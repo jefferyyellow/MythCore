@@ -1,9 +1,11 @@
 #ifndef __LOGMANAGER_H__
 #define __LOGMANAGER_H__
 #include "commontype.h"
+#include "singleton.h"
+
 #include <map>
 #include <string>
-#include "singleton.h"
+#include <stdarg.h>
 
 #ifdef __DEBUG__
 #define MAX_LOG_BUFFER_NUM	10240 

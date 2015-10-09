@@ -3,7 +3,7 @@
 #include "commontype.h"
 #include "singleton.h"
 #include "logmanager.h"
-
+#include <stdio.h>
 // some one says,the method is not precise in multi core cpu
 //  http://blog.csdn.net/solstice/article/details/5196544
 /// get the cpu time stamp counter

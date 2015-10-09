@@ -1,6 +1,6 @@
 #include "logmanager.h"
 #include "log.h"
-#include <stdarg.h>
+#include <stdio.h>
 int CLogManager::Init()
 {
 	mErrorLog = NULL;

@@ -89,12 +89,12 @@ struct CDequeIterator
 		operator+=(difference_type __n)
 	{
 		const difference_type __offset = __n + (_M_cur - _M_first);
-		if (__offset >= 0 && __offset < difference_type(_S_buffer_size()))
+		if (__offset >= 0 && __offset < difference_type(SBufferSize()))
 			_M_cur += __n;
 		else
 		{
 			const difference_type __node_offset =
-				__offset > 0 ? __offset / difference_type(_S_buffer_size())
+				__offset > 0 ? __offset / difference_type(SBufferSize())
 				: -difference_type((-__offset - 1)
 				/ SBufferSize()) - 1;
 			_M_set_node(_M_node + __node_offset);
@@ -264,8 +264,8 @@ public:
 	typedef const value_type*							const_pointer;
 	typedef value_type&							        reference;
 	typedef const value_type&							const_reference;
-	typedef typename CDequeIterator<value_type, reference, pointer, BlockSize> iterator;
-	typedef typename CDequeIterator<value_type, const_reference, const_pointer, BlockSize> const_iterator;
+	typedef CDequeIterator<value_type, reference, pointer, BlockSize> iterator;
+	typedef CDequeIterator<value_type, const_reference, const_pointer, BlockSize> const_iterator;
 	typedef std::reverse_iterator<const_iterator>		const_reverse_iterator;
 	typedef std::reverse_iterator<iterator>				reverse_iterator;
 	typedef size_t										size_type;
@@ -545,7 +545,7 @@ protected:
 
 	void	resizeMap(uint32 nMapSize)
 	{
-		if (NULL != mMapSize)
+		if (NULL != mMap)
 		{
 			delete []mMap;
 		}
