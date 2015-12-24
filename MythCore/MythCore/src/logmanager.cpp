@@ -50,12 +50,13 @@ void CLogManager::LogWarnMessage(const char* pFormat, ...)
 /// Get the specified name log
 CLog* CLogManager::GetDebugLog(const char* pName)
 {
-	DebugLogMap::iterator it = mDebugLog.find(pName);
-	if(it == mDebugLog.end())
+	CLog* pLog;
+	bool bFind = mDebugLog.Find(pName, pLog);
+	if(bFind)
 	{
-		return NULL;
+		return pLog;
 	}
-	return it->second;
+	return NULL;
 }
 
 /// add a new specified name debug log

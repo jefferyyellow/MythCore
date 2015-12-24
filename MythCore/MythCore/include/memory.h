@@ -10,12 +10,13 @@ class comconstruct
 public:
 	inline static void construct(void* p)
 	{
+		new (p)T;
 	}
 
 	inline static void construct(void* p, const T& t)
 	{
 		/*new (p)T(t);*/
-		*((T*)p) = t;
+		new (p) T(t);
 	}
 };
 

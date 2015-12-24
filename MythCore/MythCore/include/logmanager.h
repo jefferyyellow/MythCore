@@ -3,7 +3,7 @@
 #include "commontype.h"
 #include "singleton.h"
 
-#include <map>
+#include "hashmap.h"
 #include <string>
 #include <stdarg.h>
 
@@ -23,7 +23,8 @@ class CLogManager : public CSingleton<CLogManager>
 {
 	friend class CSingleton<CLogManager>;
 public:
- 	typedef std::map<std::string, CLog*> DebugLogMap;
+ 	//typedef std::map<std::string, CLog*> DebugLogMap;
+	typedef Myth::CHashMap<const char* , CLog*, 8, 8, 8> DebugLogMap;
 private:
 	CLogManager()
 	{

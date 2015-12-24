@@ -1,11 +1,11 @@
-#ifndef __ARRAY_H__
-#define __ARRAY_H__
+#ifndef __VECTOR_H__
+#define __VECTOR_H__
 namespace Myth
 {
-	template<typename T, uint32 Capacity>
-	class CArray
+	template<typename T, uint BaseCount=32, uint Increment=8>
+	class CVector
 	{
-		typedef CArray<T, Capacity>	array_type;
+		typedef CVector<T, BaseCount, Increment>	vector_type;
 	public:
 		typedef		T				value_type;
 		typedef 	value_type*		pointer;
@@ -14,30 +14,54 @@ namespace Myth
 		typedef		ptrdiff_t		difference_type;
 		typedef const value_type*	const_pointer;
 		typedef const value_type&	const_reference;
-		typedef MythInternal::__normal_iterator<pointer, array_type>			iterator;
-		typedef MythInternal::__normal_iterator<const_pointer, array_type>	const_iterator;
-		typedef MythInternal::reverse_iterator<const_iterator>				const_reverse_iterator;
+		typedef MythInternal::__normal_iterator<pointer, vector_type>			iterator;
+		typedef MythInternal::__normal_iterator<const_pointer, vector_type>		const_iterator;
+		typedef MythInternal::reverse_iterator<const_iterator>					const_reverse_iterator;
 		typedef MythInternal::reverse_iterator<iterator>						reverse_iterator;
 
 	public:
-		CArray()
+		CVector()
 		{
+			mpData = new T[BaseCount];
 			mSize = 0;
+			mCapacity = BaseCount;
 		}
-		CArray(uint32 nSize, T t=T())
+		CVector(uint32 nSize, T t=T())
 		{
-			std::fill(begin().base(), (begin() + nSize).base(), t);
+			mpData = NULL;
+			if (nSize > BaseCount)
+			{
+				Resize(nSize);
+			}
+			else
+			{
+				mpData = new T[BaseCount];
+				mCapacity = BaseCount;
+			}
+
+			std::fill(mpData, mpData + nSize, t);
 			mSize = nSize;
 		}
 
 		template <class InputIterator>
-		CArray(InputIterator first, InputIterator last)
+		CVector(InputIterator first, InputIterator last)
 		{
+			mpData = NULL;
 			uint32 nSize = last - first;
 			if (nSize <= 0)
 			{
 				return;
 			}
+			if (nSize > BaseCount)
+			{
+				Resize(nSize);
+			}
+			else
+			{
+				mpData = new T[BaseCount];
+				mCapacity = BaseCount;
+			}
+			mpData = new T[mCapacity];
 			iterator cur = begin();
 			for (uint32 i = 0; i < nSize; ++ i)
 			{
@@ -46,36 +70,41 @@ namespace Myth
 			mSize = nSize;
 		}
 
-		CArray(CArray& rArray)
+		CVector(CVector& rVector)
 		{
-			std::copy(rArray.begin().base(), rArray.end().base(), begin().base());
-			mSize = rArray.mSize;
+			mpData = new T[rVector.mCapacity];
+			std::copy(rVector.begin().base(), rVector.end().base(), begin().base());
+			mSize = rVector.mSize;
+			mCapacity = rVector.mCapacity;
 		}
-		~CArray(){}
+		~CVector(){}
 
-		CArray& operator=(CArray& rArray)
+		CVector& operator=(CVector& rVector)
 		{
-			std::copy(rArray.begin().base(), rArray.end().base(), begin().base());
-			mSize = rArray.mSize;
+			if (mCapacity < rVector.mSize)
+			{
+				Resize(rVector.mSize);
+			}
+			std::copy(rVector.begin().base(), rVector.end().base(), begin().base());
+			mSize = rVector.mSize;
 		}
-
 		iterator begin()
 		{
-			return (iterator)(mData);
+			return (iterator)(mpData);
 		}
 		const_iterator begin() const
 		{
-			return (const_iterator)(mData);
+			return (const_iterator)(mpData);
 		}
-		
+
 		iterator end()
 		{
-			return (iterator)(mData + mSize);
+			return (iterator)(mpData + mSize);
 		}
-		
+
 		const_iterator end() const
 		{
-			return (const_iterator)(mData + mSize);
+			return (const_iterator)(mpData + mSize);
 		}
 
 		size_type size() const
@@ -85,12 +114,12 @@ namespace Myth
 
 		size_type max_size() const
 		{
-			return (size_type)Capacity;
+			return (size_type)mCapacity;
 		}
 
 		size_type capacity() const
 		{
-			return (size_type)Capacity;
+			return (size_type)mCapacity;
 		}
 
 		bool empty() const
@@ -100,30 +129,31 @@ namespace Myth
 
 		reference operator[] (size_type n)
 		{
-			return mData[n];
+			return mpData[n];
 		}
 		const_reference operator[] (size_type n) const
 		{
-			return mData[n];
+			return mpData[n];
 		}
 
 		reference at (size_type n)
 		{
 			if (n < 0  || n>= mSize)
 			{
-				// Log
+				return mpData[0];
 			}
 
-			return mData[n];
+			return mpData[n];
 		}
 		const_reference at (size_type n) const
 		{
 			if (n < 0  || n>= mSize)
 			{
 				// Log
+				return mpData[0];
 			}
 
-			return mData[n];
+			return mpData[n];
 		}
 
 		reference front()
@@ -149,11 +179,12 @@ namespace Myth
 		{
 			assign(size_type(n), val);
 		}
+
 		void assign (size_type n, const value_type& val)
 		{
-			if (n > Capacity)
+			if (n > mCapacity)
 			{
-				return;
+				Resize(n);
 			}
 
 			std::fill(begin().base(), (begin() + n).base(), val);
@@ -168,21 +199,42 @@ namespace Myth
 			{
 				return;
 			}
+
+			if (nSize > mCapacity)
+			{
+				Resize(n);
+			}
+
 			iterator cur = begin();
-			for (uint32 i = 0; i < nSize && i < mSize; ++ i)
+			for (uint32 i = 0; i < nSize; ++ i)
 			{
 				*cur++ = *first++;
 			}
 			mSize = nSize;
 		}
 
+		bool		Resize(int nSize)
+		{
+			int nMode = (nSize - BaseCount) % Increment;
+			mCapacity = BaseCount + (nSize - BaseCount) / Increment * Increment;
+			mCapacity += nMode > 0 ? Increment : 0;
+			T* pNewData = new T[mCapacity];
+			if (NULL != mpData)
+			{
+				memcpy_s(pNewData, mSize * sizeof(T), mpData,  mSize * sizeof(T));
+				delete []mpData;
+			}
+			mpData = pNewData;
+			return true;
+		}
+
 		void push_back (const value_type& val)
 		{
-			if (mSize >= Capacity)
+			if (mSize >= mCapacity)
 			{
-				return;
+				Resize(mSize + Increment);
 			}
-			mData[mSize] = val;
+			mpData[mSize] = val;
 			++ mSize;
 		}
 
@@ -194,7 +246,7 @@ namespace Myth
 		{
 			if (mSize >= Capacity)
 			{
-				return end();
+				Resize(mSize + Increment);
 			}
 
 			std::copy_backward(position.base(), end().base(), (end() + 1).base());
@@ -217,14 +269,13 @@ namespace Myth
 			uint nSize = last - first;
 			if (mSize + nSize >= Capacity)
 			{
-				return ;
+				Resize(mSize + Increment);
 			}
 			std::copy_backward(position.base(), end().base(), (begin() + mSize + nSize).base());
 			std::copy(first.base(), last.base(), position.base());
 
 			mSize += nSize;
 		}
-
 
 		iterator erase (iterator position)
 		{
@@ -251,9 +302,9 @@ namespace Myth
 			mSize = 0;
 		}
 	private:
-		T			mData[Capacity];
+		T*			mpData;
 		uint32		mSize;
+		uint32		mCapacity;
 	};
 }
-
 #endif

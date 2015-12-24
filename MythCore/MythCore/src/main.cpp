@@ -18,6 +18,8 @@
 #include "list.h"
 #include "slist.h"
 #include "deque.h"
+#include "hashmap.h"
+#include "vector.h"
 
 using namespace std;
 
@@ -874,26 +876,6 @@ void testSlist()
 	printf("\n");
 }
 
-void testDeque()
-{
-	CDeque<int, 4, 4> mDeque(4, 8);
-	CDeque<int, 4, 4>::iterator it = mDeque.begin();
-	CDeque<int, 4, 4>::iterator itEnd = mDeque.end();
-	for (; it != itEnd; ++ it)
-	{
-		printf("%d\t", *it);
-	}
-
-	printf("\n");
-	CDeque<int, 4, 4> mDeque2(mDeque);
-	it = mDeque2.begin();
-	itEnd = mDeque2.end();
-	for (; it != itEnd; ++ it)
-	{
-		printf("%d\t", *it);
-	}
-}
-
 class CSizeA
 {
 public:
@@ -924,6 +906,68 @@ public:
 	int t;
 };
 
+void testHashMap()
+{
+	Myth::CHashMap<int, int, 5, 5,5> firsthash;
+	firsthash.Insert(10, 100);
+	firsthash.Insert(14, 196);
+	
+	Myth::CHashMap<int, int, 5, 5,5>::iterator it = firsthash.begin();
+	Myth::CHashMap<int, int, 5, 5,5>::iterator itend = firsthash.end();
+	for (; it != itend; ++ it)
+	{
+		printf("%d, %d\n", it->mKey, it->mData);
+	}
+	printf("\n");
+	printf("\n");
+	printf("\n");
+	firsthash.erase(10);
+
+	printf("%d, %d\n", 10, firsthash[10]);
+	printf("%d, %d\n", 14, firsthash[14]);
+	printf("%d, %d\n", 15, firsthash[15]);
+
+	firsthash.Clear();
+}
+
+void testVector()
+{
+	Myth::CVector<int, 4, 4> vector(10u, 10);
+	Myth::CVector<int, 4, 4>::iterator it = vector.begin();
+	Myth::CVector<int, 4, 4>::iterator itend = vector.end();
+	for (; it != itend; ++ it)
+	{
+		printf("%d		", *it);
+	}
+
+	printf("\n");
+	for (int i = 0; i < vector.size(); ++ i)
+	{
+		printf("%d		", vector[i]);
+	}
+	for (int i = 0; i < 20; i++)
+	{
+		vector.assign(20, 20);
+	}
+	printf("\n");
+	for (int i = 0; i < vector.size(); ++ i)
+	{
+		printf("%d		", vector[i]);
+	}
+
+	Myth::CVector<int, 4, 4> vector2(2u, 2);
+	for (int i = 0; i < 8; ++ i)
+	{
+		vector2.push_back(i);
+	}
+
+	printf("\n");
+	for (int i = 0; i < vector2.size(); ++ i)
+	{
+		printf("%d		", vector2[i]);
+	}
+
+}
 int main(int argc, char** argv)
 {
 	typedef		int				value_type;
@@ -998,7 +1042,6 @@ int main(int argc, char** argv)
 	//testarray();
 	//testList();
 	//testSlist();
-	testDeque();
 	std::vector<int> arr;
 	arr.assign(3,3);
 
@@ -1006,5 +1049,7 @@ int main(int argc, char** argv)
 	int size = sizeof(CSizeA);
 	int size2 = sizeof(CSizeB);
 
+	//testHashMap();
+	testVector();
 }
 
