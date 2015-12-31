@@ -1,5 +1,6 @@
 #ifndef __HASHMAP_H__
 #define __HASHMAP_H__
+#include "commontype.h"
 #include "iterator.h"
 #include "blockmemory.h"
 namespace Myth
@@ -63,7 +64,7 @@ namespace Myth
 			typedef KeyValuePairNode&				reference;
 
 			HashIterator()
-				: _M_node() { }
+				: mNode() { }
 
 			explicit
 				HashIterator(CHashNodeBase* node)
@@ -142,7 +143,7 @@ namespace Myth
 				HashConstIterator(const CHashNodeBase* node)
 				: mNode((KeyValuePairNode*)node) { }
 
-			HashConstIterator(HashIterator& _x)
+			HashConstIterator(HashIterator& x)
 				: mNode(x.mNode) { }
 
 			pointer

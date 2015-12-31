@@ -202,7 +202,7 @@ namespace Myth
 
 			if (nSize > mCapacity)
 			{
-				Resize(n);
+				Resize(nSize);
 			}
 
 			iterator cur = begin();
@@ -221,7 +221,7 @@ namespace Myth
 			T* pNewData = new T[mCapacity];
 			if (NULL != mpData)
 			{
-				memcpy_s(pNewData, mSize * sizeof(T), mpData,  mSize * sizeof(T));
+				memcpy(pNewData, mpData,  mSize * sizeof(T));
 				delete []mpData;
 			}
 			mpData = pNewData;
@@ -244,7 +244,7 @@ namespace Myth
 		}
 		iterator insert (iterator position, const value_type& val)
 		{
-			if (mSize >= Capacity)
+			if (mSize >= mCapacity)
 			{
 				Resize(mSize + Increment);
 			}
@@ -256,9 +256,9 @@ namespace Myth
 		}
 		void insert (iterator position, size_type n, const value_type& val)
 		{
-			if (mSize + n >= Capacity)
+			if (mSize + n >= mCapacity)
 			{
-				return;
+				Resize(mSize + n);
 			}
 			std::copy_backward(position.base(), end().base(), (begin() + mSize + n).base());
 			std::fill(position.base(), (position + n).base(), val);
@@ -267,7 +267,7 @@ namespace Myth
 		void insert (iterator position, iterator first, iterator last)
 		{
 			uint nSize = last - first;
-			if (mSize + nSize >= Capacity)
+			if (mSize + nSize >= mCapacity)
 			{
 				Resize(mSize + Increment);
 			}

@@ -11,8 +11,7 @@
 // windows has not snprintf,it has _snprintf
 #define	snprintf _snprintf
 #endif
-
-
+#include <stddef.h>
 #ifdef MYTH_OS_WINDOWS
 
 typedef	signed		__int8		sint8;
