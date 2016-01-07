@@ -20,6 +20,7 @@
 #include "deque.h"
 #include "hashmap.h"
 #include "vector.h"
+#include "selectmodel.h"
 
 using namespace std;
 
@@ -968,6 +969,13 @@ void testVector()
 	}
 
 }
+
+void testSelectModel()
+{
+	Myth::CSelectModel selectModel;
+	selectModel.setMaxFd(0);
+}
+
 int main(int argc, char** argv)
 {
 	typedef		int				value_type;

@@ -9,6 +9,11 @@
 
 namespace Myth
 {
+	void CTcpSocket::processRead()
+	{
+
+	}
+
 	SOCKET CTcpSocket::createSocket()
 	{
 		mSocketFd = socket(AF_INET, SOCK_STREAM, 0);
@@ -75,9 +80,12 @@ namespace Myth
 		socklen_t nLen = sizeof(serverAddr);
 #endif
 		SOCKET  nFd = accept(mSocketFd, (struct sockaddr*)&serverAddr, &nLen);
-		pNewSocket->setSocketFd(nFd);
-		pNewSocket->setPort(ntohs(serverAddr.sin_port));
-		pNewSocket->setIP(inet_ntoa(serverAddr.sin_addr));
+		if (NULL != pNewSocket)
+		{
+			pNewSocket->setSocketFd(nFd);
+			pNewSocket->setPort(ntohs(serverAddr.sin_port));
+			pNewSocket->setIP(inet_ntoa(serverAddr.sin_addr));
+		}
 		return 0;
 	}
 

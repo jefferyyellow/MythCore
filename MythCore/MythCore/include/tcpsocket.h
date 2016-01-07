@@ -3,6 +3,7 @@
 #include "commontype.h"
 #ifdef MYTH_OS_UNIX
 #define SOCKET int
+define SOCKET_ERROR -1
 #endif
 namespace Myth
 {
@@ -37,6 +38,7 @@ namespace Myth
 		}
 
 	public:
+		void	processRead();
 		SOCKET	createSocket();
 		int		connectServer(char* pIP, uint16 uPort);
 		int		reconnectServer();
@@ -56,8 +58,8 @@ namespace Myth
 		int		setReuseAddr(bool bReuse);
 
 	public:
-		uint32	getSocketFd(){ return mSocketFd; }
-		void	setSocketFd(uint32 uFd){ mSocketFd = uFd; }
+		SOCKET	getSocketFd(){ return mSocketFd; }
+		void	setSocketFd(SOCKET uFd){ mSocketFd = uFd; }
 
 		const char*	getIP(){ return mIP; }
 		void	setIP(const char* strIP)
@@ -73,6 +75,11 @@ namespace Myth
 		uint32	getPort(){ return mPort; }
 		void	setPort(uint16 uPort){ mPort = uPort; }
 
+		uint8	getSocketStatus(){return mSocketStatus;}
+		void	SetSocketStatus(uint8 nStatus){mSocketStatus = nStatus;}
+
+		uint8	GetListen(){return mbListen;}
+		void	SetListen(uint8 bListen){mbListen = bListen;}
 	private:
 		/// socket file des
 		SOCKET	mSocketFd;
@@ -81,7 +88,9 @@ namespace Myth
 		/// IP port
 		uint16	mPort;
 		/// socket status
-		uint16	mSocketStatus;
+		uint8	mSocketStatus;
+		/// listen socket
+		uint8	mbListen;
 	};
 }
 #endif
