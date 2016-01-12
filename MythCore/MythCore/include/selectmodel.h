@@ -12,11 +12,11 @@ namespace Myth
 			init();
 		}
 
-		CSelectModel(CTcpSocket* pAllSocket, int nSocketNum)
+		CSelectModel(CTcpSocket* pAllSocket, int nSocketCapacity)
 		{
 			init();
 			mpAllSocket = pAllSocket;
-			mSocketNum = nSocketNum;
+			mSocketCapacity = nSocketCapacity;
 		}
 
 		~CSelectModel()
@@ -32,11 +32,11 @@ namespace Myth
 			mSelectTime.tv_sec = 0;
 			mSelectTime.tv_usec = 0;
 			mpAllSocket = NULL;
-			mSocketNum = 0;
+			mSocketCapacity = 0;
 		}
 
 	public:
-		void			createListenSocket(char* pIP, uint32 uPort, int nListNum);
+		int				createListenSocket(char* pIP, uint32 uPort, int nListNum);
 		void			selectAllFd();
 		void			processRead();
 		void			addNewSocket(CTcpSocket* pNewSocket);
@@ -57,15 +57,15 @@ namespace Myth
 		CTcpSocket*		GetAllSocket(){return mpAllSocket;}
 		void			SetAllSocket(CTcpSocket* pAllSocket){mpAllSocket = pAllSocket;}
 
-		uint16			GetSocketNum(){return mSocketNum;}
-		void			SetSocketNum(uint16 nSocketNum){mSocketNum = nSocketNum;}
+		uint16			GetSocketCapacity(){ return mSocketCapacity; }
+		void			SetSocketCapacity(uint16 nSocketNum){ mSocketCapacity = nSocketNum; }
 	private:
 		SOCKET			mMaxFd;
 		fd_set			mReadSet;
 		fd_set			mReadBackSet;
 		timeval			mSelectTime;
 		CTcpSocket*		mpAllSocket;
-		uint16			mSocketNum;
+		uint16			mSocketCapacity;
 		uint16			mMaxSocketIndex;
 	};
 

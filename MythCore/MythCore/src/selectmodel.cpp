@@ -1,7 +1,8 @@
 #include "selectmodel.h"
+#include <stdio.h>
 namespace Myth
 {
-	void CSelectModel::createListenSocket(char* pIP, uint32 uPort, int nListNum)
+	int CSelectModel::createListenSocket(char* pIP, uint32 uPort, int nListNum)
 	{
 		int nSocketIndex = -1;
 
@@ -9,19 +10,24 @@ namespace Myth
 		if (NULL == pNewSocket)
 		{
 			// ³ö´í
-			return;
+			return -1;
 		}
+
+		if(INVALID_SOCKET == pNewSocket->createSocket())
+		{
+			return -1;
+		}
+
+		pNewSocket->setIP(pIP);
+		pNewSocket->setPort(uPort);
+		pNewSocket->bindPort();
+		pNewSocket->listenSocket(nListNum);
 		if (nSocketIndex > mMaxSocketIndex)
 		{
 			mMaxSocketIndex = nSocketIndex;
 		}
-		if(INVALID_SOCKET == pNewSocket->createSocket())
-		{
-			return;
-		}
 
-		pNewSocket->bindPort();
-		pNewSocket->listenSocket(nListNum);
+		return 0;
 	}
 
 	void CSelectModel::selectAllFd()
@@ -58,7 +64,9 @@ namespace Myth
 				}
 				else
 				{
-					mpAllSocket[i].processRead();
+					char acBuffer[256] = { 0 };
+					mpAllSocket[i].recvData(acBuffer, sizeof(acBuffer));
+					printf("%s\n", acBuffer);
 				}
 			}
 		}
@@ -72,7 +80,7 @@ namespace Myth
 			return NULL;
 		}
 
-		if (nIndex >= mSocketNum)
+		if (nIndex >= mSocketCapacity)
 		{
 			return NULL;
 		}
@@ -125,7 +133,7 @@ namespace Myth
 
 	int CSelectModel::findFreeSocketIndex()
 	{
-		for (int i = 0; i < mSocketNum; ++ i)
+		for (int i = 0; i < mSocketCapacity; ++i)
 		{
 			if (INVALID_SOCKET == mpAllSocket[i].getSocketFd())
 			{

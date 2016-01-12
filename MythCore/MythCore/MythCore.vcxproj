@@ -20,6 +20,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -56,6 +57,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -76,6 +78,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\epollmodel.cpp" />
     <ClCompile Include="src\fileutility.cpp" />
     <ClCompile Include="src\i18n.cpp" />
     <ClCompile Include="src\log.cpp" />
@@ -83,6 +86,8 @@
     <ClCompile Include="src\logmanager.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\performance.cpp" />
+    <ClCompile Include="src\selectmodel.cpp" />
+    <ClCompile Include="src\tcpsocket.cpp" />
     <ClCompile Include="src\timemanager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +96,7 @@
     <ClInclude Include="include\blockmemory.h" />
     <ClInclude Include="include\commontype.h" />
     <ClInclude Include="include\deque.h" />
+    <ClInclude Include="include\epollmodel.h" />
     <ClInclude Include="include\fileutility.h" />
     <ClInclude Include="include\hashmap.h" />
     <ClInclude Include="include\i18n.h" />
@@ -101,8 +107,10 @@
     <ClInclude Include="include\logmanager.h" />
     <ClInclude Include="include\memory.h" />
     <ClInclude Include="include\performance.h" />
+    <ClInclude Include="include\selectmodel.h" />
     <ClInclude Include="include\singleton.h" />
     <ClInclude Include="include\slist.h" />
+    <ClInclude Include="include\tcpsocket.h" />
     <ClInclude Include="include\timemanager.h" />
     <ClInclude Include="include\vector.h" />
   </ItemGroup>

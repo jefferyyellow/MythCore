@@ -9,11 +9,6 @@
 
 namespace Myth
 {
-	void CTcpSocket::processRead()
-	{
-
-	}
-
 	SOCKET CTcpSocket::createSocket()
 	{
 		mSocketFd = socket(AF_INET, SOCK_STREAM, 0);
@@ -53,6 +48,10 @@ namespace Myth
 
 	int	CTcpSocket::bindAdress()
 	{
+		if ('\0' == mIP[0])
+		{
+			return -1;
+		}
 		sockaddr_in serverAddr;
 		serverAddr.sin_addr.s_addr = inet_addr(mIP);
 		serverAddr.sin_port = htons(mPort);
@@ -94,8 +93,10 @@ namespace Myth
 #ifdef MYTH_OS_WINDOWS
 		closesocket(mSocketFd);
 #else
+		shutdown(mSocketFd, SHUT_RDWR);
 		close(mSocketFd);
 #endif
+		mSocketFd = -1;
 		setIP("");
 		setPort(0);
 	}
@@ -106,10 +107,43 @@ namespace Myth
 		ULONG arg = bBlock ? 1 : 0;
 		return ioctlsocket(mSocketFd, FIONBIO, &arg);
 #else
+		int nFlag = fcntl(mSocketFd, F_GETFL, 0);
+		if (nFlag < 0)
+		{
+			// 出错
+			return -1;
+		}
+		if (bBlock)
+		{
+			flags |= O_NONBLOCK;
+		}
+		else
+		{
+			flags &= ~O_NONBLOCK;
+		}
+		int nResult = fcntl(mSocketFd, F_SETFL, flags);
+		if (nResult < 0)
+		{
+			// 出错
+			return -1;
+		}
 		return 0;
 #endif
 	}
 
+	bool CTcpSocket::getNonBlock()
+	{
+#ifdef MYTH_OS_WINDOWS
+		return 0;
+#else
+		int nFlag = fcntl(mSocketFd, F_GETFL, 0);
+		if (nFlag < 0)
+		{
+			// 出错
+		}
+		return flags | O_NONBLOCK;
+#endif
+	}
 
 	int CTcpSocket::getLinger()
 	{
@@ -149,4 +183,131 @@ namespace Myth
 		int opt = (bReuse ? 1 : 0);
 		return setsockopt(mSocketFd, SOL_SOCKET, SO_REUSEADDR, (char*)&opt, sizeof(opt));
 	}
+
+	bool CTcpSocket::checkKeepAlive()
+	{
+		int nKeepAlive = 0;
+#ifdef MYTH_OS_WINDOWS
+		int nLen = sizeof(nKeepAlive);
+#else
+		socklen_t nLen = sizeof(nKeepAlive);
+#endif
+		getsockopt(mSocketFd, SOL_SOCKET, SO_KEEPALIVE, (char*)&nKeepAlive, &nLen);
+		return nKeepAlive == 1;
+
+	}
+
+	int	CTcpSocket::setKeepAlive(bool bKeepAlive)
+	{
+		int opt = (bKeepAlive ? 1 : 0);
+		return setsockopt(mSocketFd, SOL_SOCKET, SO_KEEPALIVE, (char*)&opt, sizeof(opt));
+	}
+
+	int CTcpSocket::getSendBuffSize()
+	{
+		int nBuffSize = 0;
+#ifdef MYTH_OS_WINDOWS
+		int nLen = sizeof(int);
+#else
+		socklen_t nLen = sizeof(int);
+#endif
+		getsockopt(mSocketFd, SOL_SOCKET, SO_SNDBUF, (char *)&nBuffSize, &nLen);
+		return nBuffSize;
+	}
+
+	int	CTcpSocket::setSendBuffSize(int nBuffSize)
+	{
+#ifdef MYTH_OS_WINDOWS
+		int nLen = sizeof(int);
+#else
+		socklen_t nLen = sizeof(int);
+#endif
+		return setsockopt(mSocketFd, SOL_SOCKET, SO_SNDBUF, (char *)&nBuffSize, nLen);
+	}
+
+	int	CTcpSocket::getRecvBuffSize()
+	{
+		int nBuffSize = 0;
+#ifdef MYTH_OS_WINDOWS
+		int nLen = sizeof(int);
+#else
+		socklen_t nLen = sizeof(int);
+#endif
+		getsockopt(mSocketFd, SOL_SOCKET, SO_RCVBUF, (char *)&nBuffSize, &nLen);
+		return nBuffSize;
+	}
+
+	int	CTcpSocket::setRecvBuffSize(int nBuffSize)
+	{
+#ifdef MYTH_OS_WINDOWS
+		int nLen = sizeof(int);
+#else
+		socklen_t nLen = sizeof(int);
+#endif
+		return setsockopt(mSocketFd, SOL_SOCKET, SO_RCVBUF, (char *)&nBuffSize, nLen);
+	}
+
+#ifdef MYTH_OS_WINDOWS
+	int	CTcpSocket::sendData(char* pBuff, int nBuffSize)
+	{
+		return send(mSocketFd, pBuff, nBuffSize, 0);
+	}
+#else
+
+	int	CTcpSocket::sendData(char* pBuff, int nBuffSize)
+	{
+		int nSendBytes = 0;
+		int nLeftLen = nBuffSize;
+
+		while (1)
+		{
+			// 将数据写入套接字
+			nSendBytes = write(mSocketFd, pBuff, nLeftLen);
+			if (nSendBytes == nLeftLen)
+			{
+				return nSendBytes;
+			}
+			else
+			{
+				if (0 >= nSendBytes && EINTR == errno)
+				{
+					continue;
+				}
+
+				return nSendBytes;
+			}
+		}
+	}
+#endif
+
+#ifdef MYTH_OS_WINDOWS
+	int	CTcpSocket::recvData(char* pBuff, int nBuffSize)
+	{
+		return recv(mSocketFd, pBuff, nBuffSize, 0);
+	}
+#else
+	int	CTcpSocket::recvData(char* pBuff, int nBuffSize)
+	{
+		int nRecvBytes =0;
+
+		while (1)
+		{
+			nRecvBytes = read(mSocketFd, pBuff, nBuffSize);
+
+			if (0 < nRecvBytes)
+			{
+				return nRecvBytes;
+			}
+			else
+			{
+				if (0 > nRecvBytes && errno == EINTR)
+				{
+					continue;
+				}
+				return nRecvBytes;
+			}
+		}
+		return -1;
+	}
+#endif
 }

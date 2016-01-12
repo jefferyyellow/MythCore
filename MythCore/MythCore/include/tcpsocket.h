@@ -38,7 +38,6 @@ namespace Myth
 		}
 
 	public:
-		void	processRead();
 		SOCKET	createSocket();
 		int		connectServer(char* pIP, uint16 uPort);
 		int		reconnectServer();
@@ -48,8 +47,9 @@ namespace Myth
 		int		listenSocket(int nListNum);
 		int		acceptConnection(CTcpSocket* pNewSocket);
 		void	closeSocket();
+	
 		int		setNonBlock(bool bBlock);
-		bool	IsNonBlock();
+		bool	getNonBlock();
 
 		int		getLinger();
 		int		setLinger(int nTime);
@@ -57,6 +57,17 @@ namespace Myth
 		bool	checkReuseAddr();
 		int		setReuseAddr(bool bReuse);
 
+		bool	checkKeepAlive();
+		int		setKeepAlive(bool bKeepAlive);
+
+		int		getSendBuffSize();
+		int		setSendBuffSize(int nBuffSize);
+
+		int		getRecvBuffSize();
+		int		setRecvBuffSize(int nBuffSize);
+
+		int		sendData(char* pBuff, int nBuffSize);
+		int		recvData(char* pBuff, int nBuffSize);
 	public:
 		SOCKET	getSocketFd(){ return mSocketFd; }
 		void	setSocketFd(SOCKET uFd){ mSocketFd = uFd; }
@@ -80,6 +91,7 @@ namespace Myth
 
 		uint8	GetListen(){return mbListen;}
 		void	SetListen(uint8 bListen){mbListen = bListen;}
+
 	private:
 		/// socket file des
 		SOCKET	mSocketFd;

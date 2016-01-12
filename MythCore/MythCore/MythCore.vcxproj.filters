@@ -39,6 +39,15 @@
     <ClCompile Include="src\i18n.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\tcpsocket.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\selectmodel.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\epollmodel.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\log.h">
@@ -96,6 +105,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="include\vector.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tcpsocket.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\selectmodel.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\epollmodel.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
