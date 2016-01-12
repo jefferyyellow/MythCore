@@ -1,9 +1,13 @@
 #ifndef __EPOLLMODEL_H__
 #define __EPOLLMODEL_H__
 #ifdef MYTH_OS_UNIX
-
+#include "commontype.h"
+#include <sys/epoll.h>
+#include <stdlib.h>
+#include <unistd.h>
 namespace Myth
 {
+	class CTcpSocket;
 	class CEpollModel
 	{
 	public:

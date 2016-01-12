@@ -1,6 +1,10 @@
 #ifdef MYTH_OS_UNIX
 #include "epollmodel.h"
+#include "tcpsocket.h"
 #include <stdio.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 namespace Myth
 {
 	int	CEpollModel::initEpollSocket()
@@ -9,7 +13,7 @@ namespace Myth
 		mCtrlEvent.data.ptr = NULL;
 		mCtrlEvent.data.fd  = -1;
 
-		mpWaitEvents = (struct epoll_event *) malloc(mSocketCapacity * Size(struct epoll_event));
+		mpWaitEvents = (struct epoll_event *) malloc(mSocketCapacity * sizeof(struct epoll_event));
 		if(NULL == mpWaitEvents)
 		{
 			// 出错
@@ -24,60 +28,63 @@ namespace Myth
 	}
 
 
-	int CEpollModel::createListenSocket(char* pIP, uint32 uPort, int nListNum, int nSendBuffSize, int nRecvBuffSize);
+	int CEpollModel::createListenSocket(char* pIP, uint32 uPort, int nListNum, int nSendBuffSize, int nRecvBuffSize)
 	{
-		CTcpSocket* pNewSocket = getFreeSocket(nSocketIndex);
-		if (NULL == pNewSocket)
+		SOCKET nNewFd = socket(AF_INET, SOCK_STREAM, 0);
+		if(INVALID_SOCKET == nNewFd)
 		{
-			// 出错
+			return -1;
+		}
+		if (nNewFd >= mSocketCapacity)
+		{
+			shutdown(nNewFd, SHUT_RDWR);
+			close(nNewFd);
 			return -1;
 		}
 
-		if(INVALID_SOCKET == pNewSocket->createSocket())
-		{
-			return -1;
-		}
+		CTcpSocket& rNewSocket = mpAllSocket[nNewFd];
 
-		pNewSocket->setIP(pIP);
-		pNewSocket->setPort(uPort);
-		if(pNewSocket->setNonBlock(true) < 0)
+		rNewSocket.setSocketFd(nNewFd);
+		rNewSocket.setIP(pIP);
+		rNewSocket.setPort(uPort);
+		if(rNewSocket.setNonBlock(true) < 0)
 		{
 			// 出错
-			pNewSocket->setSocketFd(-1);
+			rNewSocket.setSocketFd(-1);
 			return -1;
 		}
-		if(pNewSocket->setReuseAddr(true) < 0)
+		if(rNewSocket.setReuseAddr(true) < 0)
 		{
 			// 出错
-			pNewSocket->setSocketFd(-1);
+			rNewSocket.setSocketFd(-1);
 			return -1;
 		}
-		if(pNewSocket->setLinger(0) < 0)
+		if(rNewSocket.setLinger(0) < 0)
 		{
 			// 出错
-			pNewSocket->setSocketFd(-1);
+			rNewSocket.setSocketFd(-1);
 			return -1;
 		}
-		if(pNewSocket->bindPort() < 0)
+		if(rNewSocket.bindPort() < 0)
 		{
-			pNewSocket->setSocketFd(-1);
+			rNewSocket.setSocketFd(-1);
 			return -1;
 		}
 
 
 		if (nSendBuffSize > 0)
 		{
-			pNewSocket->setSendBuff(nSendBuffSize);
+			rNewSocket.setSendBuffSize(nSendBuffSize);
 		}
 
 		if(nRecvBuffSize > 0)
 		{
-			pNewSocket->setRecvBuff(nRecvBuffSize);
+			rNewSocket.setRecvBuffSize(nRecvBuffSize);
 		}
-		pNewSocket->listenSocket(nListNum);
-		if(addSocket(pNewSocket->getSocketFd()) < 0)
+		rNewSocket.listenSocket(nListNum);
+		if(addSocket(rNewSocket.getSocketFd()) < 0)
 		{
-			pNewSocket->setSocketFd(-1);
+			rNewSocket.setSocketFd(-1);
 			return -1;
 		}
 	}
@@ -85,7 +92,7 @@ namespace Myth
 	int CEpollModel::addSocket(int nFd)
 	{
 		mCtrlEvent.data.fd = nFd;
-		if(epoll_ctl(mEpollFd, EPOLL_CTL_ADD, nfd, &mCtrlEvent) < 0)
+		if(epoll_ctl(mEpollFd, EPOLL_CTL_ADD, nFd, &mCtrlEvent) < 0)
 		{
 			return -1;
 		}
@@ -95,7 +102,7 @@ namespace Myth
 	int CEpollModel::delSocket(int nFd)
 	{
 		mCtrlEvent.data.fd = nFd;
-		if (epoll_ctl(mEpollFd, EPOLL_CTL_DEL, nfd, &mCtrlEvent) < 0)
+		if (epoll_ctl(mEpollFd, EPOLL_CTL_DEL, nFd, &mCtrlEvent) < 0)
 		{
 			return -1;
 		}
@@ -104,7 +111,7 @@ namespace Myth
 
 	void CEpollModel::epollWait()
 	{
-		int nNumFd = epoll_wait(kdpfd, mpWaitEvents, mSocketCapacity, mWaitTimeOut);
+		int nNumFd = epoll_wait(mEpollFd, mpWaitEvents, mSocketCapacity, mWaitTimeOut);
 		if (nNumFd < 0)
 		{
 			// 出错，记录错误日志
@@ -112,8 +119,7 @@ namespace Myth
 
 		struct epoll_event* pEvent = mpWaitEvents;
 		int nFd = -1;
-		CTcpSocket* pTcpSocket = NULL;
-		for (int i = 0, i < nNumFd; i++, cevents++)
+		for (int i = 0; i < nNumFd; i++, pEvent++)
 		{
 			nFd = pEvent->data.fd;
 			if (0 > nFd)
@@ -137,12 +143,14 @@ namespace Myth
 			{
 				continue;
 			}
-			pTcpSocket = mpAllSocket[nFd];
+			CTcpSocket& rTcpSocket = mpAllSocket[nFd];
 
 			// listen socket
-			if(pTcpSocket->GetListen())
+			if(rTcpSocket.GetListen())
 			{
-				SOCKET  nNewFd = accept(mSocketFd, (struct sockaddr*)&serverAddr, &nLen);
+				sockaddr_in serverAddr;
+				socklen_t nLen = sizeof(serverAddr);
+				SOCKET  nNewFd = accept(rTcpSocket.getSocketFd(), (struct sockaddr*)&serverAddr, &nLen);
 				if (nNewFd < 0)
 				{
 					continue;
@@ -154,25 +162,25 @@ namespace Myth
 					continue;
 				}
 
-				CTcpSocket* pNewSocket = mpAllSocket[nNewFd];
-				pNewSocket->setSocketFd(nNewFd);
-				pNewSocket->setPort(ntohs(serverAddr.sin_port));
-				pNewSocket->setIP(inet_ntoa(serverAddr.sin_addr));	
+				CTcpSocket& rNewSocket = mpAllSocket[nNewFd];
+				rNewSocket.setSocketFd(nNewFd);
+				rNewSocket.setPort(ntohs(serverAddr.sin_port));
+				rNewSocket.setIP(inet_ntoa(serverAddr.sin_addr));	
 
-				if((pNewSocket->setNonBlock(true)) < 0)
+				if((rNewSocket.setNonBlock(true)) < 0)
 				{
-					pNewSocket->closeSocket();
+					rNewSocket.closeSocket();
 					continue;
 				}
 
-				addSocket(pNewSocket->getSocketFd());
+				addSocket(rNewSocket.getSocketFd());
 
 			}
 			else
 			{
 				// receive socket data
 				char acBuffer[256] = {0};
-				pTcpSocket->recvData(acBuffer, sizeof(acBuffer));
+				rTcpSocket.recvData(acBuffer, sizeof(acBuffer));
 				printf("%s\n", acBuffer);
 			}
 		}
