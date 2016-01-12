@@ -5,6 +5,9 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <stdio.h>
 #endif
 
 namespace Myth
@@ -115,13 +118,13 @@ namespace Myth
 		}
 		if (bBlock)
 		{
-			flags |= O_NONBLOCK;
+			nFlag |= O_NONBLOCK;
 		}
 		else
 		{
-			flags &= ~O_NONBLOCK;
+			nFlag &= ~O_NONBLOCK;
 		}
-		int nResult = fcntl(mSocketFd, F_SETFL, flags);
+		int nResult = fcntl(mSocketFd, F_SETFL, nFlag);
 		if (nResult < 0)
 		{
 			// ³ö´í
@@ -141,7 +144,7 @@ namespace Myth
 		{
 			// ³ö´í
 		}
-		return flags | O_NONBLOCK;
+		return nFlag | O_NONBLOCK;
 #endif
 	}
 

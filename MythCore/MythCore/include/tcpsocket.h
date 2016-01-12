@@ -3,7 +3,8 @@
 #include "commontype.h"
 #ifdef MYTH_OS_UNIX
 #define SOCKET int
-define SOCKET_ERROR -1
+#define SOCKET_ERROR -1
+#define INVALID_SOCKET -1
 #endif
 namespace Myth
 {
