@@ -26,7 +26,11 @@ namespace Myth
 
 		void init()
 		{
-			mMaxFd = ~0;
+#ifdef MYTH_OS_WINDOWS
+			mMaxFd = 0;
+#else
+			mMaxFd = -1;
+#endif // DEBUG
 			FD_ZERO(&mReadSet);
 			FD_ZERO(&mReadBackSet);
 			mSelectTime.tv_sec = 0;
@@ -34,13 +38,15 @@ namespace Myth
 			mpAllSocket = NULL;
 			mSocketCapacity = 0;
 		}
+	public:
+		static			int initSocketSystem();
 
 	public:
 		int				createListenSocket(char* pIP, uint32 uPort, int nListNum);
 		void			selectAllFd();
 		void			processRead();
 		void			addNewSocket(CTcpSocket* pNewSocket);
-		void			removeSocket(CTcpSocket* pRemoveSocket);
+		void			removeSocket(SOCKET nRemoveFd);
 		int				findFreeSocketIndex();
 		CTcpSocket*		getFreeSocket(int &rSocketIndex);
 

@@ -2,6 +2,17 @@
 #include <stdio.h>
 namespace Myth
 {
+	int CSelectModel::initSocketSystem()
+	{
+#ifdef MYTH_OS_WINDOWS
+		WSADATA  Ws;
+		if (WSAStartup(MAKEWORD(2, 2), &Ws) != 0)
+		{
+			return -1;
+		}
+#endif // MYTH_OS_WINDOWS
+		return 0;
+	}
 	int CSelectModel::createListenSocket(char* pIP, uint32 uPort, int nListNum)
 	{
 		int nSocketIndex = -1;
@@ -20,13 +31,22 @@ namespace Myth
 
 		pNewSocket->setIP(pIP);
 		pNewSocket->setPort(uPort);
-		pNewSocket->bindPort();
-		pNewSocket->listenSocket(nListNum);
+		if (pNewSocket->bindPort() < 0)
+		{
+			int nError = WSAGetLastError();
+			return -1;
+		}
+		if (pNewSocket->listenSocket(nListNum) < 0)
+		{
+			int nError = WSAGetLastError();
+			return -1;
+		}
 		if (nSocketIndex > mMaxSocketIndex)
 		{
 			mMaxSocketIndex = nSocketIndex;
 		}
-
+		pNewSocket->SetListen(1);
+		addNewSocket(pNewSocket);
 		return 0;
 	}
 
@@ -34,6 +54,11 @@ namespace Myth
 	{
 		mReadSet = mReadBackSet;
 		int nResult = select(mMaxFd + 1, &mReadSet, NULL, NULL, &mSelectTime);
+		if (nResult < 0)
+		{
+			int nError = WSAGetLastError();
+			int i = 0;
+		}
 	}
 
 	void CSelectModel::processRead()
@@ -61,12 +86,22 @@ namespace Myth
 					{
 						// ³ö´í
 					}
+					addNewSocket(pNewSocket);
 				}
 				else
 				{
-					char acBuffer[256] = { 0 };
-					mpAllSocket[i].recvData(acBuffer, sizeof(acBuffer));
-					printf("%s\n", acBuffer);
+					char acBuffer[128] = { 0 };
+					int nResult = mpAllSocket[i].recvData(acBuffer, sizeof(acBuffer));
+					if (nResult < 0)
+					{ 
+						int nRemoveFd = mpAllSocket[i].getSocketFd();
+						mpAllSocket[i].closeSocket();
+						removeSocket(nRemoveFd);
+					}
+					else
+					{
+						printf("%s\n", acBuffer);
+					}
 				}
 			}
 		}
@@ -99,21 +134,20 @@ namespace Myth
 		{
 			mMaxFd = nFd;
 		}
+		FD_SET(nFd, &mReadBackSet);
 	}
 
 
-	void CSelectModel::removeSocket(CTcpSocket* pRemoveSocket)
+	void CSelectModel::removeSocket(SOCKET nRemoveFd)
 	{
-		if (NULL == pRemoveSocket)
-		{
-			return;
-		}
-
-		SOCKET nRemoveFd = pRemoveSocket->getSocketFd();
 		if(nRemoveFd >= mMaxFd)
 		{
+#ifdef MYTH_OS_WINDOWS
+			SOCKET nMaxFd = 0;
+#else
 			SOCKET nMaxFd = -1;
-			for (int i = 0; i < mMaxSocketIndex; ++ i)
+#endif // DEBUG
+			for (int i = 0; i <= mMaxSocketIndex; ++ i)
 			{
 				SOCKET nFd = mpAllSocket[i].getSocketFd();
 				if (INVALID_SOCKET != nFd && nFd > nMaxFd)

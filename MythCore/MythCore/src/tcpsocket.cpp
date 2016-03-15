@@ -27,6 +27,7 @@ namespace Myth
 		setIP(pIP);
 		setPort(uPort);
 		sockaddr_in serverAddr;
+		serverAddr.sin_family = AF_INET;
 		serverAddr.sin_addr.s_addr = inet_addr(pIP);
 		serverAddr.sin_port = htons(uPort);
 		return connect(mSocketFd, (const struct sockaddr*)&serverAddr, sizeof(sockaddr_in));
@@ -36,6 +37,7 @@ namespace Myth
 	{
 		closeSocket();
 		sockaddr_in serverAddr;
+		serverAddr.sin_family = AF_INET;
 		serverAddr.sin_addr.s_addr = inet_addr(mIP);
 		serverAddr.sin_port = htons(mPort);
 		return connect(mSocketFd, (const struct sockaddr*)&serverAddr, sizeof(sockaddr_in));
@@ -44,6 +46,7 @@ namespace Myth
 	int	CTcpSocket::bindPort()
 	{
 		sockaddr_in serverAddr;
+		serverAddr.sin_family = AF_INET;
 		serverAddr.sin_addr.s_addr = htonl(INADDR_ANY);
 		serverAddr.sin_port = htons(mPort);
 		return bind(mSocketFd, (const struct sockaddr*)&serverAddr, sizeof(serverAddr));
@@ -99,9 +102,9 @@ namespace Myth
 		shutdown(mSocketFd, SHUT_RDWR);
 		close(mSocketFd);
 #endif
-		mSocketFd = -1;
 		setIP("");
 		setPort(0);
+		mSocketFd = INVALID_SOCKET;
 	}
 
 	int	CTcpSocket::setNonBlock(bool bBlock)
@@ -253,7 +256,17 @@ namespace Myth
 #ifdef MYTH_OS_WINDOWS
 	int	CTcpSocket::sendData(char* pBuff, int nBuffSize)
 	{
-		return send(mSocketFd, pBuff, nBuffSize, 0);
+		int nResult = send(mSocketFd, pBuff, nBuffSize, 0);
+		if (nResult < 0)
+		{
+			int nErrorNum = WSAGetLastError() ;
+			if (WSAEWOULDBLOCK == nErrorNum)
+			{
+				return 0;
+			}
+		}
+
+		return nResult;
 	}
 #else
 
@@ -286,7 +299,24 @@ namespace Myth
 #ifdef MYTH_OS_WINDOWS
 	int	CTcpSocket::recvData(char* pBuff, int nBuffSize)
 	{
-		return recv(mSocketFd, pBuff, nBuffSize, 0);
+		int nResult = recv(mSocketFd, pBuff, nBuffSize, 0);
+		if (nResult <= 0)
+		{
+			if (nResult < 0)
+			{
+				int nErrorNum = WSAGetLastError();
+				if (WSAEWOULDBLOCK == nErrorNum)
+				{
+					return 0;
+				}
+			}
+			else if (0 == nResult)
+			{
+				return -1;
+			}
+		}
+
+		return nResult;
 	}
 #else
 	int	CTcpSocket::recvData(char* pBuff, int nBuffSize)

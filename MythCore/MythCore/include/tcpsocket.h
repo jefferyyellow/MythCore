@@ -18,12 +18,14 @@ namespace Myth
 
 	class CTcpSocket
 	{
+	public:
 		CTcpSocket()
 		{
-			mSocketFd = 0;
+			mSocketFd = INVALID_SOCKET;
 			mIP[0] = '\0';
 			mPort = 0;
 			mSocketStatus = emSocketStatusClose;
+			mbListen = 0;
 		}
 		CTcpSocket(char* pIP, uint32 uPort)
 		{
