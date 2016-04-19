@@ -13,33 +13,34 @@ namespace Myth
 #endif // MYTH_OS_WINDOWS
 		return 0;
 	}
-	int CSelectModel::createListenSocket(char* pIP, uint32 uPort, int nListNum)
+	CBuffTcpSocket* CSelectModel::createListenSocket(char* pIP, uint32 uPort, int nListNum)
 	{
 		int nSocketIndex = -1;
 
-		CTcpSocket* pNewSocket = getFreeSocket(nSocketIndex);
+		CBuffTcpSocket* pNewSocket = getFreeSocket(nSocketIndex);
 		if (NULL == pNewSocket)
 		{
 			// ³ö´í
-			return -1;
+			return NULL;
 		}
 
 		if(INVALID_SOCKET == pNewSocket->createSocket())
 		{
-			return -1;
+			return NULL;
 		}
 
+		pNewSocket->setReuseAddr(true);
 		pNewSocket->setIP(pIP);
 		pNewSocket->setPort(uPort);
 		if (pNewSocket->bindPort() < 0)
 		{
-			int nError = WSAGetLastError();
-			return -1;
+			//int nError = WSAGetLastError();
+			return NULL;
 		}
 		if (pNewSocket->listenSocket(nListNum) < 0)
 		{
-			int nError = WSAGetLastError();
-			return -1;
+			//int nError = WSAGetLastError();
+			return NULL;
 		}
 		if (nSocketIndex > mMaxSocketIndex)
 		{
@@ -47,7 +48,7 @@ namespace Myth
 		}
 		pNewSocket->SetListen(1);
 		addNewSocket(pNewSocket);
-		return 0;
+		return pNewSocket;
 	}
 
 	void CSelectModel::selectAllFd()
@@ -56,9 +57,31 @@ namespace Myth
 		int nResult = select(mMaxFd + 1, &mReadSet, NULL, NULL, &mSelectTime);
 		if (nResult < 0)
 		{
-			int nError = WSAGetLastError();
+			//int nError = WSAGetLastError();
 			int i = 0;
 		}
+	}
+
+	void CSelectModel::processWrite(int nSocketIndex, char* pBuffer, int nBuffSize)
+	{
+		if (NULL == pBuffer)
+		{
+			return;
+		}
+		if (nSocketIndex < 0 || nSocketIndex > mMaxSocketIndex)
+		{
+			return;
+		}
+
+		int nResult = mpAllSocket[nSocketIndex].sendData(pBuffer, nBuffSize);
+		if (nResult <= 0)
+		{
+			int nRemoveFd = mpAllSocket[nSocketIndex].getSocketFd();
+			mpAllSocket[nSocketIndex].closeSocket();
+			removeSocket(nRemoveFd);
+			return;
+		}
+
 	}
 
 	void CSelectModel::processRead()
@@ -76,7 +99,7 @@ namespace Myth
 				if (mpAllSocket[i].GetListen())
 				{
 					int nSocketIndex = -1;
-					CTcpSocket* pNewSocket = getFreeSocket(nSocketIndex);
+					CBuffTcpSocket* pNewSocket = getFreeSocket(nSocketIndex);
 					mpAllSocket[i].acceptConnection(pNewSocket);
 					if (nSocketIndex > mMaxSocketIndex)
 					{
@@ -90,24 +113,26 @@ namespace Myth
 				}
 				else
 				{
-					char acBuffer[128] = { 0 };
-					int nResult = mpAllSocket[i].recvData(acBuffer, sizeof(acBuffer));
-					if (nResult < 0)
-					{ 
-						int nRemoveFd = mpAllSocket[i].getSocketFd();
-						mpAllSocket[i].closeSocket();
-						removeSocket(nRemoveFd);
-					}
-					else
+					if (NULL != mpAllSocket[i].getRecvBuff())
 					{
-						printf("%s\n", acBuffer);
+						int nResult = mpAllSocket[i].recvData(mpAllSocket[i].getRecvBuffPoint(), mpAllSocket[i].getRecvBuffCapacity());
+						if (nResult <= 0)
+						{
+							int nRemoveFd = mpAllSocket[i].getSocketFd();
+							mpAllSocket[i].closeSocket();
+							removeSocket(nRemoveFd);
+						}
+						else
+						{
+							mpAllSocket[i].setRecvBuffSize(mpAllSocket[i].getRecvBuffSize() + nResult);
+						}
 					}
 				}
 			}
 		}
 	}
 
-	CTcpSocket*	CSelectModel::getFreeSocket(int &rSocketIndex)
+	CBuffTcpSocket*	CSelectModel::getFreeSocket(int &rSocketIndex)
 	{
 		int nIndex = findFreeSocketIndex();
 		if (nIndex < 0)
@@ -123,7 +148,7 @@ namespace Myth
 		return &mpAllSocket[nIndex];
 	}
 
-	void CSelectModel::addNewSocket(CTcpSocket* pNewSocket)
+	void CSelectModel::addNewSocket(CBuffTcpSocket* pNewSocket)
 	{
 		if (NULL == pNewSocket)
 		{
@@ -135,6 +160,9 @@ namespace Myth
 			mMaxFd = nFd;
 		}
 		FD_SET(nFd, &mReadBackSet);
+#ifdef MYTH_OS_UNIX
+		SetFdNotInherited(nFd);
+#endif
 	}
 
 

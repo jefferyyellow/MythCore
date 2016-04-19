@@ -12,7 +12,7 @@ namespace Myth
 			init();
 		}
 
-		CSelectModel(CTcpSocket* pAllSocket, int nSocketCapacity)
+		CSelectModel(CBuffTcpSocket* pAllSocket, int nSocketCapacity)
 		{
 			init();
 			mpAllSocket = pAllSocket;
@@ -37,18 +37,20 @@ namespace Myth
 			mSelectTime.tv_usec = 0;
 			mpAllSocket = NULL;
 			mSocketCapacity = 0;
+			mMaxSocketIndex = 0;
 		}
 	public:
 		static			int initSocketSystem();
 
 	public:
-		int				createListenSocket(char* pIP, uint32 uPort, int nListNum);
+		CBuffTcpSocket*	createListenSocket(char* pIP, uint32 uPort, int nListNum);
 		void			selectAllFd();
 		void			processRead();
-		void			addNewSocket(CTcpSocket* pNewSocket);
+		void			processWrite(int nSocketIndex, char* pBuffer, int nBuffSize);
+		void			addNewSocket(CBuffTcpSocket* pNewSocket);
 		void			removeSocket(SOCKET nRemoveFd);
 		int				findFreeSocketIndex();
-		CTcpSocket*		getFreeSocket(int &rSocketIndex);
+		CBuffTcpSocket*	getFreeSocket(int &rSocketIndex);
 
 	public:
 		int				getMaxFd(){return mMaxFd;}
@@ -60,19 +62,19 @@ namespace Myth
 		fd_set			getReadBackSet(){return mReadBackSet;}
 		void			setReadBackSet(fd_set tReadBackSet){mReadBackSet = tReadBackSet;}
 
-		CTcpSocket*		GetAllSocket(){return mpAllSocket;}
-		void			SetAllSocket(CTcpSocket* pAllSocket){mpAllSocket = pAllSocket;}
+		CBuffTcpSocket*		GetAllSocket(){return mpAllSocket;}
+		void			SetAllSocket(CBuffTcpSocket* pAllSocket){mpAllSocket = pAllSocket;}
 
 		uint16			GetSocketCapacity(){ return mSocketCapacity; }
 		void			SetSocketCapacity(uint16 nSocketNum){ mSocketCapacity = nSocketNum; }
 	private:
-		SOCKET			mMaxFd;
-		fd_set			mReadSet;
-		fd_set			mReadBackSet;
-		timeval			mSelectTime;
-		CTcpSocket*		mpAllSocket;
-		uint16			mSocketCapacity;
-		uint16			mMaxSocketIndex;
+		SOCKET				mMaxFd;
+		fd_set				mReadSet;
+		fd_set				mReadBackSet;
+		timeval				mSelectTime;
+		CBuffTcpSocket*		mpAllSocket;
+		uint16				mSocketCapacity;
+		uint16				mMaxSocketIndex;
 	};
 
 }

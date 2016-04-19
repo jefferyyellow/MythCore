@@ -209,7 +209,7 @@ namespace Myth
 		return setsockopt(mSocketFd, SOL_SOCKET, SO_KEEPALIVE, (char*)&opt, sizeof(opt));
 	}
 
-	int CTcpSocket::getSendBuffSize()
+	int CTcpSocket::getSendBuffSizeOption()
 	{
 		int nBuffSize = 0;
 #ifdef MYTH_OS_WINDOWS
@@ -221,7 +221,7 @@ namespace Myth
 		return nBuffSize;
 	}
 
-	int	CTcpSocket::setSendBuffSize(int nBuffSize)
+	int	CTcpSocket::setSendBuffSizeOption(int nBuffSize)
 	{
 #ifdef MYTH_OS_WINDOWS
 		int nLen = sizeof(int);
@@ -231,7 +231,7 @@ namespace Myth
 		return setsockopt(mSocketFd, SOL_SOCKET, SO_SNDBUF, (char *)&nBuffSize, nLen);
 	}
 
-	int	CTcpSocket::getRecvBuffSize()
+	int	CTcpSocket::getRecvBuffSizeOption()
 	{
 		int nBuffSize = 0;
 #ifdef MYTH_OS_WINDOWS
@@ -243,7 +243,7 @@ namespace Myth
 		return nBuffSize;
 	}
 
-	int	CTcpSocket::setRecvBuffSize(int nBuffSize)
+	int	CTcpSocket::setRecvBuffSizeOption(int nBuffSize)
 	{
 #ifdef MYTH_OS_WINDOWS
 		int nLen = sizeof(int);
@@ -256,17 +256,25 @@ namespace Myth
 #ifdef MYTH_OS_WINDOWS
 	int	CTcpSocket::sendData(char* pBuff, int nBuffSize)
 	{
-		int nResult = send(mSocketFd, pBuff, nBuffSize, 0);
-		if (nResult < 0)
+		int nSendBytes = 0;
+		int nLeftLen = nBuffSize;
+		
+		while (true)
 		{
-			int nErrorNum = WSAGetLastError() ;
-			if (WSAEWOULDBLOCK == nErrorNum)
+			nSendBytes = send(mSocketFd, pBuff, nLeftLen, 0);
+			if (nSendBytes == nLeftLen)
 			{
-				return 0;
+				return nSendBytes;
 			}
-		}
+			else
+			{
+				if (nSendBytes <= 0)
+				{
+					return nSendBytes;
+				}
+			}
 
-		return nResult;
+		}
 	}
 #else
 
@@ -300,22 +308,6 @@ namespace Myth
 	int	CTcpSocket::recvData(char* pBuff, int nBuffSize)
 	{
 		int nResult = recv(mSocketFd, pBuff, nBuffSize, 0);
-		if (nResult <= 0)
-		{
-			if (nResult < 0)
-			{
-				int nErrorNum = WSAGetLastError();
-				if (WSAEWOULDBLOCK == nErrorNum)
-				{
-					return 0;
-				}
-			}
-			else if (0 == nResult)
-			{
-				return -1;
-			}
-		}
-
 		return nResult;
 	}
 #else
