@@ -1,3 +1,9 @@
+#ifndef __SLIST_H__
+#define __SLIST_H__
+#include <crtdefs.h>
+#include "iterator.h"
+#include "blockmemory.h"
+#include <type_traits>
 namespace Myth
 {
 	class CSlistNodeBase
@@ -27,7 +33,7 @@ namespace Myth
 		typedef CSlistNode<_Tp>	 _Node;
 		typedef size_t                    size_type;
 		typedef ptrdiff_t                 difference_type;
-		typedef std::forward_iterator_tag iterator_category;
+		typedef MythInternal::forward_iterator_tag iterator_category;
 
 		CSlistNodeBase* _M_node;
 
@@ -350,10 +356,10 @@ namespace Myth
 			pPreNode->mpNext = pCurrNode->mpNext;
 #ifdef MYTH_OS_WINDOWS
 			// vs2010 or above
-			comdeconstruct<T, std::has_trivial_destructor<T>::value>::deconstruct(&(((CListNode<T>*)pCurrNode)->mData));
+			comdeconstruct<T, std::has_trivial_destructor<T>::value>::deconstruct(&(((CSlistNode<T>*)pCurrNode)->mData));
 #else
 			// gcc has no std::has_trivial_destructor<T>::value
-			comdeconstruct<T, false>::deconstruct(&(((CListNode<T>*)pCurrNode)->mData));
+			comdeconstruct<T, false>::deconstruct(&(((CSlistNode<T>*)pCurrNode)->mData));
 #endif
 			mAlloc.free(pCurrNode);
 			return pPreNode->mpNext;
@@ -409,3 +415,4 @@ namespace Myth
 		CBlockMemory<CSlistNode<T>, BaseCount, Increment>	mAlloc;
 	};
 }
+#endif

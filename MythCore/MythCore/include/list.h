@@ -1,5 +1,9 @@
 #ifndef __LIST_H__
 #define __LIST_H__
+#include "iterator.h"
+#include "commontype.h"
+#include "blockmemory.h"
+#include <type_traits>
 namespace Myth
 {
 	class CListNodeBase

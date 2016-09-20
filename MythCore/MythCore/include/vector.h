@@ -1,5 +1,8 @@
 #ifndef __VECTOR_H__
 #define __VECTOR_H__
+#include "iterator.h"
+#include "commontype.h"
+#include <xutility>
 namespace Myth
 {
 	template<typename T, uint BaseCount=32, uint Increment=8>

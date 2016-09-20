@@ -56,7 +56,7 @@
 #ifndef __iterator_h__
 #define __iterator_h__
 
-
+#include <crtdefs.h>
 namespace MythInternal
 {
 /** @file stl_iterator_base_types.h

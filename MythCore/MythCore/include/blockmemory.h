@@ -2,6 +2,7 @@
 #define __BLOCKMEMORY_H__
 #include <stdio.h>
 #include "memory.h"
+#include "commontype.h"
 /**
  * Block memory allocate
  * This memory manager is fast memory allocator,do same thing as new/delete,it works by blocks,

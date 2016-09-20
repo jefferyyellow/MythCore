@@ -1,6 +1,6 @@
 #ifndef __MEMORY_H__
 #define __MEMORY_H__
-
+#include <new>
 /// Get the class member memory offset byte from the class(instance) head
 #define CLASS_MEM_OFFSET(Class,Member) ((int)(&((Class*)0)->Member))
 
