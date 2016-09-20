@@ -1,9 +1,13 @@
 #ifndef __SLIST_H__
 #define __SLIST_H__
+#ifdef MYTH_OS_WINDOWS
 #include <crtdefs.h>
+#endif
 #include "iterator.h"
 #include "blockmemory.h"
+#ifdef MYTH_OS_WINDOWS
 #include <type_traits>
+#endif
 namespace Myth
 {
 	class CSlistNodeBase

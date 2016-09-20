@@ -3,7 +3,9 @@
 #include "iterator.h"
 #include "commontype.h"
 #include "blockmemory.h"
+#ifdef MYTH_OS_WINDOWS
 #include <type_traits>
+#endif
 namespace Myth
 {
 	class CListNodeBase

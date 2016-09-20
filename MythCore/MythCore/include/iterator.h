@@ -56,7 +56,9 @@
 #ifndef __iterator_h__
 #define __iterator_h__
 
+#ifdef MYTH_OS_WINDOWS
 #include <crtdefs.h>
+#endif
 namespace MythInternal
 {
 /** @file stl_iterator_base_types.h

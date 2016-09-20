@@ -72,15 +72,15 @@ namespace Myth
 		}
 
 
-		if (nSendBuffSize > 0)
-		{
-			rNewSocket.setSendBuffSize(nSendBuffSize);
-		}
+		//if (nSendBuffSize > 0)
+		//{
+		//	rNewSocket.setSendBuffSize(nSendBuffSize);
+		//}
 
-		if(nRecvBuffSize > 0)
-		{
-			rNewSocket.setRecvBuffSize(nRecvBuffSize);
-		}
+		//if(nRecvBuffSize > 0)
+		//{
+		//	rNewSocket.setRecvBuffSize(nRecvBuffSize);
+		//}
 		rNewSocket.listenSocket(nListNum);
 		if(addSocket(rNewSocket.getSocketFd()) < 0)
 		{

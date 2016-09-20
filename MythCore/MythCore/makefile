@@ -52,7 +52,7 @@ include $(addsuffix /module.mk,$(modules))
 
 .PHONY :all
 
-all:$(programs)
+all:libMythCore.a
 
 
 .PHONY : libraries

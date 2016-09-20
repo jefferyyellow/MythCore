@@ -161,7 +161,7 @@ namespace Myth
 		}
 		FD_SET(nFd, &mReadBackSet);
 #ifdef MYTH_OS_UNIX
-		SetFdNotInherited(nFd);
+		//SetFdNotInherited(nFd);
 #endif
 	}
 

@@ -2,7 +2,9 @@
 #define __ARRAY_H__
 #include "commontype.h"
 #include "iterator.h"
+#ifdef MYTH_OS_WINDOWS
 #include <xutility>
+#endif
 namespace Myth
 {
 	template<typename T, uint32 Capacity>

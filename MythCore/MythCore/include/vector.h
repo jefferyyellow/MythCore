@@ -2,7 +2,9 @@
 #define __VECTOR_H__
 #include "iterator.h"
 #include "commontype.h"
+#ifdef MYTH_OS_WINDOWS
 #include <xutility>
+#endif
 namespace Myth
 {
 	template<typename T, uint BaseCount=32, uint Increment=8>
