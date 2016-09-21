@@ -229,7 +229,7 @@ namespace Myth
 		// 插入键值对
 		bool Insert(const Key& k, const Value& v)
 		{
-			unsigned int hashValue = Hash((char*)&k, sizeof(Key));
+			unsigned int hashValue = Hash((char*)k, sizeof(Key));
 			int nBucket = hashValue % BucketNum;
 			// 健值已经存在，把这个去了就是multihashmap了
 			if (KeyIsExit(k, nBucket))
@@ -260,7 +260,7 @@ namespace Myth
 		// 插入一个空白值
 		PairNode* Insert(const Key& k)
 		{
-			unsigned int hashValue = Hash((char*)&k, sizeof(Key));
+			unsigned int hashValue = Hash((char*)k, sizeof(Key));
 			int nBucket = hashValue % BucketNum;
 			
 
@@ -298,7 +298,7 @@ namespace Myth
 		// 找到一个键值
 		PairNode* Find(const Key &k)
 		{
-			unsigned int hashValue = Hash((char*)&k, sizeof(Key));
+			unsigned int hashValue = Hash((char*)k, sizeof(Key));
 			int nBucket = hashValue % BucketNum;
 			PairNode* pNode = GetValue(k, nBucket);
 			//assert(NULL != pNode);
@@ -417,7 +417,7 @@ namespace Myth
 		// 根据删除某个键对应的节点
 		bool erase(const Key& k)
 		{
-			unsigned int hashValue = Hash((char*)&k, sizeof(Key));
+			unsigned int hashValue = Hash((char*)k, sizeof(Key));
 			int nBucket = hashValue % BucketNum;
 			PairNode* pNode = EraseNodeByKey(k, nBucket);
 			if(pNode == NULL)

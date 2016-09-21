@@ -78,6 +78,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="include\thread.h" />
     <ClCompile Include="src\epollmodel.cpp" />
     <ClCompile Include="src\fileutility.cpp" />
     <ClCompile Include="src\i18n.cpp" />
@@ -86,8 +87,12 @@
     <ClCompile Include="src\logmanager.cpp" />
     <ClCompile Include="src\performance.cpp" />
     <ClCompile Include="src\selectmodel.cpp" />
+    <ClCompile Include="src\simplelock.cpp" />
     <ClCompile Include="src\tcpsocket.cpp" />
+    <ClCompile Include="src\pthread.cpp" />
+    <ClCompile Include="src\threadpool.cpp" />
     <ClCompile Include="src\timemanager.cpp" />
+    <ClCompile Include="src\winthread.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\array.h" />
@@ -106,12 +111,16 @@
     <ClInclude Include="include\logmanager.h" />
     <ClInclude Include="include\memory.h" />
     <ClInclude Include="include\performance.h" />
+    <ClInclude Include="include\pthread.h" />
     <ClInclude Include="include\selectmodel.h" />
+    <ClInclude Include="include\simplelock.h" />
     <ClInclude Include="include\singleton.h" />
     <ClInclude Include="include\slist.h" />
     <ClInclude Include="include\tcpsocket.h" />
+    <ClInclude Include="include\threadpool.h" />
     <ClInclude Include="include\timemanager.h" />
     <ClInclude Include="include\vector.h" />
+    <ClInclude Include="include\winthread.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\bit_set.inl" />

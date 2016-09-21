@@ -20,9 +20,15 @@
 //#include "slist.h"
 //#include "deque.h"
 //#include "hashmap.h"
-#include "vector.h"
+//#include "vector.h"
 //#include "selectmodel.h"
-#include <stdio.h>
+#include "threadpool.h"
+#include "thread.h"
+#include "logmanager.h"
+#include "log.h"
+#include "logdisplayer.h"
+#include "simplelock.h"
+//#include <stdio.h>
 //using namespace std;
 //
 //#define SERVER_PERCENT_FLOAT 10000.0f
@@ -932,44 +938,44 @@ private:
 //	firsthash.Clear();
 //}
 //
-void testVector()
-{
-	Myth::CVector<int, 4, 4> vector(10u, 10);
-	Myth::CVector<int, 4, 4>::iterator it = vector.begin();
-	Myth::CVector<int, 4, 4>::iterator itend = vector.end();
-	for (; it != itend; ++it)
-	{
-		printf("%d		", *it);
-	}
-
-	printf("\n");
-	for (int i = 0; i < vector.size(); ++i)
-	{
-		printf("%d		", vector[i]);
-	}
-	for (int i = 0; i < 20; i++)
-	{
-		vector.assign(20, 20);
-	}
-	printf("\n");
-	for (int i = 0; i < vector.size(); ++i)
-	{
-		printf("%d		", vector[i]);
-	}
-
-	Myth::CVector<int, 4, 4> vector2(2u, 2);
-	for (int i = 0; i < 8; ++i)
-	{
-		vector2.push_back(i);
-	}
-
-	printf("\n");
-	for (int i = 0; i < vector2.size(); ++i)
-	{
-		printf("%d		", vector2[i]);
-	}
-
-}
+//void testVector()
+//{
+//	Myth::CVector<int, 4, 4> vector(10u, 10);
+//	Myth::CVector<int, 4, 4>::iterator it = vector.begin();
+//	Myth::CVector<int, 4, 4>::iterator itend = vector.end();
+//	for (; it != itend; ++it)
+//	{
+//		printf("%d		", *it);
+//	}
+//
+//	printf("\n");
+//	for (int i = 0; i < vector.size(); ++i)
+//	{
+//		printf("%d		", vector[i]);
+//	}
+//	for (int i = 0; i < 20; i++)
+//	{
+//		vector.assign(20, 20);
+//	}
+//	printf("\n");
+//	for (int i = 0; i < vector.size(); ++i)
+//	{
+//		printf("%d		", vector[i]);
+//	}
+//
+//	Myth::CVector<int, 4, 4> vector2(2u, 2);
+//	for (int i = 0; i < 8; ++i)
+//	{
+//		vector2.push_back(i);
+//	}
+//
+//	printf("\n");
+//	for (int i = 0; i < vector2.size(); ++i)
+//	{
+//		printf("%d		", vector2[i]);
+//	}
+//
+//}
 //
 //void testSelectModel()
 //{
@@ -1016,6 +1022,20 @@ void testVector()
 //
 //}
 //#endif
+
+CSimpleLock cs;
+class CJob : public Myth::IJob
+{
+public:
+	int mNum;
+	virtual void doing(uint32 uParam)
+	{
+		cs.lock();
+		//printf("Thread Serial Num :%d, %d\n", uParam, mNum);
+		LOG_DEBUG("pro", "Thread Serial Num :%d, %d\n", uParam, mNum);
+		cs.unlock();
+	}
+};
 
 int main(int argc, char** argv)
 {
@@ -1099,7 +1119,65 @@ int main(int argc, char** argv)
 //	int size2 = sizeof(CSizeB);
 //
 //	testHashMap();
-	testVector();
+//	testVector();
 //	testCriticalSection();
+
+	CLogManager* pLogManger = CLogManager::CreateInst();
+	CLog mProDebugLog;
+	CLogManager::Inst()->AddDebugLog(&mProDebugLog, "pro");
+	
+	
+	CStdDisplayer tProPlayer;
+	mProDebugLog.AddDisplayer(&tProPlayer);
+	
+	const char* pProLogName = "pro.log";
+	CRollFileDisplayer tProFileDisplayer(const_cast<char*>(pProLogName), 1024000, 10);
+	mProDebugLog.AddDisplayer(&tProFileDisplayer);
+	
+	LOG_DEBUG("pro", "%s", "Pro log message is here!\n");
+
+
+	Myth::CThreadPool threadpool(4);
+	CJob tJob1;
+	tJob1.mNum = 1;
+	threadpool.pushBackJob(&tJob1);
+
+	CJob tJob2;
+	tJob2.mNum = 2;
+	threadpool.pushBackJob(&tJob2);
+
+	CJob tJob3;
+	tJob3.mNum = 3;
+	threadpool.pushBackJob(&tJob3);
+
+	CJob tJob4;
+	tJob4.mNum = 4;
+	threadpool.pushBackJob(&tJob4);
+
+	CJob tJob5;
+	tJob5.mNum = 5;
+	threadpool.pushBackJob(&tJob5);
+
+	CJob tJob6;
+	tJob6.mNum = 6;
+	threadpool.pushBackJob(&tJob6);
+
+	int i = 0;
+	while (true)
+	{
+		//printf("begin next\n");
+		cs.lock();
+		LOG_DEBUG("pro", "begin next\n");
+		cs.unlock();
+		threadpool.run();
+		Sleep(100);
+		++i;
+		if (i > 50)
+		{
+			break;
+		}
+	}
+
+	CLogManager::DestroyInst();
 }
 

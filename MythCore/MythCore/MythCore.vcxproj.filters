@@ -45,6 +45,21 @@
     <ClCompile Include="src\epollmodel.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="include\thread.h">
+      <Filter>头文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\winthread.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pthread.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\threadpool.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\simplelock.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\log.h">
@@ -111,6 +126,18 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="include\epollmodel.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\pthread.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\winthread.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\threadpool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\simplelock.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
