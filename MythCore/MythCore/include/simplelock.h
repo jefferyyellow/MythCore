@@ -1,7 +1,10 @@
 #ifndef __SIMPLELOCK_H__
 #define __SIMPLELOCK_H__
 #include "commontype.h"
-namespace
+#ifdef MYTH_OS_UNIX
+#include <pthread.h>
+#endif
+namespace Myth
 {
 	class CSimpleLock
 	{
@@ -12,6 +15,7 @@ namespace
 			::InitializeCriticalSection(&mCriticalSection);
 #else
 			pthread_mutexattr_init(&mMutexAttr);
+			pthread_mutexattr_settype(&mMutexAttr,PTHREAD_MUTEX_RECURSIVE_NP); 
 			pthread_mutex_init(&mMutex, &mMutexAttr);
 #endif
 		}

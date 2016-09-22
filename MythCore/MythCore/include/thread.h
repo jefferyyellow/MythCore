@@ -20,6 +20,19 @@ namespace Myth
 		virtual void doing(uint32 uParam) = 0;
 	};
 
+
+	enum TmThreadState
+	{
+		emThreadState_None		= 0,	// 无状态
+		emThreadState_Initing	= 1,	// 初始中
+		emThreadState_inited	= 2,	// 初始化完成
+		emThreadState_Runing	= 3,	// 运行中
+		emThreadState_Suspend	= 4,	// 暂停中
+		emThreadState_Exiting	= 5,	// 退出中
+		emThreadState_Exited	= 6,	// 退出完成
+		emThreadStateMax
+	};
+	class CThreadPool;
 	class IThread
 	{
 	public:
@@ -43,6 +56,15 @@ namespace Myth
 		virtual void suspend() = 0;
 		/// resume thread
 		virtual void resume() = 0;
+
+		virtual TmThreadState getThreadState() = 0;
+		virtual void setThreadState(TmThreadState eThreadState) = 0;
+
+		virtual CThreadPool* getThreadPool() = 0;
+		virtual void setThreadPool(CThreadPool* pThreadPool) = 0;
+
+		virtual sint getSerialNum() = 0;
+		virtual void setSerialNum(sint nSerialNum) = 0;
 	};
 }
 #endif

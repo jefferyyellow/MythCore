@@ -1,8 +1,8 @@
 #include "winthread.h"
-#include <windows.h>
 #include "threadpool.h"
 #ifdef MYTH_OS_WINDOWS
 
+#include <windows.h>
 namespace Myth
 {
 	unsigned long __stdcall ThreadFunction(void* arg)
@@ -45,6 +45,7 @@ namespace Myth
 	CWinThread::CWinThread()
 	{
 		mpJob = NULL;
+		mpThreadPool = NULL;
 		mThreadID = 0;
 		mThreadHand = INVALID_HANDLE_VALUE;
 		mThreadState = emThreadState_None;

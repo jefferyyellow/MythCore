@@ -1,4 +1,5 @@
 #include "timemanager.h"
+#include <time.h>
 
 sint64 CClockTime::mDeviation = 0;
 void CClockTime::Start()

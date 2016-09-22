@@ -4,7 +4,7 @@
 #include "singleton.h"
 
 #include "hashmap.h"
-#include <string>
+//#include <string>
 #include <stdarg.h>
 
 #ifdef __DEBUG__

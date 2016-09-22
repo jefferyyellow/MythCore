@@ -1,6 +1,9 @@
 #include "logmanager.h"
 #include "log.h"
 #include <stdio.h>
+#ifdef MYTH_OS_UNIX
+#include <time.h>
+#endif
 int CLogManager::Init()
 {
 	mErrorLog = NULL;

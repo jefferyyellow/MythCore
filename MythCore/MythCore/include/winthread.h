@@ -8,18 +8,6 @@ namespace Myth
 {
 	unsigned long __stdcall ThreadFunction(void* arg);
 
-	enum TmThreadState
-	{
-		emThreadState_None			= 0,	// 无状态
-		emThreadState_Initing		= 1,	// 初始中
-		emThreadState_inited		= 2,	// 初始化完成
-		emThreadState_Runing		= 3,	// 运行中
-		emThreadState_Suspend		= 4,	// 暂停中
-		emThreadState_Exiting		= 5,	// 退出中
-		emThreadState_Exited		= 6,	// 退出完成
-		emThreadStateMax
-	};
-
 	class CThreadPool;
 	class CWinThread : public IThread
 	{
@@ -38,20 +26,15 @@ namespace Myth
 		virtual void suspend();
 		/// resume thread
 		virtual void resume();
+		
+		virtual TmThreadState getThreadState(){ return mThreadState; }
+		virtual void setThreadState(TmThreadState eThreadState){ mThreadState = eThreadState; }
 
-	public:
-		/// run thread
-		void run();
+		virtual CThreadPool* getThreadPool(){ return mpThreadPool; }
+		virtual void setThreadPool(CThreadPool* pThreadPool){ mpThreadPool = pThreadPool; }
 
-	public:
-		TmThreadState	getThreadState(){ return mThreadState; }
-		void			setThreadState(TmThreadState eThreadState){ mThreadState = eThreadState; }
-
-		CThreadPool*	getThreadPool(){ return mpThreadPool; }
-		void			setThreadPool(CThreadPool* pThreadPool){ mpThreadPool = pThreadPool; }
-
-		sint			getSerialNum(){ return mSerialNum; }
-		void			setSerialNum(sint nSerialNum){ mSerialNum = nSerialNum; }
+		virtual sint getSerialNum(){ return mSerialNum; }
+		virtual void setSerialNum(sint nSerialNum){ mSerialNum = nSerialNum; }
 
 	public:
 		IJob*			mpJob;			// 可执行对象

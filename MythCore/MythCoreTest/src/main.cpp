@@ -1023,7 +1023,7 @@ private:
 //}
 //#endif
 
-CSimpleLock cs;
+Myth::CSimpleLock cs;
 class CJob : public Myth::IJob
 {
 public:
@@ -1170,7 +1170,15 @@ int main(int argc, char** argv)
 		LOG_DEBUG("pro", "begin next\n");
 		cs.unlock();
 		threadpool.run();
+#ifdef MYTH_OS_WINDOWS
 		Sleep(100);
+#else
+		struct timespec tv;
+		tv.tv_sec = 5;
+		tv.tv_nsec = 0;
+
+		nanosleep(&tv, NULL);
+#endif
 		++i;
 		if (i > 50)
 		{

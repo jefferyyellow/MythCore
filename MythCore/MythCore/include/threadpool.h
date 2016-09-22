@@ -10,6 +10,7 @@
 #include "simplelock.h"
 #include "array.h"
 #include "winthread.h"
+#include "linuxthread.h"
 namespace Myth
 {
 	class CThreadPool
@@ -25,14 +26,21 @@ namespace Myth
 			mIdleListNum = nThreadSize;
 			for (int i = 0; i < nThreadSize; ++ i)
 			{
-				CWinThread* pThead = new CWinThread;
-				if (NULL != pThead)
+				IThread* pThread = NULL;
+
+#ifdef MYTH_OS_WINDOWS
+				pThread = new CWinThread;
+#else
+				pThread = new CPThread;
+#endif			
+
+				if (NULL != pThread)
 				{
-					pThead->setThreadPool(this);
-					pThead->setSerialNum(i);
-					pThead->start();
-					mIdleList.push_back(pThead);
-					printf("%x\n", pThead);
+					pThread->setThreadPool(this);
+					pThread->setSerialNum(i);
+					pThread->start();
+					mIdleList.push_back(pThread);
+					printf("%x\n", pThread);
 				}
 			}
 			printf("*************\n");

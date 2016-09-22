@@ -89,7 +89,7 @@
     <ClCompile Include="src\selectmodel.cpp" />
     <ClCompile Include="src\simplelock.cpp" />
     <ClCompile Include="src\tcpsocket.cpp" />
-    <ClCompile Include="src\pthread.cpp" />
+    <ClCompile Include="src\linuxthread.cpp" />
     <ClCompile Include="src\threadpool.cpp" />
     <ClCompile Include="src\timemanager.cpp" />
     <ClCompile Include="src\winthread.cpp" />
@@ -111,7 +111,7 @@
     <ClInclude Include="include\logmanager.h" />
     <ClInclude Include="include\memory.h" />
     <ClInclude Include="include\performance.h" />
-    <ClInclude Include="include\pthread.h" />
+    <ClInclude Include="include\linuxthread.h" />
     <ClInclude Include="include\selectmodel.h" />
     <ClInclude Include="include\simplelock.h" />
     <ClInclude Include="include\singleton.h" />
