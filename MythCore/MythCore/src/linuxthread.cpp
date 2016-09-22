@@ -37,7 +37,7 @@ namespace Myth
 				pThead->mpJob = pJob;
 				if (NULL != pJob)
 				{
-					printf("popJob %d", pThead->getSerialNum());
+					printf("popJob %d\n", pThead->getSerialNum());
 				}
 
 			}
