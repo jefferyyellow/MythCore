@@ -60,6 +60,9 @@
     <ClCompile Include="src\linuxthread.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\mysqlfield.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\log.h">
@@ -138,6 +141,18 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="include\linuxthread.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mysqlfield.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mysqlrow.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mysqlqueryresult.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mysqldatabase.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
