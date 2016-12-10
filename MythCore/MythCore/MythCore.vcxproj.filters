@@ -13,6 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="头文件\database">
+      <UniqueIdentifier>{98ad36c0-75ab-4b3c-ac35-3ace97cd210c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\network">
+      <UniqueIdentifier>{e433dfc1-843b-49d3-9ed9-bb7ba38b1558}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\basecontainer">
+      <UniqueIdentifier>{13d363aa-062e-4739-ac1e-430497c42d53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\thread">
+      <UniqueIdentifier>{05b20607-dac7-40f9-9d39-230cf30b5fe3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\log">
+      <UniqueIdentifier>{5a24c651-b6ee-4c30-9592-b5c4a234db08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\time">
+      <UniqueIdentifier>{57cfe1f6-47e3-4bea-8d89-d02ef34d4da3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\log.cpp">
@@ -45,9 +63,6 @@
     <ClCompile Include="src\epollmodel.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="include\thread.h">
-      <Filter>头文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\winthread.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -60,33 +75,24 @@
     <ClCompile Include="src\linuxthread.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\mysqlfield.cpp">
+    <ClCompile Include="include\thread.h">
+      <Filter>头文件\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mysqlqueryresult.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mysqldatabase.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\log.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\logdisplayer.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="include\commontype.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\logmanager.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="include\fileutility.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="include\timemanager.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="include\singleton.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\performance.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="include\i18n.h">
@@ -98,67 +104,79 @@
     <ClInclude Include="include\memory.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="include\bit_set.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\array.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\iterator.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\list.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\slist.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\deque.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\hashmap.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\vector.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\tcpsocket.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\selectmodel.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\epollmodel.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\winthread.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\threadpool.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\simplelock.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\linuxthread.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="include\mysqldatabase.h">
+      <Filter>头文件\database</Filter>
     </ClInclude>
     <ClInclude Include="include\mysqlfield.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\mysqlrow.h">
-      <Filter>头文件</Filter>
+      <Filter>头文件\database</Filter>
     </ClInclude>
     <ClInclude Include="include\mysqlqueryresult.h">
-      <Filter>头文件</Filter>
+      <Filter>头文件\database</Filter>
     </ClInclude>
-    <ClInclude Include="include\mysqldatabase.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="include\selectmodel.h">
+      <Filter>头文件\network</Filter>
+    </ClInclude>
+    <ClInclude Include="include\epollmodel.h">
+      <Filter>头文件\network</Filter>
+    </ClInclude>
+    <ClInclude Include="include\bit_set.h">
+      <Filter>头文件\basecontainer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\array.h">
+      <Filter>头文件\basecontainer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\deque.h">
+      <Filter>头文件\basecontainer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\hashmap.h">
+      <Filter>头文件\basecontainer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\iterator.h">
+      <Filter>头文件\basecontainer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\slist.h">
+      <Filter>头文件\basecontainer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\list.h">
+      <Filter>头文件\basecontainer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vector.h">
+      <Filter>头文件\basecontainer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\linuxthread.h">
+      <Filter>头文件\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tcpsocket.h">
+      <Filter>头文件\network</Filter>
+    </ClInclude>
+    <ClInclude Include="include\threadpool.h">
+      <Filter>头文件\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="include\winthread.h">
+      <Filter>头文件\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="include\logdisplayer.h">
+      <Filter>头文件\log</Filter>
+    </ClInclude>
+    <ClInclude Include="include\logmanager.h">
+      <Filter>头文件\log</Filter>
+    </ClInclude>
+    <ClInclude Include="include\log.h">
+      <Filter>头文件\log</Filter>
+    </ClInclude>
+    <ClInclude Include="include\timemanager.h">
+      <Filter>头文件\time</Filter>
+    </ClInclude>
+    <ClInclude Include="include\performance.h">
+      <Filter>头文件\time</Filter>
+    </ClInclude>
+    <ClInclude Include="include\simplelock.h">
+      <Filter>头文件\thread</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="include\bit_set.inl">
-      <Filter>头文件</Filter>
+      <Filter>头文件\basecontainer</Filter>
     </None>
   </ItemGroup>
 </Project>

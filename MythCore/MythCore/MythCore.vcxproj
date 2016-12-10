@@ -51,7 +51,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;MYTH_OS_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include;C:\Program Files\MySQL\MySQL Server 5.6\include</AdditionalIncludeDirectories>
       <AdditionalOptions>/D"_SCL_SECURE_NO_WARNINGS" %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -85,7 +85,8 @@
     <ClCompile Include="src\log.cpp" />
     <ClCompile Include="src\logdisplayer.cpp" />
     <ClCompile Include="src\logmanager.cpp" />
-    <ClCompile Include="src\mysqlfield.cpp" />
+    <ClCompile Include="src\mysqldatabase.cpp" />
+    <ClCompile Include="src\mysqlqueryresult.cpp" />
     <ClCompile Include="src\performance.cpp" />
     <ClCompile Include="src\selectmodel.cpp" />
     <ClCompile Include="src\simplelock.cpp" />
@@ -114,7 +115,6 @@
     <ClInclude Include="include\mysqldatabase.h" />
     <ClInclude Include="include\mysqlfield.h" />
     <ClInclude Include="include\mysqlqueryresult.h" />
-    <ClInclude Include="include\mysqlrow.h" />
     <ClInclude Include="include\performance.h" />
     <ClInclude Include="include\linuxthread.h" />
     <ClInclude Include="include\selectmodel.h" />
