@@ -12,34 +12,40 @@ namespace Myth
 		CMysqlDataBase();
 		~CMysqlDataBase();
 
+		/// 连接mysql
 		int		connectMysqlServer(char* pHost, char* pUserName, char* pPasswd, char* pDataBase, int nPort, char* pUnixSocket);
-		int		query(const char *sql, CMysqlQueryResult& rQueryResult);
-		int		query(const char *sql);
+		/// 查询，返回结果
+		int		query(const char *pSql, CMysqlQueryResult& rQueryResult);
+		/// 查询，不在乎结果
+		int		query(const char *pSql);
+		/// 影响行数
 		int		getAffectRows()
 		{
-			if (NULL == mMysql)
-			{
-				return 0;
-			}
 			return mysql_affected_rows(mMysql);
 		}
 
+		/// 字段数目
 		int		getFieldCount()
 		{
-			if (NULL == mMysql)
-			{
-				return 0;
-			}
 			return mysql_field_count(mMysql);
 		}
 
+		/// 做后插入ID，用于自增长列
 		int		getLastInsertID()
 		{
-			if (NULL == mMysql)
-			{
-				return 0;
-			}
-			return mysql_insert_id( mMysql );
+			return mysql_insert_id(mMysql);
+		}
+
+		/// 最近的错误码
+		int getLastErrorno()
+		{
+			return mysql_errno(mMysql);
+		}
+
+		/// 最近错误描述
+		const char* getLastError()
+		{
+			return mysql_error(mMysql);
 		}
 
 	private:

@@ -51,12 +51,13 @@ namespace Myth
 #endif
 		}
 
-
+		// 连接mysql
 		mMysql = mysql_real_connect(pMysqlInit, pHost, pUserName,
 			pPasswd, pDataBase, nPort, pUnixSocket, CLIENT_MULTI_RESULTS);
 
 		if (NULL != mMysql)
 		{
+			// 保存mysql的连接信息以便重连
 			strncpy(mHost, pHost, sizeof(mHost) - 1);
 			strncpy(mUserName, pUserName, sizeof(mUserName) - 1);
 			strncpy(mPasswd, pPasswd, sizeof(mPasswd) - 1);
@@ -87,12 +88,13 @@ namespace Myth
 		{
 			return -1;
 		}
+		// 初始化查询结果
 		rQueryResult.init(pResult, nRowCount, nFieldCount);
 		rQueryResult.nextRow();
 		return 0;
 	}
 
-	int		query(const char *sql)
+	int CMysqlDataBase::query(const char *pSql)
 	{
 		if (NULL == mMysql || NULL == pSql)
 		{

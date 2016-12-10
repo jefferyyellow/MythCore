@@ -38,6 +38,27 @@ namespace Myth
 			return &mField[nIndex];
 		}
 
+		uint32			getFileValueLen(unsigned int nIndex)
+		{
+			if (nIndex >= MAX_ROW_FIELD_NUM)
+			{
+				return 0;
+			}
+
+			return mField[nIndex].getValueLen();
+		}
+
+
+		char*			getFileValue(unsigned int nIndex)
+		{
+			if (nIndex >= MAX_ROW_FIELD_NUM)
+			{
+				return 0;
+			}
+
+			return mField[nIndex].getValue();
+		}
+
 		void			setField(unsigned int nIndex, char* pValue, uint32 nValueLen)
 		{
 			if (nIndex >= MAX_ROW_FIELD_NUM)
