@@ -28,6 +28,7 @@
 #include "log.h"
 #include "logdisplayer.h"
 #include "simplelock.h"
+using namespace Myth;
 //#include <stdio.h>
 //using namespace std;
 //
@@ -1027,12 +1028,11 @@ Myth::CSimpleLock cs;
 class CJob : public Myth::IJob
 {
 public:
-	int mNum;
 	virtual void doing(uint32 uParam)
 	{
 		cs.lock();
 		//printf("Thread Serial Num :%d, %d\n", uParam, mNum);
-		LOG_DEBUG("pro", "Thread Serial Num :%d, %d\n", uParam, mNum);
+		LOG_DEBUG("pro", "Thread Serial Num :%d, %d\n", uParam, getJobID());
 		cs.unlock();
 	}
 };
@@ -1139,27 +1139,27 @@ int main(int argc, char** argv)
 
 	Myth::CThreadPool threadpool(4);
 	CJob tJob1;
-	tJob1.mNum = 1;
+	tJob1.setJobID(1);
 	threadpool.pushBackJob(&tJob1);
 
 	CJob tJob2;
-	tJob2.mNum = 2;
+	tJob2.setJobID(2);
 	threadpool.pushBackJob(&tJob2);
 
 	CJob tJob3;
-	tJob3.mNum = 3;
+	tJob3.setJobID(3);
 	threadpool.pushBackJob(&tJob3);
 
 	CJob tJob4;
-	tJob4.mNum = 4;
+	tJob4.setJobID(4);
 	threadpool.pushBackJob(&tJob4);
 
 	CJob tJob5;
-	tJob5.mNum = 5;
+	tJob5.setJobID(5);
 	threadpool.pushBackJob(&tJob5);
 
 	CJob tJob6;
-	tJob6.mNum = 6;
+	tJob6.setJobID(6);
 	threadpool.pushBackJob(&tJob6);
 
 	int i = 0;

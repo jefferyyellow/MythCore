@@ -358,13 +358,6 @@ namespace Myth
 		{
 			CSlistNode<T>* pCurrNode = (CSlistNode<T>*)(pPreNode->mpNext);
 			pPreNode->mpNext = pCurrNode->mpNext;
-#ifdef MYTH_OS_WINDOWS
-			// vs2010 or above
-			comdeconstruct<T, std::has_trivial_destructor<T>::value>::deconstruct(&(((CSlistNode<T>*)pCurrNode)->mData));
-#else
-			// gcc has no std::has_trivial_destructor<T>::value
-			comdeconstruct<T, false>::deconstruct(&(((CSlistNode<T>*)pCurrNode)->mData));
-#endif
 			mAlloc.free(pCurrNode);
 			return pPreNode->mpNext;
 		}

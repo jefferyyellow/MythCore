@@ -18,6 +18,11 @@ namespace Myth
 
 	public:
 		virtual void doing(uint32 uParam) = 0;
+
+		uint8	getJobID(){return mJobID;}
+		void	setJobID(uint8 mJobID){mJobID = mJobID;}
+	private:
+		uint8 mJobID;
 	};
 
 

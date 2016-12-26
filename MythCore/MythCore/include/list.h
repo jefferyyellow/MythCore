@@ -549,13 +549,6 @@ namespace Myth
 		void eraseNode(CListNode<T>* pCurrNode)
 		{
 			linkNode(pCurrNode->mpPrev, pCurrNode->mpNext);
-#ifdef MYTH_OS_WINDOWS
-			// vs2010 or above
-			comdeconstruct<T, std::has_trivial_destructor<T>::value>::deconstruct(&(((CListNode<T>*)pCurrNode)->mData));
-#else
-			// gcc has no std::has_trivial_destructor<T>::value
-			comdeconstruct<T, false>::deconstruct(&(((CListNode<T>*)pCurrNode)->mData));
-#endif
 			mAlloc.free(pCurrNode);
 		}
 

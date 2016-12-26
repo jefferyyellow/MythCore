@@ -31,6 +31,9 @@
     <Filter Include="头文件\time">
       <UniqueIdentifier>{57cfe1f6-47e3-4bea-8d89-d02ef34d4da3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\memory">
+      <UniqueIdentifier>{bc87aea6-0d91-4c49-918c-446f6d4ea0e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\log.cpp">
@@ -84,6 +87,12 @@
     <ClCompile Include="src\mysqldatabase.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\sharememory.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\socketstream.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\commontype.h">
@@ -96,9 +105,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="include\i18n.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="include\blockmemory.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="include\memory.h">
@@ -172,6 +178,18 @@
     </ClInclude>
     <ClInclude Include="include\simplelock.h">
       <Filter>头文件\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="include\macrodefine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\blockmemory.h">
+      <Filter>头文件\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sharememory.h">
+      <Filter>头文件\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="include\socketstream.h">
+      <Filter>头文件\memory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

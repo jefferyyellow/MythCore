@@ -424,20 +424,23 @@ namespace Myth
 			{
 				return false;
 			}
-			pNode->~KeyValuePairNode();
 			mAlloc.free(pNode);
 			return true;
 		}
 
-		Value& operator[](const Key& k)
-		{
-			PairNode* pNode = Find(k);
-			if (NULL == pNode)
-			{
-				pNode = Insert(k);
-			}
-			return pNode->mData;
-		}
+		//Value& operator[](const Key& k)
+		//{
+		//	PairNode* pNode = Find(k);
+		//	if (NULL == pNode)
+		//	{
+		//		pNode = Insert(k);
+		//	}
+		//	if (NULL == pNode)
+		//	{
+		//		return mFailure;
+		//	}
+		//	return pNode->mData;
+		//}
 
 		void Clear()
 		{
@@ -448,8 +451,6 @@ namespace Myth
 			{
 				pOld = pNode;
 				pNode = pNode->mpNext;
-
-				((PairNode*)pOld)->~KeyValuePairNode();
 				mAlloc.free((PairNode*)pOld);
 			}
 

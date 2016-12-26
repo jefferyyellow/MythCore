@@ -12,7 +12,7 @@ namespace Myth
 			init();
 		}
 
-		CSelectModel(CBuffTcpSocket* pAllSocket, int nSocketCapacity)
+		CSelectModel(CTcpSocket* pAllSocket, int nSocketCapacity)
 		{
 			init();
 			mpAllSocket = pAllSocket;
@@ -43,36 +43,47 @@ namespace Myth
 		static			int initSocketSystem();
 
 	public:
-		CBuffTcpSocket*	createListenSocket(char* pIP, uint32 uPort, int nListNum);
+		CTcpSocket*		createListenSocket(char* pIP, uint32 uPort, int nListNum);
 		void			selectAllFd();
-		void			processRead();
-		void			processWrite(int nSocketIndex, char* pBuffer, int nBuffSize);
-		void			addNewSocket(CBuffTcpSocket* pNewSocket);
+		//void			processRead();
+		int				processWrite(int nSocketIndex, char* pBuffer, int nBuffSize);
+		void			addNewSocket(CTcpSocket* pNewSocket);
 		void			removeSocket(SOCKET nRemoveFd);
 		int				findFreeSocketIndex();
-		CBuffTcpSocket*	getFreeSocket(int &rSocketIndex);
+		CTcpSocket*		getFreeSocket(int &rSocketIndex);
+		CTcpSocket*		getSocket(int nIndex)
+		{
+			if (nIndex < 0 || nIndex >= mSocketCapacity)
+			{
+				return NULL;
+			}
+			return &(mpAllSocket[nIndex]);
+		}
 
 	public:
 		int				getMaxFd(){return mMaxFd;}
 		void			setMaxFd(int nMaxFd){mMaxFd = nMaxFd;}
 
-		fd_set			getReadSet(){return mReadSet;}
-		void			setReadSet(fd_set tReadSet){mReadSet = tReadSet;}
+		fd_set&			getReadSet(){return mReadSet;}
+		void			setReadSet(fd_set& tReadSet){mReadSet = tReadSet;}
 
-		fd_set			getReadBackSet(){return mReadBackSet;}
-		void			setReadBackSet(fd_set tReadBackSet){mReadBackSet = tReadBackSet;}
+		//fd_set&			getReadBackSet(){return mReadBackSet;}
+		//void			setReadBackSet(fd_set& tReadBackSet){mReadBackSet = tReadBackSet;}
 
-		CBuffTcpSocket*		GetAllSocket(){return mpAllSocket;}
-		void			SetAllSocket(CBuffTcpSocket* pAllSocket){mpAllSocket = pAllSocket;}
+		CTcpSocket*		getAllSocket(){return mpAllSocket;}
+		void			setAllSocket(CTcpSocket* pAllSocket){mpAllSocket = pAllSocket;}
 
-		uint16			GetSocketCapacity(){ return mSocketCapacity; }
-		void			SetSocketCapacity(uint16 nSocketNum){ mSocketCapacity = nSocketNum; }
+		uint16			getSocketCapacity(){ return mSocketCapacity; }
+		void			setSocketCapacity(uint16 nSocketNum){ mSocketCapacity = nSocketNum; }
+
+		uint16			getMaxSocketIndex(){return mMaxSocketIndex;}
+		void			setMaxSocketIndex(int nMaxSocketIndex){mMaxSocketIndex = nMaxSocketIndex;}
 	private:
 		SOCKET				mMaxFd;
 		fd_set				mReadSet;
 		fd_set				mReadBackSet;
 		timeval				mSelectTime;
-		CBuffTcpSocket*		mpAllSocket;
+		CTcpSocket*			mpAllSocket;
 		uint16				mSocketCapacity;
 		uint16				mMaxSocketIndex;
 	};

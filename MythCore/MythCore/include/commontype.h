@@ -5,6 +5,7 @@
 #ifdef MYTH_OS_WINDOWS
 #include <windows.h>
 #include <time.h>
+#include <tchar.h>
 #endif
 
 #ifdef MYTH_OS_WINDOWS

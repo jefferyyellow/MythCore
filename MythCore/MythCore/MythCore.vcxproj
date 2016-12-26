@@ -51,7 +51,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;MYTH_OS_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./include;C:\Program Files\MySQL\MySQL Server 5.6\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./include;../../mysql/include</AdditionalIncludeDirectories>
       <AdditionalOptions>/D"_SCL_SECURE_NO_WARNINGS" %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -59,6 +59,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>../../mysql/lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>mysqlclient.lib;ws2_32.lib</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -89,7 +93,9 @@
     <ClCompile Include="src\mysqlqueryresult.cpp" />
     <ClCompile Include="src\performance.cpp" />
     <ClCompile Include="src\selectmodel.cpp" />
+    <ClCompile Include="src\sharememory.cpp" />
     <ClCompile Include="src\simplelock.cpp" />
+    <ClCompile Include="src\socketstream.cpp" />
     <ClCompile Include="src\tcpsocket.cpp" />
     <ClCompile Include="src\linuxthread.cpp" />
     <ClCompile Include="src\threadpool.cpp" />
@@ -111,6 +117,7 @@
     <ClInclude Include="include\log.h" />
     <ClInclude Include="include\logdisplayer.h" />
     <ClInclude Include="include\logmanager.h" />
+    <ClInclude Include="include\macrodefine.h" />
     <ClInclude Include="include\memory.h" />
     <ClInclude Include="include\mysqldatabase.h" />
     <ClInclude Include="include\mysqlfield.h" />
@@ -118,9 +125,11 @@
     <ClInclude Include="include\performance.h" />
     <ClInclude Include="include\linuxthread.h" />
     <ClInclude Include="include\selectmodel.h" />
+    <ClInclude Include="include\sharememory.h" />
     <ClInclude Include="include\simplelock.h" />
     <ClInclude Include="include\singleton.h" />
     <ClInclude Include="include\slist.h" />
+    <ClInclude Include="include\socketstream.h" />
     <ClInclude Include="include\tcpsocket.h" />
     <ClInclude Include="include\threadpool.h" />
     <ClInclude Include="include\timemanager.h" />

@@ -64,6 +64,10 @@ namespace Myth
 			mPort = 0;
 			mSocketStatus = emSocketStatusClose;
 			mbListen = 0;
+
+			mpRecvBuff = NULL;
+			mRecvBuffSize = 0;
+			mMaxRecvBuffSize = 0;
 		}
 		CTcpSocket(char* pIP, uint32 uPort)
 		{
@@ -133,94 +137,17 @@ namespace Myth
 		uint8	GetListen(){return mbListen;}
 		void	SetListen(uint8 bListen){mbListen = bListen;}
 
-	private:
-		/// socket file des
-		SOCKET	mSocketFd;
-		/// IP adress
-		char	mIP[IP_SIZE];
-		/// IP port
-		uint16	mPort;
-		/// socket status
-		uint8	mSocketStatus;
-		/// listen socket
-		uint8	mbListen;
-	};
 
-	class CBuffTcpSocket : public CTcpSocket
-	{
-	public:
-		CBuffTcpSocket()
-		{
-			mpSendBuff = NULL;
-			mSendBuffSize = 0;
-			mMaxSendBuffSize = 0;
-			mpRecvBuff = NULL;
-			mRecvBuffSize = 0;
-			mMaxRecvBuffSize = 0;
-		}
-		~CBuffTcpSocket()
-		{
-			clear();
-		}
+		char*		getRecvBuffPoint(){ return mpRecvBuff + mRecvBuffSize; }
+		sint16		getRecvBuffCapacity(){ return mMaxRecvBuffSize - mRecvBuffSize; }
 
-	public:
-		int			createBuffer(int nRecvBuffSize, int nSendBuffSize)
-		{
-			if (nRecvBuffSize > 0)
-			{
-				mpRecvBuff = new char[nRecvBuffSize];
-				if (NULL == mpRecvBuff)
-				{
-					clear();
-					return -1;
-				}
-				mRecvBuffSize = 0;
-				mMaxRecvBuffSize = nRecvBuffSize;
-			}
-			
-			if (nSendBuffSize > 0)
-			{
-				mpSendBuff = new char[nSendBuffSize];
-				if (NULL == mpSendBuff)
-				{
-					clear();
-					return -1;
-				}
-				mSendBuffSize = 0;
-				mMaxSendBuffSize = nSendBuffSize;
-			}
+		char*		getRecvBuff(){return mpRecvBuff;}
+		void		setRecvBuff(char* pRecvBuff){mpRecvBuff = pRecvBuff;}
 
-			return 0;
-		}
+		sint16		getRecvBuffSize(){return mRecvBuffSize;}
+		void		setRecvBuffSize(sint16 nRecvBuffSize){mRecvBuffSize = nRecvBuffSize;}
 
-		void		clear()
-		{
-			if (NULL != mpRecvBuff)
-			{
-				delete[]mpRecvBuff;
-				mpRecvBuff = NULL;
-			}
-
-			if (NULL != mpSendBuff)
-			{
-				delete[]mpSendBuff;
-				mpSendBuff = NULL;
-			}
-
-			mSendBuffSize = 0;
-			mMaxSendBuffSize = 0;
-			mRecvBuffSize = 0;
-			mMaxRecvBuffSize = 0;
-		}
-
-		void		resetSendBuffPoint(int nSize)
-		{
-			if (mSendBuffSize <= 0 || nSize <= 0)
-			{
-				return;
-			}
-			memmove(mpSendBuff, mpSendBuff + nSize, mSendBuffSize);
-		}
+		void		setMaxRecvBuffSize(sint16 nMaxRecvBuffSize){mMaxRecvBuffSize = nMaxRecvBuffSize;}
 
 		void		resetRecvBuffPoint(int nSize)
 		{
@@ -232,24 +159,129 @@ namespace Myth
 			memmove(mpRecvBuff, mpRecvBuff + nSize, mRecvBuffSize);
 		}
 
-		char*		getRecvBuffPoint(){return mpRecvBuff + mRecvBuffSize;}
-		int			getRecvBuffCapacity(){return mMaxRecvBuffSize - mRecvBuffSize;}
-
-		char*		getSendBuff(){return mpSendBuff;}
-		int			getSendBuffSize(){return mSendBuffSize;}
-		void		setSendBuffSize(int nSendBuffSize){mSendBuffSize = nSendBuffSize;}
-
-		char*		getRecvBuff(){return mpRecvBuff;}
-		int			getRecvBuffSize(){return mRecvBuffSize;}
-		void		setRecvBuffSize(int nRecvBuffSize){mRecvBuffSize = nRecvBuffSize;}
-
 	private:
-		char*		mpSendBuff;
-		int			mSendBuffSize;
-		int			mMaxSendBuffSize;
-		char*		mpRecvBuff;
-		int			mRecvBuffSize;
-		int			mMaxRecvBuffSize;
+		/// socket file des
+		SOCKET	mSocketFd;
+		/// IP adress
+		char	mIP[IP_SIZE];
+		/// IP port
+		uint16	mPort;
+		/// socket status
+		uint8	mSocketStatus;
+		/// listen socket
+		uint8	mbListen;
+		/// 接收缓存
+		char*	mpRecvBuff;
+		/// 接受缓存已经接受的数据长度
+		sint16		mRecvBuffSize;
+		/// 接受缓存最大的数据长度
+		sint16		mMaxRecvBuffSize;
 	};
+
+	//class CBuffTcpSocket : public CTcpSocket
+	//{
+	//public:
+	//	CBuffTcpSocket()
+	//	{
+	//		mpSendBuff = NULL;
+	//		mSendBuffSize = 0;
+	//		mMaxSendBuffSize = 0;
+	//		mpRecvBuff = NULL;
+	//		mRecvBuffSize = 0;
+	//		mMaxRecvBuffSize = 0;
+	//	}
+	//	~CBuffTcpSocket()
+	//	{
+	//		clear();
+	//	}
+
+	//public:
+	//	int			createBuffer(int nRecvBuffSize, int nSendBuffSize)
+	//	{
+	//		if (nRecvBuffSize > 0)
+	//		{
+	//			mpRecvBuff = new char[nRecvBuffSize];
+	//			if (NULL == mpRecvBuff)
+	//			{
+	//				clear();
+	//				return -1;
+	//			}
+	//			mRecvBuffSize = 0;
+	//			mMaxRecvBuffSize = nRecvBuffSize;
+	//		}
+	//		
+	//		if (nSendBuffSize > 0)
+	//		{
+	//			mpSendBuff = new char[nSendBuffSize];
+	//			if (NULL == mpSendBuff)
+	//			{
+	//				clear();
+	//				return -1;
+	//			}
+	//			mSendBuffSize = 0;
+	//			mMaxSendBuffSize = nSendBuffSize;
+	//		}
+
+	//		return 0;
+	//	}
+
+	//	void		clear()
+	//	{
+	//		if (NULL != mpRecvBuff)
+	//		{
+	//			delete[]mpRecvBuff;
+	//			mpRecvBuff = NULL;
+	//		}
+
+	//		if (NULL != mpSendBuff)
+	//		{
+	//			delete[]mpSendBuff;
+	//			mpSendBuff = NULL;
+	//		}
+
+	//		mSendBuffSize = 0;
+	//		mMaxSendBuffSize = 0;
+	//		mRecvBuffSize = 0;
+	//		mMaxRecvBuffSize = 0;
+	//	}
+
+	//	void		resetSendBuffPoint(int nSize)
+	//	{
+	//		if (mSendBuffSize <= 0 || nSize <= 0)
+	//		{
+	//			return;
+	//		}
+	//		memmove(mpSendBuff, mpSendBuff + nSize, mSendBuffSize);
+	//	}
+
+	//	void		resetRecvBuffPoint(int nSize)
+	//	{
+	//		if (mRecvBuffSize <= 0 || nSize <= 0)
+	//		{
+	//			return;
+	//		}
+
+	//		memmove(mpRecvBuff, mpRecvBuff + nSize, mRecvBuffSize);
+	//	}
+
+	//	char*		getRecvBuffPoint(){return mpRecvBuff + mRecvBuffSize;}
+	//	int			getRecvBuffCapacity(){return mMaxRecvBuffSize - mRecvBuffSize;}
+
+	//	char*		getSendBuff(){return mpSendBuff;}
+	//	int			getSendBuffSize(){return mSendBuffSize;}
+	//	void		setSendBuffSize(int nSendBuffSize){mSendBuffSize = nSendBuffSize;}
+
+	//	char*		getRecvBuff(){return mpRecvBuff;}
+	//	int			getRecvBuffSize(){return mRecvBuffSize;}
+	//	void		setRecvBuffSize(int nRecvBuffSize){mRecvBuffSize = nRecvBuffSize;}
+
+	//private:
+	//	char*		mpSendBuff;
+	//	int			mSendBuffSize;
+	//	int			mMaxSendBuffSize;
+	//	char*		mpRecvBuff;
+	//	int			mRecvBuffSize;
+	//	int			mMaxRecvBuffSize;
+	//};
 }
 #endif
