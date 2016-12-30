@@ -5,6 +5,8 @@
 #include "log.h"
 #include "sharememory.h"
 #include "socketstream.h"
+#include "messagefactory.h"
+#include "dbjob.h"
 #define PIPE_SIZE					((int)0x1000000)	/*内存管道的大小*/
 #define MAX_SOCKET_BUFF_SIZE		4096				// Socket缓冲区大小
 
@@ -27,15 +29,19 @@ public:
 	bool		init();
 	/// 初始日志
 	bool		initLog();
-	/// 初始线程
-	bool		initThread();
 	/// 初始化共享内存
 	bool		initShareMemory();
+	/// 初始逻辑模块
+	bool		initLogicModule();
+	/// 初始线程
+	bool		initThread();
 
 	/// 运行
 	void		run();
 	/// 处理前端消息
 	void		processClientMessage();
+	/// 分发前端消息
+	void		dispatchClientMessage(unsigned short nMessageID, Message* pMessage);
 
 	/// 开始为退出做准备
 	void		clear();
@@ -52,6 +58,8 @@ private:
 	CSocketStream*			mTcp2ServerMemory;
 	CSocketStream*			mServer2TcpMemory;
 	char					mBuffer[MAX_SOCKET_BUFF_SIZE + sizeof(CExchangeHead)];
+
+	CDBJob					mDBJob;
 
 };
 #endif

@@ -9,7 +9,8 @@ class CInternalMsg;
 /// 数据库管理程序,管理各个数据库Job
 class CDBManager : public CSingleton<CDBManager>
 {
-public:
+	friend class CSingleton < CDBManager > ;
+private:
 	CDBManager();
 	~CDBManager();
 

@@ -46,6 +46,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\MythCore\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>MYTH_OS_WINDOWS;_CRT_SECURE_NO_WARNINGS;__DEBUG__;MEDIUM_SIZE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

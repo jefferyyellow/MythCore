@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="message">
+      <UniqueIdentifier>{e9c422e7-a598-46d0-8b52-43b17489ad9a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -33,22 +36,46 @@
     <ClCompile Include="internalmsgpool.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="messagefactory.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\loginmessage.pb.cc">
+      <Filter>message</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\message.pb.cc">
+      <Filter>message</Filter>
+    </ClCompile>
+    <ClCompile Include="loginmodule.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="gameserver.h">
-      <Filter>源文件</Filter>
+    <ClInclude Include="dbjob.h">
+      <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="dbmanager.h">
-      <Filter>源文件</Filter>
+      <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="dbjob.h">
-      <Filter>源文件</Filter>
+    <ClInclude Include="gameserver.h">
+      <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="internalmsg.h">
-      <Filter>源文件</Filter>
+      <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="internalmsgpool.h">
-      <Filter>源文件</Filter>
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="messagefactory.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\loginmessage.pb.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\message.pb.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="loginmodule.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

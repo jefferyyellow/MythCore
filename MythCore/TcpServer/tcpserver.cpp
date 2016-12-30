@@ -54,13 +54,13 @@ bool CTcpServer::initLog()
 #endif
 
 	// 默认的debug日志
-	CRollFileDisplayer* pDefaultFileDisplayer = new CRollFileDisplayer(const_cast<char*>("default.log"), 1024000, 10);
+	CRollFileDisplayer* pDefaultFileDisplayer = new CRollFileDisplayer(const_cast<char*>("../log/tcpdefault.log"), 1024000, 10);
 	// 为默认的debug日志加文件displayer
 	mDefaultLog->AddDisplayer(pDefaultFileDisplayer);
 	CLogManager::Inst()->AddDebugLog(mDefaultLog, "default");
 
 	// 错误日志加文件displayer
-	CRollFileDisplayer* pErrorFileDisplayer = new CRollFileDisplayer(const_cast<char*>("error.log"), 1024000, 10);
+	CRollFileDisplayer* pErrorFileDisplayer = new CRollFileDisplayer(const_cast<char*>("../log/tcperror.log"), 1024000, 10);
 	CLogManager::Inst()->GetErrorLog().AddDisplayer(pErrorFileDisplayer);
 
 	// 错误日志加std displayer
@@ -68,11 +68,11 @@ bool CTcpServer::initLog()
 	CLogManager::Inst()->GetErrorLog().AddDisplayer(pDisplayer);
 
 	// 给信息日志加文件displayer
-	CRollFileDisplayer* pInfoFileDisplayer = new CRollFileDisplayer(const_cast<char*>("info.log"), 1024000, 10);
+	CRollFileDisplayer* pInfoFileDisplayer = new CRollFileDisplayer(const_cast<char*>("../log/tcpinfo.log"), 1024000, 10);
 	CLogManager::Inst()->GetInfoLog().AddDisplayer(pInfoFileDisplayer);
 
 	// 给警告日志加文件displayer
-	CRollFileDisplayer* pWarnFileDisplayer = new CRollFileDisplayer(const_cast<char*>("warn.log"), 1024000, 10);
+	CRollFileDisplayer* pWarnFileDisplayer = new CRollFileDisplayer(const_cast<char*>("../log/tcpwarn.log"), 1024000, 10);
 	CLogManager::Inst()->GetInfoLog().AddDisplayer(pWarnFileDisplayer);
 	return true;
 }
@@ -179,7 +179,6 @@ void CTcpServer::receiveMessage()
 		{
 			if (pAllSocket[i].GetListen())
 			{
-				printf("新连接成功来到\n");
 				int nSocketIndex = -1;
 				CTcpSocket* pNewSocket = mSelectModel->getFreeSocket(nSocketIndex);
 				pAllSocket[i].acceptConnection(pNewSocket);
@@ -200,7 +199,9 @@ void CTcpServer::receiveMessage()
 				pNewSocket->setMaxRecvBuffSize(MAX_SOCKET_BUFF_SIZE);
 				pNewSocket->setRecvBuffSize(0);
 				mSelectModel->addNewSocket(pNewSocket);
-				printf("连接成功！\n");
+
+				LOG_DEBUG("default", "IP: %s connect success", pNewSocket->getIP());
+				printf("IP: %s connect success", pNewSocket->getIP());
 			}
 			else
 			{
@@ -217,6 +218,8 @@ void CTcpServer::receiveMessage()
 				{
 					pAllSocket[i].setRecvBuffSize(pAllSocket[i].getRecvBuffSize() + nResult);
 					onReceiveMessage(&(pAllSocket[i]), i);
+					LOG_DEBUG("default", "receive message");
+					printf("receive message");
 				}
 			}
 		}
@@ -237,13 +240,13 @@ void CTcpServer::onReceiveMessage(CTcpSocket* pSocket, int nIndex)
 	int nTotalSize = 0;
 	while (true)
 	{
-		if (nBuffSize < 6)
+		if (nBuffSize < 4)
 		{
 			return;
 		}
 
 		short nMessageLen = *(short*)pBuffer;
-		if (nMessageLen < 6 || nMessageLen > MAX_TCPBUFF_LEN)
+		if (nMessageLen < 4 || nMessageLen > MAX_TCPBUFF_LEN)
 		{
 			// 出错
 			return;
@@ -261,7 +264,6 @@ void CTcpServer::onReceiveMessage(CTcpSocket* pSocket, int nIndex)
 
 		memcpy(mBuffer, &mExchangeHead, sizeof(mExchangeHead));
 		memcpy(mBuffer + sizeof(mExchangeHead), pBuffer, nMessageLen);
-		printf("%s\n", pBuffer + 6);
 		mTcp2ServerMemory->PushPacket((uint8*)mBuffer, nMessageLen + sizeof(mExchangeHead));
 
 		pBuffer += nMessageLen;

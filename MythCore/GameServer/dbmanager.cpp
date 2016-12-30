@@ -20,6 +20,10 @@ void CDBManager::pushTask(CInternalMsg* pMsg)
 CInternalMsg* CDBManager::popTask()
 {
 	mLock.lock();
+	if (mTaskList.empty())
+	{
+		return NULL;
+	}
 	CInternalMsg* pMsg = mTaskList.front();
 	mTaskList.pop_front();
 	mLock.unlock();

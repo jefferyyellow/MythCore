@@ -8,16 +8,17 @@
 using namespace Myth;
 class CInternalMsgPool : public CSingleton<CInternalMsgPool>
 {
-public:
-	CInternalMsgPool();
-	~CInternalMsgPool();
+	friend class CSingleton < CInternalMsgPool > ;
+private:
+	CInternalMsgPool(){}
+	~CInternalMsgPool(){}
 
 public:
 	CInternalMsg*	allocMsg(int nMessageID);
 	void			freeMsg(CInternalMsg* pMsg);
 
 private:
-	CBlockMemory<CPlayerLoginRequest, 20, 5>	mPlayerLoginRequest;
+	CBlockMemory<CIMPlayerLoginRequest, 20, 5>	mPlayerLoginRequest;
 	Myth::CSimpleLock							mLock;
 };
 #endif

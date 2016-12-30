@@ -45,12 +45,15 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>MYTH_OS_WINDOWS;_CRT_SECURE_NO_WARNINGS;__DEBUG__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\MythCore\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../MythCore/include;../dep/protobuffer;../message;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>MythCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\Debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>MythCore.lib;libprotobufd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../Debug;../dep/protobuffer/lib</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -68,19 +71,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\message\loginmessage.pb.cc" />
+    <ClCompile Include="..\message\message.pb.cc" />
     <ClCompile Include="dbjob.cpp" />
     <ClCompile Include="dbmanager.cpp" />
     <ClCompile Include="gameserver.cpp" />
     <ClCompile Include="internalmsg.cpp" />
     <ClCompile Include="internalmsgpool.cpp" />
+    <ClCompile Include="loginmodule.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="messagefactory.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\message\loginmessage.pb.h" />
+    <ClInclude Include="..\message\message.pb.h" />
     <ClInclude Include="dbjob.h" />
     <ClInclude Include="dbmanager.h" />
     <ClInclude Include="gameserver.h" />
     <ClInclude Include="internalmsg.h" />
     <ClInclude Include="internalmsgpool.h" />
+    <ClInclude Include="loginmodule.h" />
+    <ClInclude Include="messagefactory.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

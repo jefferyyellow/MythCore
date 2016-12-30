@@ -7,9 +7,9 @@ CInternalMsg* CInternalMsgPool::allocMsg(int nMessageID)
 	CInternalMsg* pMsg = NULL;
 	switch (nMessageID)
 	{
-		case ID_REQUEST_PLAYER_LOGIN_MSG:
+		case IM_REQUEST_PLAYER_LOGIN:
 		{
-			pMsg = (CInternalMsg*)mPlayerLoginRequest.allocate();
+			pMsg = reinterpret_cast<CInternalMsg*>(mPlayerLoginRequest.allocate());
 			break;
 		}
 		default:
@@ -17,6 +17,7 @@ CInternalMsg* CInternalMsgPool::allocMsg(int nMessageID)
 			break;
 		}
 	}
+	pMsg->setMsgID(nMessageID);
 	mLock.unlock();
 	return pMsg;
 }
@@ -30,9 +31,9 @@ void CInternalMsgPool::freeMsg(CInternalMsg* pMsg)
 	mLock.lock();
 	switch (pMsg->getMsgID())
 	{
-		case ID_REQUEST_PLAYER_LOGIN_MSG:
+		case IM_REQUEST_PLAYER_LOGIN:
 		{
-			mPlayerLoginRequest.free((CPlayerLoginRequest*)pMsg);
+			mPlayerLoginRequest.free((CIMPlayerLoginRequest*)pMsg);
 			break;
 		}
 		default:

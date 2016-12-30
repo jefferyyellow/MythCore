@@ -2,6 +2,11 @@
 #include "logmanager.h"
 #include "log.h"
 #include "logdisplayer.h"
+#include "loginmessage.pb.h"
+#include "message.pb.h"
+#include "loginmodule.h"
+#include "dbmanager.h"
+#include "internalmsgpool.h"
 
 /// 初始化
 bool CGameServer::init()
@@ -18,6 +23,17 @@ bool CGameServer::init()
 		return false;
 	}
 
+	bResult = initLogicModule();
+	if (!bResult)
+	{
+		return false;
+	}
+
+	bResult = initThread();
+	if (!bResult)
+	{
+		return false;
+	}
 	return true;
 }
 
@@ -42,13 +58,13 @@ bool CGameServer::initLog()
 #endif
 
 	// 默认的debug日志
-	CRollFileDisplayer* pDefaultFileDisplayer = new CRollFileDisplayer(const_cast<char*>("default.log"), 1024000, 10);
+	CRollFileDisplayer* pDefaultFileDisplayer = new CRollFileDisplayer(const_cast<char*>("../log/gamedefault.log"), 1024000, 10);
 	// 为默认的debug日志加文件displayer
 	mDefaultLog->AddDisplayer(pDefaultFileDisplayer);
 	CLogManager::Inst()->AddDebugLog(mDefaultLog, "default");
 
 	// 错误日志加文件displayer
-	CRollFileDisplayer* pErrorFileDisplayer = new CRollFileDisplayer(const_cast<char*>("error.log"), 1024000, 10);
+	CRollFileDisplayer* pErrorFileDisplayer = new CRollFileDisplayer(const_cast<char*>("../log/gameerror.log"), 1024000, 10);
 	CLogManager::Inst()->GetErrorLog().AddDisplayer(pErrorFileDisplayer);
 
 	// 错误日志加std displayer
@@ -56,11 +72,11 @@ bool CGameServer::initLog()
 	CLogManager::Inst()->GetErrorLog().AddDisplayer(pDisplayer);
 	
 	// 给信息日志加文件displayer
-	CRollFileDisplayer* pInfoFileDisplayer = new CRollFileDisplayer(const_cast<char*>("info.log"), 1024000, 10);
+	CRollFileDisplayer* pInfoFileDisplayer = new CRollFileDisplayer(const_cast<char*>("../log/gameinfo.log"), 1024000, 10);
 	CLogManager::Inst()->GetInfoLog().AddDisplayer(pInfoFileDisplayer);
 
 	// 给警告日志加文件displayer
-	CRollFileDisplayer* pWarnFileDisplayer = new CRollFileDisplayer(const_cast<char*>("warn.log"), 1024000, 10);
+	CRollFileDisplayer* pWarnFileDisplayer = new CRollFileDisplayer(const_cast<char*>("../log/gamewarn.log"), 1024000, 10);
 	CLogManager::Inst()->GetInfoLog().AddDisplayer(pWarnFileDisplayer);
 	return true;
 }
@@ -110,16 +126,26 @@ bool CGameServer::initShareMemory()
 	return true;
 }
 
+/// 初始逻辑模块
+bool CGameServer::initLogicModule()
+{
+	CLoginModule::CreateInst();
+	CMessageFactory::CreateInst();
+	CInternalMsgPool::CreateInst();
+	CDBManager::CreateInst();
+	return true;
+}
+
 /// 初始线程
 bool CGameServer::initThread()
 {
-	mThreadPool = new Myth::CThreadPool(10);
+	mThreadPool = new Myth::CThreadPool(1);
 	if (NULL == mThreadPool)
 	{
 		return false;
 	}
-
-
+	
+	mThreadPool->pushBackJob(&mDBJob);
 
 	return true;
 }
@@ -130,6 +156,17 @@ void CGameServer::run()
 	while (true)
 	{
 		processClientMessage();
+
+		mThreadPool->run();
+#ifdef MYTH_OS_WINDOWS
+		Sleep(50);
+#else
+		struct timespec tv;
+		tv.tv_sec = 0;
+		tv.tv_nsec = 50000;
+
+		nanosleep(&tv, NULL);
+#endif
 	}
 }
 
@@ -170,11 +207,32 @@ void CGameServer::processClientMessage()
 		pTemp += sizeof(short);
 		nMessageLen -= sizeof(short);
 
-		char acBuffer[1024] = {0};
-		strncpy(acBuffer, pTemp + 2, nMessageLen - 2);
-		printf(acBuffer);
+		Message* pMessage = CMessageFactory::Inst()->createClientMessage(nMessageID);
+		if (NULL != pMessage)
+		{
+			pMessage->ParseFromArray(pTemp, nMessageLen);
+			dispatchClientMessage(nMessageID, pMessage);
+		}
 	}
 }
+
+
+/// 分发前端消息
+void CGameServer::dispatchClientMessage(unsigned short nMessageID, Message* pMessage)
+{
+	int nModule = nMessageID & MESSAGE_MODULE_MASK;
+	switch (nModule)
+	{
+		case MESSAGE_MODULE_LOGIN:
+		{
+			CLoginModule::Inst()->onClientMessage(nMessageID, pMessage);
+			break;
+		}
+		default:
+			break;
+	}
+}
+
 
 /// 开始为退出做准备
 void CGameServer::clear()

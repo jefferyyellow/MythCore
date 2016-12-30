@@ -2,6 +2,7 @@
 #include <string.h>
 #include "i18n.h"
 #include "gameserver.h"
+#include "google/protobuf/stubs/common.h"
 #define _GAME_VER_   "Version 1.0.0"
 
 #ifdef MYTH_OS_UNIX
@@ -134,5 +135,7 @@ int main(int argc, char* argv[])
 	tGameServer.init();
 	tGameServer.run();
 
+	// 释放protobuf中lib和msg占用的内存
+	::google::protobuf::ShutdownProtobufLibrary();
 	return 0;
 }
