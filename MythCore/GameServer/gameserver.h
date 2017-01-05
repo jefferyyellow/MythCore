@@ -7,6 +7,8 @@
 #include "socketstream.h"
 #include "messagefactory.h"
 #include "dbjob.h"
+#include "locallogjob.h"
+#include "singleton.h"
 #define PIPE_SIZE					((int)0x1000000)	/*内存管道的大小*/
 #define MAX_SOCKET_BUFF_SIZE		4096				// Socket缓冲区大小
 
@@ -18,9 +20,10 @@ struct CExchangeHead
 	uint8	mTcpState;
 };
 
-class CGameServer
+class CGameServer : public CSingleton<CGameServer>
 {
-public:
+	friend class CSingleton<CGameServer>;
+private:
 	CGameServer(){}
 	~CGameServer(){}
 
@@ -50,6 +53,9 @@ public:
 	/// 退出
 	void		exit();
 
+public:
+	void		pushTask(EmTaskType eTaskType, CInternalMsg* pMsg);
+
 private:
 	CLog*					mDefaultLog;
 	Myth::CThreadPool*		mThreadPool;
@@ -60,6 +66,6 @@ private:
 	char					mBuffer[MAX_SOCKET_BUFF_SIZE + sizeof(CExchangeHead)];
 
 	CDBJob					mDBJob;
-
+	CLocalLogJob			mLocalLogJob;
 };
 #endif

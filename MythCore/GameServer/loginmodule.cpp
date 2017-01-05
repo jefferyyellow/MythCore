@@ -2,7 +2,7 @@
 #include "loginmessage.pb.h"
 #include "internalmsg.h"
 #include "internalmsgpool.h"
-#include "dbmanager.h"
+#include "gameserver.h"
 CLoginModule::CLoginModule()
 {
 
@@ -52,6 +52,6 @@ void CLoginModule::OnMessageLoginRequest(Message* pMessage)
 		pPlayerLoginRequest->mChannelID = pLoginRequest->channelid();
 		pPlayerLoginRequest->mWorldID = pLoginRequest->worldid();
 		strncpy(pPlayerLoginRequest->mName, pLoginRequest->name().c_str(), sizeof(pPlayerLoginRequest->mName));
-		CDBManager::Inst()->pushTask(pPlayerLoginRequest);
+		CGameServer::Inst()->pushTask(emTaskType_DB, pPlayerLoginRequest);
 	}
 }

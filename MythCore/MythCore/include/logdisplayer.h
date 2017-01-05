@@ -49,7 +49,7 @@ namespace Myth
 		/// base name of roll file
 		char 	mFileName[STRING_LENGTH_64];
 		/// current file fd
-		FILE*	mFd;
+		int		mFd;
 		/// max file size of roll file
 		uint32	mMaxFileSize;
 		/// max back file num

@@ -62,7 +62,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>../dep/mysql/lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>mysqlclient.lib;ws2_32.lib</AdditionalDependencies>
+      <AdditionalDependencies>libmysql.lib;ws2_32.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

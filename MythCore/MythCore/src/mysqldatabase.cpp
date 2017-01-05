@@ -40,7 +40,7 @@ namespace Myth
 			return -1;
 		}
 
-		if (0 == mPort)
+		if (0 == nPort)
 		{
 #ifdef MYTH_OS_WINDOWS
 			unsigned int opt = MYSQL_PROTOCOL_PIPE;
@@ -55,20 +55,21 @@ namespace Myth
 		mMysql = mysql_real_connect(pMysqlInit, pHost, pUserName,
 			pPasswd, pDataBase, nPort, pUnixSocket, CLIENT_MULTI_RESULTS);
 
-		if (NULL != mMysql)
+		if (NULL == mMysql)
 		{
-			// 保存mysql的连接信息以便重连
-			strncpy(mHost, pHost, sizeof(mHost) - 1);
-			strncpy(mUserName, pUserName, sizeof(mUserName) - 1);
-			strncpy(mPasswd, pPasswd, sizeof(mPasswd) - 1);
-			strncpy(mDataBase, pDataBase, sizeof(mDataBase) - 1);
-			if (NULL != pUnixSocket)
-			{
-				strncpy(mUnixSocket, pUnixSocket, sizeof(mUnixSocket) - 1);
-			}
-			mPort = nPort;
+			return -1;
 		}
 
+		// 保存mysql的连接信息以便重连
+		strncpy(mHost, pHost, sizeof(mHost) - 1);
+		strncpy(mUserName, pUserName, sizeof(mUserName) - 1);
+		strncpy(mPasswd, pPasswd, sizeof(mPasswd) - 1);
+		strncpy(mDataBase, pDataBase, sizeof(mDataBase) - 1);
+		if (NULL != pUnixSocket)
+		{
+			strncpy(mUnixSocket, pUnixSocket, sizeof(mUnixSocket) - 1);
+		}
+		mPort = nPort;
 		return 0;
 	}
 	

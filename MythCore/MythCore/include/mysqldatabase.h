@@ -21,7 +21,7 @@ namespace Myth
 		/// 影响行数
 		int		getAffectRows()
 		{
-			return mysql_affected_rows(mMysql);
+			return (int)mysql_affected_rows(mMysql);
 		}
 
 		/// 字段数目
@@ -33,7 +33,7 @@ namespace Myth
 		/// 做后插入ID，用于自增长列
 		int		getLastInsertID()
 		{
-			return mysql_insert_id(mMysql);
+			return (int)mysql_insert_id(mMysql);
 		}
 
 		/// 最近的错误码

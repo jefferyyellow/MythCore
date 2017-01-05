@@ -7,6 +7,11 @@ CInternalMsg* CInternalMsgPool::allocMsg(int nMessageID)
 	CInternalMsg* pMsg = NULL;
 	switch (nMessageID)
 	{
+		case IM_REQUEST_LOCAL_LOG:
+		{
+			pMsg = reinterpret_cast<CInternalMsg*>(mLocalLogRequest.allocate());
+			break;
+		}
 		case IM_REQUEST_PLAYER_LOGIN:
 		{
 			pMsg = reinterpret_cast<CInternalMsg*>(mPlayerLoginRequest.allocate());
@@ -31,6 +36,11 @@ void CInternalMsgPool::freeMsg(CInternalMsg* pMsg)
 	mLock.lock();
 	switch (pMsg->getMsgID())
 	{
+		case IM_REQUEST_LOCAL_LOG:
+		{
+			mLocalLogRequest.free((CIMLocalLogRequest*)pMsg);
+			break;
+		}
 		case IM_REQUEST_PLAYER_LOGIN:
 		{
 			mPlayerLoginRequest.free((CIMPlayerLoginRequest*)pMsg);

@@ -200,7 +200,6 @@ void CTcpServer::receiveMessage()
 				pNewSocket->setRecvBuffSize(0);
 				mSelectModel->addNewSocket(pNewSocket);
 
-				LOG_DEBUG("default", "IP: %s connect success", pNewSocket->getIP());
 				printf("IP: %s connect success", pNewSocket->getIP());
 			}
 			else
@@ -218,7 +217,6 @@ void CTcpServer::receiveMessage()
 				{
 					pAllSocket[i].setRecvBuffSize(pAllSocket[i].getRecvBuffSize() + nResult);
 					onReceiveMessage(&(pAllSocket[i]), i);
-					LOG_DEBUG("default", "receive message");
 					printf("receive message");
 				}
 			}
@@ -242,20 +240,20 @@ void CTcpServer::onReceiveMessage(CTcpSocket* pSocket, int nIndex)
 	{
 		if (nBuffSize < 4)
 		{
-			return;
+			break;
 		}
 
 		short nMessageLen = *(short*)pBuffer;
 		if (nMessageLen < 4 || nMessageLen > MAX_TCPBUFF_LEN)
 		{
 			// 出错
-			return;
+			break;
 		}
 
 		// 消息包还没有接受完全
 		if (nBuffSize < nMessageLen)
 		{
-			return;
+			break;
 		}
 
 
@@ -271,8 +269,11 @@ void CTcpServer::onReceiveMessage(CTcpSocket* pSocket, int nIndex)
 	}
 
 	int nSendSize = pSocket->getRecvBuffSize() - nBuffSize;
-	pSocket->setRecvBuffSize(nBuffSize);
-	pSocket->resetRecvBuffPoint(nSendSize);
+	if (nSendSize > 0)
+	{
+		pSocket->setRecvBuffSize(nBuffSize);
+		pSocket->resetRecvBuffPoint(nSendSize);
+	}
 }
 
 // 发送客户端消息

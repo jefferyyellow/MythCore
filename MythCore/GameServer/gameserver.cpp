@@ -5,8 +5,8 @@
 #include "loginmessage.pb.h"
 #include "message.pb.h"
 #include "loginmodule.h"
-#include "dbmanager.h"
 #include "internalmsgpool.h"
+#include "gameserverconfig.h"
 
 /// 初始化
 bool CGameServer::init()
@@ -17,13 +17,15 @@ bool CGameServer::init()
 		return false;
 	}
 
-	bResult = initShareMemory();
+	bResult = initLogicModule();
 	if (!bResult)
 	{
 		return false;
 	}
 
-	bResult = initLogicModule();
+	CGameServerConfig::Inst()->loadGameServerConfigFromXml("config/gameserverconfig.xml");
+
+	bResult = initShareMemory();
 	if (!bResult)
 	{
 		return false;
@@ -55,13 +57,13 @@ bool CGameServer::initLog()
 		printf("create default log failure");
 		return false;
 	}
-#endif
 
 	// 默认的debug日志
 	CRollFileDisplayer* pDefaultFileDisplayer = new CRollFileDisplayer(const_cast<char*>("../log/gamedefault.log"), 1024000, 10);
 	// 为默认的debug日志加文件displayer
 	mDefaultLog->AddDisplayer(pDefaultFileDisplayer);
 	CLogManager::Inst()->AddDebugLog(mDefaultLog, "default");
+#endif
 
 	// 错误日志加文件displayer
 	CRollFileDisplayer* pErrorFileDisplayer = new CRollFileDisplayer(const_cast<char*>("../log/gameerror.log"), 1024000, 10);
@@ -132,7 +134,7 @@ bool CGameServer::initLogicModule()
 	CLoginModule::CreateInst();
 	CMessageFactory::CreateInst();
 	CInternalMsgPool::CreateInst();
-	CDBManager::CreateInst();
+	CGameServerConfig::CreateInst();
 	return true;
 }
 
@@ -145,7 +147,16 @@ bool CGameServer::initThread()
 		return false;
 	}
 	
+	if (0 != mDBJob.init(CGameServerConfig::Inst()->getDBHost(), 
+		CGameServerConfig::Inst()->getDBUserName(), CGameServerConfig::Inst()->getDBPasswd(),
+		CGameServerConfig::Inst()->getDefaultDataBase(), CGameServerConfig::Inst()->getDBPort(),
+		NULL))
+	{
+		return false;
+	}
+
 	mThreadPool->pushBackJob(&mDBJob);
+	mThreadPool->pushBackJob(&mLocalLogJob);
 
 	return true;
 }
@@ -153,6 +164,7 @@ bool CGameServer::initThread()
 /// 运行
 void CGameServer::run()
 {
+	LOG_ERROR("Hello World");
 	while (true)
 	{
 		processClientMessage();
@@ -284,4 +296,25 @@ void CGameServer::clearLog()
 void CGameServer::exit()
 {
 
+}
+
+void CGameServer::pushTask(EmTaskType eTaskType, CInternalMsg* pMsg)
+{
+	switch (eTaskType)
+	{
+		case emTaskType_DB:
+		{
+			mDBJob.pushTask(pMsg);
+			break;
+		}
+		case emTaskType_LocalLog:
+		{
+			mLocalLogJob.pushTask(pMsg);
+			break;
+		}
+		default:
+		{
+			break;
+		}
+	}
 }

@@ -18,7 +18,9 @@ public:
 	void			freeMsg(CInternalMsg* pMsg);
 
 private:
-	CBlockMemory<CIMPlayerLoginRequest, 20, 5>	mPlayerLoginRequest;
+	CBlockMemory<CIMLocalLogRequest, 20, 5>			mLocalLogRequest;
+	CBlockMemory<CIMPlayerLoginRequest, 20, 5>		mPlayerLoginRequest;
+
 	Myth::CSimpleLock							mLock;
 };
 #endif

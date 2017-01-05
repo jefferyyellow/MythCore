@@ -131,9 +131,9 @@ int main(int argc, char* argv[])
 
 	setExclusive("gameserver.lock");
 
-	CGameServer tGameServer;
-	tGameServer.init();
-	tGameServer.run();
+	CGameServer::CreateInst();
+	CGameServer::Inst()->init();
+	CGameServer::Inst()->run();
 
 	// 释放protobuf中lib和msg占用的内存
 	::google::protobuf::ShutdownProtobufLibrary();

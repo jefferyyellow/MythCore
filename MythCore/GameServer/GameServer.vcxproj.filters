@@ -16,15 +16,15 @@
     <Filter Include="message">
       <UniqueIdentifier>{e9c422e7-a598-46d0-8b52-43b17489ad9a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="tinyxml">
+      <UniqueIdentifier>{eeb88c3d-9a51-485a-bd3f-8e8bd85d3b09}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="gameserver.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="dbmanager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="dbjob.cpp">
@@ -48,12 +48,21 @@
     <ClCompile Include="loginmodule.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="gameserverconfig.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxml\tinyxml2.cpp">
+      <Filter>tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="locallogjob.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="job.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dbjob.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="dbmanager.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="gameserver.h">
@@ -75,6 +84,21 @@
       <Filter>message</Filter>
     </ClInclude>
     <ClInclude Include="loginmodule.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyxml\tinyxml2.h">
+      <Filter>tinyxml</Filter>
+    </ClInclude>
+    <ClInclude Include="locallogjob.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="taskmanager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="job.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="gameserverconfig.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

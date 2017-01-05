@@ -24,7 +24,10 @@ namespace Myth
 		{
 
 		}
-		~CMysqlField();
+		~CMysqlField()
+		{
+
+		}
 
 	public:
 		char*				getValue(){ return mpValue; }

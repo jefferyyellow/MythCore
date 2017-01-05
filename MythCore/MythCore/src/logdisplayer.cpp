@@ -1,6 +1,7 @@
 #include "logdisplayer.h"
 #include <stdio.h>
-
+#include <io.h>
+#include <fcntl.h>
 namespace Myth
 {
 	/// display log message
@@ -13,8 +14,7 @@ namespace Myth
 	{
 		if (NULL != pFileName)
 		{
-			mFd = fopen(pFileName, "a+");
-			fseek(mFd, 0, SEEK_END);
+			mFd = open(pFileName, O_CREAT | O_APPEND | O_WRONLY, 00644);
 			strncpy(mFileName, pFileName, sizeof(mFileName) - 1);
 		}
 		mMaxFileSize = uMaxFileSize;
@@ -25,7 +25,7 @@ namespace Myth
 	{
 		if (NULL != mFd)
 		{
-			fclose(mFd);
+			close(mFd);
 		}
 
 	}
@@ -37,9 +37,12 @@ namespace Myth
 		{
 			return;
 		}
-		fwrite(pLogMessage, strlen(pLogMessage), 1, mFd);
-		//fseek(mFd, 0, SEEK_END);
-		uint32 nFileSize = ftell(mFd);
+
+		// 开始用的是fwrite,fopen,flcose系列的函数，由于不能支持行缓冲，
+		// 所以改成write,open,close系统函数
+		write(mFd, pLogMessage, strlen(pLogMessage));
+		
+		uint32 nFileSize = ::lseek(mFd, 0, SEEK_END);
 		if (nFileSize >= mMaxFileSize)
 		{
 			RollOver();
@@ -51,7 +54,7 @@ namespace Myth
 	{
 		if (mMaxBackNum > 0)
 		{
-			fclose(mFd);
+			close(mFd);
 			char tNewBuffer[STRING_LENGTH_256] = { 0 };
 			snprintf(tNewBuffer, sizeof(tNewBuffer) - 1, "%s.%d", mFileName, mMaxBackNum);
 			remove(tNewBuffer);
@@ -65,7 +68,7 @@ namespace Myth
 			}
 			rename(mFileName, tNewBuffer);
 
-			mFd = fopen(mFileName, "a+");
+			mFd = ::open(mFileName, O_CREAT | O_APPEND | O_WRONLY, 00644);
 		}
 	}
 

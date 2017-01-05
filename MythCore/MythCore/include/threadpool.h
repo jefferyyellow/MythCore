@@ -38,23 +38,23 @@ namespace Myth
 				{
 					pThread->setThreadPool(this);
 					pThread->setSerialNum(i);
-					//pThread->start();
+					pThread->start();
 					mIdleList.push_back(pThread);
-					//printf("%x\n", pThread);
+					printf("%x\n", pThread);
 				}
 			}
 			//printf("*************\n");
-			ThreadList::iterator it = mIdleList.begin();
+			//ThreadList::iterator it = mIdleList.begin();
 
-			int i = 0;
-			IThread* pIdleThread = NULL;
-			for (; it != mIdleList.end(); ++ it)
-			{
-				printf("%x\n", *it);
-				printf("%d\n", i);
-				++ i;
-				//pIdleThread = *it;
-			}
+			//int i = 0;
+			//IThread* pIdleThread = NULL;
+			//for (; it != mIdleList.end(); ++ it)
+			//{
+			//	printf("%x\n", *it);
+			//	printf("%d\n", i);
+			//	++ i;
+			//	//pIdleThread = *it;
+			//}
 		}
 		~CThreadPool()
 		{
