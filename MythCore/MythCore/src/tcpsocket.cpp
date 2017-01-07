@@ -102,6 +102,7 @@ namespace Myth
 		shutdown(mSocketFd, SHUT_RDWR);
 		close(mSocketFd);
 #endif
+		mSocketFd = INVALID_SOCKET;
 	}
 
 	int	CTcpSocket::setNonBlock(bool bBlock)

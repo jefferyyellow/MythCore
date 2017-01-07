@@ -2,6 +2,7 @@
 #define __LOGINMODULE_H__
 #include "singleton.h"
 #include "messagefactory.h"
+#include "commontype.h"
 class CLoginModule : public CSingleton < CLoginModule >
 {
 	friend class CSingleton < CLoginModule > ;
@@ -10,10 +11,10 @@ private:
 	~CLoginModule();
 
 public:
-	void		onClientMessage(unsigned int nMessageID, Message* pMessage);
+	void		onClientMessage(uint32 nSocketIndex, unsigned int nMessageID, Message* pMessage);
 
 
 private:
-	void		OnMessageLoginRequest(Message* pMessage);
+	void		OnMessageLoginRequest(uint32 nSocketIndex, Message* pMessage);
 };
 #endif

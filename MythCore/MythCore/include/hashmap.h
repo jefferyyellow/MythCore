@@ -229,7 +229,7 @@ namespace Myth
 		// 插入键值对
 		bool Insert(const Key& k, const Value& v)
 		{
-			unsigned int hashValue = Hash((char*)k, sizeof(Key));
+			unsigned int hashValue = Hash((char*)&k, sizeof(Key));
 			int nBucket = hashValue % BucketNum;
 			// 健值已经存在，把这个去了就是multihashmap了
 			if (KeyIsExit(k, nBucket))

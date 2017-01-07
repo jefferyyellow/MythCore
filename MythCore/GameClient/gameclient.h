@@ -32,11 +32,15 @@ public:
 public:
 	void		LoginServer();
 
+
+private:
+	void		onMessageLoginResponse(Message* pMessage);
+
 private:
 	CLog*					mDefaultLog;
 	CTcpSocket				mTcpSocket;
 	CSelectModel			mSelectModel;
-
+	char					mTcpRecData[MAX_SOCKET_BUFF_SIZE];
 	char					mBuffer[MAX_SOCKET_BUFF_SIZE];
 };
 #endif

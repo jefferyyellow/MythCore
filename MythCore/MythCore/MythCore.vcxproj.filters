@@ -191,6 +191,9 @@
     <ClInclude Include="include\socketstream.h">
       <Filter>头文件\memory</Filter>
     </ClInclude>
+    <ClInclude Include="include\fixblockmemory.h">
+      <Filter>头文件\memory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="include\bit_set.inl">

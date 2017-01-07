@@ -20,7 +20,8 @@ public:
 private:
 	CBlockMemory<CIMLocalLogRequest, 20, 5>			mLocalLogRequest;
 	CBlockMemory<CIMPlayerLoginRequest, 20, 5>		mPlayerLoginRequest;
+	CBlockMemory<CIMPlayerLoginResponse, 20, 5>		mPlayerLoginResponse;
 
-	Myth::CSimpleLock							mLock;
+	Myth::CSimpleLock								mLock;
 };
 #endif

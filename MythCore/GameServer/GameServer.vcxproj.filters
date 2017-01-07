@@ -39,12 +39,6 @@
     <ClCompile Include="messagefactory.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\message\loginmessage.pb.cc">
-      <Filter>message</Filter>
-    </ClCompile>
-    <ClCompile Include="..\message\message.pb.cc">
-      <Filter>message</Filter>
-    </ClCompile>
     <ClCompile Include="loginmodule.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -59,6 +53,21 @@
     </ClCompile>
     <ClCompile Include="job.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="loginjob.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="objpool.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="scenejob.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\loginmessage.hxx.pb.cc">
+      <Filter>message</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\message.hxx.pb.cc">
+      <Filter>message</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,12 +86,6 @@
     <ClInclude Include="messagefactory.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\message\loginmessage.pb.h">
-      <Filter>message</Filter>
-    </ClInclude>
-    <ClInclude Include="..\message\message.pb.h">
-      <Filter>message</Filter>
-    </ClInclude>
     <ClInclude Include="loginmodule.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -100,6 +103,33 @@
     </ClInclude>
     <ClInclude Include="gameserverconfig.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="loginjob.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="objpool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="obj.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="objmanager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="scenejob.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\loginmessage.hxx">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\loginmessage.hxx.pb.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\message.hxx">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\message.hxx.pb.h">
+      <Filter>message</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -18,6 +18,8 @@ namespace Myth
 		int		query(const char *pSql, CMysqlQueryResult& rQueryResult);
 		/// 查询，不在乎结果
 		int		query(const char *pSql);
+		void	clearResult();
+
 		/// 影响行数
 		int		getAffectRows()
 		{

@@ -1,6 +1,6 @@
 #include "messagefactory.h"
 char CMessageFactory::sMsgBuff[MAX_MSG_BUFF_LEN] = { 0 };
-#include "loginmessage.pb.h"
+#include "loginmessage.hxx.pb.h"
 
 #define CASE_NEW_MSG(msg, msgid)						\
 		case msgid:										\
@@ -15,6 +15,7 @@ Message* CMessageFactory::createClientMessage(unsigned short nMessageID)
 	switch (nMessageID)
 	{
 		CASE_NEW_MSG(CMessageLoginRequest, ID_C2S_REQUEST_LOGIN)
+		CASE_NEW_MSG(CMessageLoginResponse, ID_S2C_RESPONSE_LOGIN)
 		default:
 			break;
 	}

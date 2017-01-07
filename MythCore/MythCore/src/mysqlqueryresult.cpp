@@ -11,6 +11,11 @@ namespace Myth
 
 	CMysqlQueryResult::~CMysqlQueryResult()
 	{
+		clear();
+	}
+
+	void CMysqlQueryResult::clear()
+	{
 		if (NULL != mResult)
 		{
 			mysql_free_result(mResult);

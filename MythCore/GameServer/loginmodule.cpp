@@ -1,5 +1,5 @@
 #include "loginmodule.h"
-#include "loginmessage.pb.h"
+#include "loginmessage.hxx.pb.h"
 #include "internalmsg.h"
 #include "internalmsgpool.h"
 #include "gameserver.h"
@@ -14,13 +14,13 @@ CLoginModule::~CLoginModule()
 
 }
 
-void CLoginModule::onClientMessage(unsigned int nMessageID, Message* pMessage)
+void CLoginModule::onClientMessage(uint32 nSocketIndex, unsigned int nMessageID, Message* pMessage)
 {
 	switch (nMessageID)
 	{
 		case ID_C2S_REQUEST_LOGIN:
 		{
-			OnMessageLoginRequest(pMessage);
+			OnMessageLoginRequest(nSocketIndex, pMessage);
 			break;
 		}
 		default:
@@ -28,7 +28,7 @@ void CLoginModule::onClientMessage(unsigned int nMessageID, Message* pMessage)
 	}
 }
 
-void CLoginModule::OnMessageLoginRequest(Message* pMessage)
+void CLoginModule::OnMessageLoginRequest(uint32 nSocketIndex, Message* pMessage)
 {
 	if (NULL == pMessage)
 	{
@@ -51,7 +51,9 @@ void CLoginModule::OnMessageLoginRequest(Message* pMessage)
 	{
 		pPlayerLoginRequest->mChannelID = pLoginRequest->channelid();
 		pPlayerLoginRequest->mWorldID = pLoginRequest->worldid();
+		pPlayerLoginRequest->mSocketIndex = nSocketIndex;
 		strncpy(pPlayerLoginRequest->mName, pLoginRequest->name().c_str(), sizeof(pPlayerLoginRequest->mName));
 		CGameServer::Inst()->pushTask(emTaskType_DB, pPlayerLoginRequest);
+		printf("CLoginModule::OnMessageLoginRequest");
 	}
 }

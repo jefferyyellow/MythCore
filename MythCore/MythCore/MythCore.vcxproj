@@ -111,6 +111,7 @@
     <ClInclude Include="include\deque.h" />
     <ClInclude Include="include\epollmodel.h" />
     <ClInclude Include="include\fileutility.h" />
+    <ClInclude Include="include\fixblockmemory.h" />
     <ClInclude Include="include\hashmap.h" />
     <ClInclude Include="include\i18n.h" />
     <ClInclude Include="include\iterator.h" />

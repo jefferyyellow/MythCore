@@ -2,11 +2,10 @@
 #include "logmanager.h"
 #include "log.h"
 #include "logdisplayer.h"
-#include "loginmessage.pb.h"
-#include "message.pb.h"
 #include "loginmodule.h"
 #include "internalmsgpool.h"
 #include "gameserverconfig.h"
+#include "objpool.h"
 
 /// 初始化
 bool CGameServer::init()
@@ -24,12 +23,6 @@ bool CGameServer::init()
 	}
 
 	CGameServerConfig::Inst()->loadGameServerConfigFromXml("config/gameserverconfig.xml");
-
-	bResult = initShareMemory();
-	if (!bResult)
-	{
-		return false;
-	}
 
 	bResult = initThread();
 	if (!bResult)
@@ -83,50 +76,6 @@ bool CGameServer::initLog()
 	return true;
 }
 
-/// 初始化管道
-bool CGameServer::initShareMemory()
-{
-	// 一个CShareMemory管理类
-	int nShareMemorySize = sizeof(CShareMemory);
-	// 两个CSocketStream管理类
-	nShareMemorySize += 2 * sizeof(CSocketStream);
-	// 两个真实的内存区域
-	nShareMemorySize += 2 * PIPE_SIZE;
-
-	bool bCreate = true;
-	uint8* pSharePoint = CShareMemory::createShareMemory(37345234, nShareMemorySize, bCreate);
-	if (NULL == pSharePoint)
-	{
-		return false;
-	}
-	// 初始化
-	mShareMemory = (CShareMemory*)pSharePoint;
-	if (bCreate)
-	{
-		mShareMemory->setShmPoint(pSharePoint);
-		mShareMemory->setShmKey(37345234);
-		mShareMemory->setShmSize(nShareMemorySize);
-	}
-
-
-	pSharePoint += sizeof(CShareMemory);
-
-	// 初始化Tcp2Server共享内存
-	mTcp2ServerMemory = (CSocketStream*)pSharePoint;
-	if (bCreate)
-	{
-		mTcp2ServerMemory->Initialize(pSharePoint + sizeof(CSocketStream), PIPE_SIZE);
-	}
-
-	pSharePoint += sizeof(CSocketStream) + PIPE_SIZE;
-	// 初始化Server2Tcp共享内存
-	mServer2TcpMemory = (CSocketStream*)pSharePoint;
-	if (bCreate)
-	{
-		mServer2TcpMemory->Initialize(pSharePoint + sizeof(CSocketStream), PIPE_SIZE);
-	}
-	return true;
-}
 
 /// 初始逻辑模块
 bool CGameServer::initLogicModule()
@@ -135,6 +84,7 @@ bool CGameServer::initLogicModule()
 	CMessageFactory::CreateInst();
 	CInternalMsgPool::CreateInst();
 	CGameServerConfig::CreateInst();
+	CObjPool::CreateInst();
 	return true;
 }
 
@@ -155,8 +105,16 @@ bool CGameServer::initThread()
 		return false;
 	}
 
+	bool bResult = mSceneJob.init();
+	if (!bResult)
+	{
+		return false;
+	}
+
+	mThreadPool->pushBackJob(&mSceneJob);
 	mThreadPool->pushBackJob(&mDBJob);
 	mThreadPool->pushBackJob(&mLocalLogJob);
+	mThreadPool->pushBackJob(&mLoginJob);
 
 	return true;
 }
@@ -167,8 +125,6 @@ void CGameServer::run()
 	LOG_ERROR("Hello World");
 	while (true)
 	{
-		processClientMessage();
-
 		mThreadPool->run();
 #ifdef MYTH_OS_WINDOWS
 		Sleep(50);
@@ -179,69 +135,6 @@ void CGameServer::run()
 
 		nanosleep(&tv, NULL);
 #endif
-	}
-}
-
-/// 处理前端消息
-void CGameServer::processClientMessage()
-{
-	int nMessageLen = MAX_SOCKET_BUFF_SIZE;
-	int nResult = 0;
-	for (int i = 0; i < 2000; ++i)
-	{
-		nResult = mTcp2ServerMemory->GetHeadPacket((uint8*)mBuffer, nMessageLen);
-		if (nResult < 0)
-		{
-			break;
-		}
-
-		if (nMessageLen <= 0)
-		{
-			break;
-		}
-
-		char* pTemp = mBuffer;
-		CExchangeHead* pExchangeHead = (CExchangeHead*)mBuffer;
-
-		pTemp += sizeof(CExchangeHead);
-		nMessageLen -= sizeof(CExchangeHead);
-
-		short nLength = *(short*)pTemp;
-		if (nLength != nMessageLen)
-		{
-			break;
-		}
-
-		pTemp += sizeof(short);
-		nMessageLen -= sizeof(short);
-
-		short nMessageID = *(short*)pTemp;
-		pTemp += sizeof(short);
-		nMessageLen -= sizeof(short);
-
-		Message* pMessage = CMessageFactory::Inst()->createClientMessage(nMessageID);
-		if (NULL != pMessage)
-		{
-			pMessage->ParseFromArray(pTemp, nMessageLen);
-			dispatchClientMessage(nMessageID, pMessage);
-		}
-	}
-}
-
-
-/// 分发前端消息
-void CGameServer::dispatchClientMessage(unsigned short nMessageID, Message* pMessage)
-{
-	int nModule = nMessageID & MESSAGE_MODULE_MASK;
-	switch (nModule)
-	{
-		case MESSAGE_MODULE_LOGIN:
-		{
-			CLoginModule::Inst()->onClientMessage(nMessageID, pMessage);
-			break;
-		}
-		default:
-			break;
 	}
 }
 
@@ -310,6 +203,16 @@ void CGameServer::pushTask(EmTaskType eTaskType, CInternalMsg* pMsg)
 		case emTaskType_LocalLog:
 		{
 			mLocalLogJob.pushTask(pMsg);
+			break;
+		}
+		case emTaskType_Login:
+		{
+			mLoginJob.pushTask(pMsg);
+			break;
+		}
+		case emTaskType_Scene:
+		{
+			mSceneJob.pushTask(pMsg);
 			break;
 		}
 		default:

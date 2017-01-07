@@ -158,6 +158,7 @@ void CTcpServer::run()
 	{
 		mSelectModel->selectAllFd();
 		receiveMessage();
+		sendMessage();
 	}
 	
 }
@@ -293,7 +294,7 @@ void CTcpServer::sendMessage()
 		{
 			break;
 		}
-
+		printf("CTcpServer::sendMessage");
 		char* pTemp = mBuffer;
 		CExchangeHead* pExchangeHead = (CExchangeHead*)mBuffer;
 

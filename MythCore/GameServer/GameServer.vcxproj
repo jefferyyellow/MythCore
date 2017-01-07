@@ -71,8 +71,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\message\loginmessage.pb.cc" />
-    <ClCompile Include="..\message\message.pb.cc" />
+    <ClCompile Include="..\message\loginmessage.hxx.pb.cc" />
+    <ClCompile Include="..\message\message.hxx.pb.cc" />
     <ClCompile Include="dbjob.cpp" />
     <ClCompile Include="gameserver.cpp" />
     <ClCompile Include="gameserverconfig.cpp" />
@@ -80,16 +80,26 @@
     <ClCompile Include="internalmsgpool.cpp" />
     <ClCompile Include="job.cpp" />
     <ClCompile Include="locallogjob.cpp" />
+    <ClCompile Include="loginjob.cpp" />
     <ClCompile Include="loginmodule.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="messagefactory.cpp" />
+    <ClCompile Include="objpool.cpp" />
+    <ClCompile Include="scenejob.cpp" />
     <ClCompile Include="tinyxml\tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\message\loginmessage.pb.h" />
-    <ClInclude Include="..\message\message.pb.h" />
+    <ClInclude Include="..\message\loginmessage.hxx" />
+    <ClInclude Include="..\message\loginmessage.hxx.pb.h" />
+    <ClInclude Include="..\message\message.hxx" />
+    <ClInclude Include="..\message\message.hxx.pb.h" />
     <ClInclude Include="dbjob.h" />
     <ClInclude Include="job.h" />
+    <ClInclude Include="loginjob.h" />
+    <ClInclude Include="obj.h" />
+    <ClInclude Include="objmanager.h" />
+    <ClInclude Include="objpool.h" />
+    <ClInclude Include="scenejob.h" />
     <ClInclude Include="taskmanager.h" />
     <ClInclude Include="gameserver.h" />
     <ClInclude Include="gameserverconfig.h" />

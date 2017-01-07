@@ -27,6 +27,7 @@ namespace Myth
 		int init(MYSQL_RES *pResult, uint32 nRowCount, uint32 nFieldCount);
 		int nextRow();
 		TmMysqlDataType convertNativeType(enum_field_types mysqlType) const;
+		void clear();
 
 	public:
 		CMysqlField*	getField(unsigned int nIndex)

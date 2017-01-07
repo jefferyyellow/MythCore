@@ -129,5 +129,17 @@ namespace Myth
 		}
 		return 0;
 	}
+	void CMysqlDataBase::clearResult()
+	{
+		if (mMysql == NULL) return;
+
+		MYSQL_RES* tRes = NULL;
+		while (mysql_next_result(mMysql) == 0)
+		{
+			mysql_free_result(tRes);
+		}
+	}
 }
+
+
 

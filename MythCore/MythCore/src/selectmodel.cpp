@@ -186,6 +186,7 @@ namespace Myth
 				}
 			}
 		}
+		mMaxSocketIndex = 0;
 		for (int nIndex = mMaxSocketIndex; nIndex >= 0; -- nIndex)
 		{
 			if (INVALID_SOCKET != mpAllSocket[nIndex].getSocketFd())

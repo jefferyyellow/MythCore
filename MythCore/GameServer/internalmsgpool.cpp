@@ -17,6 +17,11 @@ CInternalMsg* CInternalMsgPool::allocMsg(int nMessageID)
 			pMsg = reinterpret_cast<CInternalMsg*>(mPlayerLoginRequest.allocate());
 			break;
 		}
+		case IM_RESPONSE_PLAYER_LOGIN:
+		{
+			pMsg = reinterpret_cast<CInternalMsg*>(mPlayerLoginResponse.allocate());
+			break;
+		}
 		default:
 		{
 			break;
@@ -44,6 +49,11 @@ void CInternalMsgPool::freeMsg(CInternalMsg* pMsg)
 		case IM_REQUEST_PLAYER_LOGIN:
 		{
 			mPlayerLoginRequest.free((CIMPlayerLoginRequest*)pMsg);
+			break;
+		}
+		case IM_RESPONSE_PLAYER_LOGIN:
+		{
+			mPlayerLoginResponse.free((CIMPlayerLoginResponse*)pMsg);
 			break;
 		}
 		default:

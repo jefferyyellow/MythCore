@@ -2,7 +2,8 @@
 #include "log.h"
 #include "logmanager.h"
 #include "logdisplayer.h"
-#include "loginmessage.pb.h"
+#include "loginmessage.hxx.pb.h"
+#include "../GameServer/messagefactory.h"
 
 CGameClient::CGameClient()
 	:mSelectModel(&mTcpSocket, 1)
@@ -20,7 +21,10 @@ bool CGameClient::init()
 	{
 		return false;
 	}
-
+	mTcpSocket.setRecvBuff(mTcpRecData);
+	mTcpSocket.setRecvBuffSize(0);
+	mTcpSocket.setMaxRecvBuffSize(sizeof(mTcpRecData));
+	mSelectModel.addNewSocket(&mTcpSocket);
 	return true;
 }
 
@@ -116,7 +120,8 @@ void CGameClient::processServerMessage()
 			else
 			{
 				pAllSocket[i].setRecvBuffSize(pAllSocket[i].getRecvBuffSize() + nResult);
-				onServerMessage(pAllSocket);
+				onServerMessage(&pAllSocket[i]);
+				printf("receive message");
 			}
 		}
 	}
@@ -130,7 +135,34 @@ void CGameClient::onServerMessage(CTcpSocket* pTcpSocket)
 		return;
 	}
 
+	char* pTemp = pTcpSocket->getRecvBuff();
+	if (pTcpSocket->getRecvBuffSize() < sizeof(unsigned short) * 2)
+	{
+		return;
+	}
 
+	short nLength = *(short*)pTemp;
+	pTemp += sizeof(short);
+
+	short nMessageID = *(short*)pTemp;
+	pTemp += sizeof(short);
+
+	Message* pMessage = CMessageFactory::Inst()->createClientMessage(nMessageID);
+	if (NULL != pMessage)
+	{
+		pMessage->ParseFromArray(pTemp, nLength - sizeof(unsigned short) * 2);
+		switch (nMessageID)
+		{
+			case ID_S2C_RESPONSE_LOGIN:
+			{
+				onMessageLoginResponse(pMessage);
+				break;
+			}
+			default:
+				break;
+		}
+
+	}
 }
 
 /// 发送消息给服务器
@@ -146,4 +178,14 @@ void CGameClient::sendMessage(unsigned short uMessageID, Message* pMessage)
 
 	pMessage->SerializeToArray(pTemp, sizeof(mBuffer) - (sizeof(unsigned short) * 2));
 	mTcpSocket.sendData(mBuffer, nMessageLen);
+}
+
+void CGameClient::onMessageLoginResponse(Message* pMessage)
+{
+	CMessageLoginResponse* pLoginResponse = (CMessageLoginResponse*)pMessage;
+	int nRoleID = pLoginResponse->roleid();
+	if (0 == nRoleID)
+	{
+		// 创建角色
+	}
 }

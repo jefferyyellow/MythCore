@@ -10,6 +10,7 @@ enum EmTaskType
 	emTaskType_DB			= 1,			// DB
 	emTaskType_LocalLog		= 2,			// 本地日志
 	emTaskType_Login		= 3,			// 登录
+	emTaskType_Scene		= 4,			// 场景
 };
 
 using namespace Myth;
