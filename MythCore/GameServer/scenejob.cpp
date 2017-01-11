@@ -42,6 +42,16 @@ void CSceneJob::onTask(CInternalMsg* pMsg)
 			sendClientMessage(pIMLoginResponse->mSocketIndex, pIMLoginResponse->mSocketTime,ID_S2C_RESPONSE_LOGIN, &tMessageLoginResponse);
 			break;
 		}
+
+		case IM_RESPONSE_CREATE_ROLE:
+		{
+			CIMCreateRoleResponse* pIMCreateRoleResponse = reinterpret_cast<CIMCreateRoleResponse*>(pMsg);
+			CMessageCreateRoleResponse tCreateRoleResponse;
+			tCreateRoleResponse.set_result(0);
+			tCreateRoleResponse.set_roleid(pIMCreateRoleResponse->mRoleID);
+			sendClientMessage(pIMCreateRoleResponse->mSocketIndex, 0, ID_S2C_RESPONSE_CREATE_ROLE, &tCreateRoleResponse);
+			break;
+		}
 		default:
 			break;
 	}

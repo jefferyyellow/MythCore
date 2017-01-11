@@ -3,7 +3,7 @@
 #include "job.h"
 #include "hashmap.h"
 using namespace Myth;
-#define  MAKE_LOGIN_KEY(Account, ChannelID, WorldID) ((Account << 32) & (ChannelID << 16) & (WorldID))
+#define  MAKE_LOGIN_KEY(AccountID, ChannelID, WorldID) ( (ChannelID << 48) | (WorldID << 32) | AccountID)
 class CLoginJob : public CJob<20, 20>
 {
 public:
@@ -14,6 +14,9 @@ public:
 
 private:
 	void	onTask(CInternalMsg* pMsg);
+	void	onIMPlayerLoginResponse(CInternalMsg* pMsg);
+	void	onIMCreateRoleRequest(CInternalMsg* pMsg);
+	void	OnIMCreateRoleResponse(CInternalMsg* pMsg);
 
 private:
 	typedef CHashMap<uint64, uint32, 100, 100, 100> LOGIN_LIST;

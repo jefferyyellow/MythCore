@@ -22,6 +22,11 @@ CInternalMsg* CInternalMsgPool::allocMsg(int nMessageID)
 			pMsg = reinterpret_cast<CInternalMsg*>(mPlayerLoginResponse.allocate());
 			break;
 		}
+		case IM_REQUEST_CREATE_ROLE:
+		{
+			pMsg = reinterpret_cast<CInternalMsg*>(mCreateRoleRequest.allocate());
+			break;
+		}
 		default:
 		{
 			break;
@@ -54,6 +59,11 @@ void CInternalMsgPool::freeMsg(CInternalMsg* pMsg)
 		case IM_RESPONSE_PLAYER_LOGIN:
 		{
 			mPlayerLoginResponse.free((CIMPlayerLoginResponse*)pMsg);
+			break;
+		}
+		case IM_REQUEST_CREATE_ROLE:
+		{
+			mCreateRoleRequest.free((CIMCreateRoleRequest*)pMsg);
 			break;
 		}
 		default:

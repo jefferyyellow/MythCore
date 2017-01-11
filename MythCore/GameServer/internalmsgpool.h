@@ -21,7 +21,7 @@ private:
 	CBlockMemory<CIMLocalLogRequest, 20, 5>			mLocalLogRequest;
 	CBlockMemory<CIMPlayerLoginRequest, 20, 5>		mPlayerLoginRequest;
 	CBlockMemory<CIMPlayerLoginResponse, 20, 5>		mPlayerLoginResponse;
-
+	CBlockMemory<CIMCreateRoleRequest, 20, 5>		mCreateRoleRequest;
 	Myth::CSimpleLock								mLock;
 };
 #endif

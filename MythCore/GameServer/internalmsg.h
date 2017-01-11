@@ -8,6 +8,8 @@ enum TmInternalMsgID
 	IM_REQUEST_LOCAL_LOG				= 1,			// 玩家本地日志要求
 	IM_REQUEST_PLAYER_LOGIN				= 2,			// 玩家登陆消息
 	IM_RESPONSE_PLAYER_LOGIN			= 3,			// 玩家登陆回应
+	IM_REQUEST_CREATE_ROLE				= 4,			// 玩家创建角色请求
+	IM_RESPONSE_CREATE_ROLE				= 5,			// 玩家创建角色回应
 };
 
 #define MAX_DEBUG_LOG_NAME			32
@@ -60,12 +62,23 @@ public:
 	uint		mSocketTime;							// Socket创建时间
 };
 
-class CIMPlayerDisconnectRequest
+class CIMCreateRoleRequest : public CInternalMsg
 {
-	uint		mErrorCode;								// 错误码
-	uint		mSocketIndex;							// Socket索引
-	uint		mSocketTime;							// Socket创建时间
+public:
+	uint32		mAccountID;								// 账号ID
+	uint16		mChannelID;								// 渠道
+	uint16		mWorldID;								// 服务器ID
+	char		mRoleName[32];							// 角色名
 };
 
 
+class CIMCreateRoleResponse : public CInternalMsg
+{
+public:
+	uint32		mRoleID;								// 角色ID
+	uint32		mAccountID;								// 账号ID
+	uint16		mChannelID;								// 渠道
+	uint16		mWorldID;								// 服务器ID
+	uint32		mSocketIndex;							// Socket索引
+};
 #endif

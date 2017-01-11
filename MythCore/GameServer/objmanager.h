@@ -8,7 +8,10 @@ template<typename T, sint32 MaxCount, sint32 BaseCount, sint32 IncreCount, uint3
 class CObjManager
 {
 public:
-	CObjManager(){}
+	CObjManager()
+	{
+		mLastMaxID = 0;
+	}
 	~CObjManager(){}
 
 public:
@@ -82,7 +85,7 @@ private:
 			return -1;
 		}
 
-		return (nID - IDStart) / MaxCount;
+		return (nID - IDStart) % MaxCount;
 	}
 
 private:

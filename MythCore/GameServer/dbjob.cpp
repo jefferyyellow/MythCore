@@ -47,6 +47,11 @@ void CDBJob::onTask(CInternalMsg* pMsg)
 			OnIMPlayerLoginRequest(pMsg);
 			break;
 		}
+		case IM_REQUEST_CREATE_ROLE:
+		{
+			OnIMCreateRoleRequest(pMsg);
+			break;
+		}
 		default:
 			break;
 	}
@@ -110,4 +115,47 @@ void CDBJob::OnIMPlayerLoginRequest(CInternalMsg* pMsg)
 		printf("OnIMPlayerLoginRequest end");
 	}
 	mDataBase.clearResult();
+}
+
+/// 玩家创建角色
+void CDBJob::OnIMCreateRoleRequest(CInternalMsg* pMsg)
+{
+	if (NULL == pMsg)
+	{
+		return;
+	}
+
+	CIMCreateRoleRequest* pCreateRoleRequest = reinterpret_cast<CIMCreateRoleRequest*>(pMsg);
+	if (NULL == pCreateRoleRequest)
+	{
+		return;
+	}
+	char acBuffer[STRING_LENGTH_128] = { 0 };
+	snprintf(acBuffer, sizeof(acBuffer), "call CreateRole(%d, '%s', %d, %d, %d)", 1, pCreateRoleRequest->mRoleName, pCreateRoleRequest->mAccountID, pCreateRoleRequest->mChannelID, pCreateRoleRequest->mWorldID);
+	CMysqlQueryResult tQueryResult;
+	mDataBase.query(acBuffer, tQueryResult);
+
+	if (tQueryResult.getRowCount() != 1)
+	{
+		mDataBase.clearResult();
+		return;
+	}
+
+	uint32 nRoleID = atoi(tQueryResult.getField(0)->getValue());
+	
+	mDataBase.clearResult();
+
+
+	CIMCreateRoleResponse* pIMCreateRoleResponse = reinterpret_cast<CIMCreateRoleResponse*>(CInternalMsgPool::Inst()->allocMsg(IM_RESPONSE_CREATE_ROLE));
+	if (NULL == pIMCreateRoleResponse)
+	{
+		return;
+	}
+
+	pIMCreateRoleResponse->mRoleID = nRoleID;
+	pIMCreateRoleResponse->mAccountID = pCreateRoleRequest->mAccountID;
+	pIMCreateRoleResponse->mChannelID = pCreateRoleRequest->mChannelID;
+	pIMCreateRoleResponse->mWorldID = pCreateRoleRequest->mWorldID;
+
+	CGameServer::Inst()->pushTask(emTaskType_Login, pIMCreateRoleResponse);
 }

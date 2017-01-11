@@ -260,7 +260,7 @@ namespace Myth
 		// 插入一个空白值
 		PairNode* Insert(const Key& k)
 		{
-			unsigned int hashValue = Hash((char*)k, sizeof(Key));
+			unsigned int hashValue = Hash((char*)&k, sizeof(Key));
 			int nBucket = hashValue % BucketNum;
 			
 
@@ -284,7 +284,7 @@ namespace Myth
 		// 找到一个键值
 		bool Find(const Key &k, Value& v)
 		{
-			unsigned int hashValue = Hash(k, sizeof(Key));
+			unsigned int hashValue = Hash((char*)&k, sizeof(Key));
 			int nBucket = hashValue % BucketNum;
 			PairNode* pNode = GetValue(k, nBucket);
 			if (NULL == pNode)
@@ -298,7 +298,7 @@ namespace Myth
 		// 找到一个键值
 		PairNode* Find(const Key &k)
 		{
-			unsigned int hashValue = Hash((char*)k, sizeof(Key));
+			unsigned int hashValue = Hash((char*)&k, sizeof(Key));
 			int nBucket = hashValue % BucketNum;
 			PairNode* pNode = GetValue(k, nBucket);
 			//assert(NULL != pNode);

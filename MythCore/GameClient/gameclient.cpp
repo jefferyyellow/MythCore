@@ -186,6 +186,18 @@ void CGameClient::onMessageLoginResponse(Message* pMessage)
 	int nRoleID = pLoginResponse->roleid();
 	if (0 == nRoleID)
 	{
-		// 创建角色
+		// 创建角
+		CMessageCreateRoleRequest tCreateRoleRequest;
+		tCreateRoleRequest.set_accountid(pLoginResponse->accountid());
+		tCreateRoleRequest.set_channelid(pLoginResponse->channelid());
+		tCreateRoleRequest.set_worldid(pLoginResponse->worldid());
+		tCreateRoleRequest.set_rolename("hjh");
+		sendMessage(ID_C2S_REQUEST_CREATE_ROLE, &tCreateRoleRequest);
+	}
+	else
+	{
+		CMessageEnterSceneRequest tEnterSceneRequest;
+		tEnterSceneRequest.set_roleid(pLoginResponse->roleid());
+		sendMessage(ID_C2S_REQUEST_ENTER_SCENE, &tEnterSceneRequest);
 	}
 }

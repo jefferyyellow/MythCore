@@ -16,16 +16,17 @@ CObj* CObjPool::allocObj(EmObjType eType)
 
 CObj* CObjPool::getObj(uint32 nObjID)
 {
+	CObj * pObj = NULL;
 	switch (OBJ_TYPE(nObjID))
 	{
 		case emObjType_LoginPlayer:
-			mLoginPlayerPool.getObj(nObjID);
+			pObj = reinterpret_cast<CObj*>(mLoginPlayerPool.getObj(nObjID));
 			break;
 		default:
 			break;
 	}
 
-	return NULL;
+	return pObj;
 }
 
 void CObjPool::free(uint32 nObjID)

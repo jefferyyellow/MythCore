@@ -24,7 +24,7 @@ BEGIN
 	IF FOUND_ROWS() = 0 THEN
 		SELECT 0;
 	ELSE
-		SELECT role_id;
+		SELECT RoleID;
 	END IF;
 END
 DELIMITER ;
@@ -34,6 +34,13 @@ DROP PROCEDURE IF EXISTS `CreateRole`;
 DELIMITER ;;
 CREATE PROCEDURE `CreateRole`(RoleID int unsigned, RoleName char(32), AccountID int unsigned, ChannelID int unsigned, WorldID int unsigned)
 BEGIN
+	DECLARE tmpRoleID INT UNSIGNED;
 	INSERT INTO PlayerRole (role_id,role_name,account_id,channel_id,world_id) values(RoleID, RoleName, AccountID, ChannelID, WorldID);
+	SELECT role_id INTO tmpRoleID from PlayerRole WHERE role_id=RoleID;
+	IF FOUND_ROWS() = 0 THEN
+		SELECT 0;
+	ELSE
+		SELECT tmpRoleID;
+	END IF;
 END
 DELIMITER ;

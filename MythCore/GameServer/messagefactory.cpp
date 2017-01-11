@@ -16,6 +16,11 @@ Message* CMessageFactory::createClientMessage(unsigned short nMessageID)
 	{
 		CASE_NEW_MSG(CMessageLoginRequest, ID_C2S_REQUEST_LOGIN)
 		CASE_NEW_MSG(CMessageLoginResponse, ID_S2C_RESPONSE_LOGIN)
+		CASE_NEW_MSG(CMessageCreateRoleRequest, ID_C2S_REQUEST_CREATE_ROLE)
+		CASE_NEW_MSG(CMessageCreateRoleResponse, ID_S2C_RESPONSE_CREATE_ROLE)
+		CASE_NEW_MSG(CMessageEnterSceneRequest, ID_C2S_REQUEST_ENTER_SCENE)
+		CASE_NEW_MSG(CMessageEnterSceneResponse, ID_S2C_RESPONSE_ENTER_SCENE)
+
 		default:
 			break;
 	}

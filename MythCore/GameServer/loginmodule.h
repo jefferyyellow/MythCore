@@ -16,5 +16,7 @@ public:
 
 private:
 	void		OnMessageLoginRequest(uint32 nSocketIndex, Message* pMessage);
+	void		OnMessageCreateRoleRequest(uint32 nSocketIndex, Message* pMessage);
+	void		OnMessageEnterSceneRequest(uint32 nSocketIndex, Message* pMessage);
 };
 #endif

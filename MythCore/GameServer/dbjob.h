@@ -19,7 +19,8 @@ private:
 	void	onTask(CInternalMsg* pMsg);
 	/// 玩家登陆游戏
 	void	OnIMPlayerLoginRequest(CInternalMsg* pMsg);
-	/// 
+	/// 玩家创建角色
+	void	OnIMCreateRoleRequest(CInternalMsg* pMsg);
 
 private:
 	CMysqlDataBase	mDataBase;
