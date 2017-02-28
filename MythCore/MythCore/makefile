@@ -37,7 +37,7 @@ server_sources :=
 server_objects += $(addprefix $(object_path),$(addsuffix .o,$(notdir $(basename $(server_sources)))))
 dependencies = $(subst .o,.d,$(server_objects))
 
-include_dirs = /usr/local/gcc-4.3.3/include/c++/4.3.3 ./include 
+include_dirs = ./include ../dep/mysql/include 
 CPPFLAGS += $(addprefix -I,$(include_dirs))
 
 vpath %.h $(include_dirs)

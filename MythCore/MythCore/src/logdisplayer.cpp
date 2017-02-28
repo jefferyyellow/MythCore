@@ -1,6 +1,10 @@
 #include "logdisplayer.h"
 #include <stdio.h>
+#ifdef MYTH_OS_WINDOWS
 #include <io.h>
+#else
+#include <unistd.h>
+#endif
 #include <fcntl.h>
 namespace Myth
 {
@@ -23,7 +27,7 @@ namespace Myth
 
 	CRollFileDisplayer::~CRollFileDisplayer()
 	{
-		if (NULL != mFd)
+		if (0 != mFd)
 		{
 			close(mFd);
 		}
@@ -33,7 +37,7 @@ namespace Myth
 	/// display log message
 	void CRollFileDisplayer::DisplayLog(char* pLogMessage)
 	{
-		if (NULL == mFd || NULL == pLogMessage)
+		if (0 == mFd || NULL == pLogMessage)
 		{
 			return;
 		}

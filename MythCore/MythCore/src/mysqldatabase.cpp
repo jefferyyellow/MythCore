@@ -47,7 +47,7 @@ namespace Myth
 			mysql_options(pMysqlInit,MYSQL_OPT_PROTOCOL,(char const*)&opt);
 #else
 			unsigned int opt = MYSQL_PROTOCOL_SOCKET;
-			mysql_options(mysqlInit, MYSQL_OPT_PROTOCOL, (char const*)&opt);
+			mysql_options(pMysqlInit, MYSQL_OPT_PROTOCOL, (char const*)&opt);
 #endif
 		}
 

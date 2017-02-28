@@ -27,7 +27,6 @@ namespace Myth
 	 * \date 2014
 	 */
 
-	#define NULL 0
 	template<typename T>
 	class CSingleton
 	{
