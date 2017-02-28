@@ -16,6 +16,8 @@ CREATE TABLE `PlayerRole` (
 	`channel_id` smallint(11) UNSIGNED NOT NULL,
 	`world_id` smallint(11) UNSIGNED NOT NULL,
 	`account_id` int(11) UNSIGNED NOT NULL,
+	`role_level` int(11) UNSIGNED NOT NULL,
+	`role_exp` bigint UNSIGNED NOT NULL,
 	PRIMARY KEY(`role_id`),
 	KEY `IDX_ROLE_BY_ACCOUT_ID` (`account_id`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;

@@ -74,6 +74,7 @@
     <ClCompile Include="..\message\loginmessage.hxx.pb.cc" />
     <ClCompile Include="..\message\message.hxx.pb.cc" />
     <ClCompile Include="dbjob.cpp" />
+    <ClCompile Include="entity.cpp" />
     <ClCompile Include="gameserver.cpp" />
     <ClCompile Include="gameserverconfig.cpp" />
     <ClCompile Include="internalmsg.cpp" />
@@ -94,6 +95,7 @@
     <ClInclude Include="..\message\message.hxx" />
     <ClInclude Include="..\message\message.hxx.pb.h" />
     <ClInclude Include="dbjob.h" />
+    <ClInclude Include="entity.h" />
     <ClInclude Include="job.h" />
     <ClInclude Include="loginjob.h" />
     <ClInclude Include="obj.h" />

@@ -557,11 +557,32 @@ class CMessageEnterSceneRequest : public ::google::protobuf::Message /* @@protoc
   ::google::protobuf::uint32 roleid() const;
   void set_roleid(::google::protobuf::uint32 value);
 
+  // optional uint32 AccountID = 2;
+  void clear_accountid();
+  static const int kAccountIDFieldNumber = 2;
+  ::google::protobuf::uint32 accountid() const;
+  void set_accountid(::google::protobuf::uint32 value);
+
+  // optional uint32 ChannelID = 3;
+  void clear_channelid();
+  static const int kChannelIDFieldNumber = 3;
+  ::google::protobuf::uint32 channelid() const;
+  void set_channelid(::google::protobuf::uint32 value);
+
+  // optional uint32 WorldID = 4;
+  void clear_worldid();
+  static const int kWorldIDFieldNumber = 4;
+  ::google::protobuf::uint32 worldid() const;
+  void set_worldid(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:CMessageEnterSceneRequest)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::uint32 roleid_;
+  ::google::protobuf::uint32 accountid_;
+  ::google::protobuf::uint32 channelid_;
+  ::google::protobuf::uint32 worldid_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_loginmessage_2ehxx_impl();
   friend void  protobuf_AddDesc_loginmessage_2ehxx_impl();
@@ -948,6 +969,48 @@ inline void CMessageEnterSceneRequest::set_roleid(::google::protobuf::uint32 val
   
   roleid_ = value;
   // @@protoc_insertion_point(field_set:CMessageEnterSceneRequest.RoleID)
+}
+
+// optional uint32 AccountID = 2;
+inline void CMessageEnterSceneRequest::clear_accountid() {
+  accountid_ = 0u;
+}
+inline ::google::protobuf::uint32 CMessageEnterSceneRequest::accountid() const {
+  // @@protoc_insertion_point(field_get:CMessageEnterSceneRequest.AccountID)
+  return accountid_;
+}
+inline void CMessageEnterSceneRequest::set_accountid(::google::protobuf::uint32 value) {
+  
+  accountid_ = value;
+  // @@protoc_insertion_point(field_set:CMessageEnterSceneRequest.AccountID)
+}
+
+// optional uint32 ChannelID = 3;
+inline void CMessageEnterSceneRequest::clear_channelid() {
+  channelid_ = 0u;
+}
+inline ::google::protobuf::uint32 CMessageEnterSceneRequest::channelid() const {
+  // @@protoc_insertion_point(field_get:CMessageEnterSceneRequest.ChannelID)
+  return channelid_;
+}
+inline void CMessageEnterSceneRequest::set_channelid(::google::protobuf::uint32 value) {
+  
+  channelid_ = value;
+  // @@protoc_insertion_point(field_set:CMessageEnterSceneRequest.ChannelID)
+}
+
+// optional uint32 WorldID = 4;
+inline void CMessageEnterSceneRequest::clear_worldid() {
+  worldid_ = 0u;
+}
+inline ::google::protobuf::uint32 CMessageEnterSceneRequest::worldid() const {
+  // @@protoc_insertion_point(field_get:CMessageEnterSceneRequest.WorldID)
+  return worldid_;
+}
+inline void CMessageEnterSceneRequest::set_worldid(::google::protobuf::uint32 value) {
+  
+  worldid_ = value;
+  // @@protoc_insertion_point(field_set:CMessageEnterSceneRequest.WorldID)
 }
 
 inline const CMessageEnterSceneRequest* CMessageEnterSceneRequest::internal_default_instance() {

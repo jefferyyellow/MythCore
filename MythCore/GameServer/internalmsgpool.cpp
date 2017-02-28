@@ -27,6 +27,21 @@ CInternalMsg* CInternalMsgPool::allocMsg(int nMessageID)
 			pMsg = reinterpret_cast<CInternalMsg*>(mCreateRoleRequest.allocate());
 			break;
 		}
+		case IM_RESPONSE_CREATE_ROLE:
+		{
+			pMsg = reinterpret_cast<CInternalMsg*>(mCreateRoleResponse.allocate());
+			break;
+		}
+		case IM_REQUEST_ENTER_SCENE:
+		{
+			pMsg = reinterpret_cast<CInternalMsg*>(mEnterSceneRequest.allocate());
+			break;
+		}
+		case IM_RESPONSE_ENTER_SCENE:
+		{
+			pMsg = reinterpret_cast<CInternalMsg*>(mEnterSceneResponse.allocate());
+			break;
+		}
 		default:
 		{
 			break;
@@ -64,6 +79,21 @@ void CInternalMsgPool::freeMsg(CInternalMsg* pMsg)
 		case IM_REQUEST_CREATE_ROLE:
 		{
 			mCreateRoleRequest.free((CIMCreateRoleRequest*)pMsg);
+			break;
+		}
+		case IM_RESPONSE_CREATE_ROLE:
+		{
+			mCreateRoleResponse.free((CIMCreateRoleResponse*)pMsg);
+			break;
+		}
+		case IM_REQUEST_ENTER_SCENE:
+		{
+			mEnterSceneRequest.free((CIMEnterSceneRequest*)pMsg);
+			break;
+		}
+		case IM_RESPONSE_ENTER_SCENE:
+		{
+			mEnterSceneResponse.free((CIMEnterSceneResponse*)pMsg);
 			break;
 		}
 		default:

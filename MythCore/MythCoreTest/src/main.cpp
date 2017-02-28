@@ -1032,7 +1032,7 @@ public:
 	{
 		cs.lock();
 		//printf("Thread Serial Num :%d, %d\n", uParam, mNum);
-		LOG_DEBUG("pro", "Thread Serial Num :%d, %d\n", uParam, getJobID());
+		//LOG_DEBUG("pro", "Thread Serial Num :%d, %d\n", uParam, getJobID());
 		cs.unlock();
 	}
 };
@@ -1134,7 +1134,7 @@ int main(int argc, char** argv)
 	CRollFileDisplayer tProFileDisplayer(const_cast<char*>(pProLogName), 1024000, 10);
 	mProDebugLog.AddDisplayer(&tProFileDisplayer);
 	
-	LOG_DEBUG("pro", "%s", "Pro log message is here!\n");
+//	LOG_DEBUG("pro", "%s", "Pro log message is here!\n");
 
 
 	Myth::CThreadPool threadpool(4);
@@ -1167,7 +1167,7 @@ int main(int argc, char** argv)
 	{
 		//printf("begin next\n");
 		cs.lock();
-		LOG_DEBUG("pro", "begin next\n");
+//		LOG_DEBUG("pro", "begin next\n");
 		cs.unlock();
 		threadpool.run();
 #ifdef MYTH_OS_WINDOWS

@@ -46,6 +46,9 @@ message CMessageCreateRoleResponse
 message CMessageEnterSceneRequest
 {
 	uint32	RoleID					= 1;
+	uint32	AccountID				= 2;
+	uint32	ChannelID				= 3;
+	uint32	WorldID					= 4;
 }
 
 message CMessageEnterSceneResponse

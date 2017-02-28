@@ -4,6 +4,8 @@
 #include "sharememory.h"
 #include "socketstream.h"
 #include "messagefactory.h"
+#include "singleton.h"
+#include "hashmap.h"
 using namespace Myth;
 
 
@@ -15,8 +17,11 @@ struct CExchangeHead
 	uint32	mTcpIndex;
 	uint8	mTcpState;
 };
-class CSceneJob : public CJob < 1000, 100 >
+class CSceneJob : public CJob < 1000, 100 >, CSingleton<CSceneJob>
 {
+	friend class CSingleton<CSceneJob>;
+	typedef CHashMap<uint32, uint32, 100, 100, 100> PLAYER_LIST;
+
 public:
 	CSceneJob(){}
 	~CSceneJob(){}
@@ -43,5 +48,8 @@ private:
 	CSocketStream*			mTcp2ServerMemory;
 	CSocketStream*			mServer2TcpMemory;
 	char					mBuffer[MAX_SOCKET_BUFF_SIZE + sizeof(CExchangeHead)];
+
+	/// ¼üÊÇrole id,ÖµÊÇobj id
+	PLAYER_LIST				mPlayerList; 
 };
 #endif

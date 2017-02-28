@@ -21,6 +21,8 @@ private:
 	void	OnIMPlayerLoginRequest(CInternalMsg* pMsg);
 	/// 玩家创建角色
 	void	OnIMCreateRoleRequest(CInternalMsg* pMsg);
+	// 玩家进入场景
+	void	OnIMEnterSceneRequest(CInternalMsg* pMsg);
 
 private:
 	CMysqlDataBase	mDataBase;

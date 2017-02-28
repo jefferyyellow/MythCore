@@ -17,6 +17,8 @@ private:
 	void	onIMPlayerLoginResponse(CInternalMsg* pMsg);
 	void	onIMCreateRoleRequest(CInternalMsg* pMsg);
 	void	OnIMCreateRoleResponse(CInternalMsg* pMsg);
+	void	OnIMEnterSceneRequest(CInternalMsg* pMsg);
+	void	OnIMEnterSceneResponse(CInternalMsg* pMsg);
 
 private:
 	typedef CHashMap<uint64, uint32, 100, 100, 100> LOGIN_LIST;

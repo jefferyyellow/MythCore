@@ -3,6 +3,8 @@
 #include "internalmsg.h"
 #include "internalmsgpool.h"
 #include "gameserver.h"
+#include "entity.h"
+#include "objpool.h"
 CLoginModule::CLoginModule()
 {
 
@@ -103,6 +105,28 @@ void CLoginModule::OnMessageEnterSceneRequest(uint32 nSocketIndex, Message* pMes
 	{
 		return;
 	}
-	uint32 nRoleID = pEnterSceneRequest->roleid();
 
+	CIMEnterSceneRequest* pIMEnterSceneRequest = (CIMEnterSceneRequest*)CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_ENTER_SCENE);
+	if (NULL == pIMEnterSceneRequest)
+	{
+		return;
+	}
+
+	CEntityPlayer* pNewPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->allocObj(emObjType_Player));
+	if (NULL == pNewPlayer)
+	{
+		return;
+	}
+
+	pNewPlayer->setRoleID(pEnterSceneRequest->roleid());
+
+
+
+	pIMEnterSceneRequest->mRoleID = pEnterSceneRequest->roleid();
+	pIMEnterSceneRequest->mAccountID = pEnterSceneRequest->accountid();
+	pIMEnterSceneRequest->mChannelID = pEnterSceneRequest->channelid();
+	pIMEnterSceneRequest->mWorldID = pEnterSceneRequest->worldid();
+	pIMEnterSceneRequest->mPlayerEntityID = pNewPlayer->getObjID();
+
+	CGameServer::Inst()->pushTask(emTaskType_Login, pIMEnterSceneRequest);
 }

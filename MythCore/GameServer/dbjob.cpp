@@ -3,6 +3,8 @@
 #include "internalmsgpool.h"
 #include "mysqlqueryresult.h"
 #include "gameserver.h"
+#include "entity.h"
+#include "objpool.h"
 CDBJob::CDBJob()
 {
 
@@ -50,6 +52,11 @@ void CDBJob::onTask(CInternalMsg* pMsg)
 		case IM_REQUEST_CREATE_ROLE:
 		{
 			OnIMCreateRoleRequest(pMsg);
+			break;
+		}
+		case IM_REQUEST_ENTER_SCENE:
+		{
+			OnIMEnterSceneRequest(pMsg);
 			break;
 		}
 		default:
@@ -158,4 +165,56 @@ void CDBJob::OnIMCreateRoleRequest(CInternalMsg* pMsg)
 	pIMCreateRoleResponse->mWorldID = pCreateRoleRequest->mWorldID;
 
 	CGameServer::Inst()->pushTask(emTaskType_Login, pIMCreateRoleResponse);
+}
+
+// 玩家进入场景
+void CDBJob::OnIMEnterSceneRequest(CInternalMsg* pMsg)
+{
+	if (NULL == pMsg)
+	{
+		return;
+	}
+
+	CIMEnterSceneRequest* pEnterSceneRequest = reinterpret_cast<CIMEnterSceneRequest*>(pMsg);
+	if (NULL == pEnterSceneRequest)
+	{
+		return;
+	}
+
+	CIMEnterSceneResponse* pEnterSceneResponse = reinterpret_cast<CIMEnterSceneResponse*>(CInternalMsgPool::Inst()->allocMsg(IM_RESPONSE_ENTER_SCENE));
+	if (NULL == pEnterSceneResponse)
+	{
+		return;
+	}
+
+	uint32 nRoleID = pEnterSceneRequest->mRoleID;
+	uint32 nPlayerEntityID = pEnterSceneRequest->mPlayerEntityID;
+
+	char acBuffer[STRING_LENGTH_128] = { 0 };
+	snprintf(acBuffer, sizeof(acBuffer), "call LoadPlayerInfo(%d)", nRoleID);
+	CMysqlQueryResult tQueryResult;
+	mDataBase.query(acBuffer, tQueryResult);
+
+
+	CEntityPlayer* pEntityPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(nPlayerEntityID));
+	if (NULL == pEntityPlayer)
+	{
+		return;
+	}
+	// 取得数据库加载的结果
+	pEntityPlayer->setName(tQueryResult.getField(0)->getValue());
+	pEntityPlayer->setRoleLevel(atoi(tQueryResult.getField(1)->getValue()));
+	pEntityPlayer->setRoleExp(atoll(tQueryResult.getField(2)->getValue()));
+
+
+	mDataBase.clearResult();
+
+	pEnterSceneResponse->mRoleID = pEnterSceneRequest->mRoleID;
+	pEnterSceneResponse->mAccountID = pEnterSceneRequest->mAccountID;
+	pEnterSceneResponse->mChannelID = pEnterSceneRequest->mChannelID;
+	pEnterSceneResponse->mWorldID = pEnterSceneRequest->mWorldID;
+	pEnterSceneResponse->mPlayerEntityID = pEnterSceneRequest->mPlayerEntityID;
+
+
+	CGameServer::Inst()->pushTask(emTaskType_Login, pEnterSceneResponse);
 }

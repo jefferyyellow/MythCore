@@ -52,6 +52,11 @@ void CSceneJob::onTask(CInternalMsg* pMsg)
 			sendClientMessage(pIMCreateRoleResponse->mSocketIndex, 0, ID_S2C_RESPONSE_CREATE_ROLE, &tCreateRoleResponse);
 			break;
 		}
+		case IM_RESPONSE_ENTER_SCENE:
+		{
+
+			break;
+		}
 		default:
 			break;
 	}

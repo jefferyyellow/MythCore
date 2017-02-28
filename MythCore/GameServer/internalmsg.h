@@ -10,6 +10,8 @@ enum TmInternalMsgID
 	IM_RESPONSE_PLAYER_LOGIN			= 3,			// 玩家登陆回应
 	IM_REQUEST_CREATE_ROLE				= 4,			// 玩家创建角色请求
 	IM_RESPONSE_CREATE_ROLE				= 5,			// 玩家创建角色回应
+	IM_REQUEST_ENTER_SCENE				= 6,			// 玩家进入场景的请求
+	IM_RESPONSE_ENTER_SCENE				= 7,			// 玩家进入场景的回应
 };
 
 #define MAX_DEBUG_LOG_NAME			32
@@ -80,5 +82,25 @@ public:
 	uint16		mChannelID;								// 渠道
 	uint16		mWorldID;								// 服务器ID
 	uint32		mSocketIndex;							// Socket索引
+};
+
+class CIMEnterSceneRequest : public CInternalMsg
+{
+public:
+	uint32		mRoleID;								// 角色ID
+	uint32		mAccountID;								// 账号ID
+	uint16		mChannelID;								// 渠道
+	uint16		mWorldID;								// 服务器ID
+	uint32		mPlayerEntityID;						// 角色的实体ID
+};
+
+class CIMEnterSceneResponse : public CInternalMsg
+{
+public:
+	uint32		mRoleID;								// 角色ID
+	uint32		mAccountID;								// 账号ID
+	uint16		mChannelID;								// 渠道
+	uint16		mWorldID;								// 服务器ID
+	uint32		mPlayerEntityID;						// 角色的实体ID
 };
 #endif

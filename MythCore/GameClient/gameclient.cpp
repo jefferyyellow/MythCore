@@ -198,6 +198,9 @@ void CGameClient::onMessageLoginResponse(Message* pMessage)
 	{
 		CMessageEnterSceneRequest tEnterSceneRequest;
 		tEnterSceneRequest.set_roleid(pLoginResponse->roleid());
+		tEnterSceneRequest.set_accountid(pLoginResponse->accountid());
+		tEnterSceneRequest.set_channelid(pLoginResponse->channelid());
+		tEnterSceneRequest.set_worldid(pLoginResponse->worldid());
 		sendMessage(ID_C2S_REQUEST_ENTER_SCENE, &tEnterSceneRequest);
 	}
 }

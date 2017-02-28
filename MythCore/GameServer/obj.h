@@ -9,8 +9,9 @@
 
 enum  EmObjType
 {
-	emObjType_None = 0,		// Î´Öª
-	emObjType_LoginPlayer = 1,		// µÇÂ¼Íæ¼Ò
+	emObjType_None				= 0,		// Î´Öª
+	emObjType_LoginPlayer		= 1,		// µÇÂ¼Íæ¼Ò
+	emObjType_Player			= 2,		// Íæ¼Ò
 };
 
 class CObj
@@ -41,9 +42,14 @@ public:
 
 	uint32		getSocketTime(){return mSocketTime;}
 	void		setSocketTime(uint32 nSocketTime){mSocketTime = nSocketTime;}
+
+	uint32		getRoleID() const { return mRoleID; }
+	void		setRoleID(uint32 nValue) { mRoleID = nValue; }
+
 private:
 	uint64		mKey;
 	uint32		mSocketIndex;
 	uint32		mSocketTime;
+	uint32		mRoleID;
 };
 #endif

@@ -44,3 +44,11 @@ BEGIN
 	END IF;
 END
 DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS `LoadPlayerInfo`;
+DELIMITER ;;
+CREATE PROCEDURE `LoadPlayerInfo`(RoleID int unsigned)
+BEGIN
+	select role_name, role_level, role_exp from PlayerRole WHERE role_id=RoleID;
+END
