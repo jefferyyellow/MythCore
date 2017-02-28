@@ -83,7 +83,11 @@ private:
 	CShareMemory*			mShareMemory;
 	CSocketStream*			mTcp2ServerMemory;
 	CSocketStream*			mServer2TcpMemory;
+#ifdef MYTH_OS_WINDOWS
 	CSelectModel*			mSelectModel;
+#else
+	CEpollModel*			mEpollModel;
+#endif
 	CTcpSocket*				mTcpSocket;
 
 	CBlockMemory<CTcpSocketBuff, 20, 20>	mSocketBuffPool;

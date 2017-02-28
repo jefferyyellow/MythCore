@@ -123,6 +123,8 @@ bool CTcpServer::initShareMemory()
 	return true;
 }
 
+
+#ifdef MYTH_OS_WINDOWS
 /// 初始化Socket
 bool CTcpServer::initSocket()
 {
@@ -138,7 +140,7 @@ bool CTcpServer::initSocket()
 	{
 		return false;
 	}
-	
+
 	CTcpSocket* pListenSocket = mSelectModel->createListenSocket(NULL, 6688, 5);
 	if (NULL == pListenSocket)
 	{
@@ -150,6 +152,28 @@ bool CTcpServer::initSocket()
 
 	return true;
 }
+#else
+/// 初始化Socket
+bool CTcpServer::initSocket()
+{
+	mTcpSocket = new CTcpSocket[MAX_SOCKET_NUM];
+	if (NULL == mTcpSocket)
+	{
+		return false;
+	}
+
+	mEpollModel = new CEpollModel(mTcpSocket, MAX_SOCKET_NUM);
+
+	CTcpSocket* pListenSocket = mEpollModel->createListenSocket(NULL, 6688, 5);
+	if (NULL == pListenSocket)
+	{
+		return false;
+	}
+	pListenSocket->setNonBlock(true);
+	pListenSocket->setSendBuffSizeOption(8192);
+	pListenSocket->setRecvBuffSizeOption(8192);
+}
+#endif
 
 /// 运行
 void CTcpServer::run()
@@ -163,6 +187,7 @@ void CTcpServer::run()
 	
 }
 
+#ifdef MYTH_OS_WINDOWS
 /// 接收消息
 void CTcpServer::receiveMessage()
 {
@@ -224,6 +249,86 @@ void CTcpServer::receiveMessage()
 		}
 	}
 }
+#else
+void CTcpServer::receiveMessage()
+{
+	int nNumFd = epoll_wait(mEpollFd, mpWaitEvents, mSocketCapacity, mWaitTimeOut);
+	if (nNumFd < 0)
+	{
+		// 出错，记录错误日志
+	}
+
+	struct epoll_event* pEvent = mpWaitEvents;
+	int nFd = -1;
+	for (int i = 0; i < nNumFd; i++, pEvent++)
+	{
+		nFd = pEvent->data.fd;
+		if (0 > nFd)
+		{
+			// 出错
+			continue;
+		}
+
+		// error
+		if (0 != (EPOLLERR & pEvent->events))
+		{
+			// 出错
+			continue;
+		}
+		// 不可读，直接滚蛋
+		if (0 == (EPOLLIN & pEvent->events))
+		{
+			continue;
+		}
+		if (nFd >= mSocketCapacity)
+		{
+			continue;
+		}
+		CTcpSocket& rTcpSocket = mpAllSocket[nFd];
+
+		// listen socket
+		if (rTcpSocket.GetListen())
+		{
+			CTcpSocket* pNewSocket = mEpollModel->acceptConnection(rTcpSocket);
+
+			if (NULL == pNewSocket)
+			{
+				// 出错
+			}
+			CTcpSocketBuff* pNewSocketBuff = mSocketBuffPool.allocate();
+			if (NULL == pNewSocketBuff)
+			{
+				// 出错
+			}
+			pNewSocket->setRecvBuff(pNewSocketBuff->mData);
+			pNewSocket->setMaxRecvBuffSize(MAX_SOCKET_BUFF_SIZE);
+			pNewSocket->setRecvBuffSize(0);
+			mSelectModel->addNewSocket(pNewSocket);
+
+			printf("IP: %s connect success", pNewSocket->getIP());
+		}
+		else
+		{
+			int nResult = rTcpSocket.recvData(rTcpSocket.getRecvBuffPoint(), rTcpSocket.getRecvBuffCapacity());
+			if (nResult <= 0)
+			{
+				// 客户端已经退出
+				int nRemoveFd = rTcpSocket.getSocketFd();
+				rTcpSocket.closeSocket();
+				mEpollModel->delSocket(nRemoveFd);
+				break;
+			}
+			else
+			{
+				rTcpSocket.setRecvBuffSize(pAllSocket[i].getRecvBuffSize() + nResult);
+				onReceiveMessage(&rTcpSocket, nFd);
+				printf("receive message");
+			}
+		}
+	}
+}
+#endif
+
 
 // 服务器收到一个前端消息
 void CTcpServer::onReceiveMessage(CTcpSocket* pSocket, int nIndex)
@@ -308,7 +413,11 @@ void CTcpServer::sendMessage()
 		}
 
 		int nTcpIndex = pExchangeHead->mTcpIndex;
+#ifdef MYTH_OS_WINDOWS
 		int nResult = mSelectModel->processWrite(nTcpIndex, pTemp, nMessageLen);
+#else
+		int nResult = mEpollModel->processWrite(nTcpIndex, pTemp, nMessageLen);
+#endif
 		if (nResult == nMessageLen && pExchangeHead->mTcpState == emTcpState_Close)
 		{
 			CTcpSocket* pSocket = mSelectModel->getSocket(nTcpIndex);
