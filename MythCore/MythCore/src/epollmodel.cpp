@@ -7,6 +7,15 @@
 #include <arpa/inet.h>
 namespace Myth
 {
+	CTcpSocket*	CEpollModel::getSocket(int nFd)
+	{
+		if (nFd < 0 || nFd >= mSocketCapacity)
+		{
+			return NULL;
+		}
+		return &(mpAllSocket[nFd]);
+	}
+
 	int	CEpollModel::initEpollSocket()
 	{
 		mCtrlEvent.events = EPOLLIN | EPOLLERR | EPOLLHUP;
@@ -28,7 +37,7 @@ namespace Myth
 	}
 
 
-	CTcpSocket* CEpollModel::createListenSocket(char* pIP, uint32 uPort, int nListNum, int nSendBuffSize, int nRecvBuffSize)
+	CTcpSocket* CEpollModel::createListenSocket(char* pIP, uint32 uPort, int nListNum)
 	{
 		SOCKET nNewFd = socket(AF_INET, SOCK_STREAM, 0);
 		if(INVALID_SOCKET == nNewFd)

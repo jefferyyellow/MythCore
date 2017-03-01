@@ -180,7 +180,9 @@ void CTcpServer::run()
 {
 	while (true)
 	{
+#ifdef MYTH_OS_WINDOWS
 		mSelectModel->selectAllFd();
+#endif
 		receiveMessage();
 		sendMessage();
 	}
@@ -252,13 +254,15 @@ void CTcpServer::receiveMessage()
 #else
 void CTcpServer::receiveMessage()
 {
-	int nNumFd = epoll_wait(mEpollFd, mpWaitEvents, mSocketCapacity, mWaitTimeOut);
+	int nNumFd = mEpollModel->wait();
 	if (nNumFd < 0)
 	{
 		// 出错，记录错误日志
 	}
 
-	struct epoll_event* pEvent = mpWaitEvents;
+	struct epoll_event* pEvent = mEpollModel->getWaitEvents();
+	CTcpSocket* pAllSocket = mEpollModel->getAllSocket();
+	int nSocketCapacity = mEpollModel->SocketCapacity();
 	int nFd = -1;
 	for (int i = 0; i < nNumFd; i++, pEvent++)
 	{
@@ -280,11 +284,11 @@ void CTcpServer::receiveMessage()
 		{
 			continue;
 		}
-		if (nFd >= mSocketCapacity)
+		if (nFd >= nSocketCapacity)
 		{
 			continue;
 		}
-		CTcpSocket& rTcpSocket = mpAllSocket[nFd];
+		CTcpSocket& rTcpSocket = pAllSocket[nFd];
 
 		// listen socket
 		if (rTcpSocket.GetListen())
@@ -303,7 +307,6 @@ void CTcpServer::receiveMessage()
 			pNewSocket->setRecvBuff(pNewSocketBuff->mData);
 			pNewSocket->setMaxRecvBuffSize(MAX_SOCKET_BUFF_SIZE);
 			pNewSocket->setRecvBuffSize(0);
-			mSelectModel->addNewSocket(pNewSocket);
 
 			printf("IP: %s connect success", pNewSocket->getIP());
 		}
@@ -320,7 +323,7 @@ void CTcpServer::receiveMessage()
 			}
 			else
 			{
-				rTcpSocket.setRecvBuffSize(pAllSocket[i].getRecvBuffSize() + nResult);
+				rTcpSocket.setRecvBuffSize(rTcpSocket.getRecvBuffSize() + nResult);
 				onReceiveMessage(&rTcpSocket, nFd);
 				printf("receive message");
 			}
@@ -415,9 +418,6 @@ void CTcpServer::sendMessage()
 		int nTcpIndex = pExchangeHead->mTcpIndex;
 #ifdef MYTH_OS_WINDOWS
 		int nResult = mSelectModel->processWrite(nTcpIndex, pTemp, nMessageLen);
-#else
-		int nResult = mEpollModel->processWrite(nTcpIndex, pTemp, nMessageLen);
-#endif
 		if (nResult == nMessageLen && pExchangeHead->mTcpState == emTcpState_Close)
 		{
 			CTcpSocket* pSocket = mSelectModel->getSocket(nTcpIndex);
@@ -428,6 +428,20 @@ void CTcpServer::sendMessage()
 				mSelectModel->removeSocket(nRemoveFd);
 			}
 		}
+#else
+		int nResult = mEpollModel->processWrite(nTcpIndex, pTemp, nMessageLen);
+		if (nResult == nMessageLen && pExchangeHead->mTcpState == emTcpState_Close)
+		{
+			CTcpSocket* pSocket = mEpollModel->getSocket(nTcpIndex);
+			if (NULL != pSocket)
+			{
+				int nRemoveFd = pSocket->getSocketFd();
+				pSocket->closeSocket();
+				mEpollModel->delSocket(nRemoveFd);
+			}
+		}
+#endif
+
 	}
 }
 

@@ -8,6 +8,7 @@
 #include "sharememory.h"
 #include "selectmodel.h"
 #include "blockmemory.h"
+#include "epollmodel.h"
 
 #ifdef SMALL_SIZE
 #define MAX_SOCKET_NUM				200				/*单个TCPCtrl支持的连接数*/

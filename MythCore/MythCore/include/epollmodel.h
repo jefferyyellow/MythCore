@@ -48,12 +48,26 @@ namespace Myth
 			close(mEpollFd);
 		}
 
+
+		CTcpSocket* getAllSocket() const { return mpAllSocket; }
+		epoll_event* getWaitEvents() const {return mpWaitEvents;}
+
+		uint16 SocketCapacity() const { return mSocketCapacity; }
+		void SocketCapacity(uint16 uValue) { mSocketCapacity = uValue; }
+
+		CTcpSocket*	getSocket(int nFd);
+
 	public:
-		int	initEpollSocket();
-		int createListenSocket(char* pIP, uint32 uPort, int nListNum, int nSendBuffSize, int nRecvBuffSize);
-		int addSocket(int nfd);
-		int delSocket(int nfd);
-		void epollWait();
+		int			wait()
+		{
+			return epoll_wait(mEpollFd, mpWaitEvents, mSocketCapacity, mWaitTimeOut);
+		}
+		int			initEpollSocket();
+		CTcpSocket* createListenSocket(char* pIP, uint32 uPort, int nListNum);
+		int			addSocket(int nfd);
+		int			delSocket(int nfd);
+		CTcpSocket* acceptConnection(CTcpSocket& rListSocket);
+		int			processWrite(int nSocketFd, char* pBuffer, int nBuffSize);
 	private:
 		int                 mEpollFd;
 		struct epoll_event  *mpWaitEvents;
