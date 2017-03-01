@@ -1,5 +1,8 @@
 #include "sharememory.h"
-#include <stdio.h.>
+#include <stdio.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <errno.h>
 
 namespace Myth
 {
@@ -91,11 +94,8 @@ namespace Myth
 			}
 		}
 
-		mShmKey = nKey;
-		mShmSize = nShmSize;
 
-		mpShmPoint = (uint8*)shmat(nShmID, NULL, 0);
-		return mpShmPoint;
+		return (uint8*)shmat(nShmID, NULL, 0);
 	}
 
 	int CShareMemory::destroyShareMemory(uint32 nKey, uint8* pShmPoint)
