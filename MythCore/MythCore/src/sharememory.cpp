@@ -1,8 +1,11 @@
 #include "sharememory.h"
 #include <stdio.h>
+#ifdef MYTH_OS_UNIX
 #include <sys/ipc.h>
 #include <sys/shm.h>
 #include <errno.h>
+#endif
+
 
 namespace Myth
 {

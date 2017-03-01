@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#ifdef MYTH_OS_UNIX
 #include <signal.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -7,6 +8,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/file.h>
+#endif
 #include "commontype.h"
 #include "tcpserver.h"
 
