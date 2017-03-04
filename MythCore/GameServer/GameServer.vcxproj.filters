@@ -21,47 +21,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="gameserver.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="dbjob.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="internalmsg.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="internalmsgpool.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="messagefactory.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="loginmodule.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="gameserverconfig.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="tinyxml\tinyxml2.cpp">
       <Filter>tinyxml</Filter>
-    </ClCompile>
-    <ClCompile Include="locallogjob.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="job.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="loginjob.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="objpool.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="scenejob.cpp">
-      <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\message\loginmessage.hxx.pb.cc">
       <Filter>message</Filter>
@@ -69,58 +30,55 @@
     <ClCompile Include="..\message\message.hxx.pb.cc">
       <Filter>message</Filter>
     </ClCompile>
-    <ClCompile Include="entity.cpp">
+    <ClCompile Include="src\dbjob.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entity.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameserver.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameserverconfig.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\internalmsg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\internalmsgpool.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\job.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\locallogjob.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\loginjob.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\loginmodule.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\messagefactory.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objmanager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\objpool.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\scenejob.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="dbjob.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="gameserver.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="internalmsg.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="internalmsgpool.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="messagefactory.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="loginmodule.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="tinyxml\tinyxml2.h">
       <Filter>tinyxml</Filter>
-    </ClInclude>
-    <ClInclude Include="locallogjob.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="taskmanager.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="job.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="gameserverconfig.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="loginjob.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="objpool.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="obj.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="objmanager.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="scenejob.h">
-      <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\message\loginmessage.hxx">
       <Filter>message</Filter>
@@ -134,7 +92,52 @@
     <ClInclude Include="..\message\message.hxx.pb.h">
       <Filter>message</Filter>
     </ClInclude>
-    <ClInclude Include="entity.h">
+    <ClInclude Include="inc\dbjob.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\entity.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gameserver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gameserverconfig.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\internalmsg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\internalmsgpool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\job.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\locallogjob.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\loginjob.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\loginmodule.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\messagefactory.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\obj.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\objmanager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\objpool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\scenejob.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\taskmanager.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

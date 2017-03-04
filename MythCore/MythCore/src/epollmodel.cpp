@@ -56,6 +56,7 @@ namespace Myth
 		rNewSocket.setSocketFd(nNewFd);
 		rNewSocket.setIP(pIP);
 		rNewSocket.setPort(uPort);
+		rNewSocket.SetListen(1);
 		if(rNewSocket.setNonBlock(true) < 0)
 		{
 			// ³ö´í

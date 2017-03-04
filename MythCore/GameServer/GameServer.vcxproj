@@ -45,7 +45,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>MYTH_OS_WINDOWS;_CRT_SECURE_NO_WARNINGS;__DEBUG__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../MythCore/include;../dep/protobuffer;../message;../dep/mysql/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../MythCore/include;../dep/protobuffer;../message;../dep/mysql/include;./inc;./tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -73,20 +73,21 @@
   <ItemGroup>
     <ClCompile Include="..\message\loginmessage.hxx.pb.cc" />
     <ClCompile Include="..\message\message.hxx.pb.cc" />
-    <ClCompile Include="dbjob.cpp" />
-    <ClCompile Include="entity.cpp" />
-    <ClCompile Include="gameserver.cpp" />
-    <ClCompile Include="gameserverconfig.cpp" />
-    <ClCompile Include="internalmsg.cpp" />
-    <ClCompile Include="internalmsgpool.cpp" />
-    <ClCompile Include="job.cpp" />
-    <ClCompile Include="locallogjob.cpp" />
-    <ClCompile Include="loginjob.cpp" />
-    <ClCompile Include="loginmodule.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="messagefactory.cpp" />
-    <ClCompile Include="objpool.cpp" />
-    <ClCompile Include="scenejob.cpp" />
+    <ClCompile Include="src\dbjob.cpp" />
+    <ClCompile Include="src\entity.cpp" />
+    <ClCompile Include="src\gameserver.cpp" />
+    <ClCompile Include="src\gameserverconfig.cpp" />
+    <ClCompile Include="src\internalmsg.cpp" />
+    <ClCompile Include="src\internalmsgpool.cpp" />
+    <ClCompile Include="src\job.cpp" />
+    <ClCompile Include="src\locallogjob.cpp" />
+    <ClCompile Include="src\loginjob.cpp" />
+    <ClCompile Include="src\loginmodule.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\messagefactory.cpp" />
+    <ClCompile Include="src\objmanager.cpp" />
+    <ClCompile Include="src\objpool.cpp" />
+    <ClCompile Include="src\scenejob.cpp" />
     <ClCompile Include="tinyxml\tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -94,22 +95,22 @@
     <ClInclude Include="..\message\loginmessage.hxx.pb.h" />
     <ClInclude Include="..\message\message.hxx" />
     <ClInclude Include="..\message\message.hxx.pb.h" />
-    <ClInclude Include="dbjob.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="job.h" />
-    <ClInclude Include="loginjob.h" />
-    <ClInclude Include="obj.h" />
-    <ClInclude Include="objmanager.h" />
-    <ClInclude Include="objpool.h" />
-    <ClInclude Include="scenejob.h" />
-    <ClInclude Include="taskmanager.h" />
-    <ClInclude Include="gameserver.h" />
-    <ClInclude Include="gameserverconfig.h" />
-    <ClInclude Include="internalmsg.h" />
-    <ClInclude Include="internalmsgpool.h" />
-    <ClInclude Include="locallogjob.h" />
-    <ClInclude Include="loginmodule.h" />
-    <ClInclude Include="messagefactory.h" />
+    <ClInclude Include="inc\dbjob.h" />
+    <ClInclude Include="inc\entity.h" />
+    <ClInclude Include="inc\gameserver.h" />
+    <ClInclude Include="inc\gameserverconfig.h" />
+    <ClInclude Include="inc\internalmsg.h" />
+    <ClInclude Include="inc\internalmsgpool.h" />
+    <ClInclude Include="inc\job.h" />
+    <ClInclude Include="inc\locallogjob.h" />
+    <ClInclude Include="inc\loginjob.h" />
+    <ClInclude Include="inc\loginmodule.h" />
+    <ClInclude Include="inc\messagefactory.h" />
+    <ClInclude Include="inc\obj.h" />
+    <ClInclude Include="inc\objmanager.h" />
+    <ClInclude Include="inc\objpool.h" />
+    <ClInclude Include="inc\scenejob.h" />
+    <ClInclude Include="inc\taskmanager.h" />
     <ClInclude Include="tinyxml\tinyxml2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,5 +1,6 @@
 #ifndef __SINGLETON_H__
 #define __SINGLETON_H__
+#include <stddef.h>
 namespace Myth
 {
 	/**

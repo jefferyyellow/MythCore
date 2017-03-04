@@ -163,6 +163,11 @@ bool CTcpServer::initSocket()
 	}
 
 	mEpollModel = new CEpollModel(mTcpSocket, MAX_SOCKET_NUM);
+	if (NULL == mEpollModel)
+	{
+		return false;
+	}
+	mEpollModel->initEpollSocket();
 
 	CTcpSocket* pListenSocket = mEpollModel->createListenSocket(NULL, 6688, 5);
 	if (NULL == pListenSocket)
@@ -279,16 +284,20 @@ void CTcpServer::receiveMessage()
 			// 出错
 			continue;
 		}
-		// 不可读，直接滚蛋
-		if (0 == (EPOLLIN & pEvent->events))
-		{
-			continue;
-		}
+
 		if (nFd >= nSocketCapacity)
 		{
 			continue;
 		}
 		CTcpSocket& rTcpSocket = pAllSocket[nFd];
+
+		// 不可读，直接滚蛋
+		if (0 == (EPOLLIN & pEvent->events))
+		{
+			rTcpSocket.closeSocket();
+			mEpollModel->delSocket(nFd);
+			continue;
+		}
 
 		// listen socket
 		if (rTcpSocket.GetListen())
@@ -308,7 +317,7 @@ void CTcpServer::receiveMessage()
 			pNewSocket->setMaxRecvBuffSize(MAX_SOCKET_BUFF_SIZE);
 			pNewSocket->setRecvBuffSize(0);
 
-			printf("IP: %s connect success", pNewSocket->getIP());
+			printf("IP: %s connect success\n", pNewSocket->getIP());
 		}
 		else
 		{
@@ -325,7 +334,7 @@ void CTcpServer::receiveMessage()
 			{
 				rTcpSocket.setRecvBuffSize(rTcpSocket.getRecvBuffSize() + nResult);
 				onReceiveMessage(&rTcpSocket, nFd);
-				printf("receive message");
+				printf("receive message\n");
 			}
 		}
 	}

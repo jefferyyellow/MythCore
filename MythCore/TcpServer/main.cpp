@@ -27,7 +27,7 @@ void ignorePipe()
 
 void setSignal()
 {
-	signal(SIGINT, SIG_IGN);
+	//signal(SIGINT, SIG_IGN);
 	signal(SIGHUP, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGPIPE, SIG_IGN);
@@ -131,8 +131,8 @@ int main(int argc, char* argv[])
 
 #ifdef MYTH_OS_UNIX
 	// …Ë÷√–≈∫≈
-	setSignal();
-	initDaemon();
+	//setSignal();
+	//initDaemon();
 #endif
 
 	setExclusive("tcpserver.lock");
