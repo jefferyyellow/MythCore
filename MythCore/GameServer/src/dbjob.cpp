@@ -118,7 +118,7 @@ void CDBJob::OnIMPlayerLoginRequest(CInternalMsg* pMsg)
 		pResponse->mWorldID = pLoginRequest->mWorldID;
 		pResponse->mSocketIndex = pLoginRequest->mSocketIndex;
 		pResponse->mSocketTime = pLoginRequest->mSocketTime;
-		CGameServer::Inst()->pushTask(emTaskType_Login, pResponse);
+		CGameServer::Inst()->pushTask(emTaskType_Scene, pResponse);
 		printf("OnIMPlayerLoginRequest end");
 	}
 	mDataBase.clearResult();
@@ -164,7 +164,7 @@ void CDBJob::OnIMCreateRoleRequest(CInternalMsg* pMsg)
 	pIMCreateRoleResponse->mChannelID = pCreateRoleRequest->mChannelID;
 	pIMCreateRoleResponse->mWorldID = pCreateRoleRequest->mWorldID;
 
-	CGameServer::Inst()->pushTask(emTaskType_Login, pIMCreateRoleResponse);
+	CGameServer::Inst()->pushTask(emTaskType_Scene, pIMCreateRoleResponse);
 }
 
 // 玩家进入场景
@@ -216,5 +216,5 @@ void CDBJob::OnIMEnterSceneRequest(CInternalMsg* pMsg)
 	pEnterSceneResponse->mPlayerEntityID = pEnterSceneRequest->mPlayerEntityID;
 
 
-	CGameServer::Inst()->pushTask(emTaskType_Login, pEnterSceneResponse);
+	CGameServer::Inst()->pushTask(emTaskType_Scene, pEnterSceneResponse);
 }

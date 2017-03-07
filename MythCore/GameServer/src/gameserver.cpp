@@ -114,7 +114,6 @@ bool CGameServer::initThread()
 	mThreadPool->pushBackJob(&mSceneJob);
 	mThreadPool->pushBackJob(&mDBJob);
 	mThreadPool->pushBackJob(&mLocalLogJob);
-	mThreadPool->pushBackJob(&mLoginJob);
 
 	return true;
 }
@@ -203,11 +202,6 @@ void CGameServer::pushTask(EmTaskType eTaskType, CInternalMsg* pMsg)
 		case emTaskType_LocalLog:
 		{
 			mLocalLogJob.pushTask(pMsg);
-			break;
-		}
-		case emTaskType_Login:
-		{
-			mLoginJob.pushTask(pMsg);
 			break;
 		}
 		case emTaskType_Scene:

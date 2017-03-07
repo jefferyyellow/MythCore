@@ -32,29 +32,17 @@ void CSceneJob::onTask(CInternalMsg* pMsg)
 	{
 		case IM_RESPONSE_PLAYER_LOGIN:
 		{
-			CIMPlayerLoginResponse* pIMLoginResponse = reinterpret_cast<CIMPlayerLoginResponse*>(pMsg);
-			CMessageLoginResponse tMessageLoginResponse;
-			tMessageLoginResponse.set_accountid(pIMLoginResponse->mAccountID);
-			tMessageLoginResponse.set_channelid(pIMLoginResponse->mChannelID);
-			tMessageLoginResponse.set_worldid(pIMLoginResponse->mWorldID);
-			tMessageLoginResponse.set_roleid(pIMLoginResponse->mRoleID);
-			printf("CSceneJob::onTask");
-			sendClientMessage(pIMLoginResponse->mSocketIndex, pIMLoginResponse->mSocketTime,ID_S2C_RESPONSE_LOGIN, &tMessageLoginResponse);
+			CLoginModule::Inst()->onIMPlayerLoginResponse(pMsg);
 			break;
 		}
-
 		case IM_RESPONSE_CREATE_ROLE:
 		{
-			CIMCreateRoleResponse* pIMCreateRoleResponse = reinterpret_cast<CIMCreateRoleResponse*>(pMsg);
-			CMessageCreateRoleResponse tCreateRoleResponse;
-			tCreateRoleResponse.set_result(0);
-			tCreateRoleResponse.set_roleid(pIMCreateRoleResponse->mRoleID);
-			sendClientMessage(pIMCreateRoleResponse->mSocketIndex, 0, ID_S2C_RESPONSE_CREATE_ROLE, &tCreateRoleResponse);
+			CLoginModule::Inst()->onIMCreateRoleResponse(pMsg);
 			break;
 		}
 		case IM_RESPONSE_ENTER_SCENE:
 		{
-
+			CLoginModule::Inst()->onIMEnterSceneResponse(pMsg);
 			break;
 		}
 		default:

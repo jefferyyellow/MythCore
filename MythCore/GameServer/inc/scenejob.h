@@ -17,7 +17,7 @@ struct CExchangeHead
 	uint32	mTcpIndex;
 	uint8	mTcpState;
 };
-class CSceneJob : public CJob < 1000, 100 >, CSingleton<CSceneJob>
+class CSceneJob : public CJob < 1000, 100 >, public CSingleton<CSceneJob>
 {
 	friend class CSingleton<CSceneJob>;
 	typedef CHashMap<uint32, uint32, 100, 100, 100> PLAYER_LIST;
@@ -32,12 +32,14 @@ public:
 public:
 	virtual void doing(uint32 uParam);
 
+public:
+	/// 发送前端消息
+	void		sendClientMessage(uint nSocketIndex, uint nSocketTime, unsigned short nMessageID, Message* pMessage);
+
 private:
 	void	onTask(CInternalMsg* pMsg);
 	/// 处理前端消息
 	void		processClientMessage();
-	/// 发送前端消息
-	void		sendClientMessage(uint nSocketIndex, uint nSocketTime, unsigned short nMessageID, Message* pMessage);
 	/// 分发前端消息
 	void		dispatchClientMessage(unsigned short nMessageID, Message* pMessage);
 	/// 初始化共享内存

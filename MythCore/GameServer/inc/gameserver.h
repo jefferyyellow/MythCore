@@ -48,6 +48,5 @@ private:
 	CDBJob					mDBJob;
 	CLocalLogJob			mLocalLogJob;
 	CSceneJob				mSceneJob;
-	CLoginJob				mLoginJob;
 };
 #endif
