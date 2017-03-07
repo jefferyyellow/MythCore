@@ -30,7 +30,7 @@
     <ClCompile Include="..\message\message.hxx.pb.cc">
       <Filter>message</Filter>
     </ClCompile>
-    <ClCompile Include="..\GameServer\messagefactory.cpp">
+    <ClCompile Include="..\GameServer\src\messagefactory.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

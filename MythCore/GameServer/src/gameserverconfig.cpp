@@ -1,7 +1,7 @@
 #include "gameserverconfig.h"
 #include "tinyxml2.h"
 using namespace tinyxml2;
-void CGameServerConfig::loadGameServerConfigFromXml(char* pFilePath)
+void CGameServerConfig::loadGameServerConfigFromXml(const char* pFilePath)
 {
 	if (NULL == pFilePath)
 	{

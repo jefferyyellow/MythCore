@@ -3,7 +3,7 @@
 #include "logmanager.h"
 #include "logdisplayer.h"
 #include "loginmessage.hxx.pb.h"
-#include "../GameServer/messagefactory.h"
+#include "../GameServer/inc/messagefactory.h"
 
 CGameClient::CGameClient()
 	:mSelectModel(&mTcpSocket, 1)
@@ -16,7 +16,7 @@ bool CGameClient::init()
 {
 	CSelectModel::initSocketSystem();
 	mTcpSocket.createSocket();
-	int nResult = mTcpSocket.connectServer("127.0.0.1", 6688);
+	int nResult = mTcpSocket.connectServer("192.168.10.13", 6688);
 	if (!initLog())
 	{
 		return false;

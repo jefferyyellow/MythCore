@@ -4,6 +4,15 @@
 #include "gameserver.h"
 #include "google/protobuf/stubs/common.h"
 #define _GAME_VER_   "Version 1.0.0"
+#ifdef MYTH_OS_UNIX
+#include <signal.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/file.h>
+#endif
 
 #ifdef MYTH_OS_UNIX
 void ignorePipe()
@@ -18,7 +27,7 @@ void ignorePipe()
 
 void setSignal()
 {
-	signal(SIGINT, SIG_IGN);
+	//signal(SIGINT, SIG_IGN);
 	signal(SIGHUP, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGPIPE, SIG_IGN);
@@ -126,7 +135,7 @@ int main(int argc, char* argv[])
 #ifdef MYTH_OS_UNIX
 	// …Ë÷√–≈∫≈
 	setSignal();
-	initDaemon();
+	//initDaemon();
 #endif
 
 	setExclusive("gameserver.lock");
