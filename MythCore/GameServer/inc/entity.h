@@ -1,6 +1,7 @@
 #ifndef __ENTITY_H__
 #define __ENTITY_H__
 #include "obj.h"
+#include "logintype.h"
 #define PLAYER_NAME_LENGTH   32
 class CEntity : public CObj
 {
@@ -57,5 +58,7 @@ private:
 	uint32			mRoleLevel;
 	/// 角色经验
 	uint64			mRoleExp;
+	/// socket连接信息
+	CExchangeHead	mExhangeHead;
 };
 #endif

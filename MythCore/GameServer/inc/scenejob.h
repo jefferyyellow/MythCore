@@ -6,17 +6,13 @@
 #include "messagefactory.h"
 #include "singleton.h"
 #include "hashmap.h"
+#include "logintype.h"
 using namespace Myth;
-
 
 #define PIPE_SIZE					((int)0x1000000)	/*内存管道的大小*/
 #define MAX_SOCKET_BUFF_SIZE		4096				// Socket缓冲区大小
 
-struct CExchangeHead
-{
-	uint32	mTcpIndex;
-	uint8	mTcpState;
-};
+class CEntityPlayer;
 class CSceneJob : public CJob < 1000, 100 >, public CSingleton<CSceneJob>
 {
 	friend class CSingleton<CSceneJob>;
@@ -34,7 +30,8 @@ public:
 
 public:
 	/// 发送前端消息
-	void		sendClientMessage(uint nSocketIndex, uint nSocketTime, unsigned short nMessageID, Message* pMessage);
+	void		sendClientMessage(CExchangeHead& rExchangeHead, unsigned short nMessageID, Message* pMessage);
+	void		sendClientMessage(CEntityPlayer* pPlayer, unsigned short nMessageID, Message* pMessage);
 
 private:
 	void	onTask(CInternalMsg* pMsg);

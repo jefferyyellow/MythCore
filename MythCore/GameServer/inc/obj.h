@@ -1,6 +1,8 @@
 #ifndef __OBJ_H__
 #define __OBJ_H__
 
+#include "logintype.h"
+
 // 高8位为类型，低24位为ID
 #define OBJ_ID_BITS 24
 #define OBJ_TYPE(objID) ((objID >> OBJ_ID_BITS) & 0xFF)
@@ -37,19 +39,14 @@ public:
 	uint64		getKey(){return mKey;}
 	void		setKey(uint64 nKey){mKey = nKey;}
 
-	uint32		getSocketIndex(){return mSocketIndex;}
-	void		setSocketIndex(uint32 nSocketIndex){mSocketIndex = nSocketIndex;}
-
-	uint32		getSocketTime(){return mSocketTime;}
-	void		setSocketTime(uint32 nSocketTime){mSocketTime = nSocketTime;}
-
 	uint32		getRoleID() const { return mRoleID; }
 	void		setRoleID(uint32 nValue) { mRoleID = nValue; }
 
+	CExchangeHead&	GetExchangeHead(){return mExchangeHead;}
+
 private:
-	uint64		mKey;
-	uint32		mSocketIndex;
-	uint32		mSocketTime;
-	uint32		mRoleID;
+	uint64			mKey;
+	uint32			mRoleID;
+	CExchangeHead	mExchangeHead;
 };
 #endif

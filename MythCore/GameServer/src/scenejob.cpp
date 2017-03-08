@@ -150,7 +150,7 @@ void CSceneJob::processClientMessage()
 			int nModule = nMessageID & MESSAGE_MODULE_MASK;
 			if (nModule == MESSAGE_MODULE_LOGIN)
 			{
-				CLoginModule::Inst()->onClientMessage(pExchangeHead->mTcpIndex, nMessageID, pMessage);
+				CLoginModule::Inst()->onClientMessage(pExchangeHead->mSocketIndex, nMessageID, pMessage);
 			}
 			else
 			{
@@ -161,15 +161,12 @@ void CSceneJob::processClientMessage()
 }
 
 /// 发送前端消息
-void CSceneJob::sendClientMessage(uint32 nSocketIndex, uint nSocketTime, unsigned short nMessageID, Message* pMessage)
+void CSceneJob::sendClientMessage(CExchangeHead& rExchangeHead, unsigned short nMessageID, Message* pMessage)
 {
-	CExchangeHead tHead;
-	tHead.mTcpIndex = nSocketIndex;
-	tHead.mTcpState = 0;
 
 	char* pTemp = mBuffer;
-	memcpy(pTemp, &tHead, sizeof(tHead));
-	pTemp += sizeof(tHead);
+	memcpy(pTemp, &rExchangeHead, sizeof(rExchangeHead));
+	pTemp += sizeof(rExchangeHead);
 
 	unsigned short nMessageLen = pMessage->ByteSize() + sizeof(unsigned short) * 2;
 	memcpy(pTemp, &nMessageLen, sizeof(nMessageLen));
@@ -179,9 +176,9 @@ void CSceneJob::sendClientMessage(uint32 nSocketIndex, uint nSocketTime, unsigne
 	memcpy(pTemp, &nMessageID, sizeof(nMessageID));
 	pTemp += sizeof(nMessageID);
 
-	pMessage->SerializeToArray(pTemp, sizeof(mBuffer) - sizeof(tHead) - sizeof(unsigned short) * 2);
+	pMessage->SerializeToArray(pTemp, sizeof(mBuffer) - sizeof(rExchangeHead) - sizeof(unsigned short) * 2);
 	printf("PushPacket");
-	mServer2TcpMemory->PushPacket((uint8*)mBuffer, pMessage->ByteSize() + sizeof(tHead) + sizeof(unsigned short) * 2);
+	mServer2TcpMemory->PushPacket((uint8*)mBuffer, pMessage->ByteSize() + sizeof(rExchangeHead) + sizeof(unsigned short) * 2);
 
 }
 

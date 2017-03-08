@@ -140,5 +140,8 @@
     <ClInclude Include="inc\taskmanager.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="inc\logintype.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

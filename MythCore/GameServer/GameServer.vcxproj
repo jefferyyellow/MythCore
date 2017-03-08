@@ -105,6 +105,7 @@
     <ClInclude Include="inc\locallogjob.h" />
     <ClInclude Include="inc\loginjob.h" />
     <ClInclude Include="inc\loginmodule.h" />
+    <ClInclude Include="inc\logintype.h" />
     <ClInclude Include="inc\messagefactory.h" />
     <ClInclude Include="inc\obj.h" />
     <ClInclude Include="inc\objmanager.h" />

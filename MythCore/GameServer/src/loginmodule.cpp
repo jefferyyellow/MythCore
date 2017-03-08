@@ -85,9 +85,11 @@ void CLoginModule::onIMPlayerLoginResponse(CInternalMsg* pMsg)
 	uint64 nChannelID = pResponse->mChannelID;
 	uint64 nWorldID = pResponse->mWorldID;
 	pLoginPlayer->setKey(MAKE_LOGIN_KEY(nAccountID, nChannelID, nWorldID));
-	pLoginPlayer->setSocketIndex(pResponse->mSocketIndex);
-	pLoginPlayer->setSocketTime(pResponse->mSocketTime);
 	pLoginPlayer->setRoleID(pResponse->mRoleID);
+	CExchangeHead& rExchangeHead = pLoginPlayer->GetExchangeHead();
+	rExchangeHead.mSocketTime = pResponse->mSocketTime;
+	rExchangeHead.mSocketIndex = pResponse->mSocketIndex;
+
 	mLoginList.Insert(pLoginPlayer->getKey(), pLoginPlayer->getObjID());
 
 
@@ -99,7 +101,7 @@ void CLoginModule::onIMPlayerLoginResponse(CInternalMsg* pMsg)
 	tMessageLoginResponse.set_roleid(pIMLoginResponse->mRoleID);
 	printf("CSceneJob::onTask");
 
-	CSceneJob::Inst()->sendClientMessage(pIMLoginResponse->mSocketIndex, pIMLoginResponse->mSocketTime, ID_S2C_RESPONSE_LOGIN, &tMessageLoginResponse);
+	CSceneJob::Inst()->sendClientMessage(rExchangeHead, ID_S2C_RESPONSE_LOGIN, &tMessageLoginResponse);
 }
 
 void CLoginModule::onMessageCreateRoleRequest(uint32 nSocketIndex, Message* pMessage)
@@ -178,7 +180,7 @@ void CLoginModule::onIMCreateRoleResponse(CInternalMsg* pMsg)
 	CMessageCreateRoleResponse tCreateRoleResponse;
 	tCreateRoleResponse.set_result(0);
 	tCreateRoleResponse.set_roleid(pCreateRoleResponse->mRoleID);
-	CSceneJob::Inst()->sendClientMessage(pLoginPlayer->getSocketIndex(), 0, ID_S2C_RESPONSE_CREATE_ROLE, &tCreateRoleResponse);
+	CSceneJob::Inst()->sendClientMessage(pLoginPlayer->GetExchangeHead(), ID_S2C_RESPONSE_CREATE_ROLE, &tCreateRoleResponse);
 }
 
 
@@ -257,18 +259,26 @@ void CLoginModule::onIMEnterSceneResponse(CInternalMsg* pMsg)
 		return;
 	}
 
+	uint64 nAccountID = pEnterSceneResponse->mAccountID;
+	uint64 nChannelID = pEnterSceneResponse->mChannelID;
+	uint64 nWorldID = pEnterSceneResponse->mWorldID;
+	uint64 nKey = MAKE_LOGIN_KEY(nAccountID, nChannelID, nWorldID);
 
-	CIMEnterSceneResponse* pNewEnterSceneResponse = reinterpret_cast<CIMEnterSceneResponse*>(CInternalMsgPool::Inst()->allocMsg(IM_RESPONSE_ENTER_SCENE));
-	if (NULL == pNewEnterSceneResponse)
+	uint32 nObjID = 0;
+	bool bFind = mLoginList.Find(nKey, nObjID);
+	if (!bFind || nObjID == 0)
+	{
+		// 已经不存在了
+		return;
+	}
+
+	CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::CreateInst()->getObj(nObjID));
+	if (NULL == pLoginPlayer)
 	{
 		return;
 	}
 
-	pNewEnterSceneResponse->mRoleID = pEnterSceneResponse->mRoleID;
-	pNewEnterSceneResponse->mAccountID = pEnterSceneResponse->mAccountID;
-	pNewEnterSceneResponse->mChannelID = pEnterSceneResponse->mChannelID;
-	pNewEnterSceneResponse->mWorldID = pEnterSceneResponse->mWorldID;
-	pNewEnterSceneResponse->mPlayerEntityID = pEnterSceneResponse->mPlayerEntityID;
-
-	CGameServer::Inst()->pushTask(emTaskType_Scene, pMsg);
+	CMessageEnterSceneResponse tEnterSceneResponse;
+	tEnterSceneResponse.set_result(0);
+	CSceneJob::Inst()->sendClientMessage(pLoginPlayer->GetExchangeHead(), ID_S2C_RESPONSE_CREATE_ROLE, &tEnterSceneResponse);
 }
