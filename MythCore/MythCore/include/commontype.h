@@ -1,6 +1,7 @@
 #ifndef __COMMONTYPE_H__
 #define __COMMONTYPE_H__
 #include <string.h>
+#include <stddef.h>
 
 #ifdef MYTH_OS_WINDOWS
 #include <windows.h>

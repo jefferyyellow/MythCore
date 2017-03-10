@@ -75,7 +75,7 @@ namespace Myth
 		return 0;
 	}
 
-	TmMysqlDataType CMysqlQueryResult::convertNativeType(enum_field_types mysqlType) const
+	EmMysqlDataType CMysqlQueryResult::convertNativeType(enum_field_types mysqlType) const
 	{
 		switch (mysqlType)
 		{

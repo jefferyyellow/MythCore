@@ -6,7 +6,7 @@
 
 namespace Myth
 {
-	enum TmMysqlDataType
+	enum EmMysqlDataType
 	{
 		emMysqlDataType_Unknow		= 0,
 		emMysqlDataType_String		= 1,
@@ -26,7 +26,7 @@ namespace Myth
 
 		int init(MYSQL_RES *pResult, uint32 nRowCount, uint32 nFieldCount);
 		int nextRow();
-		TmMysqlDataType convertNativeType(enum_field_types mysqlType) const;
+		EmMysqlDataType convertNativeType(enum_field_types mysqlType) const;
 		void clear();
 
 	public:
@@ -71,7 +71,7 @@ namespace Myth
 		}
 
 		/// 得到列数据类型
-		TmMysqlDataType	getFieldDataType(unsigned int nIndex)
+		EmMysqlDataType	getFieldDataType(unsigned int nIndex)
 		{
 			if (nIndex >= MAX_ROW_FIELD_NUM)
 			{
@@ -81,7 +81,7 @@ namespace Myth
 		}
 
 		/// 设置列数据类型
-		void			setFieldDataType(unsigned int nIndex, TmMysqlDataType eType)
+		void			setFieldDataType(unsigned int nIndex, EmMysqlDataType eType)
 		{
 			if (nIndex >= MAX_ROW_FIELD_NUM)
 			{
@@ -104,7 +104,7 @@ namespace Myth
 		/// 列数据	
 		CMysqlField		mField[MAX_ROW_FIELD_NUM];
 		/// 列类型
-		TmMysqlDataType	mFieldDataType[MAX_ROW_FIELD_NUM];
+		EmMysqlDataType	mFieldDataType[MAX_ROW_FIELD_NUM];
 		/// 列数目		
 		uint32			mFieldCount;
 		/// 行数目

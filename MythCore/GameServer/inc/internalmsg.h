@@ -3,7 +3,7 @@
 #include "commontype.h"
 #include "logmanager.h"
 // IM表示内部消息（internal message的简写)
-enum TmInternalMsgID
+enum EmInternalMsgID
 {
 	IM_REQUEST_LOCAL_LOG				= 1,			// 玩家本地日志要求
 	IM_REQUEST_PLAYER_LOGIN				= 2,			// 玩家登陆消息

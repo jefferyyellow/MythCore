@@ -75,6 +75,12 @@
     <ClCompile Include="src\scenejob.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\itemcontainer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\template.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tinyxml\tinyxml2.h">
@@ -141,6 +147,18 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="inc\logintype.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\itemcontainer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\itemlist.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\itemobject.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\template.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

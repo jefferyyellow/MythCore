@@ -79,6 +79,7 @@
     <ClCompile Include="src\gameserverconfig.cpp" />
     <ClCompile Include="src\internalmsg.cpp" />
     <ClCompile Include="src\internalmsgpool.cpp" />
+    <ClCompile Include="src\itemcontainer.cpp" />
     <ClCompile Include="src\job.cpp" />
     <ClCompile Include="src\locallogjob.cpp" />
     <ClCompile Include="src\loginjob.cpp" />
@@ -88,6 +89,7 @@
     <ClCompile Include="src\objmanager.cpp" />
     <ClCompile Include="src\objpool.cpp" />
     <ClCompile Include="src\scenejob.cpp" />
+    <ClCompile Include="src\template.cpp" />
     <ClCompile Include="tinyxml\tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -101,6 +103,9 @@
     <ClInclude Include="inc\gameserverconfig.h" />
     <ClInclude Include="inc\internalmsg.h" />
     <ClInclude Include="inc\internalmsgpool.h" />
+    <ClInclude Include="inc\itemcontainer.h" />
+    <ClInclude Include="inc\itemlist.h" />
+    <ClInclude Include="inc\itemobject.h" />
     <ClInclude Include="inc\job.h" />
     <ClInclude Include="inc\locallogjob.h" />
     <ClInclude Include="inc\loginjob.h" />
@@ -112,6 +117,7 @@
     <ClInclude Include="inc\objpool.h" />
     <ClInclude Include="inc\scenejob.h" />
     <ClInclude Include="inc\taskmanager.h" />
+    <ClInclude Include="inc\template.h" />
     <ClInclude Include="tinyxml\tinyxml2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

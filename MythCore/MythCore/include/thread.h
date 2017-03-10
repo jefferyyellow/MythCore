@@ -26,7 +26,7 @@ namespace Myth
 	};
 
 
-	enum TmThreadState
+	enum EmThreadState
 	{
 		emThreadState_None		= 0,	// ÎÞ×´Ì¬
 		emThreadState_Initing	= 1,	// ³õÊ¼ÖÐ
@@ -62,8 +62,8 @@ namespace Myth
 		/// resume thread
 		virtual void resume() = 0;
 
-		virtual TmThreadState getThreadState() = 0;
-		virtual void setThreadState(TmThreadState eThreadState) = 0;
+		virtual EmThreadState getThreadState() = 0;
+		virtual void setThreadState(EmThreadState eThreadState) = 0;
 
 		virtual CThreadPool* getThreadPool() = 0;
 		virtual void setThreadPool(CThreadPool* pThreadPool) = 0;

@@ -9,7 +9,7 @@
 namespace Myth
 {
 	#define IP_SIZE			16 // 192.168.223.222加上\0也就16个，ipv6以后再说
-	enum TmSocketStatus
+	enum EmSocketStatus
 	{
 		emSocketStatusClose			= 0,		/// 关闭状态
 		emSocketStatusConnecting	= 1,		/// 连接中状态

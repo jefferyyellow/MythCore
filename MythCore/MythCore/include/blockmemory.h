@@ -239,7 +239,7 @@ namespace Myth
 
 	private:
 		/// For debug only, check ident.
-		enum  TCheckIdent	{ CheckAllocatedIdent= 0x01234567, CheckDeletedIdent= 0x89ABCDEF };
+		enum  EmCheckIdent	{ CheckAllocatedIdent= 0x01234567, CheckDeletedIdent= 0x89ABCDEF };
 
 	private:
 		/// idle memory node list head
