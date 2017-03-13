@@ -5,7 +5,7 @@
 #define STRING256					256
 #define MAX_TEMPLATE_NUM			100000	// 最大模版数
 class CTemplate;
-class CDataStatic
+class CStaticData
 {
 public:
 	static CTemplate* SearchTpl(unsigned int vTempID);

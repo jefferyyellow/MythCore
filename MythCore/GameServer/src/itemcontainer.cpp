@@ -6,15 +6,21 @@ bool CItemContainer::checkSpace(int* pItemID, int* pNumber, int nSize)
 {
 	if (nSize > MAX_INSERT_TYPE_NUM)
 	{
-		return;
+		return false;
 	}
 
+	if (nSize == 1)
+	{
+		return checkSpace(pItemID[0], pNumber[0]);
+	}
+
+	// 缓存道具数目和堆叠数目
 	int nNum[MAX_INSERT_TYPE_NUM] = {0};
 	int nPileLimit[MAX_INSERT_TYPE_NUM] = {0};
 	for (int i = 0; i < nSize; ++i)
 	{
 		nNum[i] = pNumber[i];
-		CTplItem* pTplItem = (CTplItem*)CDataStatic::SearchTpl(pItemID[i]);
+		CTplItem* pTplItem = (CTplItem*)CStaticData::SearchTpl(pItemID[i]);
 		if (NULL == pTplItem)
 		{
 			nPileLimit[i] = 0;
@@ -23,74 +29,76 @@ bool CItemContainer::checkSpace(int* pItemID, int* pNumber, int nSize)
 		nPileLimit[i] = pTplItem->mPileLimit;
 	}
 
-	int nAddSpace = 0;
+	// 先将可以堆叠的道具放在对应的已经有的格子里面
 	int nTotalSpace = 0;
-	int nTmpSize = nSize;
 	for (int i = 0; i < mSize; ++ i)
 	{
+		// 空格子
 		if (INVALID_OBJ_ID == mItemObjID[i])
 		{
-			nAddSpace = 1;
-			for (int j = 0; j < nSize; ++j)
-			{
-				if (nPileLimit[j] == 1 && nNum[i] > 0)
-				{
-					nAddSpace = 0;
-					-- nNum[i];
-					if (nNum[i] <= 0)
-					{
-						-- nTmpSize;
-					}
-				}
-			}
+			nTotalSpace += 1;
 		}
 		else
 		{
+			// 已经有道具的格子是否能放下这一堆东西里的任意一种还有的可以堆叠的道具
+			// 如果可以，减少堆叠数量
 			for (int j = 0; j < nSize; ++j)
 			{
-				if (pItemID[i] == mItemID[j] && nNum[i] > 0)
+				if (mItemID[i] == pItemID[j] && nPileLimit[i] > 1 && nNum[j] > 0)
 				{
 					CItemObject* pItemObject = (CItemObject*)CObjPool::Inst()->getObj(mItemObjID[i]);
 					if (NULL != pItemObject)
 					{
 						nNum[i] -= nPileLimit[j] - pItemObject->GetItemNum();
-						if (nNum[i] < 0)
-						{
-							 -- nTmpSize;
-						}
 					}
 				}
 			}
 		}
-
-		if (nTmpSize < 0)
-		{
-			break;
-		}
-		nTotalSpace += nAddSpace;
 	}
 
+	// 计算所有堆叠数目为1的，和没有放下的堆叠数目大于1的道具
+	// 计算所需要的空格子书面
 	int nNeedSpace = 0;
-	for (int j = 0; j < nSize; ++j)
+	for (int i = 0; i < nSize; ++i)
 	{
-		
+		if (nNum[i] > 0 && nPileLimit[i]  > 0)
+		{
+			if (nPileLimit[i] == 1)
+			{
+				nNeedSpace += nNum[i];
+			}
+			else
+			{
+				nNeedSpace += (nNum[i] + nPileLimit[i] - 1) / nPileLimit[i];
+			}
+		}
 	}
+	if (nNeedSpace > nTotalSpace)
+	{
+		return true;
+	}
+
+	return false;
 }
 
+// 如果是一种道具，方便很多，空格子可以直接用，不用考虑先堆叠
+// 可以先使用空格子
 bool CItemContainer::checkSpace(int nItemID, int nNumber)
 {
-	CTplItem* pTplItem = (CTplItem*)CDataStatic::SearchTpl(nItemID);
+	CTplItem* pTplItem = (CTplItem*)CStaticData::SearchTpl(nItemID);
 	if (NULL == pTplItem)
 	{
-		return false;
+		return true;
 	}
 
 	for (int i = 0; i < mSize; ++ i)
 	{
+		// 直接用空格子
 		if (INVALID_OBJ_ID == mItemObjID[i])
 		{
 			nNumber -= pTplItem->mPileLimit;
 		}
+		// 堆叠
 		else if (nItemID == mItemID[i])
 		{
 			CItemObject* pItemObject = (CItemObject*)CObjPool::Inst()->getObj(mItemObjID[i]);
@@ -99,6 +107,7 @@ bool CItemContainer::checkSpace(int nItemID, int nNumber)
 				nNumber -= pTplItem->mPileLimit - pItemObject->GetItemNum();
 			}
 		}
+		// 检测到可以放下了
 		if (nNumber <= 0)
 		{
 			return true;
@@ -106,4 +115,98 @@ bool CItemContainer::checkSpace(int nItemID, int nNumber)
 	}
 
 	return false;
+}
+
+int CItemContainer::insertItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNumber, int &rOutLen)
+{
+	if (NULL == pOutIndex || NULL == pOutNumber || 0 == nItemNum)
+	{
+		return -1;
+	}
+
+	// 如果数据模版找不到
+	CTplItem* tpItem = (CTplItem*)CStaticData::SearchTpl(nItemID);
+	if (NULL == tpItem)
+	{
+		return -2;
+	}
+
+	rOutLen = 0;
+	int nPileLimit = tpItem->mPileLimit;
+	
+	int tEmpty[MAX_CONTAINER_ITEM_NUM] = { -1 };
+	int tEmptyNum = 0;
+
+	int nInsertedNum = 0;
+	int nLeftPileNum = 0;
+	for (unsigned int i = 0; i < mSize; ++i)
+	{
+		// 格子是空的
+		if (INVALID_OBJ_ID == mItemObjID[i])
+		{
+			tEmpty[tEmptyNum] = i;
+			tEmptyNum++;
+			if (nPileLimit == 1 && tEmptyNum >= nItemNum)
+			{
+				break;
+			}
+		}
+		else if (mItemID[i] == nItemID && nPileLimit > 1) // 在非空格子上插入
+		{
+			CItemObject* pItemObject = (CItemObject*)CObjPool::Inst()->getObj(mItemObjID[i]);
+			if (NULL != pItemObject)
+			{
+				nLeftPileNum = nPileLimit - pItemObject->GetItemNum();
+				if (nLeftPileNum <= 0)
+				{
+					continue;
+				}
+				nInsertedNum = nItemNum > nLeftPileNum ? nLeftPileNum : nItemNum;
+				pItemObject->SetItemNum(pItemObject->GetItemNum() + nInsertedNum);
+				nItemNum -= nInsertedNum;
+
+				// 记录插入在那个格子里
+				pOutIndex[rOutLen] = i;
+				// 对应的这个格子里插入了多少个数目的道具
+				pOutNumber[rOutLen] = nInsertedNum;
+				++rOutLen;
+				// 已经全部插入了，重置ID与数量的关系
+				if (nItemNum <= 0)
+				{
+					return 0;
+				}
+			}
+		}
+	}
+
+
+	// 遍历在空格子里插入的道具
+	for (int i = 0; i < tEmptyNum; i++)
+	{
+		CItemObject* pItemObject = CItemFactory::createItem(nItemID);
+		if (NULL == pItemObject)
+		{
+			continue;
+		}
+		pOutIndex[rOutLen] = tEmpty[i];
+		pOutNumber[rOutLen] = nPileLimit > nItemNum ? nItemNum : nPileLimit;
+		++rOutLen;
+
+		mItemObjID[tEmpty[i]] = pItemObject->getObjID();
+		mItemID[tEmpty[i]] = nItemID;
+		// 如果没有插入的比堆叠上限还大
+		if (nItemNum > nPileLimit)
+		{
+			pItemObject->SetItemNum(nPileLimit);
+			nItemNum -= nPileLimit;
+		}
+		else
+		{
+			// 将剩余下的放在该处
+			pItemObject->SetItemNum(nItemNum);
+			break;
+		}
+
+	}
+	return 0;
 }

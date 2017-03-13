@@ -1,9 +1,10 @@
 #include "template.h"
 #include <stddef.h>
-CTemplate* CDataStatic::spTemplate[ MAX_TEMPLATE_NUM ]							= { NULL };
+CTemplate* CStaticData::spTemplate[ MAX_TEMPLATE_NUM ]							= { NULL };
 
-CTemplate* CDataStatic::SearchTpl(unsigned int nTempID)
+CTemplate* CStaticData::SearchTpl(unsigned int nTempID)
 {
+	// 注意0也是非法值
 	if (nTempID <= 0 || nTempID >= MAX_TEMPLATE_NUM)
 	{
 #ifdef LINUX
@@ -11,4 +12,6 @@ CTemplate* CDataStatic::SearchTpl(unsigned int nTempID)
 #endif
 		return NULL;
 	}
+
+	return spTemplate[nTempID];
 }

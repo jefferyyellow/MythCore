@@ -4,6 +4,7 @@
 #include "message.hxx.pb.h"
 #include "loginmodule.h"
 #include "internalmsgpool.h"
+#include "entityplayer.h"
 
 void CSceneJob::doing(uint32 uParam)
 {
@@ -163,7 +164,6 @@ void CSceneJob::processClientMessage()
 /// 发送前端消息
 void CSceneJob::sendClientMessage(CExchangeHead& rExchangeHead, unsigned short nMessageID, Message* pMessage)
 {
-
 	char* pTemp = mBuffer;
 	memcpy(pTemp, &rExchangeHead, sizeof(rExchangeHead));
 	pTemp += sizeof(rExchangeHead);
@@ -180,6 +180,15 @@ void CSceneJob::sendClientMessage(CExchangeHead& rExchangeHead, unsigned short n
 	printf("PushPacket");
 	mServer2TcpMemory->PushPacket((uint8*)mBuffer, pMessage->ByteSize() + sizeof(rExchangeHead) + sizeof(unsigned short) * 2);
 
+}
+
+void CSceneJob::sendClientMessage(CEntityPlayer* pPlayer, unsigned short nMessageID, Message* pMessage)
+{
+	if (NULL == pPlayer)
+	{
+		return;
+	}
+	sendClientMessage(pPlayer->GetExhangeHead(), nMessageID, pMessage);
 }
 
 /// 分发前端消息

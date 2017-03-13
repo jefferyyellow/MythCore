@@ -81,6 +81,12 @@
     <ClCompile Include="src\template.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\itemobject.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entityplayer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tinyxml\tinyxml2.h">
@@ -159,6 +165,18 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="inc\template.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\entityplayer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\playersubmodule.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\itemsubmodule.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\objpoolimp.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

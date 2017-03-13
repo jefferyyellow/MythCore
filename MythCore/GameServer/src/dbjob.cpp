@@ -3,7 +3,7 @@
 #include "internalmsgpool.h"
 #include "mysqlqueryresult.h"
 #include "gameserver.h"
-#include "entity.h"
+#include "entityplayer.h"
 #include "objpool.h"
 CDBJob::CDBJob()
 {

@@ -3,7 +3,7 @@
 #include "internalmsg.h"
 #include "internalmsgpool.h"
 #include "gameserver.h"
-#include "entity.h"
+#include "entityplayer.h"
 #include "objpool.h"
 CLoginModule::CLoginModule()
 {

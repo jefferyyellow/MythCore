@@ -1,6 +1,6 @@
 #ifndef __ITEMLIST_H__
 #define __ITEMLIST_H__
-#include "obj.h"
+#include "objpool.h"
 template<uint32 Capacity>
 class CItemList
 {
@@ -29,7 +29,7 @@ public:
 		{
 			if (INVALID_OBJ_ID != mItemObjID[i])
 			{
-				CObjPool::Inst()->free(mItemObjID[i]);
+				//CObjPool::Inst()->free(mItemObjID[i]);
 			}
 		}
 	}

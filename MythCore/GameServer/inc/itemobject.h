@@ -1,6 +1,14 @@
 #ifndef __ITEMOBJECT_H__
 #define __ITEMOBJECT_H__
 #include "obj.h"
+
+class CItemObject;
+class CItemFactory
+{
+public:
+	static CItemObject* createItem(int nItemID);
+};
+
 class CItemObject : public CObj
 {
 public:
