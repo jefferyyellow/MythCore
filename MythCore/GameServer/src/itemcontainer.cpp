@@ -31,7 +31,7 @@ bool CItemContainer::checkSpace(int* pItemID, int* pNumber, int nSize)
 
 	// 先将可以堆叠的道具放在对应的已经有的格子里面
 	int nTotalSpace = 0;
-	for (int i = 0; i < mSize; ++ i)
+	for (int i = 0; i < (int)mSize; ++ i)
 	{
 		// 空格子
 		if (INVALID_OBJ_ID == mItemObjID[i])
@@ -91,7 +91,7 @@ bool CItemContainer::checkSpace(int nItemID, int nNumber)
 		return true;
 	}
 
-	for (int i = 0; i < mSize; ++ i)
+	for (int i = 0; i < (int)mSize; ++ i)
 	{
 		// 直接用空格子
 		if (INVALID_OBJ_ID == mItemObjID[i])

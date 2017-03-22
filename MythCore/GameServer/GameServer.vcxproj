@@ -109,7 +109,7 @@
     <ClInclude Include="inc\itemcontainer.h" />
     <ClInclude Include="inc\itemlist.h" />
     <ClInclude Include="inc\itemobject.h" />
-    <ClInclude Include="inc\itemsubmodule.h" />
+    <ClInclude Include="inc\itemunit.h" />
     <ClInclude Include="inc\job.h" />
     <ClInclude Include="inc\locallogjob.h" />
     <ClInclude Include="inc\loginjob.h" />
@@ -120,9 +120,11 @@
     <ClInclude Include="inc\objpoolimp.h" />
     <ClInclude Include="inc\objmanager.h" />
     <ClInclude Include="inc\objpool.h" />
-    <ClInclude Include="inc\playersubmodule.h" />
+    <ClInclude Include="inc\playersubunit.h" />
+    <ClInclude Include="inc\propertyunit.h" />
     <ClInclude Include="inc\scenejob.h" />
     <ClInclude Include="inc\taskmanager.h" />
+    <ClInclude Include="inc\taskunit.h" />
     <ClInclude Include="inc\template.h" />
     <ClInclude Include="tinyxml\tinyxml2.h" />
   </ItemGroup>

@@ -170,13 +170,19 @@
     <ClInclude Include="inc\entityplayer.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="inc\playersubmodule.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\itemsubmodule.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="inc\objpoolimp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\playersubunit.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\itemunit.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\propertyunit.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\taskunit.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

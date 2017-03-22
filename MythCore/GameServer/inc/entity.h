@@ -19,6 +19,13 @@ public:
 	CEntityCharacter(){}
 	~CEntityCharacter(){}
 
+public:
+	uint32		getTempID() const { return mTempID; }
+	void		setTempID(uint32 nValue) { mTempID = nValue; }
+
+private:
+	/// Ä£°åID
+	uint32		mTempID;
 };
 
 #endif

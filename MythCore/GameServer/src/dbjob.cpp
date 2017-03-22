@@ -203,8 +203,8 @@ void CDBJob::OnIMEnterSceneRequest(CInternalMsg* pMsg)
 	}
 	// 取得数据库加载的结果
 	pEntityPlayer->setName(tQueryResult.getField(0)->getValue());
-	pEntityPlayer->setRoleLevel(atoi(tQueryResult.getField(1)->getValue()));
-	pEntityPlayer->setRoleExp(atoll(tQueryResult.getField(2)->getValue()));
+	//pEntityPlayer->setRoleLevel(atoi(tQueryResult.getField(1)->getValue()));
+	//pEntityPlayer->setRoleExp(atoll(tQueryResult.getField(2)->getValue()));
 
 
 	mDataBase.clearResult();

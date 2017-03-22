@@ -6,6 +6,14 @@
 class CItemContainer : public CItemList < MAX_CONTAINER_ITEM_NUM >
 {
 public:
+	CItemContainer()
+	{
+		mSize = 0;
+	}
+	~CItemContainer()
+	{
+
+	}
 
 public:
 	bool	checkSpace(int* pItemID, int* pNumber, int nSize);

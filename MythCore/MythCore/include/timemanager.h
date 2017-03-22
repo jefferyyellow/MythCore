@@ -81,6 +81,7 @@ namespace Myth
 
 	class CTimeManager : public CSingleton<CTimeManager>
 	{
+		friend class CSingleton < CTimeManager > ;
 	private:
 		CTimeManager()
 		{

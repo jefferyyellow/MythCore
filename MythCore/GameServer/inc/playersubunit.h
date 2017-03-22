@@ -1,14 +1,14 @@
 #ifndef __PLAYERSUBMODULE_H__
 #define __PLAYERSUBMODULE_H__
 template <typename T>
-class CPlayerSubModule
+class CPlayerSubUnit
 {
 protected:
-	CPlayerSubModule(T* pPlayer)
+	CPlayerSubUnit(T* pPlayer)
 	{
 		mPlayer = pPlayer;
 	}
-	~CPlayerSubModule()
+	~CPlayerSubUnit()
 	{
 	}
 
