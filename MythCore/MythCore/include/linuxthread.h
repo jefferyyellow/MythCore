@@ -25,8 +25,8 @@ namespace Myth
 		/// resume thread
 		virtual void resume();
 
-		virtual TmThreadState getThreadState(){ return mThreadState; }
-		virtual void setThreadState(TmThreadState eThreadState){ mThreadState = eThreadState; }
+		virtual EmThreadState getThreadState(){ return mThreadState; }
+		virtual void setThreadState(EmThreadState eThreadState){ mThreadState = eThreadState; }
 
 		virtual CThreadPool* getThreadPool(){ return mpThreadPool; }
 		virtual void setThreadPool(CThreadPool* pThreadPool){ mpThreadPool = pThreadPool; }
@@ -44,7 +44,7 @@ namespace Myth
 		pthread_cond_t		mCond;			// 条件变量
 
 		// thread state 
-		TmThreadState		mThreadState;
+		EmThreadState		mThreadState;
 		// thread serial num
 		sint				mSerialNum;
 	};
