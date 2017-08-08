@@ -75,11 +75,10 @@ namespace Myth
 	/// Get the specified name log
 	CLog* CLogManager::GetDebugLog(const char* pName)
 	{
-		CLog* pLog;
-		bool bFind = mDebugLog.Find(pName, pLog);
-		if (bFind)
+		DebugLogMap::iterator it = mDebugLog.find(pName);
+		if (it != mDebugLog.end())
 		{
-			return pLog;
+			return it->second;
 		}
 		return NULL;
 	}
@@ -92,7 +91,7 @@ namespace Myth
 			return;
 		}
 
-		mDebugLog.Insert(pName, pLog);
+		mDebugLog[pName] = pLog;
 		return;
 	}
 

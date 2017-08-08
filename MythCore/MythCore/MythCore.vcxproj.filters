@@ -131,24 +131,6 @@
     <ClInclude Include="include\array.h">
       <Filter>头文件\basecontainer</Filter>
     </ClInclude>
-    <ClInclude Include="include\deque.h">
-      <Filter>头文件\basecontainer</Filter>
-    </ClInclude>
-    <ClInclude Include="include\hashmap.h">
-      <Filter>头文件\basecontainer</Filter>
-    </ClInclude>
-    <ClInclude Include="include\iterator.h">
-      <Filter>头文件\basecontainer</Filter>
-    </ClInclude>
-    <ClInclude Include="include\slist.h">
-      <Filter>头文件\basecontainer</Filter>
-    </ClInclude>
-    <ClInclude Include="include\list.h">
-      <Filter>头文件\basecontainer</Filter>
-    </ClInclude>
-    <ClInclude Include="include\vector.h">
-      <Filter>头文件\basecontainer</Filter>
-    </ClInclude>
     <ClInclude Include="include\linuxthread.h">
       <Filter>头文件\thread</Filter>
     </ClInclude>

@@ -108,14 +108,10 @@
     <ClInclude Include="include\bit_set.h" />
     <ClInclude Include="include\blockmemory.h" />
     <ClInclude Include="include\commontype.h" />
-    <ClInclude Include="include\deque.h" />
     <ClInclude Include="include\epollmodel.h" />
     <ClInclude Include="include\fileutility.h" />
     <ClInclude Include="include\fixblockmemory.h" />
-    <ClInclude Include="include\hashmap.h" />
     <ClInclude Include="include\i18n.h" />
-    <ClInclude Include="include\iterator.h" />
-    <ClInclude Include="include\list.h" />
     <ClInclude Include="include\log.h" />
     <ClInclude Include="include\logdisplayer.h" />
     <ClInclude Include="include\logmanager.h" />
@@ -130,12 +126,10 @@
     <ClInclude Include="include\sharememory.h" />
     <ClInclude Include="include\simplelock.h" />
     <ClInclude Include="include\singleton.h" />
-    <ClInclude Include="include\slist.h" />
     <ClInclude Include="include\socketstream.h" />
     <ClInclude Include="include\tcpsocket.h" />
     <ClInclude Include="include\threadpool.h" />
     <ClInclude Include="include\timemanager.h" />
-    <ClInclude Include="include\vector.h" />
     <ClInclude Include="include\winthread.h" />
   </ItemGroup>
   <ItemGroup>

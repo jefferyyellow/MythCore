@@ -4,8 +4,9 @@
 //#include "log.h"
 //#include "logmanager.h"
 //#include "fileutility.h"
-//#include "timemanager.h"
-//#include "performance.h"
+#include "timemanager.h"
+#include "performance.h"
+#include "commontype.h"
 //#include "i18n.h"
 //#include <vector>
 //#include <list>
@@ -19,7 +20,6 @@
 //#include "list.h"
 //#include "slist.h"
 //#include "deque.h"
-//#include "hashmap.h"
 //#include "vector.h"
 //#include "selectmodel.h"
 #include "threadpool.h"
@@ -915,29 +915,40 @@ private:
 //	int t;
 //};
 //
-//void testHashMap()
-//{
-//	Myth::CHashMap<int, int, 5, 5, 5> firsthash;
-//	firsthash.Insert(10, 100);
-//	firsthash.Insert(14, 196);
-//
-//	Myth::CHashMap<int, int, 5, 5, 5>::iterator it = firsthash.begin();
-//	Myth::CHashMap<int, int, 5, 5, 5>::iterator itend = firsthash.end();
-//	for (; it != itend; ++it)
-//	{
-//		printf("%d, %d\n", it->mKey, it->mData);
-//	}
-//	printf("\n");
-//	printf("\n");
-//	printf("\n");
-//	firsthash.erase(10);
-//
-//	printf("%d, %d\n", 10, firsthash[10]);
-//	printf("%d, %d\n", 14, firsthash[14]);
-//	printf("%d, %d\n", 15, firsthash[15]);
-//
-//	firsthash.Clear();
-//}
+void testHashMap()
+{
+	//Myth::CHashMap<int, int, 50000, 50000, 0> firsthash;
+	//for (int i = 0; i <= 50000; ++i)
+	//{
+	//	firsthash.Insert(i, i);
+	//}
+	//int j = 0;
+
+	CTimeManager* pTime = CTimeManager::CreateInst();
+	CPerformance* pPerformance = CPerformance::CreateInst();
+	PERFOR_TIMER_BEFORE(testHashMap);
+	//for (int i = 0; i <= 30000; ++i)
+	//{
+	//	firsthash.Find(i, j);
+	//}
+	double fCombatPower = 0;
+	fCombatPower = 2000000000;
+
+	for (int j = 0; j < 20000; j++)
+	{
+		fCombatPower = 200000000;
+		// 先计算正常的传统意义的属性战力
+		fCombatPower = fCombatPower * 3;
+	}
+
+
+
+	PERFOR_TIMER_AFTER(testHashMap);
+	CPerformance::Inst()->PrintResult();
+
+	CTimeManager::DestroyInst();
+	CPerformance::DestroyInst();
+}
 //
 //void testVector()
 //{
@@ -1118,74 +1129,74 @@ int main(int argc, char** argv)
 //	int size = sizeof(CSizeA);
 //	int size2 = sizeof(CSizeB);
 //
-//	testHashMap();
+	testHashMap();
 //	testVector();
 //	testCriticalSection();
 
-	CLogManager* pLogManger = CLogManager::CreateInst();
-	CLog mProDebugLog;
-	CLogManager::Inst()->AddDebugLog(&mProDebugLog, "pro");
-	
-	
-	CStdDisplayer tProPlayer;
-	mProDebugLog.AddDisplayer(&tProPlayer);
-	
-	const char* pProLogName = "pro.log";
-	CRollFileDisplayer tProFileDisplayer(const_cast<char*>(pProLogName), 1024000, 10);
-	mProDebugLog.AddDisplayer(&tProFileDisplayer);
+	//CLogManager* pLogManger = CLogManager::CreateInst();
+	//CLog mProDebugLog;
+	//CLogManager::Inst()->AddDebugLog(&mProDebugLog, "pro");
+	//
+	//
+	//CStdDisplayer tProPlayer;
+	//mProDebugLog.AddDisplayer(&tProPlayer);
+	//
+	//const char* pProLogName = "pro.log";
+	//CRollFileDisplayer tProFileDisplayer(const_cast<char*>(pProLogName), 1024000, 10);
+	//mProDebugLog.AddDisplayer(&tProFileDisplayer);
 	
 //	LOG_DEBUG("pro", "%s", "Pro log message is here!\n");
 
 
-	Myth::CThreadPool threadpool(4);
-	CJob tJob1;
-	tJob1.setJobID(1);
-	threadpool.pushBackJob(&tJob1);
-
-	CJob tJob2;
-	tJob2.setJobID(2);
-	threadpool.pushBackJob(&tJob2);
-
-	CJob tJob3;
-	tJob3.setJobID(3);
-	threadpool.pushBackJob(&tJob3);
-
-	CJob tJob4;
-	tJob4.setJobID(4);
-	threadpool.pushBackJob(&tJob4);
-
-	CJob tJob5;
-	tJob5.setJobID(5);
-	threadpool.pushBackJob(&tJob5);
-
-	CJob tJob6;
-	tJob6.setJobID(6);
-	threadpool.pushBackJob(&tJob6);
-
-	int i = 0;
-	while (true)
-	{
-		//printf("begin next\n");
-		cs.lock();
-//		LOG_DEBUG("pro", "begin next\n");
-		cs.unlock();
-		threadpool.run();
-#ifdef MYTH_OS_WINDOWS
-		Sleep(100);
-#else
-		struct timespec tv;
-		tv.tv_sec = 5;
-		tv.tv_nsec = 0;
-
-		nanosleep(&tv, NULL);
-#endif
-		++i;
-		if (i > 50)
-		{
-			break;
-		}
-	}
-
-	CLogManager::DestroyInst();
+//	Myth::CThreadPool threadpool(4);
+//	CJob tJob1;
+//	tJob1.setJobID(1);
+//	threadpool.pushBackJob(&tJob1);
+//
+//	CJob tJob2;
+//	tJob2.setJobID(2);
+//	threadpool.pushBackJob(&tJob2);
+//
+//	CJob tJob3;
+//	tJob3.setJobID(3);
+//	threadpool.pushBackJob(&tJob3);
+//
+//	CJob tJob4;
+//	tJob4.setJobID(4);
+//	threadpool.pushBackJob(&tJob4);
+//
+//	CJob tJob5;
+//	tJob5.setJobID(5);
+//	threadpool.pushBackJob(&tJob5);
+//
+//	CJob tJob6;
+//	tJob6.setJobID(6);
+//	threadpool.pushBackJob(&tJob6);
+//
+//	int i = 0;
+//	while (true)
+//	{
+//		//printf("begin next\n");
+//		cs.lock();
+////		LOG_DEBUG("pro", "begin next\n");
+//		cs.unlock();
+//		threadpool.run();
+//#ifdef MYTH_OS_WINDOWS
+//		Sleep(100);
+//#else
+//		struct timespec tv;
+//		tv.tv_sec = 5;
+//		tv.tv_nsec = 0;
+//
+//		nanosleep(&tv, NULL);
+//#endif
+//		++i;
+//		if (i > 50)
+//		{
+//			break;
+//		}
+//	}
+//
+//	CLogManager::DestroyInst();
 }
 

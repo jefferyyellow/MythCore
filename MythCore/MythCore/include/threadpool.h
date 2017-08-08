@@ -4,19 +4,18 @@
 
 #include "commontype.h"
 #include "blockmemory.h"
-#include "iterator.h"
-#include "list.h"
 #include "thread.h"
 #include "simplelock.h"
 #include "array.h"
 #include "winthread.h"
 #include "linuxthread.h"
+#include <list>
 namespace Myth
 {
 	class CThreadPool
 	{
 	public:
-		typedef CList<IThread*, 32, 0> ThreadList;
+		typedef std::list<IThread*> ThreadList;
 		typedef CArray<IJob*, 32> JobArray;
 
 	public:

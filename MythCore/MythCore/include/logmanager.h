@@ -3,8 +3,7 @@
 #include "commontype.h"
 #include "singleton.h"
 
-#include "hashmap.h"
-//#include <string>
+#include <map>
 #include <stdarg.h>
 #include "log.h"
 namespace Myth
@@ -25,8 +24,7 @@ namespace Myth
 	{
 		friend class CSingleton < CLogManager > ;
 	public:
-		//typedef std::map<std::string, CLog*> DebugLogMap;
-		typedef CHashMap<const char*, CLog*, 8, 8, 8> DebugLogMap;
+		typedef std::map<std::string, CLog*> DebugLogMap;
 	private:
 		CLogManager()
 		{

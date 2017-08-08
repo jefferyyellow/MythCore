@@ -36,17 +36,29 @@ struct CTcpSocketBuff
 	char	mData[MAX_SOCKET_BUFF_SIZE];
 };
 
-enum emTcpState
+enum EmTcpError
 {
-	emTcpState_None					= 0,	// 未知
-	emTcpState_Connect				= 1,	// 连接
-	emTcpState_Close				= 2,	// 关闭
+	emTcpError_None					= 0,	// 未知
+	// 1-15表示从游戏服务器到TCP服务器的TCP错误状态通知，
+	// 这些状态由游戏服务器设置
+	emTcpError_OffLineClose			= 1,	// 下线关闭
+
+
+	// 16-31表示从TCP服务器到游戏服务器的TCP错误状态通知，
+	// 这些状态由TCP服务器设置
+	emTcpError_SendData				= 16,	// 发送数据错误
 };
 
 struct CExchangeHead
 {
-	uint32	mTcpIndex;
-	uint8	mTcpState;
+	time_t	mSocketTime;				// socket建立时间
+	uint16	mSocketIndex;				// socket索引
+	uint16	mSocketError;				// socket错误
+};
+
+struct  CSocketInfo
+{
+	time_t	mCreateTime;			// socket的创建时间
 };
 
 class CTcpServer
@@ -79,6 +91,11 @@ public:
 	/// 退出
 	void		exit();
 
+	// 通知游戏服务器删除一个socket
+	void		sendSocketErrToGameServer(int nTcpIndex, uint16 nSocketState);
+	// 清除socket info
+	void		clearSocketInfo(int nTcpIndex);
+
 private:
 	CLog*					mDefaultLog;
 	CShareMemory*			mShareMemory;
@@ -90,6 +107,7 @@ private:
 	CEpollModel*			mEpollModel;
 #endif
 	CTcpSocket*				mTcpSocket;
+	CSocketInfo*			mSocketInfo;
 
 	CBlockMemory<CTcpSocketBuff, 20, 20>	mSocketBuffPool;
 	char					mBuffer[MAX_SOCKET_BUFF_SIZE + sizeof(CExchangeHead)];

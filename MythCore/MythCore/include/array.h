@@ -1,7 +1,6 @@
 #ifndef __ARRAY_H__
 #define __ARRAY_H__
 #include "commontype.h"
-#include "iterator.h"
 #include <algorithm>
 namespace Myth
 {
@@ -17,10 +16,8 @@ namespace Myth
 		typedef		ptrdiff_t		difference_type;
 		typedef const value_type*	const_pointer;
 		typedef const value_type&	const_reference;
-		typedef MythInternal::__normal_iterator<pointer, array_type>			iterator;
-		typedef MythInternal::__normal_iterator<const_pointer, array_type>	const_iterator;
-		typedef MythInternal::reverse_iterator<const_iterator>				const_reverse_iterator;
-		typedef MythInternal::reverse_iterator<iterator>						reverse_iterator;
+		typedef pointer				iterator;
+		typedef const_pointer		const_iterator;
 
 	public:
 		CArray()

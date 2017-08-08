@@ -3,7 +3,7 @@
 #include "singleton.h"
 #include "messagefactory.h"
 #include "commontype.h"
-#include "hashmap.h"
+#include <map>
 using namespace Myth;
 class CInternalMsg;
 #define  MAKE_LOGIN_KEY(AccountID, ChannelID, WorldID) ( (ChannelID << 48) | (WorldID << 32) | AccountID)
@@ -11,8 +11,7 @@ class CLoginModule : public CSingleton < CLoginModule >
 {
 	friend class CSingleton < CLoginModule > ;
 public:
-	typedef CHashMap<uint64, uint32, 100, 100, 100> LOGIN_LIST;
-
+	typedef std::map<uint64, uint32> LOGIN_LIST;
 private:
 	CLoginModule();
 	~CLoginModule();

@@ -135,6 +135,13 @@ bool CTcpServer::initSocket()
 	{
 		return false;
 	}
+
+	mSocketInfo = new CSocketInfo[MAX_SOCKET_NUM];
+	if (NULL == mSocketInfo)
+	{
+		return false;
+	}
+
 	mSelectModel = new CSelectModel(mTcpSocket, MAX_SOCKET_NUM);
 	if (NULL == mSelectModel)
 	{
@@ -158,6 +165,12 @@ bool CTcpServer::initSocket()
 {
 	mTcpSocket = new CTcpSocket[MAX_SOCKET_NUM];
 	if (NULL == mTcpSocket)
+	{
+		return false;
+	}
+
+	mSocketInfo = new CSocketInfo[MAX_SOCKET_NUM];
+	if (NULL == mSocketInfo)
 	{
 		return false;
 	}
@@ -349,6 +362,10 @@ void CTcpServer::onReceiveMessage(CTcpSocket* pSocket, int nIndex)
 	{
 		return;
 	}
+	if (nIndex <= 0 || nIndex >= MAX_SOCKET_NUM)
+	{
+		return;
+	}
 
 	int nBuffSize = pSocket->getRecvBuffSize();
 	char* pBuffer = pSocket->getRecvBuff();
@@ -374,9 +391,9 @@ void CTcpServer::onReceiveMessage(CTcpSocket* pSocket, int nIndex)
 			break;
 		}
 
-
-		mExchangeHead.mTcpIndex = nIndex;
-		mExchangeHead.mTcpState = 0;
+		mExchangeHead.mSocketIndex = nIndex;
+		mExchangeHead.mSocketError = emTcpError_None;
+		mExchangeHead.mSocketTime = mSocketInfo[nIndex].mCreateTime;
 
 		memcpy(mBuffer, &mExchangeHead, sizeof(mExchangeHead));
 		memcpy(mBuffer + sizeof(mExchangeHead), pBuffer, nMessageLen);
@@ -421,37 +438,85 @@ void CTcpServer::sendMessage()
 		short nLength = *(short*)pTemp;
 		if (nLength != nMessageLen)
 		{
-			break;
+			continue;
 		}
 
-		int nTcpIndex = pExchangeHead->mTcpIndex;
+		int nTcpIndex = pExchangeHead->mSocketIndex;
+		if (nTcpIndex <= 0 || nTcpIndex >= MAX_SOCKET_NUM)
+		{
+			continue;
+		}
+		if (mSocketInfo[nTcpIndex].mCreateTime != pExchangeHead->mSocketTime)
+		{
+			continue;
+		}
+
 #ifdef MYTH_OS_WINDOWS
-		int nResult = mSelectModel->processWrite(nTcpIndex, pTemp, nMessageLen);
-		if (nResult == nMessageLen && pExchangeHead->mTcpState == emTcpState_Close)
+		// 游戏服务器已经关闭socket
+		if (pExchangeHead->mSocketError == emTcpError_OffLineClose)
 		{
 			CTcpSocket* pSocket = mSelectModel->getSocket(nTcpIndex);
 			if (NULL != pSocket)
 			{
-				int nRemoveFd = pSocket->getSocketFd();
 				pSocket->closeSocket();
-				mSelectModel->removeSocket(nRemoveFd);
+				mSelectModel->removeSocket(pSocket->getSocketFd());
 			}
+			clearSocketInfo(nTcpIndex);
+		}
+
+		int nResult = mSelectModel->processWrite(nTcpIndex, pTemp, nMessageLen);
+		if (nResult != nMessageLen)
+		{
+			sendSocketErrToGameServer(nTcpIndex, emTcpError_SendData);
+			clearSocketInfo(nTcpIndex);
 		}
 #else
-		int nResult = mEpollModel->processWrite(nTcpIndex, pTemp, nMessageLen);
-		if (nResult == nMessageLen && pExchangeHead->mTcpState == emTcpState_Close)
+		// 游戏服务器已经关闭socket
+		if (pExchangeHead->mSocketError == emTcpError_OffLineClose)
 		{
 			CTcpSocket* pSocket = mEpollModel->getSocket(nTcpIndex);
 			if (NULL != pSocket)
 			{
-				int nRemoveFd = pSocket->getSocketFd();
 				pSocket->closeSocket();
-				mEpollModel->delSocket(nRemoveFd);
+				mEpollModel->delSocket(pSocket->getSocketFd());
 			}
+			clearSocketInfo(nTcpIndex);
+		}
+		int nResult = mEpollModel->processWrite(nTcpIndex, pTemp, nMessageLen);
+		if (nResult != nMessageLen)
+		{
+			sendSocketErrToGameServer(nTcpIndex, emTcpError_SendData);
+			clearSocketInfo(nTcpIndex);
 		}
 #endif
 
 	}
+}
+
+// 通知游戏服务器删除一个socket
+void CTcpServer::sendSocketErrToGameServer(int nTcpIndex, uint16 nSocketError)
+{
+	if (nTcpIndex <= 0 || nTcpIndex >= MAX_SOCKET_NUM)
+	{
+		return;
+	}
+
+	mExchangeHead.mSocketIndex = nTcpIndex;
+	mExchangeHead.mSocketError = nSocketError;
+	mExchangeHead.mSocketTime = mSocketInfo[nTcpIndex].mCreateTime;
+
+	memcpy(mBuffer, &mExchangeHead, sizeof(mExchangeHead));
+	mTcp2ServerMemory->PushPacket((uint8*)mBuffer, sizeof(mExchangeHead));
+}
+
+// 清除socket info
+void CTcpServer::clearSocketInfo(int nTcpIndex)
+{
+	if (nTcpIndex <= 0 || nTcpIndex >= MAX_SOCKET_NUM)
+	{
+		return;
+	}
+	mSocketInfo[nTcpIndex].mCreateTime =  0;
 }
 
 /// 开始为退出做准备

@@ -90,8 +90,7 @@ void CLoginModule::onIMPlayerLoginResponse(CInternalMsg* pMsg)
 	rExchangeHead.mSocketTime = pResponse->mSocketTime;
 	rExchangeHead.mSocketIndex = pResponse->mSocketIndex;
 
-	mLoginList.Insert(pLoginPlayer->getKey(), pLoginPlayer->getObjID());
-
+	mLoginList[pLoginPlayer->getKey()] = pLoginPlayer->getObjID();
 
 	CIMPlayerLoginResponse* pIMLoginResponse = reinterpret_cast<CIMPlayerLoginResponse*>(pMsg);
 	CMessageLoginResponse tMessageLoginResponse;
@@ -121,14 +120,14 @@ void CLoginModule::onMessageCreateRoleRequest(uint32 nSocketIndex, Message* pMes
 	uint64 nWorldID = pCreateRoleRequest->worldid();
 	uint64 nKey = MAKE_LOGIN_KEY(nAccountID, nChannelID, nWorldID);
 
-	uint32 nObjID = 0;
-	bool bFind = mLoginList.Find(nKey, nObjID);
-	if (!bFind || nObjID == 0)
+	LOGIN_LIST::iterator it = mLoginList.find(nKey);
+	if (it == mLoginList.end())
 	{
 		// 已经不存在了
 		return;
 	}
 
+	uint32 nObjID = it->second;
 	CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::CreateInst()->getObj(nObjID));
 	if (NULL == pLoginPlayer)
 	{
@@ -163,14 +162,14 @@ void CLoginModule::onIMCreateRoleResponse(CInternalMsg* pMsg)
 	uint64 nWorldID = pCreateRoleResponse->mWorldID;
 	uint64 nKey = MAKE_LOGIN_KEY(nAccountID, nChannelID, nWorldID);
 
-	uint32 nObjID = 0;
-	bool bFind = mLoginList.Find(nKey, nObjID);
-	if (!bFind || nObjID == 0)
+	LOGIN_LIST::iterator it = mLoginList.find(nKey);
+	if (it == mLoginList.end())
 	{
 		// 已经不存在了
 		return;
 	}
 
+	uint32 nObjID = it->second;
 	CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::CreateInst()->getObj(nObjID));
 	if (NULL == pLoginPlayer)
 	{
@@ -203,14 +202,15 @@ void CLoginModule::onMessageEnterSceneRequest(uint32 nSocketIndex, Message* pMes
 	uint64 nWorldID = pEnterSceneRequest->worldid();
 	uint64 nKey = MAKE_LOGIN_KEY(nAccountID, nChannelID, nWorldID);
 
-	uint32 nObjID = 0;
-	bool bFind = mLoginList.Find(nKey, nObjID);
-	if (!bFind || nObjID == 0)
+	//bool bFind = mLoginList.Find(nKey, nObjID);
+	LOGIN_LIST::iterator it = mLoginList.find(nKey);
+	if (it == mLoginList.end())
 	{
 		// 已经不存在了
 		return;
 	}
 
+	uint32 nObjID = it->second;
 	CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::CreateInst()->getObj(nObjID));
 	if (NULL == pLoginPlayer)
 	{
@@ -264,14 +264,16 @@ void CLoginModule::onIMEnterSceneResponse(CInternalMsg* pMsg)
 	uint64 nWorldID = pEnterSceneResponse->mWorldID;
 	uint64 nKey = MAKE_LOGIN_KEY(nAccountID, nChannelID, nWorldID);
 
-	uint32 nObjID = 0;
-	bool bFind = mLoginList.Find(nKey, nObjID);
-	if (!bFind || nObjID == 0)
+	
+	//bool bFind = mLoginList.Find(nKey, nObjID);
+	LOGIN_LIST::iterator it = mLoginList.find(nKey);
+	if (it == mLoginList.end())
 	{
 		// 已经不存在了
 		return;
 	}
 
+	uint32 nObjID = it->second;
 	CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::CreateInst()->getObj(nObjID));
 	if (NULL == pLoginPlayer)
 	{

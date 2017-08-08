@@ -1,9 +1,8 @@
 #ifndef __TASKMANAGER_H__
 #define __TASKMANAGER_H__
 #include "commontype.h"
-#include "list.h"
 #include "simplelock.h"
-
+#include <list>
 enum EmTaskType
 {
 	emTaskType_None			= 0,			// δ֪
@@ -44,7 +43,8 @@ public:
 	}
 
 private:
-	CList<CInternalMsg*, BaseCount, Increment>	mTaskList;
+	//CList<CInternalMsg*, BaseCount, Increment>	mTaskList;
+	std::list<CInternalMsg*>		mTaskList;
 	CSimpleLock						mLock;
 };
 #endif

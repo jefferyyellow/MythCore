@@ -36,6 +36,10 @@ namespace Myth
 			mpAllSocket = NULL;
 			mSocketCapacity = 0;
 			mWaitTimeOut = 0;
+			if (NULL != mpWaitEvents)
+			{
+				free(mpWaitEvents);
+			}
 		}
 
 		void finial()

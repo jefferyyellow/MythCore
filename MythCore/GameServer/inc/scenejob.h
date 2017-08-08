@@ -5,8 +5,8 @@
 #include "socketstream.h"
 #include "messagefactory.h"
 #include "singleton.h"
-#include "hashmap.h"
 #include "logintype.h"
+#include <map>
 using namespace Myth;
 
 #define PIPE_SIZE					((int)0x1000000)	/*内存管道的大小*/
@@ -16,7 +16,7 @@ class CEntityPlayer;
 class CSceneJob : public CJob < 1000, 100 >, public CSingleton<CSceneJob>
 {
 	friend class CSingleton<CSceneJob>;
-	typedef CHashMap<uint32, uint32, 100, 100, 100> PLAYER_LIST;
+	typedef std::map<uint32, uint32> PLAYER_LIST;
 
 public:
 	CSceneJob(){}

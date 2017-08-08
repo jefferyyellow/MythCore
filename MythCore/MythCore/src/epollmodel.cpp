@@ -94,7 +94,8 @@ namespace Myth
 		rNewSocket.listenSocket(nListNum);
 		if(addSocket(rNewSocket.getSocketFd()) < 0)
 		{
-			rNewSocket.setSocketFd(-1);
+			rNewSocket.closeSocket();
+			rNewSocket.setSocketFd(INVALID_SOCKET);
 			return NULL;
 		}
 
