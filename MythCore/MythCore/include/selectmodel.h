@@ -46,8 +46,8 @@ namespace Myth
 		CTcpSocket*		createListenSocket(char* pIP, uint32 uPort, int nListNum);
 		void			selectAllFd();
 		//void			processRead();
-		int				processWrite(int nSocketIndex, char* pBuffer, int nBuffSize);
-		void			addNewSocket(CTcpSocket* pNewSocket);
+		//int				processWrite(int nSocketIndex, char* pBuffer, int nBuffSize);
+		void			addNewSocket(CTcpSocket* pNewSocket, int nSocketIndex);
 		void			removeSocket(SOCKET nRemoveFd);
 		int				findFreeSocketIndex();
 		CTcpSocket*		getFreeSocket(int &rSocketIndex);

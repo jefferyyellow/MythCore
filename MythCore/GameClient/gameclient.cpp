@@ -24,7 +24,7 @@ bool CGameClient::init()
 	mTcpSocket.setRecvBuff(mTcpRecData);
 	mTcpSocket.setRecvBuffSize(0);
 	mTcpSocket.setMaxRecvBuffSize(sizeof(mTcpRecData));
-	mSelectModel.addNewSocket(&mTcpSocket);
+	mSelectModel.addNewSocket(&mTcpSocket, 0);
 	return true;
 }
 

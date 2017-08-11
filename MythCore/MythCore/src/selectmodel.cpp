@@ -42,13 +42,10 @@ namespace Myth
 			//int nError = WSAGetLastError();
 			return NULL;
 		}
-		if (nSocketIndex > mMaxSocketIndex)
-		{
-			mMaxSocketIndex = nSocketIndex;
-		}
+
 		pNewSocket->SetListen(1);
 		pNewSocket->setNonBlock(true);
-		addNewSocket(pNewSocket);
+		addNewSocket(pNewSocket, nSocketIndex);
 		return pNewSocket;
 	}
 
@@ -63,27 +60,27 @@ namespace Myth
 		}
 	}
 
-	int CSelectModel::processWrite(int nSocketIndex, char* pBuffer, int nBuffSize)
-	{
-		if (NULL == pBuffer)
-		{
-			return 0;
-		}
-		if (nSocketIndex < 0 || nSocketIndex > mMaxSocketIndex)
-		{
-			return 0;
-		}
+	//int CSelectModel::processWrite(int nSocketIndex, char* pBuffer, int nBuffSize)
+	//{
+	//	if (NULL == pBuffer)
+	//	{
+	//		return 0;
+	//	}
+	//	if (nSocketIndex < 0 || nSocketIndex > mMaxSocketIndex)
+	//	{
+	//		return 0;
+	//	}
 
-		int nResult = mpAllSocket[nSocketIndex].sendData(pBuffer, nBuffSize);
-		if (nResult <= 0 || nResult != nBuffSize)
-		{
-			int nRemoveFd = mpAllSocket[nSocketIndex].getSocketFd();
-			mpAllSocket[nSocketIndex].closeSocket();
-			removeSocket(nRemoveFd);
-			return nResult;
-		}
-		return nResult;
-	}
+	//	int nResult = mpAllSocket[nSocketIndex].sendData(pBuffer, nBuffSize);
+	//	if (nResult <= 0 || nResult != nBuffSize)
+	//	{
+	//		int nRemoveFd = mpAllSocket[nSocketIndex].getSocketFd();
+	//		mpAllSocket[nSocketIndex].closeSocket();
+	//		removeSocket(nRemoveFd);
+	//		return nResult;
+	//	}
+	//	return nResult;
+	//}
 
 	//void CSelectModel::processRead()
 	//{
@@ -149,7 +146,7 @@ namespace Myth
 		return &mpAllSocket[nIndex];
 	}
 
-	void CSelectModel::addNewSocket(CTcpSocket* pNewSocket)
+	void CSelectModel::addNewSocket(CTcpSocket* pNewSocket, int nSocketIndex)
 	{
 		if (NULL == pNewSocket)
 		{
@@ -161,6 +158,10 @@ namespace Myth
 			mMaxFd = nFd;
 		}
 		FD_SET(nFd, &mReadBackSet);
+		if (nSocketIndex > mMaxSocketIndex)
+		{
+			mMaxSocketIndex = nSocketIndex;
+		}
 #ifdef MYTH_OS_UNIX
 		//SetFdNotInherited(nFd);
 #endif
@@ -192,6 +193,7 @@ namespace Myth
 			if (INVALID_SOCKET != mpAllSocket[nIndex].getSocketFd())
 			{
 				mMaxSocketIndex = nIndex;
+				break;
 			}
 		}
 	}

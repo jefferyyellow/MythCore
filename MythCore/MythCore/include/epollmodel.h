@@ -40,6 +40,7 @@ namespace Myth
 			{
 				free(mpWaitEvents);
 			}
+			mMaxSocketFd = 0;
 		}
 
 		void finial()
@@ -71,7 +72,10 @@ namespace Myth
 		int			addSocket(int nfd);
 		int			delSocket(int nfd);
 		CTcpSocket* acceptConnection(CTcpSocket& rListSocket);
-		int			processWrite(int nSocketFd, char* pBuffer, int nBuffSize);
+		//int			processWrite(int nSocketFd, char* pBuffer, int nBuffSize);
+
+		uint16			getMaxSocketFd(){return mMaxSocketFd;}
+		void			setMaxSocketFd(int nMaxSocketFd){mMaxSocketFd = nMaxSocketFd;}
 	private:
 		int                 mEpollFd;
 		struct epoll_event  *mpWaitEvents;
@@ -79,6 +83,7 @@ namespace Myth
 		CTcpSocket*			mpAllSocket;
 		uint16				mSocketCapacity;
 		int					mWaitTimeOut;
+		uint16				mMaxSocketFd;
 	};
 }
 

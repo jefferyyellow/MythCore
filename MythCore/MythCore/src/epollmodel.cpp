@@ -109,6 +109,11 @@ namespace Myth
 		{
 			return -1;
 		}
+
+		if (nFd > mMaxSocketFd)
+		{
+			mMaxSocketFd = nFd;
+		}
 		return 0;
 	}
 
@@ -118,6 +123,16 @@ namespace Myth
 		if (epoll_ctl(mEpollFd, EPOLL_CTL_DEL, nFd, &mCtrlEvent) < 0)
 		{
 			return -1;
+		}
+		if (nFd >= mMaxSocketFd)
+		{
+			for (int i = nFd - 1; i >= 0 ; -- i)
+			{
+				if(INVALID_SOCKET != mpAllSocket[i]->getSocketFd())
+				{
+					mMaxSocketFd = mpAllSocket[i]->getSocketFd();
+				}
+			}
 		}
 		return 0;
 	}
@@ -153,27 +168,27 @@ namespace Myth
 		return &rNewSocket;
 	}
 
-	int CEpollModel::processWrite(int nSocketFd, char* pBuffer, int nBuffSize)
-	{
-		if (NULL == pBuffer)
-		{
-			return 0;
-		}
-		if (nSocketFd < 0 || nSocketFd >= mSocketCapacity)
-		{
-			return 0;
-		}
+	//int CEpollModel::processWrite(int nSocketFd, char* pBuffer, int nBuffSize)
+	//{
+	//	if (NULL == pBuffer)
+	//	{
+	//		return 0;
+	//	}
+	//	if (nSocketFd < 0 || nSocketFd >= mSocketCapacity)
+	//	{
+	//		return 0;
+	//	}
 
-		int nResult = mpAllSocket[nSocketFd].sendData(pBuffer, nBuffSize);
-		if (nResult <= 0 || nResult != nBuffSize)
-		{
-			int nRemoveFd = mpAllSocket[nSocketFd].getSocketFd();
-			mpAllSocket[nSocketFd].closeSocket();
-			delSocket(nRemoveFd);
-			return nResult;
-		}
-		return nResult;
-	}
+	//	int nResult = mpAllSocket[nSocketFd].sendData(pBuffer, nBuffSize);
+	//	if (nResult <= 0 || nResult != nBuffSize)
+	//	{
+	//		int nRemoveFd = mpAllSocket[nSocketFd].getSocketFd();
+	//		mpAllSocket[nSocketFd].closeSocket();
+	//		delSocket(nRemoveFd);
+	//		return nResult;
+	//	}
+	//	return nResult;
+	//}
 }
 #endif //  MYTH_OS_UNIX
 

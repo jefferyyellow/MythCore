@@ -71,9 +71,11 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="tcpserver.cpp" />
+    <ClCompile Include="tinyxml\tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tcpserver.h" />
+    <ClInclude Include="tinyxml\tinyxml2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

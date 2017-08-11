@@ -1,7 +1,6 @@
 #include "tcpserver.h"
-
-
-
+#include "tinyxml/tinyxml2.h"
+using namespace tinyxml2;
 
 CTcpServer::CTcpServer()
 {
@@ -16,6 +15,8 @@ CTcpServer::~CTcpServer()
 /// 初始化
 bool CTcpServer::init()
 {
+	loadTcpServerConfig("config/tcpserverconfig.xml");
+
 	bool bResult = initLog();
 	if (!bResult)
 	{
@@ -51,13 +52,13 @@ bool CTcpServer::initLog()
 		printf("create default log failure");
 		return false;
 	}
-#endif
 
 	// 默认的debug日志
 	CRollFileDisplayer* pDefaultFileDisplayer = new CRollFileDisplayer(const_cast<char*>("../log/tcpdefault.log"), 1024000, 10);
 	// 为默认的debug日志加文件displayer
 	mDefaultLog->AddDisplayer(pDefaultFileDisplayer);
 	CLogManager::Inst()->AddDebugLog(mDefaultLog, "default");
+#endif
 
 	// 错误日志加文件displayer
 	CRollFileDisplayer* pErrorFileDisplayer = new CRollFileDisplayer(const_cast<char*>("../log/tcperror.log"), 1024000, 10);
@@ -74,6 +75,18 @@ bool CTcpServer::initLog()
 	// 给警告日志加文件displayer
 	CRollFileDisplayer* pWarnFileDisplayer = new CRollFileDisplayer(const_cast<char*>("../log/tcpwarn.log"), 1024000, 10);
 	CLogManager::Inst()->GetInfoLog().AddDisplayer(pWarnFileDisplayer);
+
+	mStatisticsLog = new CLog();
+	if (NULL == mStatisticsLog)
+	{
+		printf("create StatisticsLog log failure");
+		return false;
+	}
+
+	// 默认的debug日志
+	CRollFileDisplayer* pStatisticsFileDisplayer = new CRollFileDisplayer(const_cast<char*>("../log/tcpstat.log"), 1024000, 10);
+	// 为默认的debug日志加文件displayer
+	mStatisticsLog->AddDisplayer(pStatisticsFileDisplayer);
 	return true;
 }
 
@@ -148,14 +161,21 @@ bool CTcpServer::initSocket()
 		return false;
 	}
 
-	CTcpSocket* pListenSocket = mSelectModel->createListenSocket(NULL, 6688, 5);
-	if (NULL == pListenSocket)
+	for (int i = 0; i < MAX_LISTEN_PORT_NUM; ++ i)
 	{
-		return false;
+		if (mTcpConfig.mListenPort[i] == 0)
+		{
+			break;
+		}
+		CTcpSocket* pListenSocket = mSelectModel->createListenSocket(NULL, mTcpConfig.mListenPort[i], 5);
+		if (NULL == pListenSocket)
+		{
+			return false;
+		}
+		pListenSocket->setNonBlock(true);
+		pListenSocket->setSendBuffSizeOption(8192);
+		pListenSocket->setRecvBuffSizeOption(8192);
 	}
-	pListenSocket->setNonBlock(true);
-	pListenSocket->setSendBuffSizeOption(8192);
-	pListenSocket->setRecvBuffSizeOption(8192);
 
 	return true;
 }
@@ -182,14 +202,22 @@ bool CTcpServer::initSocket()
 	}
 	mEpollModel->initEpollSocket();
 
-	CTcpSocket* pListenSocket = mEpollModel->createListenSocket(NULL, 6688, 5);
-	if (NULL == pListenSocket)
+
+	for (int i = 0; i < MAX_LISTEN_PORT_NUM; ++ i)
 	{
-		return false;
+		if (mTcpConfig.mListenPort[i] == 0)
+		{
+			break;
+		}
+		CTcpSocket* pListenSocket = mEpollModel->createListenSocket(NULL, mTcpConfig.mListenPort[i], 5);
+		if (NULL == pListenSocket)
+		{
+			return false;
+		}
+		pListenSocket->setNonBlock(true);
+		pListenSocket->setSendBuffSizeOption(8192);
+		pListenSocket->setRecvBuffSizeOption(8192);
 	}
-	pListenSocket->setNonBlock(true);
-	pListenSocket->setSendBuffSizeOption(8192);
-	pListenSocket->setRecvBuffSizeOption(8192);
 }
 #endif
 
@@ -203,8 +231,61 @@ void CTcpServer::run()
 #endif
 		receiveMessage();
 		sendMessage();
+		checkTimeOut();
 	}
 	
+}
+
+/// 检查是否超时
+void CTcpServer::checkTimeOut()
+{
+	time_t tTimeNow = time(NULL);
+	if (tTimeNow - mLastStatisticsTime > mTcpConfig.mWriteStatisticsTime)
+	{
+		writeTcpStatisticsData();
+		mLastStatisticsTime = tTimeNow;
+	}
+
+	// 检查keep live的时间
+	if (tTimeNow - mLastKeepLiveTime > mTcpConfig.mCheckLiveTime)
+	{
+		checkKeepLiveTimeOut(tTimeNow);
+		mLastKeepLiveTime = tTimeNow;
+	}
+}
+
+/// 检测keep live 是否超时
+void CTcpServer::checkKeepLiveTimeOut(time_t tTimeNow)
+{
+#ifdef MYTH_OS_WINDOWS
+	int nMaxSocketIndex = mSelectModel->getMaxSocketIndex();
+#else
+	int nMaxSocketIndex = mEpollModel->getMaxSocketFd();
+#endif
+	for (int i = 0; i < nMaxSocketIndex; ++i)
+	{
+		// 没有用的socket，直接跳过
+		if (mSocketInfo[i].mCreateTime == 0)
+		{
+			continue;
+		}
+		// 是否在keep live期间没有任何数据到来
+		if (tTimeNow - mSocketInfo[i].mKeepLiveTime > mTcpConfig.mKeepLiveTime)
+		{
+#ifdef MYTH_OS_WINDOWS
+			CTcpSocket* pSocket = mSelectModel->getSocket(i);
+#else
+			CTcpSocket* pSocket = mEpollModel->getSocket(nTcpIndex);
+#endif
+			if (NULL == pSocket)
+			{
+				continue;
+			}
+			// 直接删除
+			clearSocketInfo(i, pSocket);
+			sendSocketErrToGameServer(i, emTcpError_KeepLive);
+		}
+	}
 }
 
 #ifdef MYTH_OS_WINDOWS
@@ -228,28 +309,42 @@ void CTcpServer::receiveMessage()
 				int nSocketIndex = -1;
 				CTcpSocket* pNewSocket = mSelectModel->getFreeSocket(nSocketIndex);
 				pAllSocket[i].acceptConnection(pNewSocket);
-				if (nSocketIndex > mSelectModel->getMaxSocketIndex())
-				{
-					mSelectModel->setMaxSocketIndex(nSocketIndex);
-				}
 				if (NULL == pNewSocket)
 				{
 					// 出错
 				}
-				CTcpSocketBuff* pNewSocketBuff = mSocketBuffPool.allocate();
-				if (NULL == pNewSocketBuff)
+				if (NULL == pNewSocket->getRecvBuff())
 				{
-					// 出错
+					char* pNewSocketBuff = new char[MAX_SOCKET_BUFF_SIZE];
+					if (NULL == pNewSocketBuff)
+					{
+
+					}
+					pNewSocket->setRecvBuff((char*)pNewSocketBuff);
 				}
-				pNewSocket->setRecvBuff(pNewSocketBuff->mData);
+
 				pNewSocket->setMaxRecvBuffSize(MAX_SOCKET_BUFF_SIZE);
 				pNewSocket->setRecvBuffSize(0);
-				mSelectModel->addNewSocket(pNewSocket);
+				mSelectModel->addNewSocket(pNewSocket, nSocketIndex);
+
+				time_t tNowTime = time(NULL);
+				if (nSocketIndex>= 0 && nSocketIndex < MAX_SOCKET_NUM)
+				{
+					mSocketInfo[nSocketIndex].mCreateTime = tNowTime;
+					mSocketInfo[nSocketIndex].mKeepLiveTime = tNowTime;
+				}
+
+
+				// 时间周期内的连接数加一
+				++ mServerStatistics.mConnects;
+				// 连接总数加一
+				++ mServerStatistics.mTotalConnects;
 
 				printf("IP: %s connect success", pNewSocket->getIP());
 			}
 			else
 			{
+				printf(" receive data");
 				int nResult = pAllSocket[i].recvData(pAllSocket[i].getRecvBuffPoint(), pAllSocket[i].getRecvBuffCapacity());
 				if (nResult <= 0)
 				{
@@ -307,8 +402,8 @@ void CTcpServer::receiveMessage()
 		// 不可读，直接滚蛋
 		if (0 == (EPOLLIN & pEvent->events))
 		{
-			rTcpSocket.closeSocket();
-			mEpollModel->delSocket(nFd);
+			clearSocketInfo(nTcpIndex, &pAllSocket[nFd]);
+			sendSocketErrToGameServer(i, emTcpError_ReadData);
 			continue;
 		}
 
@@ -321,14 +416,30 @@ void CTcpServer::receiveMessage()
 			{
 				// 出错
 			}
-			CTcpSocketBuff* pNewSocketBuff = mSocketBuffPool.allocate();
-			if (NULL == pNewSocketBuff)
+			if (NULL != pNewSocket->getRecvBuff())
 			{
-				// 出错
+				char* pNewSocketBuff = new char[MAX_SOCKET_BUFF_SIZE];
+				if (NULL == pNewSocketBuff)
+				{
+
+				}
+				pNewSocket->setRecvBuff((char*)pNewSocketBuff);
 			}
-			pNewSocket->setRecvBuff(pNewSocketBuff->mData);
 			pNewSocket->setMaxRecvBuffSize(MAX_SOCKET_BUFF_SIZE);
 			pNewSocket->setRecvBuffSize(0);
+
+			time_t tNowTime = time(NULL);
+			int nFd = pNewSocket->getSocketFd();
+			if (nFd>= 0 && nFd < MAX_SOCKET_NUM)
+			{
+				mSocketInfo[nFd].mCreateTime = tNowTime;
+				mSocketInfo[nFd].mKeepLiveTime = tNowTime;
+			}
+
+			// 时间周期内的连接数加一
+			++ mServerStatistics.mConnects;
+			// 连接总数加一
+			++ mServerStatistics.mTotalConnects;
 
 			printf("IP: %s connect success\n", pNewSocket->getIP());
 		}
@@ -371,6 +482,7 @@ void CTcpServer::onReceiveMessage(CTcpSocket* pSocket, int nIndex)
 	char* pBuffer = pSocket->getRecvBuff();
 
 	int nTotalSize = 0;
+	time_t tNowTime = time(NULL);
 	while (true)
 	{
 		if (nBuffSize < 4)
@@ -394,6 +506,7 @@ void CTcpServer::onReceiveMessage(CTcpSocket* pSocket, int nIndex)
 		mExchangeHead.mSocketIndex = nIndex;
 		mExchangeHead.mSocketError = emTcpError_None;
 		mExchangeHead.mSocketTime = mSocketInfo[nIndex].mCreateTime;
+		mSocketInfo[nIndex].mKeepLiveTime = tNowTime;
 
 		memcpy(mBuffer, &mExchangeHead, sizeof(mExchangeHead));
 		memcpy(mBuffer + sizeof(mExchangeHead), pBuffer, nMessageLen);
@@ -401,6 +514,11 @@ void CTcpServer::onReceiveMessage(CTcpSocket* pSocket, int nIndex)
 
 		pBuffer += nMessageLen;
 		nBuffSize -= nMessageLen;
+
+		// 增加收到的消息数目
+		++mServerStatistics.mReceiveMessageNum;
+		// 增加收到的字节
+		mServerStatistics.mReceiveBytes += nMessageLen;
 	}
 
 	int nSendSize = pSocket->getRecvBuffSize() - nBuffSize;
@@ -452,42 +570,61 @@ void CTcpServer::sendMessage()
 		}
 
 #ifdef MYTH_OS_WINDOWS
-		// 游戏服务器已经关闭socket
+		CTcpSocket* pSocket = mSelectModel->getSocket(nTcpIndex);
+		if (NULL == pSocket)
+		{
+			continue;
+		}
+		if (INVALID_SOCKET == pSocket->getSocketFd())
+		{
+			continue;
+		}
+		// 游戏服务器已经关闭socket，所以不需要通知游戏服务器了
 		if (pExchangeHead->mSocketError == emTcpError_OffLineClose)
 		{
-			CTcpSocket* pSocket = mSelectModel->getSocket(nTcpIndex);
-			if (NULL != pSocket)
-			{
-				pSocket->closeSocket();
-				mSelectModel->removeSocket(pSocket->getSocketFd());
-			}
-			clearSocketInfo(nTcpIndex);
+			clearSocketInfo(nTcpIndex, pSocket);
+			continue;
 		}
 
-		int nResult = mSelectModel->processWrite(nTcpIndex, pTemp, nMessageLen);
+		int nResult = pSocket->sendData(pTemp, nMessageLen);
+		// int nResult = mSelectModel->processWrite(nTcpIndex, pTemp, nMessageLen);
 		if (nResult != nMessageLen)
 		{
 			sendSocketErrToGameServer(nTcpIndex, emTcpError_SendData);
-			clearSocketInfo(nTcpIndex);
+			clearSocketInfo(nTcpIndex, pSocket);
+			continue;
 		}
+		// 增加发送消息数目
+		++ mServerStatistics.mSendMessageNum;
+		// 增加发送消息的字节数
+		mServerStatistics.mSendBytes += nMessageLen;
 #else
-		// 游戏服务器已经关闭socket
+
+		CTcpSocket* pSocket = mEpollModel->getSocket(nTcpIndex);
+		if (NULL == pSocket)
+		{
+			continue;
+		}
+		// 游戏服务器已经关闭socket，所以不需要通知游戏服务器了
 		if (pExchangeHead->mSocketError == emTcpError_OffLineClose)
 		{
-			CTcpSocket* pSocket = mEpollModel->getSocket(nTcpIndex);
-			if (NULL != pSocket)
-			{
-				pSocket->closeSocket();
-				mEpollModel->delSocket(pSocket->getSocketFd());
-			}
-			clearSocketInfo(nTcpIndex);
+			clearSocketInfo(nTcpIndex, pSocket);
+			continue;
 		}
-		int nResult = mEpollModel->processWrite(nTcpIndex, pTemp, nMessageLen);
+
+		int nResult = pSocket->sendData(pTemp, nMessageLen);
+		// int nResult = mEpollModel->processWrite(nTcpIndex, pTemp, nMessageLen);
 		if (nResult != nMessageLen)
 		{
 			sendSocketErrToGameServer(nTcpIndex, emTcpError_SendData);
-			clearSocketInfo(nTcpIndex);
+			clearSocketInfo(nTcpIndex, pSocket);
+			continue;
 		}
+
+		// 增加发送消息数目
+		++mServerStatistics.mSendMessageNum;
+		// 增加发送消息的字节数
+		mServerStatistics.mSendBytes += nMessageLen;
 #endif
 
 	}
@@ -510,13 +647,108 @@ void CTcpServer::sendSocketErrToGameServer(int nTcpIndex, uint16 nSocketError)
 }
 
 // 清除socket info
-void CTcpServer::clearSocketInfo(int nTcpIndex)
+void CTcpServer::clearSocketInfo(int nTcpIndex, CTcpSocket* pSocket)
 {
-	if (nTcpIndex <= 0 || nTcpIndex >= MAX_SOCKET_NUM)
+	if (nTcpIndex >= 0 && nTcpIndex < MAX_SOCKET_NUM)
+	{
+		mSocketInfo[nTcpIndex].mCreateTime = 0;
+	}
+	
+#ifdef MYTH_OS_WINDOWS
+	mSelectModel->removeSocket(pSocket->getSocketFd());
+#else
+	mEpollModel->delSocket(pSocket->getSocketFd());
+#endif
+	pSocket->closeSocket();
+	// 总连接数减一
+	-- mServerStatistics.mTotalConnects;
+}
+
+// 加载TCP服务器配置
+void CTcpServer::loadTcpServerConfig(char* pConfigPath)
+{
+	if (NULL == pConfigPath)
 	{
 		return;
 	}
-	mSocketInfo[nTcpIndex].mCreateTime =  0;
+	tinyxml2::XMLDocument tDocument;
+	if (XML_SUCCESS != tDocument.LoadFile(pConfigPath))
+	{
+		// 出错，无法加载xml文件
+		return;
+	}
+	
+	XMLElement* pRoot = tDocument.RootElement();
+	if (NULL == pRoot)
+	{
+		// 出错，没有root节点
+		return;
+	}
+
+	// 侦听端口
+	XMLElement* pListPortElement = pRoot->FirstChildElement("ListPort");
+	if (NULL != pListPortElement)
+	{
+		int nCount = 0;
+		XMLElement* pPortElement = pListPortElement->FirstChildElement("Port");
+		for (; NULL != pPortElement; 
+			pPortElement = pListPortElement->NextSiblingElement("Port"))
+		{
+			mTcpConfig.mListenPort[nCount] = pPortElement->IntAttribute("value");
+			++ nCount;
+			if (nCount >= MAX_LISTEN_PORT_NUM)
+			{
+				break;
+			}
+		}
+	}
+
+	XMLElement* pRunParamElement = pRoot->FirstChildElement("RunParam");
+	if (NULL != pRunParamElement)
+	{
+		XMLElement* pKeepLiveTimeElement = pRunParamElement->FirstChildElement("KeepLiveTime");
+		if (NULL != pKeepLiveTimeElement)
+		{
+			mTcpConfig.mKeepLiveTime = pKeepLiveTimeElement->IntAttribute("value");
+		}
+
+		XMLElement* pCheckLiveTimeElement = pRunParamElement->FirstChildElement("CheckLiveTime");
+		if (NULL != pCheckLiveTimeElement)
+		{
+			mTcpConfig.mCheckLiveTime = pCheckLiveTimeElement->IntAttribute("value");
+		}
+
+		XMLElement* pWriteStatisticsTimeElement = pRunParamElement->FirstChildElement("WriteStatisticsTime");
+		if (NULL != pWriteStatisticsTimeElement)
+		{
+			mTcpConfig.mWriteStatisticsTime = pWriteStatisticsTimeElement->IntAttribute("value");
+		}
+	}
+}
+
+/// 写统计信息
+void CTcpServer::writeTcpStatisticsData()
+{ 
+
+	int nServer2TcpLeftSpace = mServer2TcpMemory->GetLeftSpace();
+	int nTcp2ServerLeftSpace = mTcp2ServerMemory->GetLeftSpace();
+
+	char tBuff[256] = {0};
+	snprintf(tBuff, sizeof(tBuff) - 1, "S2TLeft: %d --- T2S: %d, Connects: %d, TotalConnects: %d, ReceiveBytes: %d, ReceiveMessageNum: %d, SendBytes: %d, SendMessageNum:%d",
+		nServer2TcpLeftSpace, nTcp2ServerLeftSpace, mServerStatistics.mConnects, mServerStatistics.mTotalConnects, mServerStatistics.mReceiveBytes, 
+		mServerStatistics.mReceiveMessageNum, mServerStatistics.mSendBytes, mServerStatistics.mSendMessageNum);
+
+
+	char tLogBuff[256] = { 0 };
+	CLogManager::Inst()->FormatLogMessage(tLogBuff, sizeof(tLogBuff) - 1, "INFO", tBuff);
+	mStatisticsLog->DisplayLog(tLogBuff);
+
+
+	mServerStatistics.mConnects = 0;
+	mServerStatistics.mReceiveBytes = 0;
+	mServerStatistics.mReceiveMessageNum = 0;
+	mServerStatistics.mSendBytes = 0;
+	mServerStatistics.mSendMessageNum = 0;
 }
 
 /// 开始为退出做准备
