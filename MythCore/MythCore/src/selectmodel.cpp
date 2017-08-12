@@ -13,7 +13,7 @@ namespace Myth
 #endif // MYTH_OS_WINDOWS
 		return 0;
 	}
-	CTcpSocket* CSelectModel::createListenSocket(char* pIP, uint32 uPort, int nListNum)
+	CTcpSocket* CSelectModel::createListenSocket(char* pIP, uint32 uPort, int nListNum, int& rSocketIndex)
 	{
 		int nSocketIndex = -1;
 
@@ -46,6 +46,7 @@ namespace Myth
 		pNewSocket->SetListen(1);
 		pNewSocket->setNonBlock(true);
 		addNewSocket(pNewSocket, nSocketIndex);
+		rSocketIndex = nSocketIndex;
 		return pNewSocket;
 	}
 
@@ -181,16 +182,28 @@ namespace Myth
 			for (int i = 0; i <= mMaxSocketIndex; ++ i)
 			{
 				SOCKET nFd = mpAllSocket[i].getSocketFd();
+				if (nFd == nRemoveFd)
+				{
+					continue;
+				}
 				if (INVALID_SOCKET != nFd && nFd > nMaxFd)
 				{
-					mMaxFd = nFd;
+					nMaxFd = nFd;
 				}
 			}
+
+			mMaxFd = nMaxFd;
 		}
-		mMaxSocketIndex = 0;
+
+
 		for (int nIndex = mMaxSocketIndex; nIndex >= 0; -- nIndex)
 		{
-			if (INVALID_SOCKET != mpAllSocket[nIndex].getSocketFd())
+			SOCKET nFd = mpAllSocket[nIndex].getSocketFd();
+			if (nFd == nRemoveFd)
+			{
+				continue;
+			}
+			if (INVALID_SOCKET != nFd)
 			{
 				mMaxSocketIndex = nIndex;
 				break;

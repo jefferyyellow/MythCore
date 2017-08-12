@@ -74,7 +74,7 @@ bool CTcpServer::initLog()
 
 	// 给警告日志加文件displayer
 	CRollFileDisplayer* pWarnFileDisplayer = new CRollFileDisplayer(const_cast<char*>("../log/tcpwarn.log"), 1024000, 10);
-	CLogManager::Inst()->GetInfoLog().AddDisplayer(pWarnFileDisplayer);
+	CLogManager::Inst()->GetWarnLog().AddDisplayer(pWarnFileDisplayer);
 
 	mStatisticsLog = new CLog();
 	if (NULL == mStatisticsLog)
@@ -161,17 +161,27 @@ bool CTcpServer::initSocket()
 		return false;
 	}
 
+	time_t tNowTime = time(NULL);
 	for (int i = 0; i < MAX_LISTEN_PORT_NUM; ++ i)
 	{
 		if (mTcpConfig.mListenPort[i] == 0)
 		{
 			break;
 		}
-		CTcpSocket* pListenSocket = mSelectModel->createListenSocket(NULL, mTcpConfig.mListenPort[i], 5);
+		int nSocketIndex = -1;
+		CTcpSocket* pListenSocket = mSelectModel->createListenSocket(NULL, mTcpConfig.mListenPort[i], 5, nSocketIndex);
 		if (NULL == pListenSocket)
 		{
 			return false;
 		}
+
+		if (nSocketIndex >= 0 && nSocketIndex < MAX_SOCKET_NUM)
+		{
+			mSocketInfo[nSocketIndex].mCreateTime = 0;
+			mSocketInfo[nSocketIndex].mKeepLiveTime = 0;
+		}
+
+
 		pListenSocket->setNonBlock(true);
 		pListenSocket->setSendBuffSizeOption(8192);
 		pListenSocket->setRecvBuffSizeOption(8192);
@@ -202,18 +212,26 @@ bool CTcpServer::initSocket()
 	}
 	mEpollModel->initEpollSocket();
 
-
+	time_t tNowTime = time(NULL);
 	for (int i = 0; i < MAX_LISTEN_PORT_NUM; ++ i)
 	{
 		if (mTcpConfig.mListenPort[i] == 0)
 		{
 			break;
 		}
+	
 		CTcpSocket* pListenSocket = mEpollModel->createListenSocket(NULL, mTcpConfig.mListenPort[i], 5);
 		if (NULL == pListenSocket)
 		{
 			return false;
 		}
+		int nSocketIndex = pListenSocket->getSocketFd();
+		if (nSocketIndex >= 0 && nSocketIndex < MAX_SOCKET_NUM)
+		{
+			mSocketInfo[nSocketIndex].mCreateTime = tNowTime;
+			mSocketInfo[nSocketIndex].mKeepLiveTime = tNowTime;
+		}
+
 		pListenSocket->setNonBlock(true);
 		pListenSocket->setSendBuffSizeOption(8192);
 		pListenSocket->setRecvBuffSizeOption(8192);
@@ -262,7 +280,7 @@ void CTcpServer::checkKeepLiveTimeOut(time_t tTimeNow)
 #else
 	int nMaxSocketIndex = mEpollModel->getMaxSocketFd();
 #endif
-	for (int i = 0; i < nMaxSocketIndex; ++i)
+	for (int i = 0; i <= nMaxSocketIndex; ++i)
 	{
 		// 没有用的socket，直接跳过
 		if (mSocketInfo[i].mCreateTime == 0)
@@ -348,10 +366,12 @@ void CTcpServer::receiveMessage()
 				int nResult = pAllSocket[i].recvData(pAllSocket[i].getRecvBuffPoint(), pAllSocket[i].getRecvBuffCapacity());
 				if (nResult <= 0)
 				{
-					// 客户端已经退出
-					int nRemoveFd = pAllSocket[i].getSocketFd();
-					pAllSocket[i].closeSocket();
-					mSelectModel->removeSocket(nRemoveFd);
+					CTcpSocket* pSocket = mSelectModel->getSocket(i);
+					if (NULL != pSocket)
+					{
+						// 客户端已经退出
+						clearSocketInfo(i, pSocket);
+					}
 					break;
 				}
 				else
@@ -449,9 +469,11 @@ void CTcpServer::receiveMessage()
 			if (nResult <= 0)
 			{
 				// 客户端已经退出
-				int nRemoveFd = rTcpSocket.getSocketFd();
-				rTcpSocket.closeSocket();
-				mEpollModel->delSocket(nRemoveFd);
+				CTcpSocket* pSocket = mEpollModel->getSocket(rTcpSocket.getSocketFd());
+				if (NULL != pSocket)
+				{
+					clearSocketInfo(rTcpSocket.getSocketFd(), pSocket);
+				}
 				break;
 			}
 			else
@@ -751,9 +773,54 @@ void CTcpServer::writeTcpStatisticsData()
 	mServerStatistics.mSendMessageNum = 0;
 }
 
+/// 清除日志
+void CTcpServer::clearLog(CLog* pLog)
+{
+	if (NULL == pLog)
+	{
+		return;
+	}
+
+	for (int i = 0; i < pLog->GetDisplayerSize(); ++i)
+	{
+		CLogDisplayer* pDisplay = pLog->GetDisplayer(i);
+		if (NULL != pDisplay)
+		{
+			delete pDisplay;
+		}
+	}
+}
+
 /// 开始为退出做准备
 void CTcpServer::clear()
 {
+#ifdef __DEBUG__
+	clearLog(mDefaultLog);
+	delete mDefaultLog;
+#endif // __DEBUG__
+	clearLog(&CLogManager::Inst()->GetErrorLog());
+	clearLog(&CLogManager::Inst()->GetInfoLog());
+	clearLog(&CLogManager::Inst()->GetWarnLog());
+	clearLog(mStatisticsLog);
+	delete mStatisticsLog;
+
+
+	for (int i = 0; i < MAX_SOCKET_NUM; ++ i)
+	{
+		char* pBuff = mTcpSocket[i].getRecvBuff();
+		if (NULL != pBuff)
+		{
+			delete[]pBuff;
+		}
+	}
+
+	delete[]mTcpSocket;
+	delete[]mSocketInfo;
+#ifdef MYTH_OS_WINDOWS
+	delete mSelectModel;
+#else
+	delete mEpollModel;
+#endif
 
 }
 

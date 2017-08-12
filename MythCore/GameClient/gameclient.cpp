@@ -86,11 +86,16 @@ void CGameClient::run()
 
 void CGameClient::LoginServer()
 {
-	CMessageLoginRequest tLoginRequest;
-	tLoginRequest.set_name("hjh");
-	tLoginRequest.set_channelid(1);
-	tLoginRequest.set_worldid(1);
-	sendMessage(ID_C2S_REQUEST_LOGIN, &tLoginRequest);
+	for (int i = 0; i < 10; ++ i)
+	{
+		CMessageLoginRequest tLoginRequest;
+		tLoginRequest.set_name("hjh");
+		tLoginRequest.set_channelid(1);
+		tLoginRequest.set_worldid(1);
+		sendMessage(ID_C2S_REQUEST_LOGIN, &tLoginRequest);
+		Sleep(100);
+	}
+
 }
 
 /// 处理前端消息

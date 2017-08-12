@@ -140,8 +140,8 @@ int main(int argc, char* argv[])
 	CTcpServer tServer;
 	tServer.init();
 	tServer.run();
-
-
+	tServer.clear();
+	tServer.exit();
 
 	return 0;
 }

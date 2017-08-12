@@ -148,6 +148,9 @@ public:
 	void		loadTcpServerConfig(char* pConfigPath);
 	/// 写统计信息
 	void		writeTcpStatisticsData();
+	/// 清除日志
+	void		clearLog(CLog* pLog);
+
 private:
 	CLog*					mDefaultLog;				// 默认日志
 	CLog*					mStatisticsLog;				// 统计信息日志

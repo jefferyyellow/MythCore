@@ -27,7 +27,7 @@ namespace Myth
 
 	CRollFileDisplayer::~CRollFileDisplayer()
 	{
-		if (0 != mFd)
+		if (0 <= mFd)
 		{
 			close(mFd);
 		}
@@ -37,7 +37,7 @@ namespace Myth
 	/// display log message
 	void CRollFileDisplayer::DisplayLog(char* pLogMessage)
 	{
-		if (0 == mFd || NULL == pLogMessage)
+		if (0 > mFd || NULL == pLogMessage)
 		{
 			return;
 		}
