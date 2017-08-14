@@ -18,10 +18,11 @@ namespace Myth
 	};
 
 	#define MAX_ROW_FIELD_NUM	128
+	class CMysqlDataBase;
 	class CMysqlQueryResult
 	{
 	public:
-		CMysqlQueryResult();
+		CMysqlQueryResult(CMysqlDataBase* pMysqlDataBase, bool bProcedure);
 		~CMysqlQueryResult();
 
 		int init(MYSQL_RES *pResult, uint32 nRowCount, uint32 nFieldCount);
@@ -99,8 +100,10 @@ namespace Myth
 		void			setRowCount(uint32 nRowCount){mRowCount = nRowCount;}
 
 	private:
+		/// mysql
+		CMysqlDataBase*	mMysqlDataBase;
 		/// mysql的结果
-		MYSQL_RES		*mResult;
+		MYSQL_RES*		mResult;
 		/// 列数据	
 		CMysqlField		mField[MAX_ROW_FIELD_NUM];
 		/// 列类型
@@ -109,6 +112,8 @@ namespace Myth
 		uint32			mFieldCount;
 		/// 行数目
 		uint32			mRowCount;
+		/// 是否执行存储过程
+		bool			mProcedure;
 	};
 }
 #endif

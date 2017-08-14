@@ -6,6 +6,7 @@
 #include "internalmsgpool.h"
 #include "gameserverconfig.h"
 #include "objpool.h"
+#include "timemanager.h"
 
 /// ³õÊ¼»¯
 bool CGameServer::init()
@@ -85,6 +86,7 @@ bool CGameServer::initLogicModule()
 	CInternalMsgPool::CreateInst();
 	CGameServerConfig::CreateInst();
 	CObjPool::CreateInst();
+	CTimeManager::CreateInst();
 	return true;
 }
 
@@ -124,13 +126,14 @@ void CGameServer::run()
 	LOG_ERROR("Hello World");
 	while (true)
 	{
+		CTimeManager::Inst()->UpdateCurrTime();
 		mThreadPool->run();
 #ifdef MYTH_OS_WINDOWS
-		Sleep(5);
+		Sleep(1);
 #else
 		struct timespec tv;
 		tv.tv_sec = 0;
-		tv.tv_nsec = 5000;
+		tv.tv_nsec = 1000;
 		nanosleep(&tv, NULL);
 #endif
 	}

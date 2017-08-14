@@ -82,7 +82,7 @@ void CDBJob::OnIMPlayerLoginRequest(CInternalMsg* pMsg)
 	char acBuffer[STRING_LENGTH_128] = {0};
 	snprintf(acBuffer, sizeof(acBuffer), "call CheckUserName('%s', %d, %d)", pLoginRequest->mName, pLoginRequest->mChannelID, pLoginRequest->mServerID);
 
-	CMysqlQueryResult tQueryResult;
+	CMysqlQueryResult tQueryResult(&mDataBase, true);
 	mDataBase.query(acBuffer, tQueryResult);
 
 	if (tQueryResult.getRowCount() != 1)
@@ -142,7 +142,7 @@ void CDBJob::OnIMCreateRoleRequest(CInternalMsg* pMsg)
 	}
 	char acBuffer[STRING_LENGTH_128] = { 0 };
 	snprintf(acBuffer, sizeof(acBuffer), "call CreateRole(%d, '%s', %d, %d, %d)", 1, pCreateRoleRequest->mRoleName, pCreateRoleRequest->mAccountID, pCreateRoleRequest->mChannelID, pCreateRoleRequest->mServerID);
-	CMysqlQueryResult tQueryResult;
+	CMysqlQueryResult tQueryResult(&mDataBase, true);
 	mDataBase.query(acBuffer, tQueryResult);
 
 	if (tQueryResult.getRowCount() != 1)
@@ -195,13 +195,14 @@ void CDBJob::OnIMEnterSceneRequest(CInternalMsg* pMsg)
 
 	char acBuffer[STRING_LENGTH_128] = { 0 };
 	snprintf(acBuffer, sizeof(acBuffer), "call LoadPlayerInfo(%d)", nRoleID);
-	CMysqlQueryResult tQueryResult;
+	CMysqlQueryResult tQueryResult(&mDataBase, true);
 	mDataBase.query(acBuffer, tQueryResult);
 
 
 	CEntityPlayer* pEntityPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(nPlayerEntityID));
 	if (NULL == pEntityPlayer)
 	{
+		mDataBase.clearResult();
 		return;
 	}
 	// 取得数据库加载的结果

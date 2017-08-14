@@ -5,6 +5,7 @@
 #include "gameserver.h"
 #include "entityplayer.h"
 #include "objpool.h"
+#include "timemanager.h"
 CLoginModule::CLoginModule()
 {
 
@@ -68,6 +69,7 @@ void CLoginModule::onMessageLoginRequest(CExchangeHead& rExchangeHead, Message* 
 	pPlayerLoginRequest->mServerID = pLoginRequest->serverid();
 	// TCP服务器消息头
 	pPlayerLoginRequest->mExchangeHead = rExchangeHead;
+
 	CGameServer::Inst()->pushTask(emTaskType_DB, pPlayerLoginRequest);
 	printf("CLoginModule::OnMessageLoginRequest");
 }
@@ -104,6 +106,7 @@ void CLoginModule::onIMPlayerLoginResponse(CInternalMsg* pMsg)
 	pLoginPlayer->setKey(nKey);
 	pLoginPlayer->setRoleID(pResponse->mRoleID);
 	pLoginPlayer->GetExchangeHead() = pResponse->mExchangeHead;
+	pLoginPlayer->SetWaitTime(CTimeManager::Inst()->GetCurrTime());
 
 	mLoginList[pLoginPlayer->getKey()] = pLoginPlayer->getObjID();
 
@@ -132,8 +135,8 @@ void CLoginModule::onMessageCreateRoleRequest(CExchangeHead& rExchangeHead, Mess
 	}
 	uint64 nAccountID = pCreateRoleRequest->accountid();
 	uint64 nChannelID = pCreateRoleRequest->channelid();
-	uint64 nWorldID = pCreateRoleRequest->serverid();
-	uint64 nKey = MAKE_LOGIN_KEY(nAccountID, nChannelID, nWorldID);
+	uint64 nServerID = pCreateRoleRequest->serverid();
+	uint64 nKey = MAKE_LOGIN_KEY(nAccountID, nChannelID, nServerID);
 
 	LOGIN_LIST::iterator it = mLoginList.find(nKey);
 	if (it == mLoginList.end())

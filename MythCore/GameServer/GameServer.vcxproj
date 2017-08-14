@@ -45,7 +45,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>MYTH_OS_WINDOWS;_CRT_SECURE_NO_WARNINGS;__DEBUG__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../MythCore/include;../dep/protobuffer;../message;../dep/mysql/include;./inc;../common/tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../MythCore/include;../dep/protobuffer;../message;../dep/mysql/include;./inc;../dep/tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -71,7 +71,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\common\tinyxml\tinyxml2.cpp" />
+    <ClCompile Include="..\dep\tinyxml\tinyxml2.cpp" />
     <ClCompile Include="..\message\loginmessage.hxx.pb.cc" />
     <ClCompile Include="..\message\message.hxx.pb.cc" />
     <ClCompile Include="src\dbjob.cpp" />
@@ -94,7 +94,7 @@
     <ClCompile Include="src\template.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\common\tinyxml\tinyxml2.h" />
+    <ClInclude Include="..\dep\tinyxml\tinyxml2.h" />
     <ClInclude Include="..\message\loginmessage.hxx" />
     <ClInclude Include="..\message\loginmessage.hxx.pb.h" />
     <ClInclude Include="..\message\message.hxx" />

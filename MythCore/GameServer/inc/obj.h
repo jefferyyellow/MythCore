@@ -43,11 +43,15 @@ public:
 	uint32		getRoleID() const { return mRoleID; }
 	void		setRoleID(uint32 nValue) { mRoleID = nValue; }
 
+	time_t		GetWaitTime() const { return mWaitTime; }
+	void		SetWaitTime(time_t nValue) { mWaitTime = nValue; }
+
 	CExchangeHead&	GetExchangeHead(){ return mExchangeHead; }
 
 private:
 	uint64			mKey;
 	uint32			mRoleID;
 	CExchangeHead	mExchangeHead;
+	time_t			mWaitTime;				// 等待时间，如果等待时间小于0，登录失败
 };
 #endif

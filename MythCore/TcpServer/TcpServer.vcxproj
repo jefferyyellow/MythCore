@@ -44,7 +44,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\MythCore\include;..\common\tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\MythCore\include;..\dep\tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>MYTH_OS_WINDOWS;_CRT_SECURE_NO_WARNINGS;__DEBUG__;MEDIUM_SIZE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -69,12 +69,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\common\tinyxml\tinyxml2.cpp" />
+    <ClCompile Include="..\dep\tinyxml\tinyxml2.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="tcpserver.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\common\tinyxml\tinyxml2.h" />
+    <ClInclude Include="..\dep\tinyxml\tinyxml2.h" />
     <ClInclude Include="tcpserver.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

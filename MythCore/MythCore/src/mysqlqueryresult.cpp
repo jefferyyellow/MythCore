@@ -1,8 +1,9 @@
 #include "mysqlqueryresult.h"
-
+#include "mysqldatabase.h"
 namespace Myth
 {
-	CMysqlQueryResult::CMysqlQueryResult()
+	CMysqlQueryResult::CMysqlQueryResult(CMysqlDataBase* pMysqlDataBase, bool bProcedure)
+		:mMysqlDataBase(pMysqlDataBase), mProcedure(bProcedure)
 	{
 		mResult = NULL;
 		mFieldCount = 0;
@@ -23,6 +24,10 @@ namespace Myth
 		}
 		mFieldCount = 0;
 		mRowCount = 0;
+		if (mProcedure && NULL != mMysqlDataBase)
+		{
+			mMysqlDataBase->clearResult();
+		}
 	}
 
 	int CMysqlQueryResult::init(MYSQL_RES *pResult, uint32 nRowCount, uint32 nFieldCount)
