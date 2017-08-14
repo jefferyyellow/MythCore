@@ -91,7 +91,7 @@ bool CGameServer::initLogicModule()
 /// ³õÊ¼Ïß³Ì
 bool CGameServer::initThread()
 {
-	mThreadPool = new Myth::CThreadPool(1);
+	mThreadPool = new Myth::CThreadPool(3);
 	if (NULL == mThreadPool)
 	{
 		return false;
@@ -126,12 +126,11 @@ void CGameServer::run()
 	{
 		mThreadPool->run();
 #ifdef MYTH_OS_WINDOWS
-		Sleep(50);
+		Sleep(5);
 #else
 		struct timespec tv;
 		tv.tv_sec = 0;
-		tv.tv_nsec = 50000;
-
+		tv.tv_nsec = 5000;
 		nanosleep(&tv, NULL);
 #endif
 	}

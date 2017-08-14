@@ -80,7 +80,7 @@ void CDBJob::OnIMPlayerLoginRequest(CInternalMsg* pMsg)
 	}
 	// µÃµ½account id
 	char acBuffer[STRING_LENGTH_128] = {0};
-	snprintf(acBuffer, sizeof(acBuffer), "call CheckUserName('%s', %d, %d)", pLoginRequest->mName, pLoginRequest->mChannelID, pLoginRequest->mWorldID);
+	snprintf(acBuffer, sizeof(acBuffer), "call CheckUserName('%s', %d, %d)", pLoginRequest->mName, pLoginRequest->mChannelID, pLoginRequest->mServerID);
 
 	CMysqlQueryResult tQueryResult;
 	mDataBase.query(acBuffer, tQueryResult);
@@ -96,7 +96,7 @@ void CDBJob::OnIMPlayerLoginRequest(CInternalMsg* pMsg)
 		return;
 	}
 	
-	snprintf(acBuffer, sizeof(acBuffer), "call GetRoleInfo(%d, %d, %d)", nAccountID, pLoginRequest->mChannelID, pLoginRequest->mWorldID);
+	snprintf(acBuffer, sizeof(acBuffer), "call GetRoleInfo(%d, %d, %d)", nAccountID, pLoginRequest->mChannelID, pLoginRequest->mServerID);
 	tQueryResult.clear();
 	mDataBase.clearResult();
 
@@ -112,15 +112,18 @@ void CDBJob::OnIMPlayerLoginRequest(CInternalMsg* pMsg)
 	CIMPlayerLoginResponse* pResponse = reinterpret_cast<CIMPlayerLoginResponse*>(CInternalMsgPool::CreateInst()->allocMsg(IM_RESPONSE_PLAYER_LOGIN));
 	if (NULL != pResponse)
 	{
-		pResponse->mAccountID = nAccountID;
-		pResponse->mRoleID = nRoleID;
-		pResponse->mChannelID = pLoginRequest->mChannelID;
-		pResponse->mWorldID = pLoginRequest->mWorldID;
-		pResponse->mSocketIndex = pLoginRequest->mSocketIndex;
-		pResponse->mSocketTime = pLoginRequest->mSocketTime;
-		CGameServer::Inst()->pushTask(emTaskType_Scene, pResponse);
-		printf("OnIMPlayerLoginRequest end");
+		mDataBase.clearResult();
+		return;
 	}
+	pResponse->mAccountID = nAccountID;
+	pResponse->mRoleID = nRoleID;
+	pResponse->mChannelID = pLoginRequest->mChannelID;
+	pResponse->mServerID = pLoginRequest->mServerID;
+	pResponse->mExchangeHead = pLoginRequest->mExchangeHead;
+
+	CGameServer::Inst()->pushTask(emTaskType_Scene, pResponse);
+	printf("OnIMPlayerLoginRequest end");
+
 	mDataBase.clearResult();
 }
 
@@ -138,7 +141,7 @@ void CDBJob::OnIMCreateRoleRequest(CInternalMsg* pMsg)
 		return;
 	}
 	char acBuffer[STRING_LENGTH_128] = { 0 };
-	snprintf(acBuffer, sizeof(acBuffer), "call CreateRole(%d, '%s', %d, %d, %d)", 1, pCreateRoleRequest->mRoleName, pCreateRoleRequest->mAccountID, pCreateRoleRequest->mChannelID, pCreateRoleRequest->mWorldID);
+	snprintf(acBuffer, sizeof(acBuffer), "call CreateRole(%d, '%s', %d, %d, %d)", 1, pCreateRoleRequest->mRoleName, pCreateRoleRequest->mAccountID, pCreateRoleRequest->mChannelID, pCreateRoleRequest->mServerID);
 	CMysqlQueryResult tQueryResult;
 	mDataBase.query(acBuffer, tQueryResult);
 
@@ -162,7 +165,7 @@ void CDBJob::OnIMCreateRoleRequest(CInternalMsg* pMsg)
 	pIMCreateRoleResponse->mRoleID = nRoleID;
 	pIMCreateRoleResponse->mAccountID = pCreateRoleRequest->mAccountID;
 	pIMCreateRoleResponse->mChannelID = pCreateRoleRequest->mChannelID;
-	pIMCreateRoleResponse->mWorldID = pCreateRoleRequest->mWorldID;
+	pIMCreateRoleResponse->mServerID = pCreateRoleRequest->mServerID;
 
 	CGameServer::Inst()->pushTask(emTaskType_Scene, pIMCreateRoleResponse);
 }
@@ -212,7 +215,7 @@ void CDBJob::OnIMEnterSceneRequest(CInternalMsg* pMsg)
 	pEnterSceneResponse->mRoleID = pEnterSceneRequest->mRoleID;
 	pEnterSceneResponse->mAccountID = pEnterSceneRequest->mAccountID;
 	pEnterSceneResponse->mChannelID = pEnterSceneRequest->mChannelID;
-	pEnterSceneResponse->mWorldID = pEnterSceneRequest->mWorldID;
+	pEnterSceneResponse->mServerID = pEnterSceneRequest->mServerID;
 	pEnterSceneResponse->mPlayerEntityID = pEnterSceneRequest->mPlayerEntityID;
 
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!--
+ListPort：侦听端口，最多可以填2个
+Port：端口
+RunParam：运行参数
+KeepLiveTime：前端多久之内一定要给服务器发过消息
+CheckLiveTime：检查活着的时间间隔
+WriteStatisticsTime：写入统计信息的时间间隔
+-->
+<Data>
+  <ListPort>
+    <Port value="6688"/>
+    <Port value="6618"/>
+  </ListPort>
+  <RunParam>
+    <KeepLiveTime value="300"/>
+    <CheckLiveTime value="5"/>
+    <WriteStatisticsTime value="60"/>
+  </RunParam>
+</Data>

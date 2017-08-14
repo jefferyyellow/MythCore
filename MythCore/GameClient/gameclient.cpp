@@ -86,14 +86,14 @@ void CGameClient::run()
 
 void CGameClient::LoginServer()
 {
-	for (int i = 0; i < 10; ++ i)
+	for (int i = 0; i < 1000; ++ i)
 	{
 		CMessageLoginRequest tLoginRequest;
 		tLoginRequest.set_name("hjh");
 		tLoginRequest.set_channelid(1);
-		tLoginRequest.set_worldid(1);
+		tLoginRequest.set_serverid(1);
 		sendMessage(ID_C2S_REQUEST_LOGIN, &tLoginRequest);
-		Sleep(100);
+		Sleep(1000);
 	}
 
 }
@@ -195,7 +195,7 @@ void CGameClient::onMessageLoginResponse(Message* pMessage)
 		CMessageCreateRoleRequest tCreateRoleRequest;
 		tCreateRoleRequest.set_accountid(pLoginResponse->accountid());
 		tCreateRoleRequest.set_channelid(pLoginResponse->channelid());
-		tCreateRoleRequest.set_worldid(pLoginResponse->worldid());
+		tCreateRoleRequest.set_serverid(pLoginResponse->serverid());
 		tCreateRoleRequest.set_rolename("hjh");
 		sendMessage(ID_C2S_REQUEST_CREATE_ROLE, &tCreateRoleRequest);
 	}
@@ -205,7 +205,7 @@ void CGameClient::onMessageLoginResponse(Message* pMessage)
 		tEnterSceneRequest.set_roleid(pLoginResponse->roleid());
 		tEnterSceneRequest.set_accountid(pLoginResponse->accountid());
 		tEnterSceneRequest.set_channelid(pLoginResponse->channelid());
-		tEnterSceneRequest.set_worldid(pLoginResponse->worldid());
+		tEnterSceneRequest.set_serverid(pLoginResponse->serverid());
 		sendMessage(ID_C2S_REQUEST_ENTER_SCENE, &tEnterSceneRequest);
 	}
 }

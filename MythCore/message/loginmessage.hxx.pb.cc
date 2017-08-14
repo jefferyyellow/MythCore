@@ -53,7 +53,7 @@ void protobuf_AssignDesc_loginmessage_2ehxx() {
   static const int CMessageLoginRequest_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageLoginRequest, name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageLoginRequest, channelid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageLoginRequest, worldid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageLoginRequest, serverid_),
   };
   CMessageLoginRequest_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -70,7 +70,7 @@ void protobuf_AssignDesc_loginmessage_2ehxx() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageLoginResponse, accountid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageLoginResponse, roleid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageLoginResponse, channelid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageLoginResponse, worldid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageLoginResponse, serverid_),
   };
   CMessageLoginResponse_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -86,7 +86,7 @@ void protobuf_AssignDesc_loginmessage_2ehxx() {
   static const int CMessageCreateRoleRequest_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageCreateRoleRequest, accountid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageCreateRoleRequest, channelid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageCreateRoleRequest, worldid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageCreateRoleRequest, serverid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageCreateRoleRequest, rolename_),
   };
   CMessageCreateRoleRequest_reflection_ =
@@ -119,7 +119,7 @@ void protobuf_AssignDesc_loginmessage_2ehxx() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageEnterSceneRequest, roleid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageEnterSceneRequest, accountid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageEnterSceneRequest, channelid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageEnterSceneRequest, worldid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageEnterSceneRequest, serverid_),
   };
   CMessageEnterSceneRequest_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -219,24 +219,25 @@ void protobuf_AddDesc_loginmessage_2ehxx_impl() {
 
   protobuf_InitDefaults_loginmessage_2ehxx();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\020loginmessage.hxx\"H\n\024CMessageLoginReque"
-    "st\022\014\n\004Name\030\001 \001(\t\022\021\n\tChannelID\030\002 \001(\r\022\017\n\007W"
-    "orldID\030\003 \001(\r\"^\n\025CMessageLoginResponse\022\021\n"
-    "\tAccountID\030\001 \001(\r\022\016\n\006RoleID\030\002 \001(\r\022\021\n\tChan"
-    "nelID\030\003 \001(\r\022\017\n\007WorldID\030\004 \001(\r\"d\n\031CMessage"
-    "CreateRoleRequest\022\021\n\tAccountID\030\001 \001(\r\022\021\n\t"
-    "ChannelID\030\002 \001(\r\022\017\n\007WorldID\030\003 \001(\r\022\020\n\010Role"
-    "Name\030\004 \001(\t\"<\n\032CMessageCreateRoleResponse"
-    "\022\016\n\006Result\030\001 \001(\r\022\016\n\006RoleID\030\002 \001(\r\"b\n\031CMes"
-    "sageEnterSceneRequest\022\016\n\006RoleID\030\001 \001(\r\022\021\n"
-    "\tAccountID\030\002 \001(\r\022\021\n\tChannelID\030\003 \001(\r\022\017\n\007W"
-    "orldID\030\004 \001(\r\",\n\032CMessageEnterSceneRespon"
-    "se\022\016\n\006Result\030\002 \001(\r*\323\001\n\014LOGIN_MSG_ID\022\014\n\010I"
-    "D_ERROR\020\000\022\030\n\024ID_C2S_REQUEST_LOGIN\020\001\022\031\n\025I"
-    "D_S2C_RESPONSE_LOGIN\020\002\022\036\n\032ID_C2S_REQUEST"
-    "_CREATE_ROLE\020\003\022\037\n\033ID_S2C_RESPONSE_CREATE"
-    "_ROLE\020\004\022\036\n\032ID_C2S_REQUEST_ENTER_SCENE\020\005\022"
-    "\037\n\033ID_S2C_RESPONSE_ENTER_SCENE\020\006b\006proto3", 720);
+    "\n\020loginmessage.hxx\"I\n\024CMessageLoginReque"
+    "st\022\014\n\004Name\030\001 \001(\t\022\021\n\tChannelID\030\002 \001(\r\022\020\n\010S"
+    "erverID\030\003 \001(\r\"_\n\025CMessageLoginResponse\022\021"
+    "\n\tAccountID\030\001 \001(\r\022\016\n\006RoleID\030\002 \001(\r\022\021\n\tCha"
+    "nnelID\030\003 \001(\r\022\020\n\010ServerID\030\004 \001(\r\"e\n\031CMessa"
+    "geCreateRoleRequest\022\021\n\tAccountID\030\001 \001(\r\022\021"
+    "\n\tChannelID\030\002 \001(\r\022\020\n\010ServerID\030\003 \001(\r\022\020\n\010R"
+    "oleName\030\004 \001(\t\"<\n\032CMessageCreateRoleRespo"
+    "nse\022\016\n\006Result\030\001 \001(\r\022\016\n\006RoleID\030\002 \001(\r\"c\n\031C"
+    "MessageEnterSceneRequest\022\016\n\006RoleID\030\001 \001(\r"
+    "\022\021\n\tAccountID\030\002 \001(\r\022\021\n\tChannelID\030\003 \001(\r\022\020"
+    "\n\010ServerID\030\004 \001(\r\",\n\032CMessageEnterSceneRe"
+    "sponse\022\016\n\006Result\030\002 \001(\r*\323\001\n\014LOGIN_MSG_ID\022"
+    "\014\n\010ID_ERROR\020\000\022\030\n\024ID_C2S_REQUEST_LOGIN\020\001\022"
+    "\031\n\025ID_S2C_RESPONSE_LOGIN\020\002\022\036\n\032ID_C2S_REQ"
+    "UEST_CREATE_ROLE\020\003\022\037\n\033ID_S2C_RESPONSE_CR"
+    "EATE_ROLE\020\004\022\036\n\032ID_C2S_REQUEST_ENTER_SCEN"
+    "E\020\005\022\037\n\033ID_S2C_RESPONSE_ENTER_SCENE\020\006b\006pr"
+    "oto3", 724);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "loginmessage.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_loginmessage_2ehxx);
@@ -288,7 +289,7 @@ static void MergeFromFail(int line) {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int CMessageLoginRequest::kNameFieldNumber;
 const int CMessageLoginRequest::kChannelIDFieldNumber;
-const int CMessageLoginRequest::kWorldIDFieldNumber;
+const int CMessageLoginRequest::kServerIDFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 CMessageLoginRequest::CMessageLoginRequest()
@@ -311,8 +312,8 @@ CMessageLoginRequest::CMessageLoginRequest(const CMessageLoginRequest& from)
 
 void CMessageLoginRequest::SharedCtor() {
   name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&channelid_, 0, reinterpret_cast<char*>(&worldid_) -
-    reinterpret_cast<char*>(&channelid_) + sizeof(worldid_));
+  ::memset(&channelid_, 0, reinterpret_cast<char*>(&serverid_) -
+    reinterpret_cast<char*>(&channelid_) + sizeof(serverid_));
   _cached_size_ = 0;
 }
 
@@ -368,7 +369,7 @@ void CMessageLoginRequest::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(channelid_, worldid_);
+  ZR_(channelid_, serverid_);
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 
 #undef ZR_HELPER_
@@ -413,18 +414,18 @@ bool CMessageLoginRequest::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_WorldID;
+        if (input->ExpectTag(24)) goto parse_ServerID;
         break;
       }
 
-      // optional uint32 WorldID = 3;
+      // optional uint32 ServerID = 3;
       case 3: {
         if (tag == 24) {
-         parse_WorldID:
+         parse_ServerID:
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &worldid_)));
+                 input, &serverid_)));
         } else {
           goto handle_unusual;
         }
@@ -471,9 +472,9 @@ void CMessageLoginRequest::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->channelid(), output);
   }
 
-  // optional uint32 WorldID = 3;
-  if (this->worldid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->worldid(), output);
+  // optional uint32 ServerID = 3;
+  if (this->serverid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->serverid(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:CMessageLoginRequest)
@@ -499,9 +500,9 @@ void CMessageLoginRequest::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->channelid(), target);
   }
 
-  // optional uint32 WorldID = 3;
-  if (this->worldid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->worldid(), target);
+  // optional uint32 ServerID = 3;
+  if (this->serverid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->serverid(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:CMessageLoginRequest)
@@ -526,11 +527,11 @@ size_t CMessageLoginRequest::ByteSizeLong() const {
         this->channelid());
   }
 
-  // optional uint32 WorldID = 3;
-  if (this->worldid() != 0) {
+  // optional uint32 ServerID = 3;
+  if (this->serverid() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->worldid());
+        this->serverid());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -573,8 +574,8 @@ void CMessageLoginRequest::UnsafeMergeFrom(const CMessageLoginRequest& from) {
   if (from.channelid() != 0) {
     set_channelid(from.channelid());
   }
-  if (from.worldid() != 0) {
-    set_worldid(from.worldid());
+  if (from.serverid() != 0) {
+    set_serverid(from.serverid());
   }
 }
 
@@ -604,7 +605,7 @@ void CMessageLoginRequest::Swap(CMessageLoginRequest* other) {
 void CMessageLoginRequest::InternalSwap(CMessageLoginRequest* other) {
   name_.Swap(&other->name_);
   std::swap(channelid_, other->channelid_);
-  std::swap(worldid_, other->worldid_);
+  std::swap(serverid_, other->serverid_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -678,18 +679,18 @@ void CMessageLoginRequest::set_channelid(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:CMessageLoginRequest.ChannelID)
 }
 
-// optional uint32 WorldID = 3;
-void CMessageLoginRequest::clear_worldid() {
-  worldid_ = 0u;
+// optional uint32 ServerID = 3;
+void CMessageLoginRequest::clear_serverid() {
+  serverid_ = 0u;
 }
-::google::protobuf::uint32 CMessageLoginRequest::worldid() const {
-  // @@protoc_insertion_point(field_get:CMessageLoginRequest.WorldID)
-  return worldid_;
+::google::protobuf::uint32 CMessageLoginRequest::serverid() const {
+  // @@protoc_insertion_point(field_get:CMessageLoginRequest.ServerID)
+  return serverid_;
 }
-void CMessageLoginRequest::set_worldid(::google::protobuf::uint32 value) {
+void CMessageLoginRequest::set_serverid(::google::protobuf::uint32 value) {
   
-  worldid_ = value;
-  // @@protoc_insertion_point(field_set:CMessageLoginRequest.WorldID)
+  serverid_ = value;
+  // @@protoc_insertion_point(field_set:CMessageLoginRequest.ServerID)
 }
 
 inline const CMessageLoginRequest* CMessageLoginRequest::internal_default_instance() {
@@ -703,7 +704,7 @@ inline const CMessageLoginRequest* CMessageLoginRequest::internal_default_instan
 const int CMessageLoginResponse::kAccountIDFieldNumber;
 const int CMessageLoginResponse::kRoleIDFieldNumber;
 const int CMessageLoginResponse::kChannelIDFieldNumber;
-const int CMessageLoginResponse::kWorldIDFieldNumber;
+const int CMessageLoginResponse::kServerIDFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 CMessageLoginResponse::CMessageLoginResponse()
@@ -725,8 +726,8 @@ CMessageLoginResponse::CMessageLoginResponse(const CMessageLoginResponse& from)
 }
 
 void CMessageLoginResponse::SharedCtor() {
-  ::memset(&accountid_, 0, reinterpret_cast<char*>(&worldid_) -
-    reinterpret_cast<char*>(&accountid_) + sizeof(worldid_));
+  ::memset(&accountid_, 0, reinterpret_cast<char*>(&serverid_) -
+    reinterpret_cast<char*>(&accountid_) + sizeof(serverid_));
   _cached_size_ = 0;
 }
 
@@ -781,7 +782,7 @@ void CMessageLoginResponse::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(accountid_, worldid_);
+  ZR_(accountid_, serverid_);
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -838,18 +839,18 @@ bool CMessageLoginResponse::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_WorldID;
+        if (input->ExpectTag(32)) goto parse_ServerID;
         break;
       }
 
-      // optional uint32 WorldID = 4;
+      // optional uint32 ServerID = 4;
       case 4: {
         if (tag == 32) {
-         parse_WorldID:
+         parse_ServerID:
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &worldid_)));
+                 input, &serverid_)));
         } else {
           goto handle_unusual;
         }
@@ -896,9 +897,9 @@ void CMessageLoginResponse::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->channelid(), output);
   }
 
-  // optional uint32 WorldID = 4;
-  if (this->worldid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->worldid(), output);
+  // optional uint32 ServerID = 4;
+  if (this->serverid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->serverid(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:CMessageLoginResponse)
@@ -923,9 +924,9 @@ void CMessageLoginResponse::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->channelid(), target);
   }
 
-  // optional uint32 WorldID = 4;
-  if (this->worldid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->worldid(), target);
+  // optional uint32 ServerID = 4;
+  if (this->serverid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->serverid(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:CMessageLoginResponse)
@@ -957,11 +958,11 @@ size_t CMessageLoginResponse::ByteSizeLong() const {
         this->channelid());
   }
 
-  // optional uint32 WorldID = 4;
-  if (this->worldid() != 0) {
+  // optional uint32 ServerID = 4;
+  if (this->serverid() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->worldid());
+        this->serverid());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -1006,8 +1007,8 @@ void CMessageLoginResponse::UnsafeMergeFrom(const CMessageLoginResponse& from) {
   if (from.channelid() != 0) {
     set_channelid(from.channelid());
   }
-  if (from.worldid() != 0) {
-    set_worldid(from.worldid());
+  if (from.serverid() != 0) {
+    set_serverid(from.serverid());
   }
 }
 
@@ -1038,7 +1039,7 @@ void CMessageLoginResponse::InternalSwap(CMessageLoginResponse* other) {
   std::swap(accountid_, other->accountid_);
   std::swap(roleid_, other->roleid_);
   std::swap(channelid_, other->channelid_);
-  std::swap(worldid_, other->worldid_);
+  std::swap(serverid_, other->serverid_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -1096,18 +1097,18 @@ void CMessageLoginResponse::set_channelid(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:CMessageLoginResponse.ChannelID)
 }
 
-// optional uint32 WorldID = 4;
-void CMessageLoginResponse::clear_worldid() {
-  worldid_ = 0u;
+// optional uint32 ServerID = 4;
+void CMessageLoginResponse::clear_serverid() {
+  serverid_ = 0u;
 }
-::google::protobuf::uint32 CMessageLoginResponse::worldid() const {
-  // @@protoc_insertion_point(field_get:CMessageLoginResponse.WorldID)
-  return worldid_;
+::google::protobuf::uint32 CMessageLoginResponse::serverid() const {
+  // @@protoc_insertion_point(field_get:CMessageLoginResponse.ServerID)
+  return serverid_;
 }
-void CMessageLoginResponse::set_worldid(::google::protobuf::uint32 value) {
+void CMessageLoginResponse::set_serverid(::google::protobuf::uint32 value) {
   
-  worldid_ = value;
-  // @@protoc_insertion_point(field_set:CMessageLoginResponse.WorldID)
+  serverid_ = value;
+  // @@protoc_insertion_point(field_set:CMessageLoginResponse.ServerID)
 }
 
 inline const CMessageLoginResponse* CMessageLoginResponse::internal_default_instance() {
@@ -1120,7 +1121,7 @@ inline const CMessageLoginResponse* CMessageLoginResponse::internal_default_inst
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int CMessageCreateRoleRequest::kAccountIDFieldNumber;
 const int CMessageCreateRoleRequest::kChannelIDFieldNumber;
-const int CMessageCreateRoleRequest::kWorldIDFieldNumber;
+const int CMessageCreateRoleRequest::kServerIDFieldNumber;
 const int CMessageCreateRoleRequest::kRoleNameFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -1144,8 +1145,8 @@ CMessageCreateRoleRequest::CMessageCreateRoleRequest(const CMessageCreateRoleReq
 
 void CMessageCreateRoleRequest::SharedCtor() {
   rolename_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&accountid_, 0, reinterpret_cast<char*>(&worldid_) -
-    reinterpret_cast<char*>(&accountid_) + sizeof(worldid_));
+  ::memset(&accountid_, 0, reinterpret_cast<char*>(&serverid_) -
+    reinterpret_cast<char*>(&accountid_) + sizeof(serverid_));
   _cached_size_ = 0;
 }
 
@@ -1201,7 +1202,7 @@ void CMessageCreateRoleRequest::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(accountid_, worldid_);
+  ZR_(accountid_, serverid_);
   rolename_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 
 #undef ZR_HELPER_
@@ -1244,18 +1245,18 @@ bool CMessageCreateRoleRequest::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_WorldID;
+        if (input->ExpectTag(24)) goto parse_ServerID;
         break;
       }
 
-      // optional uint32 WorldID = 3;
+      // optional uint32 ServerID = 3;
       case 3: {
         if (tag == 24) {
-         parse_WorldID:
+         parse_ServerID:
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &worldid_)));
+                 input, &serverid_)));
         } else {
           goto handle_unusual;
         }
@@ -1314,9 +1315,9 @@ void CMessageCreateRoleRequest::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->channelid(), output);
   }
 
-  // optional uint32 WorldID = 3;
-  if (this->worldid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->worldid(), output);
+  // optional uint32 ServerID = 3;
+  if (this->serverid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->serverid(), output);
   }
 
   // optional string RoleName = 4;
@@ -1346,9 +1347,9 @@ void CMessageCreateRoleRequest::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->channelid(), target);
   }
 
-  // optional uint32 WorldID = 3;
-  if (this->worldid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->worldid(), target);
+  // optional uint32 ServerID = 3;
+  if (this->serverid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->serverid(), target);
   }
 
   // optional string RoleName = 4;
@@ -1384,11 +1385,11 @@ size_t CMessageCreateRoleRequest::ByteSizeLong() const {
         this->channelid());
   }
 
-  // optional uint32 WorldID = 3;
-  if (this->worldid() != 0) {
+  // optional uint32 ServerID = 3;
+  if (this->serverid() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->worldid());
+        this->serverid());
   }
 
   // optional string RoleName = 4;
@@ -1437,8 +1438,8 @@ void CMessageCreateRoleRequest::UnsafeMergeFrom(const CMessageCreateRoleRequest&
   if (from.channelid() != 0) {
     set_channelid(from.channelid());
   }
-  if (from.worldid() != 0) {
-    set_worldid(from.worldid());
+  if (from.serverid() != 0) {
+    set_serverid(from.serverid());
   }
   if (from.rolename().size() > 0) {
 
@@ -1472,7 +1473,7 @@ void CMessageCreateRoleRequest::Swap(CMessageCreateRoleRequest* other) {
 void CMessageCreateRoleRequest::InternalSwap(CMessageCreateRoleRequest* other) {
   std::swap(accountid_, other->accountid_);
   std::swap(channelid_, other->channelid_);
-  std::swap(worldid_, other->worldid_);
+  std::swap(serverid_, other->serverid_);
   rolename_.Swap(&other->rolename_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -1517,18 +1518,18 @@ void CMessageCreateRoleRequest::set_channelid(::google::protobuf::uint32 value) 
   // @@protoc_insertion_point(field_set:CMessageCreateRoleRequest.ChannelID)
 }
 
-// optional uint32 WorldID = 3;
-void CMessageCreateRoleRequest::clear_worldid() {
-  worldid_ = 0u;
+// optional uint32 ServerID = 3;
+void CMessageCreateRoleRequest::clear_serverid() {
+  serverid_ = 0u;
 }
-::google::protobuf::uint32 CMessageCreateRoleRequest::worldid() const {
-  // @@protoc_insertion_point(field_get:CMessageCreateRoleRequest.WorldID)
-  return worldid_;
+::google::protobuf::uint32 CMessageCreateRoleRequest::serverid() const {
+  // @@protoc_insertion_point(field_get:CMessageCreateRoleRequest.ServerID)
+  return serverid_;
 }
-void CMessageCreateRoleRequest::set_worldid(::google::protobuf::uint32 value) {
+void CMessageCreateRoleRequest::set_serverid(::google::protobuf::uint32 value) {
   
-  worldid_ = value;
-  // @@protoc_insertion_point(field_set:CMessageCreateRoleRequest.WorldID)
+  serverid_ = value;
+  // @@protoc_insertion_point(field_set:CMessageCreateRoleRequest.ServerID)
 }
 
 // optional string RoleName = 4;
@@ -1902,7 +1903,7 @@ inline const CMessageCreateRoleResponse* CMessageCreateRoleResponse::internal_de
 const int CMessageEnterSceneRequest::kRoleIDFieldNumber;
 const int CMessageEnterSceneRequest::kAccountIDFieldNumber;
 const int CMessageEnterSceneRequest::kChannelIDFieldNumber;
-const int CMessageEnterSceneRequest::kWorldIDFieldNumber;
+const int CMessageEnterSceneRequest::kServerIDFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 CMessageEnterSceneRequest::CMessageEnterSceneRequest()
@@ -1924,8 +1925,8 @@ CMessageEnterSceneRequest::CMessageEnterSceneRequest(const CMessageEnterSceneReq
 }
 
 void CMessageEnterSceneRequest::SharedCtor() {
-  ::memset(&roleid_, 0, reinterpret_cast<char*>(&worldid_) -
-    reinterpret_cast<char*>(&roleid_) + sizeof(worldid_));
+  ::memset(&roleid_, 0, reinterpret_cast<char*>(&serverid_) -
+    reinterpret_cast<char*>(&roleid_) + sizeof(serverid_));
   _cached_size_ = 0;
 }
 
@@ -1980,7 +1981,7 @@ void CMessageEnterSceneRequest::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(roleid_, worldid_);
+  ZR_(roleid_, serverid_);
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -2037,18 +2038,18 @@ bool CMessageEnterSceneRequest::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_WorldID;
+        if (input->ExpectTag(32)) goto parse_ServerID;
         break;
       }
 
-      // optional uint32 WorldID = 4;
+      // optional uint32 ServerID = 4;
       case 4: {
         if (tag == 32) {
-         parse_WorldID:
+         parse_ServerID:
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &worldid_)));
+                 input, &serverid_)));
         } else {
           goto handle_unusual;
         }
@@ -2095,9 +2096,9 @@ void CMessageEnterSceneRequest::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->channelid(), output);
   }
 
-  // optional uint32 WorldID = 4;
-  if (this->worldid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->worldid(), output);
+  // optional uint32 ServerID = 4;
+  if (this->serverid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->serverid(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:CMessageEnterSceneRequest)
@@ -2122,9 +2123,9 @@ void CMessageEnterSceneRequest::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->channelid(), target);
   }
 
-  // optional uint32 WorldID = 4;
-  if (this->worldid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->worldid(), target);
+  // optional uint32 ServerID = 4;
+  if (this->serverid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->serverid(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:CMessageEnterSceneRequest)
@@ -2156,11 +2157,11 @@ size_t CMessageEnterSceneRequest::ByteSizeLong() const {
         this->channelid());
   }
 
-  // optional uint32 WorldID = 4;
-  if (this->worldid() != 0) {
+  // optional uint32 ServerID = 4;
+  if (this->serverid() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->worldid());
+        this->serverid());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -2205,8 +2206,8 @@ void CMessageEnterSceneRequest::UnsafeMergeFrom(const CMessageEnterSceneRequest&
   if (from.channelid() != 0) {
     set_channelid(from.channelid());
   }
-  if (from.worldid() != 0) {
-    set_worldid(from.worldid());
+  if (from.serverid() != 0) {
+    set_serverid(from.serverid());
   }
 }
 
@@ -2237,7 +2238,7 @@ void CMessageEnterSceneRequest::InternalSwap(CMessageEnterSceneRequest* other) {
   std::swap(roleid_, other->roleid_);
   std::swap(accountid_, other->accountid_);
   std::swap(channelid_, other->channelid_);
-  std::swap(worldid_, other->worldid_);
+  std::swap(serverid_, other->serverid_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -2295,18 +2296,18 @@ void CMessageEnterSceneRequest::set_channelid(::google::protobuf::uint32 value) 
   // @@protoc_insertion_point(field_set:CMessageEnterSceneRequest.ChannelID)
 }
 
-// optional uint32 WorldID = 4;
-void CMessageEnterSceneRequest::clear_worldid() {
-  worldid_ = 0u;
+// optional uint32 ServerID = 4;
+void CMessageEnterSceneRequest::clear_serverid() {
+  serverid_ = 0u;
 }
-::google::protobuf::uint32 CMessageEnterSceneRequest::worldid() const {
-  // @@protoc_insertion_point(field_get:CMessageEnterSceneRequest.WorldID)
-  return worldid_;
+::google::protobuf::uint32 CMessageEnterSceneRequest::serverid() const {
+  // @@protoc_insertion_point(field_get:CMessageEnterSceneRequest.ServerID)
+  return serverid_;
 }
-void CMessageEnterSceneRequest::set_worldid(::google::protobuf::uint32 value) {
+void CMessageEnterSceneRequest::set_serverid(::google::protobuf::uint32 value) {
   
-  worldid_ = value;
-  // @@protoc_insertion_point(field_set:CMessageEnterSceneRequest.WorldID)
+  serverid_ = value;
+  // @@protoc_insertion_point(field_set:CMessageEnterSceneRequest.ServerID)
 }
 
 inline const CMessageEnterSceneRequest* CMessageEnterSceneRequest::internal_default_instance() {

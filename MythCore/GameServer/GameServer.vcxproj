@@ -45,7 +45,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>MYTH_OS_WINDOWS;_CRT_SECURE_NO_WARNINGS;__DEBUG__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../MythCore/include;../dep/protobuffer;../message;../dep/mysql/include;./inc;./tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../MythCore/include;../dep/protobuffer;../message;../dep/mysql/include;./inc;../common/tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -71,6 +71,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\common\tinyxml\tinyxml2.cpp" />
     <ClCompile Include="..\message\loginmessage.hxx.pb.cc" />
     <ClCompile Include="..\message\message.hxx.pb.cc" />
     <ClCompile Include="src\dbjob.cpp" />
@@ -84,7 +85,6 @@
     <ClCompile Include="src\itemobject.cpp" />
     <ClCompile Include="src\job.cpp" />
     <ClCompile Include="src\locallogjob.cpp" />
-    <ClCompile Include="src\loginjob.cpp" />
     <ClCompile Include="src\loginmodule.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\messagefactory.cpp" />
@@ -92,9 +92,9 @@
     <ClCompile Include="src\objpool.cpp" />
     <ClCompile Include="src\scenejob.cpp" />
     <ClCompile Include="src\template.cpp" />
-    <ClCompile Include="tinyxml\tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\common\tinyxml\tinyxml2.h" />
     <ClInclude Include="..\message\loginmessage.hxx" />
     <ClInclude Include="..\message\loginmessage.hxx.pb.h" />
     <ClInclude Include="..\message\message.hxx" />
@@ -112,7 +112,6 @@
     <ClInclude Include="inc\itemunit.h" />
     <ClInclude Include="inc\job.h" />
     <ClInclude Include="inc\locallogjob.h" />
-    <ClInclude Include="inc\loginjob.h" />
     <ClInclude Include="inc\loginmodule.h" />
     <ClInclude Include="inc\logintype.h" />
     <ClInclude Include="inc\messagefactory.h" />
@@ -126,7 +125,6 @@
     <ClInclude Include="inc\taskmanager.h" />
     <ClInclude Include="inc\taskunit.h" />
     <ClInclude Include="inc\template.h" />
-    <ClInclude Include="tinyxml\tinyxml2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,12 +1,12 @@
 
 DROP PROCEDURE IF EXISTS `CheckUserName`;
 DELIMITER ;;
-CREATE PROCEDURE `CheckUserName`(UserName char(32), ChannelID int unsigned, WorldID int unsigned)
+CREATE PROCEDURE `CheckUserName`(UserName char(32), ChannelID int unsigned, ServerID int unsigned)
 BEGIN
 	DECLARE AccountID INT UNSIGNED;
-	SELECT account_id INTO AccountID FROM PlayerAccount where user_name=UserName and channel_id=ChannelID and world_id=WorldID;
+	SELECT account_id INTO AccountID FROM PlayerAccount where user_name=UserName and channel_id=ChannelID and server_id=ServerID;
 	IF FOUND_ROWS() = 0 THEN
-		INSERT INTO PlayerAccount(user_name,channel_id, world_id, create_time) VALUES(UserName, ChannelID, WorldID, unix_timestamp());
+		INSERT INTO PlayerAccount(user_name,channel_id, server_id, create_time) VALUES(UserName, ChannelID, ServerID, unix_timestamp());
 		SELECT LAST_INSERT_ID INTO AccountID;
 		SELECT AccountID;
 	ELSE
@@ -17,10 +17,10 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `GetRoleInfo`;
 DELIMITER ;;
-CREATE PROCEDURE `GetRoleInfo`(AccountID int unsigned, ChannelID int unsigned, WorldID int unsigned)
+CREATE PROCEDURE `GetRoleInfo`(AccountID int unsigned, ChannelID int unsigned, ServerID int unsigned)
 BEGIN
 	DECLARE RoleID INT UNSIGNED;
-	SELECT role_id INTO RoleID from PlayerRole where account_id=AccountID and channel_id=ChannelID and world_id=WorldID;
+	SELECT role_id INTO RoleID from PlayerRole where account_id=AccountID and channel_id=ChannelID and server_id=ServerID;
 	IF FOUND_ROWS() = 0 THEN
 		SELECT 0;
 	ELSE
@@ -32,15 +32,20 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `CreateRole`;
 DELIMITER ;;
-CREATE PROCEDURE `CreateRole`(RoleID int unsigned, RoleName char(32), AccountID int unsigned, ChannelID int unsigned, WorldID int unsigned)
+CREATE PROCEDURE `CreateRole`(RoleID int unsigned, RoleName char(32), AccountID int unsigned, ChannelID int unsigned, ServerID int unsigned)
 BEGIN
-	DECLARE tmpRoleID INT UNSIGNED;
-	INSERT INTO PlayerRole (role_id,role_name,account_id,channel_id,world_id) values(RoleID, RoleName, AccountID, ChannelID, WorldID);
-	SELECT role_id INTO tmpRoleID from PlayerRole WHERE role_id=RoleID;
+	SELECT role_id from PlayerRole where account_id=AccountID and channel_id=ChannelID and server_id=ServerID;
 	IF FOUND_ROWS() = 0 THEN
-		SELECT 0;
+		DECLARE tmpRoleID INT UNSIGNED;
+		INSERT INTO PlayerRole (role_id,role_name,account_id,channel_id,server_id) values(RoleID, RoleName, AccountID, ChannelID, ServerID);
+		SELECT role_id INTO tmpRoleID from PlayerRole WHERE role_id=RoleID;
+		IF FOUND_ROWS() = 0 THEN
+			SELECT 0;
+		ELSE
+			SELECT tmpRoleID;
+		END IF;
 	ELSE
-		SELECT tmpRoleID;
+		SELECT 0;
 	END IF;
 END
 DELIMITER ;

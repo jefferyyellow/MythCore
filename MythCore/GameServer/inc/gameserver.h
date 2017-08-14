@@ -7,7 +7,6 @@
 #include "locallogjob.h"
 #include "singleton.h"
 #include "scenejob.h"
-#include "loginjob.h"
 
 using namespace Myth;
 

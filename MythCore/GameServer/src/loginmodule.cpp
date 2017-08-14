@@ -16,23 +16,23 @@ CLoginModule::~CLoginModule()
 
 }
 
-void CLoginModule::onClientMessage(uint32 nSocketIndex, unsigned int nMessageID, Message* pMessage)
+void CLoginModule::onClientMessage(CExchangeHead& rExchangeHead, unsigned int nMessageID, Message* pMessage)
 {
 	switch (nMessageID)
 	{
 		case ID_C2S_REQUEST_LOGIN:
 		{
-			onMessageLoginRequest(nSocketIndex, pMessage);
+			onMessageLoginRequest(rExchangeHead, pMessage);
 			break;
 		}
 		case ID_C2S_REQUEST_CREATE_ROLE:
 		{
-			onMessageCreateRoleRequest(nSocketIndex, pMessage);
+			onMessageCreateRoleRequest(rExchangeHead, pMessage);
 			break;
 		}
 		case ID_C2S_REQUEST_ENTER_SCENE:
 		{
-			onMessageEnterSceneRequest(nSocketIndex, pMessage);
+			onMessageEnterSceneRequest(rExchangeHead, pMessage);
 			break;
 		}
 		default:
@@ -40,7 +40,7 @@ void CLoginModule::onClientMessage(uint32 nSocketIndex, unsigned int nMessageID,
 	}
 }
 
-void CLoginModule::onMessageLoginRequest(uint32 nSocketIndex, Message* pMessage)
+void CLoginModule::onMessageLoginRequest(CExchangeHead& rExchangeHead, Message* pMessage)
 {
 	if (NULL == pMessage)
 	{
@@ -55,15 +55,21 @@ void CLoginModule::onMessageLoginRequest(uint32 nSocketIndex, Message* pMessage)
 
 	// 接收到客户端的消息后，转换成内部消息给DB去处理
 	CIMPlayerLoginRequest* pPlayerLoginRequest = reinterpret_cast<CIMPlayerLoginRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_PLAYER_LOGIN));
-	if (NULL != pPlayerLoginRequest)
+	if (NULL == pPlayerLoginRequest)
 	{
-		pPlayerLoginRequest->mChannelID = pLoginRequest->channelid();
-		pPlayerLoginRequest->mWorldID = pLoginRequest->worldid();
-		pPlayerLoginRequest->mSocketIndex = nSocketIndex;
-		strncpy(pPlayerLoginRequest->mName, pLoginRequest->name().c_str(), sizeof(pPlayerLoginRequest->mName));
-		CGameServer::Inst()->pushTask(emTaskType_DB, pPlayerLoginRequest);
-		printf("CLoginModule::OnMessageLoginRequest");
+		return;
 	}
+
+	// 用户名
+	strncpy(pPlayerLoginRequest->mName, pLoginRequest->name().c_str(), sizeof(pPlayerLoginRequest->mName));
+	// 渠道ID
+	pPlayerLoginRequest->mChannelID = pLoginRequest->channelid();
+	// 服务器ID
+	pPlayerLoginRequest->mServerID = pLoginRequest->serverid();
+	// TCP服务器消息头
+	pPlayerLoginRequest->mExchangeHead = rExchangeHead;
+	CGameServer::Inst()->pushTask(emTaskType_DB, pPlayerLoginRequest);
+	printf("CLoginModule::OnMessageLoginRequest");
 }
 
 
@@ -76,34 +82,43 @@ void CLoginModule::onIMPlayerLoginResponse(CInternalMsg* pMsg)
 
 	CIMPlayerLoginResponse* pResponse = reinterpret_cast<CIMPlayerLoginResponse*>(pMsg);
 
+
+	uint64 nAccountID = pResponse->mAccountID;
+	uint64 nChannelID = pResponse->mChannelID;
+	uint64 nServerID = pResponse->mServerID;
+	uint64 nKey = MAKE_LOGIN_KEY(nAccountID, nChannelID, nServerID);
+
+	// 该玩家已经在登录列表里了
+	LOGIN_LIST::iterator it = mLoginList.find(nKey);
+	if (it != mLoginList.end())
+	{
+		return;
+	}
+
 	CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::CreateInst()->allocObj(emObjType_LoginPlayer));
 	if (NULL == pLoginPlayer)
 	{
 		return;
 	}
-	uint64 nAccountID = pResponse->mAccountID;
-	uint64 nChannelID = pResponse->mChannelID;
-	uint64 nWorldID = pResponse->mWorldID;
-	pLoginPlayer->setKey(MAKE_LOGIN_KEY(nAccountID, nChannelID, nWorldID));
+
+	pLoginPlayer->setKey(nKey);
 	pLoginPlayer->setRoleID(pResponse->mRoleID);
-	CExchangeHead& rExchangeHead = pLoginPlayer->GetExchangeHead();
-	rExchangeHead.mSocketTime = pResponse->mSocketTime;
-	rExchangeHead.mSocketIndex = pResponse->mSocketIndex;
+	pLoginPlayer->GetExchangeHead() = pResponse->mExchangeHead;
 
 	mLoginList[pLoginPlayer->getKey()] = pLoginPlayer->getObjID();
 
+	// 准备回应消息
 	CIMPlayerLoginResponse* pIMLoginResponse = reinterpret_cast<CIMPlayerLoginResponse*>(pMsg);
 	CMessageLoginResponse tMessageLoginResponse;
 	tMessageLoginResponse.set_accountid(pIMLoginResponse->mAccountID);
 	tMessageLoginResponse.set_channelid(pIMLoginResponse->mChannelID);
-	tMessageLoginResponse.set_worldid(pIMLoginResponse->mWorldID);
+	tMessageLoginResponse.set_serverid(pIMLoginResponse->mServerID);
 	tMessageLoginResponse.set_roleid(pIMLoginResponse->mRoleID);
-	printf("CSceneJob::onTask");
 
-	CSceneJob::Inst()->sendClientMessage(rExchangeHead, ID_S2C_RESPONSE_LOGIN, &tMessageLoginResponse);
+	CSceneJob::Inst()->sendClientMessage(pLoginPlayer->GetExchangeHead(), ID_S2C_RESPONSE_LOGIN, &tMessageLoginResponse);
 }
 
-void CLoginModule::onMessageCreateRoleRequest(uint32 nSocketIndex, Message* pMessage)
+void CLoginModule::onMessageCreateRoleRequest(CExchangeHead& rExchangeHead, Message* pMessage)
 {
 	if (NULL == pMessage)
 	{
@@ -117,7 +132,7 @@ void CLoginModule::onMessageCreateRoleRequest(uint32 nSocketIndex, Message* pMes
 	}
 	uint64 nAccountID = pCreateRoleRequest->accountid();
 	uint64 nChannelID = pCreateRoleRequest->channelid();
-	uint64 nWorldID = pCreateRoleRequest->worldid();
+	uint64 nWorldID = pCreateRoleRequest->serverid();
 	uint64 nKey = MAKE_LOGIN_KEY(nAccountID, nChannelID, nWorldID);
 
 	LOGIN_LIST::iterator it = mLoginList.find(nKey);
@@ -142,7 +157,7 @@ void CLoginModule::onMessageCreateRoleRequest(uint32 nSocketIndex, Message* pMes
 
 	pNewRequest->mAccountID = pCreateRoleRequest->accountid();
 	pNewRequest->mChannelID = pCreateRoleRequest->channelid();
-	pNewRequest->mWorldID = pCreateRoleRequest->worldid();
+	pNewRequest->mServerID = pCreateRoleRequest->serverid();
 	strncpy(pNewRequest->mRoleName, pCreateRoleRequest->rolename().c_str(), pCreateRoleRequest->rolename().size());
 	CGameServer::Inst()->pushTask(emTaskType_DB, pNewRequest);
 
@@ -159,8 +174,8 @@ void CLoginModule::onIMCreateRoleResponse(CInternalMsg* pMsg)
 
 	uint64 nAccountID = pCreateRoleResponse->mAccountID;
 	uint64 nChannelID = pCreateRoleResponse->mChannelID;
-	uint64 nWorldID = pCreateRoleResponse->mWorldID;
-	uint64 nKey = MAKE_LOGIN_KEY(nAccountID, nChannelID, nWorldID);
+	uint64 nServerID = pCreateRoleResponse->mServerID;
+	uint64 nKey = MAKE_LOGIN_KEY(nAccountID, nChannelID, nServerID);
 
 	LOGIN_LIST::iterator it = mLoginList.find(nKey);
 	if (it == mLoginList.end())
@@ -183,7 +198,7 @@ void CLoginModule::onIMCreateRoleResponse(CInternalMsg* pMsg)
 }
 
 
-void CLoginModule::onMessageEnterSceneRequest(uint32 nSocketIndex, Message* pMessage)
+void CLoginModule::onMessageEnterSceneRequest(CExchangeHead& rExchangeHead, Message* pMessage)
 {
 	if (NULL == pMessage)
 	{
@@ -199,8 +214,8 @@ void CLoginModule::onMessageEnterSceneRequest(uint32 nSocketIndex, Message* pMes
 
 	uint64 nAccountID = pEnterSceneRequest->accountid();
 	uint64 nChannelID = pEnterSceneRequest->channelid();
-	uint64 nWorldID = pEnterSceneRequest->worldid();
-	uint64 nKey = MAKE_LOGIN_KEY(nAccountID, nChannelID, nWorldID);
+	uint64 nServerID = pEnterSceneRequest->serverid();
+	uint64 nKey = MAKE_LOGIN_KEY(nAccountID, nChannelID, nServerID);
 
 	//bool bFind = mLoginList.Find(nKey, nObjID);
 	LOGIN_LIST::iterator it = mLoginList.find(nKey);
@@ -240,7 +255,7 @@ void CLoginModule::onMessageEnterSceneRequest(uint32 nSocketIndex, Message* pMes
 	pNewEnterSceneRequest->mRoleID = pEnterSceneRequest->roleid();
 	pNewEnterSceneRequest->mAccountID = pEnterSceneRequest->accountid();
 	pNewEnterSceneRequest->mChannelID = pEnterSceneRequest->channelid();
-	pNewEnterSceneRequest->mWorldID = pEnterSceneRequest->worldid();
+	pNewEnterSceneRequest->mServerID = pEnterSceneRequest->serverid();
 	pNewEnterSceneRequest->mPlayerEntityID = pNewPlayer->getObjID();
 
 	CGameServer::Inst()->pushTask(emTaskType_DB, pNewEnterSceneRequest);
@@ -261,8 +276,8 @@ void CLoginModule::onIMEnterSceneResponse(CInternalMsg* pMsg)
 
 	uint64 nAccountID = pEnterSceneResponse->mAccountID;
 	uint64 nChannelID = pEnterSceneResponse->mChannelID;
-	uint64 nWorldID = pEnterSceneResponse->mWorldID;
-	uint64 nKey = MAKE_LOGIN_KEY(nAccountID, nChannelID, nWorldID);
+	uint64 nServerID = pEnterSceneResponse->mServerID;
+	uint64 nKey = MAKE_LOGIN_KEY(nAccountID, nChannelID, nServerID);
 
 	
 	//bool bFind = mLoginList.Find(nKey, nObjID);

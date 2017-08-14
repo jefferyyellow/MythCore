@@ -24,7 +24,7 @@
     <ClCompile Include="tcpserver.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="tinyxml\tinyxml2.cpp">
+    <ClCompile Include="..\common\tinyxml\tinyxml2.cpp">
       <Filter>tinyxml</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,7 +32,7 @@
     <ClInclude Include="tcpserver.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="tinyxml\tinyxml2.h">
+    <ClInclude Include="..\common\tinyxml\tinyxml2.h">
       <Filter>tinyxml</Filter>
     </ClInclude>
   </ItemGroup>

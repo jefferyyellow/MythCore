@@ -2,6 +2,7 @@
 #define __INTERNALMSG_H__
 #include "commontype.h"
 #include "logmanager.h"
+#include "logintype.h"
 // IM表示内部消息（internal message的简写)
 enum EmInternalMsgID
 {
@@ -48,9 +49,8 @@ class CIMPlayerLoginRequest : public CInternalMsg
 public:
 	char		mName[32];								// 名字
 	uint16		mChannelID;								// 渠道
-	uint16		mWorldID;								// 服务器ID
-	uint		mSocketIndex;							// Socket索引
-	uint		mSocketTime;							// Socket创建时间
+	uint16		mServerID;								// 服务器ID
+	CExchangeHead	mExchangeHead;						// TCP服务器消息头
 };
 
 class CIMPlayerLoginResponse : public CInternalMsg
@@ -58,10 +58,9 @@ class CIMPlayerLoginResponse : public CInternalMsg
 public:
 	uint32		mAccountID;								// 账号ID
 	uint16		mChannelID;								// 渠道
-	uint16		mWorldID;								// 服务器ID
+	uint16		mServerID;								// 服务器ID
 	uint32		mRoleID;								// 角色ID
-	uint		mSocketIndex;							// Socket索引
-	uint		mSocketTime;							// Socket创建时间
+	CExchangeHead	mExchangeHead;						// TCP服务器消息头
 };
 
 class CIMCreateRoleRequest : public CInternalMsg
@@ -69,7 +68,7 @@ class CIMCreateRoleRequest : public CInternalMsg
 public:
 	uint32		mAccountID;								// 账号ID
 	uint16		mChannelID;								// 渠道
-	uint16		mWorldID;								// 服务器ID
+	uint16		mServerID;								// 服务器ID
 	char		mRoleName[32];							// 角色名
 };
 
@@ -80,7 +79,7 @@ public:
 	uint32		mRoleID;								// 角色ID
 	uint32		mAccountID;								// 账号ID
 	uint16		mChannelID;								// 渠道
-	uint16		mWorldID;								// 服务器ID
+	uint16		mServerID;								// 服务器ID
 	uint32		mSocketIndex;							// Socket索引
 };
 
@@ -90,7 +89,7 @@ public:
 	uint32		mRoleID;								// 角色ID
 	uint32		mAccountID;								// 账号ID
 	uint16		mChannelID;								// 渠道
-	uint16		mWorldID;								// 服务器ID
+	uint16		mServerID;								// 服务器ID
 	uint32		mPlayerEntityID;						// 角色的实体ID
 };
 
@@ -100,7 +99,7 @@ public:
 	uint32		mRoleID;								// 角色ID
 	uint32		mAccountID;								// 账号ID
 	uint16		mChannelID;								// 渠道
-	uint16		mWorldID;								// 服务器ID
+	uint16		mServerID;								// 服务器ID
 	uint32		mPlayerEntityID;						// 角色的实体ID
 };
 #endif

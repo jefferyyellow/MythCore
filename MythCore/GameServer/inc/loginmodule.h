@@ -3,10 +3,13 @@
 #include "singleton.h"
 #include "messagefactory.h"
 #include "commontype.h"
+#include "logintype.h"
 #include <map>
+
+
 using namespace Myth;
 class CInternalMsg;
-#define  MAKE_LOGIN_KEY(AccountID, ChannelID, WorldID) ( (ChannelID << 48) | (WorldID << 32) | AccountID)
+#define  MAKE_LOGIN_KEY(AccountID, ChannelID, ServerID) ( (ChannelID << 48) | (ServerID << 32) | AccountID)
 class CLoginModule : public CSingleton < CLoginModule >
 {
 	friend class CSingleton < CLoginModule > ;
@@ -17,15 +20,15 @@ private:
 	~CLoginModule();
 
 public:
-	void		onClientMessage(uint32 nSocketIndex, unsigned int nMessageID, Message* pMessage);
+	void		onClientMessage(CExchangeHead& rExchangeHead, unsigned int nMessageID, Message* pMessage);
 	void		onIMPlayerLoginResponse(CInternalMsg* pMsg);
 	void		onIMCreateRoleResponse(CInternalMsg* pMsg);
 	void		onIMEnterSceneResponse(CInternalMsg* pMsg);
 
 private:
-	void		onMessageLoginRequest(uint32 nSocketIndex, Message* pMessage);
-	void		onMessageCreateRoleRequest(uint32 nSocketIndex, Message* pMessage);
-	void		onMessageEnterSceneRequest(uint32 nSocketIndex, Message* pMessage);
+	void		onMessageLoginRequest(CExchangeHead& rExchangeHead, Message* pMessage);
+	void		onMessageCreateRoleRequest(CExchangeHead& rExchangeHead, Message* pMessage);
+	void		onMessageEnterSceneRequest(CExchangeHead& rExchangeHead, Message* pMessage);
 
 private:
 	LOGIN_LIST mLoginList;

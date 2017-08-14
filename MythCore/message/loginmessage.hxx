@@ -18,7 +18,7 @@ message CMessageLoginRequest
 {
 	string  Name					= 1;
 	uint32	ChannelID				= 2;
-	uint32	WorldID					= 3;
+	uint32	ServerID				= 3;
 }
 
 message CMessageLoginResponse
@@ -26,14 +26,14 @@ message CMessageLoginResponse
 	uint32	AccountID				= 1;
 	uint32	RoleID					= 2;
 	uint32	ChannelID				= 3;
-	uint32	WorldID					= 4;		
+	uint32	ServerID					= 4;		
 }
 
 message CMessageCreateRoleRequest
 {
 	uint32	AccountID				= 1;
 	uint32	ChannelID				= 2;
-	uint32	WorldID					= 3;
+	uint32	ServerID					= 3;
 	string	RoleName				= 4;
 }
 
@@ -48,7 +48,7 @@ message CMessageEnterSceneRequest
 	uint32	RoleID					= 1;
 	uint32	AccountID				= 2;
 	uint32	ChannelID				= 3;
-	uint32	WorldID					= 4;
+	uint32	ServerID				= 4;
 }
 
 message CMessageEnterSceneResponse

@@ -151,11 +151,11 @@ class CMessageLoginRequest : public ::google::protobuf::Message /* @@protoc_inse
   ::google::protobuf::uint32 channelid() const;
   void set_channelid(::google::protobuf::uint32 value);
 
-  // optional uint32 WorldID = 3;
-  void clear_worldid();
-  static const int kWorldIDFieldNumber = 3;
-  ::google::protobuf::uint32 worldid() const;
-  void set_worldid(::google::protobuf::uint32 value);
+  // optional uint32 ServerID = 3;
+  void clear_serverid();
+  static const int kServerIDFieldNumber = 3;
+  ::google::protobuf::uint32 serverid() const;
+  void set_serverid(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:CMessageLoginRequest)
  private:
@@ -163,7 +163,7 @@ class CMessageLoginRequest : public ::google::protobuf::Message /* @@protoc_inse
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr name_;
   ::google::protobuf::uint32 channelid_;
-  ::google::protobuf::uint32 worldid_;
+  ::google::protobuf::uint32 serverid_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_loginmessage_2ehxx_impl();
   friend void  protobuf_AddDesc_loginmessage_2ehxx_impl();
@@ -257,11 +257,11 @@ class CMessageLoginResponse : public ::google::protobuf::Message /* @@protoc_ins
   ::google::protobuf::uint32 channelid() const;
   void set_channelid(::google::protobuf::uint32 value);
 
-  // optional uint32 WorldID = 4;
-  void clear_worldid();
-  static const int kWorldIDFieldNumber = 4;
-  ::google::protobuf::uint32 worldid() const;
-  void set_worldid(::google::protobuf::uint32 value);
+  // optional uint32 ServerID = 4;
+  void clear_serverid();
+  static const int kServerIDFieldNumber = 4;
+  ::google::protobuf::uint32 serverid() const;
+  void set_serverid(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:CMessageLoginResponse)
  private:
@@ -270,7 +270,7 @@ class CMessageLoginResponse : public ::google::protobuf::Message /* @@protoc_ins
   ::google::protobuf::uint32 accountid_;
   ::google::protobuf::uint32 roleid_;
   ::google::protobuf::uint32 channelid_;
-  ::google::protobuf::uint32 worldid_;
+  ::google::protobuf::uint32 serverid_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_loginmessage_2ehxx_impl();
   friend void  protobuf_AddDesc_loginmessage_2ehxx_impl();
@@ -358,11 +358,11 @@ class CMessageCreateRoleRequest : public ::google::protobuf::Message /* @@protoc
   ::google::protobuf::uint32 channelid() const;
   void set_channelid(::google::protobuf::uint32 value);
 
-  // optional uint32 WorldID = 3;
-  void clear_worldid();
-  static const int kWorldIDFieldNumber = 3;
-  ::google::protobuf::uint32 worldid() const;
-  void set_worldid(::google::protobuf::uint32 value);
+  // optional uint32 ServerID = 3;
+  void clear_serverid();
+  static const int kServerIDFieldNumber = 3;
+  ::google::protobuf::uint32 serverid() const;
+  void set_serverid(::google::protobuf::uint32 value);
 
   // optional string RoleName = 4;
   void clear_rolename();
@@ -382,7 +382,7 @@ class CMessageCreateRoleRequest : public ::google::protobuf::Message /* @@protoc
   ::google::protobuf::internal::ArenaStringPtr rolename_;
   ::google::protobuf::uint32 accountid_;
   ::google::protobuf::uint32 channelid_;
-  ::google::protobuf::uint32 worldid_;
+  ::google::protobuf::uint32 serverid_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_loginmessage_2ehxx_impl();
   friend void  protobuf_AddDesc_loginmessage_2ehxx_impl();
@@ -569,11 +569,11 @@ class CMessageEnterSceneRequest : public ::google::protobuf::Message /* @@protoc
   ::google::protobuf::uint32 channelid() const;
   void set_channelid(::google::protobuf::uint32 value);
 
-  // optional uint32 WorldID = 4;
-  void clear_worldid();
-  static const int kWorldIDFieldNumber = 4;
-  ::google::protobuf::uint32 worldid() const;
-  void set_worldid(::google::protobuf::uint32 value);
+  // optional uint32 ServerID = 4;
+  void clear_serverid();
+  static const int kServerIDFieldNumber = 4;
+  ::google::protobuf::uint32 serverid() const;
+  void set_serverid(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:CMessageEnterSceneRequest)
  private:
@@ -582,7 +582,7 @@ class CMessageEnterSceneRequest : public ::google::protobuf::Message /* @@protoc
   ::google::protobuf::uint32 roleid_;
   ::google::protobuf::uint32 accountid_;
   ::google::protobuf::uint32 channelid_;
-  ::google::protobuf::uint32 worldid_;
+  ::google::protobuf::uint32 serverid_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_loginmessage_2ehxx_impl();
   friend void  protobuf_AddDesc_loginmessage_2ehxx_impl();
@@ -745,18 +745,18 @@ inline void CMessageLoginRequest::set_channelid(::google::protobuf::uint32 value
   // @@protoc_insertion_point(field_set:CMessageLoginRequest.ChannelID)
 }
 
-// optional uint32 WorldID = 3;
-inline void CMessageLoginRequest::clear_worldid() {
-  worldid_ = 0u;
+// optional uint32 ServerID = 3;
+inline void CMessageLoginRequest::clear_serverid() {
+  serverid_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessageLoginRequest::worldid() const {
-  // @@protoc_insertion_point(field_get:CMessageLoginRequest.WorldID)
-  return worldid_;
+inline ::google::protobuf::uint32 CMessageLoginRequest::serverid() const {
+  // @@protoc_insertion_point(field_get:CMessageLoginRequest.ServerID)
+  return serverid_;
 }
-inline void CMessageLoginRequest::set_worldid(::google::protobuf::uint32 value) {
+inline void CMessageLoginRequest::set_serverid(::google::protobuf::uint32 value) {
   
-  worldid_ = value;
-  // @@protoc_insertion_point(field_set:CMessageLoginRequest.WorldID)
+  serverid_ = value;
+  // @@protoc_insertion_point(field_set:CMessageLoginRequest.ServerID)
 }
 
 inline const CMessageLoginRequest* CMessageLoginRequest::internal_default_instance() {
@@ -808,18 +808,18 @@ inline void CMessageLoginResponse::set_channelid(::google::protobuf::uint32 valu
   // @@protoc_insertion_point(field_set:CMessageLoginResponse.ChannelID)
 }
 
-// optional uint32 WorldID = 4;
-inline void CMessageLoginResponse::clear_worldid() {
-  worldid_ = 0u;
+// optional uint32 ServerID = 4;
+inline void CMessageLoginResponse::clear_serverid() {
+  serverid_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessageLoginResponse::worldid() const {
-  // @@protoc_insertion_point(field_get:CMessageLoginResponse.WorldID)
-  return worldid_;
+inline ::google::protobuf::uint32 CMessageLoginResponse::serverid() const {
+  // @@protoc_insertion_point(field_get:CMessageLoginResponse.ServerID)
+  return serverid_;
 }
-inline void CMessageLoginResponse::set_worldid(::google::protobuf::uint32 value) {
+inline void CMessageLoginResponse::set_serverid(::google::protobuf::uint32 value) {
   
-  worldid_ = value;
-  // @@protoc_insertion_point(field_set:CMessageLoginResponse.WorldID)
+  serverid_ = value;
+  // @@protoc_insertion_point(field_set:CMessageLoginResponse.ServerID)
 }
 
 inline const CMessageLoginResponse* CMessageLoginResponse::internal_default_instance() {
@@ -857,18 +857,18 @@ inline void CMessageCreateRoleRequest::set_channelid(::google::protobuf::uint32 
   // @@protoc_insertion_point(field_set:CMessageCreateRoleRequest.ChannelID)
 }
 
-// optional uint32 WorldID = 3;
-inline void CMessageCreateRoleRequest::clear_worldid() {
-  worldid_ = 0u;
+// optional uint32 ServerID = 3;
+inline void CMessageCreateRoleRequest::clear_serverid() {
+  serverid_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessageCreateRoleRequest::worldid() const {
-  // @@protoc_insertion_point(field_get:CMessageCreateRoleRequest.WorldID)
-  return worldid_;
+inline ::google::protobuf::uint32 CMessageCreateRoleRequest::serverid() const {
+  // @@protoc_insertion_point(field_get:CMessageCreateRoleRequest.ServerID)
+  return serverid_;
 }
-inline void CMessageCreateRoleRequest::set_worldid(::google::protobuf::uint32 value) {
+inline void CMessageCreateRoleRequest::set_serverid(::google::protobuf::uint32 value) {
   
-  worldid_ = value;
-  // @@protoc_insertion_point(field_set:CMessageCreateRoleRequest.WorldID)
+  serverid_ = value;
+  // @@protoc_insertion_point(field_set:CMessageCreateRoleRequest.ServerID)
 }
 
 // optional string RoleName = 4;
@@ -999,18 +999,18 @@ inline void CMessageEnterSceneRequest::set_channelid(::google::protobuf::uint32 
   // @@protoc_insertion_point(field_set:CMessageEnterSceneRequest.ChannelID)
 }
 
-// optional uint32 WorldID = 4;
-inline void CMessageEnterSceneRequest::clear_worldid() {
-  worldid_ = 0u;
+// optional uint32 ServerID = 4;
+inline void CMessageEnterSceneRequest::clear_serverid() {
+  serverid_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessageEnterSceneRequest::worldid() const {
-  // @@protoc_insertion_point(field_get:CMessageEnterSceneRequest.WorldID)
-  return worldid_;
+inline ::google::protobuf::uint32 CMessageEnterSceneRequest::serverid() const {
+  // @@protoc_insertion_point(field_get:CMessageEnterSceneRequest.ServerID)
+  return serverid_;
 }
-inline void CMessageEnterSceneRequest::set_worldid(::google::protobuf::uint32 value) {
+inline void CMessageEnterSceneRequest::set_serverid(::google::protobuf::uint32 value) {
   
-  worldid_ = value;
-  // @@protoc_insertion_point(field_set:CMessageEnterSceneRequest.WorldID)
+  serverid_ = value;
+  // @@protoc_insertion_point(field_set:CMessageEnterSceneRequest.ServerID)
 }
 
 inline const CMessageEnterSceneRequest* CMessageEnterSceneRequest::internal_default_instance() {

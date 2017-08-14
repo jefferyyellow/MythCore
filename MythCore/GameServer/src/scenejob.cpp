@@ -151,7 +151,7 @@ void CSceneJob::processClientMessage()
 			int nModule = nMessageID & MESSAGE_MODULE_MASK;
 			if (nModule == MESSAGE_MODULE_LOGIN)
 			{
-				CLoginModule::Inst()->onClientMessage(pExchangeHead->mSocketIndex, nMessageID, pMessage);
+				CLoginModule::Inst()->onClientMessage(*pExchangeHead, nMessageID, pMessage);
 			}
 			else
 			{
@@ -194,11 +194,11 @@ void CSceneJob::sendClientMessage(CEntityPlayer* pPlayer, unsigned short nMessag
 /// 分发前端消息
 void CSceneJob::dispatchClientMessage(unsigned short nMessageID, Message* pMessage)
 {
-	int nModule = nMessageID & MESSAGE_MODULE_MASK;
-	switch (nModule)
-	{
-		default:
-			break;
-	}
+	//int nModule = nMessageID & MESSAGE_MODULE_MASK;
+	//switch (nModule)
+	//{
+	//	default:
+	//		break;
+	//}
 }
 

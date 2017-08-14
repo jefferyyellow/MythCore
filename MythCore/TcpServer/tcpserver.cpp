@@ -1,5 +1,6 @@
 #include "tcpserver.h"
-#include "tinyxml/tinyxml2.h"
+#include "tinyxml2.h"
+#include "timemanager.h"
 using namespace tinyxml2;
 
 CTcpServer::CTcpServer()
@@ -15,10 +16,16 @@ CTcpServer::~CTcpServer()
 /// 初始化
 bool CTcpServer::init()
 {
-	loadTcpServerConfig("config/tcpserverconfig.xml");
-
 	bool bResult = initLog();
 	if (!bResult)
+	{
+		return false;
+	}
+
+	loadTcpServerConfig("config/tcpserverconfig.xml");
+
+	CTimeManager* pTimeManager = CTimeManager::CreateInst();
+	if (NULL == pTimeManager)
 	{
 		return false;
 	}
@@ -161,7 +168,7 @@ bool CTcpServer::initSocket()
 		return false;
 	}
 
-	time_t tNowTime = time(NULL);
+	time_t tNowTime = CTimeManager::Inst()->GetCurrTime();
 	for (int i = 0; i < MAX_LISTEN_PORT_NUM; ++ i)
 	{
 		if (mTcpConfig.mListenPort[i] == 0)
@@ -212,7 +219,7 @@ bool CTcpServer::initSocket()
 	}
 	mEpollModel->initEpollSocket();
 
-	time_t tNowTime = time(NULL);
+	time_t tNowTime = CTimeManager::Inst()->GetCurrTime();
 	for (int i = 0; i < MAX_LISTEN_PORT_NUM; ++ i)
 	{
 		if (mTcpConfig.mListenPort[i] == 0)
@@ -244,8 +251,17 @@ void CTcpServer::run()
 {
 	while (true)
 	{
+		CTimeManager::Inst()->UpdateCurrTime();
+
 #ifdef MYTH_OS_WINDOWS
 		mSelectModel->selectAllFd();
+		Sleep(1);
+#else
+		struct timespec tv;
+		tv.tv_sec = 0;
+		tv.tv_nsec = 1000;
+
+		nanosleep(&tv, NULL);
 #endif
 		receiveMessage();
 		sendMessage();
@@ -257,7 +273,7 @@ void CTcpServer::run()
 /// 检查是否超时
 void CTcpServer::checkTimeOut()
 {
-	time_t tTimeNow = time(NULL);
+	time_t tTimeNow = CTimeManager::Inst()->GetCurrTime();
 	if (tTimeNow - mLastStatisticsTime > mTcpConfig.mWriteStatisticsTime)
 	{
 		writeTcpStatisticsData();
@@ -345,7 +361,7 @@ void CTcpServer::receiveMessage()
 				pNewSocket->setRecvBuffSize(0);
 				mSelectModel->addNewSocket(pNewSocket, nSocketIndex);
 
-				time_t tNowTime = time(NULL);
+				time_t tNowTime = CTimeManager::Inst()->GetCurrTime();
 				if (nSocketIndex>= 0 && nSocketIndex < MAX_SOCKET_NUM)
 				{
 					mSocketInfo[nSocketIndex].mCreateTime = tNowTime;
@@ -362,7 +378,6 @@ void CTcpServer::receiveMessage()
 			}
 			else
 			{
-				printf(" receive data");
 				int nResult = pAllSocket[i].recvData(pAllSocket[i].getRecvBuffPoint(), pAllSocket[i].getRecvBuffCapacity());
 				if (nResult <= 0)
 				{
@@ -378,7 +393,7 @@ void CTcpServer::receiveMessage()
 				{
 					pAllSocket[i].setRecvBuffSize(pAllSocket[i].getRecvBuffSize() + nResult);
 					onReceiveMessage(&(pAllSocket[i]), i);
-					printf("receive message");
+					printf("receive message %d\n", i);
 				}
 			}
 		}
@@ -448,7 +463,7 @@ void CTcpServer::receiveMessage()
 			pNewSocket->setMaxRecvBuffSize(MAX_SOCKET_BUFF_SIZE);
 			pNewSocket->setRecvBuffSize(0);
 
-			time_t tNowTime = time(NULL);
+			time_t tNowTime = CTimeManager::Inst()->GetCurrTime();
 			int nFd = pNewSocket->getSocketFd();
 			if (nFd>= 0 && nFd < MAX_SOCKET_NUM)
 			{
@@ -504,7 +519,7 @@ void CTcpServer::onReceiveMessage(CTcpSocket* pSocket, int nIndex)
 	char* pBuffer = pSocket->getRecvBuff();
 
 	int nTotalSize = 0;
-	time_t tNowTime = time(NULL);
+	time_t tNowTime = CTimeManager::Inst()->GetCurrTime();
 	while (true)
 	{
 		if (nBuffSize < 4)
