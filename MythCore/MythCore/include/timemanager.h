@@ -32,21 +32,21 @@ namespace Myth
 		~CClockTime(){}
 
 	public:
-		inline	sint64	GetStartTime(){return mStartTime;}
-		inline	void	SetStartTime(sint64 lStartTime){mStartTime = lStartTime;}
+		inline	sint64	getStartTime(){return mStartTime;}
+		inline	void	setStartTime(sint64 lStartTime){mStartTime = lStartTime;}
 
-		inline	sint64	GetEndTime(){return mEndTime;}
-		inline	void	SetEndTime(sint64 lEndTime){mStartTime = lEndTime;}
+		inline	sint64	getEndTime(){return mEndTime;}
+		inline	void	setEndTime(sint64 lEndTime){mStartTime = lEndTime;}
 
 	public:
-		void	Start();
-		void	End();
-		sint64	GetInterval();
+		void	start();
+		void	end();
+		sint64	getInterval();
 
 	public:
 		/// calc how long when clock the time consume
-		static sint64 CalcDeviation();
-		sint64	GetDeviation(){return mDeviation;}
+		static sint64 calcDeviation();
+		sint64	getDeviation(){return mDeviation;}
 
 	private:
 		sint64	mStartTime;
@@ -66,17 +66,45 @@ namespace Myth
 				strncpy(mName, pName, sizeof(mName) - 1);
 				mName[sizeof(mName) - 1] = '\0';
 			}
-			Start();
+			start();
 		}
 		~CAutoClockTime()
 		{
-			End();
+			end();
 			//LOG_DEBUG("default", "Name : %s, Time: %lld\n", mName, GetInterval());
-			printf("Name : %s, Time: %lld\n", mName, GetInterval());
+			printf("Name : %s, Time: %lld\n", mName, getInterval());
 		}
 
 	private:
 		char	mName[STRING_LENGTH_32];
+	};
+
+	/// 自动重置计算器
+	class CAutoResetTimer
+	{
+	public:
+		CAutoResetTimer(uint32 nMaxTime)
+			:mMaxTime(nMaxTime), mLeftTime(nMaxTime)
+		{
+		}
+
+	public:
+		uint32 getLeftTime() const { return mLeftTime; }
+		void setLeftTime(uint32 nValue) { mLeftTime = nValue; }
+
+		uint32 getMaxTime() const { return mMaxTime; }
+		void setMaxTime(uint32 nValue) { mMaxTime = nValue; }
+
+		inline bool elapse(int vInterval)
+		{
+			mLeftTime -= vInterval; 
+			// 如果剩余的时间小于0，自动重置到最大值，并返回true
+			return mLeftTime <= 0 ? mLeftTime = mMaxTime, true : false;
+		}
+
+	private:
+		uint32 mLeftTime;			// 剩余时间(毫秒)
+		uint32 mMaxTime;			// 最大的时间(毫秒)
 	};
 
 	class CTimeManager : public CSingleton<CTimeManager>

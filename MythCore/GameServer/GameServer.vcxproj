@@ -91,6 +91,7 @@
     <ClCompile Include="src\objmanager.cpp" />
     <ClCompile Include="src\objpool.cpp" />
     <ClCompile Include="src\scenejob.cpp" />
+    <ClCompile Include="src\taskunit.cpp" />
     <ClCompile Include="src\template.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +113,7 @@
     <ClInclude Include="inc\itemunit.h" />
     <ClInclude Include="inc\job.h" />
     <ClInclude Include="inc\locallogjob.h" />
+    <ClInclude Include="inc\logicmodule.h" />
     <ClInclude Include="inc\loginmodule.h" />
     <ClInclude Include="inc\logintype.h" />
     <ClInclude Include="inc\messagefactory.h" />

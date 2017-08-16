@@ -4,7 +4,7 @@
 namespace Myth
 {
 	sint64 CClockTime::mDeviation = 0;
-	void CClockTime::Start()
+	void CClockTime::start()
 	{
 	#ifdef MYTH_OS_WINDOWS
 		LARGE_INTEGER tCounter;
@@ -18,7 +18,7 @@ namespace Myth
 	#endif
 	}
 
-	void CClockTime::End()
+	void CClockTime::end()
 	{
 	#ifdef MYTH_OS_WINDOWS
 		LARGE_INTEGER tCounter;
@@ -32,7 +32,7 @@ namespace Myth
 	#endif
 	}
 
-	sint64 CClockTime::GetInterval()
+	sint64 CClockTime::getInterval()
 	{
 	#ifdef MYTH_OS_WINDOWS
 		return (mEndTime - mStartTime) * 1000000 / CTimeManager::GetQueryPerformanceFrequency();
@@ -41,19 +41,19 @@ namespace Myth
 	#endif
 	}
 
-	sint64 CClockTime::CalcDeviation()
+	sint64 CClockTime::calcDeviation()
 	{
 		CClockTime tObserver;
 		CClockTime tMeasure;
-		tObserver.Start();
+		tObserver.start();
 		for (int i = 0; i < 10000; ++ i)
 		{
-			tMeasure.Start();
-			tMeasure.End();
+			tMeasure.start();
+			tMeasure.end();
 		}
-		tObserver.End();
+		tObserver.end();
 		// attation >> 1
-		mDeviation = (tObserver.GetInterval() >> 1) / 10000;
+		mDeviation = (tObserver.getInterval() >> 1) / 10000;
 		return mDeviation;
 	}
 

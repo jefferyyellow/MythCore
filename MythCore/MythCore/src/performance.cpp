@@ -29,14 +29,14 @@ namespace Myth
 		// now this  node is current node
 		CPerformance::Inst()->SetCurrNode(this);
 		// start time
-		mClockTime.Start();
+		mClockTime.start();
 	}
 	void CPerforNode::LeaveCode()
 	{
 		// end time
-		mClockTime.End();
+		mClockTime.end();
 		// get the code's time consuming
-		uint32 nTime = (uint32)mClockTime.GetInterval();
+		uint32 nTime = (uint32)mClockTime.getInterval();
 		// update the mMinTime
 		if (nTime < mMinTime)
 		{

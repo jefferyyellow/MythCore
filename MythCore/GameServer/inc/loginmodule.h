@@ -4,13 +4,14 @@
 #include "messagefactory.h"
 #include "commontype.h"
 #include "logintype.h"
+#include "logicmodule.h"
+#include "timemanager.h"
 #include <map>
-
 
 using namespace Myth;
 class CInternalMsg;
 #define  MAKE_LOGIN_KEY(AccountID, ChannelID, ServerID) ( (ChannelID << 48) | (ServerID << 32) | AccountID)
-class CLoginModule : public CSingleton < CLoginModule >
+class CLoginModule : public CLogicModule, public CSingleton < CLoginModule >
 {
 	friend class CSingleton < CLoginModule > ;
 public:
@@ -18,6 +19,10 @@ public:
 private:
 	CLoginModule();
 	~CLoginModule();
+
+public:
+	/// Ê±¼äº¯Êý
+	virtual		void OnTimer(unsigned int nTickOffset);
 
 public:
 	void		onClientMessage(CExchangeHead& rExchangeHead, unsigned int nMessageID, Message* pMessage);
@@ -31,6 +36,7 @@ private:
 	void		onMessageEnterSceneRequest(CExchangeHead& rExchangeHead, Message* pMessage);
 
 private:
-	LOGIN_LIST mLoginList;
+	LOGIN_LIST			mLoginList;
+	CAutoResetTimer		mLoginCheckTime;
 };
 #endif

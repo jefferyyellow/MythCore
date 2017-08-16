@@ -98,12 +98,10 @@ void CDBJob::OnIMPlayerLoginRequest(CInternalMsg* pMsg)
 	
 	snprintf(acBuffer, sizeof(acBuffer), "call GetRoleInfo(%d, %d, %d)", nAccountID, pLoginRequest->mChannelID, pLoginRequest->mServerID);
 	tQueryResult.clear();
-	mDataBase.clearResult();
 
 	mDataBase.query(acBuffer, tQueryResult);
 	if (tQueryResult.getRowCount() != 1)
 	{
-		mDataBase.clearResult();
 		return;
 	}
 
@@ -112,7 +110,6 @@ void CDBJob::OnIMPlayerLoginRequest(CInternalMsg* pMsg)
 	CIMPlayerLoginResponse* pResponse = reinterpret_cast<CIMPlayerLoginResponse*>(CInternalMsgPool::CreateInst()->allocMsg(IM_RESPONSE_PLAYER_LOGIN));
 	if (NULL != pResponse)
 	{
-		mDataBase.clearResult();
 		return;
 	}
 	pResponse->mAccountID = nAccountID;
@@ -124,7 +121,6 @@ void CDBJob::OnIMPlayerLoginRequest(CInternalMsg* pMsg)
 	CGameServer::Inst()->pushTask(emTaskType_Scene, pResponse);
 	printf("OnIMPlayerLoginRequest end");
 
-	mDataBase.clearResult();
 }
 
 /// 玩家创建角色
@@ -147,13 +143,11 @@ void CDBJob::OnIMCreateRoleRequest(CInternalMsg* pMsg)
 
 	if (tQueryResult.getRowCount() != 1)
 	{
-		mDataBase.clearResult();
 		return;
 	}
 
 	uint32 nRoleID = atoi(tQueryResult.getField(0)->getValue());
 	
-	mDataBase.clearResult();
 
 
 	CIMCreateRoleResponse* pIMCreateRoleResponse = reinterpret_cast<CIMCreateRoleResponse*>(CInternalMsgPool::Inst()->allocMsg(IM_RESPONSE_CREATE_ROLE));
@@ -202,7 +196,6 @@ void CDBJob::OnIMEnterSceneRequest(CInternalMsg* pMsg)
 	CEntityPlayer* pEntityPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(nPlayerEntityID));
 	if (NULL == pEntityPlayer)
 	{
-		mDataBase.clearResult();
 		return;
 	}
 	// 取得数据库加载的结果
@@ -210,15 +203,11 @@ void CDBJob::OnIMEnterSceneRequest(CInternalMsg* pMsg)
 	//pEntityPlayer->setRoleLevel(atoi(tQueryResult.getField(1)->getValue()));
 	//pEntityPlayer->setRoleExp(atoll(tQueryResult.getField(2)->getValue()));
 
-
-	mDataBase.clearResult();
-
 	pEnterSceneResponse->mRoleID = pEnterSceneRequest->mRoleID;
 	pEnterSceneResponse->mAccountID = pEnterSceneRequest->mAccountID;
 	pEnterSceneResponse->mChannelID = pEnterSceneRequest->mChannelID;
 	pEnterSceneResponse->mServerID = pEnterSceneRequest->mServerID;
 	pEnterSceneResponse->mPlayerEntityID = pEnterSceneRequest->mPlayerEntityID;
-
 
 	CGameServer::Inst()->pushTask(emTaskType_Scene, pEnterSceneResponse);
 }

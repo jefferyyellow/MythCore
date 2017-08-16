@@ -7,6 +7,7 @@
 #include "objpool.h"
 #include "timemanager.h"
 CLoginModule::CLoginModule()
+:mLoginCheckTime(1000)
 {
 
 }
@@ -15,6 +16,35 @@ CLoginModule::CLoginModule()
 CLoginModule::~CLoginModule()
 {
 
+}
+
+/// 时间函数
+void CLoginModule::OnTimer(unsigned int nTickOffset)
+{
+	if (mLoginCheckTime.elapse(nTickOffset))
+	{
+		time_t tTimeNow = CTimeManager::Inst()->GetCurrTime();
+		LOGIN_LIST::iterator it = mLoginList.begin();
+		for (; it != mLoginList.end(); )
+		{
+			uint32 nObjID = it->second;
+			CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::CreateInst()->getObj(nObjID));
+			if (NULL == pLoginPlayer)
+			{
+				it = mLoginList.erase(it);
+				continue;
+			}
+			// 超时
+			if (tTimeNow - pLoginPlayer->GetWaitTime() > 10)
+			{
+				// 断开连接
+				it = mLoginList.erase(it);
+				continue;
+			}
+
+			++ it;
+		}
+	}
 }
 
 void CLoginModule::onClientMessage(CExchangeHead& rExchangeHead, unsigned int nMessageID, Message* pMessage)
@@ -174,7 +204,6 @@ void CLoginModule::onIMCreateRoleResponse(CInternalMsg* pMsg)
 	}
 	CIMCreateRoleResponse* pCreateRoleResponse = reinterpret_cast<CIMCreateRoleResponse*>(pMsg);
 
-
 	uint64 nAccountID = pCreateRoleResponse->mAccountID;
 	uint64 nChannelID = pCreateRoleResponse->mChannelID;
 	uint64 nServerID = pCreateRoleResponse->mServerID;
@@ -282,8 +311,6 @@ void CLoginModule::onIMEnterSceneResponse(CInternalMsg* pMsg)
 	uint64 nServerID = pEnterSceneResponse->mServerID;
 	uint64 nKey = MAKE_LOGIN_KEY(nAccountID, nChannelID, nServerID);
 
-	
-	//bool bFind = mLoginList.Find(nKey, nObjID);
 	LOGIN_LIST::iterator it = mLoginList.find(nKey);
 	if (it == mLoginList.end())
 	{

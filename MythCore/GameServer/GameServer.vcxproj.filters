@@ -25,6 +25,9 @@
     <Filter Include="job">
       <UniqueIdentifier>{564dbfbd-321f-4404-a62a-91c7169534a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="logicmodule">
+      <UniqueIdentifier>{65c50def-7a02-40c9-8beb-a7b18f747864}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\message\loginmessage.hxx.pb.cc">
@@ -89,6 +92,9 @@
     </ClCompile>
     <ClCompile Include="..\dep\tinyxml\tinyxml2.cpp">
       <Filter>tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="src\taskunit.cpp">
+      <Filter>player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +190,9 @@
     </ClInclude>
     <ClInclude Include="..\dep\tinyxml\tinyxml2.h">
       <Filter>tinyxml</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\logicmodule.h">
+      <Filter>logicmodule</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
