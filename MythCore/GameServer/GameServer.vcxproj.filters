@@ -51,9 +51,6 @@
     <ClCompile Include="src\internalmsgpool.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\loginmodule.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -96,6 +93,9 @@
     <ClCompile Include="src\taskunit.cpp">
       <Filter>player</Filter>
     </ClCompile>
+    <ClCompile Include="src\loginmodule.cpp">
+      <Filter>logicmodule</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -123,9 +123,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="inc\internalmsgpool.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\loginmodule.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="inc\messagefactory.h">
@@ -192,6 +189,9 @@
       <Filter>tinyxml</Filter>
     </ClInclude>
     <ClInclude Include="inc\logicmodule.h">
+      <Filter>logicmodule</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\loginmodule.h">
       <Filter>logicmodule</Filter>
     </ClInclude>
   </ItemGroup>

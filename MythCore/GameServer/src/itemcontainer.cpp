@@ -210,3 +210,64 @@ int CItemContainer::insertItem(int nItemID, int nItemNum, int *pOutIndex, int *p
 	}
 	return 0;
 }
+
+bool CItemContainer::checkEnough(int nItemID, int nItemNum)
+{
+	for (unsigned int i = 0; i < mSize; ++i)
+	{
+		// 格子是空的
+		if (INVALID_OBJ_ID == mItemObjID[i])
+		{
+			continue;
+		}
+
+		if (mItemID[i] != nItemID)
+		{
+			continue;
+		}
+
+		CItemObject* pItemObject = (CItemObject*)CObjPool::Inst()->getObj(mItemObjID[i]);
+		if (NULL == pItemObject)
+		{
+			continue;
+		}
+		nItemNum -= pItemObject->GetItemNum();
+		if (nItemNum <= 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/// 删除道具
+bool CItemContainer::removeItem(int nItemID, int nItemNum)
+{
+	for (unsigned int i = 0; i < mSize; ++i)
+	{
+		// 格子是空的
+		if (INVALID_OBJ_ID == mItemObjID[i])
+		{
+			continue;
+		}
+
+		if (mItemID[i] != nItemID)
+		{
+			continue;
+		}
+
+		CItemObject* pItemObject = (CItemObject*)CObjPool::Inst()->getObj(mItemObjID[i]);
+		if (NULL == pItemObject)
+		{
+			continue;
+		}
+			
+		if (nItemNum >= pItemObject->GetItemNum())
+		{
+
+		}
+	}
+
+	return false;
+}
