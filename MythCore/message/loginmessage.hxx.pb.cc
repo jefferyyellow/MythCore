@@ -37,7 +37,7 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* CMessageEnterSceneResponse_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   CMessageEnterSceneResponse_reflection_ = NULL;
-const ::google::protobuf::EnumDescriptor* LOGIN_MSG_ID_descriptor_ = NULL;
+const ::google::protobuf::EnumDescriptor* LOGIN_MODULE_MSG_ID_descriptor_ = NULL;
 
 }  // namespace
 
@@ -145,7 +145,7 @@ void protobuf_AssignDesc_loginmessage_2ehxx() {
       -1,
       sizeof(CMessageEnterSceneResponse),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageEnterSceneResponse, _internal_metadata_));
-  LOGIN_MSG_ID_descriptor_ = file->enum_type(0);
+  LOGIN_MODULE_MSG_ID_descriptor_ = file->enum_type(0);
 }
 
 namespace {
@@ -231,13 +231,13 @@ void protobuf_AddDesc_loginmessage_2ehxx_impl() {
     "MessageEnterSceneRequest\022\016\n\006RoleID\030\001 \001(\r"
     "\022\021\n\tAccountID\030\002 \001(\r\022\021\n\tChannelID\030\003 \001(\r\022\020"
     "\n\010ServerID\030\004 \001(\r\",\n\032CMessageEnterSceneRe"
-    "sponse\022\016\n\006Result\030\002 \001(\r*\323\001\n\014LOGIN_MSG_ID\022"
-    "\014\n\010ID_ERROR\020\000\022\030\n\024ID_C2S_REQUEST_LOGIN\020\001\022"
-    "\031\n\025ID_S2C_RESPONSE_LOGIN\020\002\022\036\n\032ID_C2S_REQ"
-    "UEST_CREATE_ROLE\020\003\022\037\n\033ID_S2C_RESPONSE_CR"
-    "EATE_ROLE\020\004\022\036\n\032ID_C2S_REQUEST_ENTER_SCEN"
-    "E\020\005\022\037\n\033ID_S2C_RESPONSE_ENTER_SCENE\020\006b\006pr"
-    "oto3", 724);
+    "sponse\022\016\n\006Result\030\002 \001(\r*\347\001\n\023LOGIN_MODULE_"
+    "MSG_ID\022\031\n\025ID_LOGIN_MODULE_ERROR\020\000\022\030\n\024ID_"
+    "C2S_REQUEST_LOGIN\020\001\022\031\n\025ID_S2C_RESPONSE_L"
+    "OGIN\020\002\022\036\n\032ID_C2S_REQUEST_CREATE_ROLE\020\003\022\037"
+    "\n\033ID_S2C_RESPONSE_CREATE_ROLE\020\004\022\036\n\032ID_C2"
+    "S_REQUEST_ENTER_SCENE\020\005\022\037\n\033ID_S2C_RESPON"
+    "SE_ENTER_SCENE\020\006b\006proto3", 744);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "loginmessage.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_loginmessage_2ehxx);
@@ -254,11 +254,11 @@ struct StaticDescriptorInitializer_loginmessage_2ehxx {
     protobuf_AddDesc_loginmessage_2ehxx();
   }
 } static_descriptor_initializer_loginmessage_2ehxx_;
-const ::google::protobuf::EnumDescriptor* LOGIN_MSG_ID_descriptor() {
+const ::google::protobuf::EnumDescriptor* LOGIN_MODULE_MSG_ID_descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return LOGIN_MSG_ID_descriptor_;
+  return LOGIN_MODULE_MSG_ID_descriptor_;
 }
-bool LOGIN_MSG_ID_IsValid(int value) {
+bool LOGIN_MODULE_MSG_ID_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:

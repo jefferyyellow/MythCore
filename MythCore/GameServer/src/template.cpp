@@ -2,6 +2,9 @@
 #include <stddef.h>
 CTemplate* CStaticData::spTemplate[ MAX_TEMPLATE_NUM ]							= { NULL };
 
+CTplPlayerLevelUpExpConfig* CTplPlayerLevelUpExpConfig::spConfig				= NULL;
+CTplVIPConfig* CTplVIPConfig::spConfig											= NULL;
+
 CTemplate* CStaticData::SearchTpl(unsigned int nTempID)
 {
 	// 注意0也是非法值
@@ -15,3 +18,4 @@ CTemplate* CStaticData::SearchTpl(unsigned int nTempID)
 
 	return spTemplate[nTempID];
 }
+

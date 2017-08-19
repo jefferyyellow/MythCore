@@ -67,9 +67,10 @@ void protobuf_AddDesc_message_2ehxx_impl() {
 
   protobuf_InitDefaults_message_2ehxx();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\013message.hxx*K\n\021MESSAGE_MODULE_ID\022\030\n\024ME"
+    "\n\013message.hxx*e\n\021MESSAGE_MODULE_ID\022\030\n\024ME"
     "SSAGE_MODULE_LOGIN\020\000\022\034\n\027MESSAGE_MODULE_P"
-    "ROPERTY\020\200\010b\006proto3", 98);
+    "ROPERTY\020\200\010\022\030\n\023MESSAGE_MODULE_ITEM\020\200\020b\006pr"
+    "oto3", 124);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "message.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_message_2ehxx);
@@ -94,6 +95,7 @@ bool MESSAGE_MODULE_ID_IsValid(int value) {
   switch (value) {
     case 0:
     case 1024:
+    case 2048:
       return true;
     default:
       return false;

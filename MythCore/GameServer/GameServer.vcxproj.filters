@@ -96,6 +96,24 @@
     <ClCompile Include="src\loginmodule.cpp">
       <Filter>logicmodule</Filter>
     </ClCompile>
+    <ClCompile Include="src\propertymodule.cpp">
+      <Filter>logicmodule</Filter>
+    </ClCompile>
+    <ClCompile Include="src\propertyunit.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\propertymodule.hxx.pb.cc">
+      <Filter>message</Filter>
+    </ClCompile>
+    <ClCompile Include="src\itemunit.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\itemmodule.cpp">
+      <Filter>logicmodule</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\itemmodule.hxx.pb.cc">
+      <Filter>message</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -193,6 +211,27 @@
     </ClInclude>
     <ClInclude Include="inc\loginmodule.h">
       <Filter>logicmodule</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\propertymodule.h">
+      <Filter>logicmodule</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\propertymodule.hxx">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\propertymodule.hxx.pb.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\itemmodule.h">
+      <Filter>logicmodule</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\itemmodule.hxx">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\itemmodule.hxx.pb.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\errcode.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

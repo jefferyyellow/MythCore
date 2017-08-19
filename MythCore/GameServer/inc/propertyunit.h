@@ -1,6 +1,7 @@
 #ifndef __PROPERTYUNIT_H__
 #define __PROPERTYUNIT_H__
 #include "playersubunit.h"
+#include "commontype.h"
 class CEntityPlayer;
 class CPropertyUnit : public CPlayerSubUnit<CEntityPlayer>
 {
@@ -19,28 +20,34 @@ public:
 	}
 
 public:
+	/// 获得经验
+	void obtainExp(int nExp);
+	/// 获得VIP经验
+	void obtainVIPExp(int nVIPExp);
+
+public:
 	/// 等级
 	uint8			getLevel() const { return mLevel; }
 	void			setLevel(uint8 nValue) { mLevel = nValue; }
 	
 	/// 经验
-	uint64			getRoleExp() const { return mExp; }
-	void			setRoleExp(uint64 nValue) { mExp = nValue; }
+	sint64			getRoleExp() const { return mExp; }
+	void			setRoleExp(sint64 nValue) { mExp = nValue; }
 
 	/// VIP经验
-	uint32			GetVIPExp() const { return mVIPExp; }
-	void			SetVIPExp(uint32 nValue) { mVIPExp = nValue; }
+	sint32			GetVIPExp() const { return mVIPExp; }
+	void			SetVIPExp(sint32 nValue) { mVIPExp = nValue; }
 
 	/// VIP等级
-	uint8	getVIPLevel() const { return mVIPLevel; }
-	void	setVIPLevel(uint8 nValue) { mVIPLevel = nValue; }
+	uint8			getVIPLevel() const { return mVIPLevel; }
+	void			setVIPLevel(uint8 nValue) { mVIPLevel = nValue; }
 private:
 	/// 经验
-	uint64			mExp;
+	sint64			mExp;
 	/// 等级
 	uint8			mLevel;
 	/// VIP经验
-	uint32			mVIPExp;
+	sint32			mVIPExp;
 	/// VIP等级
 	uint8			mVIPLevel;
 

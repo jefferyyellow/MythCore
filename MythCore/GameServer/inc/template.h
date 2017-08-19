@@ -62,4 +62,30 @@ public:
 	// Type:	  EDITNUMBER(1,10000)
 	int		mPileLimit;
 };
+
+#define MAX_LEVEL		100
+class CTplPlayerLevelUpExpConfig : public CTemplate
+{
+public:
+	// FieldName: 第%d级升到下一级经验值
+	// FieldType: INT4
+	// Type:	  EDITNUMBER(1,10000000000000)
+	int			mLevelUpExp[MAX_LEVEL];
+
+public:
+	static CTplPlayerLevelUpExpConfig* spConfig;
+};
+
+#define MAX_VIP_LEVEL 20
+class CTplVIPConfig : public CTemplate
+{
+public:
+	// FieldName: 第%d级VIP升到下一级经验值
+	// FieldType: INT4
+	// Type:	  EDITNUMBER(1,10000000000000)
+	int			mVIPExp[MAX_VIP_LEVEL];
+	
+public:
+	static CTplVIPConfig* spConfig;
+};
 #endif

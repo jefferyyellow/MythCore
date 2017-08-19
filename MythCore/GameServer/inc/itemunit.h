@@ -2,6 +2,8 @@
 #define __ITEMSUBMODULE_H__
 #include "playersubunit.h"
 #include "itemcontainer.h"
+
+#define PLAYER_MONEY_LIMIT		1
 class CEntityPlayer;
 class CItemUnit : public CPlayerSubUnit<CEntityPlayer>
 {
@@ -18,18 +20,18 @@ public:
 	}
 
 public:
-	uint32	getMoney() const { return mMoney; }
-	void	setMoney(uint32 nValue) { mMoney = nValue; }
+	sint32	getMoney() const { return mMoney; }
+	void	setMoney(sint32 nValue) { mMoney = nValue; }
 
-	uint32	getDiamond() const { return mDiamond; }
-	void	setDiamond(uint32 nValue) { mDiamond = nValue; }
+	sint32	getDiamond() const { return mDiamond; }
+	void	setDiamond(sint32 nValue) { mDiamond = nValue; }
 
 private:
 	/// ±³°ü
 	CItemContainer			mBag;				
 	/// ½ðÇ®
-	uint32					mMoney;
+	sint32					mMoney;
 	/// ×êÊ¯
-	uint32					mDiamond;
+	sint32					mDiamond;
 };
 #endif

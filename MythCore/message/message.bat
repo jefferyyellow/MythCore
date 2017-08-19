@@ -1,2 +1,2 @@
-bin\protoc.exe -I=. --cpp_out=. message.hxx loginmessage.hxx
+bin\protoc.exe -I=. --cpp_out=. message.hxx loginmessage.hxx propertymodule.hxx itemmodule.hxx
 pause

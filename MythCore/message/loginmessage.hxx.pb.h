@@ -43,31 +43,31 @@ class CMessageEnterSceneResponse;
 class CMessageLoginRequest;
 class CMessageLoginResponse;
 
-enum LOGIN_MSG_ID {
-  ID_ERROR = 0,
+enum LOGIN_MODULE_MSG_ID {
+  ID_LOGIN_MODULE_ERROR = 0,
   ID_C2S_REQUEST_LOGIN = 1,
   ID_S2C_RESPONSE_LOGIN = 2,
   ID_C2S_REQUEST_CREATE_ROLE = 3,
   ID_S2C_RESPONSE_CREATE_ROLE = 4,
   ID_C2S_REQUEST_ENTER_SCENE = 5,
   ID_S2C_RESPONSE_ENTER_SCENE = 6,
-  LOGIN_MSG_ID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
-  LOGIN_MSG_ID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+  LOGIN_MODULE_MSG_ID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  LOGIN_MODULE_MSG_ID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
-bool LOGIN_MSG_ID_IsValid(int value);
-const LOGIN_MSG_ID LOGIN_MSG_ID_MIN = ID_ERROR;
-const LOGIN_MSG_ID LOGIN_MSG_ID_MAX = ID_S2C_RESPONSE_ENTER_SCENE;
-const int LOGIN_MSG_ID_ARRAYSIZE = LOGIN_MSG_ID_MAX + 1;
+bool LOGIN_MODULE_MSG_ID_IsValid(int value);
+const LOGIN_MODULE_MSG_ID LOGIN_MODULE_MSG_ID_MIN = ID_LOGIN_MODULE_ERROR;
+const LOGIN_MODULE_MSG_ID LOGIN_MODULE_MSG_ID_MAX = ID_S2C_RESPONSE_ENTER_SCENE;
+const int LOGIN_MODULE_MSG_ID_ARRAYSIZE = LOGIN_MODULE_MSG_ID_MAX + 1;
 
-const ::google::protobuf::EnumDescriptor* LOGIN_MSG_ID_descriptor();
-inline const ::std::string& LOGIN_MSG_ID_Name(LOGIN_MSG_ID value) {
+const ::google::protobuf::EnumDescriptor* LOGIN_MODULE_MSG_ID_descriptor();
+inline const ::std::string& LOGIN_MODULE_MSG_ID_Name(LOGIN_MODULE_MSG_ID value) {
   return ::google::protobuf::internal::NameOfEnum(
-    LOGIN_MSG_ID_descriptor(), value);
+    LOGIN_MODULE_MSG_ID_descriptor(), value);
 }
-inline bool LOGIN_MSG_ID_Parse(
-    const ::std::string& name, LOGIN_MSG_ID* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<LOGIN_MSG_ID>(
-    LOGIN_MSG_ID_descriptor(), name, value);
+inline bool LOGIN_MODULE_MSG_ID_Parse(
+    const ::std::string& name, LOGIN_MODULE_MSG_ID* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<LOGIN_MODULE_MSG_ID>(
+    LOGIN_MODULE_MSG_ID_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -1055,10 +1055,10 @@ inline const CMessageEnterSceneResponse* CMessageEnterSceneResponse::internal_de
 namespace google {
 namespace protobuf {
 
-template <> struct is_proto_enum< ::LOGIN_MSG_ID> : ::google::protobuf::internal::true_type {};
+template <> struct is_proto_enum< ::LOGIN_MODULE_MSG_ID> : ::google::protobuf::internal::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::LOGIN_MSG_ID>() {
-  return ::LOGIN_MSG_ID_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::LOGIN_MODULE_MSG_ID>() {
+  return ::LOGIN_MODULE_MSG_ID_descriptor();
 }
 
 }  // namespace protobuf

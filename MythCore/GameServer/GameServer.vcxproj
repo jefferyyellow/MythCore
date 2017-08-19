@@ -72,8 +72,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\dep\tinyxml\tinyxml2.cpp" />
+    <ClCompile Include="..\message\itemmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\loginmessage.hxx.pb.cc" />
     <ClCompile Include="..\message\message.hxx.pb.cc" />
+    <ClCompile Include="..\message\propertymodule.hxx.pb.cc" />
     <ClCompile Include="src\dbjob.cpp" />
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\entityplayer.cpp" />
@@ -82,7 +84,9 @@
     <ClCompile Include="src\internalmsg.cpp" />
     <ClCompile Include="src\internalmsgpool.cpp" />
     <ClCompile Include="src\itemcontainer.cpp" />
+    <ClCompile Include="src\itemmodule.cpp" />
     <ClCompile Include="src\itemobject.cpp" />
+    <ClCompile Include="src\itemunit.cpp" />
     <ClCompile Include="src\job.cpp" />
     <ClCompile Include="src\locallogjob.cpp" />
     <ClCompile Include="src\loginmodule.cpp" />
@@ -90,25 +94,33 @@
     <ClCompile Include="src\messagefactory.cpp" />
     <ClCompile Include="src\objmanager.cpp" />
     <ClCompile Include="src\objpool.cpp" />
+    <ClCompile Include="src\propertymodule.cpp" />
+    <ClCompile Include="src\propertyunit.cpp" />
     <ClCompile Include="src\scenejob.cpp" />
     <ClCompile Include="src\taskunit.cpp" />
     <ClCompile Include="src\template.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\dep\tinyxml\tinyxml2.h" />
+    <ClInclude Include="..\message\itemmodule.hxx" />
+    <ClInclude Include="..\message\itemmodule.hxx.pb.h" />
     <ClInclude Include="..\message\loginmessage.hxx" />
     <ClInclude Include="..\message\loginmessage.hxx.pb.h" />
     <ClInclude Include="..\message\message.hxx" />
     <ClInclude Include="..\message\message.hxx.pb.h" />
+    <ClInclude Include="..\message\propertymodule.hxx" />
+    <ClInclude Include="..\message\propertymodule.hxx.pb.h" />
     <ClInclude Include="inc\dbjob.h" />
     <ClInclude Include="inc\entity.h" />
     <ClInclude Include="inc\entityplayer.h" />
+    <ClInclude Include="inc\errcode.h" />
     <ClInclude Include="inc\gameserver.h" />
     <ClInclude Include="inc\gameserverconfig.h" />
     <ClInclude Include="inc\internalmsg.h" />
     <ClInclude Include="inc\internalmsgpool.h" />
     <ClInclude Include="inc\itemcontainer.h" />
     <ClInclude Include="inc\itemlist.h" />
+    <ClInclude Include="inc\itemmodule.h" />
     <ClInclude Include="inc\itemobject.h" />
     <ClInclude Include="inc\itemunit.h" />
     <ClInclude Include="inc\job.h" />
@@ -127,6 +139,7 @@
     <ClInclude Include="inc\taskmanager.h" />
     <ClInclude Include="inc\taskunit.h" />
     <ClInclude Include="inc\template.h" />
+    <ClInclude Include="inc\propertymodule.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
