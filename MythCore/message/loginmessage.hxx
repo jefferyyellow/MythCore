@@ -11,7 +11,7 @@ enum LOGIN_MODULE_MSG_ID
 	ID_S2C_RESPONSE_CREATE_ROLE		= 0x04;				// 玩家创建角色回应
 	ID_C2S_REQUEST_ENTER_SCENE		= 0x05;				// 玩家进入游戏请求
 	ID_S2C_RESPONSE_ENTER_SCENE		= 0x06;				// 玩家进入游戏回应
-}
+};
 
 
 message CMessageLoginRequest

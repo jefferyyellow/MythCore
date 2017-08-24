@@ -114,6 +114,9 @@
     <ClCompile Include="..\message\itemmodule.hxx.pb.cc">
       <Filter>message</Filter>
     </ClCompile>
+    <ClCompile Include="src\gmcommandmanager.cpp">
+      <Filter>logicmodule</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -232,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="inc\errcode.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gmcommandmanager.h">
+      <Filter>logicmodule</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

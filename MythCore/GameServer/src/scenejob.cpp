@@ -5,6 +5,8 @@
 #include "loginmodule.h"
 #include "internalmsgpool.h"
 #include "entityplayer.h"
+#include "propertymodule.h"
+#include "itemmodule.h"
 
 void CSceneJob::doing(uint32 uParam)
 {
@@ -155,7 +157,19 @@ void CSceneJob::processClientMessage()
 			}
 			else
 			{
-				dispatchClientMessage(nMessageID, pMessage);
+				PLAYER_SOCKET_LIST::iterator it = mPlayerSocketList.find(pExchangeHead->mSocketIndex);
+				if (it == mPlayerSocketList.end())
+				{
+					return;
+				}
+
+				CEntityPlayer* pPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
+				if (NULL == pPlayer)
+				{
+					return;
+				}
+
+				dispatchClientMessage(pPlayer, nMessageID, pMessage);
 			}
 		}
 	}
@@ -192,13 +206,23 @@ void CSceneJob::sendClientMessage(CEntityPlayer* pPlayer, unsigned short nMessag
 }
 
 /// 分发前端消息
-void CSceneJob::dispatchClientMessage(unsigned short nMessageID, Message* pMessage)
+void CSceneJob::dispatchClientMessage(CEntityPlayer* pPlayer, unsigned short nMessageID, Message* pMessage)
 {
-	//int nModule = nMessageID & MESSAGE_MODULE_MASK;
-	//switch (nModule)
-	//{
-	//	default:
-	//		break;
-	//}
+	int nModule = nMessageID & MESSAGE_MODULE_MASK;
+	switch (nModule)
+	{
+		case MESSAGE_MODULE_PROPERTY:
+		{
+			CPropertyModule::Inst()->onClientMessage(pPlayer, nMessageID, pMessage);
+			break;
+		}
+		case MESSAGE_MODULE_ITEM:
+		{
+			CItemModule::Inst()->onClientMessage(pPlayer, nMessageID, pMessage);
+			break;
+		}
+		default:
+			break;
+	}
 }
 

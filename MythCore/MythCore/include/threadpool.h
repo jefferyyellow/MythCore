@@ -109,6 +109,11 @@ namespace Myth
 		{
 			mSimpleLock.lock();
 			mIdleList.push_back(pIdleThread);
+			//printf("\npushIdleThread: %p\n", pIdleThread);
+			if (pIdleThread == (void*)0xcdcdcdcd)
+			{
+				int i = 0;
+			}
 			++ mIdleListNum;
 			mSimpleLock.unlock();
 		}

@@ -3,12 +3,13 @@
 #include "logmanager.h"
 #include "internalmsgpool.h"
 #include "internalmsg.h"
-void LogLocalLog(EmLogType eLogType, const char* pFormat, ...)
+void LogLocalLog(EmLogType eLogType, char* pFile, int nLine, char* pFunction, const char* pFormat, ...)
 {
 	va_list valist;
 	va_start(valist, pFormat);
 	char tBuffer[MAX_LOG_BUFFER_NUM] = { 0 };
-	vsnprintf(tBuffer, sizeof(tBuffer) - 1, pFormat, valist);
+	int nSize = snprintf(tBuffer, sizeof(tBuffer) - 1, "[%s:%d (%s)] ", LOG_FILE(pFile), nLine, pFunction);
+	vsnprintf(tBuffer + nSize, sizeof(tBuffer) - nSize - 1, pFormat, valist);
 	va_end(valist);
 	
 	CIMLocalLogRequest* pLocalLogRequest = reinterpret_cast<CIMLocalLogRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_LOCAL_LOG));
@@ -20,12 +21,13 @@ void LogLocalLog(EmLogType eLogType, const char* pFormat, ...)
 	}
 }
 
-void LogLocalDebugLog(const char* pLogName, const char* pFormat, ...)
+void LogLocalDebugLog(const char* pLogName, char* pFile, int nLine, char* pFunction, const char* pFormat, ...)
 {
 	va_list valist;
 	va_start(valist, pFormat);
 	char tBuffer[MAX_LOG_BUFFER_NUM] = { 0 };
-	vsnprintf(tBuffer, sizeof(tBuffer) - 1, pFormat, valist);
+	int nSize = snprintf(tBuffer, sizeof(tBuffer) - 1, "[%s:%d (%s)] ", LOG_FILE(pFile), nLine, pFunction);
+	vsnprintf(tBuffer + nSize, sizeof(tBuffer) - nSize - 1, pFormat, valist);
 	va_end(valist);
 
 	CIMLocalLogRequest* pLocalLogRequest = reinterpret_cast<CIMLocalLogRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_LOCAL_LOG));

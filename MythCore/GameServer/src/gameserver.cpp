@@ -7,7 +7,7 @@
 #include "gameserverconfig.h"
 #include "objpool.h"
 #include "timemanager.h"
-
+#include "propertymodule.h"
 /// ³õÊ¼»¯
 bool CGameServer::init()
 {
@@ -81,12 +81,15 @@ bool CGameServer::initLog()
 /// ³õÊ¼Âß¼­Ä£¿é
 bool CGameServer::initLogicModule()
 {
-	CLoginModule::CreateInst();
 	CMessageFactory::CreateInst();
 	CInternalMsgPool::CreateInst();
 	CGameServerConfig::CreateInst();
 	CObjPool::CreateInst();
 	CTimeManager::CreateInst();
+
+	// Âß¼­Ä£¿é
+	CLoginModule::CreateInst();
+	CPropertyModule::CreateInst();
 	return true;
 }
 
@@ -124,6 +127,8 @@ bool CGameServer::initThread()
 void CGameServer::run()
 {
 	LOG_ERROR("Hello World");
+	MYTH_ASSERT(1,;);
+	MYTH_ASSERT_INFO(1,;,"I love you macro!");
 	while (true)
 	{
 		CTimeManager::Inst()->UpdateCurrTime();

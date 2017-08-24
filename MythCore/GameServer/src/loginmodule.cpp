@@ -28,7 +28,7 @@ void CLoginModule::OnTimer(unsigned int nTickOffset)
 		for (; it != mLoginList.end(); )
 		{
 			uint32 nObjID = it->second;
-			CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::CreateInst()->getObj(nObjID));
+			CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::Inst()->getObj(nObjID));
 			if (NULL == pLoginPlayer)
 			{
 				it = mLoginList.erase(it);

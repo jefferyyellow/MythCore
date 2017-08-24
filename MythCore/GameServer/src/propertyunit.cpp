@@ -15,12 +15,12 @@ void CPropertyUnit::obtainExp(int nExp)
 	{
 		mExp -= CTplPlayerLevelUpExpConfig::spConfig->mLevelUpExp[mLevel];
 		++mLevel;
-	}
-
-	// 已经到达最大级了
-	if (mLevel == MAX_LEVEL)
-	{
-		mExp = 0;
+		// 已经到达最大级了
+		if (mLevel >= MAX_LEVEL)
+		{
+			mExp = 0;
+			break;
+		}
 	}
 }
 

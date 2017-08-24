@@ -16,7 +16,10 @@ class CEntityPlayer;
 class CSceneJob : public CJob < 1000, 100 >, public CSingleton<CSceneJob>
 {
 	friend class CSingleton<CSceneJob>;
+	/// 键是role id,值是obj id
 	typedef std::map<uint32, uint32> PLAYER_LIST;
+	/// 键是socket index, 值是obj id
+	typedef std::map<uint32, uint32> PLAYER_SOCKET_LIST;
 
 public:
 	CSceneJob(){}
@@ -38,7 +41,7 @@ private:
 	/// 处理前端消息
 	void		processClientMessage();
 	/// 分发前端消息
-	void		dispatchClientMessage(unsigned short nMessageID, Message* pMessage);
+	void		dispatchClientMessage(CEntityPlayer* pPlayer, unsigned short nMessageID, Message* pMessage);
 	/// 初始化共享内存
 	bool		initShareMemory();
 
@@ -48,7 +51,7 @@ private:
 	CSocketStream*			mServer2TcpMemory;
 	char					mBuffer[MAX_SOCKET_BUFF_SIZE + sizeof(CExchangeHead)];
 
-	/// 键是role id,值是obj id
 	PLAYER_LIST				mPlayerList; 
+	PLAYER_SOCKET_LIST		mPlayerSocketList;
 };
 #endif

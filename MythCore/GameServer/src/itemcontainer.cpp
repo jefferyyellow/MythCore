@@ -263,7 +263,7 @@ bool CItemContainer::removeItem(int nItemID, int nItemNum)
 			continue;
 		}
 			
-		if (nItemNum >= pItemObject->GetItemNum())
+		if (nItemNum >= (int)pItemObject->GetItemNum())
 		{
 
 		}

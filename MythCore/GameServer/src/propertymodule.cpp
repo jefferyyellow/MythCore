@@ -4,6 +4,18 @@
 #include "propertymodule.hxx.pb.h"
 #include "scenejob.h"
 
+/// 时间函数
+void CPropertyModule::OnTimer(unsigned int nTickOffset)
+{
+
+}
+
+void CPropertyModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)
+{
+
+}
+
+// 玩家获得经验
 void CPropertyModule::obtainExp(CEntityPlayer* pPlayer, int nExp)
 {
 	if (NULL == pPlayer || nExp <= 0)
@@ -22,9 +34,9 @@ void CPropertyModule::obtainExp(CEntityPlayer* pPlayer, int nExp)
 	}
 }
 
+// 玩家等级升级
 void CPropertyModule::onPlayerLevelUp(CEntityPlayer* pPlayer, int nLevel)
 {
-
 	CMessagePlayerLevelUpNotify tPlayerLevelUpNotify;
 	tPlayerLevelUpNotify.set_level(nLevel);
 	CSceneJob::Inst()->sendClientMessage(pPlayer, ID_S2C_NOTIYF_PLAYER_LEVEL_UP, &tPlayerLevelUpNotify);
