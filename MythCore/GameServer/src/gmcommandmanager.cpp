@@ -4,7 +4,8 @@
 #include "locallogjob.h"
 #include "i18n.h"
 
-void CGMCommandManager::excuteCommand(std::string strCommandName, GMTokens& tTokens, CEntityPlayer* pPlayer)
+/// ÷¥––GM√¸¡Ó
+void CGMCommandManager::excuteCommand(std::string strCommandName, StrTokens& tTokens, CEntityPlayer* pPlayer)
 {
 	CommandHash::iterator it = mCommandHash.find(strCommandName);
 	if (it != mCommandHash.end())
@@ -57,7 +58,6 @@ void CGMCommandManager::Init()
 
 COMMAND_HANDLER_IMPL(help)
 {
-	MYTH_ASSERT(tTokens.size() < 1, return);
 	MYTH_ASSERT_INFO(tTokens.size() < 1, return, 
 		"help command parameter number invalid, %d", tTokens.size());
 
@@ -103,7 +103,6 @@ COMMAND_HANDLER_IMPL(diamond)
 {
 	MYTH_ASSERT_INFO(tTokens.size() < 1, return,
 		"diamond command parameter number invalid, %d", tTokens.size());
-
 
 	int nDiamond = atoi(tTokens[0].c_str());
 	if (nDiamond > 0)

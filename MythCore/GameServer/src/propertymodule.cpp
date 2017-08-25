@@ -3,6 +3,7 @@
 #include "entityplayer.h"
 #include "propertymodule.hxx.pb.h"
 #include "scenejob.h"
+#include "locallogjob.h"
 
 /// 时间函数
 void CPropertyModule::OnTimer(unsigned int nTickOffset)
@@ -12,7 +13,16 @@ void CPropertyModule::OnTimer(unsigned int nTickOffset)
 
 void CPropertyModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)
 {
-
+	switch (nMessageID)
+	{
+		case ID_C2S_REQUEST_GM_COMMAND:
+		{
+			onMessageGMCommandRequest(pPlayer, pMessage);
+			break;
+		}
+		default:
+			break;
+	}
 }
 
 // 玩家获得经验
@@ -42,4 +52,22 @@ void CPropertyModule::onPlayerLevelUp(CEntityPlayer* pPlayer, int nLevel)
 	CSceneJob::Inst()->sendClientMessage(pPlayer, ID_S2C_NOTIYF_PLAYER_LEVEL_UP, &tPlayerLevelUpNotify);
 }
 
+// GM命令请求
+void CPropertyModule::onMessageGMCommandRequest(CEntityPlayer* pPlayer, Message* pMessage)
+{
+	MYTH_ASSERT(NULL == pPlayer || NULL == pMessage, return);
 
+	CMessageGMCommandRequest* pGMCommandRequest = reinterpret_cast<CMessageGMCommandRequest*>(pMessage);
+	if (NULL == pGMCommandRequest)
+	{
+		return;
+	}
+
+	const std::string& rCommondString = pGMCommandRequest->commandstring();
+	StrTokens tTokens = strSplit(rCommondString, " ");
+	MYTH_ASSERT(tTokens.size() >= 1, return);
+
+	const char* pCommandName = tTokens[0].c_str();
+	tTokens.erase(tTokens.begin());
+	mGMCmdManager.excuteCommand(pCommandName, tTokens, pPlayer);
+}

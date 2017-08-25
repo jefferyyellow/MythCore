@@ -1,12 +1,12 @@
 #ifndef __GMCOMMANDMANAGER_H__
 #define __GMCOMMANDMANAGER_H__
-#include <vector>
-#include <string>
+
 #include <map>
-typedef std::vector<std::string> GMTokens;
+#include "strutility.h"
+
 class CEntityPlayer;
-#define COMMAND_HANDLER_DECL(Commandname)	static void Commandname##Handler(std::string strCommandName, GMTokens& tTokens, CEntityPlayer* pPlayer)
-#define COMMAND_HANDLER_IMPL(Commandname)	void CGMCommandManager::Commandname##Handler(std::string strCommandName, GMTokens& tTokens, CEntityPlayer* pPlayer)
+#define COMMAND_HANDLER_DECL(Commandname)	static void Commandname##Handler(std::string strCommandName, StrTokens& tTokens, CEntityPlayer* pPlayer)
+#define COMMAND_HANDLER_IMPL(Commandname)	void CGMCommandManager::Commandname##Handler(std::string strCommandName, StrTokens& tTokens, CEntityPlayer* pPlayer)
 #define COMMAND_HANDLER_ADD(Commandname, HelpString) \
 	mCommandHash.insert( CommandHash::value_type(#Commandname, Commandname##Handler)); \
 	mCommandHelpHash.insert(CommandHelpHash::value_type(#Commandname, HelpString))
@@ -14,7 +14,7 @@ class CEntityPlayer;
 class CGMCommandManager
 {
 public:
-	typedef void(*COMMANDHANDLER)(std::string strCommandName, GMTokens& tTokens, CEntityPlayer* pPlayer);
+	typedef void(*COMMANDHANDLER)(std::string strCommandName, StrTokens& tTokens, CEntityPlayer* pPlayer);
 	typedef std::map<std::string, COMMANDHANDLER > CommandHash;
 	typedef std::map<std::string, std::string> CommandHelpHash;
 
@@ -30,8 +30,7 @@ public:
 
 public:
 	/// ÷¥––GM√¸¡Ó
-	void		excuteCommand(std::string strCommandName, GMTokens& tTokens, CEntityPlayer* pPlayer);
-
+	void		excuteCommand(std::string strCommandName, StrTokens& tTokens, CEntityPlayer* pPlayer);
 
 private:
 	COMMAND_HANDLER_DECL(help);

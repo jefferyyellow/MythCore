@@ -98,6 +98,7 @@
     <ClCompile Include="src\propertymodule.cpp" />
     <ClCompile Include="src\propertyunit.cpp" />
     <ClCompile Include="src\scenejob.cpp" />
+    <ClCompile Include="src\strutility.cpp" />
     <ClCompile Include="src\taskunit.cpp" />
     <ClCompile Include="src\template.cpp" />
   </ItemGroup>
@@ -138,6 +139,7 @@
     <ClInclude Include="inc\playersubunit.h" />
     <ClInclude Include="inc\propertyunit.h" />
     <ClInclude Include="inc\scenejob.h" />
+    <ClInclude Include="inc\strutility.h" />
     <ClInclude Include="inc\taskmanager.h" />
     <ClInclude Include="inc\taskunit.h" />
     <ClInclude Include="inc\template.h" />
