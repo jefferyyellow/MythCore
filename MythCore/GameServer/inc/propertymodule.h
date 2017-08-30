@@ -31,10 +31,10 @@ public:
 	/// 玩家等级升级
 	void		onPlayerLevelUp(CEntityPlayer* pPlayer, int nLevel);
 
-
 public:
 	// GM命令请求
 	void		onMessageGMCommandRequest(CEntityPlayer* pPlayer, Message* pMessage);
+
 public:
 	CGMCommandManager&		getGMCmdManager(){return mGMCmdManager;}
 

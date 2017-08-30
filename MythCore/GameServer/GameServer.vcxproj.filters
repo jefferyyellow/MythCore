@@ -28,6 +28,9 @@
     <Filter Include="logicmodule">
       <UniqueIdentifier>{65c50def-7a02-40c9-8beb-a7b18f747864}</UniqueIdentifier>
     </Filter>
+    <Filter Include="logicmodule\map">
+      <UniqueIdentifier>{dc4536f8-14c3-481a-85f4-7e2fc950452a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\message\loginmessage.hxx.pb.cc">
@@ -119,6 +122,15 @@
     </ClCompile>
     <ClCompile Include="src\strutility.cpp">
       <Filter>头文件</Filter>
+    </ClCompile>
+    <ClCompile Include="inc\mapmodule.cpp">
+      <Filter>logicmodule\map</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mapconfigmanager.cpp">
+      <Filter>logicmodule\map</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mapmamager.cpp">
+      <Filter>logicmodule\map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -243,6 +255,21 @@
       <Filter>logicmodule</Filter>
     </ClInclude>
     <ClInclude Include="inc\strutility.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\mapmodule.h">
+      <Filter>logicmodule\map</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\mapconfigmanager.h">
+      <Filter>logicmodule\map</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\mapmamager.h">
+      <Filter>logicmodule\map</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\sharelist.h">
+      <Filter>logicmodule\map</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\maptype.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

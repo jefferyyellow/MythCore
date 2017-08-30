@@ -76,6 +76,7 @@
     <ClCompile Include="..\message\loginmessage.hxx.pb.cc" />
     <ClCompile Include="..\message\message.hxx.pb.cc" />
     <ClCompile Include="..\message\propertymodule.hxx.pb.cc" />
+    <ClCompile Include="inc\mapmodule.cpp" />
     <ClCompile Include="src\dbjob.cpp" />
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\entityplayer.cpp" />
@@ -92,6 +93,8 @@
     <ClCompile Include="src\locallogjob.cpp" />
     <ClCompile Include="src\loginmodule.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\mapmamager.cpp" />
+    <ClCompile Include="src\mapconfigmanager.cpp" />
     <ClCompile Include="src\messagefactory.cpp" />
     <ClCompile Include="src\objmanager.cpp" />
     <ClCompile Include="src\objpool.cpp" />
@@ -131,6 +134,10 @@
     <ClInclude Include="inc\logicmodule.h" />
     <ClInclude Include="inc\loginmodule.h" />
     <ClInclude Include="inc\logintype.h" />
+    <ClInclude Include="inc\mapmamager.h" />
+    <ClInclude Include="inc\mapconfigmanager.h" />
+    <ClInclude Include="inc\mapmodule.h" />
+    <ClInclude Include="inc\maptype.h" />
     <ClInclude Include="inc\messagefactory.h" />
     <ClInclude Include="inc\obj.h" />
     <ClInclude Include="inc\objpoolimp.h" />
@@ -139,6 +146,7 @@
     <ClInclude Include="inc\playersubunit.h" />
     <ClInclude Include="inc\propertyunit.h" />
     <ClInclude Include="inc\scenejob.h" />
+    <ClInclude Include="inc\sharelist.h" />
     <ClInclude Include="inc\strutility.h" />
     <ClInclude Include="inc\taskmanager.h" />
     <ClInclude Include="inc\taskunit.h" />
