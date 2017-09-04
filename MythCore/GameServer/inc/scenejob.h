@@ -37,7 +37,7 @@ public:
 	void		sendClientMessage(CEntityPlayer* pPlayer, unsigned short nMessageID, Message* pMessage);
 
 private:
-	void	onTask(CInternalMsg* pMsg);
+	void		onTask(CInternalMsg* pMsg);
 	/// 处理前端消息
 	void		processClientMessage();
 	/// 分发前端消息

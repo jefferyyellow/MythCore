@@ -269,11 +269,17 @@ public:
 		}
 	}
 
-	void eraseNode(CShareListNode<T>* pCurrNode)
+	iterator eraseNode(iterator it)
+	{
+		return eraseNode(it.mNode);
+	}
+
+private:
+	iterator eraseNode(CShareListNode<T>* pCurrNode)
 	{
 		if (NULL == pCurrNode)
 		{
-			return;
+			return iterator(NULL);
 		}
 			
 		CShareListNode<T>* pPrevNode = pCurrNode->mpPrev;
@@ -293,6 +299,7 @@ public:
 		{
 			mHeadNode = pCurrNode->mpNext;
 		}
+		return iterator(pNextNode);
 	}
 
 private:

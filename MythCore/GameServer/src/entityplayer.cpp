@@ -51,3 +51,9 @@ int CEntityPlayer::RefreshDefenceFight()
 {
 	return 0;
 }
+
+/// 序列化场景信息到PB·
+void CEntityPlayer::SerializeSceneInfoToPB()
+{
+
+}

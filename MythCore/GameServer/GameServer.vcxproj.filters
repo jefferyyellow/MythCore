@@ -132,6 +132,12 @@
     <ClCompile Include="src\mapmamager.cpp">
       <Filter>logicmodule\map</Filter>
     </ClCompile>
+    <ClCompile Include="src\mapregionsearch.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geometrytype.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -270,6 +276,15 @@
       <Filter>logicmodule\map</Filter>
     </ClInclude>
     <ClInclude Include="inc\maptype.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\entitytype.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\mapregionsearch.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\geometrytype.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

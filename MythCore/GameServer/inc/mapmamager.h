@@ -6,10 +6,15 @@
 #include "maptype.h"
 #include <map>
 
+class CEntity;
+class CEntityCharacter;
+class CMythPoint;
+class CMythRect;
 using namespace Myth;
 class CMapUnit
 {
-	typedef CBlockMemory<CShareList<uint32>::CShareListNode<uint32>, 200, 200> ENTITY_ALLOC;
+public:
+	typedef CBlockMemory<CShareList<uint32>::CShareListNode<uint32>, 2000, 200> ENTITY_ALLOC;
 	typedef CShareList<uint32> ENTITY_LIST;
 public:
 	CMapUnit()
@@ -23,11 +28,13 @@ public:
 	}
 
 public:
-	unsigned short getBlockData() const { return mBlockData; }
-	void setBlockData(unsigned short nValue) { mBlockData = nValue; }
+	unsigned short		getBlockData() const { return mBlockData; }
+	void				setBlockData(unsigned short nValue) { mBlockData = nValue; }
 
-	void pushEntity(uint32 nObjID);
-	void removeEntity(uint32 nObjID);
+	void				pushEntity(uint32 nObjID);
+	void				removeEntity(uint32 nObjID);
+
+	ENTITY_LIST&		GetEntityList() { return mEntityList; }
 
 private:
 	/// 阻挡数据
@@ -49,10 +56,12 @@ public:
 	}
 	~CMap()
 	{
+		clear();
 	}
 
 public:
-	bool			init(short nLength, short nWidth);
+	int				init(short nLength, short nWidth);
+	void			clear();
 
 	CMapUnit*		getMapUnit(short nPosX, short nPosY)
 	{
@@ -63,6 +72,25 @@ public:
 		return NULL;
 	}
 
+	/// 实体移动
+	void		onEntityMove(CEntityCharacter* pEntity, CMythPoint& rDesPos);
+	/// 得到可以区域
+	void		getVisibleRect(CEntityCharacter* pEntity, CMythRect& rRect);
+	/// 把实体加入地图单元
+	bool		addEntityToMapUnit(CEntity* pEntity);
+	/// 把实体加入地图单元触发
+	void		onAddEntityToMapUnit(CEntityCharacter* pEntity, CMythRect& rSrcRect, CMythRect& rDesRect);
+	/// 将实体从地图单元中移除
+	bool		removeEntityFromMapUnit(CEntity* pEntity);
+	/// 将实体从地图单元中移除触发
+	void		onRemoveEntityFromMapUnit(CEntityCharacter* pEntity, CMythRect& rSrcRect, CMythRect& rDesRect);
+	/// 通知其他玩家创建该玩家
+	void		createPlayer2PlayerList(CEntityPlayer* pPlayer, std::vector<CEntityPlayer*>& rPlayerList);
+	/// 通知该玩家创建其他玩家
+	void		createPlayerList2Player();
+	/// 通知该玩家创建NPC列表
+	void		createNPCList2Player();
+
 public:
 	short			getLength() const { return mLength; }
 	void			setLength(short nValue) { mLength = nValue; }
@@ -70,17 +98,18 @@ public:
 	short			getWidth() const { return mWidth; }
 	void			setWidth(short nValue) { mWidth = nValue; }
 
-	short			getMapID() const { return mMapID; }
-	void			setMapID(short nValue) { mMapID = nValue; }
+	unsigned short	getMapID() const { return mMapID; }
+	void			setMapID(unsigned short nValue) { mMapID = nValue; }
 
-	short			getLineID() const { return mLineID; }
-	void			setLineID(short nValue) { mLineID = nValue; }
+	unsigned short	getLineID() const { return mLineID; }
+	void			setLineID(unsigned short nValue) { mLineID = nValue; }
 	
 	int				getMapIndex() const { return mMapIndex; }
 	void			setMapIndex(int nValue) { mMapIndex = nValue; }
 
 	EmMapType		getMapType() const { return mMapType; }
 	void			setMapType(EmMapType nValue) { mMapType = nValue; }
+
 private:
 	/// 地图单元
 	CMapUnit*			mMapUnit;
@@ -88,10 +117,10 @@ private:
 	short				mLength;
 	/// 宽度
 	short				mWidth;
-	/// 地图ID
-	short				mMapID;
 	/// 线ID
-	short				mLineID;
+	unsigned short		mLineID;
+	/// 地图ID
+	unsigned short		mMapID;
 	/// 地图索引
 	int					mMapIndex;
 	/// 地图类型
@@ -114,9 +143,13 @@ private:
 	}
 
 public:
+	/// 创建地图
+	int					createMap(unsigned short nLineID, unsigned short nMapID, int nMapIndex, short nLength, short nWidth);
+	/// 通过参数得到地图
+	CMap*				getMap(unsigned short nLineID, unsigned short nMapID, int nMapIndex);
+	/// 将地图插入地图列表中
+	bool				insertMap(unsigned short nLineID, unsigned short nMapID, int nMapIndex, CMap* pMap);
 
-	CMap*				getMap(short nLineID, short nMapID, int nMapIndex);
-	bool				insertMap(short nLineID, short nMapID, int nMapIndex, CMap* pMap);
 private:
 	MAP_LIST			mMapList;
 };

@@ -5,11 +5,12 @@
 #include "objmanager.h"
 #include "entityplayer.h"
 #define  OBJ_ID_RANGE(ObjType) OBJ_ID_START(ObjType),OBJ_ID_END(ObjType)
+
 class CObjPoolImp
 {
 public:
-	typedef CObjManager<CLoginPlayer, 1024, 32, 32, OBJ_ID_RANGE(emObjType_LoginPlayer)> LoginPlayerPool;
-	typedef CObjManager<CEntityPlayer, 3000, 30, 30, OBJ_ID_RANGE(emObjType_Player)> PlayerPool;
+	typedef CObjManager<CLoginPlayer, 64, 32, 32, OBJ_ID_RANGE(emObjType_LoginPlayer)> LoginPlayerPool;
+	typedef CObjManager<CEntityPlayer, 2000, 30, 30, OBJ_ID_RANGE(emObjType_Player)> PlayerPool;
 
 public:
 	LoginPlayerPool		mLoginPlayerPool;

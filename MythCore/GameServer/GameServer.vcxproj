@@ -95,9 +95,11 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\mapmamager.cpp" />
     <ClCompile Include="src\mapconfigmanager.cpp" />
+    <ClCompile Include="src\mapregionsearch.cpp" />
     <ClCompile Include="src\messagefactory.cpp" />
     <ClCompile Include="src\objmanager.cpp" />
     <ClCompile Include="src\objpool.cpp" />
+    <ClCompile Include="src\geometrytype.cpp" />
     <ClCompile Include="src\propertymodule.cpp" />
     <ClCompile Include="src\propertyunit.cpp" />
     <ClCompile Include="src\scenejob.cpp" />
@@ -118,6 +120,7 @@
     <ClInclude Include="inc\dbjob.h" />
     <ClInclude Include="inc\entity.h" />
     <ClInclude Include="inc\entityplayer.h" />
+    <ClInclude Include="inc\entitytype.h" />
     <ClInclude Include="inc\errcode.h" />
     <ClInclude Include="inc\gameserver.h" />
     <ClInclude Include="inc\gameserverconfig.h" />
@@ -137,6 +140,7 @@
     <ClInclude Include="inc\mapmamager.h" />
     <ClInclude Include="inc\mapconfigmanager.h" />
     <ClInclude Include="inc\mapmodule.h" />
+    <ClInclude Include="inc\mapregionsearch.h" />
     <ClInclude Include="inc\maptype.h" />
     <ClInclude Include="inc\messagefactory.h" />
     <ClInclude Include="inc\obj.h" />
@@ -144,6 +148,7 @@
     <ClInclude Include="inc\objmanager.h" />
     <ClInclude Include="inc\objpool.h" />
     <ClInclude Include="inc\playersubunit.h" />
+    <ClInclude Include="inc\geometrytype.h" />
     <ClInclude Include="inc\propertyunit.h" />
     <ClInclude Include="inc\scenejob.h" />
     <ClInclude Include="inc\sharelist.h" />

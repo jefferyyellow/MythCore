@@ -2,6 +2,15 @@
 #define __FIXBLOCKMEMORY_H__
 namespace Myth
 {
+
+	/// 突然想到MaxCount定义mBlockMemory[MaxCount]和mFreeIndex[MaxCount]无法动态扩展
+	/// 可以分配T的时候，分配T+size(int),这个int为id（或者叫做索引）这个不能生成后不能修改
+	/// 就可以动态分配了
+	/// class CData
+	/// {
+	///		int mIndex;
+	///		T	mData;
+	/// };
 	template<typename T, uint MaxCount, uint BaseCount, uint IncreCount>
 	class CFixBlockMemory
 	{

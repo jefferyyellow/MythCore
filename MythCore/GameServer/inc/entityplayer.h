@@ -33,6 +33,11 @@ public:
 	/// 刷新防御力（战斗属性）
 	virtual		int RefreshDefenceFight();
 
+
+public:
+	/// 序列化场景信息到PB·
+	void			SerializeSceneInfoToPB();
+
 public:
 	/// 角色ID
 	uint32			getRoleID(){ return mRoleID; }

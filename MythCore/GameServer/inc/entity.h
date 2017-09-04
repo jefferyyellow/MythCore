@@ -2,15 +2,66 @@
 #define __ENTITY_H__
 #include "obj.h"
 #include "logintype.h"
+#include "blockmemory.h"
+#include "sharelist.h"
+#include "geometrytype.h"
+#include "entitytype.h"
+using namespace Myth;
 #define PLAYER_NAME_LENGTH   32
 class CEntity : public CObj
 {
 public:
+	typedef CBlockMemory<CShareList<uint32>::CShareListNode<uint32>, 20000, 1000>	PLAYER_ALLOC;
+	typedef CShareList<uint32> PLAYER_LIST;
+public:
 	CEntity(){}
 	~CEntity(){}
 	
-protected:
+public:
+	void			addVisiblePlayer(CEntity* pEntity);
+	void			removeVisiblePlayer(CEntity* pEntity);
 
+	PLAYER_LIST&	getVisiblePlayer() { return mVisiblePlayer; }
+
+public:
+	unsigned short	getMapID() const { return mMapID; }
+	void			setMapID(unsigned short nValue) { mMapID = nValue; }
+
+	unsigned short	getLineID() const { return mLineID; }
+	void			setLineID(unsigned short nValue) { mLineID = nValue; }
+
+	int				getMapIndex() const { return mMapIndex; }
+	void			setMapIndex(int nValue) { mMapIndex = nValue; }
+
+	void			setPos(int nX, int nY)
+	{
+		mPos.mX = nX;
+		mPos.mY = nY;
+	}
+
+	void			setPos(CMythPoint& rPos){	mPos = rPos;}
+	CMythPoint&		getPos(){return mPos;}
+	int				getPosX(){return mPos.mX;}
+	int				getPosY(){return mPos.mY;}
+
+	EmEntityType	getEntityType() const { return mEntityType; }
+	void			setEntityType(EmEntityType nValue) { mEntityType = nValue; }
+
+protected:
+	/// 看见玩家
+	PLAYER_LIST				mVisiblePlayer;
+	/// 可见玩家分配器(避免每次去地图里搜索，尤其是玩家广播，这里相当于一个缓存）
+	static	PLAYER_ALLOC	mVisiblePlayerAlloc;
+	/// 线ID
+	unsigned short			mLineID;
+	/// 地图ID
+	unsigned short			mMapID;
+	/// 地图索引
+	int						mMapIndex;
+	/// 地图中的位置
+	CMythPoint				mPos;
+	/// 实体类型
+	EmEntityType			mEntityType;
 };
 
 class CFightProperty
@@ -58,7 +109,6 @@ public:
 	CEntityCharacter(){}
 	~CEntityCharacter(){}
 
-
 public:
 	/// 刷新最大血
 	virtual		int RefreshMaxHP()			= 0;
@@ -84,11 +134,12 @@ public:
 
 private:
 	/// 模板ID
-	uint32			mTempID;
+	uint32					mTempID;
 	/// 基础属性（比较稳定的属性）
-	CFightProperty	mBaseProperty;
-	/// 战斗属性（包括基础属性，包括容变属性）
-	CFightProperty  mFightProperty;
+	CFightProperty			mBaseProperty;
+	/// 战斗属性（包括基础属性，包括容变属性，比如BUFF属性）
+	CFightProperty			mFightProperty;
+
 };
 
 #endif
