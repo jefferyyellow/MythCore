@@ -38,21 +38,23 @@ void protobuf_ShutdownFile_mapmodule_2ehxx();
 
 class CMessageCreateNPCListNotify;
 class CMessageCreatePlayerListNotify;
+class CMessageDestroyEntityNotify;
 class CMessageEntityMoveNotify;
-class CMessagePlayerSceneInfo;
 class PBNpcSceneInfo;
+class PBPlayerSceneInfo;
 
 enum MAP_MODULE_MSG_ID {
   ID_MAP_MODULE_ERROR = 0,
   ID_S2C_NOTIYF_ENTITY_MOVE = 3072,
   ID_S2C_NOTIYF_CREATE_PLAYER_LIST = 3073,
   ID_S2C_NOTIYF_CREATE_NPC_LIST = 3074,
+  ID_S2C_NOTIYF_DESTROY_ENTITY = 3075,
   MAP_MODULE_MSG_ID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   MAP_MODULE_MSG_ID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool MAP_MODULE_MSG_ID_IsValid(int value);
 const MAP_MODULE_MSG_ID MAP_MODULE_MSG_ID_MIN = ID_MAP_MODULE_ERROR;
-const MAP_MODULE_MSG_ID MAP_MODULE_MSG_ID_MAX = ID_S2C_NOTIYF_CREATE_NPC_LIST;
+const MAP_MODULE_MSG_ID MAP_MODULE_MSG_ID_MAX = ID_S2C_NOTIYF_DESTROY_ENTITY;
 const int MAP_MODULE_MSG_ID_ARRAYSIZE = MAP_MODULE_MSG_ID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* MAP_MODULE_MSG_ID_descriptor();
@@ -167,34 +169,34 @@ extern ::google::protobuf::internal::ExplicitlyConstructed<CMessageEntityMoveNot
 
 // -------------------------------------------------------------------
 
-class CMessagePlayerSceneInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CMessagePlayerSceneInfo) */ {
+class PBPlayerSceneInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PBPlayerSceneInfo) */ {
  public:
-  CMessagePlayerSceneInfo();
-  virtual ~CMessagePlayerSceneInfo();
+  PBPlayerSceneInfo();
+  virtual ~PBPlayerSceneInfo();
 
-  CMessagePlayerSceneInfo(const CMessagePlayerSceneInfo& from);
+  PBPlayerSceneInfo(const PBPlayerSceneInfo& from);
 
-  inline CMessagePlayerSceneInfo& operator=(const CMessagePlayerSceneInfo& from) {
+  inline PBPlayerSceneInfo& operator=(const PBPlayerSceneInfo& from) {
     CopyFrom(from);
     return *this;
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const CMessagePlayerSceneInfo& default_instance();
+  static const PBPlayerSceneInfo& default_instance();
 
-  static const CMessagePlayerSceneInfo* internal_default_instance();
+  static const PBPlayerSceneInfo* internal_default_instance();
 
-  void Swap(CMessagePlayerSceneInfo* other);
+  void Swap(PBPlayerSceneInfo* other);
 
   // implements Message ----------------------------------------------
 
-  inline CMessagePlayerSceneInfo* New() const { return New(NULL); }
+  inline PBPlayerSceneInfo* New() const { return New(NULL); }
 
-  CMessagePlayerSceneInfo* New(::google::protobuf::Arena* arena) const;
+  PBPlayerSceneInfo* New(::google::protobuf::Arena* arena) const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const CMessagePlayerSceneInfo& from);
-  void MergeFrom(const CMessagePlayerSceneInfo& from);
+  void CopyFrom(const PBPlayerSceneInfo& from);
+  void MergeFrom(const PBPlayerSceneInfo& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -213,8 +215,8 @@ class CMessagePlayerSceneInfo : public ::google::protobuf::Message /* @@protoc_i
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(CMessagePlayerSceneInfo* other);
-  void UnsafeMergeFrom(const CMessagePlayerSceneInfo& from);
+  void InternalSwap(PBPlayerSceneInfo* other);
+  void UnsafeMergeFrom(const PBPlayerSceneInfo& from);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _internal_metadata_.arena();
@@ -248,7 +250,7 @@ class CMessagePlayerSceneInfo : public ::google::protobuf::Message /* @@protoc_i
   ::google::protobuf::uint32 posy() const;
   void set_posy(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:CMessagePlayerSceneInfo)
+  // @@protoc_insertion_point(class_scope:PBPlayerSceneInfo)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -263,7 +265,7 @@ class CMessagePlayerSceneInfo : public ::google::protobuf::Message /* @@protoc_i
 
   void InitAsDefaultInstance();
 };
-extern ::google::protobuf::internal::ExplicitlyConstructed<CMessagePlayerSceneInfo> CMessagePlayerSceneInfo_default_instance_;
+extern ::google::protobuf::internal::ExplicitlyConstructed<PBPlayerSceneInfo> PBPlayerSceneInfo_default_instance_;
 
 // -------------------------------------------------------------------
 
@@ -330,10 +332,23 @@ class CMessageCreatePlayerListNotify : public ::google::protobuf::Message /* @@p
 
   // accessors -------------------------------------------------------
 
+  // repeated .PBPlayerSceneInfo PlayerInfo = 1;
+  int playerinfo_size() const;
+  void clear_playerinfo();
+  static const int kPlayerInfoFieldNumber = 1;
+  const ::PBPlayerSceneInfo& playerinfo(int index) const;
+  ::PBPlayerSceneInfo* mutable_playerinfo(int index);
+  ::PBPlayerSceneInfo* add_playerinfo();
+  ::google::protobuf::RepeatedPtrField< ::PBPlayerSceneInfo >*
+      mutable_playerinfo();
+  const ::google::protobuf::RepeatedPtrField< ::PBPlayerSceneInfo >&
+      playerinfo() const;
+
   // @@protoc_insertion_point(class_scope:CMessageCreatePlayerListNotify)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedPtrField< ::PBPlayerSceneInfo > playerinfo_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_mapmodule_2ehxx_impl();
   friend void  protobuf_AddDesc_mapmodule_2ehxx_impl();
@@ -543,6 +558,99 @@ class CMessageCreateNPCListNotify : public ::google::protobuf::Message /* @@prot
 };
 extern ::google::protobuf::internal::ExplicitlyConstructed<CMessageCreateNPCListNotify> CMessageCreateNPCListNotify_default_instance_;
 
+// -------------------------------------------------------------------
+
+class CMessageDestroyEntityNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CMessageDestroyEntityNotify) */ {
+ public:
+  CMessageDestroyEntityNotify();
+  virtual ~CMessageDestroyEntityNotify();
+
+  CMessageDestroyEntityNotify(const CMessageDestroyEntityNotify& from);
+
+  inline CMessageDestroyEntityNotify& operator=(const CMessageDestroyEntityNotify& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CMessageDestroyEntityNotify& default_instance();
+
+  static const CMessageDestroyEntityNotify* internal_default_instance();
+
+  void Swap(CMessageDestroyEntityNotify* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CMessageDestroyEntityNotify* New() const { return New(NULL); }
+
+  CMessageDestroyEntityNotify* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CMessageDestroyEntityNotify& from);
+  void MergeFrom(const CMessageDestroyEntityNotify& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CMessageDestroyEntityNotify* other);
+  void UnsafeMergeFrom(const CMessageDestroyEntityNotify& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated uint32 EntityID = 1;
+  int entityid_size() const;
+  void clear_entityid();
+  static const int kEntityIDFieldNumber = 1;
+  ::google::protobuf::uint32 entityid(int index) const;
+  void set_entityid(int index, ::google::protobuf::uint32 value);
+  void add_entityid(::google::protobuf::uint32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+      entityid() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+      mutable_entityid();
+
+  // @@protoc_insertion_point(class_scope:CMessageDestroyEntityNotify)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > entityid_;
+  mutable int _entityid_cached_byte_size_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_mapmodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_mapmodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_mapmodule_2ehxx();
+  friend void protobuf_ShutdownFile_mapmodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CMessageDestroyEntityNotify> CMessageDestroyEntityNotify_default_instance_;
+
 // ===================================================================
 
 
@@ -598,56 +706,86 @@ inline const CMessageEntityMoveNotify* CMessageEntityMoveNotify::internal_defaul
 }
 // -------------------------------------------------------------------
 
-// CMessagePlayerSceneInfo
+// PBPlayerSceneInfo
 
 // optional uint32 EntityID = 1;
-inline void CMessagePlayerSceneInfo::clear_entityid() {
+inline void PBPlayerSceneInfo::clear_entityid() {
   entityid_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessagePlayerSceneInfo::entityid() const {
-  // @@protoc_insertion_point(field_get:CMessagePlayerSceneInfo.EntityID)
+inline ::google::protobuf::uint32 PBPlayerSceneInfo::entityid() const {
+  // @@protoc_insertion_point(field_get:PBPlayerSceneInfo.EntityID)
   return entityid_;
 }
-inline void CMessagePlayerSceneInfo::set_entityid(::google::protobuf::uint32 value) {
+inline void PBPlayerSceneInfo::set_entityid(::google::protobuf::uint32 value) {
   
   entityid_ = value;
-  // @@protoc_insertion_point(field_set:CMessagePlayerSceneInfo.EntityID)
+  // @@protoc_insertion_point(field_set:PBPlayerSceneInfo.EntityID)
 }
 
 // optional uint32 PosX = 2;
-inline void CMessagePlayerSceneInfo::clear_posx() {
+inline void PBPlayerSceneInfo::clear_posx() {
   posx_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessagePlayerSceneInfo::posx() const {
-  // @@protoc_insertion_point(field_get:CMessagePlayerSceneInfo.PosX)
+inline ::google::protobuf::uint32 PBPlayerSceneInfo::posx() const {
+  // @@protoc_insertion_point(field_get:PBPlayerSceneInfo.PosX)
   return posx_;
 }
-inline void CMessagePlayerSceneInfo::set_posx(::google::protobuf::uint32 value) {
+inline void PBPlayerSceneInfo::set_posx(::google::protobuf::uint32 value) {
   
   posx_ = value;
-  // @@protoc_insertion_point(field_set:CMessagePlayerSceneInfo.PosX)
+  // @@protoc_insertion_point(field_set:PBPlayerSceneInfo.PosX)
 }
 
 // optional uint32 PosY = 3;
-inline void CMessagePlayerSceneInfo::clear_posy() {
+inline void PBPlayerSceneInfo::clear_posy() {
   posy_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessagePlayerSceneInfo::posy() const {
-  // @@protoc_insertion_point(field_get:CMessagePlayerSceneInfo.PosY)
+inline ::google::protobuf::uint32 PBPlayerSceneInfo::posy() const {
+  // @@protoc_insertion_point(field_get:PBPlayerSceneInfo.PosY)
   return posy_;
 }
-inline void CMessagePlayerSceneInfo::set_posy(::google::protobuf::uint32 value) {
+inline void PBPlayerSceneInfo::set_posy(::google::protobuf::uint32 value) {
   
   posy_ = value;
-  // @@protoc_insertion_point(field_set:CMessagePlayerSceneInfo.PosY)
+  // @@protoc_insertion_point(field_set:PBPlayerSceneInfo.PosY)
 }
 
-inline const CMessagePlayerSceneInfo* CMessagePlayerSceneInfo::internal_default_instance() {
-  return &CMessagePlayerSceneInfo_default_instance_.get();
+inline const PBPlayerSceneInfo* PBPlayerSceneInfo::internal_default_instance() {
+  return &PBPlayerSceneInfo_default_instance_.get();
 }
 // -------------------------------------------------------------------
 
 // CMessageCreatePlayerListNotify
+
+// repeated .PBPlayerSceneInfo PlayerInfo = 1;
+inline int CMessageCreatePlayerListNotify::playerinfo_size() const {
+  return playerinfo_.size();
+}
+inline void CMessageCreatePlayerListNotify::clear_playerinfo() {
+  playerinfo_.Clear();
+}
+inline const ::PBPlayerSceneInfo& CMessageCreatePlayerListNotify::playerinfo(int index) const {
+  // @@protoc_insertion_point(field_get:CMessageCreatePlayerListNotify.PlayerInfo)
+  return playerinfo_.Get(index);
+}
+inline ::PBPlayerSceneInfo* CMessageCreatePlayerListNotify::mutable_playerinfo(int index) {
+  // @@protoc_insertion_point(field_mutable:CMessageCreatePlayerListNotify.PlayerInfo)
+  return playerinfo_.Mutable(index);
+}
+inline ::PBPlayerSceneInfo* CMessageCreatePlayerListNotify::add_playerinfo() {
+  // @@protoc_insertion_point(field_add:CMessageCreatePlayerListNotify.PlayerInfo)
+  return playerinfo_.Add();
+}
+inline ::google::protobuf::RepeatedPtrField< ::PBPlayerSceneInfo >*
+CMessageCreatePlayerListNotify::mutable_playerinfo() {
+  // @@protoc_insertion_point(field_mutable_list:CMessageCreatePlayerListNotify.PlayerInfo)
+  return &playerinfo_;
+}
+inline const ::google::protobuf::RepeatedPtrField< ::PBPlayerSceneInfo >&
+CMessageCreatePlayerListNotify::playerinfo() const {
+  // @@protoc_insertion_point(field_list:CMessageCreatePlayerListNotify.PlayerInfo)
+  return playerinfo_;
+}
 
 inline const CMessageCreatePlayerListNotify* CMessageCreatePlayerListNotify::internal_default_instance() {
   return &CMessageCreatePlayerListNotify_default_instance_.get();
@@ -752,7 +890,46 @@ CMessageCreateNPCListNotify::npcinfo() const {
 inline const CMessageCreateNPCListNotify* CMessageCreateNPCListNotify::internal_default_instance() {
   return &CMessageCreateNPCListNotify_default_instance_.get();
 }
+// -------------------------------------------------------------------
+
+// CMessageDestroyEntityNotify
+
+// repeated uint32 EntityID = 1;
+inline int CMessageDestroyEntityNotify::entityid_size() const {
+  return entityid_.size();
+}
+inline void CMessageDestroyEntityNotify::clear_entityid() {
+  entityid_.Clear();
+}
+inline ::google::protobuf::uint32 CMessageDestroyEntityNotify::entityid(int index) const {
+  // @@protoc_insertion_point(field_get:CMessageDestroyEntityNotify.EntityID)
+  return entityid_.Get(index);
+}
+inline void CMessageDestroyEntityNotify::set_entityid(int index, ::google::protobuf::uint32 value) {
+  entityid_.Set(index, value);
+  // @@protoc_insertion_point(field_set:CMessageDestroyEntityNotify.EntityID)
+}
+inline void CMessageDestroyEntityNotify::add_entityid(::google::protobuf::uint32 value) {
+  entityid_.Add(value);
+  // @@protoc_insertion_point(field_add:CMessageDestroyEntityNotify.EntityID)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+CMessageDestroyEntityNotify::entityid() const {
+  // @@protoc_insertion_point(field_list:CMessageDestroyEntityNotify.EntityID)
+  return entityid_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+CMessageDestroyEntityNotify::mutable_entityid() {
+  // @@protoc_insertion_point(field_mutable_list:CMessageDestroyEntityNotify.EntityID)
+  return &entityid_;
+}
+
+inline const CMessageDestroyEntityNotify* CMessageDestroyEntityNotify::internal_default_instance() {
+  return &CMessageDestroyEntityNotify_default_instance_.get();
+}
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

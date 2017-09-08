@@ -74,6 +74,7 @@
     <ClCompile Include="..\dep\tinyxml\tinyxml2.cpp" />
     <ClCompile Include="..\message\itemmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\loginmessage.hxx.pb.cc" />
+    <ClCompile Include="..\message\mapmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\message.hxx.pb.cc" />
     <ClCompile Include="..\message\propertymodule.hxx.pb.cc" />
     <ClCompile Include="inc\mapmodule.cpp" />
@@ -113,6 +114,8 @@
     <ClInclude Include="..\message\itemmodule.hxx.pb.h" />
     <ClInclude Include="..\message\loginmessage.hxx" />
     <ClInclude Include="..\message\loginmessage.hxx.pb.h" />
+    <ClInclude Include="..\message\mapmodule.hxx" />
+    <ClInclude Include="..\message\mapmodule.hxx.pb.h" />
     <ClInclude Include="..\message\message.hxx" />
     <ClInclude Include="..\message\message.hxx.pb.h" />
     <ClInclude Include="..\message\propertymodule.hxx" />

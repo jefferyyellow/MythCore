@@ -4,7 +4,9 @@
 #include "sharelist.h"
 #include "blockmemory.h"
 #include "maptype.h"
+#include "entityplayer.h"
 #include <map>
+#include <vector>
 
 class CEntity;
 class CEntityCharacter;
@@ -84,13 +86,28 @@ public:
 	bool		removeEntityFromMapUnit(CEntity* pEntity);
 	/// 将实体从地图单元中移除触发
 	void		onRemoveEntityFromMapUnit(CEntityCharacter* pEntity, CMythRect& rSrcRect, CMythRect& rDesRect);
+	/// 在地图中创建实体触发
+	void		onCreateEntityToMapUnit(CEntityCharacter* pEntity);
+	/// 在地图中移除实体触发
+	void		onRemoveEntityToMapUnit(CEntityCharacter* pEntity);
+
+
 	/// 通知其他玩家创建该玩家
 	void		createPlayer2PlayerList(CEntityPlayer* pPlayer, std::vector<CEntityPlayer*>& rPlayerList);
 	/// 通知该玩家创建其他玩家
-	void		createPlayerList2Player();
+	void		createPlayerList2Player(std::vector<CEntityPlayer*>& rPlayerList, CEntityPlayer* pPlayer);
 	/// 通知该玩家创建NPC列表
-	void		createNPCList2Player();
+	void		createNPCList2Player(std::vector<CEntityNPC*>& rNPCList, CEntityPlayer* pPlayer);
+	/// 通知该玩家创建NPC
+	void		createNPC2PlayerList(CEntityNPC* pNPC, std::vector<CEntityPlayer*>& rPlayerList);
+	/// 通知其他玩家销毁该玩家
+	void		destroyPlayer2PlayerList(CEntityPlayer* pPlayer, std::vector<CEntityPlayer*>& rPlayerList);
+	/// 通知该玩家销毁其他玩家
+	void		destroyPlayerList2Player(std::vector<CEntityPlayer*>& rPlayerList, CEntityPlayer* pPlayer);
+	/// 通知其他玩家销毁该NPC
+	void		destroyNPC2PlayerList(CEntityNPC* pNPC, std::vector<CEntityPlayer*>& rPlayerList);
 
+	
 public:
 	short			getLength() const { return mLength; }
 	void			setLength(short nValue) { mLength = nValue; }

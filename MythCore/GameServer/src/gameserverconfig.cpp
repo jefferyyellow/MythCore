@@ -1,24 +1,28 @@
 #include "gameserverconfig.h"
 #include "tinyxml2.h"
+#include "locallogjob.h"
 using namespace tinyxml2;
-void CGameServerConfig::loadGameServerConfigFromXml(const char* pFilePath)
+bool CGameServerConfig::loadGameServerConfigFromXml(const char* pFilePath)
 {
 	if (NULL == pFilePath)
 	{
-		return;
+		LOG_ERROR("load game server config failure, %s", pFilePath);
+		return false;
 	}
 	tinyxml2::XMLDocument tDocument; 
 	if (XML_SUCCESS != tDocument.LoadFile(pFilePath))
 	{
 		// 出错，无法加载xml文件
-		return;
+		LOG_ERROR("load game server config failure, %s", pFilePath);
+		return false;
 	}
 
 	XMLElement* pRoot = tDocument.RootElement();
 	if (NULL == pRoot)
 	{
 		// 出错，连Root节点都没有
-		return;
+		LOG_ERROR("game server config file has no root element, %s", pFilePath);
+		return false;
 	}
 
 	XMLElement* pDBInfo = pRoot->FirstChildElement("DBInfo");
@@ -71,4 +75,5 @@ void CGameServerConfig::loadGameServerConfigFromXml(const char* pFilePath)
 		}
 	}
 
+	return true;
 }

@@ -4,6 +4,7 @@
 #include "propertyunit.h"
 #include "itemunit.h"
 #include "taskunit.h"
+class PBPlayerSceneInfo;
 class CEntityPlayer : public CEntityCharacter
 {
 public:
@@ -36,7 +37,7 @@ public:
 
 public:
 	/// 序列化场景信息到PB·
-	void			SerializeSceneInfoToPB();
+	void			serializeSceneInfoToPB(PBPlayerSceneInfo* pbSceneInfo);
 
 public:
 	/// 角色ID

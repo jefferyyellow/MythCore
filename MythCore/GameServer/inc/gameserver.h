@@ -24,6 +24,8 @@ public:
 	bool		initLog();
 	/// 初始逻辑模块
 	bool		initLogicModule();
+	/// 初始化游戏静态数据
+	bool		initStaticData();
 	/// 初始线程
 	bool		initThread();
 

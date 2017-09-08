@@ -40,7 +40,7 @@ void CMapRegionSearch::searchMapUnity(CMapUnit* pMapUnit)
 		}
 		else
 		{
-			mEntityList.push_back(pEntity);
+			mNPCList.push_back((CEntityNPC*)pEntity);
 		}
 	}
 }

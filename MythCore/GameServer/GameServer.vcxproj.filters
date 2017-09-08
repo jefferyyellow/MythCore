@@ -138,6 +138,9 @@
     <ClCompile Include="src\geometrytype.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\message\mapmodule.hxx.pb.cc">
+      <Filter>message</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -286,6 +289,12 @@
     </ClInclude>
     <ClInclude Include="inc\geometrytype.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\mapmodule.hxx">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\mapmodule.hxx.pb.h">
+      <Filter>message</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

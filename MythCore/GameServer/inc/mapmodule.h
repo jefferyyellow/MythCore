@@ -19,6 +19,11 @@ private:
 	{
 	}
 
+public:
+	virtual		void	OnTimer(unsigned int nTickOffset);
+
+public:
+
 	/// 广播给附近的可见玩家
 	void		broadCastVisiblePlayer(CEntity* pEntity, unsigned short nMessageID, Message* pMessage);
 	/// 实体移动

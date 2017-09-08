@@ -2,7 +2,11 @@
 #include "errcode.h"
 #include "locallogjob.h"
 #include "entity.h"
+#include "entityplayer.h"
 #include "mapregionsearch.h"
+#include "mapmodule.hxx.pb.h"
+#include "scenejob.h"
+
 
 CMapUnit::ENTITY_ALLOC CMapUnit::mEntityAlloc;
 void CMapUnit::pushEntity(uint32 nObjID)
@@ -130,13 +134,16 @@ void CMap::onAddEntityToMapUnit(CEntityCharacter* pEntity, CMythRect& rSrcRect, 
 	if (emEntityType_Player == pEntity->getEntityType())
 	{
 		// 告诉周边的玩家创建该玩家
+		createPlayerList2Player(tSearch.mPlayerList, (CEntityPlayer*)pEntity);
 		// 告诉该玩家创建周边玩家
+		createPlayer2PlayerList((CEntityPlayer*)pEntity, tSearch.mPlayerList);
 		// 告诉该玩家创建NPC
-
+		createNPCList2Player(tSearch.mNPCList, (CEntityPlayer*)pEntity);
 	}
 	else
 	{
 		// 告诉周边的玩家创建该NPC
+		createNPC2PlayerList((CEntityNPC*)pEntity, tSearch.mPlayerList);
 	}
 }
 
@@ -166,33 +173,184 @@ void CMap::onRemoveEntityFromMapUnit(CEntityCharacter* pEntity, CMythRect& rSrcR
 		return;
 	}
 
+	CMapRegionSearch tSearch;
+	for (int i = 0; i < nRectNum; ++i)
+	{
+		tSearch.searchEntity(this, tRectArray[i]);
+	}
+
 	// 玩家
 	if (emEntityType_Player == pEntity->getEntityType())
 	{
-
+		// 通知周边玩家移除该玩家
+		destroyPlayer2PlayerList((CEntityPlayer*)pEntity, tSearch.mPlayerList);
+		// 通知该玩家移除周边玩家
+		destroyPlayerList2Player(tSearch.mPlayerList, (CEntityPlayer*)pEntity);
 	}
 	else
 	{
+		// 通知周边玩家移除该NPC
+		destroyNPC2PlayerList((CEntityNPC*)pEntity, tSearch.mPlayerList);
+	}
+}
 
+
+/// 在地图中创建实体触发
+void CMap::onCreateEntityToMapUnit(CEntityCharacter* pEntity)
+{
+	if (NULL == pEntity)
+	{
+		return;
+	}
+
+	CMythRect tRect;
+	getVisibleRect(pEntity, tRect);
+
+	CMapRegionSearch tSearch;
+	tSearch.searchEntity(this, tRect);
+
+	// 玩家
+	if (emEntityType_Player == pEntity->getEntityType())
+	{
+		// 告诉周边的玩家创建该玩家
+		createPlayerList2Player(tSearch.mPlayerList, (CEntityPlayer*)pEntity);
+		// 告诉该玩家创建周边玩家
+		createPlayer2PlayerList((CEntityPlayer*)pEntity, tSearch.mPlayerList);
+		// 告诉该玩家创建NPC
+		createNPCList2Player(tSearch.mNPCList, (CEntityPlayer*)pEntity);
+	}
+	else
+	{
+		// 告诉周边的玩家创建该NPC
+		createNPC2PlayerList((CEntityNPC*)pEntity, tSearch.mPlayerList);
+	}
+}
+
+/// 在地图中移除实体触发
+void CMap::onRemoveEntityToMapUnit(CEntityCharacter* pEntity)
+{
+	if (NULL == pEntity)
+	{
+		return;
+	}
+
+	CMythRect tRect;
+	getVisibleRect(pEntity, tRect);
+
+	CMapRegionSearch tSearch;
+	tSearch.searchEntity(this, tRect);
+
+	// 玩家
+	if (emEntityType_Player == pEntity->getEntityType())
+	{
+		// 通知周边玩家移除该玩家
+		destroyPlayer2PlayerList((CEntityPlayer*)pEntity, tSearch.mPlayerList);
+		// 通知该玩家移除周边玩家
+		destroyPlayerList2Player(tSearch.mPlayerList, (CEntityPlayer*)pEntity);
+	}
+	else
+	{
+		// 通知周边玩家移除该NPC
+		destroyNPC2PlayerList((CEntityNPC*)pEntity, tSearch.mPlayerList);
 	}
 }
 
 /// 通知其他玩家创建该玩家
 void CMap::createPlayer2PlayerList(CEntityPlayer* pPlayer, std::vector<CEntityPlayer*>& rPlayerList)
 {
-
+	if (NULL == pPlayer)
+	{
+		return;
+	}
+	CMessageCreatePlayerListNotify tCreatePlayerListNotify;
+	PBPlayerSceneInfo* pPlayerInfo = tCreatePlayerListNotify.add_playerinfo();
+	pPlayer->serializeSceneInfoToPB(pPlayerInfo);
+	for (unsigned int i = 0; i < rPlayerList.size(); ++ i)
+	{
+		CSceneJob::Inst()->sendClientMessage(rPlayerList[i], ID_S2C_NOTIYF_CREATE_PLAYER_LIST, &tCreatePlayerListNotify);
+	}
 }
 
 /// 通知该玩家创建其他玩家
-void CMap::createPlayerList2Player()
+void CMap::createPlayerList2Player(std::vector<CEntityPlayer*>& rPlayerList, CEntityPlayer* pPlayer)
 {
-
+	CMessageCreatePlayerListNotify tCreatePlayerListNotify;
+	for (unsigned int i = 0; i < rPlayerList.size(); ++ i)
+	{
+		PBPlayerSceneInfo* pPlayerInfo = tCreatePlayerListNotify.add_playerinfo();
+		rPlayerList[i]->serializeSceneInfoToPB(pPlayerInfo);
+	}
+	CSceneJob::Inst()->sendClientMessage(pPlayer, ID_S2C_NOTIYF_CREATE_PLAYER_LIST, &tCreatePlayerListNotify);
 }
 
 /// 通知该玩家创建NPC列表
-void CMap::createNPCList2Player()
+void CMap::createNPCList2Player(std::vector<CEntityNPC*>& rNPCList, CEntityPlayer* pPlayer)
 {
+	CMessageCreateNPCListNotify tCreateNPCListNotify;
+	for (unsigned int i = 0; i < rNPCList.size(); ++ i)
+	{
+		PBNpcSceneInfo* pNpcSceneInfo = tCreateNPCListNotify.add_npcinfo();
+		rNPCList[i]->serializeSceneInfoToPB(pNpcSceneInfo);
+	}
 
+	CSceneJob::Inst()->sendClientMessage(pPlayer, ID_S2C_NOTIYF_CREATE_NPC_LIST, &tCreateNPCListNotify);
+}
+
+/// 通知该玩家创建NPC
+void CMap::createNPC2PlayerList(CEntityNPC* pNPC, std::vector<CEntityPlayer*>& rPlayerList)
+{
+	if (NULL == pNPC)
+	{
+		return;
+	}
+	CMessageCreateNPCListNotify tCreateNPCListNotify;
+	pNPC->serializeSceneInfoToPB(tCreateNPCListNotify.add_npcinfo());
+	for (unsigned int i = 0; i < rPlayerList.size(); ++ i)
+	{
+		CSceneJob::Inst()->sendClientMessage(rPlayerList[i], ID_S2C_NOTIYF_CREATE_NPC_LIST, &tCreateNPCListNotify);
+	}
+}
+
+/// 通知其他玩家销毁该玩家
+void CMap::destroyPlayer2PlayerList(CEntityPlayer* pPlayer, std::vector<CEntityPlayer*>& rPlayerList)
+{
+	if (NULL == pPlayer)
+	{
+		return;
+	}
+	CMessageDestroyEntityNotify tDestroyEntityNotify;
+	tDestroyEntityNotify.add_entityid(pPlayer->getObjID());
+	for (unsigned int i = 0; i < rPlayerList.size(); ++i)
+	{
+		CSceneJob::Inst()->sendClientMessage(rPlayerList[i], ID_S2C_NOTIYF_DESTROY_ENTITY, &tDestroyEntityNotify);
+	}
+}
+
+/// 通知该玩家销毁其他玩家
+void CMap::destroyPlayerList2Player(std::vector<CEntityPlayer*>& rPlayerList, CEntityPlayer* pPlayer)
+{
+	CMessageDestroyEntityNotify tDestroyEntityNotify;
+	for (unsigned int i = 0; i < rPlayerList.size(); ++i)
+	{
+		tDestroyEntityNotify.add_entityid(rPlayerList[i]->getObjID());
+	}
+
+	CSceneJob::Inst()->sendClientMessage(pPlayer, ID_S2C_NOTIYF_DESTROY_ENTITY, &tDestroyEntityNotify);
+}
+
+/// 通知其他玩家销毁该NPC
+void CMap::destroyNPC2PlayerList(CEntityNPC* pNPC, std::vector<CEntityPlayer*>& rPlayerList)
+{
+	if (NULL == pNPC)
+	{
+		return;
+	}
+	CMessageDestroyEntityNotify tDestroyEntityNotify;
+	tDestroyEntityNotify.add_entityid(pNPC->getObjID());
+	for (unsigned int i = 0; i < rPlayerList.size(); ++i)
+	{
+		CSceneJob::Inst()->sendClientMessage(rPlayerList[i], ID_S2C_NOTIYF_DESTROY_ENTITY, &tDestroyEntityNotify);
+	}
 }
 
 int CMapManager::createMap(unsigned short nLineID, unsigned short nMapID, int nMapIndex, short nLength, short nWidth)

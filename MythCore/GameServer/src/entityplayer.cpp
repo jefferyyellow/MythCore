@@ -1,5 +1,5 @@
 #include "entityplayer.h"
-
+#include "mapmodule.hxx.pb.h"
 /// 刷新最大血
 int CEntityPlayer::RefreshMaxHP()
 {
@@ -53,7 +53,14 @@ int CEntityPlayer::RefreshDefenceFight()
 }
 
 /// 序列化场景信息到PB·
-void CEntityPlayer::SerializeSceneInfoToPB()
+void CEntityPlayer::serializeSceneInfoToPB(PBPlayerSceneInfo* pbPlayerInfo)
 {
+	if (NULL == pbPlayerInfo)
+	{
+		return;
+	}
 
+	pbPlayerInfo->set_entityid(getObjID());
+	pbPlayerInfo->set_posx(mPos.mX);
+	pbPlayerInfo->set_posy(mPos.mY);
 }

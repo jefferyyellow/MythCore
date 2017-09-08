@@ -1,0 +1,254 @@
+<map>
+  <door>
+    <d x="340" y="1279">0</d>
+    <d x="420" y="1279">0</d>
+    <d x="500" y="1279">0</d>
+    <d x="580" y="1279">0</d>
+    <d x="340" y="479">1001</d>
+  </door>
+  <ldoor/>
+  <splitscreen/>
+  <sdoor/>
+  <step>
+    <w>3000</w>
+    <h>1440</h>
+  </step>
+  <view>
+    <w>1022</w>
+    <h>1022</h>
+    <p x="0" y="0" scaleX="1" scaleY="1" rotation="0" w="1022" h="1022">images/scene/piece/beijing/bg_1000.png</p>
+  </view>
+  <floor>
+    <w>3000</w>
+    <h>1440</h>
+    <p x="0" y="1260" scaleX="1" scaleY="1" rotation="0" w="170" h="76">images/scene/piece/01/plain_f_02.png</p>
+    <p x="170" y="1262" scaleX="1" scaleY="1" rotation="0" w="170" h="74">images/scene/piece/01/plain_f_03.png</p>
+    <p x="340" y="1260" scaleX="1" scaleY="1" rotation="0" w="170" h="76">images/scene/piece/01/plain_f_02.png</p>
+    <p x="510" y="1262" scaleX="1" scaleY="1" rotation="0" w="170" h="74">images/scene/piece/01/plain_f_03.png</p>
+    <p x="680" y="1260" scaleX="1" scaleY="1" rotation="0" w="170" h="76">images/scene/piece/01/plain_f_02.png</p>
+    <p x="1020" y="1260" scaleX="1" scaleY="1" rotation="0" w="170" h="76">images/scene/piece/01/plain_f_02.png</p>
+    <p x="850" y="1262" scaleX="1" scaleY="1" rotation="0" w="170" h="74">images/scene/piece/01/plain_f_03.png</p>
+    <p x="1530" y="1262" scaleX="1" scaleY="1" rotation="0" w="170" h="74">images/scene/piece/01/plain_f_03.png</p>
+    <p x="1360" y="1260" scaleX="1" scaleY="1" rotation="0" w="170" h="76">images/scene/piece/01/plain_f_02.png</p>
+    <p x="1190" y="1262" scaleX="1" scaleY="1" rotation="0" w="170" h="74">images/scene/piece/01/plain_f_03.png</p>
+    <p x="1700" y="1260" scaleX="1" scaleY="1" rotation="0" w="170" h="76">images/scene/piece/01/plain_f_02.png</p>
+    <p x="1870" y="1262" scaleX="1" scaleY="1" rotation="0" w="170" h="74">images/scene/piece/01/plain_f_03.png</p>
+    <p x="2380" y="1260" scaleX="1" scaleY="1" rotation="0" w="170" h="76">images/scene/piece/01/plain_f_02.png</p>
+    <p x="2040" y="1260" scaleX="1" scaleY="1" rotation="0" w="170" h="76">images/scene/piece/01/plain_f_02.png</p>
+    <p x="2210" y="1262" scaleX="1" scaleY="1" rotation="0" w="170" h="74">images/scene/piece/01/plain_f_03.png</p>
+    <p x="2720" y="1260" scaleX="1" scaleY="1" rotation="0" w="170" h="76">images/scene/piece/01/plain_f_02.png</p>
+    <p x="2550" y="1262" scaleX="1" scaleY="1" rotation="0" w="170" h="74">images/scene/piece/01/plain_f_03.png</p>
+    <p x="2890" y="1262" scaleX="1" scaleY="1" rotation="0" w="170" h="74">images/scene/piece/01/plain_f_03.png</p>
+    <p x="0" y="1336" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="170" y="1336" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_07.png</p>
+    <p x="340" y="1336" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="510" y="1336" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_07.png</p>
+    <p x="680" y="1336" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="1020" y="1336" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_07.png</p>
+    <p x="850" y="1336" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="1360" y="1336" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="1190" y="1336" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_07.png</p>
+    <p x="1700" y="1336" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="1530" y="1336" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_07.png</p>
+    <p x="2040" y="1336" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="1870" y="1336" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_07.png</p>
+    <p x="2380" y="1336" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_07.png</p>
+    <p x="2210" y="1336" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="2550" y="1336" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_07.png</p>
+    <p x="2720" y="1336" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="2890" y="1336" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="1876" y="938" scaleX="1" scaleY="1" rotation="0" w="91" h="79">images/scene/piece/01/plain_f_01.png</p>
+    <p x="1967" y="941" scaleX="1" scaleY="1" rotation="0" w="170" h="76">images/scene/piece/01/plain_f_02.png</p>
+    <p x="2137" y="941" scaleX="1" scaleY="1" rotation="0" w="170" h="76">images/scene/piece/01/plain_f_02.png</p>
+    <p x="2307" y="943" scaleX="1" scaleY="1" rotation="0" w="170" h="74">images/scene/piece/01/plain_f_03.png</p>
+    <p x="2477" y="941" scaleX="1" scaleY="1" rotation="0" w="170" h="76">images/scene/piece/01/plain_f_02.png</p>
+    <p x="2647" y="943" scaleX="1" scaleY="1" rotation="0" w="170" h="74">images/scene/piece/01/plain_f_03.png</p>
+    <p x="2817" y="943" scaleX="1" scaleY="1" rotation="0" w="170" h="74">images/scene/piece/01/plain_f_03.png</p>
+    <p x="2987" y="943" scaleX="1" scaleY="1" rotation="0" w="170" h="74">images/scene/piece/01/plain_f_03.png</p>
+    <p x="1715" y="1138" scaleX="1" scaleY="1" rotation="0" w="91" h="79">images/scene/piece/01/plain_f_01.png</p>
+    <p x="1806" y="1141" scaleX="1" scaleY="1" rotation="0" w="170" h="76">images/scene/piece/01/plain_f_02.png</p>
+    <p x="1976" y="1132" scaleX="1" scaleY="1" rotation="0" w="101" h="85">images/scene/piece/01/plain_f_04.png</p>
+    <p x="2123" y="1058" scaleX="1" scaleY="1" rotation="0" w="91" h="79">images/scene/piece/01/plain_f_01.png</p>
+    <p x="2214" y="1052" scaleX="1" scaleY="1" rotation="0" w="101" h="85">images/scene/piece/01/plain_f_04.png</p>
+    <p x="2137" y="1137" scaleX="1" scaleY="1" rotation="0" w="77" h="107">images/scene/piece/01/plain_f_05.png</p>
+    <p x="2214" y="1136" scaleX="1" scaleY="1" rotation="0" w="77" h="108">images/scene/piece/01/plain_f_08.png</p>
+    <p x="1801" y="818" scaleX="1" scaleY="1" rotation="0" w="91" h="79">images/scene/piece/01/plain_f_01.png</p>
+    <p x="1892" y="821" scaleX="1" scaleY="1" rotation="0" w="170" h="76">images/scene/piece/01/plain_f_02.png</p>
+    <p x="2062" y="812" scaleX="1" scaleY="1" rotation="0" w="101" h="85">images/scene/piece/01/plain_f_04.png</p>
+    <p x="1605" y="696" scaleX="1" scaleY="1" rotation="0" w="91" h="79">images/scene/piece/01/plain_f_01.png</p>
+    <p x="1696" y="690" scaleX="1" scaleY="1" rotation="0" w="101" h="85">images/scene/piece/01/plain_f_04.png</p>
+    <p x="1619" y="775" scaleX="1" scaleY="1" rotation="0" w="77" h="107">images/scene/piece/01/plain_f_05.png</p>
+    <p x="1696" y="774" scaleX="1" scaleY="1" rotation="0" w="77" h="108">images/scene/piece/01/plain_f_08.png</p>
+    <p x="1621" y="882" scaleX="1" scaleY="1" rotation="0" w="75" h="72">images/scene/piece/01/plain_f_09.png</p>
+    <p x="1696" y="882" scaleX="1" scaleY="1" rotation="0" w="49" h="71">images/scene/piece/01/plain_f_12.png</p>
+    <p x="1409" y="576" scaleX="1" scaleY="1" rotation="0" w="91" h="79">images/scene/piece/01/plain_f_01.png</p>
+    <p x="1590" y="576" scaleX="-1" scaleY="1" rotation="0" w="91" h="79">images/scene/piece/01/plain_f_01.png</p>
+    <p x="1425" y="655" scaleX="1" scaleY="1" rotation="0" w="75" h="72">images/scene/piece/01/plain_f_09.png</p>
+    <p x="1574" y="655" scaleX="-1" scaleY="1" rotation="0" w="75" h="72">images/scene/piece/01/plain_f_09.png</p>
+    <p x="1867" y="448" scaleX="1" scaleY="1" rotation="0" w="101" h="85">images/scene/piece/01/plain_f_04.png</p>
+    <p x="1697" y="457" scaleX="1" scaleY="1" rotation="0" w="170" h="76">images/scene/piece/01/plain_f_02.png</p>
+    <p x="1357" y="457" scaleX="1" scaleY="1" rotation="0" w="170" h="76">images/scene/piece/01/plain_f_02.png</p>
+    <p x="1527" y="459" scaleX="1" scaleY="1" rotation="0" w="170" h="74">images/scene/piece/01/plain_f_03.png</p>
+    <p x="847" y="457" scaleX="1" scaleY="1" rotation="0" w="170" h="76">images/scene/piece/01/plain_f_02.png</p>
+    <p x="1017" y="459" scaleX="1" scaleY="1" rotation="0" w="170" h="74">images/scene/piece/01/plain_f_03.png</p>
+    <p x="1187" y="457" scaleX="1" scaleY="1" rotation="0" w="170" h="76">images/scene/piece/01/plain_f_02.png</p>
+    <p x="507" y="457" scaleX="1" scaleY="1" rotation="0" w="170" h="76">images/scene/piece/01/plain_f_02.png</p>
+    <p x="677" y="459" scaleX="1" scaleY="1" rotation="0" w="170" h="74">images/scene/piece/01/plain_f_03.png</p>
+    <p x="167" y="459" scaleX="1" scaleY="1" rotation="0" w="170" h="74">images/scene/piece/01/plain_f_03.png</p>
+    <p x="337" y="457" scaleX="1" scaleY="1" rotation="0" w="170" h="76">images/scene/piece/01/plain_f_02.png</p>
+    <p x="-3" y="457" scaleX="1" scaleY="1" rotation="0" w="170" h="76">images/scene/piece/01/plain_f_02.png</p>
+  </floor>
+  <tree>
+    <w>3000</w>
+    <h>1440</h>
+    <p x="1892" y="1003" scaleX="1" scaleY="1" rotation="0" w="170" h="72">images/scene/piece/01/plain_f_10.png</p>
+    <p x="339" y="999" scaleX="1" scaleY="1" rotation="0" w="288" h="270">images/scene/piece/build/4.png</p>
+    <p x="1890" y="1124" scaleX="1" scaleY="1" rotation="0" w="77" h="107">images/scene/piece/01/plain_f_05.png</p>
+    <p x="1890" y="1017" scaleX="1" scaleY="1" rotation="0" w="77" h="107">images/scene/piece/01/plain_f_05.png</p>
+    <p x="1890" y="1231" scaleX="1" scaleY="1" rotation="0" w="77" h="107">images/scene/piece/01/plain_f_05.png</p>
+    <p x="1967" y="1017" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="2137" y="1017" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_07.png</p>
+    <p x="2307" y="1017" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_07.png</p>
+    <p x="2477" y="1017" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="2647" y="1017" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="1967" y="1124" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="2137" y="1124" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_07.png</p>
+    <p x="2307" y="1124" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_07.png</p>
+    <p x="2477" y="1124" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="2647" y="1124" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_07.png</p>
+    <p x="2817" y="1017" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="2817" y="1124" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_07.png</p>
+    <p x="1967" y="1231" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="2137" y="1230" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_07.png</p>
+    <p x="2307" y="1231" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="2477" y="1231" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="2647" y="1231" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_07.png</p>
+    <p x="2816" y="1231" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="2987" y="1017" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="2987" y="1124" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_07.png</p>
+    <p x="2986" y="1231" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="1729" y="1217" scaleX="1" scaleY="1" rotation="0" w="77" h="107">images/scene/piece/01/plain_f_05.png</p>
+    <p x="1806" y="1217" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_07.png</p>
+    <p x="1976" y="1217" scaleX="1" scaleY="1" rotation="0" w="77" h="108">images/scene/piece/01/plain_f_08.png</p>
+    <p x="3043" y="192" scaleX="-1" scaleY="1" rotation="0" w="1000" h="800">images/scene/piece/build/3.png</p>
+    <p x="2140" y="1244" scaleX="1" scaleY="1" rotation="0" w="75" h="72">images/scene/piece/01/plain_f_09.png</p>
+    <p x="2215" y="1243" scaleX="1" scaleY="1" rotation="0" w="49" h="71">images/scene/piece/01/plain_f_12.png</p>
+    <p x="1815" y="897" scaleX="1" scaleY="1" rotation="0" w="77" h="107">images/scene/piece/01/plain_f_05.png</p>
+    <p x="1892" y="897" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="2062" y="897" scaleX="1" scaleY="1" rotation="0" w="77" h="108">images/scene/piece/01/plain_f_08.png</p>
+    <p x="1817" y="1004" scaleX="1" scaleY="1" rotation="0" w="75" h="72">images/scene/piece/01/plain_f_09.png</p>
+    <p x="677" y="680" scaleX="1" scaleY="1" rotation="0" w="1022" h="596">images/scene/piece/build/2.png</p>
+    <p x="1867" y="532" scaleX="1" scaleY="1" rotation="0" w="77" h="108">images/scene/piece/01/plain_f_08.png</p>
+    <p x="1697" y="533" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="1530" y="533" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="1360" y="533" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_07.png</p>
+    <p x="1190" y="533" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_07.png</p>
+    <p x="1020" y="533" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="850" y="533" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_07.png</p>
+    <p x="680" y="533" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_07.png</p>
+    <p x="510" y="533" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="340" y="533" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="170" y="533" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_07.png</p>
+    <p x="0" y="533" scaleX="1" scaleY="1" rotation="0" w="170" h="107">images/scene/piece/01/plain_f_06.png</p>
+    <p x="1867" y="640" scaleX="1" scaleY="1" rotation="0" w="49" h="71">images/scene/piece/01/plain_f_12.png</p>
+    <p x="1697" y="640" scaleX="1" scaleY="1" rotation="0" w="170" h="72">images/scene/piece/01/plain_f_10.png</p>
+    <p x="1527" y="640" scaleX="1" scaleY="1" rotation="0" w="170" h="72">images/scene/piece/01/plain_f_10.png</p>
+    <p x="1357" y="640" scaleX="1" scaleY="1" rotation="0" w="170" h="72">images/scene/piece/01/plain_f_10.png</p>
+    <p x="1187" y="640" scaleX="1" scaleY="1" rotation="0" w="170" h="88">images/scene/piece/01/plain_f_11.png</p>
+    <p x="1017" y="640" scaleX="1" scaleY="1" rotation="0" w="170" h="88">images/scene/piece/01/plain_f_11.png</p>
+    <p x="847" y="640" scaleX="1" scaleY="1" rotation="0" w="170" h="72">images/scene/piece/01/plain_f_10.png</p>
+    <p x="677" y="640" scaleX="1" scaleY="1" rotation="0" w="170" h="88">images/scene/piece/01/plain_f_11.png</p>
+    <p x="507" y="640" scaleX="1" scaleY="1" rotation="0" w="170" h="88">images/scene/piece/01/plain_f_11.png</p>
+    <p x="337" y="640" scaleX="1" scaleY="1" rotation="0" w="170" h="72">images/scene/piece/01/plain_f_10.png</p>
+    <p x="167" y="640" scaleX="1" scaleY="1" rotation="0" w="170" h="88">images/scene/piece/01/plain_f_11.png</p>
+    <p x="-3" y="640" scaleX="1" scaleY="1" rotation="0" w="170" h="72">images/scene/piece/01/plain_f_10.png</p>
+    <p x="834" y="79" scaleX="1" scaleY="1" rotation="0" w="422" h="394">images/scene/piece/build/2_85.png</p>
+    <p x="154" y="239" scaleX="1" scaleY="1" rotation="0" w="120" h="265">images/scene/piece/build/2_79.png</p>
+    <p x="1806" y="273" scaleX="1" scaleY="1" rotation="0" w="109" h="231">images/scene/piece/build/2_80.png</p>
+    <p x="1570" y="266" scaleX="1" scaleY="1" rotation="0" w="111" h="239">images/scene/piece/build/2_81.png</p>
+    <p x="1323" y="212" scaleX="1" scaleY="1" rotation="0" w="130" h="295">images/scene/piece/build/2_82.png</p>
+    <p x="403" y="252" scaleX="1" scaleY="1" rotation="0" w="113" h="251">images/scene/piece/build/2_83.png</p>
+    <p x="636" y="262" scaleX="1" scaleY="1" rotation="0" w="121" h="241">images/scene/piece/build/2_84.png</p>
+    <p x="282" y="1219" scaleX="1" scaleY="1" rotation="0" w="359" h="55">images/scene/piece/01_zhongjing/plain_24.png</p>
+    <p x="1636" y="1203" scaleX="1" scaleY="1" rotation="0" w="139" h="74">images/scene/piece/01_zhongjing/plain_06.png</p>
+    <p x="2652" y="1218" scaleX="1" scaleY="1" rotation="0" w="359" h="55">images/scene/piece/01_zhongjing/plain_24.png</p>
+    <p x="2301" y="1219" scaleX="1" scaleY="1" rotation="0" w="359" h="55">images/scene/piece/01_zhongjing/plain_24.png</p>
+    <p x="2610" y="1202" scaleX="1" scaleY="1" rotation="0" w="118" h="71">images/scene/piece/01_zhongjing/plain_23.png</p>
+    <p x="1763" y="1218" scaleX="1" scaleY="1" rotation="0" w="359" h="55">images/scene/piece/01_zhongjing/plain_24.png</p>
+    <p x="1890" y="1089" scaleX="1" scaleY="1" rotation="0" w="182" h="64">images/scene/piece/01_zhongjing/plain_25.png</p>
+    <p x="1822" y="1020" scaleX="1" scaleY="1" rotation="0" w="98" h="133">images/scene/piece/01_zhongjing/plain_17.png</p>
+    <p x="2260" y="1187" scaleX="1" scaleY="1" rotation="0" w="69" h="83">images/scene/piece/01_zhongjing/plain_37.png</p>
+    <p x="1720" y="1108" scaleX="1" scaleY="1" rotation="0" w="113" h="46">images/scene/piece/01_zhongjing/plain_38.png</p>
+    <p x="2147" y="1038" scaleX="1" scaleY="1" rotation="0" w="64" h="39">images/scene/piece/01_zhongjing/plain_35.png</p>
+    <p x="1901" y="701" scaleX="1" scaleY="1" rotation="0" w="251" h="134">images/scene/piece/01_zhongjing/plain_33.png</p>
+    <p x="2750" y="852" scaleX="1" scaleY="1" rotation="0" w="281" h="104">images/scene/piece/01_zhongjing/plain_32.png</p>
+    <p x="2914" y="843" scaleX="1" scaleY="1" rotation="0" w="102" h="120">images/scene/piece/01_zhongjing/plain_18.png</p>
+    <p x="2016" y="758" scaleX="1" scaleY="1" rotation="0" w="126" h="83">images/scene/piece/01_zhongjing/plain_09.png</p>
+    <p x="1802" y="747" scaleX="1" scaleY="1" rotation="0" w="200" h="92">images/scene/piece/01_zhongjing/plain_11.png</p>
+    <p x="1441" y="540" scaleX="1" scaleY="1" rotation="0" w="141" h="60">images/scene/piece/01_zhongjing/plain_02.png</p>
+    <p x="1623" y="668" scaleX="1" scaleY="1" rotation="0" w="46" h="46">images/scene/piece/01_zhongjing/plain_01.png</p>
+    <p x="1990" y="782" scaleX="1" scaleY="1" rotation="0" w="60" h="61">images/scene/piece/01_zhongjing/plain_04.png</p>
+    <p x="1669" y="665" scaleX="1" scaleY="1" rotation="0" w="113" h="46">images/scene/piece/01_zhongjing/plain_38.png</p>
+    <p x="1332" y="428" scaleX="1" scaleY="1" rotation="0" w="93" h="43">images/scene/piece/01_zhongjing/plain_36.png</p>
+    <p x="1399" y="386" scaleX="1" scaleY="1" rotation="0" w="69" h="83">images/scene/piece/01_zhongjing/plain_37.png</p>
+    <p x="819" y="429" scaleX="1" scaleY="1" rotation="0" w="64" h="39">images/scene/piece/01_zhongjing/plain_35.png</p>
+    <p x="151" y="443" scaleX="1" scaleY="1" rotation="0" w="80" h="43">images/scene/piece/01_zhongjing/plain_34.png</p>
+    <p x="1779" y="426" scaleX="1" scaleY="1" rotation="0" w="113" h="46">images/scene/piece/01_zhongjing/plain_38.png</p>
+    <dynamic x="150" y="1211" scaleX="-1" scaleY="1" rotation="0" w="288" h="500" dynamicUrl="images/scene/piece/dynamic_ysc/4">
+      <image>images/scene/piece/dynamic_ysc/4_0001.png</image>
+      <image>images/scene/piece/dynamic_ysc/4_0002.png</image>
+      <image>images/scene/piece/dynamic_ysc/4_0003.png</image>
+      <image>images/scene/piece/dynamic_ysc/4_0004.png</image>
+      <image>images/scene/piece/dynamic_ysc/4_0005.png</image>
+      <image>images/scene/piece/dynamic_ysc/4_0006.png</image>
+    </dynamic>
+    <dynamic x="911" y="1107" scaleX="1" scaleY="1" rotation="0" w="121" h="167" dynamicUrl="images/scene/piece/dynamic_ysc/1">
+      <image>images/scene/piece/dynamic_ysc/1_0001.png</image>
+      <image>images/scene/piece/dynamic_ysc/1_0002.png</image>
+      <image>images/scene/piece/dynamic_ysc/1_0003.png</image>
+      <image>images/scene/piece/dynamic_ysc/1_0004.png</image>
+      <image>images/scene/piece/dynamic_ysc/1_0005.png</image>
+      <image>images/scene/piece/dynamic_ysc/1_0006.png</image>
+    </dynamic>
+  </tree>
+  <front>
+    <w>3000</w>
+    <h>1440</h>
+  </front>
+  <t>2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</t>
+  <t>2,0,0,0,7,7,7,0,0,0,7,7,7,0,0,0,7,7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,0,0,0,7,7,7,0,0,0,7,7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7,7,7,0,7,7,7,7,7,7,7,7,0,0,0,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7,2</t>
+  <t>2,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7,7,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7,7,7,7,7,7,7,7,0,0,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7,0,0,0,7,7,0,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,0,7,7,7,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7,7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7,7,7,7,7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,0,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,0,0,0,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7,7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7,7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7,7,7,7,7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</t>
+  <t>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</t>
+  <t>2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2</t>
+  <t>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</t>
+  <t>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</t>
+  <t>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</t>
+</map>

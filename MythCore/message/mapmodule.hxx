@@ -8,6 +8,7 @@ enum MAP_MODULE_MSG_ID
 	ID_S2C_NOTIYF_ENTITY_MOVE				= 0x0C00;	// 服务器->客户端 实体移动通知
 	ID_S2C_NOTIYF_CREATE_PLAYER_LIST		= 0x0C01;	// 服务器->客户端 创建玩家列表通知
 	ID_S2C_NOTIYF_CREATE_NPC_LIST			= 0x0C02;	// 服务器->客户端 创建NPC列表通知
+	ID_S2C_NOTIYF_DESTROY_ENTITY			= 0x0C03;	// 服务器->客户端 销毁实体通知
 };
 
 message CMessageEntityMoveNotify
@@ -15,13 +16,6 @@ message CMessageEntityMoveNotify
 	uint32	EntityID						= 1;		// 实体的实体ID
 	uint32	DesPosX							= 2;		// 实体的移动坐标X
 	uint32	DesPosY							= 3;		// 实体的移动坐标Y
-}
-
-message CMessagePlayerSceneInfo
-{
-	uint32	EntityID						= 1;		// 实体的实体ID
-	uint32	PosX							= 2;		// 位置X坐标
-	uint32	PosY							= 3;		// 位置Y坐标
 }
 
 message PBPlayerSceneInfo
@@ -47,4 +41,9 @@ message PBNpcSceneInfo
 message CMessageCreateNPCListNotify
 {
 	repeated PBNpcSceneInfo		NPCInfo		= 1;		// NPC列表信息	
+}
+
+message CMessageDestroyEntityNotify
+{
+	repeated uint32				EntityID	= 1;		// 实体列表
 }

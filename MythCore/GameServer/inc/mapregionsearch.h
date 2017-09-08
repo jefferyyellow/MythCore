@@ -3,19 +3,23 @@
 #include "geometrytype.h"
 #include <vector>
 using namespace std;
-class CEntity;
+class CEntityNPC;
 class CEntityPlayer;
 class CMapUnit;
 class CMap;
 class CMapRegionSearch
 {
 public:
-	CMapRegionSearch();
-	~CMapRegionSearch();
+	CMapRegionSearch()
+	{
+	}
+	~CMapRegionSearch()
+	{
+	}
 	void clear()
 	{
 		mPlayerList.clear();
-		mEntityList.clear();
+		mNPCList.clear();
 	}
 
 public:
@@ -28,6 +32,6 @@ private:
 
 public:
 	std::vector<CEntityPlayer*>		mPlayerList;
-	std::vector<CEntity*>			mEntityList;
+	std::vector<CEntityNPC*>		mNPCList;
 };
 #endif

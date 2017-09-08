@@ -7,6 +7,7 @@
 #include "geometrytype.h"
 #include "entitytype.h"
 using namespace Myth;
+class PBNpcSceneInfo;
 #define PLAYER_NAME_LENGTH   32
 class CEntity : public CObj
 {
@@ -132,7 +133,7 @@ public:
 	uint32		getTempID() const { return mTempID; }
 	void		setTempID(uint32 nValue) { mTempID = nValue; }
 
-private:
+protected:
 	/// 模板ID
 	uint32					mTempID;
 	/// 基础属性（比较稳定的属性）
@@ -142,4 +143,50 @@ private:
 
 };
 
+/// NPC类
+class CEntityNPC : public CEntityCharacter
+{
+public:
+	CEntityNPC(){}
+	~CEntityNPC(){}
+	
+public:
+	/// 序列化场景信息到PB·
+	void			serializeSceneInfoToPB(PBNpcSceneInfo* pbNpcInfo);
+
+};
+
+/// Ogre类
+class CEntityOgre : public CEntityNPC
+{
+public:
+	CEntityOgre(){}
+	~CEntityOgre(){}
+public:
+
+};
+
+/// 功能NPC
+class CEntityFuncNPC : public CEntityNPC
+{
+public:
+	CEntityFuncNPC();
+	~CEntityFuncNPC(){}
+};
+
+/// 掉落的道具类
+class CEntityItem : public CEntityNPC
+{
+public:
+	CEntityItem()
+	{
+	}
+	~CEntityItem()
+	{
+	}
+
+private:
+	/// 道具数目
+	short				mItemNum;
+};
 #endif

@@ -8,6 +8,9 @@
 #include "objpool.h"
 #include "timemanager.h"
 #include "propertymodule.h"
+#include "mapmodule.h"
+#include "mapmamager.h"
+#include "mapconfigmanager.h"
 /// 初始化
 bool CGameServer::init()
 {
@@ -23,7 +26,11 @@ bool CGameServer::init()
 		return false;
 	}
 
-	CGameServerConfig::Inst()->loadGameServerConfigFromXml("config/gameserverconfig.xml");
+	bResult = initStaticData();
+	if (!bResult)
+	{
+		return false;
+	}
 
 	bResult = initThread();
 	if (!bResult)
@@ -90,6 +97,24 @@ bool CGameServer::initLogicModule()
 	// 逻辑模块
 	CLoginModule::CreateInst();
 	CPropertyModule::CreateInst();
+
+	CMapConfigManager::CreateInst();
+	CMapManager::CreateInst();
+	CMapModule::CreateInst();
+	return true;
+}
+
+
+/// 初始化游戏静态数据
+bool CGameServer::initStaticData()
+{
+	bool bResult = CGameServerConfig::Inst()->loadGameServerConfigFromXml("config/gameserverconfig.xml");
+	if (!bResult)
+	{
+		return bResult;
+	}
+
+	CMapConfigManager::Inst()->loadMapConfig("gameserverconfig/map/maplist.xml");
 	return true;
 }
 

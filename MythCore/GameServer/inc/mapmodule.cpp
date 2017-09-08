@@ -3,6 +3,12 @@
 #include "objpool.h"
 #include "scenejob.h"
 #include "mapmamager.h"
+
+void CMapModule::OnTimer(unsigned int nTickOffset)
+{
+
+}
+
 void CMapModule::broadCastVisiblePlayer(CEntity* pEntity, unsigned short nMessageID, Message* pMessage)
 {
 	if (NULL == pEntity)
@@ -51,3 +57,4 @@ void CMapModule::onEntityMove(CEntityCharacter* pEntity, CMythPoint& rDesPos)
 	
 	pMap->onEntityMove(pEntity, rDesPos);
 }
+

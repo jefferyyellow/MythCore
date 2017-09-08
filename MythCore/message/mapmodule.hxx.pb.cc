@@ -22,9 +22,9 @@ namespace {
 const ::google::protobuf::Descriptor* CMessageEntityMoveNotify_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   CMessageEntityMoveNotify_reflection_ = NULL;
-const ::google::protobuf::Descriptor* CMessagePlayerSceneInfo_descriptor_ = NULL;
+const ::google::protobuf::Descriptor* PBPlayerSceneInfo_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  CMessagePlayerSceneInfo_reflection_ = NULL;
+  PBPlayerSceneInfo_reflection_ = NULL;
 const ::google::protobuf::Descriptor* CMessageCreatePlayerListNotify_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   CMessageCreatePlayerListNotify_reflection_ = NULL;
@@ -34,6 +34,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* CMessageCreateNPCListNotify_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   CMessageCreateNPCListNotify_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CMessageDestroyEntityNotify_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CMessageDestroyEntityNotify_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* MAP_MODULE_MSG_ID_descriptor_ = NULL;
 
 }  // namespace
@@ -62,24 +65,25 @@ void protobuf_AssignDesc_mapmodule_2ehxx() {
       -1,
       sizeof(CMessageEntityMoveNotify),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageEntityMoveNotify, _internal_metadata_));
-  CMessagePlayerSceneInfo_descriptor_ = file->message_type(1);
-  static const int CMessagePlayerSceneInfo_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessagePlayerSceneInfo, entityid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessagePlayerSceneInfo, posx_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessagePlayerSceneInfo, posy_),
+  PBPlayerSceneInfo_descriptor_ = file->message_type(1);
+  static const int PBPlayerSceneInfo_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBPlayerSceneInfo, entityid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBPlayerSceneInfo, posx_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBPlayerSceneInfo, posy_),
   };
-  CMessagePlayerSceneInfo_reflection_ =
+  PBPlayerSceneInfo_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      CMessagePlayerSceneInfo_descriptor_,
-      CMessagePlayerSceneInfo::internal_default_instance(),
-      CMessagePlayerSceneInfo_offsets_,
+      PBPlayerSceneInfo_descriptor_,
+      PBPlayerSceneInfo::internal_default_instance(),
+      PBPlayerSceneInfo_offsets_,
       -1,
       -1,
       -1,
-      sizeof(CMessagePlayerSceneInfo),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessagePlayerSceneInfo, _internal_metadata_));
+      sizeof(PBPlayerSceneInfo),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBPlayerSceneInfo, _internal_metadata_));
   CMessageCreatePlayerListNotify_descriptor_ = file->message_type(2);
   static const int CMessageCreatePlayerListNotify_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageCreatePlayerListNotify, playerinfo_),
   };
   CMessageCreatePlayerListNotify_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -122,6 +126,20 @@ void protobuf_AssignDesc_mapmodule_2ehxx() {
       -1,
       sizeof(CMessageCreateNPCListNotify),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageCreateNPCListNotify, _internal_metadata_));
+  CMessageDestroyEntityNotify_descriptor_ = file->message_type(5);
+  static const int CMessageDestroyEntityNotify_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageDestroyEntityNotify, entityid_),
+  };
+  CMessageDestroyEntityNotify_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      CMessageDestroyEntityNotify_descriptor_,
+      CMessageDestroyEntityNotify::internal_default_instance(),
+      CMessageDestroyEntityNotify_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(CMessageDestroyEntityNotify),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageDestroyEntityNotify, _internal_metadata_));
   MAP_MODULE_MSG_ID_descriptor_ = file->enum_type(0);
 }
 
@@ -139,13 +157,15 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       CMessageEntityMoveNotify_descriptor_, CMessageEntityMoveNotify::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      CMessagePlayerSceneInfo_descriptor_, CMessagePlayerSceneInfo::internal_default_instance());
+      PBPlayerSceneInfo_descriptor_, PBPlayerSceneInfo::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       CMessageCreatePlayerListNotify_descriptor_, CMessageCreatePlayerListNotify::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       PBNpcSceneInfo_descriptor_, PBNpcSceneInfo::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       CMessageCreateNPCListNotify_descriptor_, CMessageCreateNPCListNotify::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      CMessageDestroyEntityNotify_descriptor_, CMessageDestroyEntityNotify::internal_default_instance());
 }
 
 }  // namespace
@@ -153,29 +173,33 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void protobuf_ShutdownFile_mapmodule_2ehxx() {
   CMessageEntityMoveNotify_default_instance_.Shutdown();
   delete CMessageEntityMoveNotify_reflection_;
-  CMessagePlayerSceneInfo_default_instance_.Shutdown();
-  delete CMessagePlayerSceneInfo_reflection_;
+  PBPlayerSceneInfo_default_instance_.Shutdown();
+  delete PBPlayerSceneInfo_reflection_;
   CMessageCreatePlayerListNotify_default_instance_.Shutdown();
   delete CMessageCreatePlayerListNotify_reflection_;
   PBNpcSceneInfo_default_instance_.Shutdown();
   delete PBNpcSceneInfo_reflection_;
   CMessageCreateNPCListNotify_default_instance_.Shutdown();
   delete CMessageCreateNPCListNotify_reflection_;
+  CMessageDestroyEntityNotify_default_instance_.Shutdown();
+  delete CMessageDestroyEntityNotify_reflection_;
 }
 
 void protobuf_InitDefaults_mapmodule_2ehxx_impl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   CMessageEntityMoveNotify_default_instance_.DefaultConstruct();
-  CMessagePlayerSceneInfo_default_instance_.DefaultConstruct();
+  PBPlayerSceneInfo_default_instance_.DefaultConstruct();
   CMessageCreatePlayerListNotify_default_instance_.DefaultConstruct();
   PBNpcSceneInfo_default_instance_.DefaultConstruct();
   CMessageCreateNPCListNotify_default_instance_.DefaultConstruct();
+  CMessageDestroyEntityNotify_default_instance_.DefaultConstruct();
   CMessageEntityMoveNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
-  CMessagePlayerSceneInfo_default_instance_.get_mutable()->InitAsDefaultInstance();
+  PBPlayerSceneInfo_default_instance_.get_mutable()->InitAsDefaultInstance();
   CMessageCreatePlayerListNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
   PBNpcSceneInfo_default_instance_.get_mutable()->InitAsDefaultInstance();
   CMessageCreateNPCListNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CMessageDestroyEntityNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
 }
 
 GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_InitDefaults_mapmodule_2ehxx_once_);
@@ -190,17 +214,20 @@ void protobuf_AddDesc_mapmodule_2ehxx_impl() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\rmapmodule.hxx\"N\n\030CMessageEntityMoveNot"
     "ify\022\020\n\010EntityID\030\001 \001(\r\022\017\n\007DesPosX\030\002 \001(\r\022\017"
-    "\n\007DesPosY\030\003 \001(\r\"G\n\027CMessagePlayerSceneIn"
-    "fo\022\020\n\010EntityID\030\001 \001(\r\022\014\n\004PosX\030\002 \001(\r\022\014\n\004Po"
-    "sY\030\003 \001(\r\" \n\036CMessageCreatePlayerListNoti"
-    "fy\"N\n\016PBNpcSceneInfo\022\020\n\010EntityID\030\001 \001(\r\022\016"
-    "\n\006TempID\030\002 \001(\r\022\014\n\004PosX\030\003 \001(\r\022\014\n\004PosY\030\004 \001"
-    "(\r\"\?\n\033CMessageCreateNPCListNotify\022 \n\007NPC"
-    "Info\030\001 \003(\0132\017.PBNpcSceneInfo*\227\001\n\021MAP_MODU"
-    "LE_MSG_ID\022\027\n\023ID_MAP_MODULE_ERROR\020\000\022\036\n\031ID"
-    "_S2C_NOTIYF_ENTITY_MOVE\020\200\030\022%\n ID_S2C_NOT"
-    "IYF_CREATE_PLAYER_LIST\020\201\030\022\"\n\035ID_S2C_NOTI"
-    "YF_CREATE_NPC_LIST\020\202\030b\006proto3", 509);
+    "\n\007DesPosY\030\003 \001(\r\"A\n\021PBPlayerSceneInfo\022\020\n\010"
+    "EntityID\030\001 \001(\r\022\014\n\004PosX\030\002 \001(\r\022\014\n\004PosY\030\003 \001"
+    "(\r\"H\n\036CMessageCreatePlayerListNotify\022&\n\n"
+    "PlayerInfo\030\001 \003(\0132\022.PBPlayerSceneInfo\"N\n\016"
+    "PBNpcSceneInfo\022\020\n\010EntityID\030\001 \001(\r\022\016\n\006Temp"
+    "ID\030\002 \001(\r\022\014\n\004PosX\030\003 \001(\r\022\014\n\004PosY\030\004 \001(\r\"\?\n\033"
+    "CMessageCreateNPCListNotify\022 \n\007NPCInfo\030\001"
+    " \003(\0132\017.PBNpcSceneInfo\"/\n\033CMessageDestroy"
+    "EntityNotify\022\020\n\010EntityID\030\001 \003(\r*\272\001\n\021MAP_M"
+    "ODULE_MSG_ID\022\027\n\023ID_MAP_MODULE_ERROR\020\000\022\036\n"
+    "\031ID_S2C_NOTIYF_ENTITY_MOVE\020\200\030\022%\n ID_S2C_"
+    "NOTIYF_CREATE_PLAYER_LIST\020\201\030\022\"\n\035ID_S2C_N"
+    "OTIYF_CREATE_NPC_LIST\020\202\030\022!\n\034ID_S2C_NOTIY"
+    "F_DESTROY_ENTITY\020\203\030b\006proto3", 627);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "mapmodule.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_mapmodule_2ehxx);
@@ -227,6 +254,7 @@ bool MAP_MODULE_MSG_ID_IsValid(int value) {
     case 3072:
     case 3073:
     case 3074:
+    case 3075:
       return true;
     default:
       return false;
@@ -614,79 +642,79 @@ inline const CMessageEntityMoveNotify* CMessageEntityMoveNotify::internal_defaul
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int CMessagePlayerSceneInfo::kEntityIDFieldNumber;
-const int CMessagePlayerSceneInfo::kPosXFieldNumber;
-const int CMessagePlayerSceneInfo::kPosYFieldNumber;
+const int PBPlayerSceneInfo::kEntityIDFieldNumber;
+const int PBPlayerSceneInfo::kPosXFieldNumber;
+const int PBPlayerSceneInfo::kPosYFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-CMessagePlayerSceneInfo::CMessagePlayerSceneInfo()
+PBPlayerSceneInfo::PBPlayerSceneInfo()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   if (this != internal_default_instance()) protobuf_InitDefaults_mapmodule_2ehxx();
   SharedCtor();
-  // @@protoc_insertion_point(constructor:CMessagePlayerSceneInfo)
+  // @@protoc_insertion_point(constructor:PBPlayerSceneInfo)
 }
 
-void CMessagePlayerSceneInfo::InitAsDefaultInstance() {
+void PBPlayerSceneInfo::InitAsDefaultInstance() {
 }
 
-CMessagePlayerSceneInfo::CMessagePlayerSceneInfo(const CMessagePlayerSceneInfo& from)
+PBPlayerSceneInfo::PBPlayerSceneInfo(const PBPlayerSceneInfo& from)
   : ::google::protobuf::Message(),
     _internal_metadata_(NULL) {
   SharedCtor();
   UnsafeMergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:CMessagePlayerSceneInfo)
+  // @@protoc_insertion_point(copy_constructor:PBPlayerSceneInfo)
 }
 
-void CMessagePlayerSceneInfo::SharedCtor() {
+void PBPlayerSceneInfo::SharedCtor() {
   ::memset(&entityid_, 0, reinterpret_cast<char*>(&posy_) -
     reinterpret_cast<char*>(&entityid_) + sizeof(posy_));
   _cached_size_ = 0;
 }
 
-CMessagePlayerSceneInfo::~CMessagePlayerSceneInfo() {
-  // @@protoc_insertion_point(destructor:CMessagePlayerSceneInfo)
+PBPlayerSceneInfo::~PBPlayerSceneInfo() {
+  // @@protoc_insertion_point(destructor:PBPlayerSceneInfo)
   SharedDtor();
 }
 
-void CMessagePlayerSceneInfo::SharedDtor() {
+void PBPlayerSceneInfo::SharedDtor() {
 }
 
-void CMessagePlayerSceneInfo::SetCachedSize(int size) const {
+void PBPlayerSceneInfo::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* CMessagePlayerSceneInfo::descriptor() {
+const ::google::protobuf::Descriptor* PBPlayerSceneInfo::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return CMessagePlayerSceneInfo_descriptor_;
+  return PBPlayerSceneInfo_descriptor_;
 }
 
-const CMessagePlayerSceneInfo& CMessagePlayerSceneInfo::default_instance() {
+const PBPlayerSceneInfo& PBPlayerSceneInfo::default_instance() {
   protobuf_InitDefaults_mapmodule_2ehxx();
   return *internal_default_instance();
 }
 
-::google::protobuf::internal::ExplicitlyConstructed<CMessagePlayerSceneInfo> CMessagePlayerSceneInfo_default_instance_;
+::google::protobuf::internal::ExplicitlyConstructed<PBPlayerSceneInfo> PBPlayerSceneInfo_default_instance_;
 
-CMessagePlayerSceneInfo* CMessagePlayerSceneInfo::New(::google::protobuf::Arena* arena) const {
-  CMessagePlayerSceneInfo* n = new CMessagePlayerSceneInfo;
+PBPlayerSceneInfo* PBPlayerSceneInfo::New(::google::protobuf::Arena* arena) const {
+  PBPlayerSceneInfo* n = new PBPlayerSceneInfo;
   if (arena != NULL) {
     arena->Own(n);
   }
   return n;
 }
 
-void CMessagePlayerSceneInfo::Clear() {
-// @@protoc_insertion_point(message_clear_start:CMessagePlayerSceneInfo)
+void PBPlayerSceneInfo::Clear() {
+// @@protoc_insertion_point(message_clear_start:PBPlayerSceneInfo)
 #if defined(__clang__)
 #define ZR_HELPER_(f) \
   _Pragma("clang diagnostic push") \
   _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
-  __builtin_offsetof(CMessagePlayerSceneInfo, f) \
+  __builtin_offsetof(PBPlayerSceneInfo, f) \
   _Pragma("clang diagnostic pop")
 #else
 #define ZR_HELPER_(f) reinterpret_cast<char*>(\
-  &reinterpret_cast<CMessagePlayerSceneInfo*>(16)->f)
+  &reinterpret_cast<PBPlayerSceneInfo*>(16)->f)
 #endif
 
 #define ZR_(first, last) do {\
@@ -701,11 +729,11 @@ void CMessagePlayerSceneInfo::Clear() {
 
 }
 
-bool CMessagePlayerSceneInfo::MergePartialFromCodedStream(
+bool PBPlayerSceneInfo::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:CMessagePlayerSceneInfo)
+  // @@protoc_insertion_point(parse_start:PBPlayerSceneInfo)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -768,17 +796,17 @@ bool CMessagePlayerSceneInfo::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:CMessagePlayerSceneInfo)
+  // @@protoc_insertion_point(parse_success:PBPlayerSceneInfo)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:CMessagePlayerSceneInfo)
+  // @@protoc_insertion_point(parse_failure:PBPlayerSceneInfo)
   return false;
 #undef DO_
 }
 
-void CMessagePlayerSceneInfo::SerializeWithCachedSizes(
+void PBPlayerSceneInfo::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:CMessagePlayerSceneInfo)
+  // @@protoc_insertion_point(serialize_start:PBPlayerSceneInfo)
   // optional uint32 EntityID = 1;
   if (this->entityid() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->entityid(), output);
@@ -794,13 +822,13 @@ void CMessagePlayerSceneInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->posy(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:CMessagePlayerSceneInfo)
+  // @@protoc_insertion_point(serialize_end:PBPlayerSceneInfo)
 }
 
-::google::protobuf::uint8* CMessagePlayerSceneInfo::InternalSerializeWithCachedSizesToArray(
+::google::protobuf::uint8* PBPlayerSceneInfo::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:CMessagePlayerSceneInfo)
+  // @@protoc_insertion_point(serialize_to_array_start:PBPlayerSceneInfo)
   // optional uint32 EntityID = 1;
   if (this->entityid() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->entityid(), target);
@@ -816,12 +844,12 @@ void CMessagePlayerSceneInfo::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->posy(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:CMessagePlayerSceneInfo)
+  // @@protoc_insertion_point(serialize_to_array_end:PBPlayerSceneInfo)
   return target;
 }
 
-size_t CMessagePlayerSceneInfo::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:CMessagePlayerSceneInfo)
+size_t PBPlayerSceneInfo::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:PBPlayerSceneInfo)
   size_t total_size = 0;
 
   // optional uint32 EntityID = 1;
@@ -852,23 +880,23 @@ size_t CMessagePlayerSceneInfo::ByteSizeLong() const {
   return total_size;
 }
 
-void CMessagePlayerSceneInfo::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:CMessagePlayerSceneInfo)
+void PBPlayerSceneInfo::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:PBPlayerSceneInfo)
   if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const CMessagePlayerSceneInfo* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const CMessagePlayerSceneInfo>(
+  const PBPlayerSceneInfo* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const PBPlayerSceneInfo>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CMessagePlayerSceneInfo)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:PBPlayerSceneInfo)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:CMessagePlayerSceneInfo)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:PBPlayerSceneInfo)
     UnsafeMergeFrom(*source);
   }
 }
 
-void CMessagePlayerSceneInfo::MergeFrom(const CMessagePlayerSceneInfo& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:CMessagePlayerSceneInfo)
+void PBPlayerSceneInfo::MergeFrom(const PBPlayerSceneInfo& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:PBPlayerSceneInfo)
   if (GOOGLE_PREDICT_TRUE(&from != this)) {
     UnsafeMergeFrom(from);
   } else {
@@ -876,7 +904,7 @@ void CMessagePlayerSceneInfo::MergeFrom(const CMessagePlayerSceneInfo& from) {
   }
 }
 
-void CMessagePlayerSceneInfo::UnsafeMergeFrom(const CMessagePlayerSceneInfo& from) {
+void PBPlayerSceneInfo::UnsafeMergeFrom(const PBPlayerSceneInfo& from) {
   GOOGLE_DCHECK(&from != this);
   if (from.entityid() != 0) {
     set_entityid(from.entityid());
@@ -889,30 +917,30 @@ void CMessagePlayerSceneInfo::UnsafeMergeFrom(const CMessagePlayerSceneInfo& fro
   }
 }
 
-void CMessagePlayerSceneInfo::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:CMessagePlayerSceneInfo)
+void PBPlayerSceneInfo::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:PBPlayerSceneInfo)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void CMessagePlayerSceneInfo::CopyFrom(const CMessagePlayerSceneInfo& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:CMessagePlayerSceneInfo)
+void PBPlayerSceneInfo::CopyFrom(const PBPlayerSceneInfo& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:PBPlayerSceneInfo)
   if (&from == this) return;
   Clear();
   UnsafeMergeFrom(from);
 }
 
-bool CMessagePlayerSceneInfo::IsInitialized() const {
+bool PBPlayerSceneInfo::IsInitialized() const {
 
   return true;
 }
 
-void CMessagePlayerSceneInfo::Swap(CMessagePlayerSceneInfo* other) {
+void PBPlayerSceneInfo::Swap(PBPlayerSceneInfo* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void CMessagePlayerSceneInfo::InternalSwap(CMessagePlayerSceneInfo* other) {
+void PBPlayerSceneInfo::InternalSwap(PBPlayerSceneInfo* other) {
   std::swap(entityid_, other->entityid_);
   std::swap(posx_, other->posx_);
   std::swap(posy_, other->posy_);
@@ -920,67 +948,68 @@ void CMessagePlayerSceneInfo::InternalSwap(CMessagePlayerSceneInfo* other) {
   std::swap(_cached_size_, other->_cached_size_);
 }
 
-::google::protobuf::Metadata CMessagePlayerSceneInfo::GetMetadata() const {
+::google::protobuf::Metadata PBPlayerSceneInfo::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = CMessagePlayerSceneInfo_descriptor_;
-  metadata.reflection = CMessagePlayerSceneInfo_reflection_;
+  metadata.descriptor = PBPlayerSceneInfo_descriptor_;
+  metadata.reflection = PBPlayerSceneInfo_reflection_;
   return metadata;
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
-// CMessagePlayerSceneInfo
+// PBPlayerSceneInfo
 
 // optional uint32 EntityID = 1;
-void CMessagePlayerSceneInfo::clear_entityid() {
+void PBPlayerSceneInfo::clear_entityid() {
   entityid_ = 0u;
 }
-::google::protobuf::uint32 CMessagePlayerSceneInfo::entityid() const {
-  // @@protoc_insertion_point(field_get:CMessagePlayerSceneInfo.EntityID)
+::google::protobuf::uint32 PBPlayerSceneInfo::entityid() const {
+  // @@protoc_insertion_point(field_get:PBPlayerSceneInfo.EntityID)
   return entityid_;
 }
-void CMessagePlayerSceneInfo::set_entityid(::google::protobuf::uint32 value) {
+void PBPlayerSceneInfo::set_entityid(::google::protobuf::uint32 value) {
   
   entityid_ = value;
-  // @@protoc_insertion_point(field_set:CMessagePlayerSceneInfo.EntityID)
+  // @@protoc_insertion_point(field_set:PBPlayerSceneInfo.EntityID)
 }
 
 // optional uint32 PosX = 2;
-void CMessagePlayerSceneInfo::clear_posx() {
+void PBPlayerSceneInfo::clear_posx() {
   posx_ = 0u;
 }
-::google::protobuf::uint32 CMessagePlayerSceneInfo::posx() const {
-  // @@protoc_insertion_point(field_get:CMessagePlayerSceneInfo.PosX)
+::google::protobuf::uint32 PBPlayerSceneInfo::posx() const {
+  // @@protoc_insertion_point(field_get:PBPlayerSceneInfo.PosX)
   return posx_;
 }
-void CMessagePlayerSceneInfo::set_posx(::google::protobuf::uint32 value) {
+void PBPlayerSceneInfo::set_posx(::google::protobuf::uint32 value) {
   
   posx_ = value;
-  // @@protoc_insertion_point(field_set:CMessagePlayerSceneInfo.PosX)
+  // @@protoc_insertion_point(field_set:PBPlayerSceneInfo.PosX)
 }
 
 // optional uint32 PosY = 3;
-void CMessagePlayerSceneInfo::clear_posy() {
+void PBPlayerSceneInfo::clear_posy() {
   posy_ = 0u;
 }
-::google::protobuf::uint32 CMessagePlayerSceneInfo::posy() const {
-  // @@protoc_insertion_point(field_get:CMessagePlayerSceneInfo.PosY)
+::google::protobuf::uint32 PBPlayerSceneInfo::posy() const {
+  // @@protoc_insertion_point(field_get:PBPlayerSceneInfo.PosY)
   return posy_;
 }
-void CMessagePlayerSceneInfo::set_posy(::google::protobuf::uint32 value) {
+void PBPlayerSceneInfo::set_posy(::google::protobuf::uint32 value) {
   
   posy_ = value;
-  // @@protoc_insertion_point(field_set:CMessagePlayerSceneInfo.PosY)
+  // @@protoc_insertion_point(field_set:PBPlayerSceneInfo.PosY)
 }
 
-inline const CMessagePlayerSceneInfo* CMessagePlayerSceneInfo::internal_default_instance() {
-  return &CMessagePlayerSceneInfo_default_instance_.get();
+inline const PBPlayerSceneInfo* PBPlayerSceneInfo::internal_default_instance() {
+  return &PBPlayerSceneInfo_default_instance_.get();
 }
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int CMessageCreatePlayerListNotify::kPlayerInfoFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 CMessageCreatePlayerListNotify::CMessageCreatePlayerListNotify()
@@ -1040,6 +1069,7 @@ CMessageCreatePlayerListNotify* CMessageCreatePlayerListNotify::New(::google::pr
 
 void CMessageCreatePlayerListNotify::Clear() {
 // @@protoc_insertion_point(message_clear_start:CMessageCreatePlayerListNotify)
+  playerinfo_.Clear();
 }
 
 bool CMessageCreatePlayerListNotify::MergePartialFromCodedStream(
@@ -1051,13 +1081,34 @@ bool CMessageCreatePlayerListNotify::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // repeated .PBPlayerSceneInfo PlayerInfo = 1;
+      case 1: {
+        if (tag == 10) {
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_PlayerInfo:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+                input, add_playerinfo()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(10)) goto parse_loop_PlayerInfo;
+        input->UnsafeDecrementRecursionDepth();
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
     }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
   }
 success:
   // @@protoc_insertion_point(parse_success:CMessageCreatePlayerListNotify)
@@ -1071,6 +1122,12 @@ failure:
 void CMessageCreatePlayerListNotify::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:CMessageCreatePlayerListNotify)
+  // repeated .PBPlayerSceneInfo PlayerInfo = 1;
+  for (unsigned int i = 0, n = this->playerinfo_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->playerinfo(i), output);
+  }
+
   // @@protoc_insertion_point(serialize_end:CMessageCreatePlayerListNotify)
 }
 
@@ -1078,6 +1135,13 @@ void CMessageCreatePlayerListNotify::SerializeWithCachedSizes(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:CMessageCreatePlayerListNotify)
+  // repeated .PBPlayerSceneInfo PlayerInfo = 1;
+  for (unsigned int i = 0, n = this->playerinfo_size(); i < n; i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageNoVirtualToArray(
+        1, this->playerinfo(i), false, target);
+  }
+
   // @@protoc_insertion_point(serialize_to_array_end:CMessageCreatePlayerListNotify)
   return target;
 }
@@ -1085,6 +1149,17 @@ void CMessageCreatePlayerListNotify::SerializeWithCachedSizes(
 size_t CMessageCreatePlayerListNotify::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:CMessageCreatePlayerListNotify)
   size_t total_size = 0;
+
+  // repeated .PBPlayerSceneInfo PlayerInfo = 1;
+  {
+    unsigned int count = this->playerinfo_size();
+    total_size += 1UL * count;
+    for (unsigned int i = 0; i < count; i++) {
+      total_size +=
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->playerinfo(i));
+    }
+  }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -1119,6 +1194,7 @@ void CMessageCreatePlayerListNotify::MergeFrom(const CMessageCreatePlayerListNot
 
 void CMessageCreatePlayerListNotify::UnsafeMergeFrom(const CMessageCreatePlayerListNotify& from) {
   GOOGLE_DCHECK(&from != this);
+  playerinfo_.MergeFrom(from.playerinfo_);
 }
 
 void CMessageCreatePlayerListNotify::CopyFrom(const ::google::protobuf::Message& from) {
@@ -1145,6 +1221,7 @@ void CMessageCreatePlayerListNotify::Swap(CMessageCreatePlayerListNotify* other)
   InternalSwap(other);
 }
 void CMessageCreatePlayerListNotify::InternalSwap(CMessageCreatePlayerListNotify* other) {
+  playerinfo_.UnsafeArenaSwap(&other->playerinfo_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -1159,6 +1236,36 @@ void CMessageCreatePlayerListNotify::InternalSwap(CMessageCreatePlayerListNotify
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // CMessageCreatePlayerListNotify
+
+// repeated .PBPlayerSceneInfo PlayerInfo = 1;
+int CMessageCreatePlayerListNotify::playerinfo_size() const {
+  return playerinfo_.size();
+}
+void CMessageCreatePlayerListNotify::clear_playerinfo() {
+  playerinfo_.Clear();
+}
+const ::PBPlayerSceneInfo& CMessageCreatePlayerListNotify::playerinfo(int index) const {
+  // @@protoc_insertion_point(field_get:CMessageCreatePlayerListNotify.PlayerInfo)
+  return playerinfo_.Get(index);
+}
+::PBPlayerSceneInfo* CMessageCreatePlayerListNotify::mutable_playerinfo(int index) {
+  // @@protoc_insertion_point(field_mutable:CMessageCreatePlayerListNotify.PlayerInfo)
+  return playerinfo_.Mutable(index);
+}
+::PBPlayerSceneInfo* CMessageCreatePlayerListNotify::add_playerinfo() {
+  // @@protoc_insertion_point(field_add:CMessageCreatePlayerListNotify.PlayerInfo)
+  return playerinfo_.Add();
+}
+::google::protobuf::RepeatedPtrField< ::PBPlayerSceneInfo >*
+CMessageCreatePlayerListNotify::mutable_playerinfo() {
+  // @@protoc_insertion_point(field_mutable_list:CMessageCreatePlayerListNotify.PlayerInfo)
+  return &playerinfo_;
+}
+const ::google::protobuf::RepeatedPtrField< ::PBPlayerSceneInfo >&
+CMessageCreatePlayerListNotify::playerinfo() const {
+  // @@protoc_insertion_point(field_list:CMessageCreatePlayerListNotify.PlayerInfo)
+  return playerinfo_;
+}
 
 inline const CMessageCreatePlayerListNotify* CMessageCreatePlayerListNotify::internal_default_instance() {
   return &CMessageCreatePlayerListNotify_default_instance_.get();
@@ -1846,6 +1953,292 @@ CMessageCreateNPCListNotify::npcinfo() const {
 
 inline const CMessageCreateNPCListNotify* CMessageCreateNPCListNotify::internal_default_instance() {
   return &CMessageCreateNPCListNotify_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int CMessageDestroyEntityNotify::kEntityIDFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+CMessageDestroyEntityNotify::CMessageDestroyEntityNotify()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_mapmodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CMessageDestroyEntityNotify)
+}
+
+void CMessageDestroyEntityNotify::InitAsDefaultInstance() {
+}
+
+CMessageDestroyEntityNotify::CMessageDestroyEntityNotify(const CMessageDestroyEntityNotify& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:CMessageDestroyEntityNotify)
+}
+
+void CMessageDestroyEntityNotify::SharedCtor() {
+  _cached_size_ = 0;
+}
+
+CMessageDestroyEntityNotify::~CMessageDestroyEntityNotify() {
+  // @@protoc_insertion_point(destructor:CMessageDestroyEntityNotify)
+  SharedDtor();
+}
+
+void CMessageDestroyEntityNotify::SharedDtor() {
+}
+
+void CMessageDestroyEntityNotify::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CMessageDestroyEntityNotify::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CMessageDestroyEntityNotify_descriptor_;
+}
+
+const CMessageDestroyEntityNotify& CMessageDestroyEntityNotify::default_instance() {
+  protobuf_InitDefaults_mapmodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<CMessageDestroyEntityNotify> CMessageDestroyEntityNotify_default_instance_;
+
+CMessageDestroyEntityNotify* CMessageDestroyEntityNotify::New(::google::protobuf::Arena* arena) const {
+  CMessageDestroyEntityNotify* n = new CMessageDestroyEntityNotify;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void CMessageDestroyEntityNotify::Clear() {
+// @@protoc_insertion_point(message_clear_start:CMessageDestroyEntityNotify)
+  entityid_.Clear();
+}
+
+bool CMessageDestroyEntityNotify::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:CMessageDestroyEntityNotify)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // repeated uint32 EntityID = 1;
+      case 1: {
+        if (tag == 10) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, this->mutable_entityid())));
+        } else if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 1, 10, input, this->mutable_entityid())));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:CMessageDestroyEntityNotify)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:CMessageDestroyEntityNotify)
+  return false;
+#undef DO_
+}
+
+void CMessageDestroyEntityNotify::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:CMessageDestroyEntityNotify)
+  // repeated uint32 EntityID = 1;
+  if (this->entityid_size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteTag(1, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    output->WriteVarint32(_entityid_cached_byte_size_);
+  }
+  for (int i = 0; i < this->entityid_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32NoTag(
+      this->entityid(i), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:CMessageDestroyEntityNotify)
+}
+
+::google::protobuf::uint8* CMessageDestroyEntityNotify::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:CMessageDestroyEntityNotify)
+  // repeated uint32 EntityID = 1;
+  if (this->entityid_size() > 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteTagToArray(
+      1,
+      ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED,
+      target);
+    target = ::google::protobuf::io::CodedOutputStream::WriteVarint32ToArray(
+      _entityid_cached_byte_size_, target);
+  }
+  for (int i = 0; i < this->entityid_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteUInt32NoTagToArray(this->entityid(i), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:CMessageDestroyEntityNotify)
+  return target;
+}
+
+size_t CMessageDestroyEntityNotify::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CMessageDestroyEntityNotify)
+  size_t total_size = 0;
+
+  // repeated uint32 EntityID = 1;
+  {
+    size_t data_size = 0;
+    unsigned int count = this->entityid_size();
+    for (unsigned int i = 0; i < count; i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::
+        UInt32Size(this->entityid(i));
+    }
+    if (data_size > 0) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);
+    }
+    int cached_size = ::google::protobuf::internal::ToCachedSize(data_size);
+    GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+    _entityid_cached_byte_size_ = cached_size;
+    GOOGLE_SAFE_CONCURRENT_WRITES_END();
+    total_size += data_size;
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CMessageDestroyEntityNotify::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CMessageDestroyEntityNotify)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const CMessageDestroyEntityNotify* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CMessageDestroyEntityNotify>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CMessageDestroyEntityNotify)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CMessageDestroyEntityNotify)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void CMessageDestroyEntityNotify::MergeFrom(const CMessageDestroyEntityNotify& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CMessageDestroyEntityNotify)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void CMessageDestroyEntityNotify::UnsafeMergeFrom(const CMessageDestroyEntityNotify& from) {
+  GOOGLE_DCHECK(&from != this);
+  entityid_.UnsafeMergeFrom(from.entityid_);
+}
+
+void CMessageDestroyEntityNotify::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CMessageDestroyEntityNotify)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CMessageDestroyEntityNotify::CopyFrom(const CMessageDestroyEntityNotify& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CMessageDestroyEntityNotify)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool CMessageDestroyEntityNotify::IsInitialized() const {
+
+  return true;
+}
+
+void CMessageDestroyEntityNotify::Swap(CMessageDestroyEntityNotify* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void CMessageDestroyEntityNotify::InternalSwap(CMessageDestroyEntityNotify* other) {
+  entityid_.UnsafeArenaSwap(&other->entityid_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata CMessageDestroyEntityNotify::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CMessageDestroyEntityNotify_descriptor_;
+  metadata.reflection = CMessageDestroyEntityNotify_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// CMessageDestroyEntityNotify
+
+// repeated uint32 EntityID = 1;
+int CMessageDestroyEntityNotify::entityid_size() const {
+  return entityid_.size();
+}
+void CMessageDestroyEntityNotify::clear_entityid() {
+  entityid_.Clear();
+}
+::google::protobuf::uint32 CMessageDestroyEntityNotify::entityid(int index) const {
+  // @@protoc_insertion_point(field_get:CMessageDestroyEntityNotify.EntityID)
+  return entityid_.Get(index);
+}
+void CMessageDestroyEntityNotify::set_entityid(int index, ::google::protobuf::uint32 value) {
+  entityid_.Set(index, value);
+  // @@protoc_insertion_point(field_set:CMessageDestroyEntityNotify.EntityID)
+}
+void CMessageDestroyEntityNotify::add_entityid(::google::protobuf::uint32 value) {
+  entityid_.Add(value);
+  // @@protoc_insertion_point(field_add:CMessageDestroyEntityNotify.EntityID)
+}
+const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+CMessageDestroyEntityNotify::entityid() const {
+  // @@protoc_insertion_point(field_list:CMessageDestroyEntityNotify.EntityID)
+  return entityid_;
+}
+::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+CMessageDestroyEntityNotify::mutable_entityid() {
+  // @@protoc_insertion_point(field_mutable_list:CMessageDestroyEntityNotify.EntityID)
+  return &entityid_;
+}
+
+inline const CMessageDestroyEntityNotify* CMessageDestroyEntityNotify::internal_default_instance() {
+  return &CMessageDestroyEntityNotify_default_instance_.get();
 }
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 

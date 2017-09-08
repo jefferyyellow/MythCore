@@ -12,7 +12,7 @@ private:
 	~CGameServerConfig(){}
 
 public:
-	void			loadGameServerConfigFromXml(const char* pFilePath);
+	bool			loadGameServerConfigFromXml(const char* pFilePath);
 
 public:
 	char*			getDBHost(){return mDBHost;}
