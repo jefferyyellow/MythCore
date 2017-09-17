@@ -276,7 +276,7 @@ void CLoginModule::onMessageEnterSceneRequest(CExchangeHead& rExchangeHead, Mess
 		return;
 	}
 
-	CEntityPlayer* pNewPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->allocObj(emObjType_Player));
+	CEntityPlayer* pNewPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->allocObj(emObjType_Entity_Player));
 	if (NULL == pNewPlayer)
 	{
 		return;

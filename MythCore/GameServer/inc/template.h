@@ -17,7 +17,9 @@ private:
 
 enum EmTemplateType
 {
-	emTemplateType_None			= 0,
+	emTemplateType_None				= 0,
+	emTemplateType_FuncNPC			= 1,
+	emTemplateType_Ogre				= 2,
 	emTemplateTypeMax
 };
 
@@ -87,5 +89,39 @@ public:
 	
 public:
 	static CTplVIPConfig* spConfig;
+};
+
+
+class CTplNPC : public CTemplate
+{
+	
+public:
+	CTplNPC(){}
+	~CTplNPC(){}
+};
+
+
+class CTplFuncNPC : public CTplNPC
+{
+public:
+	CTplFuncNPC()
+	{
+#ifndef TEMPEDIT
+		mTemplateType = emTemplateType_FuncNPC;
+#endif
+	}
+	~CTplFuncNPC(){}
+};
+
+class CTplOgre : public CTplNPC
+{
+public:
+	CTplOgre()
+	{
+#ifndef TEMPEDIT
+		mTemplateType = emTemplateType_Ogre;
+#endif
+	}
+	~CTplOgre(){}
 };
 #endif

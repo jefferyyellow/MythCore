@@ -2,8 +2,9 @@
 #include "tinyxml2.h"
 #include "locallogjob.h"
 #include "errcode.h"
+#include "mapmamager.h"
 using namespace tinyxml2;
-bool CMapConfig::loadMapConfig(int nMapID)
+bool CMapConfig::loadMapConfig(unsigned short nMapID)
 {
 	char szFilePath[STRING_LENGTH_256] = {0};
 	snprintf(szFilePath, sizeof(szFilePath) - 1, "gameserverconfig/map/%d.xml", nMapID);
@@ -56,7 +57,7 @@ bool CMapConfig::loadMapConfig(int nMapID)
 }
 
 /// 加载地图NPC配置
-bool CMapConfig::loadMapNPCConfig(int nMapID)
+bool CMapConfig::loadMapNPCConfig(unsigned short nMapID)
 {
 
 	char szFilePath[STRING_LENGTH_256] = { 0 };
@@ -116,6 +117,60 @@ bool CMapConfig::loadMapNPCConfig(int nMapID)
 	return true;
 }
 
+/// 从配置创建地图
+int CMapConfig::createMapFromConfig(CMap* pMap)
+{
+	if (NULL == pMap)
+	{
+		return -1;
+	}
+	// 创建NPC
+	for (unsigned int nIndex = 0; nIndex < mMapNPC.size(); ++ nIndex)
+	{
+		pMap->createNPC(mMapNPC[nIndex].mTempID, mMapNPC[nIndex].mPos);
+	}
+
+	return SUCCESS;
+}
+
+/// 创建地图
+int CMapConfigManager::createMapFromConfig(CMap* pMap)
+{
+	if (NULL == pMap)
+	{
+		return -1;
+	}
+	CMapConfig* pMapConfig = getMapConfig(pMap->getMapID());
+	if (NULL == pMapConfig)
+	{
+		return -1;
+	}
+	pMapConfig->createMapFromConfig(pMap);
+
+	return SUCCESS;
+}
+
+/// 创建所有地图
+bool CMapConfigManager::createAllMapFromConfig()
+{
+	for (int i = 0; i < MAX_MAP_ID; ++ i)
+	{
+		if (NULL == mMapConfig[i])
+		{
+			continue;
+		}
+		CMap* pMap = CMapManager::Inst()->createMap(1, i, 0, mMapConfig[i]->getLength(), mMapConfig[i]->getWidth());
+		if (NULL == pMap)
+		{
+			return false;
+		}
+
+		createMapFromConfig(pMap);
+	}
+
+	return true;
+}
+
 /// 加载地图配置
 bool CMapConfigManager::loadMapConfig(const char* pMapListFile)
 {
@@ -142,7 +197,7 @@ bool CMapConfigManager::loadMapConfig(const char* pMapListFile)
 	XMLElement* pMapElement = pRootElement->FirstChildElement("Map");
 	for (; NULL != pMapElement; pMapElement = pRootElement->NextSiblingElement("Map"))
 	{
-		int nMapID = pMapElement->IntAttribute("id");
+		unsigned short nMapID = pMapElement->IntAttribute("id");
 		if (nMapID > 0 && nMapID < MAX_MAP_ID)
 		{
 			mMapConfig[nMapID] = new CMapConfig;

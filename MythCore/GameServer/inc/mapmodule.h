@@ -5,6 +5,7 @@
 #include "messagefactory.h"
 
 class CEntity;
+class CEntityPlayer;
 class CEntityCharacter;
 class CMythPoint;
 using namespace Myth;
@@ -28,5 +29,13 @@ public:
 	void		broadCastVisiblePlayer(CEntity* pEntity, unsigned short nMessageID, Message* pMessage);
 	/// 实体移动
 	void		onEntityMove(CEntityCharacter* pEntity, CMythPoint& rDesPos);
+	/// 处理玩家移动的请求
+	void		onMessagePlayerMoveRequest(CEntityPlayer* pPlayer, Message* pMessage);
+	/// 发送处理玩家移动的回应
+	void		sendPlayerMoveResponse(CEntityPlayer* pPlayer, int nResult);
+	/// 处理玩家传送的消息
+	void		onMessagePlayerTeleportRequest(CEntityPlayer* pPlayer, Message* pMessage);
+	// 发送玩家传送回应
+	void		sendPlayerTeleportResponse(CEntityPlayer* pPlayer, int nResult);
 };
 #endif

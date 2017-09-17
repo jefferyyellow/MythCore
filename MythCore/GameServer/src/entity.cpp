@@ -1,5 +1,6 @@
 #include "entity.h"
 #include "mapmodule.hxx.pb.h"
+#include "objpool.h"
 CEntity::PLAYER_ALLOC CEntity::mVisiblePlayerAlloc;
 void CEntity::addVisiblePlayer(CEntity* pEntity)
 {
@@ -33,6 +34,37 @@ void CEntity::removeVisiblePlayer(CEntity* pEntity)
 	}
 }
 
+CEntity* CEntity::createEntity(EmEntityType eType)
+{
+	switch (eType)
+	{
+		case emEntityType_Player:
+		{
+			return (CEntity*)CObjPool::Inst()->allocObj(emObjType_Entity_Player);
+			break;
+		}
+		case emEntityType_Ogre:
+		{
+			return (CEntity*)CObjPool::Inst()->allocObj(emObjType_Entity_Ogre);
+			break;
+		}
+		case emEntityType_FuncNPC:
+		{
+			return (CEntity*)CObjPool::Inst()->allocObj(emObjType_Entity_FuncNPC);
+			break;
+		}
+		case emEntityType_Item:
+		{
+			return (CEntity*)CObjPool::Inst()->allocObj(emObjType_Entity_Item);
+			break;
+		}
+		default:
+		{
+			break;
+		}
+	}
+	return NULL;
+}
 
 /// 序列化场景信息到PB·
 void CEntityNPC::serializeSceneInfoToPB(PBNpcSceneInfo* pbNpcInfo)

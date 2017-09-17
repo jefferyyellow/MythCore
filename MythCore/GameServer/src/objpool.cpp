@@ -10,9 +10,24 @@ CObj* CObjPool::allocObj(EmObjType eType)
 		pObj = reinterpret_cast<CObj*>(mPoolImp->mLoginPlayerPool.allocObj());
 		break;
 	}
-	case emObjType_Player:
+	case emObjType_Entity_Player:
 	{
-		pObj = reinterpret_cast<CObj*>(mPoolImp->mPlayerPool.allocObj());
+		pObj = reinterpret_cast<CObj*>(mPoolImp->mPlayerEntityPool.allocObj());
+		break;
+	}
+	case emObjType_Entity_Ogre:
+	{
+		pObj = reinterpret_cast<CObj*>(mPoolImp->mOgreEntityPool.allocObj());
+		break;
+	}
+	case emObjType_Entity_FuncNPC:
+	{
+		pObj = reinterpret_cast<CObj*>(mPoolImp->mFuncNPCEntityPool.allocObj());
+		break;
+	}
+	case emObjType_Entity_Item:
+	{
+		pObj = reinterpret_cast<CObj*>(mPoolImp->mItemEntityPool.allocObj());
 		break;
 	}
 	default:
@@ -32,9 +47,24 @@ CObj* CObjPool::getObj(uint32 nObjID)
 		pObj = reinterpret_cast<CObj*>(mPoolImp->mLoginPlayerPool.getObj(nObjID));
 		break;
 	}
-	case emObjType_Player:
+	case emObjType_Entity_Player:
 	{
-		pObj = reinterpret_cast<CObj*>(mPoolImp->mPlayerPool.getObj(nObjID));
+		pObj = reinterpret_cast<CObj*>(mPoolImp->mPlayerEntityPool.getObj(nObjID));
+		break;
+	}
+	case emObjType_Entity_Ogre:
+	{
+		pObj = reinterpret_cast<CObj*>(mPoolImp->mOgreEntityPool.getObj(nObjID));
+		break;
+	}
+	case emObjType_Entity_FuncNPC:
+	{
+		pObj = reinterpret_cast<CObj*>(mPoolImp->mFuncNPCEntityPool.getObj(nObjID));
+		break;
+	}
+	case emObjType_Entity_Item:
+	{
+		pObj = reinterpret_cast<CObj*>(mPoolImp->mItemEntityPool.getObj(nObjID));
 		break;
 	}
 	default:
@@ -53,9 +83,24 @@ void CObjPool::free(uint32 nObjID)
 		mPoolImp->mLoginPlayerPool.freeByID(nObjID);
 		break;
 	}
-	case emObjType_Player:
+	case emObjType_Entity_Player:
 	{
-		mPoolImp->mPlayerPool.freeByID(nObjID);
+		mPoolImp->mPlayerEntityPool.freeByID(nObjID);
+		break;
+	}
+	case emObjType_Entity_Ogre:
+	{
+		mPoolImp->mOgreEntityPool.freeByID(nObjID);
+		break;
+	}
+	case emObjType_Entity_FuncNPC:
+	{
+		mPoolImp->mFuncNPCEntityPool.freeByID(nObjID);
+		break;
+	}
+	case emObjType_Entity_Item:
+	{
+		mPoolImp->mItemEntityPool.freeByID(nObjID);
 		break;
 	}
 	default:

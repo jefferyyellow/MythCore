@@ -91,6 +91,11 @@ public:
 	/// 在地图中移除实体触发
 	void		onRemoveEntityToMapUnit(CEntityCharacter* pEntity);
 
+	/// 创建NPC
+	CEntityNPC*		createNPC(int nNPCID, CMythPoint& rPos);
+	/// 创建玩家
+	CEntityPlayer*	createPlayer(CEntityPlayer* pPlayer);
+	/// 
 
 	/// 通知其他玩家创建该玩家
 	void		createPlayer2PlayerList(CEntityPlayer* pPlayer, std::vector<CEntityPlayer*>& rPlayerList);
@@ -104,6 +109,8 @@ public:
 	void		destroyPlayer2PlayerList(CEntityPlayer* pPlayer, std::vector<CEntityPlayer*>& rPlayerList);
 	/// 通知该玩家销毁其他玩家
 	void		destroyPlayerList2Player(std::vector<CEntityPlayer*>& rPlayerList, CEntityPlayer* pPlayer);
+	/// 通知该玩家销毁NPC列表
+	void		destroyNPCList2Player(std::vector<CEntityNPC*>& rNPCList, CEntityPlayer* pPlayer);	
 	/// 通知其他玩家销毁该NPC
 	void		destroyNPC2PlayerList(CEntityNPC* pNPC, std::vector<CEntityPlayer*>& rPlayerList);
 
@@ -161,7 +168,7 @@ private:
 
 public:
 	/// 创建地图
-	int					createMap(unsigned short nLineID, unsigned short nMapID, int nMapIndex, short nLength, short nWidth);
+	CMap*				createMap(unsigned short nLineID, unsigned short nMapID, int nMapIndex, short nLength, short nWidth);
 	/// 通过参数得到地图
 	CMap*				getMap(unsigned short nLineID, unsigned short nMapID, int nMapIndex);
 	/// 将地图插入地图列表中

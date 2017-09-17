@@ -24,6 +24,10 @@ public:
 
 	PLAYER_LIST&	getVisiblePlayer() { return mVisiblePlayer; }
 
+
+public:
+	static CEntity* createEntity(EmEntityType eType);
+
 public:
 	unsigned short	getMapID() const { return mMapID; }
 	void			setMapID(unsigned short nValue) { mMapID = nValue; }
@@ -112,22 +116,22 @@ public:
 
 public:
 	/// 刷新最大血
-	virtual		int RefreshMaxHP()			= 0;
+	virtual		int RefreshMaxHP(){return 0;};
 	/// 刷新最大魔
-	virtual		int RefreshMaxMP()			= 0;
+	virtual		int RefreshMaxMP(){return 0;};
 	/// 刷新攻击力
-	virtual		int RefreshAttack()			= 0;
+	virtual		int RefreshAttack(){return 0;};
 	/// 刷新防御力
-	virtual		int RefreshDefence()		= 0;
+	virtual		int RefreshDefence(){return 0;};
 
 	/// 刷新最大血（战斗属性）
-	virtual		int RefreshMaxHPFight()		= 0;
+	virtual		int RefreshMaxHPFight(){return 0;};
 	/// 刷新最大魔（战斗属性）
-	virtual		int RefreshMaxMPFight()		= 0;
+	virtual		int RefreshMaxMPFight(){return 0;};
 	/// 刷新攻击力（战斗属性）
-	virtual		int RefreshAttackFight()	= 0;
+	virtual		int RefreshAttackFight(){return 0;};
 	/// 刷新防御力（战斗属性）
-	virtual		int RefreshDefenceFight()	= 0;
+	virtual		int RefreshDefenceFight(){return 0;};
 
 public:
 	uint32		getTempID() const { return mTempID; }
@@ -170,7 +174,7 @@ public:
 class CEntityFuncNPC : public CEntityNPC
 {
 public:
-	CEntityFuncNPC();
+	CEntityFuncNPC(){}
 	~CEntityFuncNPC(){}
 };
 

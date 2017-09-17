@@ -10,10 +10,16 @@ class CObjPoolImp
 {
 public:
 	typedef CObjManager<CLoginPlayer, 64, 32, 32, OBJ_ID_RANGE(emObjType_LoginPlayer)> LoginPlayerPool;
-	typedef CObjManager<CEntityPlayer, 2000, 30, 30, OBJ_ID_RANGE(emObjType_Player)> PlayerPool;
+	typedef CObjManager<CEntityPlayer, 2000, 30, 30, OBJ_ID_RANGE(emObjType_Entity_Player)> PlayerEntityPool;
+	typedef CObjManager<CEntityOgre, 100000, 1000, 1000, OBJ_ID_RANGE(emObjType_Entity_Ogre)> OgreEntityPool;
+	typedef CObjManager<CEntityFuncNPC, 100000, 1000, 1000, OBJ_ID_RANGE(emObjType_Entity_FuncNPC)> FuncNPCEntityPool;
+	typedef CObjManager<CEntityItem, 100000, 1000, 1000, OBJ_ID_RANGE(emObjType_Entity_Item)> ItemEntityPool;
 
 public:
-	LoginPlayerPool		mLoginPlayerPool;
-	PlayerPool			mPlayerPool;
+	LoginPlayerPool			mLoginPlayerPool;
+	PlayerEntityPool		mPlayerEntityPool;
+	OgreEntityPool			mOgreEntityPool;
+	FuncNPCEntityPool		mFuncNPCEntityPool;
+	ItemEntityPool			mItemEntityPool;
 };
 #endif

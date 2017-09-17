@@ -3,6 +3,7 @@
 #include "objpool.h"
 #include "scenejob.h"
 #include "mapmamager.h"
+#include "locallogjob.h"
 
 void CMapModule::OnTimer(unsigned int nTickOffset)
 {
@@ -58,3 +59,27 @@ void CMapModule::onEntityMove(CEntityCharacter* pEntity, CMythPoint& rDesPos)
 	pMap->onEntityMove(pEntity, rDesPos);
 }
 
+/// 处理玩家移动的请求
+void CMapModule::onMessagePlayerMoveRequest(CEntityPlayer* pPlayer, Message* pMessage)
+{
+	MYTH_ASSERT(NULL == pPlayer || NULL == pMessage, return);
+
+}
+
+/// 发送处理玩家移动的回应
+void CMapModule::sendPlayerMoveResponse(CEntityPlayer* pPlayer, int nResult)
+{
+	MYTH_ASSERT(NULL == pPlayer, return);
+}
+
+/// 处理玩家传送的消息
+void CMapModule::onMessagePlayerTeleportRequest(CEntityPlayer* pPlayer, Message* pMessage)
+{
+	MYTH_ASSERT(NULL == pPlayer || NULL == pMessage, return);
+}
+
+// 发送玩家传送回应
+void CMapModule::sendPlayerTeleportResponse(CEntityPlayer* pPlayer, int nResult)
+{
+	MYTH_ASSERT(NULL == pPlayer, return);
+}

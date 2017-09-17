@@ -26,9 +26,7 @@ enum ERROR_ITEM
 // 400 - 499
 enum ERROR_MAP
 {
-	ERROR_MAP_CREATE_MAP_MEMORY			= 400,		// 创建地图时内存分配失败
-	ERROR_MAP_CREATE_MAP_UNIT_FAILURE	= 401,		// 创建地图单元失败
-	ERROR_MAP_ADD_MAP_LIST_FAILURE		= 402,		// 插入地图列表失败
+	ERROR_MAP_CREATE_MAP_UNIT_FAILURE	= 400,		// 创建地图单元失败
 };
 
 #endif

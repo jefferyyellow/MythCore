@@ -114,7 +114,17 @@ bool CGameServer::initStaticData()
 		return bResult;
 	}
 
-	CMapConfigManager::Inst()->loadMapConfig("gameserverconfig/map/maplist.xml");
+	bResult = CMapConfigManager::Inst()->loadMapConfig("gameserverconfig/map/maplist.xml");
+	if (!bResult)
+	{
+		return bResult;
+	}
+
+	bResult = CMapConfigManager::Inst()->createAllMapFromConfig();
+	if (!bResult)
+	{
+		return bResult;
+	}
 	return true;
 }
 

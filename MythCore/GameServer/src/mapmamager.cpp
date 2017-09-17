@@ -6,7 +6,8 @@
 #include "mapregionsearch.h"
 #include "mapmodule.hxx.pb.h"
 #include "scenejob.h"
-
+#include "mapconfigmanager.h"
+#include "template.h"
 
 CMapUnit::ENTITY_ALLOC CMapUnit::mEntityAlloc;
 void CMapUnit::pushEntity(uint32 nObjID)
@@ -37,6 +38,7 @@ int CMap::init(short nLength, short nWidth)
 	mMapUnit = new CMapUnit[nLength * nWidth];
 	if (NULL == mMapUnit)
 	{
+		LOG_ERROR("create map unit failure!");
 		return ERROR_MAP_CREATE_MAP_UNIT_FAILURE;
 	}
 
@@ -92,9 +94,6 @@ void CMap::onEntityMove(CEntityCharacter* pEntity, CMythPoint& rDesPos)
 	addEntityToMapUnit(pEntity);
 	// 加入到新的地图单元触发
 	onAddEntityToMapUnit(pEntity, tSrcRect, tDesRect);
-
-
-
 }
 
 
@@ -186,6 +185,8 @@ void CMap::onRemoveEntityFromMapUnit(CEntityCharacter* pEntity, CMythRect& rSrcR
 		destroyPlayer2PlayerList((CEntityPlayer*)pEntity, tSearch.mPlayerList);
 		// 通知该玩家移除周边玩家
 		destroyPlayerList2Player(tSearch.mPlayerList, (CEntityPlayer*)pEntity);
+		// 通知该玩家移除周边NPC列表
+		destroyNPCList2Player(tSearch.mNPCList, (CEntityPlayer*)pEntity);
 	}
 	else
 	{
@@ -247,12 +248,52 @@ void CMap::onRemoveEntityToMapUnit(CEntityCharacter* pEntity)
 		destroyPlayer2PlayerList((CEntityPlayer*)pEntity, tSearch.mPlayerList);
 		// 通知该玩家移除周边玩家
 		destroyPlayerList2Player(tSearch.mPlayerList, (CEntityPlayer*)pEntity);
+		// 通知该玩家移除周边NPC列表
+		destroyNPCList2Player(tSearch.mNPCList, (CEntityPlayer*)pEntity);
 	}
 	else
 	{
 		// 通知周边玩家移除该NPC
 		destroyNPC2PlayerList((CEntityNPC*)pEntity, tSearch.mPlayerList);
 	}
+}
+
+
+/// 创建NPC
+CEntityNPC* CMap::createNPC(int nNPCID, CMythPoint& rPos)
+{
+	CTplNPC* pTplNPC = (CTplNPC*)CStaticData::SearchTpl(nNPCID);
+	if (NULL == pTplNPC)
+	{
+		return NULL;
+	}
+	EmEntityType eEntityType = emEntityType_None;
+	if (emTemplateType_FuncNPC == pTplNPC->mTemplateType)
+	{
+		eEntityType = emEntityType_FuncNPC;
+	}
+	else
+	{
+		eEntityType = emEntityType_Ogre;
+	}
+
+
+	CEntityNPC* pEntityNPC = (CEntityNPC*)CEntity::createEntity(eEntityType);
+	if (NULL == pEntityNPC)
+	{
+		return NULL;
+	}
+	pEntityNPC->setTempID(nNPCID);
+	pEntityNPC->setPos(rPos);
+	addEntityToMapUnit(pEntityNPC);
+	onCreateEntityToMapUnit(pEntityNPC);
+	return pEntityNPC;
+}
+
+/// 创建玩家
+CEntityPlayer* CMap::createPlayer(CEntityPlayer* pPlayer)
+{
+	return NULL;
 }
 
 /// 通知其他玩家创建该玩家
@@ -267,6 +308,7 @@ void CMap::createPlayer2PlayerList(CEntityPlayer* pPlayer, std::vector<CEntityPl
 	pPlayer->serializeSceneInfoToPB(pPlayerInfo);
 	for (unsigned int i = 0; i < rPlayerList.size(); ++ i)
 	{
+		pPlayer->addVisiblePlayer(rPlayerList[i]);
 		CSceneJob::Inst()->sendClientMessage(rPlayerList[i], ID_S2C_NOTIYF_CREATE_PLAYER_LIST, &tCreatePlayerListNotify);
 	}
 }
@@ -277,6 +319,7 @@ void CMap::createPlayerList2Player(std::vector<CEntityPlayer*>& rPlayerList, CEn
 	CMessageCreatePlayerListNotify tCreatePlayerListNotify;
 	for (unsigned int i = 0; i < rPlayerList.size(); ++ i)
 	{
+		rPlayerList[i]->addVisiblePlayer(pPlayer);
 		PBPlayerSceneInfo* pPlayerInfo = tCreatePlayerListNotify.add_playerinfo();
 		rPlayerList[i]->serializeSceneInfoToPB(pPlayerInfo);
 	}
@@ -289,6 +332,7 @@ void CMap::createNPCList2Player(std::vector<CEntityNPC*>& rNPCList, CEntityPlaye
 	CMessageCreateNPCListNotify tCreateNPCListNotify;
 	for (unsigned int i = 0; i < rNPCList.size(); ++ i)
 	{
+		rNPCList[i]->addVisiblePlayer(pPlayer);
 		PBNpcSceneInfo* pNpcSceneInfo = tCreateNPCListNotify.add_npcinfo();
 		rNPCList[i]->serializeSceneInfoToPB(pNpcSceneInfo);
 	}
@@ -307,6 +351,7 @@ void CMap::createNPC2PlayerList(CEntityNPC* pNPC, std::vector<CEntityPlayer*>& r
 	pNPC->serializeSceneInfoToPB(tCreateNPCListNotify.add_npcinfo());
 	for (unsigned int i = 0; i < rPlayerList.size(); ++ i)
 	{
+		pNPC->addVisiblePlayer(rPlayerList[i]);
 		CSceneJob::Inst()->sendClientMessage(rPlayerList[i], ID_S2C_NOTIYF_CREATE_NPC_LIST, &tCreateNPCListNotify);
 	}
 }
@@ -322,6 +367,7 @@ void CMap::destroyPlayer2PlayerList(CEntityPlayer* pPlayer, std::vector<CEntityP
 	tDestroyEntityNotify.add_entityid(pPlayer->getObjID());
 	for (unsigned int i = 0; i < rPlayerList.size(); ++i)
 	{
+		pPlayer->removeVisiblePlayer(rPlayerList[i]);
 		CSceneJob::Inst()->sendClientMessage(rPlayerList[i], ID_S2C_NOTIYF_DESTROY_ENTITY, &tDestroyEntityNotify);
 	}
 }
@@ -332,9 +378,22 @@ void CMap::destroyPlayerList2Player(std::vector<CEntityPlayer*>& rPlayerList, CE
 	CMessageDestroyEntityNotify tDestroyEntityNotify;
 	for (unsigned int i = 0; i < rPlayerList.size(); ++i)
 	{
+		rPlayerList[i]->removeVisiblePlayer(pPlayer);
 		tDestroyEntityNotify.add_entityid(rPlayerList[i]->getObjID());
 	}
 
+	CSceneJob::Inst()->sendClientMessage(pPlayer, ID_S2C_NOTIYF_DESTROY_ENTITY, &tDestroyEntityNotify);
+}
+
+/// 通知该玩家销毁NPC列表
+void CMap::destroyNPCList2Player(std::vector<CEntityNPC*>& rNPCList, CEntityPlayer* pPlayer)
+{
+	CMessageDestroyEntityNotify tDestroyEntityNotify;
+	for (unsigned int i = 0; i < rNPCList.size(); ++ i)
+	{
+		rNPCList[i]->removeVisiblePlayer(pPlayer);
+		tDestroyEntityNotify.add_entityid(rNPCList[i]->getObjID());
+	}
 	CSceneJob::Inst()->sendClientMessage(pPlayer, ID_S2C_NOTIYF_DESTROY_ENTITY, &tDestroyEntityNotify);
 }
 
@@ -349,33 +408,35 @@ void CMap::destroyNPC2PlayerList(CEntityNPC* pNPC, std::vector<CEntityPlayer*>& 
 	tDestroyEntityNotify.add_entityid(pNPC->getObjID());
 	for (unsigned int i = 0; i < rPlayerList.size(); ++i)
 	{
+		pNPC->removeVisiblePlayer(rPlayerList[i]);
 		CSceneJob::Inst()->sendClientMessage(rPlayerList[i], ID_S2C_NOTIYF_DESTROY_ENTITY, &tDestroyEntityNotify);
 	}
 }
 
-int CMapManager::createMap(unsigned short nLineID, unsigned short nMapID, int nMapIndex, short nLength, short nWidth)
+
+CMap* CMapManager::createMap(unsigned short nLineID, unsigned short nMapID, int nMapIndex, short nLength, short nWidth)
 {
 	CMap* pNewMap = new CMap;
 	if (NULL == pNewMap)
 	{
 		LOG_ERROR("new CMap failure, LineID: %d, MapID: %d, MapIndex: %d", nLineID, nMapID, nMapIndex);
-		return ERROR_MAP_CREATE_MAP_MEMORY;
+		return NULL;
 	}
 	int nResult = pNewMap->init(nLength, nWidth);
 	if (SUCCESS != nResult)
 	{
 		LOG_ERROR("new map unit failure, LineID: %d, MapID: %d, MapIndex: %d, Length: %d, Width: %d", nLineID, nMapID, nMapIndex, nLength, nWidth);
 		delete pNewMap;
-		return nResult;
+		return NULL;
 	}
 	bool bResult = insertMap(nLineID, nMapID, nMapIndex, pNewMap);
 	if (!bResult)
 	{
 		LOG_ERROR("insert map into map list failure, LineID: %d, MapID: %d, MapIndex: %d", nLineID, nMapID, nMapIndex);
 		delete pNewMap;
-		return ERROR_MAP_ADD_MAP_LIST_FAILURE;
+		return NULL;
 	}
-	return SUCCESS;
+	return pNewMap;
 }
 
 CMap* CMapManager::getMap(unsigned short nLineID, unsigned short nMapID, int nMapIndex)
