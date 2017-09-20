@@ -68,7 +68,8 @@ public:
 	bool					loadMapNPCConfig(unsigned short nMapID);
 	/// 从配置创建地图
 	int						createMapFromConfig(CMap* pMap);
-
+	/// 传送门的位置
+	int						getPortalPos(unsigned short nMapID, CMythPoint& rPortalPos);
 public:
 	short					getLength() const { return mLength; }
 	void					setLength(short nValue) { mLength = nValue; }
@@ -117,7 +118,7 @@ public:
 	/// 加载地图配置
 	bool					loadMapConfig(const char* pMapListFile);
 	/// 通过地图ID得到地图配置
-	CMapConfig*			getMapConfig(unsigned short nMapID)
+	CMapConfig*				getMapConfig(unsigned short nMapID)
 	{
 		if (nMapID > 0 && nMapID < MAX_MAP_ID)
 		{
@@ -125,6 +126,7 @@ public:
 		}
 		return NULL;
 	}
+	int						getMapPortalPos(unsigned short nSrcMap, unsigned short nDesMap, CMythPoint& rPortalPos);
 
 private:
 	CMapConfig*			mMapConfig[MAX_MAP_ID];

@@ -155,7 +155,7 @@ void protobuf_AssignDesc_mapmodule_2ehxx() {
   CMessagePlayerMoveRequest_descriptor_ = file->message_type(6);
   static const int CMessagePlayerMoveRequest_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessagePlayerMoveRequest, desposx_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessagePlayerMoveRequest, despoxy_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessagePlayerMoveRequest, desposy_),
   };
   CMessagePlayerMoveRequest_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -317,15 +317,19 @@ void protobuf_AddDesc_mapmodule_2ehxx_impl() {
     " \003(\0132\017.PBNpcSceneInfo\"/\n\033CMessageDestroy"
     "EntityNotify\022\020\n\010EntityID\030\001 \003(\r\"=\n\031CMessa"
     "gePlayerMoveRequest\022\017\n\007DesPosX\030\001 \001(\r\022\017\n\007"
-    "DesPoxY\030\002 \001(\r\",\n\032CMessagePlayerMoveRespo"
+    "DesPosY\030\002 \001(\r\",\n\032CMessagePlayerMoveRespo"
     "nse\022\016\n\006Result\030\001 \001(\r\".\n\035CMessagePlayerTel"
     "eportRequest\022\r\n\005MapID\030\001 \001(\r\"0\n\036CMessageP"
-    "layerTeleportResponse\022\016\n\006Result\030\001 \001(\r*\272\001"
+    "layerTeleportResponse\022\016\n\006Result\030\001 \001(\r*\310\002"
     "\n\021MAP_MODULE_MSG_ID\022\027\n\023ID_MAP_MODULE_ERR"
     "OR\020\000\022\036\n\031ID_S2C_NOTIYF_ENTITY_MOVE\020\200\030\022%\n "
     "ID_S2C_NOTIYF_CREATE_PLAYER_LIST\020\201\030\022\"\n\035I"
     "D_S2C_NOTIYF_CREATE_NPC_LIST\020\202\030\022!\n\034ID_S2"
-    "C_NOTIYF_DESTROY_ENTITY\020\203\030b\006proto3", 834);
+    "C_NOTIYF_DESTROY_ENTITY\020\203\030\022\037\n\032ID_C2S_REQ"
+    "UEST_PLAYER_MOVE\020\204\030\022 \n\033ID_S2C_RESPONSE_P"
+    "LAYER_MOVE\020\205\030\022#\n\036ID_C2S_REQUEST_PLAYER_T"
+    "ELEPORT\020\206\030\022$\n\037ID_S2C_RESPONSE_PLAYER_TEL"
+    "EPORT\020\207\030b\006proto3", 976);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "mapmodule.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_mapmodule_2ehxx);
@@ -353,6 +357,10 @@ bool MAP_MODULE_MSG_ID_IsValid(int value) {
     case 3073:
     case 3074:
     case 3075:
+    case 3076:
+    case 3077:
+    case 3078:
+    case 3079:
       return true;
     default:
       return false;
@@ -2344,7 +2352,7 @@ inline const CMessageDestroyEntityNotify* CMessageDestroyEntityNotify::internal_
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int CMessagePlayerMoveRequest::kDesPosXFieldNumber;
-const int CMessagePlayerMoveRequest::kDesPoxYFieldNumber;
+const int CMessagePlayerMoveRequest::kDesPosYFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 CMessagePlayerMoveRequest::CMessagePlayerMoveRequest()
@@ -2366,8 +2374,8 @@ CMessagePlayerMoveRequest::CMessagePlayerMoveRequest(const CMessagePlayerMoveReq
 }
 
 void CMessagePlayerMoveRequest::SharedCtor() {
-  ::memset(&desposx_, 0, reinterpret_cast<char*>(&despoxy_) -
-    reinterpret_cast<char*>(&desposx_) + sizeof(despoxy_));
+  ::memset(&desposx_, 0, reinterpret_cast<char*>(&desposy_) -
+    reinterpret_cast<char*>(&desposx_) + sizeof(desposy_));
   _cached_size_ = 0;
 }
 
@@ -2422,7 +2430,7 @@ void CMessagePlayerMoveRequest::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(desposx_, despoxy_);
+  ZR_(desposx_, desposy_);
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -2449,18 +2457,18 @@ bool CMessagePlayerMoveRequest::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_DesPoxY;
+        if (input->ExpectTag(16)) goto parse_DesPosY;
         break;
       }
 
-      // optional uint32 DesPoxY = 2;
+      // optional uint32 DesPosY = 2;
       case 2: {
         if (tag == 16) {
-         parse_DesPoxY:
+         parse_DesPosY:
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &despoxy_)));
+                 input, &desposy_)));
         } else {
           goto handle_unusual;
         }
@@ -2497,9 +2505,9 @@ void CMessagePlayerMoveRequest::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->desposx(), output);
   }
 
-  // optional uint32 DesPoxY = 2;
-  if (this->despoxy() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->despoxy(), output);
+  // optional uint32 DesPosY = 2;
+  if (this->desposy() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->desposy(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:CMessagePlayerMoveRequest)
@@ -2514,9 +2522,9 @@ void CMessagePlayerMoveRequest::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->desposx(), target);
   }
 
-  // optional uint32 DesPoxY = 2;
-  if (this->despoxy() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->despoxy(), target);
+  // optional uint32 DesPosY = 2;
+  if (this->desposy() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->desposy(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:CMessagePlayerMoveRequest)
@@ -2534,11 +2542,11 @@ size_t CMessagePlayerMoveRequest::ByteSizeLong() const {
         this->desposx());
   }
 
-  // optional uint32 DesPoxY = 2;
-  if (this->despoxy() != 0) {
+  // optional uint32 DesPosY = 2;
+  if (this->desposy() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->despoxy());
+        this->desposy());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -2577,8 +2585,8 @@ void CMessagePlayerMoveRequest::UnsafeMergeFrom(const CMessagePlayerMoveRequest&
   if (from.desposx() != 0) {
     set_desposx(from.desposx());
   }
-  if (from.despoxy() != 0) {
-    set_despoxy(from.despoxy());
+  if (from.desposy() != 0) {
+    set_desposy(from.desposy());
   }
 }
 
@@ -2607,7 +2615,7 @@ void CMessagePlayerMoveRequest::Swap(CMessagePlayerMoveRequest* other) {
 }
 void CMessagePlayerMoveRequest::InternalSwap(CMessagePlayerMoveRequest* other) {
   std::swap(desposx_, other->desposx_);
-  std::swap(despoxy_, other->despoxy_);
+  std::swap(desposy_, other->desposy_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -2637,18 +2645,18 @@ void CMessagePlayerMoveRequest::set_desposx(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:CMessagePlayerMoveRequest.DesPosX)
 }
 
-// optional uint32 DesPoxY = 2;
-void CMessagePlayerMoveRequest::clear_despoxy() {
-  despoxy_ = 0u;
+// optional uint32 DesPosY = 2;
+void CMessagePlayerMoveRequest::clear_desposy() {
+  desposy_ = 0u;
 }
-::google::protobuf::uint32 CMessagePlayerMoveRequest::despoxy() const {
-  // @@protoc_insertion_point(field_get:CMessagePlayerMoveRequest.DesPoxY)
-  return despoxy_;
+::google::protobuf::uint32 CMessagePlayerMoveRequest::desposy() const {
+  // @@protoc_insertion_point(field_get:CMessagePlayerMoveRequest.DesPosY)
+  return desposy_;
 }
-void CMessagePlayerMoveRequest::set_despoxy(::google::protobuf::uint32 value) {
+void CMessagePlayerMoveRequest::set_desposy(::google::protobuf::uint32 value) {
   
-  despoxy_ = value;
-  // @@protoc_insertion_point(field_set:CMessagePlayerMoveRequest.DesPoxY)
+  desposy_ = value;
+  // @@protoc_insertion_point(field_set:CMessagePlayerMoveRequest.DesPosY)
 }
 
 inline const CMessagePlayerMoveRequest* CMessagePlayerMoveRequest::internal_default_instance() {

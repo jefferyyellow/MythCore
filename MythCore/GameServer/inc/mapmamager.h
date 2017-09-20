@@ -75,21 +75,25 @@ public:
 	}
 
 	/// 实体移动
-	void		onEntityMove(CEntityCharacter* pEntity, CMythPoint& rDesPos);
+	void		onEntityMove(CEntity* pEntity, CMythPoint& rDesPos);
 	/// 得到可以区域
-	void		getVisibleRect(CEntityCharacter* pEntity, CMythRect& rRect);
+	void		getVisibleRect(CEntity* pEntity, CMythRect& rRect);
 	/// 把实体加入地图单元
 	bool		addEntityToMapUnit(CEntity* pEntity);
 	/// 把实体加入地图单元触发
-	void		onAddEntityToMapUnit(CEntityCharacter* pEntity, CMythRect& rSrcRect, CMythRect& rDesRect);
+	void		onAddEntityToMapUnit(CEntity* pEntity, CMythRect& rSrcRect, CMythRect& rDesRect);
 	/// 将实体从地图单元中移除
 	bool		removeEntityFromMapUnit(CEntity* pEntity);
 	/// 将实体从地图单元中移除触发
-	void		onRemoveEntityFromMapUnit(CEntityCharacter* pEntity, CMythRect& rSrcRect, CMythRect& rDesRect);
+	void		onRemoveEntityFromMapUnit(CEntity* pEntity, CMythRect& rSrcRect, CMythRect& rDesRect);
+	/// 在地图中创建实体
+	bool		createEntityToMap(CEntity* pEntity, CMythPoint& rPos);
 	/// 在地图中创建实体触发
-	void		onCreateEntityToMapUnit(CEntityCharacter* pEntity);
+	void		onCreateEntityToMap(CEntity* pEntity);
+	/// 在地图中移除实体
+	bool		removeEntityFromMap(CEntity* pEntity);
 	/// 在地图中移除实体触发
-	void		onRemoveEntityToMapUnit(CEntityCharacter* pEntity);
+	void		onRemoveEntityFromMap(CEntity* pEntity);
 
 	/// 创建NPC
 	CEntityNPC*		createNPC(int nNPCID, CMythPoint& rPos);

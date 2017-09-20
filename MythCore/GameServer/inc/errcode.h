@@ -27,6 +27,7 @@ enum ERROR_ITEM
 enum ERROR_MAP
 {
 	ERROR_MAP_CREATE_MAP_UNIT_FAILURE	= 400,		// 创建地图单元失败
+	ERROR_MAP_TELEPORT_MAP_FAILURE		= 401,		// 传送地图失败
 };
 
 #endif

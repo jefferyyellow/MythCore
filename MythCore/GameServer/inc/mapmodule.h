@@ -1,8 +1,8 @@
 #ifndef __MAPMODULE_H__
 #define __MAPMODULE_H__
 #include "singleton.h"
-#include "logicmodule.h"
 #include "messagefactory.h"
+#include "logicmodule.h"
 
 class CEntity;
 class CEntityPlayer;
@@ -24,7 +24,9 @@ public:
 	virtual		void	OnTimer(unsigned int nTickOffset);
 
 public:
+	int			teleportEntity(CEntity* pEntity, unsigned short nMapID, CMythPoint& rPos);
 
+public:
 	/// 广播给附近的可见玩家
 	void		broadCastVisiblePlayer(CEntity* pEntity, unsigned short nMessageID, Message* pMessage);
 	/// 实体移动

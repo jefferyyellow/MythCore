@@ -56,7 +56,7 @@ void CMap::clear()
 }
 
 /// 得到可以区域
-void CMap::getVisibleRect(CEntityCharacter* pEntity, CMythRect& rRect)
+void CMap::getVisibleRect(CEntity* pEntity, CMythRect& rRect)
 {
 	rRect.mTopLeft.mX = (std::max)(pEntity->getPos().mX - VISIBLE_RADIUS_X, 0);
 	rRect.mTopLeft.mY = (std::max)(pEntity->getPos().mY - VISIBLE_RADIUS_Y, 0);
@@ -67,7 +67,7 @@ void CMap::getVisibleRect(CEntityCharacter* pEntity, CMythRect& rRect)
 }
 
 /// 实体移动
-void CMap::onEntityMove(CEntityCharacter* pEntity, CMythPoint& rDesPos)
+void CMap::onEntityMove(CEntity* pEntity, CMythPoint& rDesPos)
 {
 	MYTH_ASSERT(NULL == pEntity, return);
 	// 已经在目的地了
@@ -113,7 +113,7 @@ bool CMap::addEntityToMapUnit(CEntity* pEntity)
 }
 
 /// 把实体加入地图单元触发
-void CMap::onAddEntityToMapUnit(CEntityCharacter* pEntity, CMythRect& rSrcRect, CMythRect& rDesRect)
+void CMap::onAddEntityToMapUnit(CEntity* pEntity, CMythRect& rSrcRect, CMythRect& rDesRect)
 {
 	CMythRect tRectArray[4];
 	// tDesRect - tSrcRect,从新增的那一部分中增加
@@ -161,7 +161,7 @@ bool CMap::removeEntityFromMapUnit(CEntity* pEntity)
 }
 
 /// 将实体从地图单元中移除触发
-void CMap::onRemoveEntityFromMapUnit(CEntityCharacter* pEntity, CMythRect& rSrcRect, CMythRect& rDesRect)
+void CMap::onRemoveEntityFromMapUnit(CEntity* pEntity, CMythRect& rSrcRect, CMythRect& rDesRect)
 {
 	MYTH_ASSERT(NULL == pEntity, return);
 	CMythRect tRectArray[4];
@@ -195,9 +195,26 @@ void CMap::onRemoveEntityFromMapUnit(CEntityCharacter* pEntity, CMythRect& rSrcR
 	}
 }
 
+/// 在地图中创建实体
+bool CMap::createEntityToMap(CEntity* pEntity, CMythPoint& rPos)
+{
+	if (NULL == pEntity)
+	{
+		return false;
+	}
+	CMapUnit* pMapUnit = getMapUnit(rPos.mX, rPos.mY);
+	if (NULL == pMapUnit)
+	{
+		return false;
+	}
+
+	pMapUnit->pushEntity(pEntity->getObjID());
+	onCreateEntityToMap(pEntity);
+	return true;
+}
 
 /// 在地图中创建实体触发
-void CMap::onCreateEntityToMapUnit(CEntityCharacter* pEntity)
+void CMap::onCreateEntityToMap(CEntity* pEntity)
 {
 	if (NULL == pEntity)
 	{
@@ -227,8 +244,24 @@ void CMap::onCreateEntityToMapUnit(CEntityCharacter* pEntity)
 	}
 }
 
+/// 在地图中移除实体
+bool CMap::removeEntityFromMap(CEntity* pEntity)
+{
+	MYTH_ASSERT(NULL == pEntity, return false);
+
+	CMapUnit* pMapUnit = getMapUnit(pEntity->getPosX(), pEntity->getPosY());
+	if (NULL == pMapUnit)
+	{
+		return false;
+	}
+	pMapUnit->removeEntity(pEntity->getObjID());
+	onRemoveEntityFromMap(pEntity);
+	return true;
+}
+
+
 /// 在地图中移除实体触发
-void CMap::onRemoveEntityToMapUnit(CEntityCharacter* pEntity)
+void CMap::onRemoveEntityFromMap(CEntity* pEntity)
 {
 	if (NULL == pEntity)
 	{
@@ -286,7 +319,7 @@ CEntityNPC* CMap::createNPC(int nNPCID, CMythPoint& rPos)
 	pEntityNPC->setTempID(nNPCID);
 	pEntityNPC->setPos(rPos);
 	addEntityToMapUnit(pEntityNPC);
-	onCreateEntityToMapUnit(pEntityNPC);
+	onCreateEntityToMap(pEntityNPC);
 	return pEntityNPC;
 }
 

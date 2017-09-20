@@ -9,6 +9,10 @@ enum MAP_MODULE_MSG_ID
 	ID_S2C_NOTIYF_CREATE_PLAYER_LIST		= 0x0C01;	// 服务器->客户端 创建玩家列表通知
 	ID_S2C_NOTIYF_CREATE_NPC_LIST			= 0x0C02;	// 服务器->客户端 创建NPC列表通知
 	ID_S2C_NOTIYF_DESTROY_ENTITY			= 0x0C03;	// 服务器->客户端 销毁实体通知
+	ID_C2S_REQUEST_PLAYER_MOVE				= 0x0C04;	// 客户端->服务器 玩家移动的请求
+	ID_S2C_RESPONSE_PLAYER_MOVE				= 0x0C05;	// 服务器->客户端 玩家移动回应
+	ID_C2S_REQUEST_PLAYER_TELEPORT			= 0x0C06;	// 客户端->服务器 玩家传送请求
+	ID_S2C_RESPONSE_PLAYER_TELEPORT			= 0x0C07;	// 服务器->客户端 玩家传送回应
 };
 
 // 实体移动通知 ID_S2C_NOTIYF_ENTITY_MOVE
@@ -58,7 +62,7 @@ message CMessageDestroyEntityNotify
 message CMessagePlayerMoveRequest
 {
 	uint32	DesPosX							= 1;		// 目标位置X坐标
-	uint32	DesPoxY							= 2;		// 目标位置Y坐标
+	uint32	DesPosY							= 2;		// 目标位置Y坐标
 }
 
 // 玩家移动回应 ID_S2C_RESPONSE_PLAYER_MOVE

@@ -53,12 +53,16 @@ enum MAP_MODULE_MSG_ID {
   ID_S2C_NOTIYF_CREATE_PLAYER_LIST = 3073,
   ID_S2C_NOTIYF_CREATE_NPC_LIST = 3074,
   ID_S2C_NOTIYF_DESTROY_ENTITY = 3075,
+  ID_C2S_REQUEST_PLAYER_MOVE = 3076,
+  ID_S2C_RESPONSE_PLAYER_MOVE = 3077,
+  ID_C2S_REQUEST_PLAYER_TELEPORT = 3078,
+  ID_S2C_RESPONSE_PLAYER_TELEPORT = 3079,
   MAP_MODULE_MSG_ID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   MAP_MODULE_MSG_ID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool MAP_MODULE_MSG_ID_IsValid(int value);
 const MAP_MODULE_MSG_ID MAP_MODULE_MSG_ID_MIN = ID_MAP_MODULE_ERROR;
-const MAP_MODULE_MSG_ID MAP_MODULE_MSG_ID_MAX = ID_S2C_NOTIYF_DESTROY_ENTITY;
+const MAP_MODULE_MSG_ID MAP_MODULE_MSG_ID_MAX = ID_S2C_RESPONSE_PLAYER_TELEPORT;
 const int MAP_MODULE_MSG_ID_ARRAYSIZE = MAP_MODULE_MSG_ID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* MAP_MODULE_MSG_ID_descriptor();
@@ -726,18 +730,18 @@ class CMessagePlayerMoveRequest : public ::google::protobuf::Message /* @@protoc
   ::google::protobuf::uint32 desposx() const;
   void set_desposx(::google::protobuf::uint32 value);
 
-  // optional uint32 DesPoxY = 2;
-  void clear_despoxy();
-  static const int kDesPoxYFieldNumber = 2;
-  ::google::protobuf::uint32 despoxy() const;
-  void set_despoxy(::google::protobuf::uint32 value);
+  // optional uint32 DesPosY = 2;
+  void clear_desposy();
+  static const int kDesPosYFieldNumber = 2;
+  ::google::protobuf::uint32 desposy() const;
+  void set_desposy(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:CMessagePlayerMoveRequest)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::uint32 desposx_;
-  ::google::protobuf::uint32 despoxy_;
+  ::google::protobuf::uint32 desposy_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_mapmodule_2ehxx_impl();
   friend void  protobuf_AddDesc_mapmodule_2ehxx_impl();
@@ -1300,18 +1304,18 @@ inline void CMessagePlayerMoveRequest::set_desposx(::google::protobuf::uint32 va
   // @@protoc_insertion_point(field_set:CMessagePlayerMoveRequest.DesPosX)
 }
 
-// optional uint32 DesPoxY = 2;
-inline void CMessagePlayerMoveRequest::clear_despoxy() {
-  despoxy_ = 0u;
+// optional uint32 DesPosY = 2;
+inline void CMessagePlayerMoveRequest::clear_desposy() {
+  desposy_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessagePlayerMoveRequest::despoxy() const {
-  // @@protoc_insertion_point(field_get:CMessagePlayerMoveRequest.DesPoxY)
-  return despoxy_;
+inline ::google::protobuf::uint32 CMessagePlayerMoveRequest::desposy() const {
+  // @@protoc_insertion_point(field_get:CMessagePlayerMoveRequest.DesPosY)
+  return desposy_;
 }
-inline void CMessagePlayerMoveRequest::set_despoxy(::google::protobuf::uint32 value) {
+inline void CMessagePlayerMoveRequest::set_desposy(::google::protobuf::uint32 value) {
   
-  despoxy_ = value;
-  // @@protoc_insertion_point(field_set:CMessagePlayerMoveRequest.DesPoxY)
+  desposy_ = value;
+  // @@protoc_insertion_point(field_set:CMessagePlayerMoveRequest.DesPosY)
 }
 
 inline const CMessagePlayerMoveRequest* CMessagePlayerMoveRequest::internal_default_instance() {

@@ -133,6 +133,20 @@ int CMapConfig::createMapFromConfig(CMap* pMap)
 	return SUCCESS;
 }
 
+int CMapConfig::getPortalPos(unsigned short nMapID, CMythPoint& rPortalPos)
+{
+	for (unsigned int i = 0; i < mMapPortal.size(); ++ i)
+	{
+		if (mMapPortal[i].mTargetMapID == nMapID)
+		{
+			rPortalPos = mMapPortal[i].mPos;
+			return SUCCESS;
+		}
+	}
+
+	return -1;
+}
+
 /// ´´½¨µØÍ¼
 int CMapConfigManager::createMapFromConfig(CMap* pMap)
 {
@@ -227,4 +241,15 @@ bool CMapConfigManager::loadMapConfig(const char* pMapListFile)
 	}
 
 	return true;
+}
+
+int CMapConfigManager::getMapPortalPos(unsigned short nSrcMapID, unsigned short nDesMapID, CMythPoint& rPortalPos)
+{
+	CMapConfig* pMapConfig = getMapConfig(nDesMapID);
+	if (NULL == pMapConfig)
+	{
+		return -1;
+	}
+
+	return pMapConfig->getPortalPos(nSrcMapID, rPortalPos);
 }
