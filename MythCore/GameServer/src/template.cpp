@@ -2,7 +2,7 @@
 #include <stddef.h>
 CTemplate* CStaticData::spTemplate[ MAX_TEMPLATE_NUM ]							= { NULL };
 
-CTplPlayerLevelUpExpConfig* CTplPlayerLevelUpExpConfig::spConfig				= NULL;
+CTplPlayerLevelExpConfig* CTplPlayerLevelExpConfig::spConfig				= NULL;
 CTplVIPConfig* CTplVIPConfig::spConfig											= NULL;
 
 CTemplate* CStaticData::SearchTpl(unsigned int nTempID)

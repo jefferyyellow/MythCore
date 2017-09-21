@@ -212,9 +212,9 @@ class CMessagePlayerDiamondUpdateNotify : public ::google::protobuf::Message /* 
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 Diamond = 2;
+  // optional uint32 Diamond = 1;
   void clear_diamond();
-  static const int kDiamondFieldNumber = 2;
+  static const int kDiamondFieldNumber = 1;
   ::google::protobuf::uint32 diamond() const;
   void set_diamond(::google::protobuf::uint32 value);
 
@@ -262,7 +262,7 @@ inline const CMessagePlayerMoneyUpdateNotify* CMessagePlayerMoneyUpdateNotify::i
 
 // CMessagePlayerDiamondUpdateNotify
 
-// optional uint32 Diamond = 2;
+// optional uint32 Diamond = 1;
 inline void CMessagePlayerDiamondUpdateNotify::clear_diamond() {
   diamond_ = 0u;
 }

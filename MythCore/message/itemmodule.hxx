@@ -18,5 +18,5 @@ message CMessagePlayerMoneyUpdateNotify
 // 玩家钻石更新通知
 message CMessagePlayerDiamondUpdateNotify
 {
-	uint32	Diamond				= 2;		// 玩家当前的钻石
+	uint32	Diamond				= 1;		// 玩家当前的钻石
 }

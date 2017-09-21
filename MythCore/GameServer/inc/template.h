@@ -34,16 +34,6 @@ public:
 #ifndef TEMPEDIT
 	EmTemplateType		mTemplateType;
 #endif
-
-	CTemplate()
-	{
-		mTempID = 0;
-#ifndef TEMPEDIT
-		mTemplateType = emTemplateType_None;
-#endif
-	}
-
-	~CTemplate() {}
 };
 
 // ********************************************************************** //
@@ -70,6 +60,10 @@ public:
 	// FieldType: INT4
 	// Type:	  EDITNUMBER(1,10000)
 	int		mPileLimit;
+
+public:
+	void	setFromPB();
+	void	createToPB();
 };
 
 // ********************************************************************** //
@@ -84,7 +78,7 @@ public:
 // path		= Config/d等级经验表		## 路径
 // parent	=							## 父亲模版
 // ********************************************************************** //
-class CTplPlayerLevelUpExpConfig : public CTemplate
+class CTplPlayerLevelExpConfig : public CTemplate
 {
 public:
 	// FieldName: 第%d级升到下一级经验值
@@ -93,7 +87,7 @@ public:
 	int			mLevelUpExp[MAX_LEVEL];
 
 public:
-	static CTplPlayerLevelUpExpConfig* spConfig;
+	static CTplPlayerLevelExpConfig* spConfig;
 };
 
 // ********************************************************************** //
@@ -136,10 +130,6 @@ class CTplNPC : public CTemplate
 	// FieldType: STRING32
 	// Type:	  EDITSTRING
 	char	mName[STRING32];
-
-public:
-	CTplNPC(){}
-	~CTplNPC(){}
 };
 // ********************************************************************** //
 // ENDMAKE
@@ -154,14 +144,7 @@ public:
 // ********************************************************************** //
 class CTplFuncNPC : public CTplNPC
 {
-public:
-	CTplFuncNPC()
-	{
-#ifndef TEMPEDIT
-		mTemplateType = emTemplateType_FuncNPC;
-#endif
-	}
-	~CTplFuncNPC(){}
+
 };
 // ********************************************************************** //
 // ENDMAKE
@@ -177,13 +160,7 @@ public:
 class CTplOgre : public CTplNPC
 {
 public:
-	CTplOgre()
-	{
-#ifndef TEMPEDIT
-		mTemplateType = emTemplateType_Ogre;
-#endif
-	}
-	~CTplOgre(){}
+	
 };
 #endif
 // ********************************************************************** //

@@ -115,7 +115,7 @@ void protobuf_AddDesc_itemmodule_2ehxx_impl() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\016itemmodule.hxx\"0\n\037CMessagePlayerMoneyU"
     "pdateNotify\022\r\n\005Money\030\001 \001(\r\"4\n!CMessagePl"
-    "ayerDiamondUpdateNotify\022\017\n\007Diamond\030\002 \001(\r"
+    "ayerDiamondUpdateNotify\022\017\n\007Diamond\030\001 \001(\r"
     "*\200\001\n\022ITEM_MODULE_MSG_ID\022\030\n\024ID_ITEM_MODUL"
     "E_ERROR\020\000\022&\n!ID_S2C_NOTIYF_PLAYER_MONEY_"
     "UPDATE\020\200\020\022(\n#ID_S2C_NOTIYF_PLAYER_DIAMON"
@@ -483,9 +483,9 @@ bool CMessagePlayerDiamondUpdateNotify::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 Diamond = 2;
-      case 2: {
-        if (tag == 16) {
+      // optional uint32 Diamond = 1;
+      case 1: {
+        if (tag == 8) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -521,9 +521,9 @@ failure:
 void CMessagePlayerDiamondUpdateNotify::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:CMessagePlayerDiamondUpdateNotify)
-  // optional uint32 Diamond = 2;
+  // optional uint32 Diamond = 1;
   if (this->diamond() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->diamond(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->diamond(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:CMessagePlayerDiamondUpdateNotify)
@@ -533,9 +533,9 @@ void CMessagePlayerDiamondUpdateNotify::SerializeWithCachedSizes(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:CMessagePlayerDiamondUpdateNotify)
-  // optional uint32 Diamond = 2;
+  // optional uint32 Diamond = 1;
   if (this->diamond() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->diamond(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->diamond(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:CMessagePlayerDiamondUpdateNotify)
@@ -546,7 +546,7 @@ size_t CMessagePlayerDiamondUpdateNotify::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:CMessagePlayerDiamondUpdateNotify)
   size_t total_size = 0;
 
-  // optional uint32 Diamond = 2;
+  // optional uint32 Diamond = 1;
   if (this->diamond() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -631,7 +631,7 @@ void CMessagePlayerDiamondUpdateNotify::InternalSwap(CMessagePlayerDiamondUpdate
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // CMessagePlayerDiamondUpdateNotify
 
-// optional uint32 Diamond = 2;
+// optional uint32 Diamond = 1;
 void CMessagePlayerDiamondUpdateNotify::clear_diamond() {
   diamond_ = 0u;
 }
