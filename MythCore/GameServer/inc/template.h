@@ -3,15 +3,55 @@
 
 #define STRING32					32
 #define STRING256					256
-#define MAX_TEMPLATE_NUM			100000	// 最大模版数
+#define MAX_TEMPLATE_NUM			100000				// 最大模版数
+#define TEMPLATE_CACHE_SIZE			10 * 1024 * 1024	// 大Cache
 class CTemplate;
+class PBTplTemplate;
+class PBTplItem;
+class PBTplPlayerLevelExpConfig;
+class PBTplVIPConfig;
+class PBTplNPC;
+class PBTplFuncNPC;
+class PBTplOgre;
+
+#define TEMPLATE_SET_FROM_PB(ClassName, PBParent, PBName) \
+	{ \
+			for (int i = 0; i < (int)PBParent->PBName##_size(); ++ i) \
+			{ \
+				void* pBuff = malloc(sizeof(ClassName)); \
+				if (NULL == pBuff) \
+				{ \
+					break; \
+				} \
+				memset(pBuff, 0, sizeof(ClassName)); \
+				ClassName* pTemplate = new(pBuff) ClassName; \
+				pTemplate->setFromPB(PBParent->mutable_##PBName(i)); \
+				if (spTemplate[pTemplate->mTempID] != NULL) \
+				{ \
+					free(spTemplate[pTemplate->mTempID]); \
+					spTemplate[pTemplate->mTempID] = NULL; \
+				} \
+				spTemplate[pTemplate->mTempID] = pTemplate; \
+			} \
+	}
+
+
 class CStaticData
 {
+
 public:
-	static CTemplate* SearchTpl(unsigned int vTempID);
+	/// 从文件中加载
+	static bool	loadFromFile(const char* pFilePath);
+	/// 从PB中创建
+	static void	createFromPB(PBTplTemplate* pTplTemplate);
+public:
+	static CTemplate* searchTpl(unsigned int vTempID);
 
 private:
 	static CTemplate* spTemplate[MAX_TEMPLATE_NUM];						// 模版表
+
+public:
+	static int	mVersion;			// 版本号
 };
 
 
@@ -34,6 +74,16 @@ public:
 #ifndef TEMPEDIT
 	EmTemplateType		mTemplateType;
 #endif
+
+	CTemplate()
+	{
+		mTempID = 0;
+#ifndef TEMPEDIT
+		mTemplateType = emTemplateType_None;
+#endif
+	}
+
+	~CTemplate() {}
 };
 
 // ********************************************************************** //
@@ -62,8 +112,10 @@ public:
 	int		mPileLimit;
 
 public:
-	void	setFromPB();
-	void	createToPB();
+	CTplItem(){}
+	~CTplItem(){}
+	void	setFromPB(PBTplItem* pbItem);
+	void	createToPB(PBTplItem* pbItem);
 };
 
 // ********************************************************************** //
@@ -88,6 +140,13 @@ public:
 
 public:
 	static CTplPlayerLevelExpConfig* spConfig;
+
+public:
+	CTplPlayerLevelExpConfig(){}
+	~CTplPlayerLevelExpConfig(){}
+
+	void	setFromPB(PBTplPlayerLevelExpConfig* pbConfig);
+	void	createToPB(PBTplPlayerLevelExpConfig* pbConfig);
 };
 
 // ********************************************************************** //
@@ -112,6 +171,13 @@ public:
 	
 public:
 	static CTplVIPConfig* spConfig;
+
+public:
+	CTplVIPConfig(){}
+	~CTplVIPConfig(){}
+
+	void	setFromPB(PBTplVIPConfig* pbConfig);
+	void	createToPB(PBTplVIPConfig* pbConfig);
 };
 // ********************************************************************** //
 // ENDMAKE
@@ -130,6 +196,13 @@ class CTplNPC : public CTemplate
 	// FieldType: STRING32
 	// Type:	  EDITSTRING
 	char	mName[STRING32];
+
+public:
+	CTplNPC(){}
+	~CTplNPC(){}
+
+	void	setFromPB(PBTplNPC* pbNpc);
+	void	createToPB(PBTplNPC* pbNpc);
 };
 // ********************************************************************** //
 // ENDMAKE
@@ -144,7 +217,16 @@ class CTplNPC : public CTemplate
 // ********************************************************************** //
 class CTplFuncNPC : public CTplNPC
 {
-
+public:
+	CTplFuncNPC()
+	{
+#ifndef TEMPEDIT
+		mTemplateType = emTemplateType_FuncNPC;
+#endif
+	}
+	~CTplFuncNPC(){}
+	void	setFromPB(PBTplFuncNPC* pbFuncNpc);
+	void	createToPB(PBTplFuncNPC* pbFuncNpc);
 };
 // ********************************************************************** //
 // ENDMAKE
@@ -160,7 +242,16 @@ class CTplFuncNPC : public CTplNPC
 class CTplOgre : public CTplNPC
 {
 public:
-	
+	CTplOgre()
+	{
+#ifndef TEMPEDIT
+		mTemplateType = emTemplateType_Ogre;
+#endif
+	}
+	~CTplOgre(){}
+
+	void	setFromPB(PBTplOgre* pbOgre);
+	void	createToPB(PBTplOgre* pbOgre);
 };
 #endif
 // ********************************************************************** //

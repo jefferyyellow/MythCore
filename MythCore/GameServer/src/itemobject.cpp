@@ -2,7 +2,7 @@
 #include "template.h"
 CItemObject* CItemFactory::createItem(int nItemID)
 {
-	CTplItem* pTplItem = (CTplItem*)CStaticData::SearchTpl(nItemID);
+	CTplItem* pTplItem = (CTplItem*)CStaticData::searchTpl(nItemID);
 	if (NULL == pTplItem)
 	{
 		return NULL;

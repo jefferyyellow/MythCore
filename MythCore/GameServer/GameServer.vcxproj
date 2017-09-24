@@ -77,6 +77,7 @@
     <ClCompile Include="..\message\mapmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\message.hxx.pb.cc" />
     <ClCompile Include="..\message\propertymodule.hxx.pb.cc" />
+    <ClCompile Include="..\message\template.hxx.pb.cc" />
     <ClCompile Include="inc\mapmodule.cpp" />
     <ClCompile Include="src\dbjob.cpp" />
     <ClCompile Include="src\entity.cpp" />
@@ -120,6 +121,8 @@
     <ClInclude Include="..\message\message.hxx.pb.h" />
     <ClInclude Include="..\message\propertymodule.hxx" />
     <ClInclude Include="..\message\propertymodule.hxx.pb.h" />
+    <ClInclude Include="..\message\template.hxx" />
+    <ClInclude Include="..\message\template.hxx.pb.h" />
     <ClInclude Include="inc\dbjob.h" />
     <ClInclude Include="inc\entity.h" />
     <ClInclude Include="inc\entityplayer.h" />

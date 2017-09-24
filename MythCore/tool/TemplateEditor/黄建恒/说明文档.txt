@@ -1,0 +1,2 @@
+Compile_TemplateEditor.bat  放在任意路径下
+update_new.bat和update_template_new.bat放在策划路径的模板数据路径下

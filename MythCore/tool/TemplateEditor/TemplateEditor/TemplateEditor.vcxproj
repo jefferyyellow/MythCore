@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{220AA8A1-CA47-42B7-8A0C-4099C7BD076F}</ProjectGuid>
+    <RootNamespace>TemplateEditor</RootNamespace>
+    <Keyword>MFCProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>12.0.21005.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>false</ValidateAllParameters>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\GameServer\inc;..\..\..\dep\protobuffer;..\..\..\message;..\..\..\dep\tinyxml;..\..\..\MythCore\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;TEMPEDIT;MYTH_OS_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0804</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>../../../dep/protobuffer/lib/libprotobufd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>false</ValidateAllParameters>
+    </Midl>
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0804</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="CatalogTree.cpp" />
+    <ClCompile Include="ChangeTableInfo.cpp" />
+    <ClCompile Include="ChangeTemplateNameDialog.cpp" />
+    <ClCompile Include="ChildFrm.cpp" />
+    <ClCompile Include="CommonDefine.cpp" />
+    <ClCompile Include="CreateFilter.cpp" />
+    <ClCompile Include="CreateTableDialog.cpp" />
+    <ClCompile Include="CreateTemlateDialog.cpp" />
+    <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="ParseProtobuf.cpp" />
+    <ClCompile Include="ProgStatusBar.cpp" />
+    <ClCompile Include="SearchTemplateDialog.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="TemplateCloneDialog.cpp" />
+    <ClCompile Include="TemplateEditor.cpp" />
+    <ClCompile Include="TemplateEditorDoc.cpp" />
+    <ClCompile Include="TemplateEditorView.cpp" />
+    <ClCompile Include="TemplateManager.cpp" />
+    <ClCompile Include="TemplateWrite.cpp" />
+    <ClCompile Include="TempPathDialog.cpp" />
+    <ClCompile Include="XTreeCtrl.cpp" />
+    <ClCompile Include="..\..\..\GameServer\src\template.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\message\template.hxx.pb.cc">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="ComboBoxDialog.cpp" />
+    <ClCompile Include="MultiCheckDialog.cpp" />
+    <ClCompile Include="NumberDialog.cpp" />
+    <ClCompile Include="StringDialog.cpp" />
+    <ClCompile Include="..\..\..\dep\tinyxml\tinyxml2.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CatalogTree.h" />
+    <ClInclude Include="ChangeTableInfo.h" />
+    <ClInclude Include="ChangeTemplateNameDialog.h" />
+    <ClInclude Include="ChildFrm.h" />
+    <ClInclude Include="CommonDefine.h" />
+    <ClInclude Include="CreateFilter.h" />
+    <ClInclude Include="CreateTableDialog.h" />
+    <ClInclude Include="CreateTemlateDialog.h" />
+    <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="ParseProtobuf.h" />
+    <ClInclude Include="ProgStatusBar.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="SearchTemplateDialog.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="TemplateCloneDialog.h" />
+    <ClInclude Include="TemplateEditor.h" />
+    <ClInclude Include="TemplateEditorDoc.h" />
+    <ClInclude Include="TemplateEditorView.h" />
+    <ClInclude Include="TemplateManager.h" />
+    <ClInclude Include="TemplateWrite.h" />
+    <ClInclude Include="TempPathDialog.h" />
+    <ClInclude Include="XTreeCtrl.h" />
+    <ClInclude Include="..\..\..\GameServer\inc\template.h" />
+    <ClInclude Include="..\..\..\message\template.hxx" />
+    <ClInclude Include="..\..\..\message\template.hxx.pb.h" />
+    <ClInclude Include="ComboBoxDialog.h" />
+    <ClInclude Include="MultiCheckDialog.h" />
+    <ClInclude Include="NumberDialog.h" />
+    <ClInclude Include="StringDialog.h" />
+    <ClInclude Include="..\..\..\dep\tinyxml\tinyxml2.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\bitmap1.bmp" />
+    <Image Include="res\bitmap2.bmp" />
+    <Image Include="res\bmp00001.bmp" />
+    <Image Include="res\bmp00002.bmp" />
+    <Image Include="res\icon1.ico" />
+    <Image Include="res\TemplateEditor.ico" />
+    <Image Include="res\TemplateEditorDoc.ico" />
+    <Image Include="res\Toolbar.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TemplateEditor.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\TemplateEditor.rc2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="TemplateEditor.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

@@ -716,10 +716,16 @@ class PBTplPlayerLevelExpConfig : public ::google::protobuf::Message /* @@protoc
 
   // accessors -------------------------------------------------------
 
-  // repeated uint32 LevelUpExp = 1;
+  // optional uint32 TempID = 1;
+  void clear_tempid();
+  static const int kTempIDFieldNumber = 1;
+  ::google::protobuf::uint32 tempid() const;
+  void set_tempid(::google::protobuf::uint32 value);
+
+  // repeated uint32 LevelUpExp = 2;
   int levelupexp_size() const;
   void clear_levelupexp();
-  static const int kLevelUpExpFieldNumber = 1;
+  static const int kLevelUpExpFieldNumber = 2;
   ::google::protobuf::uint32 levelupexp(int index) const;
   void set_levelupexp(int index, ::google::protobuf::uint32 value);
   void add_levelupexp(::google::protobuf::uint32 value);
@@ -734,6 +740,7 @@ class PBTplPlayerLevelExpConfig : public ::google::protobuf::Message /* @@protoc
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > levelupexp_;
   mutable int _levelupexp_cached_byte_size_;
+  ::google::protobuf::uint32 tempid_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_template_2ehxx_impl();
   friend void  protobuf_AddDesc_template_2ehxx_impl();
@@ -809,10 +816,16 @@ class PBTplVIPConfig : public ::google::protobuf::Message /* @@protoc_insertion_
 
   // accessors -------------------------------------------------------
 
-  // repeated uint32 VIPExp = 1;
+  // optional uint32 TempID = 1;
+  void clear_tempid();
+  static const int kTempIDFieldNumber = 1;
+  ::google::protobuf::uint32 tempid() const;
+  void set_tempid(::google::protobuf::uint32 value);
+
+  // repeated uint32 VIPExp = 2;
   int vipexp_size() const;
   void clear_vipexp();
-  static const int kVIPExpFieldNumber = 1;
+  static const int kVIPExpFieldNumber = 2;
   ::google::protobuf::uint32 vipexp(int index) const;
   void set_vipexp(int index, ::google::protobuf::uint32 value);
   void add_vipexp(::google::protobuf::uint32 value);
@@ -827,6 +840,7 @@ class PBTplVIPConfig : public ::google::protobuf::Message /* @@protoc_insertion_
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > vipexp_;
   mutable int _vipexp_cached_byte_size_;
+  ::google::protobuf::uint32 tempid_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_template_2ehxx_impl();
   friend void  protobuf_AddDesc_template_2ehxx_impl();
@@ -908,18 +922,23 @@ class PBTplNPC : public ::google::protobuf::Message /* @@protoc_insertion_point(
   ::google::protobuf::uint32 tempid() const;
   void set_tempid(::google::protobuf::uint32 value);
 
-  // optional uint32 Name = 2;
+  // optional string Name = 2;
   void clear_name();
   static const int kNameFieldNumber = 2;
-  ::google::protobuf::uint32 name() const;
-  void set_name(::google::protobuf::uint32 value);
+  const ::std::string& name() const;
+  void set_name(const ::std::string& value);
+  void set_name(const char* value);
+  void set_name(const char* value, size_t size);
+  ::std::string* mutable_name();
+  ::std::string* release_name();
+  void set_allocated_name(::std::string* name);
 
   // @@protoc_insertion_point(class_scope:PBTplNPC)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr name_;
   ::google::protobuf::uint32 tempid_;
-  ::google::protobuf::uint32 name_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_template_2ehxx_impl();
   friend void  protobuf_AddDesc_template_2ehxx_impl();
@@ -1550,7 +1569,21 @@ inline const PBTplItem* PBTplItem::internal_default_instance() {
 
 // PBTplPlayerLevelExpConfig
 
-// repeated uint32 LevelUpExp = 1;
+// optional uint32 TempID = 1;
+inline void PBTplPlayerLevelExpConfig::clear_tempid() {
+  tempid_ = 0u;
+}
+inline ::google::protobuf::uint32 PBTplPlayerLevelExpConfig::tempid() const {
+  // @@protoc_insertion_point(field_get:PBTplPlayerLevelExpConfig.TempID)
+  return tempid_;
+}
+inline void PBTplPlayerLevelExpConfig::set_tempid(::google::protobuf::uint32 value) {
+  
+  tempid_ = value;
+  // @@protoc_insertion_point(field_set:PBTplPlayerLevelExpConfig.TempID)
+}
+
+// repeated uint32 LevelUpExp = 2;
 inline int PBTplPlayerLevelExpConfig::levelupexp_size() const {
   return levelupexp_.size();
 }
@@ -1587,7 +1620,21 @@ inline const PBTplPlayerLevelExpConfig* PBTplPlayerLevelExpConfig::internal_defa
 
 // PBTplVIPConfig
 
-// repeated uint32 VIPExp = 1;
+// optional uint32 TempID = 1;
+inline void PBTplVIPConfig::clear_tempid() {
+  tempid_ = 0u;
+}
+inline ::google::protobuf::uint32 PBTplVIPConfig::tempid() const {
+  // @@protoc_insertion_point(field_get:PBTplVIPConfig.TempID)
+  return tempid_;
+}
+inline void PBTplVIPConfig::set_tempid(::google::protobuf::uint32 value) {
+  
+  tempid_ = value;
+  // @@protoc_insertion_point(field_set:PBTplVIPConfig.TempID)
+}
+
+// repeated uint32 VIPExp = 2;
 inline int PBTplVIPConfig::vipexp_size() const {
   return vipexp_.size();
 }
@@ -1638,18 +1685,48 @@ inline void PBTplNPC::set_tempid(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:PBTplNPC.TempID)
 }
 
-// optional uint32 Name = 2;
+// optional string Name = 2;
 inline void PBTplNPC::clear_name() {
-  name_ = 0u;
+  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::google::protobuf::uint32 PBTplNPC::name() const {
+inline const ::std::string& PBTplNPC::name() const {
   // @@protoc_insertion_point(field_get:PBTplNPC.Name)
-  return name_;
+  return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void PBTplNPC::set_name(::google::protobuf::uint32 value) {
+inline void PBTplNPC::set_name(const ::std::string& value) {
   
-  name_ = value;
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:PBTplNPC.Name)
+}
+inline void PBTplNPC::set_name(const char* value) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:PBTplNPC.Name)
+}
+inline void PBTplNPC::set_name(const char* value, size_t size) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:PBTplNPC.Name)
+}
+inline ::std::string* PBTplNPC::mutable_name() {
+  
+  // @@protoc_insertion_point(field_mutable:PBTplNPC.Name)
+  return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* PBTplNPC::release_name() {
+  // @@protoc_insertion_point(field_release:PBTplNPC.Name)
+  
+  return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void PBTplNPC::set_allocated_name(::std::string* name) {
+  if (name != NULL) {
+    
+  } else {
+    
+  }
+  name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
+  // @@protoc_insertion_point(field_set_allocated:PBTplNPC.Name)
 }
 
 inline const PBTplNPC* PBTplNPC::internal_default_instance() {

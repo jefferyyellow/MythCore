@@ -20,7 +20,7 @@ bool CItemContainer::checkSpace(int* pItemID, int* pNumber, int nSize)
 	for (int i = 0; i < nSize; ++i)
 	{
 		nNum[i] = pNumber[i];
-		CTplItem* pTplItem = (CTplItem*)CStaticData::SearchTpl(pItemID[i]);
+		CTplItem* pTplItem = (CTplItem*)CStaticData::searchTpl(pItemID[i]);
 		if (NULL == pTplItem)
 		{
 			nPileLimit[i] = 0;
@@ -85,7 +85,7 @@ bool CItemContainer::checkSpace(int* pItemID, int* pNumber, int nSize)
 // 可以先使用空格子
 bool CItemContainer::checkSpace(int nItemID, int nNumber)
 {
-	CTplItem* pTplItem = (CTplItem*)CStaticData::SearchTpl(nItemID);
+	CTplItem* pTplItem = (CTplItem*)CStaticData::searchTpl(nItemID);
 	if (NULL == pTplItem)
 	{
 		return true;
@@ -125,7 +125,7 @@ int CItemContainer::insertItem(int nItemID, int nItemNum, int *pOutIndex, int *p
 	}
 
 	// 如果数据模版找不到
-	CTplItem* tpItem = (CTplItem*)CStaticData::SearchTpl(nItemID);
+	CTplItem* tpItem = (CTplItem*)CStaticData::searchTpl(nItemID);
 	if (NULL == tpItem)
 	{
 		return -2;

@@ -43,19 +43,21 @@ message PBTplItem
 
 message PBTplPlayerLevelExpConfig
 {
-	repeated uint32		LevelUpExp		= 1;	// 升到下一级经验值
+	uint32				TempID			= 1;	// 模板ID
+	repeated uint32		LevelUpExp		= 2;	// 升到下一级经验值
 }
 
 message PBTplVIPConfig
 {
-	repeated uint32		VIPExp			= 1;	// VIP升到下一级经验值
+	uint32				TempID			= 1;	// 模板ID
+	repeated uint32		VIPExp			= 2;	// VIP升到下一级经验值
 }
 
 // NPC基本信息
 message PBTplNPC
 {
 	uint32				TempID			= 1;	// 模板ID
-	uint32				Name			= 2;	// NPC名字
+	string				Name			= 2;	// NPC名字
 }
 
 // 功能NPC

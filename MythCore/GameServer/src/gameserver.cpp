@@ -11,6 +11,7 @@
 #include "mapmodule.h"
 #include "mapmamager.h"
 #include "mapconfigmanager.h"
+#include "template.h"
 /// ³õÊ¼»¯
 bool CGameServer::init()
 {
@@ -121,6 +122,12 @@ bool CGameServer::initStaticData()
 	}
 
 	bResult = CMapConfigManager::Inst()->createAllMapFromConfig();
+	if (!bResult)
+	{
+		return bResult;
+	}
+
+	bResult = CStaticData::loadFromFile("gameserverconfig/template/template_server.dat");
 	if (!bResult)
 	{
 		return bResult;

@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="template">
+      <UniqueIdentifier>{aca57552-8786-445b-a1a9-6c5953b879e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dialog">
+      <UniqueIdentifier>{185a79e6-f0a4-47eb-9bda-70b206fb5351}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tiny">
+      <UniqueIdentifier>{192b1ea1-aa19-40ad-80c6-f60c10ca650b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CatalogTree.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ChangeTableInfo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ChangeTemplateNameDialog.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ChildFrm.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonDefine.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateFilter.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateTableDialog.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateTemlateDialog.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ParseProtobuf.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgStatusBar.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SearchTemplateDialog.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TemplateCloneDialog.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TemplateEditor.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TemplateEditorDoc.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TemplateEditorView.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TemplateManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TemplateWrite.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TempPathDialog.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="XTreeCtrl.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\GameServer\src\template.cpp">
+      <Filter>template</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\message\template.hxx.pb.cc">
+      <Filter>template</Filter>
+    </ClCompile>
+    <ClCompile Include="ComboBoxDialog.cpp">
+      <Filter>dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiCheckDialog.cpp">
+      <Filter>dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="NumberDialog.cpp">
+      <Filter>dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="StringDialog.cpp">
+      <Filter>dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\dep\tinyxml\tinyxml2.cpp">
+      <Filter>tiny</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CatalogTree.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ChangeTableInfo.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ChangeTemplateNameDialog.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ChildFrm.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonDefine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateFilter.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateTableDialog.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateTemlateDialog.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ParseProtobuf.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgStatusBar.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SearchTemplateDialog.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplateCloneDialog.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplateEditor.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplateEditorDoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplateEditorView.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplateManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplateWrite.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TempPathDialog.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="XTreeCtrl.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\GameServer\inc\template.h">
+      <Filter>template</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\message\template.hxx">
+      <Filter>template</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\message\template.hxx.pb.h">
+      <Filter>template</Filter>
+    </ClInclude>
+    <ClInclude Include="ComboBoxDialog.h">
+      <Filter>dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiCheckDialog.h">
+      <Filter>dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="NumberDialog.h">
+      <Filter>dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="StringDialog.h">
+      <Filter>dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\dep\tinyxml\tinyxml2.h">
+      <Filter>tiny</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\bitmap1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\bitmap2.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\bmp00001.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\bmp00002.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\icon1.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\TemplateEditor.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\TemplateEditorDoc.ico">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\Toolbar.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TemplateEditor.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\TemplateEditor.rc2">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+</Project>

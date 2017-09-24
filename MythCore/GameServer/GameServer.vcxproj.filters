@@ -141,6 +141,9 @@
     <ClCompile Include="..\message\mapmodule.hxx.pb.cc">
       <Filter>message</Filter>
     </ClCompile>
+    <ClCompile Include="..\message\template.hxx.pb.cc">
+      <Filter>message</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -294,6 +297,12 @@
       <Filter>message</Filter>
     </ClInclude>
     <ClInclude Include="..\message\mapmodule.hxx.pb.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\template.hxx">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\template.hxx.pb.h">
       <Filter>message</Filter>
     </ClInclude>
   </ItemGroup>

@@ -295,7 +295,7 @@ void CMap::onRemoveEntityFromMap(CEntity* pEntity)
 /// ´´½¨NPC
 CEntityNPC* CMap::createNPC(int nNPCID, CMythPoint& rPos)
 {
-	CTplNPC* pTplNPC = (CTplNPC*)CStaticData::SearchTpl(nNPCID);
+	CTplNPC* pTplNPC = (CTplNPC*)CStaticData::searchTpl(nNPCID);
 	if (NULL == pTplNPC)
 	{
 		return NULL;
