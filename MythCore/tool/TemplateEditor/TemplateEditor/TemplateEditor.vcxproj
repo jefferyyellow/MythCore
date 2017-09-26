@@ -26,7 +26,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v120</PlatformToolset>
-    <UseOfMfc>Dynamic</UseOfMfc>
+    <UseOfMfc>Static</UseOfMfc>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -64,7 +64,7 @@
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;TEMPEDIT;MYTH_OS_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
@@ -79,6 +79,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -114,7 +116,6 @@
     <ClCompile Include="ChangeTemplateNameDialog.cpp" />
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="CommonDefine.cpp" />
-    <ClCompile Include="CreateFilter.cpp" />
     <ClCompile Include="CreateTableDialog.cpp" />
     <ClCompile Include="CreateTemlateDialog.cpp" />
     <ClCompile Include="MainFrm.cpp" />
@@ -132,7 +133,6 @@
     <ClCompile Include="TemplateManager.cpp" />
     <ClCompile Include="TemplateWrite.cpp" />
     <ClCompile Include="TempPathDialog.cpp" />
-    <ClCompile Include="XTreeCtrl.cpp" />
     <ClCompile Include="..\..\..\GameServer\src\template.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </PrecompiledHeader>
@@ -156,7 +156,6 @@
     <ClInclude Include="ChangeTemplateNameDialog.h" />
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="CommonDefine.h" />
-    <ClInclude Include="CreateFilter.h" />
     <ClInclude Include="CreateTableDialog.h" />
     <ClInclude Include="CreateTemlateDialog.h" />
     <ClInclude Include="MainFrm.h" />
@@ -172,7 +171,6 @@
     <ClInclude Include="TemplateManager.h" />
     <ClInclude Include="TemplateWrite.h" />
     <ClInclude Include="TempPathDialog.h" />
-    <ClInclude Include="XTreeCtrl.h" />
     <ClInclude Include="..\..\..\GameServer\inc\template.h" />
     <ClInclude Include="..\..\..\message\template.hxx" />
     <ClInclude Include="..\..\..\message\template.hxx.pb.h" />

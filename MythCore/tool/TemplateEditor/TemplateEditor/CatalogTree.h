@@ -1,6 +1,5 @@
 #pragma once
 #include "afxcmn.h"
-#include "XTreeCtrl.h"
 #include "resource.h"
 /********************************************************************
 	created:	21/12/2011   16:32
@@ -72,7 +71,6 @@ public:
 	afx_msg void OnCloneTemplate();
 	afx_msg void OnCreateTemplateTable();
 	afx_msg void OnOpenWithExcel();
-	afx_msg void OnCreateFilter();
 	afx_msg void OnChangeTemplateName();
 	afx_msg void OnDeleteTemplate();
 	afx_msg void OnChangeTableInfo();

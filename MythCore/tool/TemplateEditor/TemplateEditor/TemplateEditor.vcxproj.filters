@@ -39,9 +39,6 @@
     <ClCompile Include="CommonDefine.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="CreateFilter.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="CreateTableDialog.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -84,9 +81,6 @@
     <ClCompile Include="TempPathDialog.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="XTreeCtrl.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\GameServer\src\template.cpp">
       <Filter>template</Filter>
     </ClCompile>
@@ -123,9 +117,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="CommonDefine.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="CreateFilter.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="CreateTableDialog.h">
@@ -171,9 +162,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="TempPathDialog.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="XTreeCtrl.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\GameServer\inc\template.h">

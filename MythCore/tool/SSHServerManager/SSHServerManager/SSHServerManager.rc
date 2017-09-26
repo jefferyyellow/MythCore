@@ -1,0 +1,250 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 中文(简体，中国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#include ""res\\SSHServerManager.rc2""  // 非 Microsoft Visual C++ 编辑的资源\r\n"
+    "#include ""afxres.rc""     // 标准组件\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\SSHServerManager.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 235, 55
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 SSHServerManager"
+FONT 9, "宋体", 0, 0, 0x1
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "SSHServerManager 1.0 版",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2013",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "确定",IDOK,178,7,50,16,WS_GROUP
+END
+
+IDD_SSHSERVERMANAGER_DIALOG DIALOGEX 0, 0, 607, 328
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "SSHServerManager"
+FONT 9, "宋体", 0, 0, 0x1
+BEGIN
+    PUSHBUTTON      "重启服务器",IDC_MANUAL_RESTART_SERVER,533,39,50,14
+    PUSHBUTTON      "关闭服务器",IDC_MANUAL_CLOSE_SERVER,533,16,50,14
+    LTEXT           "外网IP:",IDC_STATIC,374,23,29,8
+    CONTROL         "",IDC_MANUAL_SERVER_IP,"SysIPAddress32",WS_DISABLED | WS_TABSTOP,415,19,100,15
+    LTEXT           "用户名:",IDC_STATIC,374,71,29,8
+    LTEXT           "密码:",IDC_STATIC,374,95,21,8
+    EDITTEXT        IDC_MANUAL_USER_NAME,415,69,100,14,ES_AUTOHSCROLL | WS_DISABLED
+    EDITTEXT        IDC_MANUAL_PASSWORD,415,93,100,14,ES_PASSWORD | ES_AUTOHSCROLL | WS_DISABLED
+    CONTROL         "",IDC_SERVER_LIST,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,7,331,253
+    PUSHBUTTON      "增加服务器",IDC_ADD_SERVER_LIST_ITEM,9,269,50,14
+    PUSHBUTTON      "编辑服务器",IDC_EDIT_SERVER_LIST_ITEM,67,269,50,14
+    PUSHBUTTON      "删除服务器",IDC_DELETE_SERVER_LIST_ITEM,121,269,50,14
+    GROUPBOX        "服务器信息",IDC_STATIC,348,3,253,140
+    PUSHBUTTON      "开始监控",IDC_MANUAL_MONITOR,176,268,50,14
+    PUSHBUTTON      "停止监控",IDC_MANUAL_STOP_MONITOR,228,267,50,14
+    PUSHBUTTON      "全部监控",IDC_ALL_MONITOR,283,267,50,14
+    PUSHBUTTON      "全部停止监控",IDC_ALL_STOP_MONITOR,9,291,50,14
+    PUSHBUTTON      "全部停服",IDC_ALL_STOP_SERVER,68,291,50,14
+    PUSHBUTTON      "全部更新",IDC_ALL_UPDATE,122,291,50,14
+    PUSHBUTTON      "全部重启",IDC_ALL_START_SERVER,283,291,50,14
+    CONTROL         "",IDC_SERVER_DATE,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,379,180,100,15
+    EDITTEXT        IDC_SERVER_TIME,481,180,52,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "修改",IDC_CHANGE_SERVER_TIME,535,180,50,14
+    GROUPBOX        "修改服务器时间",IDC_STATIC,348,160,253,49
+    PUSHBUTTON      "更新服务器",IDC_UPDATE_SERVER,533,62,50,14
+    PUSHBUTTON      "更新数据库表",IDC_UPDATE_DATABASE,533,85,50,14
+    PUSHBUTTON      "全部更新数据库表",IDC_ALL_UPDATE_DATEBASE,176,291,96,14
+    LTEXT           "内网IP:",IDC_STATIC,374,47,29,8
+    CONTROL         "",IDC_MANUAL_SERVER_LOCAL_IP,"SysIPAddress32",WS_DISABLED | WS_TABSTOP,415,44,100,15
+    PUSHBUTTON      "全部脚本可执行",IDC_ALL_SCRIPT_EXECUTE,341,291,74,14
+    PUSHBUTTON      "脚本可执行",IDC_MANUAL_SCRIPT_EXECUTE,533,108,50,14
+END
+
+IDD_ADD_SERVER_INFO DIALOGEX 0, 0, 220, 204
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_ADD_SERVER_ID,81,23,100,14,ES_AUTOHSCROLL
+    CONTROL         "",IDC_ADD_SERVER_IP,"SysIPAddress32",WS_TABSTOP,81,47,100,15
+    EDITTEXT        IDC_ADD_SERVER_USER_NAME,81,97,100,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ADD_SERVER_PASSWORD,81,121,100,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "确定",IDOK,36,153,50,14
+    PUSHBUTTON      "取消",IDCANCEL,132,153,50,14
+    LTEXT           "服务器ID:",IDC_STATIC,39,25,35,8
+    LTEXT           "外网IP:",IDC_STATIC,39,52,26,8
+    LTEXT           "用户名:",IDC_STATIC,39,100,34,8
+    LTEXT           "密码:",IDC_STATIC,39,125,20,8
+    LTEXT           "内网IP:",IDC_STATIC,39,76,26,8
+    CONTROL         "",IDC_ADD_SERVER_LOCAL_IP,"SysIPAddress32",WS_TABSTOP,81,72,100,15
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080403a8"
+        BEGIN
+            VALUE "CompanyName", "TODO: <公司名>"
+            VALUE "FileDescription", "TODO: <文件说明>"
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "InternalName", "SSHServerManager.exe"
+            VALUE "LegalCopyright", "TODO: (C) <公司名>。保留所有权利。"
+            VALUE "OriginalFilename", "SSHServerManager.exe"
+            VALUE "ProductName", "TODO: <产品名>"
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 936
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_SSHSERVERMANAGER_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 601
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 321
+    END
+
+    IDD_ADD_SERVER_INFO, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 213
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 197
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDS_ABOUTBOX            "关于 SSHServerManager(&A)..."
+END
+
+#endif    // 中文(简体，中国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE 4, 2
+#pragma code_page(936)
+#include "res\SSHServerManager.rc2"  // 非 Microsoft Visual C++ 编辑的资源
+#include "afxres.rc"     // 标准组件
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

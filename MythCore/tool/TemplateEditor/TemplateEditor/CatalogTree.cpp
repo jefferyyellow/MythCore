@@ -11,7 +11,6 @@
 #include "CreateTemlateDialog.h"
 #include "CreateTableDialog.h"
 #include "TemplateCloneDialog.h"
-#include "CreateFilter.h"
 #include "ChangeTemplateNameDialog.h"
 #include "ChangeTableInfo.h"
 
@@ -50,7 +49,6 @@ BEGIN_MESSAGE_MAP(CCatalogTree, CDialogBar)
 	ON_COMMAND(ID_CLONE_TEMPLATE, &CCatalogTree::OnCloneTemplate)
 	ON_COMMAND(ID_CREATETEMPLATETABLE, &CCatalogTree::OnCreateTemplateTable)
 	ON_COMMAND(ID_OPENWITHEXCEL, &CCatalogTree::OnOpenWithExcel)
-	ON_COMMAND(ID_CREATEFILTER, &CCatalogTree::OnCreateFilter)
 	ON_COMMAND(ID_CHANGETEMPLATENAME, &CCatalogTree::OnChangeTemplateName)
 	ON_COMMAND(ID_DELETETEMPLATE, &CCatalogTree::OnDeleteTemplate)
 	ON_COMMAND(ID_CHANGETABLEINFO, &CCatalogTree::OnChangeTableInfo)
@@ -488,18 +486,6 @@ void CCatalogTree::OnOpenWithExcel()
 	ShellExecuteEx(&ShExecInfo);
 }
 
-// 创建过滤器
-void CCatalogTree::OnCreateFilter()
-{
-	if(CTemplateWrite::GetSingletonPtr()->GetWritingPB())
-	{
-		AfxMessageBox(_T("正在生成模板中，不允许修改数据！"));
-		return;
-	}
-	CCreateFilter dialog;
-	dialog.DoModal();
-}
-
 void CCatalogTree::OnChangeTemplateName()
 {
 	if(CTemplateWrite::GetSingletonPtr()->GetWritingPB())
@@ -618,7 +604,6 @@ DWORD WINAPI CCatalogTree::ReadTemplateDataThreadFunc(LPVOID param)
 // 树节点排序回调函数
 int CALLBACK CCatalogTree::MyCompareProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 {
-	CXTreeCtrl* pmyTreeCtrl = (CXTreeCtrl*) lParamSort;
 	CTreeItemData* pData1 = (CTreeItemData*)lParam1;
 	CTreeItemData* pData2 = (CTreeItemData*)lParam2;
 	if (NULL == pData1 || NULL == pData2)

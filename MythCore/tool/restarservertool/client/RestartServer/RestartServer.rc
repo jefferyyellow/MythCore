@@ -1,0 +1,245 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 中文(简体，中国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#include ""res\\RestartServer.rc2""  // 非 Microsoft Visual C++ 编辑的资源\r\n"
+    "#include ""afxres.rc""     // 标准组件\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\RestartServer.ico"
+IDI_ICON_SMILE          ICON                    "smiley018.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 235, 55
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 RestartServer"
+FONT 9, "宋体", 0, 0, 0x1
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "RestartServer 1.0 版",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2013",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "确定",IDOK,178,7,50,16,WS_GROUP
+END
+
+IDD_RESTARTSERVER_DIALOG DIALOGEX 0, 0, 623, 320
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "RestartServer"
+FONT 9, "宋体", 0, 0, 0x1
+BEGIN
+    PUSHBUTTON      "重启服务器",IDC_RESTART_SERVER0,323,141,119,14
+    PUSHBUTTON      "得到服务器时间",IDC_GET_SERVER_DATE_TIME,204,287,72,14
+    CONTROL         "",IDC_SET_SERVER_DATE_TIME,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,199,233,100,15
+    EDITTEXT        IDC_EDIT_HOUR,361,231,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_MINUTE,361,252,40,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_SECOND,361,271,40,14,ES_AUTOHSCROLL
+    LTEXT           "小时：",IDC_STATIC,311,236,25,8
+    GROUPBOX        "设置时间",IDC_STATIC,179,189,264,119
+    LTEXT           "分钟：",IDC_STATIC,311,255,25,8
+    LTEXT           "秒：",IDC_STATIC,311,272,17,8
+    PUSHBUTTON      "设置服务器时间",IDC_SET_SERVER_TIME,356,287,72,14
+    LTEXT           "当前服务器时间：",IDC_STATIC,206,205,65,8
+    LTEXT           "20131220 12:30:44",IDC_CURRENT_SERVER_TIME,294,206,132,8
+    PUSHBUTTON      "关闭服务器",IDC_STOP_SERVER0,324,159,119,14
+    LTEXT           "正在获取服务器列表,请稍等",IDC_GETSERVERLIST,180,155,111,8
+    LTEXT           "设置服务器时间时将会重启",IDC_SETTIMERESTART,175,135,137,46
+    GROUPBOX        "第二个服务器",IDC_SERVER1,168,17,141,25
+    GROUPBOX        "第三个服务器",IDC_SERVER2,317,17,141,25
+    GROUPBOX        "第四个服务器",IDC_SERVER3,464,17,141,25
+    CONTROL         "选择",IDC_SELECT_SERVER1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,175,27,32,10
+    CONTROL         "选择",IDC_SELECT_SERVER2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,325,27,32,10
+    GROUPBOX        "第一个服务器",IDC_SERVER0,18,17,141,25
+    CONTROL         "选择",IDC_SELECT_SERVER0,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,26,27,32,10
+    CONTROL         "选择",IDC_SELECT_SERVER3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,473,27,32,10
+    LTEXT           "无服务器",IDC_NAME_SERVER0,69,29,88,8
+    LTEXT           "无服务器",IDC_NAME_SERVER1,218,29,72,8
+    LTEXT           "无服务器",IDC_NAME_SERVER2,367,29,87,8
+    LTEXT           "无服务器",IDC_NAME_SERVER3,515,29,78,8
+    CONTROL         "选择",IDC_SELECT_SERVER4,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,26,62,32,10
+    LTEXT           "无服务器",IDC_NAME_SERVER4,69,64,78,8
+    CONTROL         "选择",IDC_SELECT_SERVER5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,175,62,32,10
+    LTEXT           "无服务器",IDC_NAME_SERVER5,218,64,78,8
+    CONTROL         "选择",IDC_SELECT_SERVER6,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,325,62,32,10
+    LTEXT           "无服务器",IDC_NAME_SERVER6,367,64,78,8
+    CONTROL         "选择",IDC_SELECT_SERVER7,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,473,62,32,10
+    LTEXT           "无服务器",IDC_NAME_SERVER7,515,64,78,8
+    CONTROL         "选择",IDC_SELECT_SERVER8,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,26,96,32,10
+    LTEXT           "无服务器",IDC_NAME_SERVER8,69,98,78,8
+    CONTROL         "选择",IDC_SELECT_SERVER9,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,175,96,32,10
+    LTEXT           "无服务器",IDC_NAME_SERVER9,218,98,78,8
+    CONTROL         "选择",IDC_SELECT_SERVER10,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,325,96,32,10
+    LTEXT           "无服务器",IDC_NAME_SERVER10,367,98,78,8
+    CONTROL         "选择",IDC_SELECT_SERVER11,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,473,96,32,10
+    LTEXT           "无服务器",IDC_NAME_SERVER11,515,98,78,8
+    GROUPBOX        "第五个服务器",IDC_SERVER4,18,51,141,25
+    GROUPBOX        "第六个服务器",IDC_SERVER5,168,51,141,25
+    GROUPBOX        "第七个服务器",IDC_SERVER6,317,51,141,25
+    GROUPBOX        "第八个服务器",IDC_SERVER7,464,51,141,25
+    GROUPBOX        "第九个服务器",IDC_SERVER8,18,85,141,25
+    GROUPBOX        "第十个服务器",IDC_SERVER9,168,85,141,25
+    GROUPBOX        "第十一个服务器",IDC_SERVER10,317,85,141,25
+    GROUPBOX        "第十二个服务器",IDC_SERVER11,464,85,141,25
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080403a8"
+        BEGIN
+            VALUE "CompanyName", "TODO: <公司名>"
+            VALUE "FileDescription", "TODO: <文件说明>"
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "InternalName", "RestartServer.exe"
+            VALUE "LegalCopyright", "TODO: (C) <公司名>。保留所有权利。"
+            VALUE "OriginalFilename", "RestartServer.exe"
+            VALUE "ProductName", "TODO: <产品名>"
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 936
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_RESTARTSERVER_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 616
+        TOPMARGIN, 6
+        BOTTOMMARGIN, 313
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDS_ABOUTBOX            "关于 RestartServer(&A)..."
+END
+
+#endif    // 中文(简体，中国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE 4, 2
+#pragma code_page(936)
+#include "res\RestartServer.rc2"  // 非 Microsoft Visual C++ 编辑的资源
+#include "afxres.rc"     // 标准组件
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

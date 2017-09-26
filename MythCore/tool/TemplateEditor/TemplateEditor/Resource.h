@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
-// Used by TemplateEditor.rc
+// Microsoft Visual C++ 生成的包含文件。
+// 供 TemplateEditor.rc 使用
 //
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
@@ -23,7 +23,6 @@
 #define IDB_BITMAP_FILE                 140
 #define IDB_BITMAP_DIRT                 141
 #define IDB_BITMAP_FILECO               142
-#define IDD_CREATEFILTER                143
 #define IDR_MENUORIGIN                  144
 #define IDR_MENUTEMPTABLE               145
 #define IDR_MENUTEMPDATA                146
@@ -47,7 +46,6 @@
 #define IDC_EDIT1                       1012
 #define IDC_NUMBER                      1012
 #define IDC_STRINGEDIT                  1012
-#define IDC_FILTERNAME                  1012
 #define IDC_TEMPLATERENAME              1012
 #define IDC_SEARCHID                    1012
 #define IDC_CHANGETABLENAME             1012

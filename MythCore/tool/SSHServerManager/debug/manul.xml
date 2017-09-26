@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<server>
+  <command>
+    <restart value="sudo su&#x0A; cd&#x0A; source .bash_profile&#x0A; cd /data/wwwroot/mxw2code/server/bin&#x0A; ./restart.sh&#x0A;"/>
+    <stop value="sudo su&#x0A; cd /data/wwwroot/mxw2code/server/bin&#x0A; ./stop.sh&#x0A;"/>
+    <monitor1 value="sudo su&#x0A; cd /data/wwwroot/mxw2code/server/bin&#x0A;"/>
+    <monitor2 value="./monitor.sh&#x0A;"/>
+    <update value="sudo su&#x0A; cd /data/wwwroot/mxw2code&#x0A; svn up&#x0A;"/>
+    <updatedb value="sudo su&#x0A; cd /data/wwwroot/mxw2code/server/bin&#x0A; ./updatedbtable.sh"/>
+    <chmodscript value="sudo su&#x0A; cd /data/wwwroot/mxw2code/server/bin&#x0A; chmod +x monitor.sh&#x0A; chmod +x restart.sh&#x0A; chmod +x updatedbtable.sh&#x0A; chmod +x stop.sh&#x0A;"/>
+  </command>
+  <!--1表示正式服,0表示测试服,用来确实检测不检测平台服务器是否启动成功-->
+  <servertype value="1"/>
+  <!--重启服务器数据等待时间  单位:秒-->
+  <restartwaittime value="240"/>
+  <!--关闭服务器数据等待时间  单位:秒-->
+  <stopwaittime value="120"/>
+  <!--更新服务器数据等待时间  单位:秒-->
+  <updatewaittime value="120"/>
+   <!--更新数据库数据等待时间  单位:秒-->
+  <updatedbwaittime value="60"/>
+</server>

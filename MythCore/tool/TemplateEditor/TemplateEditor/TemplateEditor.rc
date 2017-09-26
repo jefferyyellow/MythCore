@@ -13,13 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Chinese (P.R.C.) resources
+// 中文(简体，中国) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
-#ifdef _WIN32
 LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
 #pragma code_page(936)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -84,7 +82,7 @@ IDB_BITMAP_FILECO       BITMAP                  "res\\bmp00002.bmp"
 // Toolbar
 //
 
-IDR_MAINFRAME TOOLBAR  16, 15
+IDR_MAINFRAME TOOLBAR 16, 15
 BEGIN
     BUTTON      ID_NEW_TEMPLATE
     BUTTON      ID_SAVETEMPLATE
@@ -103,7 +101,7 @@ END
 // Menu
 //
 
-IDR_MAINFRAME MENU 
+IDR_MAINFRAME MENU
 BEGIN
     POPUP "文件(&F)"
     BEGIN
@@ -135,7 +133,7 @@ BEGIN
     END
 END
 
-IDR_TemplateEditorTYPE MENU 
+IDR_TemplateEditorTYPE MENU
 BEGIN
     POPUP "文件(&F)"
     BEGIN
@@ -168,7 +166,7 @@ BEGIN
     END
 END
 
-IDR_MENUFILTER MENU 
+IDR_MENUFILTER MENU
 BEGIN
     POPUP "a"
     BEGIN
@@ -176,7 +174,7 @@ BEGIN
     END
 END
 
-IDR_MENUORIGIN MENU 
+IDR_MENUORIGIN MENU
 BEGIN
     POPUP "asdf"
     BEGIN
@@ -184,7 +182,7 @@ BEGIN
     END
 END
 
-IDR_MENUTEMPTABLE MENU 
+IDR_MENUTEMPTABLE MENU
 BEGIN
     POPUP "a"
     BEGIN
@@ -194,7 +192,7 @@ BEGIN
     END
 END
 
-IDR_MENUTEMPDATA MENU 
+IDR_MENUTEMPDATA MENU
 BEGIN
     POPUP "a"
     BEGIN
@@ -210,7 +208,7 @@ END
 // Accelerator
 //
 
-IDR_MAINFRAME ACCELERATORS 
+IDR_MAINFRAME ACCELERATORS
 BEGIN
     "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
     VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
@@ -364,17 +362,6 @@ BEGIN
     EDITTEXT        IDC_STRINGEDIT,122,74,233,14,ES_AUTOHSCROLL
 END
 
-IDD_CREATEFILTER DIALOGEX 0, 0, 274, 142
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Dialog"
-FONT 8, "MS Shell Dlg", 400, 0, 0x1
-BEGIN
-    DEFPUSHBUTTON   "确定",IDOK,40,121,50,14
-    PUSHBUTTON      "取消",IDCANCEL,170,121,50,14
-    LTEXT           "筛选器名字：",IDC_STATIC,33,68,49,8
-    EDITTEXT        IDC_FILTERNAME,93,65,156,14,ES_AUTOHSCROLL
-END
-
 IDD_CHANGETEMPLATENAME DIALOGEX 0, 0, 326, 148
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Dialog"
@@ -406,7 +393,6 @@ BEGIN
     PUSHBUTTON      "取消",IDCANCEL,159,105,50,14
     LTEXT           "模板表名称：",IDC_STATIC,41,30,57,8
     EDITTEXT        IDC_CHANGETABLENAME,105,25,116,14,ES_AUTOHSCROLL
-    LTEXT           "等级段：",IDC_STATIC,41,57,57,8
 END
 
 IDD_TEMPPATHDIALOG DIALOGEX 0, 0, 228, 313
@@ -465,7 +451,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
@@ -535,14 +521,6 @@ BEGIN
         BOTTOMMARGIN, 175
     END
 
-    IDD_CREATEFILTER, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 267
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 135
-    END
-
     IDD_CHANGETEMPLATENAME, DIALOG
     BEGIN
         LEFTMARGIN, 7
@@ -583,25 +561,25 @@ END
 // String Table
 //
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDP_OLE_INIT_FAILED     "OLE 初始化失败。请确保 OLE 库是正确的版本。"
     ID_INDICATOR_DESCRIBE   "模块数据转换完成"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     IDR_MAINFRAME           "TemplateEditor"
     IDR_TemplateEditorTYPE  "\nTemplateEditor\nTemplateEditor\n\n\nTemplateEditor.Document\nTemplateEditor.Document"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     AFX_IDS_APP_TITLE       "TemplateEditor"
     AFX_IDS_IDLEMESSAGE     "就绪"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_INDICATOR_EXT        "EXT"
     ID_INDICATOR_CAPS       "CAP"
@@ -611,7 +589,7 @@ BEGIN
     ID_INDICATOR_REC        "REC"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_FILE_NEW             "创建新文档\n新建"
     ID_FILE_OPEN            "打开现有文档\n打开"
@@ -620,13 +598,13 @@ BEGIN
     ID_FILE_SAVE_AS         "用新名称保存活动文档\n另存为"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_APP_ABOUT            "显示程序信息、版本号和版权\n关于"
     ID_APP_EXIT             "退出应用程序；提示保存文档\n退出"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_FILE_MRU_FILE1       "打开此文档"
     ID_FILE_MRU_FILE2       "打开此文档"
@@ -646,13 +624,13 @@ BEGIN
     ID_FILE_MRU_FILE16      "打开此文档"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_NEXT_PANE            "切换到下一个窗格\n下一窗格"
     ID_PREV_PANE            "切换回上一个窗格\n上一窗格"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_WINDOW_NEW           "为活动文档打开另一个窗口\n新建窗口"
     ID_WINDOW_ARRANGE       "在窗口底部排列图标\n排列图标"
@@ -662,7 +640,7 @@ BEGIN
     ID_WINDOW_SPLIT         "将活动窗口拆分为多个窗格\n拆分"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_EDIT_CLEAR           "清除选定内容\n清除"
     ID_EDIT_CLEAR_ALL       "清除全部内容\n全部清除"
@@ -677,14 +655,14 @@ BEGIN
     ID_EDIT_REDO            "恢复上次撤消的操作\n重做"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_VIEW_TOOLBAR         "显示或隐藏工具栏\n切换工具栏"
     ID_VIEW_STATUS_BAR      "显示或隐藏状态栏\n切换状态栏"
     ID_VIEW_AUTOARRANGE     "以网格方式排列图标。"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     AFX_IDS_SCSIZE          "更改窗口大小"
     AFX_IDS_SCMOVE          "更改窗口位置"
@@ -695,14 +673,14 @@ BEGIN
     AFX_IDS_SCCLOSE         "关闭活动窗口并提示保存文档"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     AFX_IDS_SCRESTORE       "将窗口恢复到正常大小"
     AFX_IDS_SCTASKLIST      "激活任务列表"
     AFX_IDS_MDICHILD        "激活此窗口"
 END
 
-STRINGTABLE 
+STRINGTABLE
 BEGIN
     ID_VIEW_SMALLICON       "使用小图标显示各项。\n小图标"
     ID_VIEW_LARGEICON       "使用大图标显示各项。\n大图标"
@@ -712,7 +690,7 @@ BEGIN
     ID_VIEW_BYNAME          "按字母顺序对图标排序。"
 END
 
-#endif    // Chinese (P.R.C.) resources
+#endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////
 
 

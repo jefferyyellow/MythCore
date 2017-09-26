@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="tiny">
+      <UniqueIdentifier>{f5842f85-a17c-49fd-99fd-29dc6005fe57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{38e83255-b7ff-481d-8746-8f93b91207ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{f09e7018-b46c-458b-ab97-f0a9780568f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common\inc">
+      <UniqueIdentifier>{7583dfb8-900e-4e69-ba82-71814d3845a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="servercommon">
+      <UniqueIdentifier>{4394fcbc-19b2-4b0c-825b-3f58e83fb9c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="servercommon\inc">
+      <UniqueIdentifier>{eca6b4ee-21cf-467e-b988-07f2a0490651}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mysql">
+      <UniqueIdentifier>{7a596537-4151-41c4-a0d1-3c55544dabb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mysql\include">
+      <UniqueIdentifier>{d89c2b19-ae64-41c7-b698-7624235b344d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mysql\src">
+      <UniqueIdentifier>{5c5cfaaa-8f3d-475b-adf0-ea7f585fa039}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DBMsgFactory.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ParseProtobuf.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PBToolCommon.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ProtoXMLManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\common\tiny\tinystr.cpp">
+      <Filter>tiny</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\common\tiny\tinyxml.cpp">
+      <Filter>tiny</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\common\tiny\tinyxmlerror.cpp">
+      <Filter>tiny</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\common\tiny\tinyxmlparser.cpp">
+      <Filter>tiny</Filter>
+    </ClCompile>
+    <ClCompile Include="DatabaseMysql.cpp">
+      <Filter>mysql\src</Filter>
+    </ClCompile>
+    <ClCompile Include="Field.cpp">
+      <Filter>mysql\src</Filter>
+    </ClCompile>
+    <ClCompile Include="QueryResultMysql.cpp">
+      <Filter>mysql\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="makefile">
+      <Filter>源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DBMsgFactory.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ParseProtobuf.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PBToolCommon.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ProtoXMLManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\tiny\tinystr.h">
+      <Filter>tiny</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\tiny\tinyxml.h">
+      <Filter>tiny</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\array_list.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\base.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\base64.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\charset.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\client_comm_engine.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\clock.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\code_queue.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\comhandle.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\commondefine.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\config.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\dbinterface.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\debug_new.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\dirtyword.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\equal_function.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\file_lock.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\hash_function.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\hash_key_map.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\hmac.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\log.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\logservertype.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\memorymanager.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\message_queue.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\net_head.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\object.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\objmanager.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\oi_tea.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\performance.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\proxy_head.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\proxymessage_pb.hxx.pb.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\serverhandle.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\servermessage_in.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\servertool.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\share_define.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\sharemem.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\shm.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\sk_assert.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\sk_hashmap.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\sk_md5.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\sk_queue.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\sk_random.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\sk_set.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\sk_sharedhashmap.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\sk_sharedvector.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\sk_string.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\sk_vector.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\sock_stream.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\stdafx.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\tcp_conn.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\thread.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\timer_define.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\timerinterface.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\timermanager.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\urlcode.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\include\westserver.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\common\inc\property_pb.hxx">
+      <Filter>common\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\servercommon\inc\servermessage_pb.hxx">
+      <Filter>servercommon\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="DatabaseMysql.h">
+      <Filter>mysql\include</Filter>
+    </ClInclude>
+    <ClInclude Include="Field.h">
+      <Filter>mysql\include</Filter>
+    </ClInclude>
+    <ClInclude Include="QueryResultMysql.h">
+      <Filter>mysql\include</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
