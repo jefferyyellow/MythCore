@@ -214,7 +214,7 @@ BOOL CSSHServerManagerDlg::OnInitDialog()
 
 void CSSHServerManagerDlg::InitAuthorizeInfo()
 {
-	TiXmlDocument tDoc;
+	tinyxml2::XMLDocument tDoc;
 	bool bResult = tDoc.LoadFile("authorize.xml");
 	if (!bResult)
 	{
@@ -223,20 +223,20 @@ void CSSHServerManagerDlg::InitAuthorizeInfo()
 	}
 
 
-	TiXmlElement *tpRoot = tDoc.FirstChildElement();
+	XMLElement *tpRoot = tDoc.FirstChildElement();
 	if (NULL == tpRoot)
 	{
 		return;
 	}
 
-	TiXmlElement *pUserNode = tpRoot->FirstChildElement("user");
+	XMLElement *pUserNode = tpRoot->FirstChildElement("user");
 	if (NULL == pUserNode)
 	{
 		AfxMessageBox(_T("找不着配置中的用户名"));
 		return;
 	}
 
-	TiXmlElement *pPasswdNode = tpRoot->FirstChildElement("passwd");
+	XMLElement *pPasswdNode = tpRoot->FirstChildElement("passwd");
 	if (NULL == pPasswdNode)
 	{
 		AfxMessageBox(_T("找不着配置中的密码"));
@@ -269,7 +269,7 @@ void CSSHServerManagerDlg::InitAuthorizeInfo()
 
 void CSSHServerManagerDlg::InitManulServerInfo()
 {
-	TiXmlDocument tDoc;
+	tinyxml2::XMLDocument tDoc;
 	bool bResult = tDoc.LoadFile( "manul.xml" );
 	if (!bResult)
 	{
@@ -277,13 +277,13 @@ void CSSHServerManagerDlg::InitManulServerInfo()
 		return;
 	}
 
-	TiXmlElement *tpRoot = tDoc.FirstChildElement();
+	XMLElement *tpRoot = tDoc.FirstChildElement();
 	if (NULL == tpRoot)
 	{
 		return;
 	}
 
-	TiXmlElement *pCommandElement = tpRoot->FirstChildElement( "command" );
+	XMLElement *pCommandElement = tpRoot->FirstChildElement( "command" );
 	if (NULL == pCommandElement)
 	{
 		AfxMessageBox(_T("找不着配置中的命令项"));
@@ -298,7 +298,7 @@ void CSSHServerManagerDlg::InitManulServerInfo()
 	GetCommandInfo(pCommandElement, "updatedb", gUpdatedbCommand, sizeof(gUpdatedbCommand) - 1, _T("找不着更新服务器命令配置,请检查配置文件!"));
 	GetCommandInfo(pCommandElement, "chmodscript", gChmodScriptCommand, sizeof(gChmodScriptCommand) - 1, _T("找不着修改脚本权限配置,请检查配置文件!"));
 
-	TiXmlElement *pServerTypeElement = tpRoot->FirstChildElement( "servertype" );
+	XMLElement *pServerTypeElement = tpRoot->FirstChildElement( "servertype" );
 	if (NULL == pServerTypeElement)
 	{
 		AfxMessageBox(_T("找不着配置中的服务器类型项"));
@@ -315,7 +315,7 @@ void CSSHServerManagerDlg::InitManulServerInfo()
 		return;
 	}
 
-	TiXmlElement *pRestartTimeElement = tpRoot->FirstChildElement( "restartwaittime" );
+	XMLElement *pRestartTimeElement = tpRoot->FirstChildElement( "restartwaittime" );
 	if (NULL == pRestartTimeElement)
 	{
 		AfxMessageBox(_T("找不着配置中的服务器类型项"));
@@ -332,7 +332,7 @@ void CSSHServerManagerDlg::InitManulServerInfo()
 		return;
 	}
 
-	TiXmlElement *pStopTimeElement = tpRoot->FirstChildElement( "stopwaittime" );
+	XMLElement *pStopTimeElement = tpRoot->FirstChildElement( "stopwaittime" );
 	if (NULL == pStopTimeElement)
 	{
 		AfxMessageBox(_T("找不着配置中的服务器类型项"));
@@ -349,7 +349,7 @@ void CSSHServerManagerDlg::InitManulServerInfo()
 		return;
 	}
 
-	TiXmlElement *pUpdateTimeElement = tpRoot->FirstChildElement( "updatewaittime" );
+	XMLElement *pUpdateTimeElement = tpRoot->FirstChildElement( "updatewaittime" );
 	if (NULL == pUpdateTimeElement)
 	{
 		AfxMessageBox(_T("找不着配置中的服务器类型项"));
@@ -366,7 +366,7 @@ void CSSHServerManagerDlg::InitManulServerInfo()
 		return;
 	}
 
-	TiXmlElement *pUpdateDBTimeElement = tpRoot->FirstChildElement( "updatedbwaittime" );
+	XMLElement *pUpdateDBTimeElement = tpRoot->FirstChildElement( "updatedbwaittime" );
 	if (NULL == pUpdateDBTimeElement)
 	{
 		AfxMessageBox(_T("找不着配置中的服务器类型项"));
@@ -384,9 +384,9 @@ void CSSHServerManagerDlg::InitManulServerInfo()
 	}
 }
 
-void CSSHServerManagerDlg::GetCommandInfo(TiXmlElement *pCommandElement, char* pCommand, char* pTargetCommand, int nLength, CString strErrMessage)
+void CSSHServerManagerDlg::GetCommandInfo(XMLElement *pCommandElement, char* pCommand, char* pTargetCommand, int nLength, CString strErrMessage)
 {
-	TiXmlElement* pSubCommandElement = pCommandElement->FirstChildElement(pCommand);
+	XMLElement* pSubCommandElement = pCommandElement->FirstChildElement(pCommand);
 	if (NULL == pSubCommandElement)
 	{
 		AfxMessageBox(strErrMessage);
@@ -406,7 +406,7 @@ void CSSHServerManagerDlg::GetCommandInfo(TiXmlElement *pCommandElement, char* p
 
 void CSSHServerManagerDlg::InitServerListInfo()
 {
-	TiXmlDocument tDoc;
+	tinyxml2::XMLDocument tDoc;
 	bool bResult = tDoc.LoadFile( "serverlist.xml" );
 	if (!bResult)
 	{
@@ -414,12 +414,12 @@ void CSSHServerManagerDlg::InitServerListInfo()
 		return;
 	}
 
-	TiXmlElement *tpRoot = tDoc.FirstChildElement();
+	XMLElement *tpRoot = tDoc.FirstChildElement();
 	if (NULL == tpRoot)
 	{
 		return;
 	}
-	TiXmlElement *pServerElement = tpRoot->FirstChildElement( "server" );
+	XMLElement *pServerElement = tpRoot->FirstChildElement( "server" );
 	for (; NULL != pServerElement; pServerElement = pServerElement->NextSiblingElement("server"))
 	{
 		const char* pID = pServerElement->Attribute("id");
@@ -462,15 +462,14 @@ void CSSHServerManagerDlg::InitServerListInfo()
 
 void CSSHServerManagerDlg::SaveServerListInfoToFile()
 {
-	TiXmlDocument* pFilterDoc = new TiXmlDocument;
-	TiXmlDeclaration* pDeclaration = new TiXmlDeclaration("1.0", "gb2312", "yes");
-
+	tinyxml2::XMLDocument* pFilterDoc = new tinyxml2::XMLDocument;
+	XMLDeclaration* pDeclaration = pFilterDoc->NewDeclaration();
 	pFilterDoc->LinkEndChild(pDeclaration);
-	TiXmlElement* pRootElem = new TiXmlElement("serverlist");
+	XMLElement* pRootElem = pFilterDoc->NewElement("serverlist");
 	pFilterDoc->LinkEndChild(pRootElem);
 	for (int i = 0; i < mServerListInfo.size(); ++ i)
 	{
-		TiXmlElement* pServerElem = new TiXmlElement("server");
+		XMLElement* pServerElem = pFilterDoc->NewElement("server");
 		if (NULL == pServerElem)
 		{
 			continue;

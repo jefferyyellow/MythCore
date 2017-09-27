@@ -150,6 +150,7 @@ void CTplPlayerLevelExpConfig::setFromPB(PBTplPlayerLevelExpConfig* pbConfig)
 	{
 		mLevelUpExp[i] = pbConfig->levelupexp(i);
 	}
+	mFloatTest = pbConfig->floattest();
 }
 
 void CTplPlayerLevelExpConfig::createToPB(PBTplPlayerLevelExpConfig* pbConfig)
@@ -164,6 +165,7 @@ void CTplPlayerLevelExpConfig::createToPB(PBTplPlayerLevelExpConfig* pbConfig)
 	{
 		pbConfig->add_levelupexp(mLevelUpExp[i]);
 	}
+	pbConfig->set_floattest(mFloatTest);
 }
 
 void CTplVIPConfig::setFromPB(PBTplVIPConfig* pbConfig)

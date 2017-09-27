@@ -734,12 +734,19 @@ class PBTplPlayerLevelExpConfig : public ::google::protobuf::Message /* @@protoc
   ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
       mutable_levelupexp();
 
+  // optional double FloatTest = 3;
+  void clear_floattest();
+  static const int kFloatTestFieldNumber = 3;
+  double floattest() const;
+  void set_floattest(double value);
+
   // @@protoc_insertion_point(class_scope:PBTplPlayerLevelExpConfig)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > levelupexp_;
   mutable int _levelupexp_cached_byte_size_;
+  double floattest_;
   ::google::protobuf::uint32 tempid_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_template_2ehxx_impl();
@@ -1611,6 +1618,20 @@ inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
 PBTplPlayerLevelExpConfig::mutable_levelupexp() {
   // @@protoc_insertion_point(field_mutable_list:PBTplPlayerLevelExpConfig.LevelUpExp)
   return &levelupexp_;
+}
+
+// optional double FloatTest = 3;
+inline void PBTplPlayerLevelExpConfig::clear_floattest() {
+  floattest_ = 0;
+}
+inline double PBTplPlayerLevelExpConfig::floattest() const {
+  // @@protoc_insertion_point(field_get:PBTplPlayerLevelExpConfig.FloatTest)
+  return floattest_;
+}
+inline void PBTplPlayerLevelExpConfig::set_floattest(double value) {
+  
+  floattest_ = value;
+  // @@protoc_insertion_point(field_set:PBTplPlayerLevelExpConfig.FloatTest)
 }
 
 inline const PBTplPlayerLevelExpConfig* PBTplPlayerLevelExpConfig::internal_default_instance() {

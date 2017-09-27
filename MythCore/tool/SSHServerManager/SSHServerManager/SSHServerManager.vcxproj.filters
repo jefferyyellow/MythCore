@@ -51,16 +51,7 @@
     <ClCompile Include="Thread.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="tiny\tinystr.cpp">
-      <Filter>tiny</Filter>
-    </ClCompile>
-    <ClCompile Include="tiny\tinyxml.cpp">
-      <Filter>tiny</Filter>
-    </ClCompile>
-    <ClCompile Include="tiny\tinyxmlerror.cpp">
-      <Filter>tiny</Filter>
-    </ClCompile>
-    <ClCompile Include="tiny\tinyxmlparser.cpp">
+    <ClCompile Include="..\..\..\dep\tinyxml\tinyxml2.cpp">
       <Filter>tiny</Filter>
     </ClCompile>
   </ItemGroup>
@@ -101,10 +92,7 @@
     <ClInclude Include="Thread.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="tiny\tinystr.h">
-      <Filter>tiny</Filter>
-    </ClInclude>
-    <ClInclude Include="tiny\tinyxml.h">
+    <ClInclude Include="..\..\..\dep\tinyxml\tinyxml2.h">
       <Filter>tiny</Filter>
     </ClInclude>
   </ItemGroup>

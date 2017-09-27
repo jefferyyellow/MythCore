@@ -8,6 +8,21 @@
 *********************************************************************/
 class CTemplateManager;
 class PBTplTemplate;
+
+#define CREATE_DATA_TO_PB(TemplateName, TemplateClassName, PBParent, PBName) \
+	if (TemplateName == strTempName) \
+	{ \
+		if (sizeof(TemplateClassName) != nTempLen) \
+		{ \
+			return FALSE; \
+		} \
+		TemplateClassName* pTplConfig = (TemplateClassName*)pTempData; \
+		pTplConfig->createToPB(PBParent->add_##PBName()); \
+	} 
+
+
+
+
 class CTemplateWrite
 {
 public:
@@ -27,7 +42,7 @@ public:
 	// 创建xml版本的前端
 	BOOL	WritePBToXml(PBTplTemplate& rTemplate);
 	// 往PB结构里加入数据
-	BOOL	AddPBData(CString& strTempName, char* pTempData, PBTplTemplate* pTemp, int nTempLen, bool bServer, char* pTempName, bool& bItem, bool& bFashionMall);
+	BOOL	AddPBData(PBTplTemplate* pTplTemplate, CString& strTempName, char* pTempData, int nTempLen);
 	// 校验数据
 	BOOL	VerifyValue(CTemplateManager* pTemplateManager, CString& strOutError);
 	// 校验单选一数据

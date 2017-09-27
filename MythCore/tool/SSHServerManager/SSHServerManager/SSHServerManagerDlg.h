@@ -28,7 +28,7 @@ public:
 
 	void InitAuthorizeInfo();
 	void InitManulServerInfo();
-	void GetCommandInfo(TiXmlElement *pCommandElement, char* pCommand, char* pTargetCommand, int nLength, CString strErrMessage);
+	void GetCommandInfo(XMLElement *pCommandElement, char* pCommand, char* pTargetCommand, int nLength, CString strErrMessage);
 	void InitServerListInfo();
 	void SaveServerListInfoToFile();
 	int GetMonitorIndex();

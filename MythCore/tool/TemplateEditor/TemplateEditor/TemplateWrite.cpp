@@ -210,19 +210,34 @@ BOOL CTemplateWrite::WriteToPB(CTemplateManager* pTemplateManager)
 						*pTmpFloat = fValue;
 						pDataBuffer += sizeof(float);
 					}
+					else if (strFieldType.find("DOUBLE") != string::npos)
+					{
+						double fValue = atof(strValue.c_str());
+						// 是否已经越界
+						if (pDataBuffer + sizeof(double) - pBuffer > emSingleTemplateMaxSize)
+						{
+							AfxMessageBox(_T("10K的缓冲区越界了！！！"));
+							// 报错吧,已经越界了 
+							return FALSE;
+						}
+
+						double* pTmpDouble = (double*)pDataBuffer;
+						*pTmpDouble = fValue;
+						pDataBuffer += sizeof(double);
+					}
 				}
 
 
 				// 
 				bool bItem = false;
 				bool bFashionMall = false;
-				if(!AddPBData(pOriginalTemplate->m_strOriginName, pBuffer, pServerTemp, (int)(pDataBuffer - pBuffer), TRUE, acTemplateName, bItem, bFashionMall))
+				if(!AddPBData(pServerTemp, pOriginalTemplate->m_strOriginName, pBuffer, (int)(pDataBuffer - pBuffer)))
 				{
 					AfxMessageBox(CString(_T("模板字段对应不上,请重新编译模板编辑器或者重新生成原始模板表!\n") + pOriginalTemplate->m_strOriginName));
 					return FALSE;
 				}
 
-				if (!AddPBData(pOriginalTemplate->m_strOriginName, pBuffer, pClientTemp, (int)(pDataBuffer - pBuffer), FALSE, NULL, bItem, bFashionMall))
+				if (!AddPBData(pClientTemp, pOriginalTemplate->m_strOriginName, pBuffer, (int)(pDataBuffer - pBuffer)))
 				{
 					AfxMessageBox(CString(_T("模板字段对应不上,请重新编译模板编辑器或者重新生成原始模板表!\n") + pOriginalTemplate->m_strOriginName));
 					return FALSE;
@@ -230,7 +245,7 @@ BOOL CTemplateWrite::WriteToPB(CTemplateManager* pTemplateManager)
 			}
 		}
 	}
-	WritePBToXml(*pServerTemp);
+	//WritePBToXml(*pServerTemp);
 	// 分别写服务器与客户端模板
 	fstream fstm_server( "template_server.dat", ios::out | ios::binary );
 	if (fstm_server.is_open() == false)
@@ -255,39 +270,25 @@ BOOL CTemplateWrite::WriteToPB(CTemplateManager* pTemplateManager)
 	fstm_server.close();
 
 
-	for (int i = 0; i < 2; i++)
+	fstream fstm_client( "template_client_necessary.dat", ios::out | ios::binary );
+	if ( fstm_client.is_open() == false )
 	{
-		char acFileName[MAX_PATH] = {0};
-		if(i == 0)
-		{
-			_snprintf(acFileName, sizeof(acFileName), "template_client_necessary.dat", i);
-		}
-		else
-		{
-			_snprintf(acFileName, sizeof(acFileName), "template_client_0.dat", i - 1);
-		}
+		::AfxMessageBox( L"创建模板dat文件失败!" );
+		return FALSE;
+	}
+	fstm_client.write( (char*)&nTempVersion, sizeof( int ) );
 
-		fstream fstm_client( acFileName, ios::out | ios::binary );
-		if ( fstm_client.is_open() == false )
-		{
-			::AfxMessageBox( L"创建模板dat文件失败!" );
-			return FALSE;
-		}
-		fstm_client.write( (char*)&nTempVersion, sizeof( int ) );
-
-		// 将客户端文件序列化到缓冲区
-		memset(pResultBuffer, 0, emAllTemplateMaxSize);
-		if ( pClientTemp[i].SerializeToArray( pResultBuffer, pClientTemp[i].ByteSize() ) == false )
-		{
-			::AfxMessageBox( L"Serialize Client PB failed!" );
-			return FALSE;
-		}
-
-		// 客户端模板数据写入文件
-		fstm_client.write( pResultBuffer, pClientTemp[i].ByteSize() );
-		fstm_client.close();
+	// 将客户端文件序列化到缓冲区
+	memset(pResultBuffer, 0, emAllTemplateMaxSize);
+	if ( pClientTemp->SerializeToArray( pResultBuffer, pClientTemp->ByteSize() ) == false )
+	{
+		::AfxMessageBox( L"Serialize Client PB failed!" );
+		return FALSE;
 	}
 
+	// 客户端模板数据写入文件
+	fstm_client.write( pResultBuffer, pClientTemp->ByteSize() );
+	fstm_client.close();
 
 	delete pServerTemp;
 	delete []pClientTemp;
@@ -638,20 +639,22 @@ void CTemplateWrite::ASCIIToUTF8(const char* pSr, int nSrcLen, char*pDst, int nD
 }
 
 // 往PB结构里加入数据
-BOOL CTemplateWrite::AddPBData(CString& strTempName, char* pTempData, PBTplTemplate* pTemp, int nTempLen, bool bServer, char* pTempName, bool& bItem, bool& bFashionMall)
+BOOL CTemplateWrite::AddPBData(PBTplTemplate* pTplTemplate, CString& strTempName, char* pTempData, int nTempLen)
 {
-	if ( pTempData == NULL || pTemp == NULL )
+	if ( pTempData == NULL || pTplTemplate == NULL )
 	{
 		return FALSE;
 	}
-	if (bServer)
-	{
-		pTempName[0] = '\0';
-	}
 
+	PBTplItemSet*	pbTplItemSet = pTplTemplate->mutable_itemset();
+	PBTplConfigSet* pbTplConfigSet = pTplTemplate->mutable_configset();
+	PBTplSkillSet*	pbTplSkillSet = pTplTemplate->mutable_skillset();
+	PBTplNPCSet*	pbTplNPCSet = pTplTemplate->mutable_npcset();
+
+	CREATE_DATA_TO_PB("d等级经验表", CTplPlayerLevelExpConfig, pbTplConfigSet, levelexpconfig);
+	CREATE_DATA_TO_PB("VIP经验表", CTplVIPConfig, pbTplConfigSet, vipconfig);
+	CREATE_DATA_TO_PB("g功能NPC", CTplFuncNPC, pbTplNPCSet, funcnpc);
+	CREATE_DATA_TO_PB("NPC基本信息", CTplOgre, pbTplNPCSet, ogre);
 
 	return TRUE;
-
-	
-	
 }

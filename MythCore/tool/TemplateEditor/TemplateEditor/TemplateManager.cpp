@@ -781,6 +781,10 @@ int CTemplateManager::CalculateOriginSize(COriginalTemplate* pOriginTemplate)
 		{
 			nLength += sizeof(float);
 		}
+		else if (strType.find("DOUBLE", 0) != string::npos)
+		{
+			nLength += sizeof(double);
+		}
 	}
 	return nLength;
 }

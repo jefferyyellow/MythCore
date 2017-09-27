@@ -505,6 +505,7 @@ int CParseProtobuf::Message2Xml(const Message& rMessage, XMLElement* tpParent, i
 				}
 				mXmldoc->SaveFile(acXmlFileName);
 				delete mXmldoc;
+				mXmldoc = NULL;
 			}
 		} 
 

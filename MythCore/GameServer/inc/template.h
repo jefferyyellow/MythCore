@@ -1,6 +1,11 @@
 #ifndef __TEMPLATE_H__
 #define __TEMPLATE_H__
 
+#ifdef TEMPEDIT
+#pragma pack(push)
+#pragma pack(4)
+#endif
+
 #define STRING32					32
 #define STRING256					256
 #define MAX_TEMPLATE_NUM			100000				// 最大模版数
@@ -138,6 +143,11 @@ public:
 	// Type:	  EDITNUMBER(1,10000000000000)
 	int			mLevelUpExp[MAX_LEVEL];
 
+	// FieldName: 堆叠上限
+	// FieldType: DOUBLE
+	// Type:	  EDITNUMBER(1,10000)
+	double			mFloatTest;
+
 public:
 	static CTplPlayerLevelExpConfig* spConfig;
 
@@ -253,7 +263,11 @@ public:
 	void	setFromPB(PBTplOgre* pbOgre);
 	void	createToPB(PBTplOgre* pbOgre);
 };
+
+#ifdef TEMPEDIT
+#pragma pack(pop)
 #endif
 // ********************************************************************** //
 // ENDMAKE
 // ********************************************************************** //
+#endif

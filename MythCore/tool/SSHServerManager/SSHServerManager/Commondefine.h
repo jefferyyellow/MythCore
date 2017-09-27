@@ -1,7 +1,8 @@
 #ifndef __COMMONDEFINE_H__
 #define __COMMONDEFINE_H__
 #include <stdio.h>
-#include "tiny/tinyxml.h"
+#include "tinyxml2.h"
+using namespace tinyxml2;
 #ifdef	WIN32
 	#include <Windows.h>
 	typedef DWORD pthread_t;

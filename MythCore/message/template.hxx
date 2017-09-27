@@ -45,6 +45,7 @@ message PBTplPlayerLevelExpConfig
 {
 	uint32				TempID			= 1;	// 模板ID
 	repeated uint32		LevelUpExp		= 2;	// 升到下一级经验值
+	double				FloatTest		= 3;	// 浮点数测试
 }
 
 message PBTplVIPConfig
