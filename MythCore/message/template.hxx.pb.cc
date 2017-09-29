@@ -137,10 +137,11 @@ void protobuf_AssignDesc_template_2ehxx() {
       sizeof(PBTplNPCSet),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplNPCSet, _internal_metadata_));
   PBTplItem_descriptor_ = file->message_type(5);
-  static const int PBTplItem_offsets_[4] = {
+  static const int PBTplItem_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplItem, tempid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplItem, name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplItem, describe_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplItem, itemtype_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplItem, pilelimit_),
   };
   PBTplItem_reflection_ =
@@ -154,10 +155,9 @@ void protobuf_AssignDesc_template_2ehxx() {
       sizeof(PBTplItem),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplItem, _internal_metadata_));
   PBTplPlayerLevelExpConfig_descriptor_ = file->message_type(6);
-  static const int PBTplPlayerLevelExpConfig_offsets_[3] = {
+  static const int PBTplPlayerLevelExpConfig_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplPlayerLevelExpConfig, tempid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplPlayerLevelExpConfig, levelupexp_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplPlayerLevelExpConfig, floattest_),
   };
   PBTplPlayerLevelExpConfig_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -339,16 +339,16 @@ void protobuf_AddDesc_template_2ehxx_impl() {
     "lExpConfig\022\"\n\tVIPConfig\030\002 \003(\0132\017.PBTplVIP"
     "Config\"\017\n\rPBTplSkillSet\"G\n\013PBTplNPCSet\022\036"
     "\n\007FuncNpc\030\001 \003(\0132\r.PBTplFuncNPC\022\030\n\004Ogre\030\002"
-    " \003(\0132\n.PBTplOgre\"N\n\tPBTplItem\022\016\n\006TempID\030"
-    "\001 \001(\r\022\014\n\004Name\030\002 \001(\t\022\020\n\010Describe\030\003 \001(\t\022\021\n"
-    "\tPileLimit\030\004 \001(\r\"R\n\031PBTplPlayerLevelExpC"
-    "onfig\022\016\n\006TempID\030\001 \001(\r\022\022\n\nLevelUpExp\030\002 \003("
-    "\r\022\021\n\tFloatTest\030\003 \001(\001\"0\n\016PBTplVIPConfig\022\016"
-    "\n\006TempID\030\001 \001(\r\022\016\n\006VIPExp\030\002 \003(\r\"(\n\010PBTplN"
-    "PC\022\016\n\006TempID\030\001 \001(\r\022\014\n\004Name\030\002 \001(\t\"+\n\014PBTp"
-    "lFuncNPC\022\033\n\010BaseInfo\030\001 \001(\0132\t.PBTplNPC\"(\n"
-    "\tPBTplOgre\022\033\n\010BaseInfo\030\001 \001(\0132\t.PBTplNPCb"
-    "\006proto3", 727);
+    " \003(\0132\n.PBTplOgre\"`\n\tPBTplItem\022\016\n\006TempID\030"
+    "\001 \001(\r\022\014\n\004Name\030\002 \001(\t\022\020\n\010Describe\030\003 \001(\t\022\020\n"
+    "\010ItemType\030\004 \001(\r\022\021\n\tPileLimit\030\005 \001(\r\"\?\n\031PB"
+    "TplPlayerLevelExpConfig\022\016\n\006TempID\030\001 \001(\r\022"
+    "\022\n\nLevelUpExp\030\002 \003(\r\"0\n\016PBTplVIPConfig\022\016\n"
+    "\006TempID\030\001 \001(\r\022\016\n\006VIPExp\030\002 \003(\r\"(\n\010PBTplNP"
+    "C\022\016\n\006TempID\030\001 \001(\r\022\014\n\004Name\030\002 \001(\t\"+\n\014PBTpl"
+    "FuncNPC\022\033\n\010BaseInfo\030\001 \001(\0132\t.PBTplNPC\"(\n\t"
+    "PBTplOgre\022\033\n\010BaseInfo\030\001 \001(\0132\t.PBTplNPCb\006"
+    "proto3", 726);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "template.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_template_2ehxx);
@@ -1961,6 +1961,7 @@ inline const PBTplNPCSet* PBTplNPCSet::internal_default_instance() {
 const int PBTplItem::kTempIDFieldNumber;
 const int PBTplItem::kNameFieldNumber;
 const int PBTplItem::kDescribeFieldNumber;
+const int PBTplItem::kItemTypeFieldNumber;
 const int PBTplItem::kPileLimitFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -2106,13 +2107,28 @@ bool PBTplItem::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_PileLimit;
+        if (input->ExpectTag(32)) goto parse_ItemType;
         break;
       }
 
-      // optional uint32 PileLimit = 4;
+      // optional uint32 ItemType = 4;
       case 4: {
         if (tag == 32) {
+         parse_ItemType:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &itemtype_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(40)) goto parse_PileLimit;
+        break;
+      }
+
+      // optional uint32 PileLimit = 5;
+      case 5: {
+        if (tag == 40) {
          parse_PileLimit:
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -2174,9 +2190,14 @@ void PBTplItem::SerializeWithCachedSizes(
       3, this->describe(), output);
   }
 
-  // optional uint32 PileLimit = 4;
+  // optional uint32 ItemType = 4;
+  if (this->itemtype() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->itemtype(), output);
+  }
+
+  // optional uint32 PileLimit = 5;
   if (this->pilelimit() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->pilelimit(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->pilelimit(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:PBTplItem)
@@ -2213,9 +2234,14 @@ void PBTplItem::SerializeWithCachedSizes(
         3, this->describe(), target);
   }
 
-  // optional uint32 PileLimit = 4;
+  // optional uint32 ItemType = 4;
+  if (this->itemtype() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->itemtype(), target);
+  }
+
+  // optional uint32 PileLimit = 5;
   if (this->pilelimit() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->pilelimit(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->pilelimit(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:PBTplItem)
@@ -2247,7 +2273,14 @@ size_t PBTplItem::ByteSizeLong() const {
         this->describe());
   }
 
-  // optional uint32 PileLimit = 4;
+  // optional uint32 ItemType = 4;
+  if (this->itemtype() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->itemtype());
+  }
+
+  // optional uint32 PileLimit = 5;
   if (this->pilelimit() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -2298,6 +2331,9 @@ void PBTplItem::UnsafeMergeFrom(const PBTplItem& from) {
 
     describe_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.describe_);
   }
+  if (from.itemtype() != 0) {
+    set_itemtype(from.itemtype());
+  }
   if (from.pilelimit() != 0) {
     set_pilelimit(from.pilelimit());
   }
@@ -2330,6 +2366,7 @@ void PBTplItem::InternalSwap(PBTplItem* other) {
   std::swap(tempid_, other->tempid_);
   name_.Swap(&other->name_);
   describe_.Swap(&other->describe_);
+  std::swap(itemtype_, other->itemtype_);
   std::swap(pilelimit_, other->pilelimit_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -2448,7 +2485,21 @@ void PBTplItem::set_allocated_describe(::std::string* describe) {
   // @@protoc_insertion_point(field_set_allocated:PBTplItem.Describe)
 }
 
-// optional uint32 PileLimit = 4;
+// optional uint32 ItemType = 4;
+void PBTplItem::clear_itemtype() {
+  itemtype_ = 0u;
+}
+::google::protobuf::uint32 PBTplItem::itemtype() const {
+  // @@protoc_insertion_point(field_get:PBTplItem.ItemType)
+  return itemtype_;
+}
+void PBTplItem::set_itemtype(::google::protobuf::uint32 value) {
+  
+  itemtype_ = value;
+  // @@protoc_insertion_point(field_set:PBTplItem.ItemType)
+}
+
+// optional uint32 PileLimit = 5;
 void PBTplItem::clear_pilelimit() {
   pilelimit_ = 0u;
 }
@@ -2472,7 +2523,6 @@ inline const PBTplItem* PBTplItem::internal_default_instance() {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int PBTplPlayerLevelExpConfig::kTempIDFieldNumber;
 const int PBTplPlayerLevelExpConfig::kLevelUpExpFieldNumber;
-const int PBTplPlayerLevelExpConfig::kFloatTestFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 PBTplPlayerLevelExpConfig::PBTplPlayerLevelExpConfig()
@@ -2494,8 +2544,7 @@ PBTplPlayerLevelExpConfig::PBTplPlayerLevelExpConfig(const PBTplPlayerLevelExpCo
 }
 
 void PBTplPlayerLevelExpConfig::SharedCtor() {
-  ::memset(&floattest_, 0, reinterpret_cast<char*>(&tempid_) -
-    reinterpret_cast<char*>(&floattest_) + sizeof(tempid_));
+  tempid_ = 0u;
   _cached_size_ = 0;
 }
 
@@ -2534,27 +2583,7 @@ PBTplPlayerLevelExpConfig* PBTplPlayerLevelExpConfig::New(::google::protobuf::Ar
 
 void PBTplPlayerLevelExpConfig::Clear() {
 // @@protoc_insertion_point(message_clear_start:PBTplPlayerLevelExpConfig)
-#if defined(__clang__)
-#define ZR_HELPER_(f) \
-  _Pragma("clang diagnostic push") \
-  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
-  __builtin_offsetof(PBTplPlayerLevelExpConfig, f) \
-  _Pragma("clang diagnostic pop")
-#else
-#define ZR_HELPER_(f) reinterpret_cast<char*>(\
-  &reinterpret_cast<PBTplPlayerLevelExpConfig*>(16)->f)
-#endif
-
-#define ZR_(first, last) do {\
-  ::memset(&(first), 0,\
-           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
-} while (0)
-
-  ZR_(floattest_, tempid_);
-
-#undef ZR_HELPER_
-#undef ZR_
-
+  tempid_ = 0u;
   levelupexp_.Clear();
 }
 
@@ -2593,21 +2622,6 @@ bool PBTplPlayerLevelExpConfig::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  1, 18, input, this->mutable_levelupexp())));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(25)) goto parse_FloatTest;
-        break;
-      }
-
-      // optional double FloatTest = 3;
-      case 3: {
-        if (tag == 25) {
-         parse_FloatTest:
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
-                 input, &floattest_)));
         } else {
           goto handle_unusual;
         }
@@ -2654,11 +2668,6 @@ void PBTplPlayerLevelExpConfig::SerializeWithCachedSizes(
       this->levelupexp(i), output);
   }
 
-  // optional double FloatTest = 3;
-  if (this->floattest() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteDouble(3, this->floattest(), output);
-  }
-
   // @@protoc_insertion_point(serialize_end:PBTplPlayerLevelExpConfig)
 }
 
@@ -2685,11 +2694,6 @@ void PBTplPlayerLevelExpConfig::SerializeWithCachedSizes(
       WriteUInt32NoTagToArray(this->levelupexp(i), target);
   }
 
-  // optional double FloatTest = 3;
-  if (this->floattest() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(3, this->floattest(), target);
-  }
-
   // @@protoc_insertion_point(serialize_to_array_end:PBTplPlayerLevelExpConfig)
   return target;
 }
@@ -2703,11 +2707,6 @@ size_t PBTplPlayerLevelExpConfig::ByteSizeLong() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->tempid());
-  }
-
-  // optional double FloatTest = 3;
-  if (this->floattest() != 0) {
-    total_size += 1 + 8;
   }
 
   // repeated uint32 LevelUpExp = 2;
@@ -2766,9 +2765,6 @@ void PBTplPlayerLevelExpConfig::UnsafeMergeFrom(const PBTplPlayerLevelExpConfig&
   if (from.tempid() != 0) {
     set_tempid(from.tempid());
   }
-  if (from.floattest() != 0) {
-    set_floattest(from.floattest());
-  }
 }
 
 void PBTplPlayerLevelExpConfig::CopyFrom(const ::google::protobuf::Message& from) {
@@ -2797,7 +2793,6 @@ void PBTplPlayerLevelExpConfig::Swap(PBTplPlayerLevelExpConfig* other) {
 void PBTplPlayerLevelExpConfig::InternalSwap(PBTplPlayerLevelExpConfig* other) {
   std::swap(tempid_, other->tempid_);
   levelupexp_.UnsafeArenaSwap(&other->levelupexp_);
-  std::swap(floattest_, other->floattest_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -2855,20 +2850,6 @@ PBTplPlayerLevelExpConfig::levelupexp() const {
 PBTplPlayerLevelExpConfig::mutable_levelupexp() {
   // @@protoc_insertion_point(field_mutable_list:PBTplPlayerLevelExpConfig.LevelUpExp)
   return &levelupexp_;
-}
-
-// optional double FloatTest = 3;
-void PBTplPlayerLevelExpConfig::clear_floattest() {
-  floattest_ = 0;
-}
-double PBTplPlayerLevelExpConfig::floattest() const {
-  // @@protoc_insertion_point(field_get:PBTplPlayerLevelExpConfig.FloatTest)
-  return floattest_;
-}
-void PBTplPlayerLevelExpConfig::set_floattest(double value) {
-  
-  floattest_ = value;
-  // @@protoc_insertion_point(field_set:PBTplPlayerLevelExpConfig.FloatTest)
 }
 
 inline const PBTplPlayerLevelExpConfig* PBTplPlayerLevelExpConfig::internal_default_instance() {

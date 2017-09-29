@@ -122,6 +122,7 @@ void CTplItem::setFromPB(PBTplItem* pbItem)
 	mTempID = pbItem->tempid();
 	strncpy(mName, pbItem->name().c_str(), sizeof(mName) - 1);
 	strncpy(mDescribe, pbItem->describe().c_str(), sizeof(mDescribe) - 1);
+	mItemType = pbItem->itemtype();
 	mPileLimit = pbItem->pilelimit();
 }
 
@@ -134,6 +135,7 @@ void CTplItem::createToPB(PBTplItem* pbItem)
 	pbItem->set_tempid(mTempID);
 	pbItem->set_name(mName);
 	pbItem->set_describe(mDescribe);
+	pbItem->set_itemtype(mItemType);
 	pbItem->set_pilelimit(mPileLimit);
 }
 
@@ -150,7 +152,6 @@ void CTplPlayerLevelExpConfig::setFromPB(PBTplPlayerLevelExpConfig* pbConfig)
 	{
 		mLevelUpExp[i] = pbConfig->levelupexp(i);
 	}
-	mFloatTest = pbConfig->floattest();
 }
 
 void CTplPlayerLevelExpConfig::createToPB(PBTplPlayerLevelExpConfig* pbConfig)
@@ -165,7 +166,6 @@ void CTplPlayerLevelExpConfig::createToPB(PBTplPlayerLevelExpConfig* pbConfig)
 	{
 		pbConfig->add_levelupexp(mLevelUpExp[i]);
 	}
-	pbConfig->set_floattest(mFloatTest);
 }
 
 void CTplVIPConfig::setFromPB(PBTplVIPConfig* pbConfig)

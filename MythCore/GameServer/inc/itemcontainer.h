@@ -22,10 +22,12 @@ public:
 	bool	checkSpace(int nItemID, int nNumber);
 	// 插入道具
 	int		insertItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNumber, int &rOutLen);
-	/// 背包里是否有足够的道具
+	/// 背包里是否有足够数量的道具
 	bool	checkEnough(int nItemID, int nItemNum);
 	/// 删除道具
-	bool	removeItem(int nItemID, int nItemNum);
+	void	removeItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNumber, int &rOutLen);
+	/// 删除道具
+	bool	removeItem(unsigned int nIndex, unsigned int nNum);
 
 public:
 	uint32		getSize(){return mSize;}

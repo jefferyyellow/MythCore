@@ -627,9 +627,15 @@ class PBTplItem : public ::google::protobuf::Message /* @@protoc_insertion_point
   ::std::string* release_describe();
   void set_allocated_describe(::std::string* describe);
 
-  // optional uint32 PileLimit = 4;
+  // optional uint32 ItemType = 4;
+  void clear_itemtype();
+  static const int kItemTypeFieldNumber = 4;
+  ::google::protobuf::uint32 itemtype() const;
+  void set_itemtype(::google::protobuf::uint32 value);
+
+  // optional uint32 PileLimit = 5;
   void clear_pilelimit();
-  static const int kPileLimitFieldNumber = 4;
+  static const int kPileLimitFieldNumber = 5;
   ::google::protobuf::uint32 pilelimit() const;
   void set_pilelimit(::google::protobuf::uint32 value);
 
@@ -640,6 +646,7 @@ class PBTplItem : public ::google::protobuf::Message /* @@protoc_insertion_point
   ::google::protobuf::internal::ArenaStringPtr name_;
   ::google::protobuf::internal::ArenaStringPtr describe_;
   ::google::protobuf::uint32 tempid_;
+  ::google::protobuf::uint32 itemtype_;
   ::google::protobuf::uint32 pilelimit_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_template_2ehxx_impl();
@@ -734,19 +741,12 @@ class PBTplPlayerLevelExpConfig : public ::google::protobuf::Message /* @@protoc
   ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
       mutable_levelupexp();
 
-  // optional double FloatTest = 3;
-  void clear_floattest();
-  static const int kFloatTestFieldNumber = 3;
-  double floattest() const;
-  void set_floattest(double value);
-
   // @@protoc_insertion_point(class_scope:PBTplPlayerLevelExpConfig)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > levelupexp_;
   mutable int _levelupexp_cached_byte_size_;
-  double floattest_;
   ::google::protobuf::uint32 tempid_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_template_2ehxx_impl();
@@ -1555,7 +1555,21 @@ inline void PBTplItem::set_allocated_describe(::std::string* describe) {
   // @@protoc_insertion_point(field_set_allocated:PBTplItem.Describe)
 }
 
-// optional uint32 PileLimit = 4;
+// optional uint32 ItemType = 4;
+inline void PBTplItem::clear_itemtype() {
+  itemtype_ = 0u;
+}
+inline ::google::protobuf::uint32 PBTplItem::itemtype() const {
+  // @@protoc_insertion_point(field_get:PBTplItem.ItemType)
+  return itemtype_;
+}
+inline void PBTplItem::set_itemtype(::google::protobuf::uint32 value) {
+  
+  itemtype_ = value;
+  // @@protoc_insertion_point(field_set:PBTplItem.ItemType)
+}
+
+// optional uint32 PileLimit = 5;
 inline void PBTplItem::clear_pilelimit() {
   pilelimit_ = 0u;
 }
@@ -1618,20 +1632,6 @@ inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
 PBTplPlayerLevelExpConfig::mutable_levelupexp() {
   // @@protoc_insertion_point(field_mutable_list:PBTplPlayerLevelExpConfig.LevelUpExp)
   return &levelupexp_;
-}
-
-// optional double FloatTest = 3;
-inline void PBTplPlayerLevelExpConfig::clear_floattest() {
-  floattest_ = 0;
-}
-inline double PBTplPlayerLevelExpConfig::floattest() const {
-  // @@protoc_insertion_point(field_get:PBTplPlayerLevelExpConfig.FloatTest)
-  return floattest_;
-}
-inline void PBTplPlayerLevelExpConfig::set_floattest(double value) {
-  
-  floattest_ = value;
-  // @@protoc_insertion_point(field_set:PBTplPlayerLevelExpConfig.FloatTest)
 }
 
 inline const PBTplPlayerLevelExpConfig* PBTplPlayerLevelExpConfig::internal_default_instance() {

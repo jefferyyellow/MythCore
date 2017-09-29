@@ -2,6 +2,7 @@
 #include "template.h"
 #include "itemobject.h"
 #include "objpool.h"
+#include "locallogjob.h"
 bool CItemContainer::checkSpace(int* pItemID, int* pNumber, int nSize)
 {
 	if (nSize > MAX_INSERT_TYPE_NUM)
@@ -128,6 +129,8 @@ int CItemContainer::insertItem(int nItemID, int nItemNum, int *pOutIndex, int *p
 	CTplItem* tpItem = (CTplItem*)CStaticData::searchTpl(nItemID);
 	if (NULL == tpItem)
 	{
+		// 道具模板数据为空
+		LOG_ERROR("item template data is null");
 		return -2;
 	}
 
@@ -159,6 +162,8 @@ int CItemContainer::insertItem(int nItemID, int nItemNum, int *pOutIndex, int *p
 				nLeftPileNum = nPileLimit - pItemObject->GetItemNum();
 				if (nLeftPileNum <= 0)
 				{
+					// 道具的堆叠数目出错了
+					LOG_ERROR("item pile num valid");
 					continue;
 				}
 				nInsertedNum = nItemNum > nLeftPileNum ? nLeftPileNum : nItemNum;
@@ -168,7 +173,7 @@ int CItemContainer::insertItem(int nItemID, int nItemNum, int *pOutIndex, int *p
 				// 记录插入在那个格子里
 				pOutIndex[rOutLen] = i;
 				// 对应的这个格子里插入了多少个数目的道具
-				pOutNumber[rOutLen] = nInsertedNum;
+				pOutNumber[rOutLen] = pItemObject->GetItemNum();
 				++rOutLen;
 				// 已经全部插入了，重置ID与数量的关系
 				if (nItemNum <= 0)
@@ -186,6 +191,8 @@ int CItemContainer::insertItem(int nItemID, int nItemNum, int *pOutIndex, int *p
 		CItemObject* pItemObject = CItemFactory::createItem(nItemID);
 		if (NULL == pItemObject)
 		{
+			// 从道具实体池创建道具实体失败
+			LOG_ERROR("create item object from pool failure!!!");
 			continue;
 		}
 		pOutIndex[rOutLen] = tEmpty[i];
@@ -211,6 +218,7 @@ int CItemContainer::insertItem(int nItemID, int nItemNum, int *pOutIndex, int *p
 	return 0;
 }
 
+// 背包里是否有足够数量的道具
 bool CItemContainer::checkEnough(int nItemID, int nItemNum)
 {
 	for (unsigned int i = 0; i < mSize; ++i)
@@ -242,7 +250,7 @@ bool CItemContainer::checkEnough(int nItemID, int nItemNum)
 }
 
 /// 删除道具
-bool CItemContainer::removeItem(int nItemID, int nItemNum)
+void CItemContainer::removeItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNumber, int &rOutLen)
 {
 	for (unsigned int i = 0; i < mSize; ++i)
 	{
@@ -262,12 +270,71 @@ bool CItemContainer::removeItem(int nItemID, int nItemNum)
 		{
 			continue;
 		}
-			
-		if (nItemNum >= (int)pItemObject->GetItemNum())
+		
+		// 当前的这个道具已经够了，不需要再往后找了
+		if (nItemNum <= (int)pItemObject->GetItemNum())
 		{
+			pItemObject->SetItemNum(pItemObject->GetItemNum() - nItemNum);
 
+			pOutIndex[rOutLen] = i;
+			pOutNumber[rOutLen] = pItemObject->GetItemNum();
+			++rOutLen;
+
+			if (0 == pItemObject->GetItemNum())
+			{
+				mItemObjID[i] = INVALID_OBJ_ID;
+				mItemID[i] = 0;
+				CItemFactory::destroyItem(pItemObject->getObjID());
+			}
+			return;
+		}
+		else
+		{
+			mItemObjID[i] = INVALID_OBJ_ID;
+			mItemID[i] = 0;
+
+			pOutIndex[rOutLen] = i;
+			pOutNumber[rOutLen] = 0;
+			++rOutLen;
+
+			CItemFactory::destroyItem(pItemObject->getObjID());
 		}
 	}
 
-	return false;
+	return;
+}
+
+/// 删除道具
+bool CItemContainer::removeItem(unsigned int nIndex, unsigned int nNum)
+{
+	if (nIndex >= mSize)
+	{
+		return false;
+	}
+
+	if (INVALID_OBJ_ID == mItemObjID[nIndex])
+	{
+		return false;
+	}
+
+	CItemObject* pItemObject = (CItemObject*)CObjPool::Inst()->getObj(mItemObjID[nIndex]);
+	if (NULL == pItemObject)
+	{
+		return false;
+	}
+
+	if (pItemObject->GetItemNum() < nNum)
+	{
+		return false;
+	}
+
+	pItemObject->SetItemNum(pItemObject->GetItemNum() - nNum);
+	// 如果删除完了
+	if (pItemObject->GetItemNum() <= 0)
+	{
+		mItemObjID[nIndex] = INVALID_OBJ_ID;
+		mItemID[nIndex] = 0;
+		CItemFactory::destroyItem(pItemObject->getObjID());
+	}
+	return true;
 }

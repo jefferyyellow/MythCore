@@ -38,14 +38,14 @@ message PBTplItem
 	uint32				TempID			= 1;	// 模板ID
 	string				Name			= 2;	// 道具显示名称
 	string				Describe		= 3;	// 物品详细说明
-	uint32				PileLimit		= 4;	// 堆叠上限
+	uint32				ItemType		= 4;	// 道具类型
+	uint32				PileLimit		= 5;	// 堆叠上限
 }
 
 message PBTplPlayerLevelExpConfig
 {
 	uint32				TempID			= 1;	// 模板ID
 	repeated uint32		LevelUpExp		= 2;	// 升到下一级经验值
-	double				FloatTest		= 3;	// 浮点数测试
 }
 
 message PBTplVIPConfig

@@ -30,6 +30,16 @@ CObj* CObjPool::allocObj(EmObjType eType)
 		pObj = reinterpret_cast<CObj*>(mPoolImp->mItemEntityPool.allocObj());
 		break;
 	}
+	case emObjType_Item_Common:
+	{
+		pObj = reinterpret_cast<CObj*>(mPoolImp->mItemCommonPool.allocObj());
+		break;
+	}
+	case emObjType_Item_Equip:
+	{
+		pObj = reinterpret_cast<CObj*>(mPoolImp->mItemEquipPool.allocObj());
+		break;
+	}
 	default:
 		break;
 	}
@@ -67,6 +77,16 @@ CObj* CObjPool::getObj(uint32 nObjID)
 		pObj = reinterpret_cast<CObj*>(mPoolImp->mItemEntityPool.getObj(nObjID));
 		break;
 	}
+	case emObjType_Item_Common:
+	{
+		pObj = reinterpret_cast<CObj*>(mPoolImp->mItemCommonPool.getObj(nObjID));
+		break;
+	}
+	case emObjType_Item_Equip:
+	{
+		pObj = reinterpret_cast<CObj*>(mPoolImp->mItemEquipPool.getObj(nObjID));
+		break;
+	}
 	default:
 		break;
 	}
@@ -101,6 +121,16 @@ void CObjPool::free(uint32 nObjID)
 	case emObjType_Entity_Item:
 	{
 		mPoolImp->mItemEntityPool.freeByID(nObjID);
+		break;
+	}
+	case emObjType_Item_Common:
+	{
+		mPoolImp->mItemCommonPool.freeByID(nObjID);
+		break;
+	}
+	case emObjType_Item_Equip:
+	{
+		mPoolImp->mItemEquipPool.freeByID(nObjID);
 		break;
 	}
 	default:

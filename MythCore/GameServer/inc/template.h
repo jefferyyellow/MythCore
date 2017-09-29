@@ -91,6 +91,13 @@ public:
 	~CTemplate() {}
 };
 
+
+enum EmItemType
+{
+	emItemType_None		= 0,		// 无类型
+	emItemType_Common	= 1,		// 通用道具
+	emItemType_Equip	= 2,		// 装备道具
+};
 // ********************************************************************** //
 // BEGINMAKE
 // virtual	= true						## 代表不生成到数据库中
@@ -110,6 +117,11 @@ public:
 	// FieldType: STRING256
 	// Type:	  EDITSTRING
 	char	mDescribe[STRING256];
+
+	// FieldName: 道具类型
+	// FieldType: INT4
+	// Type:	  COMBOENUM(EmItemType)
+	int		mItemType;
 
 	// FieldName: 堆叠上限
 	// FieldType: INT4
@@ -142,11 +154,6 @@ public:
 	// FieldType: INT4
 	// Type:	  EDITNUMBER(1,10000000000000)
 	int			mLevelUpExp[MAX_LEVEL];
-
-	// FieldName: 堆叠上限
-	// FieldType: DOUBLE
-	// Type:	  EDITNUMBER(1,10000)
-	double			mFloatTest;
 
 public:
 	static CTplPlayerLevelExpConfig* spConfig;
