@@ -5,6 +5,7 @@
 #include "objmanager.h"
 #include "entityplayer.h"
 #include "itemobject.h"
+#include "loginplayer.h"
 #define OBJ_ID_RANGE(ObjType) OBJ_ID_START(ObjType),OBJ_ID_END(ObjType)
 #define CAPACITY_LOGIN_PLAYER		256
 #define	CAPACITY_PLAYER				2000

@@ -31,6 +31,9 @@
     <Filter Include="logicmodule\map">
       <UniqueIdentifier>{dc4536f8-14c3-481a-85f4-7e2fc950452a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="logicmodule\login">
+      <UniqueIdentifier>{8d0c58c9-4875-4a95-aaef-0030a1d15acf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\message\loginmessage.hxx.pb.cc">
@@ -96,9 +99,6 @@
     <ClCompile Include="src\taskunit.cpp">
       <Filter>player</Filter>
     </ClCompile>
-    <ClCompile Include="src\loginmodule.cpp">
-      <Filter>logicmodule</Filter>
-    </ClCompile>
     <ClCompile Include="src\propertymodule.cpp">
       <Filter>logicmodule</Filter>
     </ClCompile>
@@ -143,6 +143,12 @@
     </ClCompile>
     <ClCompile Include="..\message\template.hxx.pb.cc">
       <Filter>message</Filter>
+    </ClCompile>
+    <ClCompile Include="src\loginmodule.cpp">
+      <Filter>logicmodule\login</Filter>
+    </ClCompile>
+    <ClCompile Include="src\loginplayer.cpp">
+      <Filter>logicmodule\login</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -239,9 +245,6 @@
     <ClInclude Include="inc\logicmodule.h">
       <Filter>logicmodule</Filter>
     </ClInclude>
-    <ClInclude Include="inc\loginmodule.h">
-      <Filter>logicmodule</Filter>
-    </ClInclude>
     <ClInclude Include="inc\propertymodule.h">
       <Filter>logicmodule</Filter>
     </ClInclude>
@@ -304,6 +307,15 @@
     </ClInclude>
     <ClInclude Include="..\message\template.hxx.pb.h">
       <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\loginmodule.h">
+      <Filter>logicmodule\login</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\loginplayer.h">
+      <Filter>logicmodule\login</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\statemachine.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

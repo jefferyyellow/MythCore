@@ -13,4 +13,7 @@ struct CExchangeHead
 	uint16	mSocketIndex;				// socket索引
 	uint16	mSocketError;				// socket错误
 };
+
+
+#define MAX_PLAYER_NAME_LEN		32		// 玩家名字最大长度
 #endif

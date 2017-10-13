@@ -37,69 +37,69 @@ protected:
 class CIMLocalLogRequest : public CInternalMsg
 {
 public:
-	uint8		mLogType;								// 日志类型		
-	char		mLogContent[MAX_LOG_BUFFER_NUM];		// 日志内容
+	uint8		mLogType;									// 日志类型		
+	char		mLogContent[MAX_LOG_BUFFER_NUM];			// 日志内容
 #ifdef __DEBUG__
-	char		mDebugName[MAX_DEBUG_LOG_NAME];			// 调试日志名字
+	char		mDebugName[MAX_DEBUG_LOG_NAME];				// 调试日志名字
 #endif
 };
 
 class CIMPlayerLoginRequest : public CInternalMsg
 {
 public:
-	char		mName[32];								// 名字
-	uint16		mChannelID;								// 渠道
-	uint16		mServerID;								// 服务器ID
-	CExchangeHead	mExchangeHead;						// TCP服务器消息头
+	char			mName[MAX_PLAYER_NAME_LEN];				// 名字
+	uint16			mChannelID;								// 渠道
+	uint16			mServerID;								// 服务器ID
+	CExchangeHead	mExchangeHead;							// TCP服务器消息头
 };
 
 class CIMPlayerLoginResponse : public CInternalMsg
 {
 public:
-	uint32		mAccountID;								// 账号ID
-	uint16		mChannelID;								// 渠道
-	uint16		mServerID;								// 服务器ID
-	uint32		mRoleID;								// 角色ID
-	CExchangeHead	mExchangeHead;						// TCP服务器消息头
+	uint32			mAccountID;								// 账号ID
+	uint16			mChannelID;								// 渠道
+	uint16			mServerID;								// 服务器ID
+	uint32			mRoleID;								// 角色ID
+	CExchangeHead	mExchangeHead;							// TCP服务器消息头
 };
 
 class CIMCreateRoleRequest : public CInternalMsg
 {
 public:
-	uint32		mAccountID;								// 账号ID
-	uint16		mChannelID;								// 渠道
-	uint16		mServerID;								// 服务器ID
-	char		mRoleName[32];							// 角色名
+	uint32			mAccountID;								// 账号ID
+	uint16			mChannelID;								// 渠道
+	uint16			mServerID;								// 服务器ID
+	char			mRoleName[MAX_PLAYER_NAME_LEN];			// 角色名
 };
 
 
 class CIMCreateRoleResponse : public CInternalMsg
 {
 public:
-	uint32		mRoleID;								// 角色ID
-	uint32		mAccountID;								// 账号ID
-	uint16		mChannelID;								// 渠道
-	uint16		mServerID;								// 服务器ID
-	uint32		mSocketIndex;							// Socket索引
+	uint32			mRoleID;								// 角色ID
+	uint32			mAccountID;								// 账号ID
+	uint16			mChannelID;								// 渠道
+	uint16			mServerID;								// 服务器ID
+	uint32			mSocketIndex;							// Socket索引
 };
 
 class CIMEnterSceneRequest : public CInternalMsg
 {
 public:
-	uint32		mRoleID;								// 角色ID
-	uint32		mAccountID;								// 账号ID
-	uint16		mChannelID;								// 渠道
-	uint16		mServerID;								// 服务器ID
-	uint32		mPlayerEntityID;						// 角色的实体ID
+	uint32			mRoleID;								// 角色ID
+	uint32			mAccountID;								// 账号ID
+	uint16			mChannelID;								// 渠道
+	uint16			mServerID;								// 服务器ID
+	uint32			mPlayerEntityID;						// 角色的实体ID
 };
 
 class CIMEnterSceneResponse : public CInternalMsg
 {
 public:
-	uint32		mRoleID;								// 角色ID
-	uint32		mAccountID;								// 账号ID
-	uint16		mChannelID;								// 渠道
-	uint16		mServerID;								// 服务器ID
-	uint32		mPlayerEntityID;						// 角色的实体ID
+	uint32			mRoleID;								// 角色ID
+	uint32			mAccountID;								// 账号ID
+	uint16			mChannelID;								// 渠道
+	uint16			mServerID;								// 服务器ID
+	uint32			mPlayerEntityID;						// 角色的实体ID
 };
 #endif

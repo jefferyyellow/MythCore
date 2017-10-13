@@ -6,6 +6,7 @@
 #include "entityplayer.h"
 #include "objpool.h"
 #include "timemanager.h"
+#include "loginplayer.h"
 CLoginModule::CLoginModule()
 :mLoginCheckTime(1000)
 {
@@ -49,26 +50,36 @@ void CLoginModule::OnTimer(unsigned int nTickOffset)
 
 void CLoginModule::onClientMessage(CExchangeHead& rExchangeHead, unsigned int nMessageID, Message* pMessage)
 {
-	switch (nMessageID)
+	CLoginPlayer* pLoginPlayer = NULL;
+	LOGIN_LIST::iterator it = mLoginList.find(rExchangeHead.mSocketIndex);
+	if (it == mLoginList.end())
 	{
-		case ID_C2S_REQUEST_LOGIN:
+		pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::Inst()->allocObj(emObjType_LoginPlayer));
+		// 分配失败
+		if (NULL == pLoginPlayer)
 		{
-			onMessageLoginRequest(rExchangeHead, pMessage);
-			break;
+			return;
 		}
-		case ID_C2S_REQUEST_CREATE_ROLE:
+		std::pair<LOGIN_LIST::iterator,bool> ret = mLoginList.insert(LOGIN_LIST::value_type(rExchangeHead.mSocketIndex, pLoginPlayer->getObjID()));
+		// 插入列表失败
+		if (!ret.second)
 		{
-			onMessageCreateRoleRequest(rExchangeHead, pMessage);
-			break;
+			CObjPool::Inst()->free(pLoginPlayer->getObjID());
+			return;
 		}
-		case ID_C2S_REQUEST_ENTER_SCENE:
-		{
-			onMessageEnterSceneRequest(rExchangeHead, pMessage);
-			break;
-		}
-		default:
-			break;
+		pLoginPlayer->getExchangeHead() = rExchangeHead;
+		it = ret.first;
 	}
+	else
+	{
+		pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::Inst()->getObj(it->second));
+	}
+	if (NULL == pLoginPlayer)
+	{
+		return;
+	}
+	pLoginPlayer->setClientMessage(pMessage);
+	pLoginPlayer->setClientMessageID(nMessageID);
 }
 
 void CLoginModule::onMessageLoginRequest(CExchangeHead& rExchangeHead, Message* pMessage)
@@ -78,30 +89,7 @@ void CLoginModule::onMessageLoginRequest(CExchangeHead& rExchangeHead, Message* 
 		return;
 	}
 
-	CMessageLoginRequest* pLoginRequest = reinterpret_cast<CMessageLoginRequest*>(pMessage);
-	if (NULL == pLoginRequest)
-	{
-		return;
-	}
 
-	// 接收到客户端的消息后，转换成内部消息给DB去处理
-	CIMPlayerLoginRequest* pPlayerLoginRequest = reinterpret_cast<CIMPlayerLoginRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_PLAYER_LOGIN));
-	if (NULL == pPlayerLoginRequest)
-	{
-		return;
-	}
-
-	// 用户名
-	strncpy(pPlayerLoginRequest->mName, pLoginRequest->name().c_str(), sizeof(pPlayerLoginRequest->mName));
-	// 渠道ID
-	pPlayerLoginRequest->mChannelID = pLoginRequest->channelid();
-	// 服务器ID
-	pPlayerLoginRequest->mServerID = pLoginRequest->serverid();
-	// TCP服务器消息头
-	pPlayerLoginRequest->mExchangeHead = rExchangeHead;
-
-	CGameServer::Inst()->pushTask(emTaskType_DB, pPlayerLoginRequest);
-	printf("CLoginModule::OnMessageLoginRequest");
 }
 
 
@@ -112,43 +100,6 @@ void CLoginModule::onIMPlayerLoginResponse(CInternalMsg* pMsg)
 		return;
 	}
 
-	CIMPlayerLoginResponse* pResponse = reinterpret_cast<CIMPlayerLoginResponse*>(pMsg);
-
-
-	uint64 nAccountID = pResponse->mAccountID;
-	uint64 nChannelID = pResponse->mChannelID;
-	uint64 nServerID = pResponse->mServerID;
-	uint64 nKey = MAKE_LOGIN_KEY(nAccountID, nChannelID, nServerID);
-
-	// 该玩家已经在登录列表里了
-	LOGIN_LIST::iterator it = mLoginList.find(nKey);
-	if (it != mLoginList.end())
-	{
-		return;
-	}
-
-	CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::Inst()->allocObj(emObjType_LoginPlayer));
-	if (NULL == pLoginPlayer)
-	{
-		return;
-	}
-
-	pLoginPlayer->setKey(nKey);
-	pLoginPlayer->setRoleID(pResponse->mRoleID);
-	pLoginPlayer->GetExchangeHead() = pResponse->mExchangeHead;
-	pLoginPlayer->SetWaitTime(CTimeManager::Inst()->GetCurrTime());
-
-	mLoginList[pLoginPlayer->getKey()] = pLoginPlayer->getObjID();
-
-	// 准备回应消息
-	CIMPlayerLoginResponse* pIMLoginResponse = reinterpret_cast<CIMPlayerLoginResponse*>(pMsg);
-	CMessageLoginResponse tMessageLoginResponse;
-	tMessageLoginResponse.set_accountid(pIMLoginResponse->mAccountID);
-	tMessageLoginResponse.set_channelid(pIMLoginResponse->mChannelID);
-	tMessageLoginResponse.set_serverid(pIMLoginResponse->mServerID);
-	tMessageLoginResponse.set_roleid(pIMLoginResponse->mRoleID);
-
-	CSceneJob::Inst()->sendClientMessage(pLoginPlayer->GetExchangeHead(), ID_S2C_RESPONSE_LOGIN, &tMessageLoginResponse);
 }
 
 void CLoginModule::onMessageCreateRoleRequest(CExchangeHead& rExchangeHead, Message* pMessage)

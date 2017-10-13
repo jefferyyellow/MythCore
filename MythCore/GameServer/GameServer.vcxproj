@@ -94,6 +94,7 @@
     <ClCompile Include="src\job.cpp" />
     <ClCompile Include="src\locallogjob.cpp" />
     <ClCompile Include="src\loginmodule.cpp" />
+    <ClCompile Include="src\loginplayer.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\mapmamager.cpp" />
     <ClCompile Include="src\mapconfigmanager.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="inc\locallogjob.h" />
     <ClInclude Include="inc\logicmodule.h" />
     <ClInclude Include="inc\loginmodule.h" />
+    <ClInclude Include="inc\loginplayer.h" />
     <ClInclude Include="inc\logintype.h" />
     <ClInclude Include="inc\mapmamager.h" />
     <ClInclude Include="inc\mapconfigmanager.h" />
@@ -158,6 +160,7 @@
     <ClInclude Include="inc\propertyunit.h" />
     <ClInclude Include="inc\scenejob.h" />
     <ClInclude Include="inc\sharelist.h" />
+    <ClInclude Include="inc\statemachine.h" />
     <ClInclude Include="inc\strutility.h" />
     <ClInclude Include="inc\taskmanager.h" />
     <ClInclude Include="inc\taskunit.h" />

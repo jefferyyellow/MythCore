@@ -89,11 +89,11 @@ namespace Myth
 		}
 
 	public:
-		uint32 getLeftTime() const { return mLeftTime; }
-		void setLeftTime(uint32 nValue) { mLeftTime = nValue; }
+		time_t getLeftTime() const { return mLeftTime; }
+		void setLeftTime(time_t nValue) { mLeftTime = nValue; }
 
-		uint32 getMaxTime() const { return mMaxTime; }
-		void setMaxTime(uint32 nValue) { mMaxTime = nValue; }
+		time_t getMaxTime() const { return mMaxTime; }
+		void setMaxTime(time_t nValue) { mMaxTime = nValue; }
 
 		inline bool elapse(int vInterval)
 		{
@@ -103,8 +103,8 @@ namespace Myth
 		}
 
 	private:
-		uint32 mLeftTime;			// 剩余时间(毫秒)
-		uint32 mMaxTime;			// 最大的时间(毫秒)
+		time_t mLeftTime;			// 剩余时间(毫秒)
+		time_t mMaxTime;			// 最大的时间(毫秒)
 	};
 
 	class CTimeManager : public CSingleton<CTimeManager>
