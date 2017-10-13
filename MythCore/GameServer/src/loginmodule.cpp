@@ -127,7 +127,7 @@ void CLoginModule::onIMPlayerLoginResponse(CInternalMsg* pMsg)
 		return;
 	}
 
-	CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::CreateInst()->allocObj(emObjType_LoginPlayer));
+	CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::Inst()->allocObj(emObjType_LoginPlayer));
 	if (NULL == pLoginPlayer)
 	{
 		return;
@@ -176,7 +176,7 @@ void CLoginModule::onMessageCreateRoleRequest(CExchangeHead& rExchangeHead, Mess
 	}
 
 	uint32 nObjID = it->second;
-	CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::CreateInst()->getObj(nObjID));
+	CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::Inst()->getObj(nObjID));
 	if (NULL == pLoginPlayer)
 	{
 		return;
@@ -217,7 +217,7 @@ void CLoginModule::onIMCreateRoleResponse(CInternalMsg* pMsg)
 	}
 
 	uint32 nObjID = it->second;
-	CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::CreateInst()->getObj(nObjID));
+	CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::Inst()->getObj(nObjID));
 	if (NULL == pLoginPlayer)
 	{
 		return;
@@ -258,7 +258,7 @@ void CLoginModule::onMessageEnterSceneRequest(CExchangeHead& rExchangeHead, Mess
 	}
 
 	uint32 nObjID = it->second;
-	CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::CreateInst()->getObj(nObjID));
+	CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::Inst()->getObj(nObjID));
 	if (NULL == pLoginPlayer)
 	{
 		return;
@@ -319,7 +319,7 @@ void CLoginModule::onIMEnterSceneResponse(CInternalMsg* pMsg)
 	}
 
 	uint32 nObjID = it->second;
-	CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::CreateInst()->getObj(nObjID));
+	CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::Inst()->getObj(nObjID));
 	if (NULL == pLoginPlayer)
 	{
 		return;
