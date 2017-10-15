@@ -14,6 +14,7 @@ void CItemModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageI
 
 }
 
+/// 获得金钱
 int CItemModule::obtainMoney(CEntityPlayer* pPlayer, int nMoney)
 {
 	if (nMoney < 0)
@@ -35,6 +36,7 @@ int CItemModule::obtainMoney(CEntityPlayer* pPlayer, int nMoney)
 	return SUCCESS;
 }
 
+/// 消费金钱
 int CItemModule::consumeMoney(CEntityPlayer* pPlayer, int nMoney)
 {
 	if (nMoney < 0)
@@ -60,6 +62,7 @@ int CItemModule::consumeMoney(CEntityPlayer* pPlayer, int nMoney)
 	return SUCCESS;
 }
 
+/// 获得钻石
 int	CItemModule::obtainDiamond(CEntityPlayer* pPlayer, int nDiamond)
 {
 	if (nDiamond < 0)
@@ -81,6 +84,7 @@ int	CItemModule::obtainDiamond(CEntityPlayer* pPlayer, int nDiamond)
 	return SUCCESS;
 }
 
+/// 消费钻石 
 int	CItemModule::consumeDiamond(CEntityPlayer* pPlayer, int nDiamond)
 {
 	if (nDiamond < 0)
@@ -102,5 +106,24 @@ int	CItemModule::consumeDiamond(CEntityPlayer* pPlayer, int nDiamond)
 	CMessagePlayerDiamondUpdateNotify tMsg;
 	tMsg.set_diamond(rItemUnit.getDiamond());
 	CSceneJob::Inst()->sendClientMessage(pPlayer, ID_S2C_NOTIYF_PLAYER_DIAMOND_UPDATE, &tMsg);
+	return SUCCESS;
+}
+
+/// 包裹是否能装下这些道具
+bool CItemModule::checkItemSpace(CEntityPlayer* pPlayer, int* pItemID, int* pItemNum, int nSize)
+{
+	if (NULL == pPlayer || NULL == pItemID || NULL == pItemNum)
+	{
+		return false;
+	}
+
+	CItemBox& rBox = pPlayer->GetItemUnit().getBag();
+	return rBox.checkSpace(pItemID, pItemNum, nSize);
+}
+
+/// 插入道具
+int CItemModule::insertItem(CEntityPlayer* pPlayer, int* pItemID, int* pItemNum, int nSize)
+{
+
 	return SUCCESS;
 }

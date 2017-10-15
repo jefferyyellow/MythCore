@@ -30,6 +30,9 @@ public:
 	int			obtainDiamond(CEntityPlayer* pPlayer, int nDiamond);
 	/// 消费钻石
 	int			consumeDiamond(CEntityPlayer* pPlayer, int nDiamond);
-
+	/// 包裹是否能装下这些道具
+	bool		checkItemSpace(CEntityPlayer* pPlayer, int* pItemID, int* pItemNum,int nSize);
+	/// 插入道具
+	int			insertItem(CEntityPlayer* pPlayer, int* pItemID, int* pItemNum,int nSize);
 };
 #endif

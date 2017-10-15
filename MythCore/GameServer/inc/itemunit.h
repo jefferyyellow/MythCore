@@ -26,9 +26,11 @@ public:
 	sint32	getDiamond() const { return mDiamond; }
 	void	setDiamond(sint32 nValue) { mDiamond = nValue; }
 
+	CItemBox& getBag(){ return mBag; }
 private:
 	/// ±³°ü
-	CItemContainer			mBag;				
+	CItemBox				mBag;				
+
 	/// ½ðÇ®
 	sint32					mMoney;
 	/// ×êÊ¯

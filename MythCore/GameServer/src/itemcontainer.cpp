@@ -3,7 +3,7 @@
 #include "itemobject.h"
 #include "objpool.h"
 #include "locallogjob.h"
-bool CItemContainer::checkSpace(int* pItemID, int* pNumber, int nSize)
+bool CItemBox::checkSpace(int* pItemID, int* pNumber, int nSize)
 {
 	if (nSize > MAX_INSERT_TYPE_NUM)
 	{
@@ -84,7 +84,7 @@ bool CItemContainer::checkSpace(int* pItemID, int* pNumber, int nSize)
 
 // 如果是一种道具，方便很多，空格子可以直接用，不用考虑先堆叠
 // 可以先使用空格子
-bool CItemContainer::checkSpace(int nItemID, int nNumber)
+bool CItemBox::checkSpace(int nItemID, int nNumber)
 {
 	CTplItem* pTplItem = (CTplItem*)CStaticData::searchTpl(nItemID);
 	if (NULL == pTplItem)
@@ -118,7 +118,7 @@ bool CItemContainer::checkSpace(int nItemID, int nNumber)
 	return false;
 }
 
-int CItemContainer::insertItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNumber, int &rOutLen)
+int CItemBox::insertItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNumber, int &rOutLen)
 {
 	if (NULL == pOutIndex || NULL == pOutNumber || 0 == nItemNum)
 	{
@@ -219,7 +219,7 @@ int CItemContainer::insertItem(int nItemID, int nItemNum, int *pOutIndex, int *p
 }
 
 // 背包里是否有足够数量的道具
-bool CItemContainer::checkEnough(int nItemID, int nItemNum)
+bool CItemBox::checkEnough(int nItemID, int nItemNum)
 {
 	for (unsigned int i = 0; i < mSize; ++i)
 	{
@@ -250,7 +250,7 @@ bool CItemContainer::checkEnough(int nItemID, int nItemNum)
 }
 
 /// 删除道具
-void CItemContainer::removeItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNumber, int &rOutLen)
+void CItemBox::removeItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNumber, int &rOutLen)
 {
 	for (unsigned int i = 0; i < mSize; ++i)
 	{
@@ -305,7 +305,7 @@ void CItemContainer::removeItem(int nItemID, int nItemNum, int *pOutIndex, int *
 }
 
 /// 删除道具
-bool CItemContainer::removeItem(unsigned int nIndex, unsigned int nNum)
+bool CItemBox::removeItem(unsigned int nIndex, unsigned int nNum)
 {
 	if (nIndex >= mSize)
 	{

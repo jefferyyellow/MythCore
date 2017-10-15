@@ -3,14 +3,14 @@
 #define MAX_INSERT_TYPE_NUM 16
 #include "itemlist.h"
 #define  MAX_CONTAINER_ITEM_NUM 100
-class CItemContainer : public CItemList < MAX_CONTAINER_ITEM_NUM >
+class CItemBox : public CItemList < MAX_CONTAINER_ITEM_NUM >
 {
 public:
-	CItemContainer()
+	CItemBox()
 	{
 		mSize = 0;
 	}
-	~CItemContainer()
+	~CItemBox()
 	{
 
 	}
