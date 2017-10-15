@@ -9,8 +9,14 @@ public:
 	CStateMachine()
 	{
 		mCurState = 0;
+		mpClass = NULL;
 	}
 	~CStateMachine(){}
+	void init(ClassType* pClass, int nCurState)
+	{
+		mpClass = pClass;
+		mCurState = nCurState;
+	}
 private:
 	class CState
 	{
@@ -49,7 +55,7 @@ public:
 			return;
 		}
 
-		int nNewState = (mStateData[mCurState].mStateFunc)();
+		int nNewState = (mpClass->*mStateData[mCurState].mStateFunc)();
 		if (nNewState < 0)
 		{
 			return;
@@ -75,8 +81,21 @@ public:
 		mStateData[nState].mLeftTime = mStateData[nState].mMaxTime;
 	}
 	
+	bool elapse(unsigned int nTickOffset)
+	{
+		// 重置时间
+		mStateData[mCurState].mLeftTime -= nTickOffset;
+		if (mStateData[mCurState].mLeftTime < 0)
+		{
+			return true;
+		}
+		return false;
+	}
+
+
 private:
-	CState	mStateData[Size];		// 状态机所有状态
-	int		mCurState;				// 当前状态
+	CState		mStateData[Size];		// 状态机所有状态
+	int			mCurState;				// 当前状态
+	ClassType*	mpClass;
 };
 #endif

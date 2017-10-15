@@ -5,6 +5,7 @@
 using namespace Myth;
 
 class CInternalMsg;
+class CIMPlayerLoginMsg;
 class CDBJob : public CJob<200, 20>
 {
 public:
@@ -18,11 +19,13 @@ public:
 private:
 	void	onTask(CInternalMsg* pMsg);
 	/// 玩家登陆游戏
-	void	OnIMPlayerLoginRequest(CInternalMsg* pMsg);
+	void	onIMPlayerLoginRequest(CInternalMsg* pMsg);
 	/// 玩家创建角色
-	void	OnIMCreateRoleRequest(CInternalMsg* pMsg);
+	void	onIMCreateRoleRequest(CInternalMsg* pMsg);
 	// 玩家进入场景
-	void	OnIMEnterSceneRequest(CInternalMsg* pMsg);
+	void	onIMEnterSceneRequest(CInternalMsg* pMsg);
+	// 拷贝玩家登陆消息
+	void	copyPlayerLoginMsg(CIMPlayerLoginMsg* pDstMsg, CIMPlayerLoginMsg* pSrcMsg);
 
 private:
 	CMysqlDataBase	mDataBase;

@@ -25,18 +25,13 @@ public:
 	virtual		void OnTimer(unsigned int nTickOffset);
 
 public:
+	/// 处理客户端消息
 	void		onClientMessage(CExchangeHead& rExchangeHead, unsigned int nMessageID, Message* pMessage);
-	void		onIMPlayerLoginResponse(CInternalMsg* pMsg);
-	void		onIMCreateRoleResponse(CInternalMsg* pMsg);
-	void		onIMEnterSceneResponse(CInternalMsg* pMsg);
+	/// 处理数据库消息
+	void		OnDBMessage(CInternalMsg* pMsg);
 
 private:
-	void		onMessageLoginRequest(CExchangeHead& rExchangeHead, Message* pMessage);
-	void		onMessageCreateRoleRequest(CExchangeHead& rExchangeHead, Message* pMessage);
-	void		onMessageEnterSceneRequest(CExchangeHead& rExchangeHead, Message* pMessage);
-
-private:
-	LOGIN_LIST			mLoginList;
-	CAutoResetTimer		mLoginCheckTime;
+	LOGIN_LIST			mLoginList;				// 登录列表
+	CAutoResetTimer		mLoginCheckTime;		// 登录校验时间
 };
 #endif

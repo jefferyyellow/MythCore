@@ -2,8 +2,10 @@
 #define __LOGINPLAYER_H__
 #include "obj.h"
 #include "statemachine.h"
-class Message;
+#include "messagefactory.h"
+
 class CInternalMsg;
+class CIMPlayerLoginMsg;
 enum EMLoginState
 {
 	emLoginState_None				= 0,	// 无状态
@@ -34,13 +36,30 @@ public:
 	int			processCreateRoleing();
 	int			processWaitEnterGame();
 	int			processWaitPlaying();
-
+	void		setPlayerLoginMsg(CIMPlayerLoginMsg* pMsg);
+	bool		elapse(unsigned int nTickOffset);
 public:
-	uint64		getKey(){ return mKey; }
-	void		setKey(uint64 nKey){ mKey = nKey; }
+	uint32		getAccountID() const { return mAccountID; }
+	void		setAccountID(uint32 nValue) { mAccountID = nValue; }
+
+	uint16		getChannelID() const { return mChannelID; }
+	void		setChannelID(uint16 nValue) { mChannelID = nValue; }
+
+	uint16		getServerID() const { return mServerID; }
+	void		setServerID(uint16 nValue) { mServerID = nValue; }
 
 	uint32		getRoleID() const { return mRoleID; }
 	void		setRoleID(uint32 nValue) { mRoleID = nValue; }
+
+	void		setAccountName(const char* pName)
+	{
+		if (NULL == pName)
+		{
+			return;
+		}
+		strncpy(mAccountName, pName, sizeof(mAccountName) - 1);
+	}
+	char*		getAccountName(){return mAccountName;}
 
 	CExchangeHead&	getExchangeHead(){ return mExchangeHead; }
 
@@ -57,12 +76,14 @@ public:
 	void		setDBMessageID(int nValue) { mDBMessageID = nValue; }
 
 private:
-	uint64							mKey;
-	uint32							mRoleID;
-	char							mName[MAX_PLAYER_NAME_LEN];
-	CExchangeHead					mExchangeHead;
+	uint32							mAccountID;								// 账号ID
+	uint16							mChannelID;								// 渠道
+	uint16							mServerID;								// 服务器ID
+	uint32							mRoleID;								// 角色ID
+	char							mAccountName[MAX_PLAYER_NAME_LEN];		// 账号名
+	CExchangeHead					mExchangeHead;							// TCP消息交换头
 
-	CStateMachine<CLoginPlayer, emLoginStateMax>	mStateMachine;
+	CStateMachine<CLoginPlayer, emLoginStateMax>	mStateMachine;			// 状态机
 
 	// 从客户端发过来的消息
 	Message*						mClientMessage;

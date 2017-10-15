@@ -43,63 +43,54 @@ public:
 	char		mDebugName[MAX_DEBUG_LOG_NAME];				// 调试日志名字
 #endif
 };
+// 玩家登陆内部消息基类
+class CIMPlayerLoginMsg : public CInternalMsg
+{
+public:
+	uint16			mSocketIndex;							// socket索引
+	uint32			mAccountID;								// 账号ID
+	uint16			mChannelID;								// 渠道
+	uint16			mServerID;								// 服务器ID
+};
 
-class CIMPlayerLoginRequest : public CInternalMsg
+class CIMPlayerLoginRequest : public CIMPlayerLoginMsg
 {
 public:
 	char			mName[MAX_PLAYER_NAME_LEN];				// 名字
-	uint16			mChannelID;								// 渠道
-	uint16			mServerID;								// 服务器ID
-	CExchangeHead	mExchangeHead;							// TCP服务器消息头
 };
 
-class CIMPlayerLoginResponse : public CInternalMsg
+class CIMPlayerLoginResponse : public CIMPlayerLoginMsg
 {
 public:
-	uint32			mAccountID;								// 账号ID
-	uint16			mChannelID;								// 渠道
-	uint16			mServerID;								// 服务器ID
 	uint32			mRoleID;								// 角色ID
-	CExchangeHead	mExchangeHead;							// TCP服务器消息头
+	char			mName[MAX_PLAYER_NAME_LEN];				// 名字
 };
 
-class CIMCreateRoleRequest : public CInternalMsg
+class CIMCreateRoleRequest : public CIMPlayerLoginMsg
 {
 public:
-	uint32			mAccountID;								// 账号ID
-	uint16			mChannelID;								// 渠道
-	uint16			mServerID;								// 服务器ID
 	char			mRoleName[MAX_PLAYER_NAME_LEN];			// 角色名
 };
 
 
-class CIMCreateRoleResponse : public CInternalMsg
+class CIMCreateRoleResponse : public CIMPlayerLoginMsg
 {
 public:
 	uint32			mRoleID;								// 角色ID
-	uint32			mAccountID;								// 账号ID
-	uint16			mChannelID;								// 渠道
-	uint16			mServerID;								// 服务器ID
-	uint32			mSocketIndex;							// Socket索引
+	char			mRoleName[MAX_PLAYER_NAME_LEN];			// 角色名
 };
 
-class CIMEnterSceneRequest : public CInternalMsg
+class CIMEnterSceneRequest : public CIMPlayerLoginMsg
 {
 public:
 	uint32			mRoleID;								// 角色ID
-	uint32			mAccountID;								// 账号ID
-	uint16			mChannelID;								// 渠道
-	uint16			mServerID;								// 服务器ID
 	uint32			mPlayerEntityID;						// 角色的实体ID
 };
 
-class CIMEnterSceneResponse : public CInternalMsg
+class CIMEnterSceneResponse : public CIMPlayerLoginMsg
 {
 public:
 	uint32			mRoleID;								// 角色ID
-	uint32			mAccountID;								// 账号ID
-	uint16			mChannelID;								// 渠道
-	uint16			mServerID;								// 服务器ID
 	uint32			mPlayerEntityID;						// 角色的实体ID
 };
 #endif

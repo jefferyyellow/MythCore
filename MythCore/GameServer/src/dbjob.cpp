@@ -46,17 +46,17 @@ void CDBJob::onTask(CInternalMsg* pMsg)
 	{
 		case IM_REQUEST_PLAYER_LOGIN:
 		{
-			OnIMPlayerLoginRequest(pMsg);
+			onIMPlayerLoginRequest(pMsg);
 			break;
 		}
 		case IM_REQUEST_CREATE_ROLE:
 		{
-			OnIMCreateRoleRequest(pMsg);
+			onIMCreateRoleRequest(pMsg);
 			break;
 		}
 		case IM_REQUEST_ENTER_SCENE:
 		{
-			OnIMEnterSceneRequest(pMsg);
+			onIMEnterSceneRequest(pMsg);
 			break;
 		}
 		default:
@@ -65,7 +65,7 @@ void CDBJob::onTask(CInternalMsg* pMsg)
 }
 
 /// 玩家登陆游戏
-void CDBJob::OnIMPlayerLoginRequest(CInternalMsg* pMsg)
+void CDBJob::onIMPlayerLoginRequest(CInternalMsg* pMsg)
 {
 	printf("OnIMPlayerLoginRequest begin");
 	if (NULL == pMsg)
@@ -112,19 +112,18 @@ void CDBJob::OnIMPlayerLoginRequest(CInternalMsg* pMsg)
 	{
 		return;
 	}
-	pResponse->mAccountID = nAccountID;
+
+	copyPlayerLoginMsg(pResponse, pLoginRequest);
 	pResponse->mRoleID = nRoleID;
-	pResponse->mChannelID = pLoginRequest->mChannelID;
-	pResponse->mServerID = pLoginRequest->mServerID;
-	pResponse->mExchangeHead = pLoginRequest->mExchangeHead;
+	strncpy(pResponse->mName, pLoginRequest->mName, MAX_PLAYER_NAME_LEN);
+
 
 	CGameServer::Inst()->pushTask(emTaskType_Scene, pResponse);
 	printf("OnIMPlayerLoginRequest end");
-
 }
 
 /// 玩家创建角色
-void CDBJob::OnIMCreateRoleRequest(CInternalMsg* pMsg)
+void CDBJob::onIMCreateRoleRequest(CInternalMsg* pMsg)
 {
 	if (NULL == pMsg)
 	{
@@ -148,8 +147,6 @@ void CDBJob::OnIMCreateRoleRequest(CInternalMsg* pMsg)
 
 	uint32 nRoleID = atoi(tQueryResult.getField(0)->getValue());
 	
-
-
 	CIMCreateRoleResponse* pIMCreateRoleResponse = reinterpret_cast<CIMCreateRoleResponse*>(CInternalMsgPool::Inst()->allocMsg(IM_RESPONSE_CREATE_ROLE));
 	if (NULL == pIMCreateRoleResponse)
 	{
@@ -157,15 +154,14 @@ void CDBJob::OnIMCreateRoleRequest(CInternalMsg* pMsg)
 	}
 
 	pIMCreateRoleResponse->mRoleID = nRoleID;
-	pIMCreateRoleResponse->mAccountID = pCreateRoleRequest->mAccountID;
-	pIMCreateRoleResponse->mChannelID = pCreateRoleRequest->mChannelID;
-	pIMCreateRoleResponse->mServerID = pCreateRoleRequest->mServerID;
+	strncpy(pIMCreateRoleResponse->mRoleName, pCreateRoleRequest->mRoleName, MAX_PLAYER_NAME_LEN - 1);
+	copyPlayerLoginMsg(pIMCreateRoleResponse, pCreateRoleRequest);
 
 	CGameServer::Inst()->pushTask(emTaskType_Scene, pIMCreateRoleResponse);
 }
 
 // 玩家进入场景
-void CDBJob::OnIMEnterSceneRequest(CInternalMsg* pMsg)
+void CDBJob::onIMEnterSceneRequest(CInternalMsg* pMsg)
 {
 	if (NULL == pMsg)
 	{
@@ -192,7 +188,6 @@ void CDBJob::OnIMEnterSceneRequest(CInternalMsg* pMsg)
 	CMysqlQueryResult tQueryResult(&mDataBase, true);
 	mDataBase.query(acBuffer, tQueryResult);
 
-
 	CEntityPlayer* pEntityPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(nPlayerEntityID));
 	if (NULL == pEntityPlayer)
 	{
@@ -204,10 +199,17 @@ void CDBJob::OnIMEnterSceneRequest(CInternalMsg* pMsg)
 	//pEntityPlayer->setRoleExp(atoll(tQueryResult.getField(2)->getValue()));
 
 	pEnterSceneResponse->mRoleID = pEnterSceneRequest->mRoleID;
-	pEnterSceneResponse->mAccountID = pEnterSceneRequest->mAccountID;
-	pEnterSceneResponse->mChannelID = pEnterSceneRequest->mChannelID;
-	pEnterSceneResponse->mServerID = pEnterSceneRequest->mServerID;
 	pEnterSceneResponse->mPlayerEntityID = pEnterSceneRequest->mPlayerEntityID;
 
+	copyPlayerLoginMsg(pEnterSceneResponse, pEnterSceneRequest);
 	CGameServer::Inst()->pushTask(emTaskType_Scene, pEnterSceneResponse);
+}
+
+// 拷贝玩家登陆消息
+void CDBJob::copyPlayerLoginMsg(CIMPlayerLoginMsg* pDstMsg, CIMPlayerLoginMsg* pSrcMsg)
+{
+	pDstMsg->mSocketIndex = pSrcMsg->mSocketIndex;
+	pDstMsg->mAccountID = pSrcMsg->mAccountID;
+	pDstMsg->mChannelID = pSrcMsg->mChannelID;
+	pDstMsg->mServerID = pSrcMsg->mServerID;
 }
