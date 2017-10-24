@@ -8,4 +8,5 @@ enum EmEntityType
 	emEntityType_FuncNPC		= 3,	// 功能NPC
 	emEntityType_Item			= 4,	// 道具
 };
+
 #endif

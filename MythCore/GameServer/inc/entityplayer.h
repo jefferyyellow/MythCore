@@ -5,35 +5,51 @@
 #include "itemunit.h"
 #include "taskunit.h"
 class PBPlayerSceneInfo;
+
+class CBaseProperty
+{
+public:
+	CBaseProperty()
+	{
+		mValue = 0;
+		mDirty = false;
+	}
+	~CBaseProperty()
+	{
+
+	}
+public:
+	int			getValue() const { return mValue; }
+	void		setValue(int val) { mValue = val; }
+
+	bool		getDirty() const { return mDirty; }
+	void		setDirty(bool val) { mDirty = val; }
+
+private:
+	///	基础属性
+	int				mValue;
+	///	基础属性脏标记
+	bool			mDirty;
+};
+
 class CEntityPlayer : public CEntityCharacter
 {
 public:
 	CEntityPlayer()
 		:mPropertyUnit(this), mItemUnit(this), mTaskUnit(this)
 	{
-
+		mName[0] = '\0';
+		mRoleID = 0;
+		mLastOffTime = 0;
+		mOnTime = 0;
 	}
 	~CEntityPlayer(){}
 
 public:
-	/// 刷新最大血
-	virtual		int RefreshMaxHP();
-	/// 刷新最大魔
-	virtual		int RefreshMaxMP();
-	/// 刷新攻击力
-	virtual		int RefreshAttack();
-	/// 刷新防御力
-	virtual		int RefreshDefence();
-
-	/// 刷新最大血（战斗属性）
-	virtual		int RefreshMaxHPFight();
-	/// 刷新最大魔（战斗属性）
-	virtual		int RefreshMaxMPFight();
-	/// 刷新攻击力（战斗属性）
-	virtual		int RefreshAttackFight();
-	/// 刷新防御力（战斗属性）
-	virtual		int RefreshDefenceFight();
-
+	/// 刷新基本属性
+	void			RefreshBaseProperty();
+	/// 刷新战斗属性
+	virtual void	RefreshFightProperty();
 
 public:
 	/// 序列化场景信息到PB·
@@ -80,5 +96,7 @@ private:
 	time_t			mLastOffTime;
 	/// 这次上线时间
 	time_t			mOnTime;
+	/// 基础属性
+	CBaseProperty	mBaseProperty[emPropertyTypeMax];
 };
 #endif 

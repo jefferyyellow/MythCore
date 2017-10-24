@@ -20,6 +20,22 @@ public:
 	}
 
 public:
+	/// 得到金钱
+	int			obtainMoney(int nMoney);
+	/// 消费金钱
+	int			consumeMoney(int nMoney);
+	/// 得到钻石
+	int			obtainDiamond(int nDiamond);
+	/// 消费钻石
+	int			consumeDiamond(int nDiamond);
+	/// 包裹是否能装下这些道具
+	bool		checkItemSpace(int* pItemID, int* pItemNum, int nSize);
+	/// 插入道具
+	int			insertItem(int* pItemID, int* pItemNum, int nSize);
+	/// 插入道具
+	int			insertItem(int nItemID, int nItemNum);
+
+public:
 	sint32	getMoney() const { return mMoney; }
 	void	setMoney(sint32 nValue) { mMoney = nValue; }
 
