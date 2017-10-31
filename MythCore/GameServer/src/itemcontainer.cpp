@@ -120,6 +120,7 @@ bool CItemBox::checkSpace(int nItemID, int nNumber)
 
 int CItemBox::insertItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNumber, int &rOutLen)
 {
+	rOutLen = 0;
 	if (NULL == pOutIndex || NULL == pOutNumber || 0 == nItemNum)
 	{
 		return -1;
@@ -134,7 +135,6 @@ int CItemBox::insertItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNum
 		return -2;
 	}
 
-	rOutLen = 0;
 	int nPileLimit = tpItem->mPileLimit;
 	
 	int tEmpty[MAX_CONTAINER_ITEM_NUM] = { -1 };

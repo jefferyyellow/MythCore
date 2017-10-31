@@ -68,6 +68,16 @@ enum EmTemplateType
 	emTemplateTypeMax
 };
 
+
+enum EmPropertyType
+{
+	emPropertyType_MaxHP			= 0,	// 最大血值
+	emPropertyType_MaxMP			= 1,	// 最大魔值
+	emPropertyType_Attack			= 2,	// 攻击力
+	emPropertyType_Defence			= 3,	// 防御力
+	emPropertyTypeMax
+};
+
 /// 主要规则，所以的模板都以CTpl开头
 
 // 所有模板的基类

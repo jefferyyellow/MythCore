@@ -3,6 +3,7 @@
 #include "itemmodule.h"
 #include "locallogjob.h"
 #include "i18n.h"
+#include "entityplayer.h"
 
 /// Ö´ÐÐGMÃüÁî
 void CGMCommandManager::excuteCommand(std::string strCommandName, StrTokens& tTokens, CEntityPlayer* pPlayer)
@@ -91,11 +92,11 @@ COMMAND_HANDLER_IMPL(money)
 	int nMoney = atoi(tTokens[0].c_str());
 	if (nMoney > 0)
 	{
-		CItemModule::Inst()->obtainMoney(pPlayer, nMoney);
+		pPlayer->GetItemUnit().obtainMoney(nMoney);
 	}
 	else
 	{
-		CItemModule::Inst()->consumeMoney(pPlayer, -nMoney);
+		pPlayer->GetItemUnit().consumeMoney(-nMoney);
 	}
 }
 
@@ -107,10 +108,10 @@ COMMAND_HANDLER_IMPL(diamond)
 	int nDiamond = atoi(tTokens[0].c_str());
 	if (nDiamond > 0)
 	{
-		CItemModule::Inst()->obtainDiamond(pPlayer, nDiamond);
+		pPlayer->GetItemUnit().obtainDiamond(nDiamond);
 	}
 	else
 	{
-		CItemModule::Inst()->consumeDiamond(pPlayer, -nDiamond);
+		pPlayer->GetItemUnit().consumeDiamond(-nDiamond);
 	}
 }

@@ -6,6 +6,7 @@
 #include "sharelist.h"
 #include "geometrytype.h"
 #include "entitytype.h"
+#include "template.h"
 using namespace Myth;
 class PBNpcSceneInfo;
 #define PLAYER_NAME_LENGTH   32
@@ -69,20 +70,20 @@ protected:
 	EmEntityType			mEntityType;
 };
 
-class CFightProperty
+class CEntityCharacter : public CEntity
 {
 public:
-	uint32		getMaxHP() const { return mMaxHP; }
-	void		setMaxHP(uint32 nValue) { mMaxHP = nValue; }
+	CEntityCharacter(){}
+	~CEntityCharacter(){}
 
-	uint32		getMaxMP() const { return mMaxMP; }
-	void		setMaxMP(uint32 nValue){ mMaxMP = nValue; }
+public:
 
-	uint32		getAttack() const { return mAttack; }
-	void		setAttack(uint32 nValue) { mAttack = nValue; }
 
-	uint32		setDefence() const { return mDefence; }
-	void		getDefence(uint32 nValue) { mDefence = nValue; }
+public:
+	uint32		getTempID() const { return mTempID; }
+	void		setTempID(uint32 nValue) { mTempID = nValue; }
+	/// 刷新战斗属性
+	virtual void	RefreshFightProperty(){}
 
 	// 当前血值
 	uint32		getCurHP() const { return mCurHP; }
@@ -91,60 +92,15 @@ public:
 	// 当前魔值
 	uint32		getCurMP() const { return mCurMP; }
 	void		setCurMP(uint32 nValue) { mCurMP = nValue; }
-
-private:
-	/// 最大血值
-	uint32		mMaxHP;
-	/// 最大魔值
-	uint32		mMaxMP;
-	/// 攻击力
-	uint32		mAttack;
-	/// 防御力
-	uint32		mDefence;
-
-	/// 当前血值
-	uint32		mCurHP;
-	/// 当前魔值
-	uint32		mCurMP;
-};
-
-class CEntityCharacter : public CEntity
-{
-public:
-	CEntityCharacter(){}
-	~CEntityCharacter(){}
-
-public:
-	/// 刷新最大血
-	virtual		int RefreshMaxHP(){return 0;};
-	/// 刷新最大魔
-	virtual		int RefreshMaxMP(){return 0;};
-	/// 刷新攻击力
-	virtual		int RefreshAttack(){return 0;};
-	/// 刷新防御力
-	virtual		int RefreshDefence(){return 0;};
-
-	/// 刷新最大血（战斗属性）
-	virtual		int RefreshMaxHPFight(){return 0;};
-	/// 刷新最大魔（战斗属性）
-	virtual		int RefreshMaxMPFight(){return 0;};
-	/// 刷新攻击力（战斗属性）
-	virtual		int RefreshAttackFight(){return 0;};
-	/// 刷新防御力（战斗属性）
-	virtual		int RefreshDefenceFight(){return 0;};
-
-public:
-	uint32		getTempID() const { return mTempID; }
-	void		setTempID(uint32 nValue) { mTempID = nValue; }
-
 protected:
 	/// 模板ID
 	uint32					mTempID;
-	/// 基础属性（比较稳定的属性）
-	CFightProperty			mBaseProperty;
-	/// 战斗属性（包括基础属性，包括容变属性，比如BUFF属性）
-	CFightProperty			mFightProperty;
-
+	/// 战斗属性
+	int						mFightProperty[emPropertyTypeMax];
+	/// 当前血值
+	uint32					mCurHP;
+	/// 当前魔值
+	uint32					mCurMP;
 };
 
 /// NPC类
@@ -166,8 +122,10 @@ class CEntityOgre : public CEntityNPC
 public:
 	CEntityOgre(){}
 	~CEntityOgre(){}
-public:
 
+public:
+	/// 刷新战斗属性
+	virtual void	RefreshFightProperty();
 };
 
 /// 功能NPC

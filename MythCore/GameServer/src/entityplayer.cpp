@@ -1,55 +1,26 @@
 #include "entityplayer.h"
 #include "mapmodule.hxx.pb.h"
-/// 刷新最大血
-int CEntityPlayer::RefreshMaxHP()
+/// 刷新基本属性
+void CEntityPlayer::RefreshBaseProperty()
 {
-
-	return 0;
+	for (int i = 0; i < emPropertyTypeMax; ++ i)
+	{
+		if (mBaseProperty[i].getDirty())
+		{
+			/// 刷新对应的属性
+			//mBaseProperty[i] = 
+			// mFightProperty[i] = 
+		}
+	}
 }
 
-/// 刷新最大魔
-int CEntityPlayer::RefreshMaxMP()
+/// 刷新战斗属性
+void CEntityPlayer::RefreshFightProperty()
 {
-
-	return 0;
-}
-
-/// 刷新攻击力
-int CEntityPlayer::RefreshAttack()
-{
-
-	return 0;
-}
-
-/// 刷新防御力
-int CEntityPlayer::RefreshDefence()
-{
-
-	return 0;
-}
-
-/// 刷新最大血（战斗属性）
-int CEntityPlayer::RefreshMaxHPFight()
-{
-	return 0;
-}
-
-/// 刷新最大魔（战斗属性）
-int CEntityPlayer::RefreshMaxMPFight()
-{
-	return 0;
-}
-
-/// 刷新攻击力（战斗属性）
-int CEntityPlayer::RefreshAttackFight()
-{
-	return 0;
-}
-
-/// 刷新防御力（战斗属性）
-int CEntityPlayer::RefreshDefenceFight()
-{
-	return 0;
+	for (int i = 0; i < emPropertyTypeMax; ++i)
+	{
+		
+	}
 }
 
 /// 序列化场景信息到PB·

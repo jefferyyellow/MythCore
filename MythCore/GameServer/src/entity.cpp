@@ -78,3 +78,10 @@ void CEntityNPC::serializeSceneInfoToPB(PBNpcSceneInfo* pbNpcInfo)
 	pbNpcInfo->set_posx(mPos.mX);
 	pbNpcInfo->set_posy(mPos.mY);
 }
+
+
+/// À¢–¬’Ω∂∑ Ù–‘
+void	CEntityOgre::RefreshFightProperty()
+{
+
+}
