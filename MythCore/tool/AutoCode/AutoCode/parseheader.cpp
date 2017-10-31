@@ -25,6 +25,10 @@ void CParseHeader::parseHeaderFile(const char* pFilePath)
 
 	mFileContent.clear();
 	FILE* pFile = fopen(pFilePath, "r");
+	if (NULL == pFile)
+	{
+		return;
+	}
 	char acBuffer[MAX_LINE_CHAR_NUM] = {0};
 
 	// 读取文件的内容，保存起来
@@ -36,7 +40,7 @@ void CParseHeader::parseHeaderFile(const char* pFilePath)
 		mFileContent.push_back(pNewLine);
 	}
 	
-	for (mCurLineIndex = 0; mCurLineIndex < mFileContent.size(); ++mCurLineIndex)
+	for (mCurLineIndex = 0; mCurLineIndex < (int)mFileContent.size(); ++mCurLineIndex)
 	{
 		parseLine(mFileContent[mCurLineIndex], strlen(mFileContent[mCurLineIndex]));
 	}
@@ -51,6 +55,10 @@ void CParseHeader::parseSourceFile(const char* pFilePath)
 	}
 	mFileContent.clear();
 	FILE* pFile = fopen(pFilePath, "r");
+	if (NULL == pFile)
+	{
+		return;
+	}
 	char acBuffer[MAX_LINE_CHAR_NUM] = { 0 };
 
 	// 读取文件的内容，保存起来
@@ -74,6 +82,11 @@ void CParseHeader::parseLine(const char* pLine, int nLineLength)
 	int nStart = 0;
 
 	getFirstWord(pLine, nStart, nLineLength, acWord);
+	if (checkComment(acWord, strlen(acWord)))
+	{
+		return;
+	}
+
 	// 这行是函数的
 	if (checkFunc(pLine, nLineLength))
 	{
@@ -227,6 +240,14 @@ void CParseHeader::getFirstWord(const char* pLine, int& rStart, int nLineLength,
 			bEnd = true;
 			break;
 		}
+
+		if (pLine[i] == '/' && i + 1 < nLineLength && pLine[i + 1] == '*')
+		{
+			nIndex = i;
+			bEnd = true;
+			break;
+		}
+
 	}
 
 	strncpy(pWord, pLine + rStart, nIndex - rStart);
@@ -251,7 +272,7 @@ bool CParseHeader::checkFunc(const char* pLine, int nLineLength)
 		char acBuffer[MAX_PATH] = { 0 };
 		int nCurLine = mCurLineIndex;
 		bool bInFunction = false;
-		for (; nCurLine < mFileContent.size(); ++nCurLine)
+		for (; nCurLine < (int)mFileContent.size(); ++nCurLine)
 		{
 			strncpy(acBuffer, mFileContent[nCurLine], sizeof(acBuffer) - 1);
 			acBuffer[strlen(mFileContent[nCurLine])] = '\0';
@@ -278,6 +299,36 @@ bool CParseHeader::checkFunc(const char* pLine, int nLineLength)
 	return false;
 }
 
+bool CParseHeader::checkComment(const char* pLine, int nLineLength)
+{
+	if (nLineLength < 2)
+	{
+		return false;
+	}
+	/**/
+	if (pLine[0] == '/' && pLine[1] == '*')
+	{
+		char acBuffer[MAX_PATH] = { 0 };
+		int nCurLine = mCurLineIndex;
+		bool bInFunction = false;
+		for (; nCurLine < (int)mFileContent.size(); ++nCurLine)
+		{
+			int nLength = strlen(mFileContent[nCurLine]);
+			strncpy(acBuffer, mFileContent[nCurLine], nLength);
+			acBuffer[nLength] = '\0';
+
+			if (strstr(acBuffer, "*/") != NULL)
+			{
+				mCurLineIndex = nCurLine;
+				break;
+			}
+
+		}
+		return true;
+	}
+	return false;
+}
+
 void CParseHeader::writeHeaderFile()
 {
 	mCurClass = NULL;
@@ -286,7 +337,7 @@ void CParseHeader::writeHeaderFile()
 	FILE* pFile = fopen("test_back.h", "wt");
 
 	char acBuffer[MAX_PATH] = { 0 };
-	for (mCurLineIndex = 0; mCurLineIndex < mFileContent.size(); ++mCurLineIndex)
+	for (mCurLineIndex = 0; mCurLineIndex < (int)mFileContent.size(); ++mCurLineIndex)
 	{
 		writeHeaderLine(pFile, mFileContent[mCurLineIndex], strlen(mFileContent[mCurLineIndex]));
 	}
@@ -301,6 +352,12 @@ void CParseHeader::writeHeaderLine(FILE* pFile, const char* pLine, int nLineLeng
 	int nCurLineIndex = mCurLineIndex;
 
 	getFirstWord(pLine, nStart, nLineLength, acWord);
+	if (checkComment(acWord, strlen(acWord)))
+	{
+		writeContent(pFile, nCurLineIndex, mCurLineIndex);
+		return;
+	}
+
 	// 这行是函数的
 	if (checkFunc(pLine, nLineLength))
 	{
@@ -314,12 +371,15 @@ void CParseHeader::writeHeaderLine(FILE* pFile, const char* pLine, int nLineLeng
 				char acBuffer[MAX_PATH] = { 0 };
 				for (; nCurLineIndex < mCurLineIndex; ++nCurLineIndex)
 				{
+					int nLength = strlen(mFileContent[nCurLineIndex]);
+					strncpy(acBuffer, mFileContent[nCurLineIndex], nLength);
+					acBuffer[nLength] = '\0';
+
 					fwrite(mFileContent[nCurLineIndex], strlen(mFileContent[nCurLineIndex]), 1, pFile);
 					const char* pBrace = strchr(acBuffer, '{');
 					if (NULL != pBrace)
 					{
-						int nLineLength = strlen(mFileContent[nCurLineIndex]);
-						for (int i = 0; i < nLineLength; ++ i)
+						for (int i = 0; i < nLength; ++ i)
 						{
 							if (acBuffer[i] == '{')
 							{
@@ -339,6 +399,7 @@ void CParseHeader::writeHeaderLine(FILE* pFile, const char* pLine, int nLineLeng
 				}
 
 				writeVariableInit(pFile, nSpaceNum);
+				fwrite(mFileContent[mCurLineIndex], strlen(mFileContent[mCurLineIndex]), 1, pFile);
 			}
 		}
 		else
@@ -384,7 +445,7 @@ void CParseHeader::writeVariableInit(FILE* pFile, int nSpaceNum)
 	char acWord[MAX_PATH] = { 0 };
 	char acSpace[] = " ";
 	CPlusClass::VARIABLE_VECTOR& rVariableList = mCurClass->getVariableList();
-	for (int i = 0; i < rVariableList.size(); ++ i)
+	for (int i = 0; i < (int)rVariableList.size(); ++ i)
 	{
 		const char* pDefaultValue = getDefaultValue(rVariableList[i]->getType());
 		if (NULL == pDefaultValue)
@@ -400,12 +461,6 @@ void CParseHeader::writeVariableInit(FILE* pFile, int nSpaceNum)
 		fwrite(acWord, strlen(acWord), 1, pFile);
 
 	}
-	for (int j = 0; j < nSpaceNum - 4; ++j)
-	{
-		fwrite(acSpace, strlen(acSpace), 1, pFile);
-	}
-	fwrite("}\n", strlen("}\n"), 1, pFile);
-
 }
 
 void CParseHeader::writeContent(FILE* pFile, int nStartIndex, int nEndIndex)
@@ -426,7 +481,7 @@ void CParseHeader::writeSourceFile()
 	FILE* pFile = fopen("test_back.cpp", "wt");
 
 	char acBuffer[MAX_PATH] = { 0 };
-	for (mCurLineIndex = 0; mCurLineIndex < mFileContent.size(); ++mCurLineIndex)
+	for (mCurLineIndex = 0; mCurLineIndex < (int)mFileContent.size(); ++mCurLineIndex)
 	{
 		writeSourceLine(pFile, mFileContent[mCurLineIndex], strlen(mFileContent[mCurLineIndex]));
 	}
@@ -480,6 +535,7 @@ void CParseHeader::writeSourceLine(FILE* pFile, const char* pLine, int nLineLeng
 				}
 
 				writeVariableInit(pFile, nSpaceNum);
+				fwrite(mFileContent[mCurLineIndex], strlen(mFileContent[mCurLineIndex]), 1, pFile);
 			}
 			else
 			{
@@ -548,7 +604,7 @@ CPlusClass* CParseHeader::getClassByName(char* pClassName, CPlusClass* pOutClass
 	}
 	if (NULL == pOutClass)
 	{
-		for (int i = 0; i < mClassList.size(); ++ i)
+		for (int i = 0; i < (int)mClassList.size(); ++ i)
 		{
 			if (0 == strncmp(pClassName, mClassList[i]->getName(), MAX_PATH))
 			{
@@ -559,7 +615,7 @@ CPlusClass* CParseHeader::getClassByName(char* pClassName, CPlusClass* pOutClass
 	else
 	{
 		CPlusClass::SUB_CLASS_VECTOR& rSubClassList = mCurClass->getSubClassList();
-		for (int i = 0; i < rSubClassList.size(); ++i)
+		for (int i = 0; i < (int)rSubClassList.size(); ++i)
 		{
 			if (0 == strncmp(pClassName, rSubClassList[i]->getName(), MAX_PATH))
 			{
@@ -582,7 +638,7 @@ const char* CParseHeader::getDefaultValue(const char* pVariableType)
 		return "NULL";
 	}
 
-	for (int i = 0; i < mVariableDefaultList.size(); ++ i)
+	for (int i = 0; i < (int)mVariableDefaultList.size(); ++ i)
 	{
 		if (0 == strncmp(pVariableType, mVariableDefaultList[i].getType(), MAX_PATH))
 		{

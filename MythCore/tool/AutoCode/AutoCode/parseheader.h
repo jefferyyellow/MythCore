@@ -21,6 +21,7 @@ public:
 	void parseLine(const char* pLine, int nLineLength);
 	void getFirstWord(const char* pLine, int& rStart, int nLineLength, char* pWord);
 	bool checkFunc(const char* pLine, int nLineLength);
+	bool checkComment(const char* pLine, int nLineLength);
 	bool deleteHeadSpace(const char* pLine, int& rStart, int nLineLength);
 
 	void parseSourceFile(const char* pFilePath);

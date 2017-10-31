@@ -16,10 +16,10 @@ public:
 	public:
 		void init()
 		{
-    mPosX = int;
-    mPosY = int;
-    mPosZ = float;
-}
+            mPosX = 0;
+            mPosY = 0;
+            mPosZ = 0.0f;
+		}
 	public:
 		int mPosX, mPosY;
 		float mPosZ;
