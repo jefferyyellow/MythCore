@@ -78,11 +78,8 @@ void CParseHeader::parseLine(const char* pLine, int nLineLength)
 	{
 		return;
 	}
-	char acWord[MAX_PATH] = {0};
-	int nStart = 0;
 
-	getFirstWord(pLine, nStart, nLineLength, acWord);
-	if (checkComment(acWord, strlen(acWord)))
+	if (checkComment(pLine, nLineLength))
 	{
 		return;
 	}
@@ -93,6 +90,11 @@ void CParseHeader::parseLine(const char* pLine, int nLineLength)
 		return;
 	}
 
+
+	char acWord[MAX_PATH] = { 0 };
+	int nStart = 0;
+
+	getFirstWord(pLine, nStart, nLineLength, acWord);
 	if (nStart >= nLineLength)
 	{
 		return;
@@ -174,7 +176,7 @@ void CParseHeader::parseLine(const char* pLine, int nLineLength)
 
 	while (true)
 	{
-		getFirstWord(pLine, nStart, nLineLength, acWord);
+		getFirstVariable(pLine, nStart, nLineLength, acWord);
 		if (strncmp(acWord, "", MAX_PATH - 1) == 0 )
 		{
 			break;
@@ -183,6 +185,14 @@ void CParseHeader::parseLine(const char* pLine, int nLineLength)
 		CVariable* pNewVariable = new CVariable;
 		pNewVariable->setType(strType);
 		pNewVariable->setName(acWord);
+		pNewVariable->setArrayDimension(calcArrayDimension(pLine, nLineLength));
+
+		char acBuffer[MAX_PATH] = {};
+		bool bRet = getDefaultValue(mFileContent[mCurLineIndex - 1], strlen(mFileContent[mCurLineIndex - 1]), acBuffer);
+		if (bRet)
+		{
+			pNewVariable->setDefaultValue(acBuffer);
+		}
 		rVariableList.push_back(pNewVariable);
 
 		if (nStart >= nLineLength)
@@ -199,13 +209,55 @@ bool CParseHeader::deleteHeadSpace(const char* pLine, int& rStart, int nLineLeng
 {
 	for (int i = rStart; i < nLineLength; ++i)
 	{
-		if (pLine[i] != ' '&& pLine[i] != '\t' && pLine[i] != '\n')
+		if (pLine[i] != ' '
+			&& pLine[i] != '\t' 
+			&& pLine[i] != '\n'
+			&& pLine[i] != ','
+			&& pLine[i] != ';')
 		{
 			rStart = i;
 			return false;
 		}
 	}
 	rStart = nLineLength;
+	return true;
+}
+
+bool CParseHeader::getDefaultValue(const char* pLine, int nLineLength, char* pDefaultValue)
+{
+	bool bComment = false;
+	int nStart = 0;
+	for (int i = 0; i < nLineLength; ++ i)
+	{
+		if (pLine[i] == '/' && i + 1 < nLineLength && pLine[i + 1] == '/')
+		{
+			bComment = true;
+			nStart = i;
+			break;
+		}
+
+		if (pLine[i] == '/' && i + 1 < nLineLength && pLine[i + 1] == '*')
+		{
+			bComment = true;
+			nStart = i;
+			break;
+		}
+	}
+
+	if (!bComment)
+	{
+		return false;
+	}
+
+	const char* pPos = strstr(pLine, "default");
+	if (NULL == pPos)
+	{
+		return false;
+	}
+	
+	pPos += strlen("default:");
+	nStart = pPos - pLine;
+	getFirstWord(pLine, nStart, nLineLength, pDefaultValue);
 	return true;
 }
 
@@ -259,6 +311,69 @@ void CParseHeader::getFirstWord(const char* pLine, int& rStart, int nLineLength,
 	}
 }
 
+void CParseHeader::getFirstVariable(const char* pLine, int& rStart, int nLineLength, char* pWord)
+{
+	// 删除前导空格
+	bool bDelete = deleteHeadSpace(pLine, rStart, nLineLength);
+	if (bDelete)
+	{
+		pWord[0] = '\0';
+		rStart = nLineLength;
+		return;
+	}
+
+	int nIndex = 0;
+	bool bEnd = false;
+	for (int i = rStart; i < nLineLength; ++i)
+	{
+		if (pLine[i] == ' '		// 间隔字符
+			|| pLine[i] == '\t'	// 间隔字符
+			|| pLine[i] == '\n'	// 行结束
+			|| pLine[i] == ','	// 变量结束
+			|| pLine[i] == ';'	// 语句结束
+			|| pLine[i] == '[') // 数组开始
+		{
+			nIndex = i;
+			break;
+		}
+		// //注释
+		if (pLine[i] == '/' && i + 1 < nLineLength && pLine[i + 1] == '/')
+		{
+			nIndex = i;
+			bEnd = true;
+			break;
+		}
+
+		if (pLine[i] == '/' && i + 1 < nLineLength && pLine[i + 1] == '*')
+		{
+			nIndex = i;
+			bEnd = true;
+			break;
+		}
+
+	}
+
+	strncpy(pWord, pLine + rStart, nIndex - rStart);
+	pWord[nIndex - rStart] = '\0';
+
+	if (pLine[nIndex] == '[')
+	{
+		for (int i = nIndex + 1; i < nLineLength; ++i)
+		{
+			if (pLine[i] == ']')
+			{
+				nIndex = i;
+			}
+		}
+	}
+
+	rStart = nIndex + 1;
+	if (bEnd)
+	{
+		rStart = nLineLength;
+	}
+}
+
 bool CParseHeader::checkFunc(const char* pLine, int nLineLength)
 {
 	if (strchr(pLine, '(') != NULL)
@@ -301,31 +416,19 @@ bool CParseHeader::checkFunc(const char* pLine, int nLineLength)
 
 bool CParseHeader::checkComment(const char* pLine, int nLineLength)
 {
-	if (nLineLength < 2)
+	for (int i = 0; i < nLineLength; ++i)
 	{
-		return false;
-	}
-	/**/
-	if (pLine[0] == '/' && pLine[1] == '*')
-	{
-		char acBuffer[MAX_PATH] = { 0 };
-		int nCurLine = mCurLineIndex;
-		bool bInFunction = false;
-		for (; nCurLine < (int)mFileContent.size(); ++nCurLine)
+		if (pLine[i] == '/' && (i + 1 < nLineLength) && pLine[i + 1] == '/')
 		{
-			int nLength = strlen(mFileContent[nCurLine]);
-			strncpy(acBuffer, mFileContent[nCurLine], nLength);
-			acBuffer[nLength] = '\0';
-
-			if (strstr(acBuffer, "*/") != NULL)
-			{
-				mCurLineIndex = nCurLine;
-				break;
-			}
-
+			return true;
 		}
-		return true;
+		// /*
+		if (pLine[i] == '/' && (i + 1 < nLineLength) && pLine[i + 1] == '*')
+		{
+			return true;
+		}
 	}
+
 	return false;
 }
 
@@ -350,13 +453,14 @@ void CParseHeader::writeHeaderLine(FILE* pFile, const char* pLine, int nLineLeng
 	char acWord[MAX_PATH] = { 0 };
 	int nStart = 0;
 	int nCurLineIndex = mCurLineIndex;
-
-	getFirstWord(pLine, nStart, nLineLength, acWord);
-	if (checkComment(acWord, strlen(acWord)))
+	if (checkComment(pLine, nLineLength))
 	{
 		writeContent(pFile, nCurLineIndex, mCurLineIndex);
 		return;
 	}
+
+	getFirstWord(pLine, nStart, nLineLength, acWord);
+
 
 	// 这行是函数的
 	if (checkFunc(pLine, nLineLength))
@@ -453,11 +557,23 @@ void CParseHeader::writeVariableInit(FILE* pFile, int nSpaceNum)
 			continue;
 		}
 
-		for (int j = 0; j < nSpaceNum; ++ j)
+
+		if (rVariableList[i]->checkDefaultValue())
+		{
+			if (0 == strncmp(rVariableList[i]->getDefaultValue(), "ignore", MAX_PATH))
+			{
+				continue;
+			}
+			_snprintf_s(acWord, sizeof(acWord)-1, "%s = %s;\n", rVariableList[i]->getName(), rVariableList[i]->getDefaultValue());
+		}
+		else
+		{
+			_snprintf_s(acWord, sizeof(acWord)-1, "%s = %s;\n", rVariableList[i]->getName(), pDefaultValue);
+		}
+		for (int j = 0; j < nSpaceNum; ++j)
 		{
 			fwrite(acSpace, strlen(acSpace), 1, pFile);
 		}
-		_snprintf_s(acWord, sizeof(acWord) - 1, "%s = %s;\n", rVariableList[i]->getName(), pDefaultValue);
 		fwrite(acWord, strlen(acWord), 1, pFile);
 
 	}
@@ -647,4 +763,18 @@ const char* CParseHeader::getDefaultValue(const char* pVariableType)
 	}
 
 	return NULL;
+}
+
+int CParseHeader::calcArrayDimension(const char* pLine, int nLineLength)
+{
+	int nCount = 0;
+	for (int i = 0; i < nLineLength; ++ i)
+	{
+		if (pLine[i] == '[')
+		{
+			++ nCount;
+		}
+	}
+
+	return nCount;
 }

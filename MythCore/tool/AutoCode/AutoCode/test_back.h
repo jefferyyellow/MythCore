@@ -16,12 +16,15 @@ public:
 	public:
 		void init()
 		{
-            mPosX = 0;
             mPosY = 0;
-            mPosZ = 0.0f;
+            */ = 0;
+            mPosZ = -1;
 		}
 	public:
-		int mPosX, mPosY;
+		// default: ignore
+		/* int mPosX;
+		int mPosY;*/
+		// Œª÷√ default: -1
 		float mPosZ;
 	};
 

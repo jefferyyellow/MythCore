@@ -40,7 +40,7 @@ public:
 	{
 		mName[0] = '\0';
 		mType[0] = '\0';
-		memset(mName, 0, sizeof(mName));
+		mDefaultValue[0] = '\0';
 		mArrayDimension = 0;
 	}
 	~CVariable()
@@ -66,6 +66,28 @@ public:
 			return;
 		}
 		strncpy(mName, pName, sizeof(mName) - 1);
+	}
+
+	int getArrayDimension() const { return mArrayDimension; }
+	void setArrayDimension(int val) { mArrayDimension = val; }
+
+	const char* getDefaultValue(){return mDefaultValue;}
+	void setDefaultValue(const char* pDefaultValue)
+	{
+		if (NULL == pDefaultValue)
+		{
+			return;
+		}
+		strncpy(mDefaultValue, pDefaultValue, sizeof(mDefaultValue) - 1);
+	}
+
+	bool			checkDefaultValue()
+	{
+		if (mDefaultValue[0] != '\0')
+		{
+			return true;
+		}
+		return false;
 	}
 
 private:

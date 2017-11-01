@@ -20,9 +20,11 @@ public:
 	void parseHeaderFile(const char* pFilePath);
 	void parseLine(const char* pLine, int nLineLength);
 	void getFirstWord(const char* pLine, int& rStart, int nLineLength, char* pWord);
+	void getFirstVariable(const char* pLine, int& rStart, int nLineLength, char* pWord);
 	bool checkFunc(const char* pLine, int nLineLength);
 	bool checkComment(const char* pLine, int nLineLength);
 	bool deleteHeadSpace(const char* pLine, int& rStart, int nLineLength);
+	bool getDefaultValue(const char* pLine, int nLineLength, char* pDefaultValue);
 
 	void parseSourceFile(const char* pFilePath);
 	void writeHeaderFile();
@@ -34,6 +36,8 @@ public:
 	CPlusClass* getClass(const char* pLine, int nLineLength);
 	CPlusClass* getClassByName(char* pClassName, CPlusClass* pOutClass);
 	const char* getDefaultValue(const char* pVariableType);
+	int	calcArrayDimension(const char* pLine, int nLineLength);
+
 private:
 	VEC_FILE			mFileContent;
 	CLASS_VECTOR		mClassList;
