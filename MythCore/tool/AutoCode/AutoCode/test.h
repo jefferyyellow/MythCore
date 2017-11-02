@@ -19,10 +19,13 @@ public:
 		}
 	public:
 		// default: ignore
-		/* int mPosX;
-		int mPosY;*/
+		/* int mPosX;*/
+		// default: ignore
+		int mPosY;
 		// Œª÷√ default: -1
 		float mPosZ;
+		int a[10];
+		char c[10];
 	};
 
 

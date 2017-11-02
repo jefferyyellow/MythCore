@@ -16,16 +16,19 @@ public:
 	public:
 		void init()
 		{
-            mPosY = 0;
-            */ = 0;
             mPosZ = -1;
+            memset(a, 0, sizeof(a));
+            c[0] = '\0';
 		}
 	public:
 		// default: ignore
-		/* int mPosX;
-		int mPosY;*/
+		/* int mPosX;*/
+		// default: ignore
+		int mPosY;
 		// 位置 default: -1
 		float mPosZ;
+		int a[10];
+		char c[10];
 	};
 
 
@@ -39,6 +42,9 @@ public:
 
 	CPlusClass* getOutClass() const { return mOutClass; }
 	void setOutClass(CPlusClass* val) { mOutClass = val; }
+
+	// autocode do not edit!!!
+	// end autocode
 
 private:
 	SUB_CLASS_VECTOR		mSubClassList;		// 子类列表

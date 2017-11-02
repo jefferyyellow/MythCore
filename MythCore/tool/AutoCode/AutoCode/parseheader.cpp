@@ -13,6 +13,9 @@ void CParseHeader::init()
 	tTemp.setValue("0.0f");
 	mVariableDefaultList.push_back(tTemp);
 
+	tTemp.setType("char");
+	tTemp.setValue("0");
+	mVariableDefaultList.push_back(tTemp);
 }
 
 
@@ -389,21 +392,19 @@ bool CParseHeader::checkFunc(const char* pLine, int nLineLength)
 		bool bInFunction = false;
 		for (; nCurLine < (int)mFileContent.size(); ++nCurLine)
 		{
-			strncpy(acBuffer, mFileContent[nCurLine], sizeof(acBuffer) - 1);
-			acBuffer[strlen(mFileContent[nCurLine])] = '\0';
-			if (!bInFunction && strchr(acBuffer, ';') != NULL)
+			if (!bInFunction && strchr(mFileContent[nCurLine], ';') != NULL)
 			{
 				mCurLineIndex = nCurLine;
 				return true;
 			}
 
-			if (strchr(acBuffer, '{') != NULL)
+			if (strchr(mFileContent[nCurLine], '{') != NULL)
 			{
 				bInFunction  = true;
 			}
 
 
-			if (strchr(acBuffer, '}') != NULL)
+			if (strchr(mFileContent[nCurLine], '}') != NULL)
 			{
 				mCurLineIndex  = nCurLine;
 				return true;
@@ -425,7 +426,15 @@ bool CParseHeader::checkComment(const char* pLine, int nLineLength)
 		// /*
 		if (pLine[i] == '/' && (i + 1 < nLineLength) && pLine[i + 1] == '*')
 		{
-			return true;
+			int nCurLine = mCurLineIndex;
+			for (; nCurLine < (int)mFileContent.size(); ++nCurLine)
+			{
+				if (NULL != strstr(mFileContent[nCurLine], "*/"))
+				{
+					mCurLineIndex = nCurLine;
+					return true;
+				}
+			}
 		}
 	}
 
@@ -557,19 +566,43 @@ void CParseHeader::writeVariableInit(FILE* pFile, int nSpaceNum)
 			continue;
 		}
 
-
-		if (rVariableList[i]->checkDefaultValue())
+		if ( 1 == rVariableList[i]->getArrayDimension() && 0 == strcmp(rVariableList[i]->getType(), "char"))
 		{
-			if (0 == strncmp(rVariableList[i]->getDefaultValue(), "ignore", MAX_PATH))
-			{
-				continue;
-			}
-			_snprintf_s(acWord, sizeof(acWord)-1, "%s = %s;\n", rVariableList[i]->getName(), rVariableList[i]->getDefaultValue());
+			_snprintf_s(acWord, sizeof(acWord)-1, "%s[0] = '\\0';\n", rVariableList[i]->getName());
 		}
 		else
 		{
-			_snprintf_s(acWord, sizeof(acWord)-1, "%s = %s;\n", rVariableList[i]->getName(), pDefaultValue);
+			if (rVariableList[i]->checkDefaultValue())
+			{
+				if (0 == strncmp(rVariableList[i]->getDefaultValue(), "ignore", MAX_PATH))
+				{
+					continue;
+				}
+
+				if (rVariableList[i]->getArrayDimension() > 0)
+				{
+					_snprintf_s(acWord, sizeof(acWord)-1, "memset(%s, %s, sizeof(%s));\n", rVariableList[i]->getName(),
+						rVariableList[i]->getDefaultValue(), rVariableList[i]->getName());
+				}
+				else
+				{
+					_snprintf_s(acWord, sizeof(acWord)-1, "%s = %s;\n", rVariableList[i]->getName(), rVariableList[i]->getDefaultValue());
+				}
+			}
+			else
+			{
+				if (rVariableList[i]->getArrayDimension() > 0)
+				{
+					_snprintf_s(acWord, sizeof(acWord)-1, "memset(%s, %s, sizeof(%s));\n", rVariableList[i]->getName(),
+						pDefaultValue, rVariableList[i]->getName());
+				}
+				else
+				{
+					_snprintf_s(acWord, sizeof(acWord)-1, "%s = %s;\n", rVariableList[i]->getName(), pDefaultValue);
+				}
+			}
 		}
+
 		for (int j = 0; j < nSpaceNum; ++j)
 		{
 			fwrite(acSpace, strlen(acSpace), 1, pFile);
