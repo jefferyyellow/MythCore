@@ -1,3 +1,6 @@
+#ifndef __VARIABLE_H__
+#define __VARIABLE_H__
+
 #include "commontype.h"
 class CVariableDefault
 {
@@ -90,9 +93,32 @@ public:
 		return false;
 	}
 
+	char*			getArrayMaxLen(int nIndex)
+	{
+		if (nIndex < 0 || nIndex >= MAX_ARRAY_DIMENSION)
+		{
+			return NULL;
+		}
+
+		return mArrayMaxLen[nIndex];
+	}
+
+	void			setArrayMaxLen(int nIndex, const char* pArrayMaxLen)
+	{
+		if (nIndex < 0 || nIndex >= MAX_ARRAY_DIMENSION)
+		{
+			return;
+		}
+
+		strncpy(mArrayMaxLen[nIndex], pArrayMaxLen, TYPE_NAME_LENGTH);
+	}
+
 private:
-	char 			mType[TYPE_NAME_LENGTH];	// 变量类型
-	char			mName[TYPE_NAME_LENGTH];	// 变量名
-	int				mArrayDimension;			// 数组维数
+	char 			mType[TYPE_NAME_LENGTH];			// 变量类型
+	char			mName[TYPE_NAME_LENGTH];			// 变量名
+	int				mArrayDimension;					// 数组维数
+	char			mArrayMaxLen[MAX_ARRAY_DIMENSION][TYPE_NAME_LENGTH];	// 不考虑3维数组
 	char			mDefaultValue[TYPE_NAME_LENGTH];	// 初始化值（如果设置了初始化就不用默认初始化）
 };
+
+#endif

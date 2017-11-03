@@ -1,3 +1,6 @@
+#ifndef __CLASS_H__
+#define __CLASS_H__
+
 #include "commontype.h"
 #include "variable.h"
 class CPlusClass
@@ -40,3 +43,5 @@ private:
 	char					mName[CLASS_NAME_LENGTH];		// 类名
 	int						mCurClassIndex;					// 当前处理的类索引
 };
+
+#endif

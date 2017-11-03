@@ -78,10 +78,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="class.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="parseheader.cpp" />
-    <ClCompile Include="variable.cpp" />
+    <ClCompile Include="writeinit.cpp" />
+    <ClCompile Include="writemethod.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="class.h" />

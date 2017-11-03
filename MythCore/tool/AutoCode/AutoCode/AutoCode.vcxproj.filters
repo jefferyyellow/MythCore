@@ -21,10 +21,10 @@
     <ClCompile Include="parseheader.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="class.cpp">
+    <ClCompile Include="writeinit.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="variable.cpp">
+    <ClCompile Include="writemethod.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,5 +1,6 @@
 #include "commontype.h"
 #include "variable.h"
+#define  MAX_LENGTH 10
 class CPlusClass
 {
 public:
@@ -24,8 +25,12 @@ public:
 		int mPosY;
 		// Œª÷√ default: -1
 		float mPosZ;
-		int a[10];
-		char c[10];
+		int mA[MAX_LENGTH];
+		char mC[10];
+		char* mPos;
+
+		// autocode	DO NOT EDIT!
+		// autocode
 	};
 
 
