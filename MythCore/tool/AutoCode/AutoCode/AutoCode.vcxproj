@@ -53,6 +53,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>..\..\..\dep\tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -78,12 +79,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\dep\tinyxml\tinyxml2.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="parseheader.cpp" />
     <ClCompile Include="writeinit.cpp" />
     <ClCompile Include="writemethod.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\dep\tinyxml\tinyxml2.h" />
     <ClInclude Include="class.h" />
     <ClInclude Include="commontype.h" />
     <ClInclude Include="parseheader.h" />

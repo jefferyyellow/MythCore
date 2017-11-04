@@ -17,11 +17,17 @@ public:
 		mCurClass = NULL;
 		mCurLineIndex = 0;
 		mCurClassIndex = 0;
-		init();
 	}
-	void	init();
+	~CParseHeader()
+	{
+		clear();
+	}
+	void	clear();
+	void	clearContent();
 
 public:
+	/// 加载默认值配置文件
+	bool loadDefaultValueXml(const char* pXmlFile);
 	// ******分析头文件和CPP文件******
 	/// 分析头文件
 	void parseHeaderFile(const char* pFilePath);
@@ -49,11 +55,11 @@ public:
 
 	// ******写初始化函数相关******
 	/// 写头文件
-	void writeHeaderFile();
+	void writeHeaderFile(const char* pHeadFile);
 	/// 写头文件的一行
 	void writeHeaderLine(FILE* pFile, const char* pLine, int nLineLength);
 	/// 写源文件
-	void writeSourceFile();
+	void writeSourceFile(const char* pSrcFile);
 	/// 写源文件的一行
 	void writeSourceLine(FILE* pFile, const char* pLine, int nLineLength);
 	/// 得到init函数的类

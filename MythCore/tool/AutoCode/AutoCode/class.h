@@ -11,7 +11,23 @@ public:
 		mOutClass = NULL;
 		mCurClassIndex = 0;
 	}
-	~CPlusClass(){}
+	~CPlusClass()
+	{
+		clear();
+	}
+
+	void clear()
+	{
+		for (int i = 0; i < mVariableList.size(); ++i)
+		{
+			delete mVariableList[i];
+		}
+
+		for (int i = 0; i < mSubClassList.size(); ++ i)
+		{
+			delete mSubClassList[i];
+		}
+	}
 public:
 	typedef vector<CPlusClass*>		SUB_CLASS_VECTOR;
 	typedef vector<CVariable*>		VARIABLE_VECTOR;

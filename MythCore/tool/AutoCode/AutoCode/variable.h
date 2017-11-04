@@ -7,6 +7,8 @@ class CVariableDefault
 public:
 	CVariableDefault()
 	{
+		mType[0] = '\0';
+		mValue[0] = '\0';
 	}
 	~CVariableDefault(){}
 

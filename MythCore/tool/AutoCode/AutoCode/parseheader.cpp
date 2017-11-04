@@ -1,23 +1,71 @@
 #include "parseheader.h"
 #include <stdio.h>
+#include "tinyxml2.h"
+using namespace tinyxml2;
 
-void CParseHeader::init()
+void CParseHeader::clear()
 {
-	CVariableDefault tTemp;
+	for (int i = 0; i < mClassList.size(); ++i)
+	{
+		delete mClassList[i];
+	}
 
-	tTemp.setType("int");
-	tTemp.setValue("0");
-	mVariableDefaultList.push_back(tTemp);
-
-	tTemp.setType("float");
-	tTemp.setValue("0.0f");
-	mVariableDefaultList.push_back(tTemp);
-
-	tTemp.setType("char");
-	tTemp.setValue("0");
-	mVariableDefaultList.push_back(tTemp);
+	
+	clearContent();
 }
 
+void CParseHeader::clearContent()
+{
+	for (int i = 0; i < mFileContent.size(); ++i)
+	{
+		delete[]mFileContent[i];
+	}
+
+	mFileContent.clear();
+}
+
+
+/// 加载默认值配置文件
+bool CParseHeader::loadDefaultValueXml(const char* pXmlFile)
+{
+	if (NULL == pXmlFile)
+	{
+		return false;
+	}
+
+	tinyxml2::XMLDocument tDocument;
+	if (XML_SUCCESS != tDocument.LoadFile(pXmlFile))
+	{
+		return false;
+	}
+
+	XMLElement* pRootElement = tDocument.RootElement();
+	if (NULL == pRootElement)
+	{
+		return false;
+	}
+
+	XMLElement* pDefaultValue = pRootElement->FirstChildElement("DefaultValue");
+	for (; NULL != pDefaultValue; pDefaultValue = pDefaultValue->NextSiblingElement("DefaultValue"))
+	{
+		CVariableDefault tDefault;
+		const char* pType = pDefaultValue->Attribute("Type");
+		if (NULL != pType)
+		{
+			tDefault.setType(pType);
+		}
+
+		const char* pValue = pDefaultValue->Attribute("Value");
+		if (NULL != pValue)
+		{
+			tDefault.setValue(pValue);
+		}
+
+		mVariableDefaultList.push_back(tDefault);
+	}
+
+	return true;
+}
 
 void CParseHeader::parseHeaderFile(const char* pFilePath)
 {
@@ -26,7 +74,7 @@ void CParseHeader::parseHeaderFile(const char* pFilePath)
 		return;
 	}
 
-	mFileContent.clear();
+	clearContent();
 	FILE* pFile = fopen(pFilePath, "r");
 	if (NULL == pFile)
 	{
@@ -188,7 +236,7 @@ void CParseHeader::parseSourceFile(const char* pFilePath)
 	{
 		return;
 	}
-	mFileContent.clear();
+	clearContent();
 	FILE* pFile = fopen(pFilePath, "r");
 	if (NULL == pFile)
 	{

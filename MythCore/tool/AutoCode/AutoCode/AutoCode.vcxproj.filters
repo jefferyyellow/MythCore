@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="tinyxml">
+      <UniqueIdentifier>{253cd339-4cf3-4209-a28c-6bf4e10ec6eb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -27,6 +30,9 @@
     <ClCompile Include="writemethod.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\dep\tinyxml\tinyxml2.cpp">
+      <Filter>tinyxml</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="parseheader.h">
@@ -40,6 +46,9 @@
     </ClInclude>
     <ClInclude Include="variable.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\dep\tinyxml\tinyxml2.h">
+      <Filter>tinyxml</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,11 +1,15 @@
 #include "parseheader.h"
 
-void CParseHeader::writeHeaderFile()
+void CParseHeader::writeHeaderFile(const char* pHeadFile)
 {
+	if (NULL == pHeadFile)
+	{
+		return;
+	}
 	mCurClass = NULL;
 	mCurLineIndex = 0;
 
-	FILE* pFile = fopen("test_back.h", "wt");
+	FILE* pFile = fopen(pHeadFile, "wt");
 
 	char acBuffer[MAX_PATH] = { 0 };
 	for (mCurLineIndex = 0; mCurLineIndex < (int)mFileContent.size(); ++mCurLineIndex)
@@ -117,12 +121,17 @@ void CParseHeader::writeHeaderLine(FILE* pFile, const char* pLine, int nLineLeng
 }
 
 
-void CParseHeader::writeSourceFile()
+void CParseHeader::writeSourceFile(const char* pSrcFile)
 {
+	if (NULL == pSrcFile)
+	{
+		return;
+	}
+
 	mCurClass = NULL;
 	mCurLineIndex = 0;
 
-	FILE* pFile = fopen("test_back.cpp", "wt");
+	FILE* pFile = fopen(pSrcFile, "wt");
 
 	char acBuffer[MAX_PATH] = { 0 };
 	for (mCurLineIndex = 0; mCurLineIndex < (int)mFileContent.size(); ++mCurLineIndex)
