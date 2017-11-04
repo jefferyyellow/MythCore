@@ -1,18 +1,28 @@
 #include "commontype.h"
 #include "variable.h"
 #define  MAX_LENGTH 10
-class CPlusClass
+#define  MAX_LENGTH2 15
+
+class CPlusClassTest
 {
 public:
-	CPlusClass()
+	typedef vector<CPlusClassTest*>		SUB_CLASS_VECTOR;
+	typedef vector<CVariable*>		VARIABLE_VECTOR;
+
+public:
+	CPlusClassTest()
 	{
 		mOutClass = NULL;
 	}
-	~CPlusClass(){}
+	~CPlusClassTest(){}
 
-	void init();
+	void init()
+	{
 
-	class CNestClass
+	}
+	// autocode	DO NOT EDIT!
+	// autocode
+	class CNestClassTest
 	{
 	public:
 		void init()
@@ -26,7 +36,9 @@ public:
 		// 位置 default: -1
 		float mPosZ;
 		int mA[MAX_LENGTH];
-		char mC[10];
+		int mB[MAX_LENGTH][MAX_LENGTH2];
+		char mC[MAX_LENGTH];
+		char mD[MAX_LENGTH][MAX_LENGTH2];
 		char* mPos;
 
 		// autocode	DO NOT EDIT!
@@ -34,19 +46,9 @@ public:
 	};
 
 
-public:
-	typedef vector<CPlusClass*>		SUB_CLASS_VECTOR;
-	typedef vector<CVariable*>		VARIABLE_VECTOR;
-
-public:
-	SUB_CLASS_VECTOR&		getSubClassList(){ return mSubClassList; }
-	VARIABLE_VECTOR&		getVariableList(){ return mVariableList; }
-
-	CPlusClass* getOutClass() const { return mOutClass; }
-	void setOutClass(CPlusClass* val) { mOutClass = val; }
 
 private:
-	SUB_CLASS_VECTOR		mSubClassList;		// 子类列表
-	VARIABLE_VECTOR			mVariableList;		// 变量列表
-	CPlusClass*				mOutClass;			// 外层类
+	SUB_CLASS_VECTOR		mSubClassList[MAX_LENGTH];		// 子类列表
+	VARIABLE_VECTOR			mVariableList[MAX_LENGTH][MAX_LENGTH2];		// 变量列表
+	CPlusClassTest*			mOutClass;			// 外层类
 };

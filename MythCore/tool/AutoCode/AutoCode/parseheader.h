@@ -71,16 +71,15 @@ public:
 	/// 写变量的get/set函数
 	bool writeGetSetMethod(FILE* pFile, const char* pLine, int nLineLength);
 	/// 写非数组的内置类型
-	void writeBuiltInType(CVariable* pVariable, FILE* pFile, int nSpaceNum, int &rCount);
+	void writeBuiltInType(bool bBuiltIn, CVariable* pVariable, FILE* pFile, int nSpaceNum, int &rCount);
 	/// 写内置数组
-	void writeBuiltInArray(CVariable* pVariable, FILE* pFile, int nSpaceNum, int &rCount);
+	void writeBuiltInArray(bool bBuiltIn, CVariable* pVariable, FILE* pFile, int nSpaceNum, int &rCount);
 	/// 写二维内置类型数组
-	void writeBuiltInArray2(CVariable* pVariable, FILE* pFile, int nSpaceNum, int &rCount);
+	void writeBuiltInArray2(bool bBuiltIn, CVariable* pVariable, FILE* pFile, int nSpaceNum, int &rCount);
 	/// 写字符数组
 	void writeCharArray(CVariable* pVariable, FILE* pFile, int nSpaceNum, int &rCount);
 	/// 写二维字符串数组 
 	void writeCharArray2(CVariable* pVariable, FILE* pFile, int nSpaceNum, int &rCount);
-
 
 	/// 得到第一个大写字母的位置
 	const char* getFirstUpcase(const char* pLine);
