@@ -1,4 +1,23 @@
 #include "parseclass.h"
+
+/// 初始
+void CParseClass::init()
+{
+	CBuildInTypeToPB tValue;
+
+	tValue.setBuildInType("int");
+	tValue.setPBType("uint32");
+	mBuildTypeToPBList.push_back(tValue);
+
+	tValue.setBuildInType("char");
+	tValue.setPBType("string");
+	mBuildTypeToPBList.push_back(tValue);
+
+	tValue.setBuildInType("float");
+	tValue.setPBType("float");
+	mBuildTypeToPBList.push_back(tValue);
+}
+
 void CParseClass::clearContent()
 {
 	for (int i = 0; i < mFileContent.size(); ++i)
@@ -27,6 +46,7 @@ void CParseClass::parseClass(const char* pFilePath, const char* pClassName)
 	char* pPos = NULL;
 	int nClassCount = 0;
 	bool bInClass = false;
+	bool bInEnum = false;
 	// 读取文件的内容，保存起来
 	while (fgets(acBuffer, MAX_PATH, pFile) != NULL)
 	{
@@ -40,18 +60,39 @@ void CParseClass::parseClass(const char* pFilePath, const char* pClassName)
 			bInClass = true;
 		}
 
+		if (bInEnum)
+		{
+			pPos = strstr(acBuffer, "};");
+			// 主类的结束标志
+			if (NULL != pPos)
+			{
+				bInEnum = false;
+			}
+			continue;
+		}
+
+		pPos = strstr(acBuffer, "enum");
+		if (NULL != pPos)
+		{
+			bInEnum  = true;
+			continue;
+		}
+
 		pPos = strstr(acBuffer, "class");
 		if (NULL != pPos)
 		{
 			++ nClassCount;
 		}
-
-		pPos = strstr(acBuffer, "};");
-		// 主类的结束标志
-		if (NULL != pPos)
+		else
 		{
-			-- nClassCount;
+			pPos = strstr(acBuffer, "};");
+			// 主类的结束标志
+			if (NULL != pPos)
+			{
+				--nClassCount;
+			}
 		}
+
 
 		char *pNewLine = new char[MAX_LINE_CHAR_NUM];
 		strncpy(pNewLine, acBuffer, sizeof(acBuffer) - 1);
@@ -89,7 +130,6 @@ void CParseClass::parseLine(const char* pLine, int nLineLength)
 		return;
 	}
 
-
 	char acWord[MAX_PATH] = { 0 };
 	int nStart = 0;
 
@@ -121,6 +161,16 @@ void CParseClass::parseLine(const char* pLine, int nLineLength)
 
 		getFirstWord(pLine, nStart, nLineLength, acWord);
 		mCurClass->setName(acWord);
+
+		const char* pParentPos = strstr(pLine, "public");
+		if (NULL != pParentPos)
+		{
+			nStart = pParentPos - pLine;
+			nStart += strlen("public");
+			getFirstWord(pLine, nStart, nLineLength, acWord);
+			pNewClass->setParentName(acWord);
+		}
+
 		return;
 	}
 
@@ -169,7 +219,7 @@ void CParseClass::parseLine(const char* pLine, int nLineLength)
 	}
 
 	CClass::VARIABLE_VECTOR& rVariableList = mCurClass->getVariableList();
-	char strType[TYPE_NAME_LENGTH];
+	char strType[MAX_NAME_LENGTH];
 	strncpy(strType, acWord, sizeof(strType) - 1);
 
 
@@ -347,6 +397,26 @@ bool CParseClass::checkFunc(const char* pLine, int nLineLength)
 	return false;
 }
 
+///// 是否是枚举
+//bool CParseClass::checkEnum(const char* pLine, int nLineLength)
+//{
+//	if (strstr(pLine, "enum") != NULL)
+//	{
+//		int nCurLine = mCurLineIndex;
+//
+//		for (; nCurLine < (int)mFileContent.size(); ++nCurLine)
+//		{
+//			if (strchr(mFileContent[nCurLine], '}') != NULL)
+//			{
+//				mCurLineIndex = nCurLine;
+//				return true;
+//			}
+//		}
+//	}
+//
+//	return false;
+//}
+
 bool CParseClass::checkComment(const char* pLine, int nLineLength)
 {
 
@@ -431,4 +501,536 @@ void CParseClass::getMaxArrayLen(const char* pSrc, int nLength, char* pMaxArrayL
 			break;
 		}
 	}
+}
+
+/// 得到类的真实名字（去掉前缀CTpl,C,CTemplate）
+void CParseClass::getRealClassName(const char* pClassName, char* pRealName, int nSize)
+{
+	if (NULL == pClassName || NULL == pRealName)
+	{
+		return;
+	}
+
+	/// if(str)
+	if (0 == strncmp(pClassName, "CTpl", strlen("CTpl")))
+	{
+		strncpy(pRealName, pClassName + strlen("CTpl"), nSize - 1);
+	}
+	else if (0 == strncmp(pClassName, "CTemplate", strlen("CTemplate")))
+	{
+		strncpy(pRealName, pClassName + strlen("CTemplate"), nSize - 1);
+	}
+	else if (0 == strncmp(pClassName, "C", strlen("C")))
+	{
+		strncpy(pRealName, pClassName + strlen("C"), nSize - 1);
+	}
+	else
+	{
+		strncpy(pRealName, pClassName, nSize - 1);
+	}
+}
+
+/// 得到第一个大写字母的位置
+const char* CParseClass::getFirstUpcase(const char* pSrc)
+{
+	if (NULL == pSrc)
+	{
+		return NULL;
+	}
+	int nLength = strlen(pSrc);
+	for (int i = 0; i < nLength; ++i)
+	{
+		if (pSrc[i] >= 'A' && pSrc[i] <= 'Z')
+		{
+			return (pSrc + i);
+		}
+	}
+	return NULL;
+}
+
+
+const char* CParseClass::getPBTypeValue(const char* pBuildInType)
+{
+	if (NULL == pBuildInType)
+	{
+		return NULL;
+	}
+
+	for (int i = 0; i < (int)mBuildTypeToPBList.size(); ++i)
+	{
+		if (0 == strncmp(pBuildInType, mBuildTypeToPBList[i].getBuildInType(), MAX_NAME_LENGTH))
+		{
+			return mBuildTypeToPBList[i].getPBType();
+		}
+	}
+
+	return NULL;
+}
+
+/// 得到全类名
+void CParseClass::getClassDomainName(CClass* pClass,char* pName, int nSize)
+{
+	if (NULL == pClass || NULL == pName)
+	{
+		return;
+	}
+
+	char acBuffer[CLASS_NAME_LENGTH] = { 0 };
+	vector<CClass*> tClassList;
+	for (; NULL != pClass; pClass = pClass->getOutClass())
+	{
+		tClassList.push_back(pClass);
+	}
+
+	for (int i = tClassList.size() - 1; i >= 0; -- i)
+	{
+		_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s%s::", acBuffer, tClassList[i]->getName());
+	}
+	strncpy(pName, acBuffer, nSize - 1);
+}
+
+/// 写模板头文件
+void CParseClass::writeTempHeadFile()
+{
+	if (NULL == mMainClass)
+	{
+		return;
+	}
+	FILE* pFile = fopen("Template_back.h", "wt");
+	if (NULL == pFile)
+	{
+		return;
+	}
+	char acClassName[MAX_NAME_LENGTH] = { 0 };
+	getRealClassName(mMainClass->getName(), acClassName, sizeof(acClassName));
+
+	char acBuffer[MAX_LINE_CHAR_NUM] = { 0 };
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t%s(){};\n", acBuffer, mMainClass->getName());
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t~%s(){};\n", acBuffer, mMainClass->getName());
+	fwrite(acBuffer, strlen(acBuffer), 1, pFile);
+
+	writeClassHeadFile(mMainClass, pFile);
+	fclose(pFile);
+}
+
+/// 写类的头文件
+void CParseClass::writeClassHeadFile(CClass* pClass, FILE* pFile)
+{
+	if (NULL == pClass || NULL == pFile)
+	{
+		return;
+	}
+
+	char acClassName[MAX_NAME_LENGTH] = { 0 };
+	getRealClassName(pClass->getName(), acClassName, sizeof(acClassName));
+
+	char acBuffer[MAX_LINE_CHAR_NUM] = { 0 };
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tvoid SetFromPB(PB%s* pbData);\n", acBuffer, acClassName);
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tvoid CreateToPB(PB%s* pbData);\n", acBuffer, acClassName);
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\n", acBuffer);
+	fwrite(acBuffer, strlen(acBuffer), 1, pFile);
+
+	for (int i = 0; i < pClass->getSubClassList().size(); ++i)
+	{
+		writeClassHeadFile(pClass->getSubClassList()[i], pFile);
+	}
+}
+
+/// 写模板源文件
+void CParseClass::writeTempSourceFile()
+{
+	if (NULL == mMainClass)
+	{
+		return;
+	}
+	FILE* pFile = fopen("Template_back.cpp", "wt");
+	if (NULL == pFile)
+	{
+		return;
+	}
+	writeClassSourceFile(mMainClass, pFile);
+}
+
+/// 写类的源文件
+void CParseClass::writeClassSourceFile(CClass* pClass, FILE* pFile)
+{
+	if (NULL == pClass || NULL == pFile)
+	{
+		return;
+	}
+
+
+	writeSetFromPB(pClass, pFile);
+	writeCreatePB(pClass, pFile);
+
+	for (int i = 0; i < pClass->getSubClassList().size(); ++i)
+	{
+		writeClassSourceFile(pClass->getSubClassList()[i], pFile);
+	}
+
+}
+
+void CParseClass::writeSetFromPB(CClass* pClass, FILE* pFile)
+{
+	char acClassName[MAX_NAME_LENGTH] = { 0 };
+	getRealClassName(pClass->getName(), acClassName, sizeof(acClassName));
+
+
+	char acClassDomainName[CLASS_NAME_LENGTH] = { 0 };
+	getClassDomainName(pClass, acClassDomainName, sizeof(acClassDomainName)-1);
+
+	char acBuffer[MAX_LINE_CHAR_NUM] = { 0 };
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%svoid %sSetFromPB(PB%s* pbData)\n", acBuffer, acClassDomainName, acClassName);
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s{\n", acBuffer);
+
+	// 如果有父类
+	if (pClass->getParentName()[0] != '\0')
+	{
+		if (0 == strncmp(pClass->getParentName(), "CTemplate", CLASS_NAME_LENGTH))
+		{
+			// 内置类型
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tmTempID = pbData->tempid();\t\n", acBuffer);
+
+		}
+		else
+		{
+			char acClassName[MAX_NAME_LENGTH] = { 0 };
+			getRealClassName(pClass->getParentName(), acClassName, sizeof(acClassName));
+
+			// 自定义类型
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t%s::SetFromPB(pbData->mutable_super());\n", acBuffer, pClass->getParentName());
+		}
+	}
+
+
+	for (int i = 0; i < pClass->getVariableList().size(); ++i)
+	{
+		CVariable* pVariable = (pClass->getVariableList())[i];
+		if (NULL == pVariable)
+		{
+			continue;
+		}
+		const char* pRealVariableName = getFirstUpcase(pVariable->getName());
+		char acRealVariableName[MAX_NAME_LENGTH] = { 0 };
+		strncpy(acRealVariableName, pRealVariableName, sizeof(acRealVariableName)-1);
+
+		if (pVariable->getArrayDimension() > 0)
+		{
+			if (0 == strncmp("char", pVariable->getType(), MAX_NAME_LENGTH))
+			{
+				if (1 == pVariable->getArrayDimension())
+				{
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tstrncpy(%s, pbData->%s().c_str(), sizeof(%s) - 1);\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName), pVariable->getName());
+				}
+				else if (2 == pVariable->getArrayDimension())
+				{
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tfor(int i = 0; i < %s && i < pbData->%s_size(); ++ i)\n", acBuffer, pVariable->getArrayMaxLen(0), acRealVariableName);
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t{\n", acBuffer);
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\tstrncpy(%s, pbData->%s(i).c_str(), sizeof(%s) - 1);\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName), pVariable->getName());
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t}\n", acBuffer);
+				}
+			}
+			else
+			{
+				if (1 == pVariable->getArrayDimension())
+				{
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tfor(int i = 0; i < %s && i < pbData->%s_size(); ++ i)\n", acBuffer, pVariable->getArrayMaxLen(0), acRealVariableName);
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t{\n", acBuffer);
+					const char* pPBType = getPBTypeValue(pVariable->getType());
+					if (NULL == pPBType)
+					{
+						// 自定义类型
+						_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t%s[i].SetFromPB(pbData->mutable_%s(i));\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName));
+					}
+					else
+					{
+						// 内置类型
+						_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t%s[i] = pbData->%s(i);\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName));
+					}
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t}\n", acBuffer);
+
+				}
+				else if (2 == pVariable->getArrayDimension())
+				{
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tint n%sCount = 0\n", acBuffer, acRealVariableName);
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tfor(int i = 0; i < %s; ++ i)\n", acBuffer, pVariable->getArrayMaxLen(0));
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t{\n", acBuffer);
+
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\tfor(int j = 0; j < %s && n%sCount < %s_size(); ++ j, ++  n%sCount)\n",
+						acBuffer, pVariable->getArrayMaxLen(1), acRealVariableName, acRealVariableName, acRealVariableName);
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t{\n", acBuffer);
+
+					const char* pPBType = getPBTypeValue(pVariable->getType());
+					if (NULL == pPBType)
+					{
+						// 自定义类型
+						_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t\t%s[i][j].SetFromPB(pbData->mutable_%s(%s));\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName), acRealVariableName);
+					}
+					else
+					{
+						// 内置类型
+						_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t\t%s[i][j] = pbData->%s(%s);\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName), acRealVariableName);
+					}
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t}\n", acBuffer);
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t}\n", acBuffer);
+				}
+
+			}
+
+			continue;
+		}
+
+		const char* pPBType = getPBTypeValue(pVariable->getType());
+		if (NULL == pPBType)
+		{
+			// 自定义类型
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t%s.SetFromPB(pbData->mutable_%s());\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName));
+		}
+		else
+		{
+			// 内置类型
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t%s = pbData->%s();\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName));
+		}
+	}
+
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s}\n", acBuffer);
+	fwrite(acBuffer, strlen(acBuffer), 1, pFile);
+}
+
+void CParseClass::writeCreatePB(CClass* pClass, FILE* pFile)
+{
+	char acClassName[MAX_NAME_LENGTH] = { 0 };
+	getRealClassName(pClass->getName(), acClassName, sizeof(acClassName));
+
+
+	char acClassDomainName[CLASS_NAME_LENGTH] = { 0 };
+	getClassDomainName(pClass, acClassDomainName, sizeof(acClassDomainName)-1);
+
+	char acBuffer[MAX_LINE_CHAR_NUM] = { 0 };
+
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%svoid %sCreateToPB(PB%s* pbData);\n", acBuffer, acClassDomainName, acClassName);
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s{\n", acBuffer);
+
+
+
+
+	// 如果有父类
+	if (pClass->getParentName()[0] != '\0')
+	{
+		if (0 == strncmp(pClass->getParentName(), "CTemplate", CLASS_NAME_LENGTH))
+		{
+			// 内置类型
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tpbData->set_tempid(mTempID);\t\n", acBuffer);
+
+		}
+		else
+		{
+			char acClassName[MAX_NAME_LENGTH] = { 0 };
+			getRealClassName(pClass->getParentName(), acClassName, sizeof(acClassName));
+
+			// 自定义类型
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t%s::CreateToPB(pbData->mutable_super());\n", acBuffer, pClass->getParentName());
+		}
+	}
+
+
+	for (int i = 0; i < pClass->getVariableList().size(); ++i)
+	{
+		CVariable* pVariable = (pClass->getVariableList())[i];
+		if (NULL == pVariable)
+		{
+			continue;
+		}
+		const char* pRealVariableName = getFirstUpcase(pVariable->getName());
+		char acRealVariableName[MAX_NAME_LENGTH] = { 0 };
+		strncpy(acRealVariableName, pRealVariableName, sizeof(acRealVariableName)-1);
+
+		if (pVariable->getArrayDimension() > 0)
+		{
+			if (0 == strncmp("char", pVariable->getType(), MAX_NAME_LENGTH))
+			{
+				if (1 == pVariable->getArrayDimension())
+				{
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tpbData->set_%s(%s);\n", acBuffer, _strlwr(acRealVariableName), pVariable->getName());
+				}
+				else if (2 == pVariable->getArrayDimension())
+				{
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tfor(int i = 0; i < %s; ++ i)\n", acBuffer, pVariable->getArrayMaxLen(0));
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t{\n", acBuffer);
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\tpbData->add_%s(%s[i]);\n", acBuffer, _strlwr(acRealVariableName), pVariable->getName());
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t}\n", acBuffer);
+				}
+			}
+			else
+			{
+				if (1 == pVariable->getArrayDimension())
+				{
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tfor(int i = 0; i < %s && i < pbData->%s_size(); ++ i)\n", acBuffer, pVariable->getArrayMaxLen(0), acRealVariableName);
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t{\n", acBuffer);
+					const char* pPBType = getPBTypeValue(pVariable->getType());
+					if (NULL == pPBType)
+					{
+						// 自定义类型
+						_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t%s[i].CreateToPB(pbData->add_%s(i));\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName));
+					}
+					else
+					{
+						// 内置类型
+						_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\tpbData->add_%s(%s[i]);\n", acBuffer, _strlwr(acRealVariableName), pVariable->getName());
+					}
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t}\n", acBuffer);
+
+				}
+				else if (2 == pVariable->getArrayDimension())
+				{
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tfor(int i = 0; i < %s; ++ i)\n", acBuffer, pVariable->getArrayMaxLen(0));
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t{\n", acBuffer);
+
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\tfor(int j = 0; j < %s; ++ j)\n",acBuffer, pVariable->getArrayMaxLen(1));
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t{\n", acBuffer);
+
+					const char* pPBType = getPBTypeValue(pVariable->getType());
+					if (NULL == pPBType)
+					{
+						// 自定义类型
+						_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t\t%s[i][j].CreateToPB(pbData->add_%s());\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName));
+					}
+					else
+					{
+						// 内置类型
+						_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t\tpbData->add_%s(%s);\n", acBuffer, _strlwr(acRealVariableName), pVariable->getName());
+					}
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t}\n", acBuffer);
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t}\n", acBuffer);
+				}
+
+			}
+
+			continue;
+		}
+
+		const char* pPBType = getPBTypeValue(pVariable->getType());
+		if (NULL == pPBType)
+		{
+			// 自定义类型
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t%s.CreateToPB(pbData->mutable_%s());\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName));
+		}
+		else
+		{
+			// 内置类型
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tpbData->set_%s(%s);\n", acBuffer, _strlwr(acRealVariableName), pVariable->getName());
+		}
+	}
+
+
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s}\n", acBuffer);
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\n\n", acBuffer);
+
+	fwrite(acBuffer, strlen(acBuffer), 1, pFile);
+}
+
+
+/// 写模板PB文件
+void CParseClass::writeTempPBFile()
+{
+	if (NULL == mMainClass)
+	{
+		return;
+	}
+	FILE* pFile = fopen("template_pb_back.hxx", "wt");
+	if (NULL == pFile)
+	{
+		return;
+	}
+
+	writeClassPBFile(mMainClass, pFile);
+	fclose(pFile);
+}
+
+/// 写类PB文件
+void CParseClass::writeClassPBFile(CClass* pClass, FILE* pFile)
+{
+	if (NULL == pClass || NULL == pFile)
+	{
+		return;
+	}
+
+	
+	for (int i = 0; i < pClass->getSubClassList().size(); ++ i)
+	{
+		writeClassPBFile(pClass->getSubClassList()[i], pFile);
+	}
+
+	char acClassName[MAX_NAME_LENGTH] = { 0 };
+	getRealClassName(pClass->getName(), acClassName, sizeof(acClassName));
+
+	char acBuffer[MAX_LINE_CHAR_NUM] = { 0 };
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%smessage PB%s\n", acBuffer, acClassName);
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s{\n", acBuffer);
+	
+	int nFieldCount = 1;
+	// 如果有父类
+	if (pClass->getParentName()[0] != '\0')
+	{
+		if (0 == strncmp(pClass->getParentName(), "CTemplate", CLASS_NAME_LENGTH))
+		{
+			// 内置类型
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t\t\t%s\t%s\t=%d\n", acBuffer, "uint32", "TempID", nFieldCount);
+
+		}
+		else
+		{
+			char acClassName[MAX_NAME_LENGTH] = { 0 };
+			getRealClassName(pClass->getParentName(), acClassName, sizeof(acClassName));
+
+			// 自定义类型
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t\t\tPB%s\t%s\t=%d\n", acBuffer, acClassName, "Super", nFieldCount);
+		}
+		++ nFieldCount;
+	}
+
+	for (int i = 0; i < pClass->getVariableList().size(); ++ i)
+	{
+		CVariable* pVariable = (pClass->getVariableList())[i];
+		if (NULL == pVariable)
+		{
+			continue;
+		}
+		if (pVariable->getArrayDimension() > 0)
+		{
+			// 一维char数组直接不用repeated,只有二维char数组才用repeated
+			if (pVariable->getArrayDimension() < 2 && 0 == strncmp("char", pVariable->getType(), MAX_NAME_LENGTH))
+			{
+				_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t\t", acBuffer);
+			}
+			else
+			{
+				_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\trepeated", acBuffer);
+			}
+		}
+		else
+		{
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t\t", acBuffer);
+		}
+
+		const char* pRealVariableName = getFirstUpcase(pVariable->getName());
+		const char* pPBType = getPBTypeValue(pVariable->getType());
+		if (NULL == pPBType)
+		{
+			char acClassName[MAX_NAME_LENGTH] = { 0 };
+			getRealClassName(pVariable->getType(), acClassName, sizeof(acClassName));
+
+			// 自定义类型
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tPB%s\t%s\t=%d\n", acBuffer, acClassName, pRealVariableName, nFieldCount);
+		}
+		else
+		{
+			// 内置类型
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t%s\t%s\t=%d\n", acBuffer, pPBType, pRealVariableName, nFieldCount);
+		}
+		++ nFieldCount;
+	}
+
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s}\n", acBuffer);
+	fwrite(acBuffer, strlen(acBuffer), 1, pFile);
 }

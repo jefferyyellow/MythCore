@@ -2,5 +2,8 @@
 int main()
 {
 	CParseClass tParseClass;
-	tParseClass.parseClass("template.h", "CTemplateSubsectionReward");
+	tParseClass.parseClass("template.h", "CTemplateGashaponDropTable");
+	tParseClass.writeTempHeadFile();
+	tParseClass.writeTempSourceFile();
+	tParseClass.writeTempPBFile();
 }

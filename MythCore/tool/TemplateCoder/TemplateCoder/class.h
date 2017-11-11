@@ -10,6 +10,8 @@ public:
 	{
 		mOutClass = NULL;
 		mCurClassIndex = 0;
+		mName[0] = '\0';
+		mParentName[0] = '\0';
 	}
 	~CClass()
 	{
@@ -52,12 +54,22 @@ public:
 	int getCurClassIndex() const { return mCurClassIndex; }
 	void setCurClassIndex(int val) { mCurClassIndex = val; }
 
+	const char* getParentName(){return mParentName;}
+	void setParentName(const char* pParentName)
+	{
+		if (NULL == pParentName)
+		{
+			return;
+		}
+		strncpy(mParentName, pParentName, sizeof(mParentName) - 1);
+	}
 private:
 	SUB_CLASS_VECTOR		mSubClassList;					// 子类列表
 	VARIABLE_VECTOR			mVariableList;					// 变量列表
 	CClass*					mOutClass;						// 外层类
 	char					mName[CLASS_NAME_LENGTH];		// 类名
 	int						mCurClassIndex;					// 当前处理的类索引
+	char					mParentName[CLASS_NAME_LENGTH];	// 父类的名字
 };
 
 #endif

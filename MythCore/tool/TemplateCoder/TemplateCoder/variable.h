@@ -58,13 +58,13 @@ public:
 			return;
 		}
 
-		strncpy(mArrayMaxLen[nIndex], pArrayMaxLen, TYPE_NAME_LENGTH);
+		strncpy(mArrayMaxLen[nIndex], pArrayMaxLen, MAX_NAME_LENGTH);
 	}
 
 private:
-	char 			mType[TYPE_NAME_LENGTH];										// 变量类型
-	char			mName[TYPE_NAME_LENGTH];										// 变量名
+	char 			mType[MAX_NAME_LENGTH];										// 变量类型
+	char			mName[MAX_NAME_LENGTH];										// 变量名
 	int				mArrayDimension;												// 数组维数
-	char			mArrayMaxLen[MAX_ARRAY_DIMENSION][TYPE_NAME_LENGTH];			// 不考虑3维数组
+	char			mArrayMaxLen[MAX_ARRAY_DIMENSION][MAX_NAME_LENGTH];			// 不考虑3维数组
 };
 #endif
