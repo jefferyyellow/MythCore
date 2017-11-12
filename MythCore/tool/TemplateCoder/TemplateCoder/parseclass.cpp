@@ -16,6 +16,10 @@ void CParseClass::init()
 	tValue.setBuildInType("float");
 	tValue.setPBType("float");
 	mBuildTypeToPBList.push_back(tValue);
+
+	tValue.setBuildInType("unsigned long long");
+	tValue.setPBType("uint64");
+	mBuildTypeToPBList.push_back(tValue);
 }
 
 void CParseClass::clearContent()
@@ -201,28 +205,34 @@ void CParseClass::parseLine(const char* pLine, int nLineLength)
 	{
 		return;
 	}
-
-	// 静态变量不能在init里初始化,所以不管是静态函数还是静态变量，直接跳过
-	if (strncmp(acWord, "static", MAX_PATH - 1) == 0 ||
-		strncmp(acWord, "auto", MAX_PATH - 1) == 0 ||
-		strncmp(acWord, "const", MAX_PATH - 1) == 0 ||
-		strncmp(acWord, "mutable", MAX_PATH - 1) == 0 ||
-		strncmp(acWord, "register", MAX_PATH - 1) == 0 ||
-		strncmp(acWord, "static", MAX_PATH - 1) == 0 ||
-		strncmp(acWord, "volatile", MAX_PATH - 1) == 0)
+	// 静态变量和函数都跳过
+	if (strncmp(acWord, "static", MAX_PATH - 1) == 0)
 	{
-		getFirstWord(pLine, nStart, nLineLength, acWord);
-		if (nStart >= nLineLength)
-		{
-			return;
-		}
+		return;
 	}
 
+	// const int i;如果不是以下修饰变量的，那nStart已经指向int后面的位置了，后退到int前面
+	if (strncmp(acWord, "auto", MAX_PATH - 1) != 0 &&
+		strncmp(acWord, "const", MAX_PATH - 1) != 0 &&
+		strncmp(acWord, "mutable", MAX_PATH - 1) != 0 &&
+		strncmp(acWord, "register", MAX_PATH - 1) != 0 &&
+		strncmp(acWord, "volatile", MAX_PATH - 1) != 0)
+	{
+		// 回到类型前
+		nStart = nStart - strlen(acWord);
+	}
+
+	// 得到变量类型
+	char acVariableType[CLASS_NAME_LENGTH] = {0};
+	if (!getVariableTypeName(pLine, nStart, nLineLength, acVariableType))
+	{
+		return;
+	}
+
+	char strType[CLASS_NAME_LENGTH] = { 0 };
+	processVariableType(acVariableType, strType, sizeof(acVariableType));
+	
 	CClass::VARIABLE_VECTOR& rVariableList = mCurClass->getVariableList();
-	char strType[MAX_NAME_LENGTH];
-	strncpy(strType, acWord, sizeof(strType) - 1);
-
-
 	while (true)
 	{
 		getFirstVariable(pLine, nStart, nLineLength, acWord);
@@ -359,8 +369,111 @@ void CParseClass::getFirstVariable(const char* pLine, int& rStart, int nLineLeng
 	}
 }
 
+/// 得到第一个变量名的开始处
+bool CParseClass::getVariableTypeName(const char* pLine, int& rStart, int nLineLength, char* pVariableName)
+{
+	if (NULL == pLine)
+	{
+		return false;
+	}
+	
+	int nPos = -1;
+	for (int i = rStart; i < nLineLength; ++ i)
+	{
+		// ,是因为多个变量名之间
+		if (',' == pLine[i] || ';' == pLine[i] || '[' == pLine[i])
+		{
+			nPos = i;
+			break;
+		}
+	}
+	// 找不到逗号和分号，一般不会如此
+	if (-1 == nPos)
+	{
+		rStart = nLineLength;
+		return false;
+	}
+
+
+	// 倒着找，找到第一个变量名，主要可能有空格
+	bool bInName = false;
+	for (int i = nPos - 1; i >= 0; -- i)
+	{
+		// 第一个不是空格和tab键
+		if (pLine[i] != ' ' && pLine[i] != '\t')
+		{
+			bInName = true;
+		}
+
+		if (bInName)
+		{
+			if (pLine[i] == ' ' || pLine[i] == '\t')
+			{
+				strncpy(pVariableName, pLine + rStart - 1, i - rStart + 1);
+				rStart = i; 
+				return true;
+			}
+		}
+	}
+	strncpy(pVariableName, pLine, nPos);
+	return false;
+}
+
+void CParseClass::processVariableType(char* pSrc, char* pDst, int nLength)
+{
+	int nCount = 0;
+	for (int i = 0; i < nLength; ++ i)
+	{
+		// 结束
+		if (pSrc[i] == '\0')
+		{
+			break;
+		}
+
+		// 如果是多个空格连在一起，只留一个
+		if (pSrc[i] == ' ')
+		{
+			if (nCount > 0 && pDst[nCount - 1] != ' ')
+			{
+				pDst[nCount] = pSrc[i];
+				++ nCount;
+			}
+			continue;
+		}
+
+		// 多个空格和table缩成一个空格
+		if (pSrc[i] == '\t')
+		{
+			if (nCount > 0 && pDst[nCount - 1] != ' ')
+			{
+				pDst[nCount] = ' ';
+				++nCount;
+			}
+			continue;
+		}
+
+		pDst[nCount] = pSrc[i];
+		++nCount;
+	}
+	pDst[nCount] = '\0';
+	if (nCount <= 0)
+	{
+		return;
+	}
+	// 如果最后一个是空格,去掉
+	if (pDst[nCount - 1] == ' ')
+	{
+		pDst[nCount - 1] = '\0';
+	}
+}
+
 bool CParseClass::checkFunc(const char* pLine, int nLineLength)
 {
+	if (NULL == pLine)
+	{
+		return false;
+	}
+
 	if (strchr(pLine, '(') != NULL)
 	{
 		// 函数声明
@@ -396,26 +509,6 @@ bool CParseClass::checkFunc(const char* pLine, int nLineLength)
 
 	return false;
 }
-
-///// 是否是枚举
-//bool CParseClass::checkEnum(const char* pLine, int nLineLength)
-//{
-//	if (strstr(pLine, "enum") != NULL)
-//	{
-//		int nCurLine = mCurLineIndex;
-//
-//		for (; nCurLine < (int)mFileContent.size(); ++nCurLine)
-//		{
-//			if (strchr(mFileContent[nCurLine], '}') != NULL)
-//			{
-//				mCurLineIndex = nCurLine;
-//				return true;
-//			}
-//		}
-//	}
-//
-//	return false;
-//}
 
 bool CParseClass::checkComment(const char* pLine, int nLineLength)
 {
@@ -484,6 +577,19 @@ int CParseClass::calcArrayDimension(CVariable* pVariable, const char* pLine, int
 void CParseClass::getMaxArrayLen(const char* pSrc, int nLength, char* pMaxArrayLen)
 {
 	int i = 0;
+	int nPos = 0;
+	// 去掉前导空格
+	for (; i < nLength; ++i)
+	{
+		if (pSrc[i] == ' ' || pSrc[i] == '\t')
+		{
+			continue;
+		}
+
+		nPos = i;
+		break;
+	}
+
 	for (; i < nLength; ++i)
 	{
 		if (pSrc[i] == ' ' || pSrc[i] == ']')
@@ -492,15 +598,8 @@ void CParseClass::getMaxArrayLen(const char* pSrc, int nLength, char* pMaxArrayL
 		}
 	}
 
-	for (; i < nLength; ++ i)
-	{
-		if (pSrc[i] == ' ' || pSrc[i] == ']')
-		{
-			strncpy(pMaxArrayLen, pSrc, i);
-			pMaxArrayLen[i] = '\0';
-			break;
-		}
-	}
+	strncpy(pMaxArrayLen, pSrc + nPos, i - nPos);
+	pMaxArrayLen[i] = '\0';
 }
 
 /// 得到类的真实名字（去掉前缀CTpl,C,CTemplate）
@@ -604,7 +703,7 @@ void CParseClass::writeTempHeadFile()
 	char acClassName[MAX_NAME_LENGTH] = { 0 };
 	getRealClassName(mMainClass->getName(), acClassName, sizeof(acClassName));
 
-	char acBuffer[MAX_LINE_CHAR_NUM] = { 0 };
+	char acBuffer[MAX_WRITE_BUFFER] = { 0 };
 	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t%s(){};\n", acBuffer, mMainClass->getName());
 	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t~%s(){};\n", acBuffer, mMainClass->getName());
 	fwrite(acBuffer, strlen(acBuffer), 1, pFile);
@@ -624,7 +723,7 @@ void CParseClass::writeClassHeadFile(CClass* pClass, FILE* pFile)
 	char acClassName[MAX_NAME_LENGTH] = { 0 };
 	getRealClassName(pClass->getName(), acClassName, sizeof(acClassName));
 
-	char acBuffer[MAX_LINE_CHAR_NUM] = { 0 };
+	char acBuffer[MAX_WRITE_BUFFER] = { 0 };
 	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tvoid SetFromPB(PB%s* pbData);\n", acBuffer, acClassName);
 	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tvoid CreateToPB(PB%s* pbData);\n", acBuffer, acClassName);
 	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\n", acBuffer);
@@ -679,7 +778,7 @@ void CParseClass::writeSetFromPB(CClass* pClass, FILE* pFile)
 	char acClassDomainName[CLASS_NAME_LENGTH] = { 0 };
 	getClassDomainName(pClass, acClassDomainName, sizeof(acClassDomainName)-1);
 
-	char acBuffer[MAX_LINE_CHAR_NUM] = { 0 };
+	char acBuffer[MAX_WRITE_BUFFER] = { 0 };
 	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%svoid %sSetFromPB(PB%s* pbData)\n", acBuffer, acClassDomainName, acClassName);
 	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s{\n", acBuffer);
 
@@ -724,9 +823,9 @@ void CParseClass::writeSetFromPB(CClass* pClass, FILE* pFile)
 				}
 				else if (2 == pVariable->getArrayDimension())
 				{
-					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tfor(int i = 0; i < %s && i < pbData->%s_size(); ++ i)\n", acBuffer, pVariable->getArrayMaxLen(0), acRealVariableName);
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tfor(int i = 0; i < %s && i < pbData->%s_size(); ++ i)\n", acBuffer, pVariable->getArrayMaxLen(0), _strlwr(acRealVariableName));
 					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t{\n", acBuffer);
-					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\tstrncpy(%s, pbData->%s(i).c_str(), sizeof(%s) - 1);\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName), pVariable->getName());
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\tstrncpy(%s[i], pbData->%s(i).c_str(), sizeof(%s) - 1);\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName), pVariable->getName());
 					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t}\n", acBuffer);
 				}
 			}
@@ -734,7 +833,7 @@ void CParseClass::writeSetFromPB(CClass* pClass, FILE* pFile)
 			{
 				if (1 == pVariable->getArrayDimension())
 				{
-					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tfor(int i = 0; i < %s && i < pbData->%s_size(); ++ i)\n", acBuffer, pVariable->getArrayMaxLen(0), acRealVariableName);
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tfor(int i = 0; i < %s && i < pbData->%s_size(); ++ i)\n", acBuffer, pVariable->getArrayMaxLen(0), _strlwr(acRealVariableName));
 					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t{\n", acBuffer);
 					const char* pPBType = getPBTypeValue(pVariable->getType());
 					if (NULL == pPBType)
@@ -752,12 +851,12 @@ void CParseClass::writeSetFromPB(CClass* pClass, FILE* pFile)
 				}
 				else if (2 == pVariable->getArrayDimension())
 				{
-					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tint n%sCount = 0\n", acBuffer, acRealVariableName);
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tint n%sCount = 0;\n", acBuffer, acRealVariableName);
 					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tfor(int i = 0; i < %s; ++ i)\n", acBuffer, pVariable->getArrayMaxLen(0));
 					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t{\n", acBuffer);
 
 					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\tfor(int j = 0; j < %s && n%sCount < %s_size(); ++ j, ++  n%sCount)\n",
-						acBuffer, pVariable->getArrayMaxLen(1), acRealVariableName, acRealVariableName, acRealVariableName);
+						acBuffer, pVariable->getArrayMaxLen(1), acRealVariableName, _strlwr(acRealVariableName), acRealVariableName);
 					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t{\n", acBuffer);
 
 					const char* pPBType = getPBTypeValue(pVariable->getType());
@@ -806,9 +905,9 @@ void CParseClass::writeCreatePB(CClass* pClass, FILE* pFile)
 	char acClassDomainName[CLASS_NAME_LENGTH] = { 0 };
 	getClassDomainName(pClass, acClassDomainName, sizeof(acClassDomainName)-1);
 
-	char acBuffer[MAX_LINE_CHAR_NUM] = { 0 };
+	char acBuffer[MAX_WRITE_BUFFER] = { 0 };
 
-	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%svoid %sCreateToPB(PB%s* pbData);\n", acBuffer, acClassDomainName, acClassName);
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%svoid %sCreateToPB(PB%s* pbData)\n", acBuffer, acClassDomainName, acClassName);
 	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s{\n", acBuffer);
 
 
@@ -865,13 +964,13 @@ void CParseClass::writeCreatePB(CClass* pClass, FILE* pFile)
 			{
 				if (1 == pVariable->getArrayDimension())
 				{
-					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tfor(int i = 0; i < %s && i < pbData->%s_size(); ++ i)\n", acBuffer, pVariable->getArrayMaxLen(0), acRealVariableName);
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tfor(int i = 0; i < %s && i < pbData->%s_size(); ++ i)\n", acBuffer, pVariable->getArrayMaxLen(0), _strlwr(acRealVariableName));
 					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t{\n", acBuffer);
 					const char* pPBType = getPBTypeValue(pVariable->getType());
 					if (NULL == pPBType)
 					{
 						// 自定义类型
-						_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t%s[i].CreateToPB(pbData->add_%s(i));\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName));
+						_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t%s[i].CreateToPB(pbData->add_%s());\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName));
 					}
 					else
 					{
@@ -964,7 +1063,7 @@ void CParseClass::writeClassPBFile(CClass* pClass, FILE* pFile)
 	char acClassName[MAX_NAME_LENGTH] = { 0 };
 	getRealClassName(pClass->getName(), acClassName, sizeof(acClassName));
 
-	char acBuffer[MAX_LINE_CHAR_NUM] = { 0 };
+	char acBuffer[MAX_WRITE_BUFFER] = { 0 };
 	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%smessage PB%s\n", acBuffer, acClassName);
 	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s{\n", acBuffer);
 	
@@ -975,7 +1074,7 @@ void CParseClass::writeClassPBFile(CClass* pClass, FILE* pFile)
 		if (0 == strncmp(pClass->getParentName(), "CTemplate", CLASS_NAME_LENGTH))
 		{
 			// 内置类型
-			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t\t\t%s\t%s\t=%d\n", acBuffer, "uint32", "TempID", nFieldCount);
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t\t\t%s\t%s\t=%d;\n", acBuffer, "uint32", "TempID", nFieldCount);
 
 		}
 		else
@@ -984,7 +1083,7 @@ void CParseClass::writeClassPBFile(CClass* pClass, FILE* pFile)
 			getRealClassName(pClass->getParentName(), acClassName, sizeof(acClassName));
 
 			// 自定义类型
-			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t\t\tPB%s\t%s\t=%d\n", acBuffer, acClassName, "Super", nFieldCount);
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t\t\tPB%s\t%s\t=%d;\n", acBuffer, acClassName, "Super", nFieldCount);
 		}
 		++ nFieldCount;
 	}
@@ -1021,12 +1120,12 @@ void CParseClass::writeClassPBFile(CClass* pClass, FILE* pFile)
 			getRealClassName(pVariable->getType(), acClassName, sizeof(acClassName));
 
 			// 自定义类型
-			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tPB%s\t%s\t=%d\n", acBuffer, acClassName, pRealVariableName, nFieldCount);
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tPB%s\t%s\t=%d;\n", acBuffer, acClassName, pRealVariableName, nFieldCount);
 		}
 		else
 		{
 			// 内置类型
-			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t%s\t%s\t=%d\n", acBuffer, pPBType, pRealVariableName, nFieldCount);
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t%s\t%s\t=%d;\n", acBuffer, pPBType, pRealVariableName, nFieldCount);
 		}
 		++ nFieldCount;
 	}

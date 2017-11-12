@@ -65,10 +65,12 @@ public:
 	void getFirstWord(const char* pLine, int& rStart, int nLineLength, char* pWord);
 	/// 得到第一个变量
 	void getFirstVariable(const char* pLine, int& rStart, int nLineLength, char* pWord);
+	/// 得到第一个变量名的开始处
+	bool getVariableTypeName(const char* pLine, int& rStart, int nLineLength, char* pVariableName);
+	/// 处理变量名的空格
+	void processVariableType(char* pSrc, char* pDst, int nLength);
 	/// 是否是函数部分
 	bool checkFunc(const char* pLine, int nLineLength);
-	///// 是否是枚举
-	//bool checkEnum(const char* pLine, int nLineLength);
 	/// 是否是注释部分
 	bool checkComment(const char* pLine, int nLineLength);
 	/// 删除前导空格

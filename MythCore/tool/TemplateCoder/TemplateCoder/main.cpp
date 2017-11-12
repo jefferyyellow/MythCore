@@ -2,7 +2,7 @@
 int main()
 {
 	CParseClass tParseClass;
-	tParseClass.parseClass("template.h", "CTemplateGashaponDropTable");
+	tParseClass.parseClass("template.h", "CTemplateHorseSkillPropertyConfig");
 	tParseClass.writeTempHeadFile();
 	tParseClass.writeTempSourceFile();
 	tParseClass.writeTempPBFile();

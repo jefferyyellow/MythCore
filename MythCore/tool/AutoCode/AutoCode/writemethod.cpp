@@ -592,6 +592,10 @@ void CParseHeader::writeCharArray2(CVariable* pVariable, FILE* pFile, int nSpace
 
 const char* CParseHeader::getFirstUpcase(const char* pLine)
 {
+	if (NULL == pLine)
+	{
+		return NULL;
+	}
 	int nLineLength = strlen(pLine);
 	for (int i = 0; i < nLineLength; ++i)
 	{

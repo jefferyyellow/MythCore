@@ -10,5 +10,6 @@ using namespace std;
 #define DEFAULT_VALUE_LENGTH	32		// 默认值长度
 #define MAX_LINE_CHAR_NUM		1024	// 每一行最大的字符数
 #define MAX_ARRAY_DIMENSION		2		// 最大的数组维数
+#define MAX_WRITE_BUFFER		100 * 1024 // 最大的写入BUFF
 #define MAX_PATH				260		
 #endif
