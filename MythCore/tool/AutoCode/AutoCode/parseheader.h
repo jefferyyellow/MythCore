@@ -17,11 +17,17 @@ public:
 		mCurClass = NULL;
 		mCurLineIndex = 0;
 		mCurClassIndex = 0;
-		init();
 	}
-	void	init();
+	~CParseHeader()
+	{
+		clear();
+	}
+	void	clear();
+	void	clearContent();
 
 public:
+	/// 加载默认值配置文件
+	bool loadDefaultValueXml(const char* pXmlFile);
 	// ******分析头文件和CPP文件******
 	/// 分析头文件
 	void parseHeaderFile(const char* pFilePath);
@@ -49,11 +55,11 @@ public:
 
 	// ******写初始化函数相关******
 	/// 写头文件
-	void writeHeaderFile();
+	void writeHeaderFile(const char* pHeadFile);
 	/// 写头文件的一行
 	void writeHeaderLine(FILE* pFile, const char* pLine, int nLineLength);
 	/// 写源文件
-	void writeSourceFile();
+	void writeSourceFile(const char* pSrcFile);
 	/// 写源文件的一行
 	void writeSourceLine(FILE* pFile, const char* pLine, int nLineLength);
 	/// 得到init函数的类
@@ -71,16 +77,15 @@ public:
 	/// 写变量的get/set函数
 	bool writeGetSetMethod(FILE* pFile, const char* pLine, int nLineLength);
 	/// 写非数组的内置类型
-	void writeBuiltInType(CVariable* pVariable, FILE* pFile, int nSpaceNum, int &rCount);
+	void writeBuiltInType(bool bBuiltIn, CVariable* pVariable, FILE* pFile, int nSpaceNum, int &rCount);
 	/// 写内置数组
-	void writeBuiltInArray(CVariable* pVariable, FILE* pFile, int nSpaceNum, int &rCount);
+	void writeBuiltInArray(bool bBuiltIn, CVariable* pVariable, FILE* pFile, int nSpaceNum, int &rCount);
 	/// 写二维内置类型数组
-	void writeBuiltInArray2(CVariable* pVariable, FILE* pFile, int nSpaceNum, int &rCount);
+	void writeBuiltInArray2(bool bBuiltIn, CVariable* pVariable, FILE* pFile, int nSpaceNum, int &rCount);
 	/// 写字符数组
 	void writeCharArray(CVariable* pVariable, FILE* pFile, int nSpaceNum, int &rCount);
 	/// 写二维字符串数组 
 	void writeCharArray2(CVariable* pVariable, FILE* pFile, int nSpaceNum, int &rCount);
-
 
 	/// 得到第一个大写字母的位置
 	const char* getFirstUpcase(const char* pLine);
