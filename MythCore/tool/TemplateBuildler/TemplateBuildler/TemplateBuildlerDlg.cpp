@@ -235,6 +235,7 @@ void CTemplateBuildlerDlg::OnBnClickedChangetemppath()
 	BROWSEINFO bi;   
 	bi.hwndOwner = m_hWnd;   
 	bi.pidlRoot = NULL;   
+	bi.pszDisplayName = NULL;
 	bi.lpszTitle = _T("请选择需要打包的目录：");   
 	bi.lpfn = NULL;   
 	bi.lParam = 0;   

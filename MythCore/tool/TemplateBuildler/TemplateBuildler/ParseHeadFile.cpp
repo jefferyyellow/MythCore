@@ -349,7 +349,7 @@ BOOL CParseHeadFile::ParseRepeateField(CTemplateInfo& info, string strLine)
 
 
 //展开嵌套模板字段
-BOOL CParseHeadFile::UnfoldNestTemplate(CTemplateInfo* info, string strline)
+BOOL CParseHeadFile::UnfoldNestTemplate(CTemplateInfo& rRoot, CTemplateInfo* info, string strline)
 {
 	int dimensional = 0;		//数组维度
 	CTemplateInfo *iNestTp;
@@ -365,8 +365,8 @@ BOOL CParseHeadFile::UnfoldNestTemplate(CTemplateInfo* info, string strline)
 		ipos = strline.find("[", ipos+2);
 	}
 
-	nestTempMap::iterator it = info->m_nestTemplates.find(nestTpName);
-	if(it == info->m_nestTemplates.end())
+	nestTempMap::iterator it = rRoot.m_nestTemplates.find(nestTpName);
+	if(it == rRoot.m_nestTemplates.end())
 	{
 		return FALSE;//未找到的类型返回，主要避开基本数据类型造成的混淆
 	}
@@ -393,6 +393,12 @@ BOOL CParseHeadFile::UnfoldNestTemplate(CTemplateInfo* info, string strline)
 			fieldInfo.m_strFieldName = acResultName;
 			fieldInfo.m_strFieldType = iNestTp->m_vecFieldInfo[i].m_strFieldType;
 			fieldInfo.m_strType = iNestTp->m_vecFieldInfo[i].m_strType;
+			int nParaSignPos = fieldInfo.m_strFieldName.find('$');
+			if (nParaSignPos != string::npos && nParaSignPos != 0)
+			{
+				fieldInfo.m_strFieldName.erase(nParaSignPos, 1);
+				fieldInfo.m_strFieldName.insert(0, "$");
+			}
 			info->m_vecFieldInfo.push_back(fieldInfo);
 		}
 	}
@@ -409,6 +415,12 @@ BOOL CParseHeadFile::UnfoldNestTemplate(CTemplateInfo* info, string strline)
 				fieldInfo.m_strFieldName = acResultName;
 				fieldInfo.m_strFieldType = iNestTp->m_vecFieldInfo[j].m_strFieldType;
 				fieldInfo.m_strType = iNestTp->m_vecFieldInfo[j].m_strType;
+				int nParaSignPos = fieldInfo.m_strFieldName.find('$');
+				if (nParaSignPos != string::npos && nParaSignPos != 0)
+				{
+					fieldInfo.m_strFieldName.erase(nParaSignPos, 1);
+					fieldInfo.m_strFieldName.insert(0, "$");
+				}
 				info->m_vecFieldInfo.push_back(fieldInfo);
 			}
 		}
@@ -427,6 +439,12 @@ BOOL CParseHeadFile::UnfoldNestTemplate(CTemplateInfo* info, string strline)
 					fieldInfo.m_strFieldName = acResultName;
 					fieldInfo.m_strFieldType = iNestTp->m_vecFieldInfo[k].m_strFieldType;
 					fieldInfo.m_strType = iNestTp->m_vecFieldInfo[k].m_strType;
+					int nParaSignPos = fieldInfo.m_strFieldName.find('$');
+					if (nParaSignPos != string::npos && nParaSignPos != 0)
+					{
+						fieldInfo.m_strFieldName.erase(nParaSignPos, 1);
+						fieldInfo.m_strFieldName.insert(0, "$");
+					}
 					info->m_vecFieldInfo.push_back(fieldInfo);
 				}
 			}
@@ -436,7 +454,7 @@ BOOL CParseHeadFile::UnfoldNestTemplate(CTemplateInfo* info, string strline)
 }
 
 // 分析模板体
-BOOL CParseHeadFile::ParseTemplateBody(CTemplateInfo& info, ifstream& InFile, int nRepatedNum1, int nRepeatedNum2)
+BOOL CParseHeadFile::ParseTemplateBody(CTemplateInfo& rRoot, CTemplateInfo& info, ifstream& InFile, int nRepatedNum1, int nRepeatedNum2)
 {
 	string::size_type nIndex = 0;
 	char acBuffer[emLine_Max_Char] = {0};
@@ -465,10 +483,10 @@ BOOL CParseHeadFile::ParseTemplateBody(CTemplateInfo& info, ifstream& InFile, in
 			{
 				string nestTpName = GetFirstWord(strLine.substr(nIndex + 6));
 				CTemplateInfo *iNestTemp = new CTemplateInfo();
-				if(ParseTemplateBody(*iNestTemp, InFile))	//递归嵌套处理函数，兼容之前格式，若读取类中无字段，不做操作
+				if(ParseTemplateBody(rRoot, *iNestTemp, InFile))	//递归嵌套处理函数，兼容之前格式，若读取类中无字段，不做操作
 				{
 					std::pair<string, CTemplateInfo*> pa(nestTpName, iNestTemp);
-					info.m_nestTemplates.insert(pa);
+					rRoot.m_nestTemplates.insert(pa);
 				}
 			}
 			continue;
@@ -562,10 +580,10 @@ BOOL CParseHeadFile::ParseTemplateBody(CTemplateInfo& info, ifstream& InFile, in
 			string strTemp = strLine;
 			strclassName = GetFirstWord(strTemp);
 
-			nestTempMap::iterator it = info.m_nestTemplates.find(strclassName);
-			if(it != info.m_nestTemplates.end())
+			nestTempMap::iterator it = rRoot.m_nestTemplates.find(strclassName);
+			if(it != rRoot.m_nestTemplates.end())
 			{
-				UnfoldNestTemplate(&info, strLine);
+				UnfoldNestTemplate(rRoot, &info, strLine);
 			}
 
 			bUnfold = FALSE;
@@ -627,7 +645,7 @@ BOOL CParseHeadFile::ParseTemplate(ifstream& InFile)
 	// 分析头
 	ParseTemplateHead(templateInfo, InFile);
 	// 分析模板体
-	ParseTemplateBody(templateInfo, InFile);
+	ParseTemplateBody(templateInfo, templateInfo, InFile);
 	m_vecTemplate.push_back(templateInfo);
 	return TRUE;
 }

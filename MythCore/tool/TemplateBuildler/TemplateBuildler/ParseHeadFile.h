@@ -119,7 +119,7 @@ public:
 	// 分析模板
 	BOOL	ParseTemplate(ifstream& InFile);
 	// 分析模板体
-	BOOL	ParseTemplateBody(CTemplateInfo& info, ifstream& InFile, int nRepatedNum1 = -1, int nRepeatedNum2 = -1);
+	BOOL	ParseTemplateBody(CTemplateInfo& rRoot, CTemplateInfo& info, ifstream& InFile, int nRepatedNum1 = -1, int nRepeatedNum2 = -1);
 	// 将字符串的第一个非空格与TAB开始的串转换成数字
 	int		GetFirstDigit(string& strSource);
 	// 分析重复字段,"%d"情况
@@ -127,7 +127,7 @@ public:
 	//处理嵌套类型模板，递归执行展开
 	BOOL	HandleNestTemplate(CTemplateInfo *info, ifstream& InFile);
 	//展开数组类型字段
-	BOOL	UnfoldNestTemplate(CTemplateInfo*info, string strline);
+	BOOL	UnfoldNestTemplate(CTemplateInfo& rRoot, CTemplateInfo*info, string strline);
 	// 从当前的模板类及其父类里查找枚举信息
 	BOOL	GetEnumInfo(CTemplateInfo& rInfo, string strEnum, hash_map<string, CEnumInfo>::iterator& itResult);
 	// 在全局枚举信息里查找,如果找不着就能所有的模板的嵌套枚举信息
