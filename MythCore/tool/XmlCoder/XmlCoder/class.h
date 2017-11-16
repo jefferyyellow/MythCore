@@ -26,9 +26,11 @@ public:
 	}
 public:
 	typedef vector<CVariable*>		VARIABLE_VECTOR;
+	typedef vector<CClass*>			CLASS_VECTOR;
 
 public:
 	VARIABLE_VECTOR&		getVariableList(){ return mVariableList; }
+	CLASS_VECTOR&			getSubClassList(){return mvecSubClassList;}
 
 	const char* getName() { return mName; }
 	void setName(const char* pName) 
@@ -47,6 +49,7 @@ public:
 	void setCount(int nValue) { mCount = nValue; }
 
 private:
+	CLASS_VECTOR			mvecSubClassList;				// 子类列表
 	VARIABLE_VECTOR			mVariableList;					// 变量列表
 	char					mName[CLASS_NAME_LENGTH];		// 类名
 	bool					mNeedGeneral;					// 外部引用

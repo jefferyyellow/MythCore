@@ -11,9 +11,9 @@ sale：是否打折，1：表示促销，0：表示不促销
 time：上架时间，年（四位）：月（两位）：日（两位）
 -->
 <config class="1">
-  <validity time0="int" time1="int" time2="int"/>
+  <validity Time0="int" Time1="int" Time2="int"/>
   <Items>
-    <Item class="1" id="int" on="bool" time="int" sale="int" price0="int" price1="int" price2="int" />
-    <Item class="1" id="int" on="bool" time="int" sale="int" price0="int" price1="int" price2="int" />
+    <Item class="1" Id="int" On="bool" Time="int" Sale="int" Price0="int" Price1="int" Price2="int" />
+    <Item class="1" Id="int" On="bool" Time="int" Sale="int" Price0="int" Price1="int" Price2="int" />
   </Items>
 </config>

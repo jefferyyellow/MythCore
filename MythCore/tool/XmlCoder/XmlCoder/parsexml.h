@@ -18,17 +18,17 @@ public:
 
 	void init()
 	{
-        mCurClass = NULL;
+        mRootClass = NULL;
 	}
 public:
 	// 分析Xml
 	void parseXml(const char* pPath);
 	// 分析Xml节点
-	void parseXmlElement(XMLElement* pElement);
+	void parseXmlElement(XMLElement* pElement, CClass* pParent);
 	// 根据名字得到对应的变量
 	CVariable* getVariable(CClass* pClass, const char* pName);
 	// 根据名字得到对应的类
-	CClass* getClass(const char* pName);
+	CClass* getSubClass(CClass* pClass, const char* pName);
 	// 写头文件
 	void writeHeadFile(const char* pName);
 	// 写类的声明
@@ -38,13 +38,10 @@ public:
 	void writeSourceFile(const char* pName);
 
 	// autocode don't edit
-    CLASS_VECTOR& getClassList(){ return mvecClassList;}
-
-    CClass* getCurClass(){ return mCurClass;}
-    void setCurClass(CClass* value){ mCurClass = value;}
+    CClass* getRootClass(){ return mRootClass;}
+    void setRootClass(CClass* value){ mRootClass = value;}
 	// autocode
 private:
-	CLASS_VECTOR		mvecClassList;
-	CClass*				mCurClass;
+	CClass*				mRootClass;
 };
 #endif

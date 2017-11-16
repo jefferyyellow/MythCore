@@ -19,25 +19,26 @@ void CParseXml::parseXml(const char* pPath)
 	{
 		return;
 	}
-	parseXmlElement(pRootElement);
+	parseXmlElement(pRootElement, NULL);
 
 }
 
-void CParseXml::parseXmlElement(XMLElement* pElement)
+void CParseXml::parseXmlElement(XMLElement* pElement, CClass* pParent)
 {
 	if (NULL == pElement)
 	{
 		return;
 	}
 
+	CClass* pCurClass = pParent;
 	const char* pClassAttribute = pElement->Attribute("class");
 	if (NULL != pClassAttribute)
 	{
-		CClass* pClass = getClass(pElement->Name());
+		CClass* pClass = getSubClass(pParent, pElement->Name());
 		if (NULL != pClass)
 		{
 			pClass->setCount(pClass->getCount() + 1);
-			mCurClass = pClass;
+			return;
 		}
 		else
 		{
@@ -45,8 +46,15 @@ void CParseXml::parseXmlElement(XMLElement* pElement)
 			pNewClass->setName(pElement->Name());
 			pNewClass->setNeedGeneral((bool)(atoi(pClassAttribute)));
 			pNewClass->setCount(0);
-			mvecClassList.push_back(pNewClass);
-			mCurClass = pNewClass;
+			if (NULL == mRootClass)
+			{
+				mRootClass = pNewClass;
+			}
+			else
+			{
+				pParent->getSubClassList().push_back(pNewClass);
+			}
+			pCurClass = pNewClass;
 		}
 	}
 
@@ -59,7 +67,7 @@ void CParseXml::parseXmlElement(XMLElement* pElement)
 			continue;
 		}
 		
-		CVariable* pVariable = getVariable(mCurClass, pAttribute->Name());
+		CVariable* pVariable = getVariable(pCurClass, pAttribute->Name());
 		if (NULL != pVariable)
 		{
 			pVariable->setCount(pVariable->getCount() + 1);
@@ -70,14 +78,14 @@ void CParseXml::parseXmlElement(XMLElement* pElement)
 			pNewVariable->setName(pAttribute->Name());
 			pNewVariable->setType(pAttribute->Value());
 			pNewVariable->setCount(0);
-			mCurClass->getVariableList().push_back(pNewVariable);
+			pCurClass->getVariableList().push_back(pNewVariable);
 		}
 	}
 
 	XMLElement* pChildElement = pElement->FirstChildElement();
 	for (; NULL != pChildElement; pChildElement = pChildElement->NextSiblingElement())
 	{
-		parseXmlElement(pChildElement);
+		parseXmlElement(pChildElement, pCurClass);
 	}
 }
 
@@ -106,18 +114,18 @@ CVariable* CParseXml::getVariable(CClass* pClass, const char* pName)
 }
 
 // 根据名字得到对应的类
-CClass* CParseXml::getClass(const char* pName)
+CClass* CParseXml::getSubClass(CClass* pClass, const char* pName)
 {
 	if (NULL == pName)
 	{
 		return NULL;
 	}
 
-	for (int i = 0; i < mvecClassList.size(); ++i)
+	for (int i = 0; i < pClass->getSubClassList().size(); ++i)
 	{
-		if (0 == strncmp(pName, mvecClassList[i]->getName(), CLASS_NAME_LENGTH))
+		if (0 == strncmp(pName, pClass->getSubClassList()[i]->getName(), CLASS_NAME_LENGTH))
 		{
-			return mvecClassList[i];
+			return pClass->getSubClassList()[i];
 		}
 	}
 	return NULL;
@@ -137,9 +145,9 @@ void CParseXml::writeHeadFile(const char* pName)
 		return;
 	}
 
-	for (int i = 0; i < mvecClassList.size(); ++ i)
+	for (int i = 0; i < mRootClass->getSubClassList().size(); ++ i)
 	{
-		writeClassFile(mvecClassList[i], pFile);
+		writeClassFile(mRootClass->getSubClassList()[i], pFile);
 	}
 }
 
@@ -154,6 +162,25 @@ void CParseXml::writeClassFile(CClass* pClass, FILE* pFile)
 	char acBuffer[MAX_WRITE_BUFFER] = { 0 };
 	_snprintf_s(acBuffer, sizeof(acBuffer) - 1, "%sclass C%s\n", acBuffer, pClass->getName());
 	_snprintf_s(acBuffer, sizeof(acBuffer) - 1, "%s{\n", acBuffer);
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%spublic:\n", acBuffer);
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tC%s()\n", acBuffer, pClass->getName());
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t{\n", acBuffer, pClass->getName());
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\tinit();\n", acBuffer, pClass->getName());
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t}\n", acBuffer, pClass->getName());
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t~C%s(){}\n", acBuffer, pClass->getName());
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\n", acBuffer, pClass->getName());
+
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%spublic:\n", acBuffer);
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tvoid init()\n", acBuffer);
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t{\n", acBuffer, pClass->getName());
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\n", acBuffer, pClass->getName());
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t}\n", acBuffer, pClass->getName());
+
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t// autocode don't edit!!!\n", acBuffer, pClass->getName());
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t// autocode\n", acBuffer, pClass->getName());
+
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\n", acBuffer, pClass->getName());
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%sprivate:\n", acBuffer, pClass->getName());
 	CClass::VARIABLE_VECTOR& rVariableList = pClass->getVariableList();
 	for (int i = 0; i < rVariableList.size(); ++ i)
 	{
@@ -161,9 +188,18 @@ void CParseXml::writeClassFile(CClass* pClass, FILE* pFile)
 		{
 			continue;
 		}
-		_snprintf_s(acBuffer, sizeof(acBuffer) - 1, "%s\t%s\t\tm%s;\n", acBuffer, rVariableList[i]->getType(), rVariableList[i]->getName());
+
+		if (rVariableList[i]->getCount() > 0)
+		{
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tvector<%s>\t\tm%s;\n", acBuffer, rVariableList[i]->getType(), rVariableList[i]->getName());
+		}
+		else
+		{
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t%s\t\tm%s;\n", acBuffer, rVariableList[i]->getType(), rVariableList[i]->getName());
+		}
 	}
 	_snprintf_s(acBuffer, sizeof(acBuffer) - 1, "%s};\n", acBuffer);
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\n", acBuffer, pClass->getName());
 
 	fwrite(acBuffer, strlen(acBuffer), 1, pFile);
 }
