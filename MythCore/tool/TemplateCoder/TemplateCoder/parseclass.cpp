@@ -306,6 +306,7 @@ void CParseClass::getFirstWord(const char* pLine, int& rStart, int nLineLength, 
 	}
 }
 
+// 得到第一个变量
 void CParseClass::getFirstVariable(const char* pLine, int& rStart, int nLineLength, char* pWord)
 {
 	// 删除前导空格
@@ -321,7 +322,7 @@ void CParseClass::getFirstVariable(const char* pLine, int& rStart, int nLineLeng
 	bool bEnd = false;
 	for (int i = rStart; i < nLineLength; ++i)
 	{
-		if (pLine[i] == ' '		// 间隔字符
+		if (pLine[i] == ' '		// 空字符
 			|| pLine[i] == '\t'	// 间隔字符
 			|| pLine[i] == '\n'	// 行结束
 			|| pLine[i] == ','	// 变量结束
@@ -338,7 +339,7 @@ void CParseClass::getFirstVariable(const char* pLine, int& rStart, int nLineLeng
 			bEnd = true;
 			break;
 		}
-
+		// /*注释
 		if (pLine[i] == '/' && i + 1 < nLineLength && pLine[i + 1] == '*')
 		{
 			nIndex = i;
@@ -351,8 +352,10 @@ void CParseClass::getFirstVariable(const char* pLine, int& rStart, int nLineLeng
 	strncpy(pWord, pLine + rStart, nIndex - rStart);
 	pWord[nIndex - rStart] = '\0';
 
+	// 如果结束符是数组
 	if (pLine[nIndex] == '[')
 	{
+		// 找到数组的解释]
 		for (int i = nIndex + 1; i < nLineLength; ++i)
 		{
 			if (pLine[i] == ']')
@@ -467,6 +470,7 @@ void CParseClass::processVariableType(char* pSrc, char* pDst, int nLength)
 	}
 }
 
+// 是否是函数部分
 bool CParseClass::checkFunc(const char* pLine, int nLineLength)
 {
 	if (NULL == pLine)
@@ -474,9 +478,10 @@ bool CParseClass::checkFunc(const char* pLine, int nLineLength)
 		return false;
 	}
 
+	// 函数以（）为标志
 	if (strchr(pLine, '(') != NULL)
 	{
-		// 函数声明
+		// 如果这行里就有；表示函数声明
 		if (strchr(pLine, ';') != NULL)
 		{
 			return true;
@@ -484,25 +489,35 @@ bool CParseClass::checkFunc(const char* pLine, int nLineLength)
 
 		char acBuffer[MAX_PATH] = { 0 };
 		int nCurLine = mCurLineIndex;
-		bool bInFunction = false;
+		int nInFunction = 0;
 		for (; nCurLine < (int)mFileContent.size(); ++nCurLine)
 		{
-			if (!bInFunction && strchr(mFileContent[nCurLine], ';') != NULL)
+			// 处理像如下这种函数
+			// void Func(int i, float f,
+			// int j);
+			if (0 == nInFunction && strchr(mFileContent[nCurLine], ';') != NULL)
 			{
 				mCurLineIndex = nCurLine;
 				return true;
 			}
 
+			// 处理像如下这种函数
+			// void Func()
+			// {
+			// }
 			if (strchr(mFileContent[nCurLine], '{') != NULL)
 			{
-				bInFunction  = true;
+				++ nInFunction;
 			}
-
 
 			if (strchr(mFileContent[nCurLine], '}') != NULL)
 			{
-				mCurLineIndex  = nCurLine;
-				return true;
+				-- nInFunction;
+				if (nInFunction == 0)
+				{
+					mCurLineIndex = nCurLine;
+					return true;
+				}
 			}
 		}
 	}
@@ -510,17 +525,22 @@ bool CParseClass::checkFunc(const char* pLine, int nLineLength)
 	return false;
 }
 
+/// 是否是注释部分
 bool CParseClass::checkComment(const char* pLine, int nLineLength)
 {
 
 	int nStart = 0;
+	
+	// 函数前导空格
 	bool bDelete = deleteHeadSpace(pLine, nStart, nLineLength);
-
+	
+	// 这一行是否是以//开头
 	if (pLine[nStart] == '/' && (nStart + 1 < nLineLength) && pLine[nStart + 1] == '/')
 	{
 		return true;
 	}
-	// /*
+
+	// 这一行是否是以/*开头,并找到对应的*/所在的行
 	if (pLine[nStart] == '/' && (nStart + 1 < nLineLength) && pLine[nStart + 1] == '*')
 	{
 		int nCurLine = mCurLineIndex;
@@ -542,6 +562,7 @@ bool CParseClass::deleteHeadSpace(const char* pLine, int& rStart, int nLineLengt
 {
 	for (int i = rStart; i < nLineLength; ++i)
 	{
+		// 碰到下列终止符就终止掉
 		if (pLine[i] != ' '
 			&& pLine[i] != '\t' 
 			&& pLine[i] != '\n'
@@ -590,6 +611,7 @@ void CParseClass::getMaxArrayLen(const char* pSrc, int nLength, char* pMaxArrayL
 		break;
 	}
 
+	// 找到结束字符
 	for (; i < nLength; ++i)
 	{
 		if (pSrc[i] == ' ' || pSrc[i] == ']')

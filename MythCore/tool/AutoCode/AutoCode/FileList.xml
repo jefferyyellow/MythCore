@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <Data>
-  <File HeadFile="test.h" SrcFile="test.cpp"/>
+  <File HeadFile="../variable.h" SrcFile="../variable.cpp"/>
+  <File HeadFile="../parsexml.h" SrcFile="../parsexml.cpp"/>
 </Data>

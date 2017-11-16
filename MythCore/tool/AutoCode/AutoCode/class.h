@@ -23,10 +23,12 @@ public:
 			delete mVariableList[i];
 		}
 
+		mVariableList.clear();
 		for (int i = 0; i < mSubClassList.size(); ++ i)
 		{
 			delete mSubClassList[i];
 		}
+		mSubClassList.clear();
 	}
 public:
 	typedef vector<CPlusClass*>		SUB_CLASS_VECTOR;

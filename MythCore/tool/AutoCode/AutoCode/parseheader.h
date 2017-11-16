@@ -39,6 +39,10 @@ public:
 	void getFirstWord(const char* pLine, int& rStart, int nLineLength, char* pWord);
 	/// 得到第一个变量
 	void getFirstVariable(const char* pLine, int& rStart, int nLineLength, char* pWord);
+	/// 得到变量的类型名
+	bool getVariableTypeName(const char* pLine, int& rStart, int nLineLength, char* pVariableName);
+	/// 处理变量的类型
+	void processVariableType(char* pSrc, char* pDst, int nLength);
 	/// 是否是函数部分
 	bool checkFunc(const char* pLine, int nLineLength);
 	/// 是否是注释部分

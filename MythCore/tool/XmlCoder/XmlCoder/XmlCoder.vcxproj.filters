@@ -27,6 +27,12 @@
     <ClCompile Include="..\..\..\dep\tinyxml\tinyxml2.cpp">
       <Filter>tinyxml</Filter>
     </ClCompile>
+    <ClCompile Include="variable.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="class.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="parsexml.h">
@@ -36,6 +42,12 @@
       <Filter>tinyxml</Filter>
     </ClInclude>
     <ClInclude Include="commontype.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="class.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="variable.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
