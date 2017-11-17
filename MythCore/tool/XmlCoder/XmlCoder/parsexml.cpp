@@ -116,7 +116,7 @@ CVariable* CParseXml::getVariable(CClass* pClass, const char* pName)
 // 根据名字得到对应的类
 CClass* CParseXml::getSubClass(CClass* pClass, const char* pName)
 {
-	if (NULL == pName)
+	if (NULL == pClass || NULL == pName)
 	{
 		return NULL;
 	}
@@ -145,10 +145,7 @@ void CParseXml::writeHeadFile(const char* pName)
 		return;
 	}
 
-	for (int i = 0; i < mRootClass->getSubClassList().size(); ++ i)
-	{
-		writeClassFile(mRootClass->getSubClassList()[i], pFile);
-	}
+	writeClassFile(mRootClass, pFile);
 }
 
 // 写类的声明
@@ -157,6 +154,12 @@ void CParseXml::writeClassFile(CClass* pClass, FILE* pFile)
 	if (NULL == pClass || NULL == pFile)
 	{
 		return;
+	}
+
+	CClass::CLASS_VECTOR& rClassList = pClass->getSubClassList();
+	for (int i = 0; i < rClassList.size(); ++ i)
+	{
+		writeClassFile(rClassList[i], pFile);
 	}
 
 	char acBuffer[MAX_WRITE_BUFFER] = { 0 };
@@ -181,6 +184,24 @@ void CParseXml::writeClassFile(CClass* pClass, FILE* pFile)
 
 	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\n", acBuffer, pClass->getName());
 	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%sprivate:\n", acBuffer, pClass->getName());
+	
+	for (int i = 0; i < rClassList.size(); ++i)
+	{
+		if (NULL == rClassList[i])
+		{
+			continue;
+		}
+
+		if (rClassList[i]->getCount() > 0)
+		{
+			_snprintf_s(acBuffer, sizeof(acBuffer) - 1, "%s\tvector<C%s>\t\tm%s;\n", acBuffer, rClassList[i]->getName(), rClassList[i]->getName());
+		}
+		else
+		{
+			_snprintf_s(acBuffer, sizeof(acBuffer) - 1, "%s\tC%s\t\tm%s;\n", acBuffer, rClassList[i]->getName(), rClassList[i]->getName());
+		}
+	}
+
 	CClass::VARIABLE_VECTOR& rVariableList = pClass->getVariableList();
 	for (int i = 0; i < rVariableList.size(); ++ i)
 	{
