@@ -2,6 +2,7 @@
 int main()
 {
 	CParseXml tParseXml;
-	tParseXml.parseXml("FashionMall.xml");
-	tParseXml.writeHeadFile("FashionMall.h");
+	tParseXml.parseXml("ActivityWorldFieldConfig.xml");
+	tParseXml.writeHeadFile("ActivityWorldFieldConfig.h");
+	tParseXml.writeSourceFile("ActivityWorldFieldConfig.cpp", "ActivityWorldFieldConfig.xml");
 }

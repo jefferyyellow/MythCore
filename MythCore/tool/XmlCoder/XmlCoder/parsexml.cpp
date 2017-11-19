@@ -34,10 +34,18 @@ void CParseXml::parseXmlElement(XMLElement* pElement, CClass* pParent)
 	const char* pClassAttribute = pElement->Attribute("class");
 	if (NULL != pClassAttribute)
 	{
-		CClass* pClass = getSubClass(pParent, pElement->Name());
-		if (NULL != pClass)
+		if (NULL != pParent)
 		{
-			pClass->setCount(pClass->getCount() + 1);
+			pCurClass = pParent->getSubClass(pElement->Name());
+		}
+		if (NULL != pCurClass)
+		{
+			CXmlElement* pClassElement = pCurClass->getXmlElement(pElement->Name());
+			if (NULL != pClassElement)
+			{
+				pClassElement->setCount(pClassElement->getCount() + 1);
+			}
+			pCurClass->setCount(pCurClass->getCount() + 1);
 			return;
 		}
 		else
@@ -45,7 +53,7 @@ void CParseXml::parseXmlElement(XMLElement* pElement, CClass* pParent)
 			CClass* pNewClass = new CClass;
 			pNewClass->setName(pElement->Name());
 			pNewClass->setNeedGeneral((bool)(atoi(pClassAttribute)));
-			pNewClass->setCount(0);
+			pNewClass->setCount(1);
 			if (NULL == mRootClass)
 			{
 				mRootClass = pNewClass;
@@ -58,27 +66,49 @@ void CParseXml::parseXmlElement(XMLElement* pElement, CClass* pParent)
 		}
 	}
 
-	const XMLAttribute* pAttribute = pElement->FirstAttribute();
-	for (; NULL != pAttribute; pAttribute = pAttribute->Next())
+	if (NULL != pCurClass)
 	{
-		// 过滤class属性节点
-		if (0 == strncmp("class", pAttribute->Name(), CLASS_NAME_LENGTH))
+		CXmlElement* pClassElement = pCurClass->getXmlElement(pElement->Name());
+		if (NULL != pClassElement)
 		{
-			continue;
-		}
-		
-		CVariable* pVariable = getVariable(pCurClass, pAttribute->Name());
-		if (NULL != pVariable)
-		{
-			pVariable->setCount(pVariable->getCount() + 1);
+			pClassElement->setCount(pClassElement->getCount() + 1);
 		}
 		else
 		{
-			CVariable* pNewVariable = new CVariable;
-			pNewVariable->setName(pAttribute->Name());
-			pNewVariable->setType(pAttribute->Value());
-			pNewVariable->setCount(0);
-			pCurClass->getVariableList().push_back(pNewVariable);
+			CXmlElement tElement;
+			tElement.setName(string(pElement->Name()));
+			tElement.setCount(1);
+			tElement.setAlreadyWrite(false);
+			if (NULL == pParent)
+			{
+				tElement.setRoot(true);
+			}
+			pCurClass->pushBack(tElement);
+
+		}
+
+		const XMLAttribute* pAttribute = pElement->FirstAttribute();
+		for (; NULL != pAttribute; pAttribute = pAttribute->Next())
+		{
+			// 过滤class属性节点
+			if (0 == strncmp("class", pAttribute->Name(), CLASS_NAME_LENGTH))
+			{
+				continue;
+			}
+
+			CVariable* pVariable = pCurClass->getVariable(pAttribute->Name());
+			if (NULL != pVariable)
+			{
+				pVariable->setCount(pVariable->getCount() + 1);
+			}
+			else
+			{
+				CVariable* pNewVariable = new CVariable;
+				pNewVariable->setName(pAttribute->Name());
+				pNewVariable->setType(pAttribute->Value());
+				pNewVariable->setCount(1);
+				pCurClass->getVariableList().push_back(pNewVariable);
+			}
 		}
 	}
 
@@ -89,47 +119,6 @@ void CParseXml::parseXmlElement(XMLElement* pElement, CClass* pParent)
 	}
 }
 
-// 检查列表里有没有该名字的变量
-CVariable* CParseXml::getVariable(CClass* pClass, const char* pName)
-{
-	if (NULL == pClass || NULL == pName)
-	{
-		return NULL;
-	}
-
-	for (int i = 0; i < pClass->getVariableList().size(); ++ i)
-	{
-		CVariable* pVariable = pClass->getVariableList()[i];
-		if (NULL == pVariable)
-		{
-			continue;
-		}
-		if (0 == strncmp(pVariable->getName(), pName, CLASS_NAME_LENGTH))
-		{
-			return pVariable;
-		}
-	}
-
-	return NULL;
-}
-
-// 根据名字得到对应的类
-CClass* CParseXml::getSubClass(CClass* pClass, const char* pName)
-{
-	if (NULL == pClass || NULL == pName)
-	{
-		return NULL;
-	}
-
-	for (int i = 0; i < pClass->getSubClassList().size(); ++i)
-	{
-		if (0 == strncmp(pName, pClass->getSubClassList()[i]->getName(), CLASS_NAME_LENGTH))
-		{
-			return pClass->getSubClassList()[i];
-		}
-	}
-	return NULL;
-}
 
 // 写头文件
 void CParseXml::writeHeadFile(const char* pName)
@@ -146,6 +135,7 @@ void CParseXml::writeHeadFile(const char* pName)
 	}
 
 	writeClassFile(mRootClass, pFile);
+	fclose(pFile);
 }
 
 // 写类的声明
@@ -192,7 +182,7 @@ void CParseXml::writeClassFile(CClass* pClass, FILE* pFile)
 			continue;
 		}
 
-		if (rClassList[i]->getCount() > 0)
+		if (rClassList[i]->getCount() > 1)
 		{
 			_snprintf_s(acBuffer, sizeof(acBuffer) - 1, "%s\tvector<C%s>\t\tm%s;\n", acBuffer, rClassList[i]->getName(), rClassList[i]->getName());
 		}
@@ -210,7 +200,7 @@ void CParseXml::writeClassFile(CClass* pClass, FILE* pFile)
 			continue;
 		}
 
-		if (rVariableList[i]->getCount() > 0)
+		if (rVariableList[i]->getCount() > 1)
 		{
 			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tvector<%s>\t\tm%s;\n", acBuffer, rVariableList[i]->getType(), rVariableList[i]->getName());
 		}
@@ -226,12 +216,20 @@ void CParseXml::writeClassFile(CClass* pClass, FILE* pFile)
 }
 
 // 写源文件
-void CParseXml::writeSourceFile(const char* pName)
+void CParseXml::writeSourceFile(const char* pName, const char* pPath)
 {
 	if (NULL == pName)
 	{
 		return;
 	}
 
+	FILE* pFile = fopen(pName, "wt");
+	if (NULL == pFile)
+	{
+		return;
+	}
 
+	mRootClass->formatSourceFile(pName, pPath);
+	mRootClass->writeSourceFile(pFile);
 }
+
