@@ -86,14 +86,16 @@ void CGameClient::run()
 
 void CGameClient::LoginServer()
 {
+	char acName[256] = {0};
 	for (int i = 0; i < 1000; ++ i)
 	{
 		CMessageLoginRequest tLoginRequest;
-		tLoginRequest.set_name("hjh");
+		snprintf(acName, sizeof(acName), "hjh%d", i);
+		tLoginRequest.set_name(acName);
 		tLoginRequest.set_channelid(1);
 		tLoginRequest.set_serverid(1);
 		sendMessage(ID_C2S_REQUEST_LOGIN, &tLoginRequest);
-		Sleep(1000);
+		Sleep(100);
 	}
 
 }
@@ -164,6 +166,7 @@ void CGameClient::onServerMessage(CTcpSocket* pTcpSocket)
 				break;
 			}
 			default:
+
 				break;
 		}
 
@@ -187,7 +190,10 @@ void CGameClient::sendMessage(unsigned short uMessageID, Message* pMessage)
 
 void CGameClient::onMessageLoginResponse(Message* pMessage)
 {
+	char acName[256] = { 0 };
 	CMessageLoginResponse* pLoginResponse = (CMessageLoginResponse*)pMessage;
+	snprintf(acName, sizeof(acName), "hjh%d", pLoginResponse->accountid());
+
 	int nRoleID = pLoginResponse->roleid();
 	if (0 == nRoleID)
 	{
@@ -196,7 +202,7 @@ void CGameClient::onMessageLoginResponse(Message* pMessage)
 		tCreateRoleRequest.set_accountid(pLoginResponse->accountid());
 		tCreateRoleRequest.set_channelid(pLoginResponse->channelid());
 		tCreateRoleRequest.set_serverid(pLoginResponse->serverid());
-		tCreateRoleRequest.set_rolename("hjh");
+		tCreateRoleRequest.set_rolename(acName);
 		sendMessage(ID_C2S_REQUEST_CREATE_ROLE, &tCreateRoleRequest);
 	}
 	else

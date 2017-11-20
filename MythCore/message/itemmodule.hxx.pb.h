@@ -36,6 +36,7 @@ void protobuf_InitDefaults_itemmodule_2ehxx();
 void protobuf_AssignDesc_itemmodule_2ehxx();
 void protobuf_ShutdownFile_itemmodule_2ehxx();
 
+class CMessageInsertItemNotify;
 class CMessagePlayerDiamondUpdateNotify;
 class CMessagePlayerMoneyUpdateNotify;
 
@@ -233,6 +234,106 @@ class CMessagePlayerDiamondUpdateNotify : public ::google::protobuf::Message /* 
 };
 extern ::google::protobuf::internal::ExplicitlyConstructed<CMessagePlayerDiamondUpdateNotify> CMessagePlayerDiamondUpdateNotify_default_instance_;
 
+// -------------------------------------------------------------------
+
+class CMessageInsertItemNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CMessageInsertItemNotify) */ {
+ public:
+  CMessageInsertItemNotify();
+  virtual ~CMessageInsertItemNotify();
+
+  CMessageInsertItemNotify(const CMessageInsertItemNotify& from);
+
+  inline CMessageInsertItemNotify& operator=(const CMessageInsertItemNotify& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CMessageInsertItemNotify& default_instance();
+
+  static const CMessageInsertItemNotify* internal_default_instance();
+
+  void Swap(CMessageInsertItemNotify* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CMessageInsertItemNotify* New() const { return New(NULL); }
+
+  CMessageInsertItemNotify* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CMessageInsertItemNotify& from);
+  void MergeFrom(const CMessageInsertItemNotify& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CMessageInsertItemNotify* other);
+  void UnsafeMergeFrom(const CMessageInsertItemNotify& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 ItemID = 1;
+  void clear_itemid();
+  static const int kItemIDFieldNumber = 1;
+  ::google::protobuf::uint32 itemid() const;
+  void set_itemid(::google::protobuf::uint32 value);
+
+  // optional uint32 Index = 2;
+  void clear_index();
+  static const int kIndexFieldNumber = 2;
+  ::google::protobuf::uint32 index() const;
+  void set_index(::google::protobuf::uint32 value);
+
+  // optional uint32 Number = 3;
+  void clear_number();
+  static const int kNumberFieldNumber = 3;
+  ::google::protobuf::uint32 number() const;
+  void set_number(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:CMessageInsertItemNotify)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 itemid_;
+  ::google::protobuf::uint32 index_;
+  ::google::protobuf::uint32 number_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_itemmodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_itemmodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_itemmodule_2ehxx();
+  friend void protobuf_ShutdownFile_itemmodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CMessageInsertItemNotify> CMessageInsertItemNotify_default_instance_;
+
 // ===================================================================
 
 
@@ -279,7 +380,58 @@ inline void CMessagePlayerDiamondUpdateNotify::set_diamond(::google::protobuf::u
 inline const CMessagePlayerDiamondUpdateNotify* CMessagePlayerDiamondUpdateNotify::internal_default_instance() {
   return &CMessagePlayerDiamondUpdateNotify_default_instance_.get();
 }
+// -------------------------------------------------------------------
+
+// CMessageInsertItemNotify
+
+// optional uint32 ItemID = 1;
+inline void CMessageInsertItemNotify::clear_itemid() {
+  itemid_ = 0u;
+}
+inline ::google::protobuf::uint32 CMessageInsertItemNotify::itemid() const {
+  // @@protoc_insertion_point(field_get:CMessageInsertItemNotify.ItemID)
+  return itemid_;
+}
+inline void CMessageInsertItemNotify::set_itemid(::google::protobuf::uint32 value) {
+  
+  itemid_ = value;
+  // @@protoc_insertion_point(field_set:CMessageInsertItemNotify.ItemID)
+}
+
+// optional uint32 Index = 2;
+inline void CMessageInsertItemNotify::clear_index() {
+  index_ = 0u;
+}
+inline ::google::protobuf::uint32 CMessageInsertItemNotify::index() const {
+  // @@protoc_insertion_point(field_get:CMessageInsertItemNotify.Index)
+  return index_;
+}
+inline void CMessageInsertItemNotify::set_index(::google::protobuf::uint32 value) {
+  
+  index_ = value;
+  // @@protoc_insertion_point(field_set:CMessageInsertItemNotify.Index)
+}
+
+// optional uint32 Number = 3;
+inline void CMessageInsertItemNotify::clear_number() {
+  number_ = 0u;
+}
+inline ::google::protobuf::uint32 CMessageInsertItemNotify::number() const {
+  // @@protoc_insertion_point(field_get:CMessageInsertItemNotify.Number)
+  return number_;
+}
+inline void CMessageInsertItemNotify::set_number(::google::protobuf::uint32 value) {
+  
+  number_ = value;
+  // @@protoc_insertion_point(field_set:CMessageInsertItemNotify.Number)
+}
+
+inline const CMessageInsertItemNotify* CMessageInsertItemNotify::internal_default_instance() {
+  return &CMessageInsertItemNotify_default_instance_.get();
+}
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 

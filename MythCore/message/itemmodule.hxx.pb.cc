@@ -25,6 +25,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* CMessagePlayerDiamondUpdateNotify_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   CMessagePlayerDiamondUpdateNotify_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CMessageInsertItemNotify_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CMessageInsertItemNotify_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* ITEM_MODULE_MSG_ID_descriptor_ = NULL;
 
 }  // namespace
@@ -65,6 +68,22 @@ void protobuf_AssignDesc_itemmodule_2ehxx() {
       -1,
       sizeof(CMessagePlayerDiamondUpdateNotify),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessagePlayerDiamondUpdateNotify, _internal_metadata_));
+  CMessageInsertItemNotify_descriptor_ = file->message_type(2);
+  static const int CMessageInsertItemNotify_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageInsertItemNotify, itemid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageInsertItemNotify, index_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageInsertItemNotify, number_),
+  };
+  CMessageInsertItemNotify_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      CMessageInsertItemNotify_descriptor_,
+      CMessageInsertItemNotify::internal_default_instance(),
+      CMessageInsertItemNotify_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(CMessageInsertItemNotify),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageInsertItemNotify, _internal_metadata_));
   ITEM_MODULE_MSG_ID_descriptor_ = file->enum_type(0);
 }
 
@@ -83,6 +102,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
       CMessagePlayerMoneyUpdateNotify_descriptor_, CMessagePlayerMoneyUpdateNotify::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       CMessagePlayerDiamondUpdateNotify_descriptor_, CMessagePlayerDiamondUpdateNotify::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      CMessageInsertItemNotify_descriptor_, CMessageInsertItemNotify::internal_default_instance());
 }
 
 }  // namespace
@@ -92,6 +113,8 @@ void protobuf_ShutdownFile_itemmodule_2ehxx() {
   delete CMessagePlayerMoneyUpdateNotify_reflection_;
   CMessagePlayerDiamondUpdateNotify_default_instance_.Shutdown();
   delete CMessagePlayerDiamondUpdateNotify_reflection_;
+  CMessageInsertItemNotify_default_instance_.Shutdown();
+  delete CMessageInsertItemNotify_reflection_;
 }
 
 void protobuf_InitDefaults_itemmodule_2ehxx_impl() {
@@ -99,8 +122,10 @@ void protobuf_InitDefaults_itemmodule_2ehxx_impl() {
 
   CMessagePlayerMoneyUpdateNotify_default_instance_.DefaultConstruct();
   CMessagePlayerDiamondUpdateNotify_default_instance_.DefaultConstruct();
+  CMessageInsertItemNotify_default_instance_.DefaultConstruct();
   CMessagePlayerMoneyUpdateNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
   CMessagePlayerDiamondUpdateNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CMessageInsertItemNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
 }
 
 GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_InitDefaults_itemmodule_2ehxx_once_);
@@ -116,10 +141,12 @@ void protobuf_AddDesc_itemmodule_2ehxx_impl() {
     "\n\016itemmodule.hxx\"0\n\037CMessagePlayerMoneyU"
     "pdateNotify\022\r\n\005Money\030\001 \001(\r\"4\n!CMessagePl"
     "ayerDiamondUpdateNotify\022\017\n\007Diamond\030\001 \001(\r"
-    "*\200\001\n\022ITEM_MODULE_MSG_ID\022\030\n\024ID_ITEM_MODUL"
-    "E_ERROR\020\000\022&\n!ID_S2C_NOTIYF_PLAYER_MONEY_"
-    "UPDATE\020\200\020\022(\n#ID_S2C_NOTIYF_PLAYER_DIAMON"
-    "D_UPDATE\020\201\020b\006proto3", 259);
+    "\"I\n\030CMessageInsertItemNotify\022\016\n\006ItemID\030\001"
+    " \001(\r\022\r\n\005Index\030\002 \001(\r\022\016\n\006Number\030\003 \001(\r*\200\001\n\022"
+    "ITEM_MODULE_MSG_ID\022\030\n\024ID_ITEM_MODULE_ERR"
+    "OR\020\000\022&\n!ID_S2C_NOTIYF_PLAYER_MONEY_UPDAT"
+    "E\020\200\020\022(\n#ID_S2C_NOTIYF_PLAYER_DIAMOND_UPD"
+    "ATE\020\201\020b\006proto3", 334);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "itemmodule.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_itemmodule_2ehxx);
@@ -647,6 +674,373 @@ void CMessagePlayerDiamondUpdateNotify::set_diamond(::google::protobuf::uint32 v
 
 inline const CMessagePlayerDiamondUpdateNotify* CMessagePlayerDiamondUpdateNotify::internal_default_instance() {
   return &CMessagePlayerDiamondUpdateNotify_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int CMessageInsertItemNotify::kItemIDFieldNumber;
+const int CMessageInsertItemNotify::kIndexFieldNumber;
+const int CMessageInsertItemNotify::kNumberFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+CMessageInsertItemNotify::CMessageInsertItemNotify()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_itemmodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CMessageInsertItemNotify)
+}
+
+void CMessageInsertItemNotify::InitAsDefaultInstance() {
+}
+
+CMessageInsertItemNotify::CMessageInsertItemNotify(const CMessageInsertItemNotify& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:CMessageInsertItemNotify)
+}
+
+void CMessageInsertItemNotify::SharedCtor() {
+  ::memset(&itemid_, 0, reinterpret_cast<char*>(&number_) -
+    reinterpret_cast<char*>(&itemid_) + sizeof(number_));
+  _cached_size_ = 0;
+}
+
+CMessageInsertItemNotify::~CMessageInsertItemNotify() {
+  // @@protoc_insertion_point(destructor:CMessageInsertItemNotify)
+  SharedDtor();
+}
+
+void CMessageInsertItemNotify::SharedDtor() {
+}
+
+void CMessageInsertItemNotify::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CMessageInsertItemNotify::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CMessageInsertItemNotify_descriptor_;
+}
+
+const CMessageInsertItemNotify& CMessageInsertItemNotify::default_instance() {
+  protobuf_InitDefaults_itemmodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<CMessageInsertItemNotify> CMessageInsertItemNotify_default_instance_;
+
+CMessageInsertItemNotify* CMessageInsertItemNotify::New(::google::protobuf::Arena* arena) const {
+  CMessageInsertItemNotify* n = new CMessageInsertItemNotify;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void CMessageInsertItemNotify::Clear() {
+// @@protoc_insertion_point(message_clear_start:CMessageInsertItemNotify)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(CMessageInsertItemNotify, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<CMessageInsertItemNotify*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&(first), 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(itemid_, number_);
+
+#undef ZR_HELPER_
+#undef ZR_
+
+}
+
+bool CMessageInsertItemNotify::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:CMessageInsertItemNotify)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 ItemID = 1;
+      case 1: {
+        if (tag == 8) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &itemid_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_Index;
+        break;
+      }
+
+      // optional uint32 Index = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_Index:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &index_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_Number;
+        break;
+      }
+
+      // optional uint32 Number = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_Number:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &number_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:CMessageInsertItemNotify)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:CMessageInsertItemNotify)
+  return false;
+#undef DO_
+}
+
+void CMessageInsertItemNotify::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:CMessageInsertItemNotify)
+  // optional uint32 ItemID = 1;
+  if (this->itemid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->itemid(), output);
+  }
+
+  // optional uint32 Index = 2;
+  if (this->index() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->index(), output);
+  }
+
+  // optional uint32 Number = 3;
+  if (this->number() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->number(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:CMessageInsertItemNotify)
+}
+
+::google::protobuf::uint8* CMessageInsertItemNotify::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:CMessageInsertItemNotify)
+  // optional uint32 ItemID = 1;
+  if (this->itemid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->itemid(), target);
+  }
+
+  // optional uint32 Index = 2;
+  if (this->index() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->index(), target);
+  }
+
+  // optional uint32 Number = 3;
+  if (this->number() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->number(), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:CMessageInsertItemNotify)
+  return target;
+}
+
+size_t CMessageInsertItemNotify::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CMessageInsertItemNotify)
+  size_t total_size = 0;
+
+  // optional uint32 ItemID = 1;
+  if (this->itemid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->itemid());
+  }
+
+  // optional uint32 Index = 2;
+  if (this->index() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->index());
+  }
+
+  // optional uint32 Number = 3;
+  if (this->number() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->number());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CMessageInsertItemNotify::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CMessageInsertItemNotify)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const CMessageInsertItemNotify* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CMessageInsertItemNotify>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CMessageInsertItemNotify)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CMessageInsertItemNotify)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void CMessageInsertItemNotify::MergeFrom(const CMessageInsertItemNotify& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CMessageInsertItemNotify)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void CMessageInsertItemNotify::UnsafeMergeFrom(const CMessageInsertItemNotify& from) {
+  GOOGLE_DCHECK(&from != this);
+  if (from.itemid() != 0) {
+    set_itemid(from.itemid());
+  }
+  if (from.index() != 0) {
+    set_index(from.index());
+  }
+  if (from.number() != 0) {
+    set_number(from.number());
+  }
+}
+
+void CMessageInsertItemNotify::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CMessageInsertItemNotify)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CMessageInsertItemNotify::CopyFrom(const CMessageInsertItemNotify& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CMessageInsertItemNotify)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool CMessageInsertItemNotify::IsInitialized() const {
+
+  return true;
+}
+
+void CMessageInsertItemNotify::Swap(CMessageInsertItemNotify* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void CMessageInsertItemNotify::InternalSwap(CMessageInsertItemNotify* other) {
+  std::swap(itemid_, other->itemid_);
+  std::swap(index_, other->index_);
+  std::swap(number_, other->number_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata CMessageInsertItemNotify::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CMessageInsertItemNotify_descriptor_;
+  metadata.reflection = CMessageInsertItemNotify_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// CMessageInsertItemNotify
+
+// optional uint32 ItemID = 1;
+void CMessageInsertItemNotify::clear_itemid() {
+  itemid_ = 0u;
+}
+::google::protobuf::uint32 CMessageInsertItemNotify::itemid() const {
+  // @@protoc_insertion_point(field_get:CMessageInsertItemNotify.ItemID)
+  return itemid_;
+}
+void CMessageInsertItemNotify::set_itemid(::google::protobuf::uint32 value) {
+  
+  itemid_ = value;
+  // @@protoc_insertion_point(field_set:CMessageInsertItemNotify.ItemID)
+}
+
+// optional uint32 Index = 2;
+void CMessageInsertItemNotify::clear_index() {
+  index_ = 0u;
+}
+::google::protobuf::uint32 CMessageInsertItemNotify::index() const {
+  // @@protoc_insertion_point(field_get:CMessageInsertItemNotify.Index)
+  return index_;
+}
+void CMessageInsertItemNotify::set_index(::google::protobuf::uint32 value) {
+  
+  index_ = value;
+  // @@protoc_insertion_point(field_set:CMessageInsertItemNotify.Index)
+}
+
+// optional uint32 Number = 3;
+void CMessageInsertItemNotify::clear_number() {
+  number_ = 0u;
+}
+::google::protobuf::uint32 CMessageInsertItemNotify::number() const {
+  // @@protoc_insertion_point(field_get:CMessageInsertItemNotify.Number)
+  return number_;
+}
+void CMessageInsertItemNotify::set_number(::google::protobuf::uint32 value) {
+  
+  number_ = value;
+  // @@protoc_insertion_point(field_set:CMessageInsertItemNotify.Number)
+}
+
+inline const CMessageInsertItemNotify* CMessageInsertItemNotify::internal_default_instance() {
+  return &CMessageInsertItemNotify_default_instance_.get();
 }
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 

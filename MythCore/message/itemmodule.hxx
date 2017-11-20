@@ -29,10 +29,3 @@ message CMessageInsertItemNotify
 	uint32 Index				= 2;		// 物品索引
 	uint32 Number				= 3;		// 物品数目
 }
-
-// 插入属性道具
-message CMessageInsertItemNotify
-{
-	uint32 ItemID				= 1;		// 道具ID
-	uint32 Index				= 2;		// 道具在包裹中的索引
-}

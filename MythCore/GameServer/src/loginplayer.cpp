@@ -41,14 +41,17 @@ int CLoginPlayer::processStateNone()
 	{
 		return -1;
 	}
+	
+	strncpy(pPlayerLoginRequest->mName, pLoginRequest->name().c_str(), sizeof(pPlayerLoginRequest->mName) - 1);
+	pPlayerLoginRequest->mChannelID = pLoginRequest->channelid();
+	pPlayerLoginRequest->mServerID = pLoginRequest->serverid();
 
 	setAccountName(pPlayerLoginRequest->mName);
 	setChannelID(pPlayerLoginRequest->mChannelID);
 	setServerID(pPlayerLoginRequest->mServerID);
 
 	// ÓÃ»§Ãû
-	strncpy(pPlayerLoginRequest->mName, pLoginRequest->name().c_str(), sizeof(pPlayerLoginRequest->mName));
-	setPlayerLoginMsg((CIMPlayerLoginMsg*)pLoginRequest);
+	setPlayerLoginMsg((CIMPlayerLoginMsg*)pPlayerLoginRequest);
 
 	CGameServer::Inst()->pushTask(emTaskType_DB, pPlayerLoginRequest);
 	printf("CLoginModule::OnMessageLoginRequest");
@@ -58,7 +61,7 @@ int CLoginPlayer::processStateNone()
 
 int CLoginPlayer::processAccountVerify()
 {
-	if (NULL == mDBMessage || IM_RESPONSE_PLAYER_LOGIN != mClientMessageID)
+	if (NULL == mDBMessage || IM_RESPONSE_PLAYER_LOGIN != mDBMessageID)
 	{
 		return -1;
 	}
@@ -71,6 +74,8 @@ int CLoginPlayer::processAccountVerify()
 	{
 		return -1;
 	}
+
+	mAccountID = pIMLoginResponse->mAccountID;
 
 	CMessageLoginResponse tMessageLoginResponse;
 	tMessageLoginResponse.set_accountid(pIMLoginResponse->mAccountID);
@@ -115,7 +120,7 @@ int CLoginPlayer::processWaitCreateRole()
 	}
 
 	setPlayerLoginMsg(pNewRequest);
-	strncpy(pNewRequest->mRoleName, pCreateRoleRequest->rolename().c_str(), pCreateRoleRequest->rolename().size());
+	strncpy(pNewRequest->mRoleName, pCreateRoleRequest->rolename().c_str(), sizeof(pNewRequest->mRoleName) - 1);
 	CGameServer::Inst()->pushTask(emTaskType_DB, pNewRequest);
 
 	return emLoginState_CreateRoleing;
@@ -207,7 +212,7 @@ int CLoginPlayer::processWaitPlaying()
 
 	CMessageEnterSceneResponse tEnterSceneResponse;
 	tEnterSceneResponse.set_result(0);
-	CSceneJob::Inst()->sendClientMessage(mExchangeHead, ID_S2C_RESPONSE_CREATE_ROLE, &tEnterSceneResponse);
+	CSceneJob::Inst()->sendClientMessage(mExchangeHead, ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
 
 	return emLoginState_None;
 }

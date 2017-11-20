@@ -9,9 +9,7 @@ class CObjPool : public CSingleton<CObjPool>
 {
 	friend class CSingleton<CObjPool>;
 private:
-	CObjPool()
-	{
-	}
+	CObjPool();
 	~CObjPool(){}
 
 public:

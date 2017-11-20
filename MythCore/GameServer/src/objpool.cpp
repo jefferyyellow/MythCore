@@ -1,5 +1,10 @@
 #include "objpool.h"
 #include "objpoolimp.h"
+CObjPool::CObjPool()
+{
+	mPoolImp = new CObjPoolImp;
+}
+
 CObj* CObjPool::allocObj(EmObjType eType)
 {
 	CObj* pObj = NULL;

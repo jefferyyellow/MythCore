@@ -108,13 +108,14 @@ void CDBJob::onIMPlayerLoginRequest(CInternalMsg* pMsg)
 	uint32 nRoleID = atoi(tQueryResult.getField(0)->getValue());
 
 	CIMPlayerLoginResponse* pResponse = reinterpret_cast<CIMPlayerLoginResponse*>(CInternalMsgPool::CreateInst()->allocMsg(IM_RESPONSE_PLAYER_LOGIN));
-	if (NULL != pResponse)
+	if (NULL == pResponse)
 	{
 		return;
 	}
 
 	copyPlayerLoginMsg(pResponse, pLoginRequest);
 	pResponse->mRoleID = nRoleID;
+	pResponse->mAccountID = nAccountID;
 	strncpy(pResponse->mName, pLoginRequest->mName, MAX_PLAYER_NAME_LEN);
 
 
