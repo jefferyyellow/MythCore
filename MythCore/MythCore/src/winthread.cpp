@@ -31,6 +31,7 @@ namespace Myth
 				continue;
 			}
 			pThead->mpJob->doing(pThead->getSerialNum());
+			pThead->mpThreadPool->setJobFree(pThead->mpJob);
 			if (NULL != pThead->mpThreadPool)
 			{
 				IJob* pJob = pThead->mpThreadPool->popJob();

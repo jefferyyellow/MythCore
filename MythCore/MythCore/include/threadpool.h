@@ -77,13 +77,28 @@ namespace Myth
 				mSimpleLock.unlock();
 				return NULL;
 			}
-
-			IJob* pRunJob = mJobArray[mJobIndex];
-			++mJobIndex;
+			IJob* pRunJob = NULL;
+			for (; mJobIndex < mJobArray.size(); ++ mJobIndex)
+			{
+				if (!(mJobArray[mJobIndex]->getBusy()))
+				{
+					pRunJob = mJobArray[mJobIndex];
+					mJobArray[mJobIndex]->setBusy(true);
+					++mJobIndex;
+					break;
+				}
+			}			
 		
 			mSimpleLock.unlock();
 
 			return pRunJob;
+		}
+
+		void				setJobFree(IJob* pJob)
+		{
+			mSimpleLock.lock();
+			pJob->setBusy(false);
+			mSimpleLock.unlock();
 		}
 
 

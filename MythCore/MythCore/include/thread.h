@@ -9,7 +9,7 @@ namespace Myth
 	public:
 		IJob()
 		{
-
+			mBusy = false;
 		}
 		virtual ~IJob()
 		{
@@ -21,8 +21,12 @@ namespace Myth
 
 		uint8	getJobID(){return mJobID;}
 		void	setJobID(uint8 mJobID){mJobID = mJobID;}
+
+		bool	getBusy(){return mBusy;}
+		void	setBusy(bool bBusy){mBusy = bBusy;}
 	private:
 		uint8 mJobID;
+		bool mBusy;
 	};
 
 

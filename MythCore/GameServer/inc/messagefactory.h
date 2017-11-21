@@ -12,7 +12,10 @@ class CMessageFactory : public CSingleton<CMessageFactory>
 {
 	friend class CSingleton < CMessageFactory > ;
 private:
-	CMessageFactory(){}
+	CMessageFactory()
+	{
+		sMsgBuff[0] = '\0';
+	}
 	~CMessageFactory(){}
 
 public:
@@ -21,6 +24,6 @@ public:
 	void			destroyMessage(Message* pMessage);
 
 private:
-	static char sMsgBuff[ MAX_MSG_BUFF_LEN ];
+	char 			sMsgBuff[ MAX_MSG_BUFF_LEN ];
 };
 #endif // !__MESSAGEFACTORY_H__

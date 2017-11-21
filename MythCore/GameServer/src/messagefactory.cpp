@@ -1,5 +1,5 @@
 #include "messagefactory.h"
-char CMessageFactory::sMsgBuff[MAX_MSG_BUFF_LEN] = { 0 };
+//char CMessageFactory::sMsgBuff[MAX_MSG_BUFF_LEN] = { 0 };
 #include "loginmessage.hxx.pb.h"
 #include "propertymodule.hxx.pb.h"
 #include "itemmodule.hxx.pb.h"
