@@ -18,6 +18,7 @@ public:
         mType[0] = '\0';
         mName[0] = '\0';
         mCount = 0;
+		mAlreadyWrite = false;
 	}
 
 public:
@@ -45,10 +46,14 @@ public:
 	int getCount() const { return mCount; }
 	void setCount(int nValue) { mCount = nValue; }
 
+	bool getAlreadyWrite() const { return mAlreadyWrite; }
+	void setAlreadyWrite(bool val) { mAlreadyWrite = val; }
+
 private:
 	char 			mType[CLASS_NAME_LENGTH];			// 变量类型
 	char			mName[CLASS_NAME_LENGTH];			// 变量名
 	int				mCount;								// 数组维数
+	bool			mAlreadyWrite;					// 是否已经写
 };
 
 #endif

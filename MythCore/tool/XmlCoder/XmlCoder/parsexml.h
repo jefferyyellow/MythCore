@@ -12,7 +12,6 @@ public:
 public:
 	CParseXml()
 	{
-		
 	}
 	~CParseXml(){}
 
@@ -25,18 +24,13 @@ public:
 	void parseXml(const char* pPath);
 	// 分析Xml节点
 	void parseXmlElement(XMLElement* pElement, CClass* pParent);
-	// 根据名字得到对应的变量
-	CVariable* getVariable(CClass* pClass, const char* pName);
-	// 根据名字得到对应的类
-	CClass* getSubClass(CClass* pClass, const char* pName);
 	// 写头文件
 	void writeHeadFile(const char* pName);
 	// 写类的声明
 	void writeClassFile(CClass* pClass, FILE* pFile);
 
 	// 写源文件
-	void writeSourceFile(const char* pName);
-
+	void writeSourceFile(const char* pName, const char* pPath);
 	// autocode don't edit
     CClass* getRootClass(){ return mRootClass;}
     void setRootClass(CClass* value){ mRootClass = value;}
