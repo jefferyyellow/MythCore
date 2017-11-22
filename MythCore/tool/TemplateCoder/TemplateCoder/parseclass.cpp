@@ -986,7 +986,7 @@ void CParseClass::writeCreatePB(CClass* pClass, FILE* pFile)
 			{
 				if (1 == pVariable->getArrayDimension())
 				{
-					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tfor(int i = 0; i < %s && i < pbData->%s_size(); ++ i)\n", acBuffer, pVariable->getArrayMaxLen(0), _strlwr(acRealVariableName));
+					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tfor(int i = 0; i < %s; ++ i)\n", acBuffer, pVariable->getArrayMaxLen(0), _strlwr(acRealVariableName));
 					_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t{\n", acBuffer);
 					const char* pPBType = getPBTypeValue(pVariable->getType());
 					if (NULL == pPBType)
