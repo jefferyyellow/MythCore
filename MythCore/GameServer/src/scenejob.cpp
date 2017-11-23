@@ -45,7 +45,7 @@ void CSceneJob::onTask(CInternalMsg* pMsg)
 	}
 }
 
-bool CSceneJob::init()
+bool CSceneJob::init(int nDBBuffSize)
 {
 	bool bResult = initShareMemory();
 	if (!bResult)
@@ -53,6 +53,8 @@ bool CSceneJob::init()
 		return false;
 	}
 	
+	mDBBuffer = new uint8[nDBBuffSize];
+	mDBStream.Initialize(mDBBuffer, nDBBuffSize);
 	return true;
 }
 
@@ -99,6 +101,30 @@ bool CSceneJob::initShareMemory()
 		mServer2TcpMemory->Initialize(pSharePoint + sizeof(CSocketStream), PIPE_SIZE);
 	}
 	return true;
+}
+
+/// 压入DB数据
+void CSceneJob::pushDBData(uint8* pData, int nDataLength)
+{
+	if (NULL == pData || 0 == nDataLength)
+	{
+		return;
+	}
+	mDBStreamLock.lock();
+	int nResult = mDBStream.PushPacket(pData, nDataLength);
+	mDBStreamLock.unlock();
+}
+
+/// 取出DB数据
+void CSceneJob::popDBData(uint8* pData, int &rLength)
+{
+	if (NULL == pData)
+	{
+		return;
+	}
+	mDBStreamLock.lock();
+	int nResult = mDBStream.GetHeadPacket(pData, rLength);
+	mDBStreamLock.unlock();
 }
 
 /// 处理前端消息

@@ -16,6 +16,12 @@ public:
 public:
 	virtual void doing(uint32 uParam);
 
+public:
+	int		setBuffer(int nBufferSize);
+	/// 压入工作数据
+	void	pushBackJobData(uint8* pData, int nDataLength);
+	/// 取出工作数据
+	void	popBackJobData(uint8* pData, int &rLength);
 private:
 	void	onTask(CInternalMsg* pMsg);
 	/// 玩家登陆游戏
@@ -29,5 +35,8 @@ private:
 
 private:
 	CMysqlDataBase	mDataBase;
+	CSocketStream	mJobStream;
+	uint8*			mJobBuffer;
+	CSimpleLock		mJobStreamLock;
 };
 #endif

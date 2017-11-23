@@ -264,3 +264,8 @@ void CGameServer::pushTask(EmTaskType eTaskType, CInternalMsg* pMsg)
 		}
 	}
 }
+
+void CGameServer::pushDBTask()
+{
+
+}

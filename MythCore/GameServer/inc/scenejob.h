@@ -26,7 +26,7 @@ public:
 	~CSceneJob(){}
 
 public:
-	bool		init();
+	bool		init(int nDBBuffSize);
 
 public:
 	virtual void doing(uint32 uParam);
@@ -44,6 +44,10 @@ private:
 	void		dispatchClientMessage(CEntityPlayer* pPlayer, unsigned short nMessageID, Message* pMessage);
 	/// 初始化共享内存
 	bool		initShareMemory();
+	/// 压入DB数据
+	void		pushDBData(uint8* pData, int nDataLength);
+	/// 取出DB数据
+	void		popDBData(uint8* pData, int &rLength);
 
 private:
 	CShareMemory*			mShareMemory;
@@ -53,5 +57,10 @@ private:
 
 	PLAYER_LIST				mPlayerList; 
 	PLAYER_SOCKET_LIST		mPlayerSocketList;
+
+
+	CSocketStream			mDBStream;
+	uint8*					mDBBuffer;
+	CSimpleLock				mDBStreamLock;
 };
 #endif

@@ -39,6 +39,41 @@ void CDBJob::doing(uint32 uParam)
 	}
 }
 
+int CDBJob::setBuffer(int nBufferSize)
+{
+	mJobBuffer = new uint8[nBufferSize];
+	if (NULL == mJobBuffer)
+	{
+		return -1;
+	}
+	mJobStream.Initialize(mJobBuffer, nBufferSize);
+}
+
+/// 压入工作数据
+void CDBJob::pushBackJobData(uint8* pData, int nDataLength)
+{
+	if (NULL == pData || 0 == nDataLength)
+	{
+		return;
+	}
+
+	mJobStreamLock.lock();
+	mJobStream.PushPacket(pData, nDataLength);
+	mJobStreamLock.unlock();
+}
+
+/// 取出工作数据
+void CDBJob::popBackJobData(uint8* pData, int &rLength)
+{
+	if (NULL == pData)
+	{
+		return;
+	}
+
+	mJobStreamLock.lock();
+	mJobStream.GetHeadPacket(pData, rLength);
+	mJobStreamLock.unlock();
+}
 
 void CDBJob::onTask(CInternalMsg* pMsg)
 {

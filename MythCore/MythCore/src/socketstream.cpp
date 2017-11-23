@@ -4,6 +4,9 @@ namespace Myth
 {
 	CSocketStream::CSocketStream(void)
 	{
+		mSize = 0;
+		mBegin = 0;
+		mEnd = 0;
 	}
 
 	CSocketStream::~CSocketStream(void)
