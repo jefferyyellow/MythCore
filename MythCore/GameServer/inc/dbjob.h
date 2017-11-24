@@ -2,6 +2,8 @@
 #define __DBJOB_H__
 #include "job.h"
 #include "mysqldatabase.h"
+#include "socketstream.h"
+#include "dbmessage.h"
 using namespace Myth;
 
 class CInternalMsg;
@@ -22,6 +24,8 @@ public:
 	void	pushBackJobData(uint8* pData, int nDataLength);
 	/// 取出工作数据
 	void	popBackJobData(uint8* pData, int &rLength);
+	/// 处理DB流里的数据
+	void	checkDBStream();
 private:
 	void	onTask(CInternalMsg* pMsg);
 	/// 玩家登陆游戏
@@ -38,5 +42,7 @@ private:
 	CSocketStream	mJobStream;
 	uint8*			mJobBuffer;
 	CSimpleLock		mJobStreamLock;
+	CDBRequest		mDBRequest;
+	CDBResponse		mDBResponse;
 };
 #endif

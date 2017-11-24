@@ -152,11 +152,12 @@ bool CGameServer::initThread()
 		return false;
 	}
 
-	bool bResult = mSceneJob.init();
+	bool bResult = mSceneJob.init(MAX_SCENE_DB_BUFFER_SIZE);
 	if (!bResult)
 	{
 		return false;
 	}
+	mDBJob.setBuffer(MAX_DB_JOB_BUFFER_SIZE);
 
 	mThreadPool->pushBackJob(&mSceneJob);
 	mThreadPool->pushBackJob(&mDBJob);
@@ -265,7 +266,7 @@ void CGameServer::pushTask(EmTaskType eTaskType, CInternalMsg* pMsg)
 	}
 }
 
-void CGameServer::pushDBTask()
+void CGameServer::pushDBTask(int nUid, uint8* pData, uint8 nDataLength)
 {
-
+	mDBJob.pushBackJobData(pData, nDataLength);
 }

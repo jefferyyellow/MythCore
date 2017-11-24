@@ -7,7 +7,7 @@
 #include "entityplayer.h"
 #include "propertymodule.h"
 #include "itemmodule.h"
-
+#include "gameserver.h"
 void CSceneJob::doing(uint32 uParam)
 {
 	processClientMessage();
@@ -126,6 +126,26 @@ void CSceneJob::popDBData(uint8* pData, int &rLength)
 	int nResult = mDBStream.GetHeadPacket(pData, rLength);
 	mDBStreamLock.unlock();
 }
+
+/// 压入DB任务
+void CSceneJob::pushDBTask(int nPlayerID, int nSessionType, int nParam1, int nParam2, char* pSql, ...)
+{
+	va_list tArgs;
+	va_start(tArgs, pSql);
+	// +1表示吧终止符也拷贝过去
+	int nLength = ::vsnprintf(mDBRequest.mSqlBuffer, sizeof(mDBRequest.mSqlBuffer) - 1, pSql, tArgs) + 1;
+	va_end(tArgs);
+
+	mDBRequest.mPlayerID = nPlayerID;
+	mDBRequest.mParam1 = nParam1;
+	mDBRequest.mParam2 = nParam2;
+	mDBRequest.mSessionType = nSessionType;
+	mDBRequest.mSqlLenth = nLength;
+
+	int nTotalLength = nLength + sizeof(CDBRequestHeader);
+	CGameServer::Inst()->pushDBTask(0, (uint8*)(&mDBRequest), (uint8)nTotalLength);
+}
+
 
 /// 处理前端消息
 void CSceneJob::processClientMessage()

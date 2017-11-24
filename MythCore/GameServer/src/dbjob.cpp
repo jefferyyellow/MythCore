@@ -75,6 +75,21 @@ void CDBJob::popBackJobData(uint8* pData, int &rLength)
 	mJobStreamLock.unlock();
 }
 
+/// 处理DB流里的数据
+void CDBJob::checkDBStream()
+{
+	int nLength = 0;
+	popBackJobData((uint8*)&mDBRequest, nLength);
+	if (nLength <= 0)
+	{
+		return;
+	}
+
+	CMysqlQueryResult tQueryResult(&mDataBase, true);
+	mDataBase.query(mDBRequest.mSqlBuffer, tQueryResult);
+
+}
+
 void CDBJob::onTask(CInternalMsg* pMsg)
 {
 	switch (pMsg->getMsgID())

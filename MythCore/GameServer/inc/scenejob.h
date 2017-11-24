@@ -6,6 +6,7 @@
 #include "messagefactory.h"
 #include "singleton.h"
 #include "logintype.h"
+#include "dbmessage.h"
 #include <map>
 using namespace Myth;
 
@@ -48,6 +49,8 @@ private:
 	void		pushDBData(uint8* pData, int nDataLength);
 	/// 取出DB数据
 	void		popDBData(uint8* pData, int &rLength);
+	/// 压入DB任务
+	void		pushDBTask(int nPlayerID, int nSessionType, int nParam1, int nParam2, char* pSql, ...);
 
 private:
 	CShareMemory*			mShareMemory;
@@ -62,5 +65,8 @@ private:
 	CSocketStream			mDBStream;
 	uint8*					mDBBuffer;
 	CSimpleLock				mDBStreamLock;
+
+	CDBRequest				mDBRequest;
+	CDBResponse				mDBResponse;
 };
 #endif

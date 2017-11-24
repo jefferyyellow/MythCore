@@ -55,6 +55,9 @@ typedef	unsigned	int			uint;			// at least 32bits (depend of processor)
 #define STRING_LENGTH_256	256			/// string length 256 byte
 #define STRING_LENGTH_1024	1024		/// string length 1024 byte
 
-#define	MAX_NUM_LOG_DISPLAYER	4			/// max displayer per log
+#define	MAX_NUM_LOG_DISPLAYER	4		/// max displayer per log
 #define MAX_NUM_DEBUG_LOG	16			/// max debug log
+
+#define MAX_DB_JOB_BUFFER_SIZE		8 * 1024* 1024		// 8M
+#define MAX_SCENE_DB_BUFFER_SIZE	16 * 1024 * 1024	// 16M
 #endif

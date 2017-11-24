@@ -125,6 +125,7 @@
     <ClInclude Include="..\message\template.hxx" />
     <ClInclude Include="..\message\template.hxx.pb.h" />
     <ClInclude Include="inc\dbjob.h" />
+    <ClInclude Include="inc\dbmessage.h" />
     <ClInclude Include="inc\entity.h" />
     <ClInclude Include="inc\entityplayer.h" />
     <ClInclude Include="inc\entitytype.h" />
