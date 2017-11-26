@@ -1,6 +1,6 @@
 #include "loginmodule.h"
 #include "loginmessage.hxx.pb.h"
-#include "internalmsg.h"
+#include "dbmessage.h"
 #include "internalmsgpool.h"
 #include "gameserver.h"
 #include "entityplayer.h"
@@ -87,26 +87,22 @@ void CLoginModule::onClientMessage(CExchangeHead& rExchangeHead, unsigned int nM
 	pLoginPlayer->checkState();
 }
 
-void CLoginModule::OnDBMessage(CInternalMsg* pMsg)
+void CLoginModule::OnDBMessage(CDBResponse* pMsg)
 {
 	if (NULL == pMsg)
 	{
 		return;
 	}
-	CIMPlayerLoginMsg* pPlayerLoginMsg = (CIMPlayerLoginMsg*)pMsg;
-	int nSocketIndex = pPlayerLoginMsg->mSocketIndex;
-	LOGIN_LIST::iterator it = mLoginList.find(nSocketIndex);
-	if (it == mLoginList.end())
-	{
-		return;
-	}
-
-	CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::Inst()->getObj(it->second));
+	int nPlayerID  = pMsg->mPlayerID;
+	CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::Inst()->getObj(nPlayerID));
 	if (NULL == pLoginPlayer)
 	{
 		return;
 	}
 	pLoginPlayer->setDBMessage(pMsg);
-	pLoginPlayer->setDBMessageID(pMsg->getMsgID());
+	pLoginPlayer->setDBSessionType((EmSessionType)pMsg->mSessionType);
 	pLoginPlayer->checkState();
+	pLoginPlayer->setDBMessage(NULL);
+	pLoginPlayer->setDBSessionType(emSessionType_None);
+
 }

@@ -9,7 +9,7 @@
 #include <map>
 
 using namespace Myth;
-class CInternalMsg;
+class CDBResponse;
 #define  MAKE_LOGIN_KEY(AccountID, ChannelID, ServerID) ( (ChannelID << 48) | (ServerID << 32) | AccountID)
 class CLoginModule : public CLogicModule, public CSingleton < CLoginModule >
 {
@@ -28,7 +28,7 @@ public:
 	/// 处理客户端消息
 	void		onClientMessage(CExchangeHead& rExchangeHead, unsigned int nMessageID, Message* pMessage);
 	/// 处理数据库消息
-	void		OnDBMessage(CInternalMsg* pMsg);
+	void		OnDBMessage(CDBResponse* pMsg);
 
 private:
 	LOGIN_LIST			mLoginList;				// 登录列表

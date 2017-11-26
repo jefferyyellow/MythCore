@@ -4,13 +4,19 @@ DELIMITER ;;
 CREATE PROCEDURE `CheckUserName`(UserName char(32), ChannelID int unsigned, ServerID int unsigned)
 BEGIN
 	DECLARE AccountID INT UNSIGNED;
+	DECLARE RoleID INT UNSIGNED;
+
 	SELECT account_id INTO AccountID FROM PlayerAccount where user_name=UserName and channel_id=ChannelID and server_id=ServerID;
 	IF FOUND_ROWS() = 0 THEN
 		INSERT INTO PlayerAccount(user_name,channel_id, server_id, create_time) VALUES(UserName, ChannelID, ServerID, unix_timestamp());
 		SELECT LAST_INSERT_ID() INTO AccountID;
-		SELECT AccountID,UserName,ChannelID, ServerID;
+	END IF;
+
+	SELECT role_id INTO RoleID from PlayerRole where account_id=AccountID and channel_id=ChannelID and server_id=ServerID;
+	IF FOUND_ROWS() = 0 THEN
+		SELECT AccountID, 0;
 	ELSE
-		SELECT AccountID,UserName,ChannelID, ServerID;
+		SELECT AccountID, RoleID;
 	END IF;
 END
 ;;

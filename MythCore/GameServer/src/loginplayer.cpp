@@ -1,7 +1,5 @@
 #include "loginplayer.h"
 #include "loginmessage.hxx.pb.h"
-#include "internalmsg.h"
-#include "internalmsgpool.h"
 #include "gameserver.h"
 #include "objpool.h"
 #include "entityplayer.h"
@@ -36,58 +34,34 @@ int CLoginPlayer::processStateNone()
 		return -1;
 	}
 
-	//// 接收到客户端的消息后，转换成内部消息给DB去处理
-	//CIMPlayerLoginRequest* pPlayerLoginRequest = reinterpret_cast<CIMPlayerLoginRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_PLAYER_LOGIN));
-	//if (NULL == pPlayerLoginRequest)
-	//{
-	//	return -1;
-	//}
-	//
-	//strncpy(pPlayerLoginRequest->mName, pLoginRequest->name().c_str(), sizeof(pPlayerLoginRequest->mName) - 1);
-	//pPlayerLoginRequest->mChannelID = pLoginRequest->channelid();
-	//pPlayerLoginRequest->mServerID = pLoginRequest->serverid();
+	setAccountName(pLoginRequest->name().c_str());
+	setChannelID(pLoginRequest->channelid());
+	setServerID(pLoginRequest->serverid());
 
-	//setAccountName(pPlayerLoginRequest->mName);
-	//setChannelID(pPlayerLoginRequest->mChannelID);
-	//setServerID(pPlayerLoginRequest->mServerID);
-
-	//// 用户名
-	//setPlayerLoginMsg((CIMPlayerLoginMsg*)pPlayerLoginRequest);
-
-	//CGameServer::Inst()->pushTask(emTaskType_DB, pPlayerLoginRequest);
-	//printf("CLoginModule::OnMessageLoginRequest");
-
-	CDBModule::Inst()->pushDBTask(0, emSessionType_AccountVerify,0, 0, "call CheckUserName('%s', %d, %d)", 
+	CDBModule::Inst()->pushDBTask(getObjID(), emSessionType_AccountVerify,0, 0, "call CheckUserName('%s', %d, %d)", 
 		pLoginRequest->name().c_str(), pLoginRequest->channelid(), pLoginRequest->serverid());
-	//return emLoginState_AccountVerify;
+	return emLoginState_AccountVerify;
 }
 
 int CLoginPlayer::processAccountVerify()
 {
-	if (NULL == mDBMessage || IM_RESPONSE_PLAYER_LOGIN != mDBMessageID)
+	if (NULL == mDBResponse || emSessionType_AccountVerify != mDBSessionType)
 	{
 		return -1;
 	}
 
 	// 准备回应消息
-	CIMPlayerLoginResponse* pIMLoginResponse = reinterpret_cast<CIMPlayerLoginResponse*>(mDBMessage);
-	if (mServerID != pIMLoginResponse->mServerID 
-		|| mChannelID != pIMLoginResponse->mChannelID
-		|| 0 != strncmp(pIMLoginResponse->mName, mAccountName, sizeof(mAccountName)- 1))
-	{
-		return -1;
-	}
-
-	mAccountID = pIMLoginResponse->mAccountID;
+	mAccountID = mDBResponse->getInt();
+	mRoleID = mDBResponse->getInt();
 
 	CMessageLoginResponse tMessageLoginResponse;
-	tMessageLoginResponse.set_accountid(pIMLoginResponse->mAccountID);
-	tMessageLoginResponse.set_channelid(pIMLoginResponse->mChannelID);
-	tMessageLoginResponse.set_serverid(pIMLoginResponse->mServerID);
-	tMessageLoginResponse.set_roleid(pIMLoginResponse->mRoleID);
+	tMessageLoginResponse.set_accountid(mAccountID);
+	tMessageLoginResponse.set_channelid(mChannelID);
+	tMessageLoginResponse.set_serverid(mServerID);
+	tMessageLoginResponse.set_roleid(mRoleID);
 
 	CSceneJob::Inst()->sendClientMessage(mExchangeHead, ID_S2C_RESPONSE_LOGIN, &tMessageLoginResponse);
-	if (pIMLoginResponse->mRoleID == 0)
+	if (mRoleID == 0)
 	{
 		return emLoginState_WaitCreateRole;
 	}
@@ -116,37 +90,24 @@ int CLoginPlayer::processWaitCreateRole()
 		return -1;
 	}
 
-	CIMCreateRoleRequest* pNewRequest = reinterpret_cast<CIMCreateRoleRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_CREATE_ROLE));
-	if (NULL == pNewRequest)
-	{
-		return -1;
-	}
-
-	setPlayerLoginMsg(pNewRequest);
-	strncpy(pNewRequest->mRoleName, pCreateRoleRequest->rolename().c_str(), sizeof(pNewRequest->mRoleName) - 1);
-	CGameServer::Inst()->pushTask(emTaskType_DB, pNewRequest);
+	CDBModule::Inst()->pushDBTask(getObjID(), emSessionType_CreateRole, 0, 0, "call CreateRole(%d, '%s', %d, %d, %d)",
+	pCreateRoleRequest->rolename().c_str(), mAccountID, mChannelID, mServerID);
 
 	return emLoginState_CreateRoleing;
 }
 
 int CLoginPlayer::processCreateRoleing()
 {
-	if (NULL == mDBMessage || IM_RESPONSE_CREATE_ROLE != mDBMessageID)
-	{
-		return -1;
-	}
-	CIMCreateRoleResponse* pCreateRoleResponse = reinterpret_cast<CIMCreateRoleResponse*>(mDBMessage);
-	if (mServerID != pCreateRoleResponse->mServerID
-		|| mChannelID != pCreateRoleResponse->mChannelID
-		|| mAccountID != pCreateRoleResponse->mAccountID)
+	if (NULL == mDBResponse || emSessionType_CreateRole != mDBSessionType)
 	{
 		return -1;
 	}
 
+	mRoleID = mDBResponse->getInt();
 
 	CMessageCreateRoleResponse tCreateRoleResponse;
 	tCreateRoleResponse.set_result(0);
-	tCreateRoleResponse.set_roleid(pCreateRoleResponse->mRoleID);
+	tCreateRoleResponse.set_roleid(mRoleID);
 	CSceneJob::Inst()->sendClientMessage(mExchangeHead, ID_S2C_RESPONSE_CREATE_ROLE, &tCreateRoleResponse);
 
 	return emLoginState_WaitEnterGame;
@@ -171,11 +132,7 @@ int CLoginPlayer::processWaitEnterGame()
 		return -1;
 	}
 
-	CIMEnterSceneRequest* pNewEnterSceneRequest = reinterpret_cast<CIMEnterSceneRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_ENTER_SCENE));
-	if (NULL == pNewEnterSceneRequest)
-	{
-		return -1;
-	}
+
 
 	CEntityPlayer* pNewPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->allocObj(emObjType_Entity_Player));
 	if (NULL == pNewPlayer)
@@ -184,52 +141,22 @@ int CLoginPlayer::processWaitEnterGame()
 	}
 
 	pNewPlayer->setRoleID(pEnterSceneRequest->roleid());
-
-	pNewEnterSceneRequest->mRoleID = pEnterSceneRequest->roleid();
-	pNewEnterSceneRequest->mPlayerEntityID = pNewPlayer->getObjID();
-	setPlayerLoginMsg(pNewEnterSceneRequest);
-
-	CGameServer::Inst()->pushTask(emTaskType_DB, pNewEnterSceneRequest);
-
+	CDBModule::Inst()->pushDBTask(getObjID(), emSessionType_LoadPlayerInfo, 0, 0, "call LoadPlayerInfo(%d)", mRoleID);
 	return emLoginState_Playing;
 }
 int CLoginPlayer::processWaitPlaying()
 {
-	if (NULL == mDBMessage || IM_RESPONSE_ENTER_SCENE != mDBMessageID)
+	if (NULL == mDBResponse || emSessionType_LoadPlayerInfo != mDBSessionType)
 	{
 		return -1;
 	}
 
-	CIMEnterSceneResponse* pEnterSceneResponse = reinterpret_cast<CIMEnterSceneResponse*>(mDBMessage);
-	if (NULL == pEnterSceneResponse)
-	{
-		return -1;
-	}
-
-	if (mServerID != pEnterSceneResponse->mServerID
-		|| mChannelID != pEnterSceneResponse->mChannelID
-		|| mAccountID != pEnterSceneResponse->mAccountID)
-	{
-		return -1;
-	}
 
 	CMessageEnterSceneResponse tEnterSceneResponse;
 	tEnterSceneResponse.set_result(0);
 	CSceneJob::Inst()->sendClientMessage(mExchangeHead, ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
 
 	return emLoginState_None;
-}
-
-void CLoginPlayer::setPlayerLoginMsg(CIMPlayerLoginMsg* pMsg)
-{
-	if (NULL == pMsg)
-	{
-		return;
-	}
-	pMsg->mSocketIndex = mExchangeHead.mSocketIndex;
-	pMsg->mAccountID = mAccountID;
-	pMsg->mChannelID = mChannelID;
-	pMsg->mServerID = mServerID;
 }
 
 bool CLoginPlayer::elapse(unsigned int nTickOffset)

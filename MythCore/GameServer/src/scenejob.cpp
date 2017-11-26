@@ -35,13 +35,6 @@ void CSceneJob::onTask(CInternalMsg* pMsg)
 	}
 	switch (pMsg->getMsgID())
 	{
-		case IM_RESPONSE_PLAYER_LOGIN:
-		case IM_RESPONSE_CREATE_ROLE:
-		case IM_RESPONSE_ENTER_SCENE:
-		{
-			CLoginModule::Inst()->OnDBMessage(pMsg);
-			break;
-		}
 		default:
 			break;
 	}

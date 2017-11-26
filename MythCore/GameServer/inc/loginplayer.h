@@ -3,9 +3,8 @@
 #include "obj.h"
 #include "statemachine.h"
 #include "messagefactory.h"
-
-class CInternalMsg;
-class CIMPlayerLoginMsg;
+#include "dbmessage.h"
+class CDBResponse;
 enum EMLoginState
 {
 	emLoginState_None				= 0,	// 无状态
@@ -36,7 +35,6 @@ public:
 	int			processCreateRoleing();
 	int			processWaitEnterGame();
 	int			processWaitPlaying();
-	void		setPlayerLoginMsg(CIMPlayerLoginMsg* pMsg);
 	bool		elapse(unsigned int nTickOffset);
 public:
 	unsigned int getAccountID() const { return mAccountID; }
@@ -69,11 +67,11 @@ public:
 	int			getClientMessageID() const { return mClientMessageID; }
 	void		setClientMessageID(int nValue) { mClientMessageID = nValue; }
 
-	CInternalMsg* getDBMessage() const { return mDBMessage; }
-	void		setDBMessage(CInternalMsg* nValue) { mDBMessage = nValue; }
+	CDBResponse* getDBMessage() const { return mDBResponse; }
+	void		setDBMessage(CDBResponse* nValue) { mDBResponse = nValue; }
 
-	int			getDBMessageID() const { return mDBMessageID; }
-	void		setDBMessageID(int nValue) { mDBMessageID = nValue; }
+	EmSessionType getDBSessionType() const { return mDBSessionType; }
+	void		setDBSessionType(EmSessionType eValue) { mDBSessionType = eValue; }
 
 private:
 	unsigned int					mAccountID;								// 账号ID
@@ -90,8 +88,8 @@ private:
 	// 从客户端发过来的消息ID
 	int								mClientMessageID;
 	// 从DB发过来的消息
-	CInternalMsg*					mDBMessage;
+	CDBResponse*					mDBResponse;
 	// 从DB发过来的消息ID
-	int								mDBMessageID;
+	EmSessionType					mDBSessionType;
 };
 #endif
