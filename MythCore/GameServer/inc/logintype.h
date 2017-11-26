@@ -10,8 +10,8 @@ enum EmTcpError
 struct CExchangeHead
 {
 	time_t	mSocketTime;				// socket建立时间
-	uint16	mSocketIndex;				// socket索引
-	uint16	mSocketError;				// socket错误
+	short	mSocketIndex;				// socket索引
+	short	mSocketError;				// socket错误
 };
 
 

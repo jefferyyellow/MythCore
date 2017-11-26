@@ -36,7 +36,7 @@ namespace Myth
 		// end time
 		mClockTime.end();
 		// get the code's time consuming
-		uint32 nTime = (uint32)mClockTime.getInterval();
+		int nTime = (int)mClockTime.getInterval();
 		// update the mMinTime
 		if (nTime < mMinTime)
 		{

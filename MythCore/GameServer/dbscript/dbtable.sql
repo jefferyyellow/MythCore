@@ -5,7 +5,7 @@ CREATE TABLE `PlayerAccount` (
 	`server_id` smallint(11) UNSIGNED NOT NULL,
 	`user_name` char(32) NOT NULL,
 	`create_time` int(11) NOT NULL,
-	PRIMARY KEY(`account_id`, `channel_id`, `world_id`)
+	PRIMARY KEY(`account_id`, `channel_id`, `server_id`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 

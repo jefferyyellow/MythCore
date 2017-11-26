@@ -57,8 +57,8 @@ public:
 
 public:
 	/// 角色ID
-	uint32			getRoleID(){ return mRoleID; }
-	void			setRoleID(uint32 nRoleID){ mRoleID = nRoleID; }
+	unsigned int	getRoleID(){ return mRoleID; }
+	void			setRoleID(unsigned int nRoleID){ mRoleID = nRoleID; }
 	/// 角色名字
 	char*			getName(){ return mName; }
 	void			setName(char* pName)
@@ -91,7 +91,7 @@ private:
 	/// 角色名字
 	char			mName[PLAYER_NAME_LENGTH];
 	/// 角色ID
-	uint32			mRoleID;
+	unsigned int	mRoleID;
 	/// 上次下线时间
 	time_t			mLastOffTime;
 	/// 这次上线时间

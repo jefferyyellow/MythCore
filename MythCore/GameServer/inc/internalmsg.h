@@ -26,18 +26,18 @@ public:
 	~CInternalMsg(){}
 
 public:
-	uint32		getMsgID(){return mMsgID;}
-	void		setMsgID(uint32 uMsgID){mMsgID = uMsgID;}
+	int			getMsgID(){return mMsgID;}
+	void		setMsgID(int uMsgID){mMsgID = uMsgID;}
 
 protected:
-	uint32		mMsgID;
+	int			mMsgID;
 };
 
 
 class CIMLocalLogRequest : public CInternalMsg
 {
 public:
-	uint8		mLogType;									// 日志类型		
+	byte		mLogType;									// 日志类型		
 	char		mLogContent[MAX_LOG_BUFFER_NUM];			// 日志内容
 #ifdef __DEBUG__
 	char		mDebugName[MAX_DEBUG_LOG_NAME];				// 调试日志名字
@@ -47,10 +47,10 @@ public:
 class CIMPlayerLoginMsg : public CInternalMsg
 {
 public:
-	uint16			mSocketIndex;							// socket索引
-	uint32			mAccountID;								// 账号ID
-	uint16			mChannelID;								// 渠道
-	uint16			mServerID;								// 服务器ID
+	short			mSocketIndex;							// socket索引
+	unsigned int	mAccountID;								// 账号ID
+	short			mChannelID;								// 渠道
+	short			mServerID;								// 服务器ID
 };
 
 class CIMPlayerLoginRequest : public CIMPlayerLoginMsg
@@ -62,7 +62,7 @@ public:
 class CIMPlayerLoginResponse : public CIMPlayerLoginMsg
 {
 public:
-	uint32			mRoleID;								// 角色ID
+	unsigned int	mRoleID;								// 角色ID
 	char			mName[MAX_PLAYER_NAME_LEN];				// 名字
 };
 
@@ -76,21 +76,21 @@ public:
 class CIMCreateRoleResponse : public CIMPlayerLoginMsg
 {
 public:
-	uint32			mRoleID;								// 角色ID
+	unsigned int	mRoleID;								// 角色ID
 	char			mRoleName[MAX_PLAYER_NAME_LEN];			// 角色名
 };
 
 class CIMEnterSceneRequest : public CIMPlayerLoginMsg
 {
 public:
-	uint32			mRoleID;								// 角色ID
-	uint32			mPlayerEntityID;						// 角色的实体ID
+	unsigned int	mRoleID;								// 角色ID
+	unsigned int	mPlayerEntityID;						// 角色的实体ID
 };
 
 class CIMEnterSceneResponse : public CIMPlayerLoginMsg
 {
 public:
-	uint32			mRoleID;								// 角色ID
-	uint32			mPlayerEntityID;						// 角色的实体ID
+	unsigned int	mRoleID;								// 角色ID
+	unsigned int	mPlayerEntityID;						// 角色的实体ID
 };
 #endif

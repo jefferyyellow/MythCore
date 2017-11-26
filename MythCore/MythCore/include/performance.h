@@ -55,15 +55,15 @@ namespace Myth
 		/// name of the node
 		char			mName[STRING_LENGTH_32];
 		/// visit times
-		uint32			mCallNum;
+		int				mCallNum;
 		/// max time of the clock timer record
-		uint32			mMaxTime;
+		int				mMaxTime;
 		/// min time of the clock timer record
-		uint32			mMinTime;
+		int				mMinTime;
 		/// min time of the clock timer record(mTotalTime/mCallNum)
-		uint32			mAveTime;
+		int				mAveTime;
 		/// total time of the clock timer record
-		uint32			mTotalTime;
+		int				mTotalTime;
 	};
 
 	class CPerformance : public CSingleton < CPerformance >

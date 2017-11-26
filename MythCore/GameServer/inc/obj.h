@@ -20,11 +20,11 @@ public:
 	~CObj(){}
 
 public:
-	uint32		getObjID(){ return mObjID; }
-	void		setObjID(uint32 nObjID){ mObjID = nObjID; }
+	int			getObjID(){ return mObjID; }
+	void		setObjID(int nObjID){ mObjID = nObjID; }
 
 private:
-	uint32		mObjID;
+	int			mObjID;
 };
 
 enum  EmObjType

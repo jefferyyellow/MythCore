@@ -13,7 +13,7 @@ namespace Myth
 #endif // MYTH_OS_WINDOWS
 		return 0;
 	}
-	CTcpSocket* CSelectModel::createListenSocket(char* pIP, uint32 uPort, int nListNum, int& rSocketIndex)
+	CTcpSocket* CSelectModel::createListenSocket(char* pIP, short uPort, int nListNum, int& rSocketIndex)
 	{
 		int nSocketIndex = -1;
 

@@ -14,8 +14,8 @@ private:
 
 public:
 	CObj*	allocObj(EmObjType eType);
-	CObj*	getObj(uint32 nObjID);
-	void	free(uint32 nObjID);
+	CObj*	getObj(int nObjID);
+	void	free(int nObjID);
 
 private:
 	CObjPoolImp* mPoolImp;

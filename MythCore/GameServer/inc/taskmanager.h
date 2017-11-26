@@ -14,7 +14,7 @@ enum EmTaskType
 using namespace Myth;
 class CInternalMsg;
 /// 数据库管理程序,管理各个数据库Job
-template<uint BaseCount, uint Increment>
+template<int BaseCount, int Increment>
 class CTaskManager
 {
 public:

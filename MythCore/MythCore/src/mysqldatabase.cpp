@@ -3,7 +3,7 @@
 #include <errmsg.h>
 namespace Myth
 {
-	uint16 CMysqlDataBase::mDBCount = 0;
+	short CMysqlDataBase::mDBCount = 0;
 	CMysqlDataBase::CMysqlDataBase()
 	{
 		if (0 == mDBCount++)
@@ -82,8 +82,8 @@ namespace Myth
 		}
 
 		MYSQL_RES *pResult = mysql_store_result(mMysql);
-		uint32 nRowCount = (uint32)mysql_affected_rows(mMysql);
-		uint32 nFieldCount = mysql_field_count(mMysql);
+		int nRowCount = (int)mysql_affected_rows(mMysql);
+		int nFieldCount = mysql_field_count(mMysql);
 
 		if (NULL == pResult)
 		{
@@ -94,6 +94,67 @@ namespace Myth
 		rQueryResult.nextRow();
 		return 0;
 	}
+
+	/// 查询，将结果返回字节流中
+	int CMysqlDataBase::query(const char *pSql, byte* pBuffer, int& rLength, int& rRowNum, int& rColNum)
+	{
+		int nResult = query(pSql);
+		if (0 != nResult)
+		{
+			return nResult;
+		}
+
+
+		int nMaxSize = rLength;
+		rLength = 0;
+		MYSQL_RES *pResult = mysql_store_result(mMysql);
+		int nRowCount = (int)mysql_affected_rows(mMysql);
+		int nFieldCount = mysql_field_count(mMysql);
+
+		rRowNum = nRowCount;
+		rColNum = nFieldCount;
+		if (NULL == pResult)
+		{
+			return -1;
+		}
+
+		unsigned long* pValueLength = (unsigned long*)pBuffer;
+		rLength = (nRowCount * nFieldCount * sizeof(unsigned long));
+		byte* pValue = pBuffer + rLength;
+
+		for (int i = 0; i < nRowCount; ++ i)
+		{
+			MYSQL_ROW tRow = mysql_fetch_row(pResult);
+			unsigned long *pColumn = mysql_fetch_lengths(pResult);
+			if (NULL == tRow || NULL == pColumn)
+			{
+				break;
+			}
+			
+			for (int nCount = 0; nCount < nFieldCount; ++ nCount)
+			{
+				rLength += pColumn[nCount] + 1;
+				if (rLength > nMaxSize)
+				{
+					mysql_free_result(pResult);
+					clearResult();
+					rLength = 0;
+					return -1;
+				}
+				*pValueLength = pColumn[nCount];
+				pValueLength += 1;
+				memcpy(pValue, tRow[nCount], pColumn[nCount] + 1);
+				pValue += pColumn[nCount] + 1;
+			}
+		}
+
+		mysql_free_result(pResult);
+		clearResult();
+
+		return 0;
+	}
+
+
 
 	int CMysqlDataBase::query(const char *pSql)
 	{

@@ -8,9 +8,11 @@
 #include "propertymodule.h"
 #include "itemmodule.h"
 #include "gameserver.h"
-void CSceneJob::doing(uint32 uParam)
+#include "dbmodule.h"
+void CSceneJob::doing(int uParam)
 {
 	processClientMessage();
+	checkDBStream();
 	while (true)
 	{
 		CInternalMsg* pIMMsg = mTaskManager.popTask();
@@ -53,7 +55,7 @@ bool CSceneJob::init(int nDBBuffSize)
 		return false;
 	}
 	
-	mDBBuffer = new uint8[nDBBuffSize];
+	mDBBuffer = new byte[nDBBuffSize];
 	mDBStream.Initialize(mDBBuffer, nDBBuffSize);
 	return true;
 }
@@ -69,7 +71,7 @@ bool CSceneJob::initShareMemory()
 	nShareMemorySize += 2 * PIPE_SIZE;
 
 	bool bCreate = true;
-	uint8* pSharePoint = CShareMemory::createShareMemory(37345234, nShareMemorySize, bCreate);
+	byte* pSharePoint = CShareMemory::createShareMemory(37345234, nShareMemorySize, bCreate);
 	if (NULL == pSharePoint)
 	{
 		return false;
@@ -104,7 +106,7 @@ bool CSceneJob::initShareMemory()
 }
 
 /// 压入DB数据
-void CSceneJob::pushDBData(uint8* pData, int nDataLength)
+void CSceneJob::pushBackDBData(byte* pData, int nDataLength)
 {
 	if (NULL == pData || 0 == nDataLength)
 	{
@@ -116,7 +118,7 @@ void CSceneJob::pushDBData(uint8* pData, int nDataLength)
 }
 
 /// 取出DB数据
-void CSceneJob::popDBData(uint8* pData, int &rLength)
+void CSceneJob::popUpDBData(byte* pData, int &rLength)
 {
 	if (NULL == pData)
 	{
@@ -127,23 +129,20 @@ void CSceneJob::popDBData(uint8* pData, int &rLength)
 	mDBStreamLock.unlock();
 }
 
-/// 压入DB任务
-void CSceneJob::pushDBTask(int nPlayerID, int nSessionType, int nParam1, int nParam2, char* pSql, ...)
+/// 检查DB流
+void CSceneJob::checkDBStream()
 {
-	va_list tArgs;
-	va_start(tArgs, pSql);
-	// +1表示吧终止符也拷贝过去
-	int nLength = ::vsnprintf(mDBRequest.mSqlBuffer, sizeof(mDBRequest.mSqlBuffer) - 1, pSql, tArgs) + 1;
-	va_end(tArgs);
+	for (int i = 0; i < 2000; ++ i)
+	{
+		int nLength = 0;
+		popUpDBData((byte*)CDBModule::Inst()->getDBResponse(), nLength);
+		if (nLength <= 0)
+		{
+			return;
+		}
 
-	mDBRequest.mPlayerID = nPlayerID;
-	mDBRequest.mParam1 = nParam1;
-	mDBRequest.mParam2 = nParam2;
-	mDBRequest.mSessionType = nSessionType;
-	mDBRequest.mSqlLenth = nLength;
-
-	int nTotalLength = nLength + sizeof(CDBRequestHeader);
-	CGameServer::Inst()->pushDBTask(0, (uint8*)(&mDBRequest), (uint8)nTotalLength);
+		CDBModule::Inst()->onDBSession();
+	}
 }
 
 
@@ -154,7 +153,7 @@ void CSceneJob::processClientMessage()
 	int nResult = 0;
 	for (int i = 0; i < 2000; ++i)
 	{
-		nResult = mTcp2ServerMemory->GetHeadPacket((uint8*)mBuffer, nMessageLen);
+		nResult = mTcp2ServerMemory->GetHeadPacket((byte*)mBuffer, nMessageLen);
 		if (nResult < 0)
 		{
 			break;
@@ -230,7 +229,7 @@ void CSceneJob::sendClientMessage(CExchangeHead& rExchangeHead, unsigned short n
 
 	pMessage->SerializeToArray(pTemp, sizeof(mBuffer) - sizeof(rExchangeHead) - sizeof(unsigned short) * 2);
 	printf("PushPacket");
-	mServer2TcpMemory->PushPacket((uint8*)mBuffer, pMessage->ByteSize() + sizeof(rExchangeHead) + sizeof(unsigned short) * 2);
+	mServer2TcpMemory->PushPacket((byte*)mBuffer, pMessage->ByteSize() + sizeof(rExchangeHead) + sizeof(unsigned short) * 2);
 
 }
 

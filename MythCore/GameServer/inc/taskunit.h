@@ -30,18 +30,18 @@ public:
 	}
 public:
 	// 任务ID
-	sint16			getTaskID() const { return mTaskID; }
-	void			setTaskID(sint16 nValue) { mTaskID = nValue; }
+	short			getTaskID() const { return mTaskID; }
+	void			setTaskID(short nValue) { mTaskID = nValue; }
 
 	// 任务进度
-	sint16			getTaskProgress() const { return mTaskProgress; }
-	void			setTaskProgress(sint16 nValue) { mTaskProgress = nValue; }
+	short			getTaskProgress() const { return mTaskProgress; }
+	void			setTaskProgress(short nValue) { mTaskProgress = nValue; }
 
 	// 任务类型
 	EmTaskCondType	getTaskCondType() const { return mTaskCondType; }
 	void			setTaskCondType(EmTaskCondType nValue) { mTaskCondType = nValue; }
 
-	sint32			getTaskParam(int nIndex)
+	int			getTaskParam(int nIndex)
 	{
 		if (nIndex < 0 || nIndex >= MAX_TASK_PARAM)
 		{
@@ -50,7 +50,7 @@ public:
 		return mTaskParam[nIndex];
 	}
 
-	void			setTaskParam(int nIndex, sint32 nTaskParam)
+	void			setTaskParam(int nIndex, int nTaskParam)
 	{
 		if (nIndex < 0 || nIndex >= MAX_TASK_PARAM)
 		{
@@ -61,13 +61,13 @@ public:
 	}
 private:
 	/// 任务ID
-	sint16			mTaskID;
+	short			mTaskID;
 	/// 任务进度
-	sint16			mTaskProgress;
+	short			mTaskProgress;
 	/// 任务条件类型
 	EmTaskCondType	mTaskCondType;
 	/// 任务参数
-	sint32			mTaskParam[MAX_TASK_PARAM];
+	int				mTaskParam[MAX_TASK_PARAM];
 };
 
 class CEntityPlayer;
@@ -87,7 +87,7 @@ public:
 
 public:
 	void							refreshTaskProgress(EmTaskCondType eTaskCondType, int nParam1, int nParam2);
-	void							setTaskComplete(uint32 nTaskID)
+	void							setTaskComplete(int nTaskID)
 	{
 		mCompleteTasks.setBit(nTaskID);
 		if (nTaskID > mMaxCompleteTaskID)
@@ -97,17 +97,17 @@ public:
 	}
 
 public:
-	uint16							getMaxCompleteTaskID() const { return mMaxCompleteTaskID; }
-	void							setMaxCompleteTaskID(uint16 nValue) { mMaxCompleteTaskID = nValue; }
+	short							getMaxCompleteTaskID() const { return mMaxCompleteTaskID; }
+	void							setMaxCompleteTaskID(short nValue) { mMaxCompleteTaskID = nValue; }
 
 private:
 	/// 所有已经完成的任务
 	Myth::CBitSet<MAX_TASK_ID>		mCompleteTasks;
 	/// 最大的已经完成的任务
-	uint16							mMaxCompleteTaskID;
+	short							mMaxCompleteTaskID;
 	/// 已经接受的任务列表
 	CPlayerTask						mTaskList[MAX_TASK_NUM];
 	/// 已经接受任务列表数目
-	uint32							mTaskListNum;
+	int								mTaskListNum;
 };
 #endif

@@ -52,7 +52,7 @@ CObj* CObjPool::allocObj(EmObjType eType)
 	return pObj;
 }
 
-CObj* CObjPool::getObj(uint32 nObjID)
+CObj* CObjPool::getObj(int nObjID)
 {
 	CObj * pObj = NULL;
 	switch (OBJ_TYPE(nObjID))
@@ -99,7 +99,7 @@ CObj* CObjPool::getObj(uint32 nObjID)
 	return pObj;
 }
 
-void CObjPool::free(uint32 nObjID)
+void CObjPool::free(int nObjID)
 {
 	switch (OBJ_TYPE(nObjID))
 	{

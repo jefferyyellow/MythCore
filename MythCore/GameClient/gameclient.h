@@ -40,7 +40,7 @@ private:
 	CLog*					mDefaultLog;
 	CTcpSocket				mTcpSocket;
 	CSelectModel			mSelectModel;
-	char					mTcpRecData[MAX_SOCKET_BUFF_SIZE];
-	char					mBuffer[MAX_SOCKET_BUFF_SIZE];
+	byte					mTcpRecData[MAX_SOCKET_BUFF_SIZE];
+	byte					mBuffer[MAX_SOCKET_BUFF_SIZE];
 };
 #endif

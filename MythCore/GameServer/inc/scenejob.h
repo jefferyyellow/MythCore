@@ -6,7 +6,7 @@
 #include "messagefactory.h"
 #include "singleton.h"
 #include "logintype.h"
-#include "dbmessage.h"
+#include "bytestream.h"
 #include <map>
 using namespace Myth;
 
@@ -18,9 +18,9 @@ class CSceneJob : public CJob < 1000, 100 >, public CSingleton<CSceneJob>
 {
 	friend class CSingleton<CSceneJob>;
 	/// 键是role id,值是obj id
-	typedef std::map<uint32, uint32> PLAYER_LIST;
+	typedef std::map<int, int> PLAYER_LIST;
 	/// 键是socket index, 值是obj id
-	typedef std::map<uint32, uint32> PLAYER_SOCKET_LIST;
+	typedef std::map<int, int> PLAYER_SOCKET_LIST;
 
 public:
 	CSceneJob(){}
@@ -30,7 +30,15 @@ public:
 	bool		init(int nDBBuffSize);
 
 public:
-	virtual void doing(uint32 uParam);
+	/// 压入DB数据
+	void		pushBackDBData(byte* pData, int nDataLength);
+	/// 取出DB数据
+	void		popUpDBData(byte* pData, int &rLength);
+	/// 检查DB流
+	void		checkDBStream();
+
+public:
+	virtual void doing(int uParam);
 
 public:
 	/// 发送前端消息
@@ -45,12 +53,6 @@ private:
 	void		dispatchClientMessage(CEntityPlayer* pPlayer, unsigned short nMessageID, Message* pMessage);
 	/// 初始化共享内存
 	bool		initShareMemory();
-	/// 压入DB数据
-	void		pushDBData(uint8* pData, int nDataLength);
-	/// 取出DB数据
-	void		popDBData(uint8* pData, int &rLength);
-	/// 压入DB任务
-	void		pushDBTask(int nPlayerID, int nSessionType, int nParam1, int nParam2, char* pSql, ...);
 
 private:
 	CShareMemory*			mShareMemory;
@@ -62,11 +64,8 @@ private:
 	PLAYER_SOCKET_LIST		mPlayerSocketList;
 
 
-	CSocketStream			mDBStream;
-	uint8*					mDBBuffer;
+	CByteStream				mDBStream;
+	byte*					mDBBuffer;
 	CSimpleLock				mDBStreamLock;
-
-	CDBRequest				mDBRequest;
-	CDBResponse				mDBResponse;
 };
 #endif

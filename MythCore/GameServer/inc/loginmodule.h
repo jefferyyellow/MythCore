@@ -15,7 +15,7 @@ class CLoginModule : public CLogicModule, public CSingleton < CLoginModule >
 {
 	friend class CSingleton < CLoginModule > ;
 public:
-	typedef std::map<uint16, uint32> LOGIN_LIST;
+	typedef std::map<short, int> LOGIN_LIST;
 private:
 	CLoginModule();
 	~CLoginModule();

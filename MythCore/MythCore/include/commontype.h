@@ -15,36 +15,17 @@
 #endif
 #include <stddef.h>
 #ifdef MYTH_OS_WINDOWS
-
-typedef	signed		__int8		sint8;
-typedef	unsigned	__int8		uint8;
-typedef	signed		__int16		sint16;
-typedef	unsigned	__int16		uint16;
-typedef	signed		__int32		sint32;
-typedef	unsigned	__int32		uint32;
+typedef unsigned char byte;
 typedef	signed		__int64		sint64;
 typedef	unsigned	__int64		uint64;
-
-typedef				int			sint;			// at least 32bits (depend of processor)
-typedef	unsigned	int			uint;			// at least 32bits (depend of processor)
-
 #elif defined (MYTH_OS_UNIX)
 
 #include <sys/types.h>
 #include <stdint.h>
 #include <climits>
-
-typedef	int8_t		sint8;
-typedef	uint8_t		uint8;
-typedef	int16_t		sint16;
-typedef	uint16_t	uint16;
-typedef	int32_t		sint32;
-typedef	uint32_t	uint32;
+typedef unsigned char byte;
 typedef	int64_t		sint64;
 typedef	uint64_t	uint64;
-
-typedef				int			sint;			// at least 32bits (depend of processor)
-typedef	unsigned	int			uint;			// at least 32bits (depend of processor)
 #endif // MYTH_OS_UNIX
 
 #define STRING_LENGTH_8		8			/// string length 8 byte

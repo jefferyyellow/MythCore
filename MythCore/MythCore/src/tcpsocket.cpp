@@ -18,7 +18,7 @@ namespace Myth
 		return mSocketFd;
 	}
 
-	int	CTcpSocket::connectServer(char* pIP, uint16 uPort)
+	int	CTcpSocket::connectServer(char* pIP, short uPort)
 	{
 		if (NULL == pIP)
 		{
@@ -252,14 +252,14 @@ namespace Myth
 	}
 
 #ifdef MYTH_OS_WINDOWS
-	int	CTcpSocket::sendData(char* pBuff, int nBuffSize)
+	int	CTcpSocket::sendData(byte* pBuff, int nBuffSize)
 	{
 		int nSendBytes = 0;
 		int nLeftLen = nBuffSize;
 		
 		while (true)
 		{
-			nSendBytes = send(mSocketFd, pBuff, nLeftLen, 0);
+			nSendBytes = send(mSocketFd, (char*)pBuff, nLeftLen, 0);
 			if (nSendBytes == nLeftLen)
 			{
 				return nSendBytes;
@@ -303,19 +303,19 @@ namespace Myth
 #endif
 
 #ifdef MYTH_OS_WINDOWS
-	int	CTcpSocket::recvData(char* pBuff, int nBuffSize)
+	int	CTcpSocket::recvData(byte* pBuff, int nBuffSize)
 	{
-		int nResult = recv(mSocketFd, pBuff, nBuffSize, 0);
+		int nResult = recv(mSocketFd, (char*)pBuff, nBuffSize, 0);
 		return nResult;
 	}
 #else
-	int	CTcpSocket::recvData(char* pBuff, int nBuffSize)
+	int	CTcpSocket::recvData(byte* pBuff, int nBuffSize)
 	{
 		int nRecvBytes =0;
 
 		while (1)
 		{
-			nRecvBytes = read(mSocketFd, pBuff, nBuffSize);
+			nRecvBytes = read(mSocketFd, (char*)pBuff, nBuffSize);
 
 			if (0 < nRecvBytes)
 			{

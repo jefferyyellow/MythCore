@@ -33,20 +33,20 @@ namespace Myth
 		virtual CThreadPool* getThreadPool(){ return mpThreadPool; }
 		virtual void setThreadPool(CThreadPool* pThreadPool){ mpThreadPool = pThreadPool; }
 
-		virtual sint getSerialNum(){ return mSerialNum; }
-		virtual void setSerialNum(sint nSerialNum){ mSerialNum = nSerialNum; }
+		virtual int getSerialNum(){ return mSerialNum; }
+		virtual void setSerialNum(int nSerialNum){ mSerialNum = nSerialNum; }
 
 	public:
 		IJob*			mpJob;			// 可执行对象
 		CThreadPool*	mpThreadPool;	// 线程池
 
 	private:
-		uint32			mThreadID;
+		int				mThreadID;
 		HANDLE			mThreadHand;
 		// thread state 
 		EmThreadState	mThreadState;
 		// thread serial num
-		sint			mSerialNum;
+		int				mSerialNum;
 	};
 }
 #endif

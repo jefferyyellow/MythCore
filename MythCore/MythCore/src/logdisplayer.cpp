@@ -14,7 +14,7 @@ namespace Myth
 		printf("%s", pLogMessage);
 	}
 
-	CRollFileDisplayer::CRollFileDisplayer(char* pFileName, uint32 uMaxFileSize, uint uMaxBackNum)
+	CRollFileDisplayer::CRollFileDisplayer(char* pFileName, int uMaxFileSize, int uMaxBackNum)
 	{
 		if (NULL != pFileName)
 		{
@@ -46,7 +46,7 @@ namespace Myth
 		// 所以改成write,open,close系统函数
 		write(mFd, pLogMessage, strlen(pLogMessage));
 		
-		uint32 nFileSize = ::lseek(mFd, 0, SEEK_END);
+		int nFileSize = ::lseek(mFd, 0, SEEK_END);
 		if (nFileSize >= mMaxFileSize)
 		{
 			RollOver();

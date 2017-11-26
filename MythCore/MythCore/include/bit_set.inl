@@ -10,7 +10,7 @@ namespace Myth
 		caluLastMask();
 		if (bAllSet)
 		{
-			memset(mBitSet, ~((uint)0), sizeof(mBitSet));
+			memset(mBitSet, ~((int)0), sizeof(mBitSet));
 			mBitSet[mBitSetSize - 1] &= mLastMask;
 		}
 		else
@@ -22,9 +22,9 @@ namespace Myth
 	template<int Capacity>
 	bool CBitSet<Capacity>::checkAllBitSet()
 	{
-		for (uint i = 0; i < mBitSetSize - 1; ++i)
+		for (int i = 0; i < mBitSetSize - 1; ++i)
 		{
-			if (mBitSet[i] != ~(uint(0)))
+			if (mBitSet[i] != ~(int(0)))
 			{
 				return false;
 			}
@@ -40,7 +40,7 @@ namespace Myth
 	template<int Capacity>
 	bool CBitSet<Capacity>::checkAllBitClear()
 	{
-		for (uint i = 0; i < mBitSetSize; ++i)
+		for (int i = 0; i < mBitSetSize; ++i)
 		{
 			if (mBitSet[i] != 0)
 			{
@@ -55,7 +55,7 @@ namespace Myth
 	CBitSet<Capacity> CBitSet<Capacity>::operator~() const
 	{
 		CBitSet<Capacity> tTemp = *this;
-		for (uint i = 0; i < tTemp.mBitSetSize; ++i)
+		for (int i = 0; i < tTemp.mBitSetSize; ++i)
 		{
 			tTemp.mBitSet[i] = ~tTemp.mBitSet[i];
 		}

@@ -10,16 +10,16 @@
 #include "template.h"
 
 CMapUnit::ENTITY_ALLOC CMapUnit::mEntityAlloc;
-void CMapUnit::pushEntity(uint32 nObjID)
+void CMapUnit::pushEntity(int nObjID)
 {
-	CShareList<uint32>::CShareListNode<uint32>* pNode = mEntityAlloc.allocate();
+	CShareList<int>::CShareListNode<int>* pNode = mEntityAlloc.allocate();
 	pNode->mData = nObjID;
 	pNode->mpNext = NULL;
 	pNode->mpPrev = NULL;
 	mEntityList.push_front(pNode);
 }
 
-void CMapUnit::removeEntity(uint32 nObjID)
+void CMapUnit::removeEntity(int nObjID)
 {
 	ENTITY_LIST::iterator it = mEntityList.begin();
 	for (; it != mEntityList.end(); ++ it)

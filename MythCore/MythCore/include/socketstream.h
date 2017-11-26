@@ -14,19 +14,19 @@ namespace Myth
 
 	public:
 		// 初始化
-		int			Initialize(uint8* pBuffer, int nTotalSize);
+		int			Initialize(byte* pBuffer, int nTotalSize);
 		// 重置
-		int			Resume(uint8* pBuffer, int nTotalSize);
+		int			Resume(byte* pBuffer, int nTotalSize);
 		// 将一个数据附加在缓冲区后面
-		int			PushPacket(const uint8* pCode, int nLength);
+		int			PushPacket(const byte* pCode, int nLength);
 		// 从缓冲区取出一个消息
-		int			GetHeadPacket(uint8* pCode, int &rLength);
+		int			GetHeadPacket(byte* pCode, int &rLength);
 		// 从缓冲区取出一个消息
-		int			PeekHeadPacket(uint8* pCode, int& rLength);
+		int			PeekHeadPacket(byte* pCode, int& rLength);
 		// 从缓冲区删除一个消息
 		int			DeleteHeadPacket();
 		// 从指定偏移处取出一个消息
-		int			GetOnePacket(int nOffset, int nLength, uint8* pOutCode, int& rOutLength);
+		int			GetOnePacket(int nOffset, int nLength, byte* pOutCode, int& rOutLength);
 		// 转储到文件
 		int			DumpToFile(const char* pFileName);
 		// 从文件里加载
@@ -36,16 +36,16 @@ namespace Myth
 		// 是否为空
 		bool		IsEmpty();
 		// 得到剩余空间
-		sint32		GetLeftSpace();
+		int			GetLeftSpace();
 
 
 		bool		IsFull();
-		inline void			GetCriticalData(sint32 &rBegin, sint32 &rEnd)
+		inline void			GetCriticalData(int &rBegin, int &rEnd)
 		{
 			rBegin = mBegin;
 			rEnd = mEnd;
 		}
-		inline  void		SetCriticalData(sint32 nBegin, sint32 nEnd)
+		inline  void		SetCriticalData(int nBegin, int nEnd)
 		{
 			if (nBegin >= 0 && nBegin < mSize)
 			{
@@ -59,9 +59,9 @@ namespace Myth
 		}
 
 	private:
-		sint32				mSize;
-		sint32				mBegin;
-		sint32				mEnd;
+		int				mSize;
+		int				mBegin;
+		int				mEnd;
 	};
 }
 

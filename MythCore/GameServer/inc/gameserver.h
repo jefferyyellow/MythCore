@@ -41,7 +41,7 @@ public:
 
 public:
 	void		pushTask(EmTaskType eTaskType, CInternalMsg* pMsg);
-	void		pushDBTask(int nUid, uint8* pData, uint8 nDataLength);
+	void		pushDBTask(int nUid, byte* pData, int nDataLength);
 
 private:
 	CLog*					mDefaultLog;

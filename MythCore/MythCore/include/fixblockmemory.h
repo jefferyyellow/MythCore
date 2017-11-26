@@ -11,7 +11,7 @@ namespace Myth
 	///		int mIndex;
 	///		T	mData;
 	/// };
-	template<typename T, uint MaxCount, uint BaseCount, uint IncreCount>
+	template<typename T, int MaxCount, int BaseCount, int IncreCount>
 	class CFixBlockMemory
 	{
 	public:
@@ -33,7 +33,7 @@ namespace Myth
 		}
 
 	public:
-		T*			allocate(sint &nMemIndex)
+		T*			allocate(int &nMemIndex)
 		{
 			if (0 >= mFreeCount)
 			{
@@ -55,7 +55,7 @@ namespace Myth
 			return mBlockMemory[nIndex];
 		}
 
-		T*			get(sint nMemIndex)
+		T*			get(int nMemIndex)
 		{
 			if (nMemIndex < 0 || nMemIndex >= mAllocCount)
 			{
@@ -64,7 +64,7 @@ namespace Myth
 			return mBlockMemory[nMemIndex];
 		}
 
-		void		free(sint nMemIndex)
+		void		free(int nMemIndex)
 		{
 			if (nMemIndex < 0 || nMemIndex >= mAllocCount)
 			{
@@ -73,7 +73,7 @@ namespace Myth
 			mFreeIndex[mFreeCount] = nMemIndex;
 		}
 
-		void		allocIncrement(uint nSize)
+		void		allocIncrement(int nSize)
 		{
 			if (nSize + mAllocCount > MaxCount)
 			{
@@ -97,9 +97,9 @@ namespace Myth
 	
 	private:
 		T*			mBlockMemory[MaxCount];
-		sint32		mAllocCount;
+		int			mAllocCount;
 		int			mFreeIndex[MaxCount];
-		sint32		mFreeCount;
+		int			mFreeCount;
 	};
 }
 #endif

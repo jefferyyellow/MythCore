@@ -15,7 +15,7 @@ namespace Myth
 
 
 	// 初始化
-	int CSocketStream::Initialize(uint8* pBuffer, sint32 nTotalSize)
+	int CSocketStream::Initialize(byte* pBuffer, int nTotalSize)
 	{
 		if (NULL == pBuffer)
 		{
@@ -28,7 +28,7 @@ namespace Myth
 	}
 
 	// 重置
-	int	CSocketStream::Resume(uint8* pBuffer, sint32 nTotalSize)
+	int	CSocketStream::Resume(byte* pBuffer, int nTotalSize)
 	{
 		if (NULL == pBuffer)
 		{
@@ -39,7 +39,7 @@ namespace Myth
 	}
 
 	// 将一个数据附加在缓冲区后面
-	int	CSocketStream::PushPacket(const uint8* pCode, sint32 nLength)
+	int	CSocketStream::PushPacket(const byte* pCode, int nLength)
 	{
 		// 参数校验
 		if (NULL == pCode || nLength <= 0)
@@ -48,9 +48,9 @@ namespace Myth
 		}
 
 
-		sint32 nLeftSpace = 0;
-		sint32 nBegin = -1;
-		sint32 nEnd = -1;
+		int nLeftSpace = 0;
+		int nBegin = -1;
+		int nEnd = -1;
 
 		if (IsFull())
 		{
@@ -70,11 +70,11 @@ namespace Myth
 			return -4;
 		}
 
-		uint8* pBuffer = (uint8*)this + sizeof(CSocketStream);
+		byte* pBuffer = (byte*)this + sizeof(CSocketStream);
 
 
 		unsigned short usLength = (unsigned short)nLength;
-		uint8* pSrc = (uint8*)&usLength;
+		byte* pSrc = (byte*)&usLength;
 		for (unsigned int i = 0; i < sizeof(unsigned short); ++i)
 		{
 			pBuffer[nEnd] = pSrc[i];
@@ -113,7 +113,7 @@ namespace Myth
 
 
 	// 从缓冲区取出一个消息
-	int	CSocketStream::GetHeadPacket(uint8* pCode, sint32 &rLength)
+	int	CSocketStream::GetHeadPacket(byte* pCode, int &rLength)
 	{
 		// 参数校验
 		if (NULL == pCode)
@@ -123,8 +123,8 @@ namespace Myth
 		}
 
 
-		sint32 nBegin = -1;
-		sint32 nEnd = -1;
+		int nBegin = -1;
+		int nEnd = -1;
 
 		if (IsEmpty())
 		{
@@ -134,7 +134,7 @@ namespace Myth
 
 		GetCriticalData(nBegin, nEnd);
 		// 得到数据长度
-		sint32 nDataLength = 0;
+		int nDataLength = 0;
 		if (nBegin < nEnd)
 		{
 			nDataLength = nEnd - nBegin;
@@ -150,11 +150,11 @@ namespace Myth
 			return -3;
 		}
 
-		uint8* pBuffer = (uint8*)this + sizeof(CSocketStream);
+		byte* pBuffer = (byte*)this + sizeof(CSocketStream);
 
 		// 读取消息包长度(注意与PushPacket中写消息包长度对应)
 		unsigned short usLength = 0;
-		uint8* pDest = (uint8*)&usLength;
+		byte* pDest = (byte*)&usLength;
 		for (unsigned int i = 0; i < sizeof(short); ++i)
 		{
 			pDest[i] = pBuffer[nBegin];
@@ -201,7 +201,7 @@ namespace Myth
 	}
 
 	// // 从缓冲区取出一个消息，注意和GetHeadCode区别,该函数取出数据后并不设置临界区偏移
-	int CSocketStream::PeekHeadPacket(uint8* pCode, sint32& rLength)
+	int CSocketStream::PeekHeadPacket(byte* pCode, int& rLength)
 	{
 		// 参数校验
 		if (NULL == pCode)
@@ -209,8 +209,8 @@ namespace Myth
 			return -1;
 		}
 
-		sint32 nBegin = -1;
-		sint32 nEnd = -1;
+		int nBegin = -1;
+		int nEnd = -1;
 
 		if (IsEmpty())
 		{
@@ -236,11 +236,11 @@ namespace Myth
 			return -3;
 		}
 
-		uint8* pBuffer = (uint8*)this + sizeof(CSocketStream);
+		byte* pBuffer = (byte*)this + sizeof(CSocketStream);
 
 		// 读取消息包长度(注意与PushPacket中写消息包长度对应)
 		unsigned short usLength = 0;
-		uint8* pDest = (uint8*)&usLength;
+		byte* pDest = (byte*)&usLength;
 		for (unsigned int i = 0; i < sizeof(short); ++i)
 		{
 			pDest[i] = pBuffer[nBegin];
@@ -288,8 +288,8 @@ namespace Myth
 	// 从缓冲区删除一个消息
 	int	CSocketStream::DeleteHeadPacket()
 	{
-		sint32 nBegin = -1;
-		sint32 nEnd = -1;
+		int nBegin = -1;
+		int nEnd = -1;
 
 		if (IsEmpty())
 		{
@@ -298,7 +298,7 @@ namespace Myth
 
 		GetCriticalData(nBegin, nEnd);
 		// 得到数据长度
-		sint32 nDataLength = 0;
+		int nDataLength = 0;
 		if (nBegin < nEnd)
 		{
 			nDataLength = nEnd - nBegin;
@@ -312,11 +312,11 @@ namespace Myth
 			SetCriticalData(nEnd, -1);
 			return -2;
 		}
-		uint8* pBuffer = (uint8*)this + sizeof(CSocketStream);
+		byte* pBuffer = (byte*)this + sizeof(CSocketStream);
 
 		// 读取消息包长度(注意与PushPacket中写消息包长度对应)
 		unsigned short usLength = 0;
-		uint8* pDest = (uint8*)&usLength;
+		byte* pDest = (byte*)&usLength;
 		for (unsigned int i = 0; i < sizeof(short); ++i)
 		{
 			pDest[i] = pBuffer[nBegin];
@@ -336,7 +336,7 @@ namespace Myth
 	}
 
 	// 从指定偏移处取出一个消息
-	int	CSocketStream::GetOnePacket(sint32 nOffset, sint32 nLength, uint8* pOutCode, sint32& rOutLength)
+	int	CSocketStream::GetOnePacket(int nOffset, int nLength, byte* pOutCode, int& rOutLength)
 	{
 		// 参数校验
 		if (NULL == pOutCode || nLength <= 0)
@@ -365,8 +365,8 @@ namespace Myth
 		}
 
 		// 得到临界处的数据
-		sint32 nBegin = -1;
-		sint32 nEnd = -1;
+		int nBegin = -1;
+		int nEnd = -1;
 		GetCriticalData(nBegin, nEnd);
 
 		if (nOffset < nBegin || nOffset >= nEnd)
@@ -390,11 +390,11 @@ namespace Myth
 			SetCriticalData(nEnd, -1);
 			return -6;
 		}
-		uint8* pBuffer = (uint8*)this + sizeof(CSocketStream);
+		byte* pBuffer = (byte*)this + sizeof(CSocketStream);
 
 		// 读取消息包长度(注意与PushPacket中写消息包长度对应)
 		unsigned short usLength = 0;
-		uint8* pDest = (uint8*)&usLength;
+		byte* pDest = (byte*)&usLength;
 		for (unsigned int i = 0; i < sizeof(short); ++i)
 		{
 			pDest[i] = pBuffer[nBegin];
@@ -432,7 +432,7 @@ namespace Myth
 	}
 
 	// 得到剩余空间
-	sint32	CSocketStream::GetLeftSpace()
+	int	CSocketStream::GetLeftSpace()
 	{
 		int nMaxLength = 0;
 		int nBegin = -1;
@@ -463,8 +463,8 @@ namespace Myth
 	// 队列是否为空
 	bool CSocketStream::IsEmpty()
 	{
-		sint32 nBegin = -1;
-		sint32 nEnd = -1;
+		int nBegin = -1;
+		int nEnd = -1;
 
 		GetCriticalData(nBegin, nEnd);
 		if (nBegin == nEnd)
@@ -478,7 +478,7 @@ namespace Myth
 	bool CSocketStream::IsFull()
 	{
 		// 空余空间的大小
-		sint32 nMaxLength = GetLeftSpace();
+		int nMaxLength = GetLeftSpace();
 		if (nMaxLength > 0)
 		{
 			return false;

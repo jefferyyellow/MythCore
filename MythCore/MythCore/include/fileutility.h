@@ -26,11 +26,11 @@ namespace Myth
 		/// 
 		static bool			CheckFileExist(const char* pFilePath);
 		static bool			IsDirectory(const char* pFilePath);
-		static uint32		GetFileSize(const char* pFilePath);
-		static uint32		GetFileSize(FILE* pFile);
-		static uint32		GetFileModifyTime(const char* pFilePath);
-		static bool			SetFileModifyTime(const char* pFilePath, uint32 uModifyTime);
-		static uint32		GetFileCreateDate(const char* pFilePath);
+		static unsigned int	GetFileSize(const char* pFilePath);
+		static unsigned int	GetFileSize(FILE* pFile);
+		static unsigned int	GetFileModifyTime(const char* pFilePath);
+		static bool			SetFileModifyTime(const char* pFilePath, unsigned int uModifyTime);
+		static unsigned int	GetFileCreateDate(const char* pFilePath);
 		static bool			CreateEmptyFile(const char* pFilePath);
 		static bool			DeleteFile(const char* pFilePath);
 		static bool			CreateDir(const char* pDirName);

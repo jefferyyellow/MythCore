@@ -32,7 +32,7 @@ namespace Myth
 	}
 
 	/// Get a displayer
-	CLogDisplayer* CLog::GetDisplayer(uint32 uIndex)
+	CLogDisplayer* CLog::GetDisplayer(unsigned int uIndex)
 	{
 		if (uIndex >= MAX_NUM_LOG_DISPLAYER)
 		{

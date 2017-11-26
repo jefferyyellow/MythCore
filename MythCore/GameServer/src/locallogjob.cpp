@@ -41,7 +41,7 @@ void LogLocalDebugLog(const char* pLogName, char* pFile, int nLine, char* pFunct
 }
 
 
-void CLocalLogJob::doing(uint32 uParam)
+void CLocalLogJob::doing(int uParam)
 {
 	while (true)
 	{

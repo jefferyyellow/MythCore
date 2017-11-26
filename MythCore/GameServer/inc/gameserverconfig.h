@@ -19,7 +19,7 @@ public:
 	char*			getDBUserName(){return mDBUserName;}
 	char*			getDBPasswd(){return mDBPasswd;}
 	char*			getDefaultDataBase(){return mDefaultDataBase;}
-	uint32			getDBPort(){return mDBPort;}
+	short			getDBPort(){return mDBPort;}
 
 private:
 	/// 注意，Host不只是有IP，还可能是域名
@@ -31,6 +31,6 @@ private:
 	/// 连接的数据库名
 	char			mDefaultDataBase[STRING_LENGTH_16];
 	/// 端口
-	uint32			mDBPort;
+	short			mDBPort;
 };
 #endif

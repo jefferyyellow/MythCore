@@ -83,6 +83,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="include\bytestream.cpp" />
     <ClCompile Include="include\thread.h" />
     <ClCompile Include="src\epollmodel.cpp" />
     <ClCompile Include="src\fileutility.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="include\array.h" />
     <ClInclude Include="include\bit_set.h" />
     <ClInclude Include="include\blockmemory.h" />
+    <ClInclude Include="include\bytestream.h" />
     <ClInclude Include="include\commontype.h" />
     <ClInclude Include="include\epollmodel.h" />
     <ClInclude Include="include\fileutility.h" />

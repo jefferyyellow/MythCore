@@ -93,6 +93,9 @@
     <ClCompile Include="src\socketstream.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="include\bytestream.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\commontype.h">
@@ -175,6 +178,9 @@
     </ClInclude>
     <ClInclude Include="include\fixblockmemory.h">
       <Filter>头文件\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="include\bytestream.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

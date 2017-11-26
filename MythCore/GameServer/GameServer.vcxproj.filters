@@ -150,6 +150,9 @@
     <ClCompile Include="src\loginplayer.cpp">
       <Filter>logicmodule\login</Filter>
     </ClCompile>
+    <ClCompile Include="src\dbmodule.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -318,6 +321,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="inc\dbmessage.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\dbmodule.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

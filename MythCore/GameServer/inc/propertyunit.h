@@ -27,29 +27,29 @@ public:
 
 public:
 	/// 等级
-	uint8			getLevel() const { return mLevel; }
-	void			setLevel(uint8 nValue) { mLevel = nValue; }
+	byte			getLevel() const { return mLevel; }
+	void			setLevel(byte nValue) { mLevel = nValue; }
 	
 	/// 经验
 	sint64			getRoleExp() const { return mExp; }
 	void			setRoleExp(sint64 nValue) { mExp = nValue; }
 
 	/// VIP经验
-	sint32			GetVIPExp() const { return mVIPExp; }
-	void			SetVIPExp(sint32 nValue) { mVIPExp = nValue; }
+	int				GetVIPExp() const { return mVIPExp; }
+	void			SetVIPExp(int nValue) { mVIPExp = nValue; }
 
 	/// VIP等级
-	uint8			getVIPLevel() const { return mVIPLevel; }
-	void			setVIPLevel(uint8 nValue) { mVIPLevel = nValue; }
+	byte			getVIPLevel() const { return mVIPLevel; }
+	void			setVIPLevel(byte nValue) { mVIPLevel = nValue; }
 private:
 	/// 经验
 	sint64			mExp;
 	/// 等级
-	uint8			mLevel;
+	byte			mLevel;
 	/// VIP经验
-	sint32			mVIPExp;
+	int				mVIPExp;
 	/// VIP等级
-	uint8			mVIPLevel;
+	byte			mVIPLevel;
 
 };
 #endif

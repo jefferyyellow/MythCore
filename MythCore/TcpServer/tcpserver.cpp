@@ -108,7 +108,7 @@ bool CTcpServer::initShareMemory()
 	nShareMemorySize += 2 * PIPE_SIZE;
 
 	bool bCreate = true;
-	uint8* pSharePoint = CShareMemory::createShareMemory(37345234, nShareMemorySize, bCreate);
+	byte* pSharePoint = CShareMemory::createShareMemory(37345234, nShareMemorySize, bCreate);
 	if (NULL == pSharePoint)
 	{
 		return false;
@@ -349,12 +349,12 @@ void CTcpServer::receiveMessage()
 				}
 				if (NULL == pNewSocket->getRecvBuff())
 				{
-					char* pNewSocketBuff = new char[MAX_SOCKET_BUFF_SIZE];
+					byte* pNewSocketBuff = new byte[MAX_SOCKET_BUFF_SIZE];
 					if (NULL == pNewSocketBuff)
 					{
 
 					}
-					pNewSocket->setRecvBuff((char*)pNewSocketBuff);
+					pNewSocket->setRecvBuff(pNewSocketBuff);
 				}
 
 				pNewSocket->setMaxRecvBuffSize(MAX_SOCKET_BUFF_SIZE);
@@ -516,7 +516,7 @@ void CTcpServer::onReceiveMessage(CTcpSocket* pSocket, int nIndex)
 	}
 
 	int nBuffSize = pSocket->getRecvBuffSize();
-	char* pBuffer = pSocket->getRecvBuff();
+	byte* pBuffer = pSocket->getRecvBuff();
 
 	int nTotalSize = 0;
 	time_t tNowTime = CTimeManager::Inst()->GetCurrTime();
@@ -547,7 +547,7 @@ void CTcpServer::onReceiveMessage(CTcpSocket* pSocket, int nIndex)
 
 		memcpy(mBuffer, &mExchangeHead, sizeof(mExchangeHead));
 		memcpy(mBuffer + sizeof(mExchangeHead), pBuffer, nMessageLen);
-		mTcp2ServerMemory->PushPacket((uint8*)mBuffer, nMessageLen + sizeof(mExchangeHead));
+		mTcp2ServerMemory->PushPacket((byte*)mBuffer, nMessageLen + sizeof(mExchangeHead));
 
 		pBuffer += nMessageLen;
 		nBuffSize -= nMessageLen;
@@ -573,7 +573,7 @@ void CTcpServer::sendMessage()
 	int nResult = 0;
 	for (int i = 0; i < MAX_SEND_PACKAGE_ONCE; ++ i)
 	{
-		nResult = mServer2TcpMemory->GetHeadPacket((uint8*)mBuffer, nMessageLen);
+		nResult = mServer2TcpMemory->GetHeadPacket((byte*)mBuffer, nMessageLen);
 		if (nResult < 0)
 		{
 			break;
@@ -584,7 +584,7 @@ void CTcpServer::sendMessage()
 			break;
 		}
 		printf("CTcpServer::sendMessage");
-		char* pTemp = mBuffer;
+		byte* pTemp = mBuffer;
 		CExchangeHead* pExchangeHead = (CExchangeHead*)mBuffer;
 
 		pTemp += sizeof(CExchangeHead);
@@ -668,7 +668,7 @@ void CTcpServer::sendMessage()
 }
 
 // 通知游戏服务器删除一个socket
-void CTcpServer::sendSocketErrToGameServer(int nTcpIndex, uint16 nSocketError)
+void CTcpServer::sendSocketErrToGameServer(int nTcpIndex, short nSocketError)
 {
 	if (nTcpIndex <= 0 || nTcpIndex >= MAX_SOCKET_NUM)
 	{
@@ -680,7 +680,7 @@ void CTcpServer::sendSocketErrToGameServer(int nTcpIndex, uint16 nSocketError)
 	mExchangeHead.mSocketTime = mSocketInfo[nTcpIndex].mCreateTime;
 
 	memcpy(mBuffer, &mExchangeHead, sizeof(mExchangeHead));
-	mTcp2ServerMemory->PushPacket((uint8*)mBuffer, sizeof(mExchangeHead));
+	mTcp2ServerMemory->PushPacket((byte*)mBuffer, sizeof(mExchangeHead));
 }
 
 // 清除socket info
@@ -822,7 +822,7 @@ void CTcpServer::clear()
 
 	for (int i = 0; i < MAX_SOCKET_NUM; ++ i)
 	{
-		char* pBuff = mTcpSocket[i].getRecvBuff();
+		byte* pBuff = mTcpSocket[i].getRecvBuff();
 		if (NULL != pBuff)
 		{
 			delete[]pBuff;

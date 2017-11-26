@@ -22,26 +22,26 @@ namespace Myth
 	 * \author jefferyyellow
 	 * \date 2015
 	 */
-	template<typename T, uint BaseCount, uint Increment>
+	template<typename T, int BaseCount, int Increment>
 	class CBlockMemory
 	{
 	private:
 		struct CMemoryNode
 		{
 			/// mpNode:		idle mode
-			/// uint8		mBuff[sizeof(T)]: allocate mode
+			/// byte		mBuff[sizeof(T)]: allocate mode
 			union BuffNode
 			{
-				uint8		mBuff[sizeof(T)];
+				byte		mBuff[sizeof(T)];
 				CMemoryNode	*mpNode;
 			};	
 
 	#ifdef __DEBUG__
-			uint32		mHeadIdent;
+			int			mHeadIdent;
 	#endif
 			BuffNode	mBuffNode;
 	#ifdef __DEBUG__
-			uint32		mTailIdent;
+			int			mTailIdent;
 	#endif
 		};
 		struct CBlockListNode
@@ -149,7 +149,7 @@ namespace Myth
 	//		comdeconstruct<T, false>::deconstruct(pFree);
 	//#endif
 	#ifdef __DEBUG__
-			uint8 *pTemp = (uint8*)pFree;
+			byte *pTemp = (byte*)pFree;
 			CMemoryNode* pFreeNode = reinterpret_cast<CMemoryNode*>(pTemp - CLASS_MEM_OFFSET(CMemoryNode,mBuffNode));
 			// check the ident
 			if (CheckAllocatedIdent != pFreeNode->mHeadIdent)
@@ -186,7 +186,7 @@ namespace Myth
 
 	private:
 		/// allocate a memory block consist of nSize memory nodes;
-		CMemoryNode*		allocBlock(uint nSize)
+		CMemoryNode*		allocBlock(int nSize)
 		{
 			if (nSize <= 0)
 			{
@@ -199,7 +199,7 @@ namespace Myth
 			}
 			// make all memory node as a chain
 			CMemoryNode* pTempNode = pNode;
-			for (uint i = 0; i < nSize - 1; ++ i)
+			for (int i = 0; i < nSize - 1; ++ i)
 			{
 				pTempNode->mBuffNode.mpNode = pTempNode + 1;
 				++ pTempNode;
@@ -208,7 +208,7 @@ namespace Myth
 			pTempNode->mBuffNode.mpNode = NULL;
 	#ifdef __DEBUG__
 			pTempNode = pNode;
-			for (uint i = 0; i < nSize; ++ i)
+			for (int i = 0; i < nSize; ++ i)
 			{
 				// mark as free node
 				pTempNode->mHeadIdent = CheckDeletedIdent;
@@ -247,7 +247,7 @@ namespace Myth
 		/// memory block list head
 		CBlockListNode*		mpBlockHead;
 		/// alread allocate memory node count
-		uint32				mAllocCount;
+		int					mAllocCount;
 	};
 }
 

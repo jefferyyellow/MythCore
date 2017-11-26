@@ -19,7 +19,7 @@ namespace Myth
 			mpValue = rFiled.mpValue;
 			mValueLen = rFiled.mValueLen;
 		}
-		CMysqlField(char* pValue, uint16 nValueLen)
+		CMysqlField(char* pValue, int nValueLen)
 			:mpValue(pValue), mValueLen(nValueLen)
 		{
 
@@ -33,12 +33,12 @@ namespace Myth
 		char*				getValue(){ return mpValue; }
 		void				setValue(char* pValue){ mpValue = pValue; }
 
-		uint32				getValueLen(){ return mValueLen; }
-		void				setValueLen(uint32 nValueLen){ mValueLen = nValueLen; }
+		int					getValueLen(){ return mValueLen; }
+		void				setValueLen(int nValueLen){ mValueLen = nValueLen; }
 
 	private:
 		char*				mpValue;
-		uint32				mValueLen;
+		int					mValueLen;
 	};
 }
 

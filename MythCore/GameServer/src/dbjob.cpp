@@ -23,8 +23,11 @@ int CDBJob::init(char* pHost, char* pUserName, char* pPasswd, char* pDataBase, i
 	return 0;
 }
 
-void CDBJob::doing(uint32 uParam)
+void CDBJob::doing(int uParam)
 {
+	//printf("CDBJob:: %d\n", uParam);
+	//Sleep(3000);
+	checkDBStream();
 	while (true)
 	{
 		CInternalMsg* pIMMsg = mTaskManager.popTask();
@@ -41,16 +44,17 @@ void CDBJob::doing(uint32 uParam)
 
 int CDBJob::setBuffer(int nBufferSize)
 {
-	mJobBuffer = new uint8[nBufferSize];
+	mJobBuffer = new byte[nBufferSize];
 	if (NULL == mJobBuffer)
 	{
 		return -1;
 	}
 	mJobStream.Initialize(mJobBuffer, nBufferSize);
+	return 0;
 }
 
 /// 压入工作数据
-void CDBJob::pushBackJobData(uint8* pData, int nDataLength)
+void CDBJob::pushBackJobData(byte* pData, int nDataLength)
 {
 	if (NULL == pData || 0 == nDataLength)
 	{
@@ -63,7 +67,7 @@ void CDBJob::pushBackJobData(uint8* pData, int nDataLength)
 }
 
 /// 取出工作数据
-void CDBJob::popBackJobData(uint8* pData, int &rLength)
+void CDBJob::popUpJobData(byte* pData, int &rLength)
 {
 	if (NULL == pData)
 	{
@@ -78,16 +82,33 @@ void CDBJob::popBackJobData(uint8* pData, int &rLength)
 /// 处理DB流里的数据
 void CDBJob::checkDBStream()
 {
-	int nLength = 0;
-	popBackJobData((uint8*)&mDBRequest, nLength);
-	if (nLength <= 0)
+	for (int i = 0; i < 2000; ++ i)
 	{
-		return;
+		int nLength = 0;
+		popUpJobData((byte*)&mDBRequest, nLength);
+		if (nLength <= 0)
+		{
+			return;
+		}
+
+		int nResultLength = sizeof(mDBResponse.mSqlBuffer) - 1;
+
+		int nRowNum = 0;
+		int nColNum = 0;
+		int nResult = mDataBase.query((char*)mDBRequest.mSqlBuffer, (byte*)mDBResponse.mSqlBuffer, nResultLength,
+			nRowNum, nColNum);
+
+
+		mDBResponse.mPlayerID = mDBRequest.mPlayerID;
+		mDBResponse.mResult = nResult;
+		mDBResponse.mParam1 = mDBRequest.mParam1;
+		mDBResponse.mParam2 = mDBRequest.mParam2;
+		mDBResponse.mSessionType = mDBRequest.mSessionType;
+		mDBResponse.mRowNum = nRowNum;
+		mDBResponse.mColNum = nColNum;
+		mDBResponse.mSqlLenth = nResultLength;
+		CSceneJob::Inst()->pushBackDBData((byte*)&mDBResponse, sizeof(CDBResponseHeader)+nResultLength);
 	}
-
-	CMysqlQueryResult tQueryResult(&mDataBase, true);
-	mDataBase.query(mDBRequest.mSqlBuffer, tQueryResult);
-
 }
 
 void CDBJob::onTask(CInternalMsg* pMsg)
@@ -140,7 +161,7 @@ void CDBJob::onIMPlayerLoginRequest(CInternalMsg* pMsg)
 		return;
 	}
 
-	uint32 nAccountID = atoi(tQueryResult.getField(0)->getValue());
+	unsigned int nAccountID = atoi(tQueryResult.getField(0)->getValue());
 	if (nAccountID <= 0)
 	{
 		return;
@@ -155,7 +176,7 @@ void CDBJob::onIMPlayerLoginRequest(CInternalMsg* pMsg)
 		return;
 	}
 
-	uint32 nRoleID = atoi(tQueryResult.getField(0)->getValue());
+	unsigned int nRoleID = atoi(tQueryResult.getField(0)->getValue());
 
 	CIMPlayerLoginResponse* pResponse = reinterpret_cast<CIMPlayerLoginResponse*>(CInternalMsgPool::CreateInst()->allocMsg(IM_RESPONSE_PLAYER_LOGIN));
 	if (NULL == pResponse)
@@ -196,7 +217,7 @@ void CDBJob::onIMCreateRoleRequest(CInternalMsg* pMsg)
 		return;
 	}
 
-	uint32 nRoleID = atoi(tQueryResult.getField(0)->getValue());
+	unsigned int nRoleID = atoi(tQueryResult.getField(0)->getValue());
 	
 	CIMCreateRoleResponse* pIMCreateRoleResponse = reinterpret_cast<CIMCreateRoleResponse*>(CInternalMsgPool::Inst()->allocMsg(IM_RESPONSE_CREATE_ROLE));
 	if (NULL == pIMCreateRoleResponse)
@@ -231,8 +252,8 @@ void CDBJob::onIMEnterSceneRequest(CInternalMsg* pMsg)
 		return;
 	}
 
-	uint32 nRoleID = pEnterSceneRequest->mRoleID;
-	uint32 nPlayerEntityID = pEnterSceneRequest->mPlayerEntityID;
+	unsigned int nRoleID = pEnterSceneRequest->mRoleID;
+	unsigned int nPlayerEntityID = pEnterSceneRequest->mPlayerEntityID;
 
 	char acBuffer[STRING_LENGTH_128] = { 0 };
 	snprintf(acBuffer, sizeof(acBuffer), "call LoadPlayerInfo(%d)", nRoleID);

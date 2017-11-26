@@ -83,7 +83,7 @@ namespace Myth
 	class CAutoResetTimer
 	{
 	public:
-		CAutoResetTimer(uint32 nMaxTime)
+		CAutoResetTimer(int nMaxTime)
 			:mMaxTime(nMaxTime), mLeftTime(nMaxTime)
 		{
 		}

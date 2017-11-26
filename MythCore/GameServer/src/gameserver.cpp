@@ -12,6 +12,7 @@
 #include "mapmamager.h"
 #include "mapconfigmanager.h"
 #include "template.h"
+#include "dbmodule.h"
 /// 初始化
 bool CGameServer::init()
 {
@@ -102,6 +103,8 @@ bool CGameServer::initLogicModule()
 	CMapConfigManager::CreateInst();
 	CMapManager::CreateInst();
 	CMapModule::CreateInst();
+	CDBModule::CreateInst();
+
 	return true;
 }
 
@@ -127,24 +130,24 @@ bool CGameServer::initStaticData()
 		return bResult;
 	}
 
-	bResult = CStaticData::loadFromFile("gameserverconfig/template/template_server.dat");
-	if (!bResult)
-	{
-		return bResult;
-	}
+	//bResult = CStaticData::loadFromFile("gameserverconfig/template/template_server.dat");
+	//if (!bResult)
+	//{
+	//	return bResult;
+	//}
 	return true;
 }
 
 /// 初始线程
 bool CGameServer::initThread()
 {
-	mThreadPool = new Myth::CThreadPool(3);
+	mThreadPool = new Myth::CThreadPool(10);
 	if (NULL == mThreadPool)
 	{
 		return false;
 	}
 	
-	if (0 != mDBJob.init(CGameServerConfig::Inst()->getDBHost(), 
+	if (0 != mDBJob.init(CGameServerConfig::Inst()->getDBHost(),
 		CGameServerConfig::Inst()->getDBUserName(), CGameServerConfig::Inst()->getDBPasswd(),
 		CGameServerConfig::Inst()->getDefaultDataBase(), CGameServerConfig::Inst()->getDBPort(),
 		NULL))
@@ -174,6 +177,7 @@ void CGameServer::run()
 	MYTH_ASSERT_INFO(1,;,"I love you macro!");
 	while (true)
 	{
+		//printf("*dddd*");
 		CTimeManager::Inst()->UpdateCurrTime();
 		mThreadPool->run();
 #ifdef MYTH_OS_WINDOWS
@@ -198,7 +202,7 @@ void CGameServer::clear()
 void CGameServer::clearLog()
 {
 	// 删除错误日志的displayer
-	uint8 nErrorDisplaySize = CLogManager::Inst()->GetErrorLog().GetDisplayerSize();
+	byte nErrorDisplaySize = CLogManager::Inst()->GetErrorLog().GetDisplayerSize();
 	for (int i = 0; i < nErrorDisplaySize; ++i)
 	{
 		delete CLogManager::Inst()->GetErrorLog().GetDisplayer(i);
@@ -206,7 +210,7 @@ void CGameServer::clearLog()
 	CLogManager::Inst()->GetErrorLog().SetDisplayerSize(0);
 
 	// 删除信息日志的displayer
-	uint8 nInfoDisplaySize = CLogManager::Inst()->GetInfoLog().GetDisplayerSize();
+	byte nInfoDisplaySize = CLogManager::Inst()->GetInfoLog().GetDisplayerSize();
 	for (int i = 0; i < nInfoDisplaySize; ++ i)
 	{
 		delete CLogManager::Inst()->GetInfoLog().GetDisplayer(i);
@@ -266,7 +270,7 @@ void CGameServer::pushTask(EmTaskType eTaskType, CInternalMsg* pMsg)
 	}
 }
 
-void CGameServer::pushDBTask(int nUid, uint8* pData, uint8 nDataLength)
+void CGameServer::pushDBTask(int nUid, byte* pData, int nDataLength)
 {
 	mDBJob.pushBackJobData(pData, nDataLength);
 }

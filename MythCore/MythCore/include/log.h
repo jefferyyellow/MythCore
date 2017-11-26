@@ -35,11 +35,11 @@ namespace Myth
 		/// Add a displayer
 		bool			AddDisplayer(CLogDisplayer* pDisplayer);
 		/// Get a displayer
-		CLogDisplayer*	GetDisplayer(uint32 uIndex);
+		CLogDisplayer*	GetDisplayer(unsigned int uIndex);
 		/// Get the size of displayer 
-		uint8				GetDisplayerSize(){return mDisplayerSize;}
+		byte				GetDisplayerSize(){return mDisplayerSize;}
 		/// Set the size of displayer
-		void			SetDisplayerSize(uint8 nSize){mDisplayerSize = nSize;}
+		void			SetDisplayerSize(byte nSize){mDisplayerSize = nSize;}
 	
 		void			DisplayLog(char* pLogMessage);
 	private:
@@ -48,7 +48,7 @@ namespace Myth
 		/// Displayers of log,these decide where the log display
 		CLogDisplayer*	mDisplayer[MAX_NUM_LOG_DISPLAYER];
 		/// Number of displayer
-		uint8			mDisplayerSize;
+		byte			mDisplayerSize;
 	};
 }
 

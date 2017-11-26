@@ -7,12 +7,13 @@ BEGIN
 	SELECT account_id INTO AccountID FROM PlayerAccount where user_name=UserName and channel_id=ChannelID and server_id=ServerID;
 	IF FOUND_ROWS() = 0 THEN
 		INSERT INTO PlayerAccount(user_name,channel_id, server_id, create_time) VALUES(UserName, ChannelID, ServerID, unix_timestamp());
-		SELECT LAST_INSERT_ID INTO AccountID;
-		SELECT AccountID;
+		SELECT LAST_INSERT_ID() INTO AccountID;
+		SELECT AccountID,UserName,ChannelID, ServerID;
 	ELSE
-		SELECT AccountID;
+		SELECT AccountID,UserName,ChannelID, ServerID;
 	END IF;
 END
+;;
 DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `GetRoleInfo`;
@@ -27,6 +28,7 @@ BEGIN
 		SELECT RoleID;
 	END IF;
 END
+;;
 DELIMITER ;
 
 
@@ -49,6 +51,7 @@ BEGIN
 		SELECT 0;
 	END IF;
 END
+;;
 DELIMITER ;
 
 
@@ -58,3 +61,5 @@ CREATE PROCEDURE `LoadPlayerInfo`(RoleID int unsigned)
 BEGIN
 	select role_name, role_level, role_exp from PlayerRole WHERE role_id=RoleID;
 END
+;;
+DELIMITER ;

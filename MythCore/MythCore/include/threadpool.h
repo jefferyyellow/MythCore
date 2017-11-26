@@ -144,10 +144,10 @@ namespace Myth
 
 	private:
 		ThreadList			mIdleList;
-		uint8				mIdleListNum; 
+		byte				mIdleListNum; 
 
 		JobArray			mJobArray;
-		uint8				mJobIndex;
+		byte				mJobIndex;
 
 		CSimpleLock			mSimpleLock;
 	};

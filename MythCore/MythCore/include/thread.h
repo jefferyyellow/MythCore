@@ -17,15 +17,15 @@ namespace Myth
 		}
 
 	public:
-		virtual void doing(uint32 uParam) = 0;
+		virtual void doing(int uParam) = 0;
 
-		uint8	getJobID(){return mJobID;}
-		void	setJobID(uint8 mJobID){mJobID = mJobID;}
+		byte	getJobID(){return mJobID;}
+		void	setJobID(byte mJobID){mJobID = mJobID;}
 
 		bool	getBusy(){return mBusy;}
 		void	setBusy(bool bBusy){mBusy = bBusy;}
 	private:
-		uint8 mJobID;
+		byte mJobID;
 		bool mBusy;
 	};
 
@@ -72,8 +72,8 @@ namespace Myth
 		virtual CThreadPool* getThreadPool() = 0;
 		virtual void setThreadPool(CThreadPool* pThreadPool) = 0;
 
-		virtual sint getSerialNum() = 0;
-		virtual void setSerialNum(sint nSerialNum) = 0;
+		virtual int getSerialNum() = 0;
+		virtual void setSerialNum(int nSerialNum) = 0;
 	};
 }
 #endif

@@ -1,7 +1,7 @@
 #ifndef __BIT_SET_H__
 #define __BIT_SET_H__
 #include "commontype.h"
-/// sizeof(uint32)
+/// sizeof(int)
 #define	MYTH_BITLEN			(4 * 8)
 // 32 = 2^5  ->   MYTH_BITLEN = 2 ^ MYTH_BITLEN_SHIFT
 #define	MYTH_BITLEN_SHIFT	5				
@@ -52,45 +52,45 @@ namespace Myth
 		/// get the size of used array
 		int		size() const{ return Capacity; }
 		/// clear the uIndex bit
-		void	clearBit(uint32 uIndex)
+		void	clearBit(unsigned int uIndex)
 		{
 			if (uIndex >= Capacity)
 			{
 				return;
 			}
 
-			uint32 mask = 1 << (uIndex & (MYTH_BITLEN - 1));
+			int mask = 1 << (uIndex & (MYTH_BITLEN - 1));
 			mBitSet[uIndex >> MYTH_BITLEN_SHIFT] &= ~mask;
 		}
 		/// check the uIndex bit is set
-		bool	getBit(uint uIndex) const
+		bool	getBit(unsigned int uIndex) const
 		{
 			if (uIndex >= Capacity)
 			{
 				return false;
 			}
-			uint32 mask = 1 << (uIndex & (MYTH_BITLEN - 1));
+			int mask = 1 << (uIndex & (MYTH_BITLEN - 1));
 			return 0 != (mBitSet[uIndex >> MYTH_BITLEN_SHIFT] & mask);
 		}
 		/// set the uIndex bit to 1
-		void	setBit(uint uIndex)
+		void	setBit(unsigned int uIndex)
 		{
 			if (uIndex >= Capacity)
 			{
 				return;
 			}
-			uint32 mask = 1 << (uIndex & (MYTH_BITLEN - 1));
+			int mask = 1 << (uIndex & (MYTH_BITLEN - 1));
 			mBitSet[uIndex >> MYTH_BITLEN_SHIFT] |= mask;
 		}
 		/// check the uIndex bit is set to 1
-		bool	operator[](uint uIndex) const
+		bool	operator[](unsigned int uIndex) const
 		{
 			return getBit(uIndex);
 		}
 		/// set all bit to 1
 		void	setAllBit()
 		{
-			memset(mBitSet, ~((uint)0), sizeof(mBitSet));
+			memset(mBitSet, ~((int)0), sizeof(mBitSet));
 			mBitSet[mBitSetSize - 1] &= mLastMask;
 		}
 		/// set all bit to 0
@@ -130,7 +130,7 @@ namespace Myth
 
 	public:
 		/// get function for mBitSet
-		uint32	getBitSet(uint uIndex)
+		int	getBitSet(unsigned int uIndex)
 		{
 			if (uIndex >= mBitSetSize)
 			{
@@ -141,7 +141,7 @@ namespace Myth
 		}
 
 		/// set function for mBitSet
-		void	setBitSet(uint uIndex, uint32 uBitSet)
+		void	setBitSet(unsigned int uIndex, int uBitSet)
 		{
 			if (uIndex >= mBitSetSize)
 			{
@@ -155,11 +155,11 @@ namespace Myth
 		/// calculate the mLastMask
 		void	caluLastMask()
 		{
-			uint uLastBits = Capacity & (MYTH_BITLEN - 1);
+			int uLastBits = Capacity & (MYTH_BITLEN - 1);
 			// if Capacity % MYTH_BITLEN == 0
 			if (uLastBits == 0)
 			{
-				mLastMask = ~((uint)0);
+				mLastMask = ~((int)0);
 			}
 			else
 			{
@@ -169,11 +169,11 @@ namespace Myth
 
 	private:
 		/// bit array
-		uint32	mBitSet[BIT_SET_LEN(Capacity)];
+		int	mBitSet[BIT_SET_LEN(Capacity)];
 		/// size of array mBitSet
-		uint32	mBitSetSize;
-		/// the last uint32 mask
-		uint32	mLastMask;
+		int	mBitSetSize;
+		/// the last int mask
+		int	mLastMask;
 	};
 }
 

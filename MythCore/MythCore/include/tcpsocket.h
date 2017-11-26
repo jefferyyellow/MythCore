@@ -69,7 +69,7 @@ namespace Myth
 			mRecvBuffSize = 0;
 			mMaxRecvBuffSize = 0;
 		}
-		CTcpSocket(char* pIP, uint32 uPort)
+		CTcpSocket(char* pIP, short uPort)
 		{
 			if (NULL != pIP)
 			{
@@ -84,7 +84,7 @@ namespace Myth
 
 	public:
 		SOCKET	createSocket();
-		int		connectServer(char* pIP, uint16 uPort);
+		int		connectServer(char* pIP, short uPort);
 		int		reconnectServer();
 		int		bindPort();
 		int		bindAdress();
@@ -111,8 +111,8 @@ namespace Myth
 		int		getRecvBuffSizeOption();
 		int		setRecvBuffSizeOption(int nBuffSize);
 
-		int		sendData(char* pBuff, int nBuffSize);
-		int		recvData(char* pBuff, int nBuffSize);
+		int		sendData(byte* pBuff, int nBuffSize);
+		int		recvData(byte* pBuff, int nBuffSize);
 	public:
 		SOCKET	getSocketFd(){ return mSocketFd; }
 		void	setSocketFd(SOCKET uFd){ mSocketFd = uFd; }
@@ -128,26 +128,26 @@ namespace Myth
 			mIP[sizeof(mIP) - 1] = '\0';
 		}
 
-		uint32	getPort(){ return mPort; }
-		void	setPort(uint16 uPort){ mPort = uPort; }
+		short	getPort(){ return mPort; }
+		void	setPort(short uPort){ mPort = uPort; }
 
-		uint8	getSocketStatus(){return mSocketStatus;}
-		void	SetSocketStatus(uint8 nStatus){mSocketStatus = nStatus;}
+		byte	getSocketStatus(){return mSocketStatus;}
+		void	SetSocketStatus(byte nStatus){mSocketStatus = nStatus;}
 
-		uint8	GetListen(){return mbListen;}
-		void	SetListen(uint8 bListen){mbListen = bListen;}
+		byte	GetListen(){return mbListen;}
+		void	SetListen(byte bListen){mbListen = bListen;}
 
 
-		char*		getRecvBuffPoint(){ return mpRecvBuff + mRecvBuffSize; }
-		sint16		getRecvBuffCapacity(){ return mMaxRecvBuffSize - mRecvBuffSize; }
+		byte*		getRecvBuffPoint(){ return mpRecvBuff + mRecvBuffSize; }
+		short		getRecvBuffCapacity(){ return mMaxRecvBuffSize - mRecvBuffSize; }
 
-		char*		getRecvBuff(){return mpRecvBuff;}
-		void		setRecvBuff(char* pRecvBuff){mpRecvBuff = pRecvBuff;}
+		byte*		getRecvBuff(){return mpRecvBuff;}
+		void		setRecvBuff(byte* pRecvBuff){mpRecvBuff = pRecvBuff;}
 
-		sint16		getRecvBuffSize(){return mRecvBuffSize;}
-		void		setRecvBuffSize(sint16 nRecvBuffSize){mRecvBuffSize = nRecvBuffSize;}
+		short		getRecvBuffSize(){return mRecvBuffSize;}
+		void		setRecvBuffSize(short nRecvBuffSize){mRecvBuffSize = nRecvBuffSize;}
 
-		void		setMaxRecvBuffSize(sint16 nMaxRecvBuffSize){mMaxRecvBuffSize = nMaxRecvBuffSize;}
+		void		setMaxRecvBuffSize(short nMaxRecvBuffSize){mMaxRecvBuffSize = nMaxRecvBuffSize;}
 
 		void		resetRecvBuffPoint(int nSize)
 		{
@@ -165,17 +165,17 @@ namespace Myth
 		/// IP adress
 		char	mIP[IP_SIZE];
 		/// IP port
-		uint16	mPort;
+		short	mPort;
 		/// socket status
-		uint8	mSocketStatus;
+		byte	mSocketStatus;
 		/// listen socket
-		uint8	mbListen;
+		byte	mbListen;
 		/// 接收缓存
-		char*	mpRecvBuff;
+		byte*	mpRecvBuff;
 		/// 接受缓存已经接受的数据长度
-		sint16		mRecvBuffSize;
+		short	mRecvBuffSize;
 		/// 接受缓存最大的数据长度
-		sint16		mMaxRecvBuffSize;
+		short	mMaxRecvBuffSize;
 	};
 
 	//class CBuffTcpSocket : public CTcpSocket

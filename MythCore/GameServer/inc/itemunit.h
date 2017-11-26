@@ -36,11 +36,11 @@ public:
 	int			insertItem(int nItemID, int nItemNum);
 
 public:
-	sint32	getMoney() const { return mMoney; }
-	void	setMoney(sint32 nValue) { mMoney = nValue; }
+	int		getMoney() const { return mMoney; }
+	void	setMoney(int nValue) { mMoney = nValue; }
 
-	sint32	getDiamond() const { return mDiamond; }
-	void	setDiamond(sint32 nValue) { mDiamond = nValue; }
+	int	getDiamond() const { return mDiamond; }
+	void	setDiamond(int nValue) { mDiamond = nValue; }
 
 	CItemBox& getBag(){ return mBag; }
 private:
@@ -48,8 +48,8 @@ private:
 	CItemBox				mBag;				
 
 	/// ½ðÇ®
-	sint32					mMoney;
+	int						mMoney;
 	/// ×êÊ¯
-	sint32					mDiamond;
+	int						mDiamond;
 };
 #endif

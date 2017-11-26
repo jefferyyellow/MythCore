@@ -1,7 +1,7 @@
 #ifndef __ITEMLIST_H__
 #define __ITEMLIST_H__
 #include "objpool.h"
-template<uint32 Capacity>
+template<int Capacity>
 class CItemList
 {
 public:
@@ -34,7 +34,7 @@ public:
 		}
 	}
 
-	void		setItem(int nIndex, uint32 nObjID, uint32 nItemID)
+	void		setItem(int nIndex, int nObjID, int nItemID)
 	{
 		if (nIndex < 0 || nIndex >= Capacity)
 		{
@@ -46,7 +46,7 @@ public:
 	}
 
 public:
-	void		setItemObjID(int nIndex, uint32 nObjID)
+	void		setItemObjID(int nIndex, int nObjID)
 	{
 		if (nIndex < 0 || nIndex >= Capacity)
 		{
@@ -56,7 +56,7 @@ public:
 		mItemObjID[nIndex] = nObjID;
 	}
 
-	uint32		operator[](int nIndex)
+	int		operator[](int nIndex)
 	{
 		if (nIndex < 0 || nIndex >= Capacity)
 		{
@@ -65,7 +65,7 @@ public:
 		return mItemObjID[nIndex];
 	}
 
-	uint32		getItemObjID(int nIndex)
+	int		getItemObjID(int nIndex)
 	{
 		if (nIndex < 0 || nIndex >= Capacity)
 		{
@@ -83,12 +83,12 @@ public:
 
 		return mItemID[nIndex];
 	}
-	uint32		getCapacity(){return Capacity;}
+	int		getCapacity(){return Capacity;}
 
 protected:
 	/// Obj ID列表
-	uint32		mItemObjID[Capacity];
+	int		mItemObjID[Capacity];
 	/// 道具模板ID
-	uint32		mItemID[Capacity];
+	int		mItemID[Capacity];
 };
 #endif

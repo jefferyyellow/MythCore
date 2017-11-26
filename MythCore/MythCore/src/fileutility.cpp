@@ -130,7 +130,7 @@ namespace Myth
 #endif
 	}
 
-	uint32 CFileUtility::GetFileSize(const char* pFilePath)
+	unsigned int CFileUtility::GetFileSize(const char* pFilePath)
 	{
 #ifdef MYTH_OS_WINDOWS
 		struct _stat tTempStat;
@@ -146,7 +146,7 @@ namespace Myth
 		return tTempStat.st_size;
 	}
 
-	uint32 CFileUtility::GetFileSize(FILE* pFile)
+	unsigned int CFileUtility::GetFileSize(FILE* pFile)
 	{
 #ifdef MYTH_OS_WINDOWS
 		struct _stat tTempStat;
@@ -163,7 +163,7 @@ namespace Myth
 		return tTempStat.st_size;
 	}
 
-	uint32 CFileUtility::GetFileModifyTime(const char* pFilePath)
+	unsigned int CFileUtility::GetFileModifyTime(const char* pFilePath)
 	{
 		//	if(NULL == pFilePath)
 		//	{
@@ -185,7 +185,7 @@ namespace Myth
 		//
 		return 0;
 	}
-	bool CFileUtility::SetFileModifyTime(const char* pFilePath, uint32 uModifyTime)
+	bool CFileUtility::SetFileModifyTime(const char* pFilePath, unsigned int uModifyTime)
 	{
 		if (NULL == pFilePath)
 		{
@@ -194,7 +194,7 @@ namespace Myth
 		return true;
 	}
 
-	uint32 CFileUtility::GetFileCreateDate(const char* pFilePath)
+	unsigned int CFileUtility::GetFileCreateDate(const char* pFilePath)
 	{
 		if (NULL == pFilePath)
 		{
@@ -212,7 +212,7 @@ namespace Myth
 		{
 			return 0;
 		}
-		return (uint32)tTempStat.st_ctime;
+		return (unsigned int)tTempStat.st_ctime;
 
 	}
 

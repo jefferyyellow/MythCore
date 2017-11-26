@@ -25,7 +25,7 @@ namespace Myth
 		CMysqlQueryResult(CMysqlDataBase* pMysqlDataBase, bool bProcedure);
 		~CMysqlQueryResult();
 
-		int init(MYSQL_RES *pResult, uint32 nRowCount, uint32 nFieldCount);
+		int init(MYSQL_RES *pResult, int nRowCount, int nFieldCount);
 		int nextRow();
 		EmMysqlDataType convertNativeType(enum_field_types mysqlType) const;
 		void clear();
@@ -40,7 +40,7 @@ namespace Myth
 			return &mField[nIndex];
 		}
 
-		uint32			getFileValueLen(unsigned int nIndex)
+		int			getFileValueLen(unsigned int nIndex)
 		{
 			if (nIndex >= MAX_ROW_FIELD_NUM)
 			{
@@ -61,7 +61,7 @@ namespace Myth
 			return mField[nIndex].getValue();
 		}
 
-		void			setField(unsigned int nIndex, char* pValue, uint32 nValueLen)
+		void			setField(unsigned int nIndex, char* pValue, int nValueLen)
 		{
 			if (nIndex >= MAX_ROW_FIELD_NUM)
 			{
@@ -92,12 +92,12 @@ namespace Myth
 		}
 
 		/// 得到列数目
-		uint32			getFieldCount(){return mFieldCount;}
-		void			setFieldCount(uint32 nFieldCount){mFieldCount = nFieldCount;}
+		int				getFieldCount(){return mFieldCount;}
+		void			setFieldCount(int nFieldCount){mFieldCount = nFieldCount;}
 
 		/// 得到行数目
-		uint32			getRowCount(){return mRowCount;}
-		void			setRowCount(uint32 nRowCount){mRowCount = nRowCount;}
+		int				getRowCount(){return mRowCount;}
+		void			setRowCount(int nRowCount){mRowCount = nRowCount;}
 
 	private:
 		/// mysql
@@ -109,9 +109,9 @@ namespace Myth
 		/// 列类型
 		EmMysqlDataType	mFieldDataType[MAX_ROW_FIELD_NUM];
 		/// 列数目		
-		uint32			mFieldCount;
+		int				mFieldCount;
 		/// 行数目
-		uint32			mRowCount;
+		int				mRowCount;
 		/// 是否执行存储过程
 		bool			mProcedure;
 	};

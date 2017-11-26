@@ -9,7 +9,7 @@ void CEntity::addVisiblePlayer(CEntity* pEntity)
 		return;
 	}
 
-	CShareList<uint32>::CShareListNode<uint32>* pNode = mVisiblePlayerAlloc.allocate();
+	CShareList<int>::CShareListNode<int>* pNode = mVisiblePlayerAlloc.allocate();
 	pNode->mData = pEntity->getObjID();
 	pNode->mpNext = NULL;
 	pNode->mpPrev = NULL;

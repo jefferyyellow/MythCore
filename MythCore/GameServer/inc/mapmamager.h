@@ -16,8 +16,8 @@ using namespace Myth;
 class CMapUnit
 {
 public:
-	typedef CBlockMemory<CShareList<uint32>::CShareListNode<uint32>, 2000, 200> ENTITY_ALLOC;
-	typedef CShareList<uint32> ENTITY_LIST;
+	typedef CBlockMemory<CShareList<int>::CShareListNode<int>, 2000, 200> ENTITY_ALLOC;
+	typedef CShareList<int> ENTITY_LIST;
 public:
 	CMapUnit()
 	{
@@ -33,8 +33,8 @@ public:
 	unsigned short		getBlockData() const { return mBlockData; }
 	void				setBlockData(unsigned short nValue) { mBlockData = nValue; }
 
-	void				pushEntity(uint32 nObjID);
-	void				removeEntity(uint32 nObjID);
+	void				pushEntity(int nObjID);
+	void				removeEntity(int nObjID);
 
 	ENTITY_LIST&		GetEntityList() { return mEntityList; }
 

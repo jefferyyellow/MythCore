@@ -2,7 +2,7 @@
 #define __JOB_H__
 #include "thread.h"
 #include "taskmanager.h"
-template<uint BaseCount, uint Increment>
+template<int BaseCount, int Increment>
 class CJob : public IJob
 {
 public:
@@ -14,7 +14,7 @@ public:
 	}
 
 public:
-	virtual void doing(uint32 uParam) = 0;
+	virtual void doing(int uParam) = 0;
 	void pushTask(CInternalMsg* pMsg)
 	{
 		mTaskManager.pushTask(pMsg);

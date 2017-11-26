@@ -16,6 +16,9 @@ namespace Myth
 		int		connectMysqlServer(char* pHost, char* pUserName, char* pPasswd, char* pDataBase, int nPort, char* pUnixSocket);
 		/// 查询，返回结果
 		int		query(const char *pSql, CMysqlQueryResult& rQueryResult);
+		/// 查询，将结果返回字节流中
+		int		query(const char *pSql, byte* pBuffer, int& rLength, int& rRowNum, int& rColNum);
+
 		/// 查询，不在乎结果
 		int		query(const char *pSql);
 		void	clearResult();
@@ -52,7 +55,7 @@ namespace Myth
 
 	private:
 		/// 引用计数
-		static uint16	mDBCount;
+		static short	mDBCount;
 		MYSQL			*mMysql;
 		/// 保持数据库信息用于断线重连
 		/// 注意，Host不只是有IP，还可能是域名
@@ -66,7 +69,7 @@ namespace Myth
 		/// unix socket
 		char			mUnixSocket[STRING_LENGTH_32];
 		/// 端口
-		uint32			mPort;
+		int				mPort;
 	};
 }
 #endif

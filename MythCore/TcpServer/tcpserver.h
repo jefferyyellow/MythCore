@@ -95,8 +95,8 @@ public:
 struct CExchangeHead
 {
 	time_t	mSocketTime;				// socket建立时间
-	uint16	mSocketIndex;				// socket索引
-	uint16	mSocketError;				// socket错误
+	short	mSocketIndex;				// socket索引
+	short	mSocketError;				// socket错误
 };
 
 struct  CSocketInfo
@@ -141,7 +141,7 @@ public:
 	void		exit();
 
 	/// 通知游戏服务器删除一个socket
-	void		sendSocketErrToGameServer(int nTcpIndex, uint16 nSocketState);
+	void		sendSocketErrToGameServer(int nTcpIndex, short nSocketState);
 	/// 清除socket info
 	void		clearSocketInfo(int nTcpIndex, CTcpSocket* pSocket);
 	/// 加载TCP服务器配置
@@ -165,7 +165,7 @@ private:
 	CTcpSocket*				mTcpSocket;					// Socket
 	CSocketInfo*			mSocketInfo;				// Socket的信息
 
-	char					mBuffer[MAX_SOCKET_BUFF_SIZE + sizeof(CExchangeHead)];	// 消息缓存
+	byte					mBuffer[MAX_SOCKET_BUFF_SIZE + sizeof(CExchangeHead)];	// 消息缓存
 	CExchangeHead			mExchangeHead;				// TCP和游戏服务器的消息交换头
 	CTcpConfig				mTcpConfig;					// 配置
 	time_t					mLastKeepLiveTime;			// 检查保持活跃的时间

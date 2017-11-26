@@ -2,7 +2,7 @@
 #define __DBJOB_H__
 #include "job.h"
 #include "mysqldatabase.h"
-#include "socketstream.h"
+#include "bytestream.h"
 #include "dbmessage.h"
 using namespace Myth;
 
@@ -16,14 +16,14 @@ public:
 	int		init(char* pHost, char* pUserName, char* pPasswd, char* pDataBase, int nPort, char* pUnixSocket);
 
 public:
-	virtual void doing(uint32 uParam);
+	virtual void doing(int uParam);
 
 public:
 	int		setBuffer(int nBufferSize);
 	/// 压入工作数据
-	void	pushBackJobData(uint8* pData, int nDataLength);
+	void	pushBackJobData(byte* pData, int nDataLength);
 	/// 取出工作数据
-	void	popBackJobData(uint8* pData, int &rLength);
+	void	popUpJobData(byte* pData, int &rLength);
 	/// 处理DB流里的数据
 	void	checkDBStream();
 private:
@@ -39,8 +39,8 @@ private:
 
 private:
 	CMysqlDataBase	mDataBase;
-	CSocketStream	mJobStream;
-	uint8*			mJobBuffer;
+	CByteStream		mJobStream;
+	byte*			mJobBuffer;
 	CSimpleLock		mJobStreamLock;
 	CDBRequest		mDBRequest;
 	CDBResponse		mDBResponse;

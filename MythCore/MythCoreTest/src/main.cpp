@@ -1039,7 +1039,7 @@ Myth::CSimpleLock cs;
 class CJob : public Myth::IJob
 {
 public:
-	virtual void doing(uint32 uParam)
+	virtual void doing(int uParam)
 	{
 		cs.lock();
 		//printf("Thread Serial Num :%d, %d\n", uParam, mNum);

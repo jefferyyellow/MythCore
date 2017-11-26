@@ -39,17 +39,17 @@ public:
 	void		setPlayerLoginMsg(CIMPlayerLoginMsg* pMsg);
 	bool		elapse(unsigned int nTickOffset);
 public:
-	uint32		getAccountID() const { return mAccountID; }
-	void		setAccountID(uint32 nValue) { mAccountID = nValue; }
+	unsigned int getAccountID() const { return mAccountID; }
+	void		setAccountID(int nValue) { mAccountID = nValue; }
 
-	uint16		getChannelID() const { return mChannelID; }
-	void		setChannelID(uint16 nValue) { mChannelID = nValue; }
+	short		getChannelID() const { return mChannelID; }
+	void		setChannelID(short nValue) { mChannelID = nValue; }
 
-	uint16		getServerID() const { return mServerID; }
-	void		setServerID(uint16 nValue) { mServerID = nValue; }
+	short		getServerID() const { return mServerID; }
+	void		setServerID(short nValue) { mServerID = nValue; }
 
-	uint32		getRoleID() const { return mRoleID; }
-	void		setRoleID(uint32 nValue) { mRoleID = nValue; }
+	unsigned int getRoleID() const { return mRoleID; }
+	void		setRoleID(unsigned int nValue) { mRoleID = nValue; }
 
 	void		setAccountName(const char* pName)
 	{
@@ -76,10 +76,10 @@ public:
 	void		setDBMessageID(int nValue) { mDBMessageID = nValue; }
 
 private:
-	uint32							mAccountID;								// 账号ID
-	uint16							mChannelID;								// 渠道
-	uint16							mServerID;								// 服务器ID
-	uint32							mRoleID;								// 角色ID
+	unsigned int					mAccountID;								// 账号ID
+	short							mChannelID;								// 渠道
+	short							mServerID;								// 服务器ID
+	unsigned int					mRoleID;								// 角色ID
 	char							mAccountName[MAX_PLAYER_NAME_LEN];		// 账号名
 	CExchangeHead					mExchangeHead;							// TCP消息交换头
 

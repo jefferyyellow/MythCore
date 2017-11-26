@@ -4,7 +4,7 @@
 #include "fixblockmemory.h"
 using namespace Myth;
 
-template<typename T, sint32 MaxCount, sint32 BaseCount, sint32 IncreCount, uint32 IDStart, uint32 IDEnd>
+template<typename T, int MaxCount, int BaseCount, int IncreCount, int IDStart, int IDEnd>
 class CObjManager
 {
 public:
@@ -23,14 +23,14 @@ public:
 		{
 			return NULL;
 		}
-		uint32 nID = generalID(nMemIndex);
+		int nID = generalID(nMemIndex);
 		pNode->setObjID(nID);
 		return pNode;
 	}
 
-	T*		getObj(uint32 nObjID)
+	T*		getObj(int nObjID)
 	{
-		sint32 nIndex = calMemIndex(nObjID);
+		int nIndex = calMemIndex(nObjID);
 		return mFixMemory.get(nIndex);
 	}
 	void	free(T *pObj)
@@ -40,13 +40,13 @@ public:
 			return;
 		}
 
-		sint32 nIndex = calMemIndex(pObj->getObjID());
+		int nIndex = calMemIndex(pObj->getObjID());
 		mFixMemory.free(nIndex);
 	}
 
-	void	freeByID(uint32 nObjID)
+	void	freeByID(int nObjID)
 	{
-		sint32 nIndex = calMemIndex(nObjID);
+		int nIndex = calMemIndex(nObjID);
 		mFixMemory.free(nIndex);
 	}
 
@@ -61,12 +61,12 @@ private:
 	// 为了保证id的向上增长,real_id就是这么计算的,但如果nTempID大于id_end,且nLastID为最终的id,这就完成了一个循环,
 	// 所以id不总是向上增长的
 	// ***********************************************************************
-	uint32	generalID(sint32 nMemIndex)
+	int	generalID(int nMemIndex)
 	{
-		uint32 nLastID = nMemIndex + IDStart;
+		int nLastID = nMemIndex + IDStart;
 		if (nLastID <= mLastMaxID)
 		{
-			uint32 nTempID = nLastID + ((mLastMaxID - nLastID) / MaxCount + 1) * MaxCount;
+			int nTempID = nLastID + ((mLastMaxID - nLastID) / MaxCount + 1) * MaxCount;
 			// 如果累加的小于最大值才用，不然的话回到最小值
 			if (nTempID < IDEnd)
 			{
@@ -78,7 +78,7 @@ private:
 		return nLastID;
 	}
 
-	sint32 calMemIndex(uint32 nID)
+	int calMemIndex(int nID)
 	{
 		if (nID < IDStart || nID >=IDEnd )
 		{
@@ -90,6 +90,6 @@ private:
 
 private:
 	CFixBlockMemory<T, MaxCount, BaseCount, IncreCount> mFixMemory;
-	uint32 mLastMaxID;
+	int mLastMaxID;
 };
 #endif

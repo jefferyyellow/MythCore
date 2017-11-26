@@ -30,10 +30,10 @@ public:
 	bool	removeItem(unsigned int nIndex, unsigned int nNum);
 
 public:
-	uint32		getSize(){return mSize;}
-	void		setSize(uint32 nSize){mSize = nSize;}
+	int		getSize(){return mSize;}
+	void	setSize(int nSize){mSize = nSize;}
 
 private:
-	uint32		mSize;
+	int		mSize;
 };
 #endif

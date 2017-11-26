@@ -7,26 +7,26 @@ namespace Myth
 	class CShareMemory
 	{
 	public:
-		static uint8*		createShareMemory(uint32 nKey, int nSize, bool& bCreate);
-		static int			destroyShareMemory(uint32 nKey, uint8* pShmPoint);
+		static byte*		createShareMemory(int nKey, int nSize, bool& bCreate);
+		static int			destroyShareMemory(int nKey, byte* pShmPoint);
 
 	public:
-		uint32		getShmKey(){ return mShmKey; }
-		void		setShmKey(uint32 nShmKey){ mShmKey = nShmKey; }
+		int			getShmKey(){ return mShmKey; }
+		void		setShmKey(int nShmKey){ mShmKey = nShmKey; }
 
-		uint32		getShmSize(){ return mShmSize; }
-		void		setShmSize(uint32 nShmSize){ mShmSize = nShmSize; }
+		int			getShmSize(){ return mShmSize; }
+		void		setShmSize(int nShmSize){ mShmSize = nShmSize; }
 
-		uint8*		getShmPoint(){ return mpShmPoint; }
-		void		setShmPoint(uint8* pShmPoint){ mpShmPoint = pShmPoint; }
+		byte*		getShmPoint(){ return mpShmPoint; }
+		void		setShmPoint(byte* pShmPoint){ mpShmPoint = pShmPoint; }
 
 	private:
 		/// 共享内存的键值
-		uint32		mShmKey;
+		int			mShmKey;
 		/// 共享内存的大小
-		uint32		mShmSize;
+		int			mShmSize;
 		/// 共享内存指针
-		uint8*		mpShmPoint;
+		byte*		mpShmPoint;
 	};
 }
 

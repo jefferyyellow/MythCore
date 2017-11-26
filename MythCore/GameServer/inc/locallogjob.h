@@ -52,7 +52,7 @@ public:
 	~CLocalLogJob(){}
 
 public:
-	virtual void doing(uint32 uParam);
+	virtual void doing(int uParam);
 
 private:
 	void	OnIMLocalLogRequest(CIMLocalLogRequest* pLogRequest);

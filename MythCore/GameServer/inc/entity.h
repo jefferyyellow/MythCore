@@ -13,8 +13,8 @@ class PBNpcSceneInfo;
 class CEntity : public CObj
 {
 public:
-	typedef CBlockMemory<CShareList<uint32>::CShareListNode<uint32>, 20000, 1000>	PLAYER_ALLOC;
-	typedef CShareList<uint32> PLAYER_LIST;
+	typedef CBlockMemory<CShareList<int>::CShareListNode<int>, 20000, 1000>	PLAYER_ALLOC;
+	typedef CShareList<int> PLAYER_LIST;
 public:
 	CEntity(){}
 	~CEntity(){}
@@ -80,27 +80,27 @@ public:
 
 
 public:
-	uint32		getTempID() const { return mTempID; }
-	void		setTempID(uint32 nValue) { mTempID = nValue; }
+	int			getTempID() const { return mTempID; }
+	void		setTempID(int nValue) { mTempID = nValue; }
 	/// 刷新战斗属性
 	virtual void	RefreshFightProperty(){}
 
 	// 当前血值
-	uint32		getCurHP() const { return mCurHP; }
-	void		setCurHP(uint32 nValue){ mCurHP = nValue; }
+	int			getCurHP() const { return mCurHP; }
+	void		setCurHP(int nValue){ mCurHP = nValue; }
 
 	// 当前魔值
-	uint32		getCurMP() const { return mCurMP; }
-	void		setCurMP(uint32 nValue) { mCurMP = nValue; }
+	int			getCurMP() const { return mCurMP; }
+	void		setCurMP(int nValue) { mCurMP = nValue; }
 protected:
 	/// 模板ID
-	uint32					mTempID;
+	int					mTempID;
 	/// 战斗属性
-	int						mFightProperty[emPropertyTypeMax];
+	int					mFightProperty[emPropertyTypeMax];
 	/// 当前血值
-	uint32					mCurHP;
+	int					mCurHP;
 	/// 当前魔值
-	uint32					mCurMP;
+	int					mCurMP;
 };
 
 /// NPC类

@@ -30,7 +30,7 @@ namespace Myth
 		}
 	}
 
-	int CMysqlQueryResult::init(MYSQL_RES *pResult, uint32 nRowCount, uint32 nFieldCount)
+	int CMysqlQueryResult::init(MYSQL_RES *pResult, int nRowCount, int nFieldCount)
 	{
 		if (NULL == pResult)
 		{
@@ -52,7 +52,7 @@ namespace Myth
 		mRowCount = nRowCount;
 
 		 MYSQL_FIELD *pFields = mysql_fetch_fields(mResult);
-		 for (uint32 i = 0; i < mFieldCount; i++)
+		 for (int i = 0; i < mFieldCount; i++)
 		 {
 			setFieldDataType(i, convertNativeType(pFields[i].type));
 		 }
@@ -73,7 +73,7 @@ namespace Myth
 			return -1;
 		}
 
-		for (uint32 i = 0; i < mFieldCount; i++)
+		for (int i = 0; i < mFieldCount; i++)
 		{
 			setField(i, tRow[i], pColumn[i]);
 		}

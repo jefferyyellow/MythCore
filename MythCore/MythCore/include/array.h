@@ -4,7 +4,7 @@
 #include <algorithm>
 namespace Myth
 {
-	template<typename T, uint32 Capacity>
+	template<typename T, int Capacity>
 	class CArray
 	{
 		typedef CArray<T, Capacity>	array_type;
@@ -24,7 +24,7 @@ namespace Myth
 		{
 			mSize = 0;
 		}
-		CArray(uint32 nSize, T t=T())
+		CArray(int nSize, T t=T())
 		{
 			std::fill(begin().base(), (begin() + nSize).base(), t);
 			mSize = nSize;
@@ -33,13 +33,13 @@ namespace Myth
 		template <class InputIterator>
 		CArray(InputIterator first, InputIterator last)
 		{
-			uint32 nSize = last - first;
+			int nSize = last - first;
 			if (nSize <= 0)
 			{
 				return;
 			}
 			iterator cur = begin();
-			for (uint32 i = 0; i < nSize; ++ i)
+			for (int i = 0; i < nSize; ++ i)
 			{
 				*cur++ = *first++;
 			}
@@ -163,13 +163,13 @@ namespace Myth
 		template <typename InputIterator>
 		void assign (InputIterator first, InputIterator last)
 		{
-			uint32 nSize = last - first;
+			int nSize = last - first;
 			if (nSize <= 0)
 			{
 				return;
 			}
 			iterator cur = begin();
-			for (uint32 i = 0; i < nSize && i < mSize; ++ i)
+			for (int i = 0; i < nSize && i < mSize; ++ i)
 			{
 				*cur++ = *first++;
 			}
@@ -214,7 +214,7 @@ namespace Myth
 		}
 		void insert (iterator position, iterator first, iterator last)
 		{
-			uint nSize = last - first;
+			int nSize = last - first;
 			if (mSize + nSize >= Capacity)
 			{
 				return ;
@@ -252,7 +252,7 @@ namespace Myth
 		}
 	private:
 		T			mData[Capacity];
-		uint32		mSize;
+		int		mSize;
 	};
 }
 

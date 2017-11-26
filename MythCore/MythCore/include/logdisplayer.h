@@ -34,7 +34,7 @@ namespace Myth
 	class CRollFileDisplayer : public CLogDisplayer
 	{
 	public:
-		CRollFileDisplayer(char* pFileName, uint32 uMaxFileSize, uint uMaxBackNum);
+		CRollFileDisplayer(char* pFileName, int uMaxFileSize, int uMaxBackNum);
 		virtual ~CRollFileDisplayer();
 
 	public:
@@ -51,9 +51,9 @@ namespace Myth
 		/// current file fd
 		int		mFd;
 		/// max file size of roll file
-		uint32	mMaxFileSize;
+		int		mMaxFileSize;
 		/// max back file num
-		uint32	mMaxBackNum;
+		int		mMaxBackNum;
 	};
 
 	/** debugger output displayer: display the log message in the debugger(for example: microsoft visual studio) 

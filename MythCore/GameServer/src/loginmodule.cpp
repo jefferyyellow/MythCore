@@ -28,7 +28,7 @@ void CLoginModule::OnTimer(unsigned int nTickOffset)
 		LOGIN_LIST::iterator it = mLoginList.begin();
 		for (; it != mLoginList.end(); )
 		{
-			uint32 nObjID = it->second;
+			int nObjID = it->second;
 			CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::Inst()->getObj(nObjID));
 			if (NULL == pLoginPlayer)
 			{

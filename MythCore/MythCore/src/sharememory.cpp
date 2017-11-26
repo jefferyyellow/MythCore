@@ -10,7 +10,7 @@
 namespace Myth
 {
 #ifdef MYTH_OS_WINDOWS
-	uint8* CShareMemory::createShareMemory(uint32 nKey, int nSize, bool& bCreate)
+	byte* CShareMemory::createShareMemory(int nKey, int nSize, bool& bCreate)
 	{
 		bCreate = true;
 		char szKeyBuffer[MAX_PATH] = { 0 };
@@ -29,10 +29,10 @@ namespace Myth
 			bCreate = false;
 		}
 
-		return (uint8 *)MapViewOfFile(hHandle, FILE_MAP_ALL_ACCESS, 0, 0, 0);
+		return (byte *)MapViewOfFile(hHandle, FILE_MAP_ALL_ACCESS, 0, 0, 0);
 	}
 
-	int CShareMemory::destroyShareMemory(uint32 nKey, uint8* pShmPoint)
+	int CShareMemory::destroyShareMemory(int nKey, byte* pShmPoint)
 	{
 		if (NULL != pShmPoint)
 		{
@@ -50,7 +50,7 @@ namespace Myth
 		return 0;
 	}
 #else
-	uint8* CShareMemory::createShareMemory(uint32 nKey, int nSize, bool& bCreate)
+	byte* CShareMemory::createShareMemory(int nKey, int nSize, bool& bCreate)
 	{
 		bCreate = true;
 		key_t tKey = (key_t)nKey;
@@ -98,10 +98,10 @@ namespace Myth
 		}
 
 
-		return (uint8*)shmat(nShmID, NULL, 0);
+		return (byte*)shmat(nShmID, NULL, 0);
 	}
 
-	int CShareMemory::destroyShareMemory(uint32 nKey, uint8* pShmPoint)
+	int CShareMemory::destroyShareMemory(int nKey, char* pShmPoint)
 	{
 		key_t tKey = (key_t)nKey;
 		if (tKey < 0)

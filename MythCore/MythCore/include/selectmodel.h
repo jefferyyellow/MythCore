@@ -43,7 +43,7 @@ namespace Myth
 		static			int initSocketSystem();
 
 	public:
-		CTcpSocket*		createListenSocket(char* pIP, uint32 uPort, int nListNum, int& rSocketIndex);
+		CTcpSocket*		createListenSocket(char* pIP, short uPort, int nListNum, int& rSocketIndex);
 		void			selectAllFd();
 		//void			processRead();
 		//int				processWrite(int nSocketIndex, char* pBuffer, int nBuffSize);
@@ -73,19 +73,19 @@ namespace Myth
 		CTcpSocket*		getAllSocket(){return mpAllSocket;}
 		void			setAllSocket(CTcpSocket* pAllSocket){mpAllSocket = pAllSocket;}
 
-		uint16			getSocketCapacity(){ return mSocketCapacity; }
-		void			setSocketCapacity(uint16 nSocketNum){ mSocketCapacity = nSocketNum; }
+		short			getSocketCapacity(){ return mSocketCapacity; }
+		void			setSocketCapacity(short nSocketNum){ mSocketCapacity = nSocketNum; }
 
-		uint16			getMaxSocketIndex(){return mMaxSocketIndex;}
-		void			setMaxSocketIndex(int nMaxSocketIndex){mMaxSocketIndex = nMaxSocketIndex;}
+		short			getMaxSocketIndex(){return mMaxSocketIndex;}
+		void			setMaxSocketIndex(short nMaxSocketIndex){mMaxSocketIndex = nMaxSocketIndex;}
 	private:
 		SOCKET				mMaxFd;
 		fd_set				mReadSet;
 		fd_set				mReadBackSet;
 		timeval				mSelectTime;
 		CTcpSocket*			mpAllSocket;
-		uint16				mSocketCapacity;
-		uint16				mMaxSocketIndex;
+		short				mSocketCapacity;
+		short				mMaxSocketIndex;
 	};
 
 }

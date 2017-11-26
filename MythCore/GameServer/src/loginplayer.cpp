@@ -5,6 +5,7 @@
 #include "gameserver.h"
 #include "objpool.h"
 #include "entityplayer.h"
+#include "dbmodule.h"
 
 void CLoginPlayer::init()
 {
@@ -35,28 +36,30 @@ int CLoginPlayer::processStateNone()
 		return -1;
 	}
 
-	// 接收到客户端的消息后，转换成内部消息给DB去处理
-	CIMPlayerLoginRequest* pPlayerLoginRequest = reinterpret_cast<CIMPlayerLoginRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_PLAYER_LOGIN));
-	if (NULL == pPlayerLoginRequest)
-	{
-		return -1;
-	}
-	
-	strncpy(pPlayerLoginRequest->mName, pLoginRequest->name().c_str(), sizeof(pPlayerLoginRequest->mName) - 1);
-	pPlayerLoginRequest->mChannelID = pLoginRequest->channelid();
-	pPlayerLoginRequest->mServerID = pLoginRequest->serverid();
+	//// 接收到客户端的消息后，转换成内部消息给DB去处理
+	//CIMPlayerLoginRequest* pPlayerLoginRequest = reinterpret_cast<CIMPlayerLoginRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_PLAYER_LOGIN));
+	//if (NULL == pPlayerLoginRequest)
+	//{
+	//	return -1;
+	//}
+	//
+	//strncpy(pPlayerLoginRequest->mName, pLoginRequest->name().c_str(), sizeof(pPlayerLoginRequest->mName) - 1);
+	//pPlayerLoginRequest->mChannelID = pLoginRequest->channelid();
+	//pPlayerLoginRequest->mServerID = pLoginRequest->serverid();
 
-	setAccountName(pPlayerLoginRequest->mName);
-	setChannelID(pPlayerLoginRequest->mChannelID);
-	setServerID(pPlayerLoginRequest->mServerID);
+	//setAccountName(pPlayerLoginRequest->mName);
+	//setChannelID(pPlayerLoginRequest->mChannelID);
+	//setServerID(pPlayerLoginRequest->mServerID);
 
-	// 用户名
-	setPlayerLoginMsg((CIMPlayerLoginMsg*)pPlayerLoginRequest);
+	//// 用户名
+	//setPlayerLoginMsg((CIMPlayerLoginMsg*)pPlayerLoginRequest);
 
-	CGameServer::Inst()->pushTask(emTaskType_DB, pPlayerLoginRequest);
-	printf("CLoginModule::OnMessageLoginRequest");
+	//CGameServer::Inst()->pushTask(emTaskType_DB, pPlayerLoginRequest);
+	//printf("CLoginModule::OnMessageLoginRequest");
 
-	return emLoginState_AccountVerify;
+	CDBModule::Inst()->pushDBTask(0, emSessionType_AccountVerify,0, 0, "call CheckUserName('%s', %d, %d)", 
+		pLoginRequest->name().c_str(), pLoginRequest->channelid(), pLoginRequest->serverid());
+	//return emLoginState_AccountVerify;
 }
 
 int CLoginPlayer::processAccountVerify()
