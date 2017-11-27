@@ -75,6 +75,8 @@ public:
 	void formatClass(XMLElement* pElement, XMLElement* pParentElement, bool bClass, int nIndentNum);
 	// 
 	void formatAttribute(XMLElement* pElement, int nIndentNum, bool bRoot);
+	void formatVariable(CVariable* pVariable, XMLElement* pElement, const XMLAttribute* pAttribute, bool bRoot);
+	void fromatVariableArray(CVariable* pVariable, XMLElement* pElement, const XMLAttribute* pAttribute, bool bRoot);
 	// 写源文件
 	void writeSourceFile(FILE* pFile);
 	// 根据名字得到对应的变量

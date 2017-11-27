@@ -63,12 +63,12 @@ void CClass::formatAttribute(XMLElement* pElement, int nIndentNum, bool bRoot)
 			if (pVariable->getCount() > 1)
 			{
 				appendIndent(nIndentNum);
-				_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s.push_back(pRootElement->IntAttribute(\"%s\"));\n", mBuffer, pAttribute->Name(), pAttribute->Name());
+				fromatVariableArray(pVariable, pElement, pAttribute, bRoot);
 			}
 			else
 			{
 				appendIndent(nIndentNum);
-				_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s = pRootElement->IntAttribute(\"%s\");\n", mBuffer, pAttribute->Name(), pAttribute->Name());
+				formatVariable(pVariable, pElement, pAttribute, bRoot);
 			}
 		}
 		else
@@ -76,19 +76,165 @@ void CClass::formatAttribute(XMLElement* pElement, int nIndentNum, bool bRoot)
 			if (pVariable->getCount() > 1)
 			{
 				appendIndent(nIndentNum);
-				_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s.push_back(p%sEle->IntAttribute(\"%s\"));\n", mBuffer, pAttribute->Name(), pElement->Name(), pAttribute->Name());
+				fromatVariableArray(pVariable, pElement, pAttribute, bRoot);
 			}
 			else
 			{
 				appendIndent(nIndentNum);
-				_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s = p%sEle->IntAttribute(\"%s\");\n", mBuffer, pAttribute->Name(), pElement->Name(), pAttribute->Name());
+				formatVariable(pVariable, pElement, pAttribute, bRoot);
 			}
 		}
-
-
 	}
 
 }
+
+void CClass::formatVariable(CVariable* pVariable, XMLElement* pElement, const XMLAttribute* pAttribute, bool bRoot)
+{
+	if (NULL == pVariable || NULL == pAttribute)
+	{
+		return;
+	}
+
+	if (0 == strcmp(pVariable->getName(), "int"))
+	{
+		if (bRoot)
+		{
+			_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s = pRootElement->IntAttribute(\"%s\");\n", mBuffer, pAttribute->Name(), pAttribute->Name());
+		}
+		else
+		{
+			_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s = p%sEle->IntAttribute(\"%s\");\n", mBuffer, pAttribute->Name(), pElement->Name(), pAttribute->Name());
+		}
+	}
+	else if (0 == strcmp(pVariable->getName(), "int64"))
+	{
+		if (bRoot)
+		{
+			_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s = pRootElement->Int64Attribute(\"%s\");\n", mBuffer, pAttribute->Name(), pAttribute->Name());
+		}
+		else
+		{
+			_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s = p%sEle->Int64Attribute(\"%s\");\n", mBuffer, pAttribute->Name(), pElement->Name(), pAttribute->Name());
+		}
+	}
+	else if (0 == strcmp(pVariable->getName(), "bool"))
+	{
+		if (bRoot)
+		{
+			_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s = pRootElement->BoolAttribute(\"%s\");\n", mBuffer, pAttribute->Name(), pAttribute->Name());
+		}
+		else
+		{
+			_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s = p%sEle->BoolAttribute(\"%s\");\n", mBuffer, pAttribute->Name(), pElement->Name(), pAttribute->Name());
+		}
+	}
+	else if (0 == strcmp(pVariable->getName(), "double"))
+	{
+		if (bRoot)
+		{
+			_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s = pRootElement->DoubleAttribute(\"%s\");\n", mBuffer, pAttribute->Name(), pAttribute->Name());
+		}
+		else
+		{
+			_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s = p%sEle->DoubleAttribute(\"%s\");\n", mBuffer, pAttribute->Name(), pElement->Name(), pAttribute->Name());
+		}
+	}
+	else if (0 == strcmp(pVariable->getName(), "float"))
+	{
+		if (bRoot)
+		{
+			_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s = pRootElement->FloatAttribute(\"%s\");\n", mBuffer, pAttribute->Name(), pAttribute->Name());
+		}
+		else
+		{
+			_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s = p%sEle->FloatAttribute(\"%s\");\n", mBuffer, pAttribute->Name(), pElement->Name(), pAttribute->Name());
+		}
+	}
+	// 其实这个用不上，最多就是解析后发给客户端，类型不再用char数组，直接用string
+	else if (0 == strcmp(pVariable->getName(), "string"))
+	{
+		if (bRoot)
+		{
+			_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s = string(pRootElement->FindAttribute(\"%s\"));\n", mBuffer, pAttribute->Name(), pAttribute->Name());
+		}
+		else
+		{
+			_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s = string(p%sEle->FindAttribute(\"%s\"));\n", mBuffer, pAttribute->Name(), pElement->Name(), pAttribute->Name());
+		}
+	}
+}
+
+void CClass::fromatVariableArray(CVariable* pVariable, XMLElement* pElement, const XMLAttribute* pAttribute, bool bRoot)
+{
+	if (0 == strcmp(pVariable->getName(), "int"))
+	{
+		if (bRoot)
+		{
+			_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s.push_back(pRootElement->IntAttribute(\"%s\"));\n", mBuffer, pAttribute->Name(), pAttribute->Name());
+		}
+		else
+		{
+			_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s.push_back(p%sEle->IntAttribute(\"%s\"));\n", mBuffer, pAttribute->Name(), pElement->Name(), pAttribute->Name());
+		}
+	}
+	else if (0 == strcmp(pVariable->getName(), "int64"))
+	{
+		if (bRoot)
+		{
+			_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s.push_back(pRootElement->Int64Attribute(\"%s\"));\n", mBuffer, pAttribute->Name(), pAttribute->Name());
+		}
+		else
+		{
+			_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s.push_back(p%sEle->Int64Attribute(\"%s\"));\n", mBuffer, pAttribute->Name(), pElement->Name(), pAttribute->Name());
+		}
+	}
+	else if (0 == strcmp(pVariable->getName(), "bool"))
+	{
+		if (bRoot)
+		{
+			_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s.push_back(pRootElement->BoolAttribute(\"%s\"));\n", mBuffer, pAttribute->Name(), pAttribute->Name());
+		}
+		else
+		{
+			_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s.push_back(p%sEle->BoolAttribute(\"%s\"));\n", mBuffer, pAttribute->Name(), pElement->Name(), pAttribute->Name());
+		}
+	}
+	else if (0 == strcmp(pVariable->getName(), "double"))
+	{
+		if (bRoot)
+		{
+			_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s.push_back(pRootElement->DoubleAttribute(\"%s\"));\n", mBuffer, pAttribute->Name(), pAttribute->Name());
+		}
+		else
+		{
+			_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s.push_back(p%sEle->DoubleAttribute(\"%s\"));\n", mBuffer, pAttribute->Name(), pElement->Name(), pAttribute->Name());
+		}
+	}
+	else if (0 == strcmp(pVariable->getName(), "float"))
+	{
+		if (bRoot)
+		{
+			_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s.push_back(pRootElement->FloatAttribute(\"%s\"));\n", mBuffer, pAttribute->Name(), pAttribute->Name());
+		}
+		else
+		{
+			_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s.push_back(p%sEle->FloatAttribute(\"%s\"));\n", mBuffer, pAttribute->Name(), pElement->Name(), pAttribute->Name());
+		}
+	}
+	// 其实这个用不上，最多就是解析后发给客户端，类型不再用char数组，直接用string
+	else if (0 == strcmp(pVariable->getName(), "string"))
+	{
+		if (bRoot)
+		{
+			_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s.push_back(pRootElement->FindAttribute(\"%s\"));\n", mBuffer, pAttribute->Name(), pAttribute->Name());
+		}
+		else
+		{
+			_snprintf_s(mBuffer, sizeof(mBuffer)-1, "%sm%s.push_back(p%sEle->FindAttribute(\"%s\"));\n", mBuffer, pAttribute->Name(), pElement->Name(), pAttribute->Name());
+		}
+	}
+}
+
 
 void CClass::formatClass(XMLElement* pElement, XMLElement* pParentElement, bool bClass, int nIndentNum)
 {
