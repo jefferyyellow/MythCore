@@ -37,9 +37,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* PBTplItem_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   PBTplItem_reflection_ = NULL;
-const ::google::protobuf::Descriptor* PBTplPlayerLevelExpConfig_descriptor_ = NULL;
+const ::google::protobuf::Descriptor* PBTplLevelExpConfig_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  PBTplPlayerLevelExpConfig_reflection_ = NULL;
+  PBTplLevelExpConfig_reflection_ = NULL;
 const ::google::protobuf::Descriptor* PBTplVIPConfig_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   PBTplVIPConfig_reflection_ = NULL;
@@ -154,21 +154,21 @@ void protobuf_AssignDesc_template_2ehxx() {
       -1,
       sizeof(PBTplItem),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplItem, _internal_metadata_));
-  PBTplPlayerLevelExpConfig_descriptor_ = file->message_type(6);
-  static const int PBTplPlayerLevelExpConfig_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplPlayerLevelExpConfig, tempid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplPlayerLevelExpConfig, levelupexp_),
+  PBTplLevelExpConfig_descriptor_ = file->message_type(6);
+  static const int PBTplLevelExpConfig_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplLevelExpConfig, tempid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplLevelExpConfig, levelupexp_),
   };
-  PBTplPlayerLevelExpConfig_reflection_ =
+  PBTplLevelExpConfig_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      PBTplPlayerLevelExpConfig_descriptor_,
-      PBTplPlayerLevelExpConfig::internal_default_instance(),
-      PBTplPlayerLevelExpConfig_offsets_,
+      PBTplLevelExpConfig_descriptor_,
+      PBTplLevelExpConfig::internal_default_instance(),
+      PBTplLevelExpConfig_offsets_,
       -1,
       -1,
       -1,
-      sizeof(PBTplPlayerLevelExpConfig),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplPlayerLevelExpConfig, _internal_metadata_));
+      sizeof(PBTplLevelExpConfig),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplLevelExpConfig, _internal_metadata_));
   PBTplVIPConfig_descriptor_ = file->message_type(7);
   static const int PBTplVIPConfig_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplVIPConfig, tempid_),
@@ -253,7 +253,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       PBTplItem_descriptor_, PBTplItem::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      PBTplPlayerLevelExpConfig_descriptor_, PBTplPlayerLevelExpConfig::internal_default_instance());
+      PBTplLevelExpConfig_descriptor_, PBTplLevelExpConfig::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       PBTplVIPConfig_descriptor_, PBTplVIPConfig::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
@@ -279,8 +279,8 @@ void protobuf_ShutdownFile_template_2ehxx() {
   delete PBTplNPCSet_reflection_;
   PBTplItem_default_instance_.Shutdown();
   delete PBTplItem_reflection_;
-  PBTplPlayerLevelExpConfig_default_instance_.Shutdown();
-  delete PBTplPlayerLevelExpConfig_reflection_;
+  PBTplLevelExpConfig_default_instance_.Shutdown();
+  delete PBTplLevelExpConfig_reflection_;
   PBTplVIPConfig_default_instance_.Shutdown();
   delete PBTplVIPConfig_reflection_;
   PBTplNPC_default_instance_.Shutdown();
@@ -301,7 +301,7 @@ void protobuf_InitDefaults_template_2ehxx_impl() {
   PBTplNPCSet_default_instance_.DefaultConstruct();
   ::google::protobuf::internal::GetEmptyString();
   PBTplItem_default_instance_.DefaultConstruct();
-  PBTplPlayerLevelExpConfig_default_instance_.DefaultConstruct();
+  PBTplLevelExpConfig_default_instance_.DefaultConstruct();
   PBTplVIPConfig_default_instance_.DefaultConstruct();
   ::google::protobuf::internal::GetEmptyString();
   PBTplNPC_default_instance_.DefaultConstruct();
@@ -313,7 +313,7 @@ void protobuf_InitDefaults_template_2ehxx_impl() {
   PBTplSkillSet_default_instance_.get_mutable()->InitAsDefaultInstance();
   PBTplNPCSet_default_instance_.get_mutable()->InitAsDefaultInstance();
   PBTplItem_default_instance_.get_mutable()->InitAsDefaultInstance();
-  PBTplPlayerLevelExpConfig_default_instance_.get_mutable()->InitAsDefaultInstance();
+  PBTplLevelExpConfig_default_instance_.get_mutable()->InitAsDefaultInstance();
   PBTplVIPConfig_default_instance_.get_mutable()->InitAsDefaultInstance();
   PBTplNPC_default_instance_.get_mutable()->InitAsDefaultInstance();
   PBTplFuncNPC_default_instance_.get_mutable()->InitAsDefaultInstance();
@@ -334,21 +334,20 @@ void protobuf_AddDesc_template_2ehxx_impl() {
     "Set\030\001 \001(\0132\r.PBTplItemSet\022\"\n\tConfigSet\030\002 "
     "\001(\0132\017.PBTplConfigSet\022 \n\010SkillSet\030\003 \001(\0132\016"
     ".PBTplSkillSet\022\034\n\006NPCSet\030\004 \001(\0132\014.PBTplNP"
-    "CSet\"\016\n\014PBTplItemSet\"h\n\016PBTplConfigSet\0222"
-    "\n\016LevelExpConfig\030\001 \003(\0132\032.PBTplPlayerLeve"
-    "lExpConfig\022\"\n\tVIPConfig\030\002 \003(\0132\017.PBTplVIP"
-    "Config\"\017\n\rPBTplSkillSet\"G\n\013PBTplNPCSet\022\036"
-    "\n\007FuncNpc\030\001 \003(\0132\r.PBTplFuncNPC\022\030\n\004Ogre\030\002"
-    " \003(\0132\n.PBTplOgre\"`\n\tPBTplItem\022\016\n\006TempID\030"
-    "\001 \001(\r\022\014\n\004Name\030\002 \001(\t\022\020\n\010Describe\030\003 \001(\t\022\020\n"
-    "\010ItemType\030\004 \001(\r\022\021\n\tPileLimit\030\005 \001(\r\"\?\n\031PB"
-    "TplPlayerLevelExpConfig\022\016\n\006TempID\030\001 \001(\r\022"
-    "\022\n\nLevelUpExp\030\002 \003(\r\"0\n\016PBTplVIPConfig\022\016\n"
-    "\006TempID\030\001 \001(\r\022\016\n\006VIPExp\030\002 \003(\r\"(\n\010PBTplNP"
-    "C\022\016\n\006TempID\030\001 \001(\r\022\014\n\004Name\030\002 \001(\t\"+\n\014PBTpl"
-    "FuncNPC\022\033\n\010BaseInfo\030\001 \001(\0132\t.PBTplNPC\"(\n\t"
-    "PBTplOgre\022\033\n\010BaseInfo\030\001 \001(\0132\t.PBTplNPCb\006"
-    "proto3", 726);
+    "CSet\"\016\n\014PBTplItemSet\"b\n\016PBTplConfigSet\022,"
+    "\n\016LevelExpConfig\030\001 \003(\0132\024.PBTplLevelExpCo"
+    "nfig\022\"\n\tVIPConfig\030\002 \003(\0132\017.PBTplVIPConfig"
+    "\"\017\n\rPBTplSkillSet\"G\n\013PBTplNPCSet\022\036\n\007Func"
+    "Npc\030\001 \003(\0132\r.PBTplFuncNPC\022\030\n\004Ogre\030\002 \003(\0132\n"
+    ".PBTplOgre\"`\n\tPBTplItem\022\016\n\006TempID\030\001 \001(\r\022"
+    "\014\n\004Name\030\002 \001(\t\022\020\n\010Describe\030\003 \001(\t\022\020\n\010ItemT"
+    "ype\030\004 \001(\r\022\021\n\tPileLimit\030\005 \001(\r\"9\n\023PBTplLev"
+    "elExpConfig\022\016\n\006TempID\030\001 \001(\r\022\022\n\nLevelUpEx"
+    "p\030\002 \003(\r\"0\n\016PBTplVIPConfig\022\016\n\006TempID\030\001 \001("
+    "\r\022\016\n\006VIPExp\030\002 \003(\r\"(\n\010PBTplNPC\022\016\n\006TempID\030"
+    "\001 \001(\r\022\014\n\004Name\030\002 \001(\t\"+\n\014PBTplFuncNPC\022\033\n\010B"
+    "aseInfo\030\001 \001(\0132\t.PBTplNPC\"(\n\tPBTplOgre\022\033\n"
+    "\010BaseInfo\030\001 \001(\0132\t.PBTplNPCb\006proto3", 714);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "template.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_template_2ehxx);
@@ -1166,7 +1165,7 @@ bool PBTplConfigSet::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .PBTplPlayerLevelExpConfig LevelExpConfig = 1;
+      // repeated .PBTplLevelExpConfig LevelExpConfig = 1;
       case 1: {
         if (tag == 10) {
           DO_(input->IncrementRecursionDepth());
@@ -1222,7 +1221,7 @@ failure:
 void PBTplConfigSet::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:PBTplConfigSet)
-  // repeated .PBTplPlayerLevelExpConfig LevelExpConfig = 1;
+  // repeated .PBTplLevelExpConfig LevelExpConfig = 1;
   for (unsigned int i = 0, n = this->levelexpconfig_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       1, this->levelexpconfig(i), output);
@@ -1241,7 +1240,7 @@ void PBTplConfigSet::SerializeWithCachedSizes(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:PBTplConfigSet)
-  // repeated .PBTplPlayerLevelExpConfig LevelExpConfig = 1;
+  // repeated .PBTplLevelExpConfig LevelExpConfig = 1;
   for (unsigned int i = 0, n = this->levelexpconfig_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
@@ -1263,7 +1262,7 @@ size_t PBTplConfigSet::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:PBTplConfigSet)
   size_t total_size = 0;
 
-  // repeated .PBTplPlayerLevelExpConfig LevelExpConfig = 1;
+  // repeated .PBTplLevelExpConfig LevelExpConfig = 1;
   {
     unsigned int count = this->levelexpconfig_size();
     total_size += 1UL * count;
@@ -1363,31 +1362,31 @@ void PBTplConfigSet::InternalSwap(PBTplConfigSet* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // PBTplConfigSet
 
-// repeated .PBTplPlayerLevelExpConfig LevelExpConfig = 1;
+// repeated .PBTplLevelExpConfig LevelExpConfig = 1;
 int PBTplConfigSet::levelexpconfig_size() const {
   return levelexpconfig_.size();
 }
 void PBTplConfigSet::clear_levelexpconfig() {
   levelexpconfig_.Clear();
 }
-const ::PBTplPlayerLevelExpConfig& PBTplConfigSet::levelexpconfig(int index) const {
+const ::PBTplLevelExpConfig& PBTplConfigSet::levelexpconfig(int index) const {
   // @@protoc_insertion_point(field_get:PBTplConfigSet.LevelExpConfig)
   return levelexpconfig_.Get(index);
 }
-::PBTplPlayerLevelExpConfig* PBTplConfigSet::mutable_levelexpconfig(int index) {
+::PBTplLevelExpConfig* PBTplConfigSet::mutable_levelexpconfig(int index) {
   // @@protoc_insertion_point(field_mutable:PBTplConfigSet.LevelExpConfig)
   return levelexpconfig_.Mutable(index);
 }
-::PBTplPlayerLevelExpConfig* PBTplConfigSet::add_levelexpconfig() {
+::PBTplLevelExpConfig* PBTplConfigSet::add_levelexpconfig() {
   // @@protoc_insertion_point(field_add:PBTplConfigSet.LevelExpConfig)
   return levelexpconfig_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::PBTplPlayerLevelExpConfig >*
+::google::protobuf::RepeatedPtrField< ::PBTplLevelExpConfig >*
 PBTplConfigSet::mutable_levelexpconfig() {
   // @@protoc_insertion_point(field_mutable_list:PBTplConfigSet.LevelExpConfig)
   return &levelexpconfig_;
 }
-const ::google::protobuf::RepeatedPtrField< ::PBTplPlayerLevelExpConfig >&
+const ::google::protobuf::RepeatedPtrField< ::PBTplLevelExpConfig >&
 PBTplConfigSet::levelexpconfig() const {
   // @@protoc_insertion_point(field_list:PBTplConfigSet.LevelExpConfig)
   return levelexpconfig_;
@@ -2521,77 +2520,77 @@ inline const PBTplItem* PBTplItem::internal_default_instance() {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int PBTplPlayerLevelExpConfig::kTempIDFieldNumber;
-const int PBTplPlayerLevelExpConfig::kLevelUpExpFieldNumber;
+const int PBTplLevelExpConfig::kTempIDFieldNumber;
+const int PBTplLevelExpConfig::kLevelUpExpFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-PBTplPlayerLevelExpConfig::PBTplPlayerLevelExpConfig()
+PBTplLevelExpConfig::PBTplLevelExpConfig()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   if (this != internal_default_instance()) protobuf_InitDefaults_template_2ehxx();
   SharedCtor();
-  // @@protoc_insertion_point(constructor:PBTplPlayerLevelExpConfig)
+  // @@protoc_insertion_point(constructor:PBTplLevelExpConfig)
 }
 
-void PBTplPlayerLevelExpConfig::InitAsDefaultInstance() {
+void PBTplLevelExpConfig::InitAsDefaultInstance() {
 }
 
-PBTplPlayerLevelExpConfig::PBTplPlayerLevelExpConfig(const PBTplPlayerLevelExpConfig& from)
+PBTplLevelExpConfig::PBTplLevelExpConfig(const PBTplLevelExpConfig& from)
   : ::google::protobuf::Message(),
     _internal_metadata_(NULL) {
   SharedCtor();
   UnsafeMergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:PBTplPlayerLevelExpConfig)
+  // @@protoc_insertion_point(copy_constructor:PBTplLevelExpConfig)
 }
 
-void PBTplPlayerLevelExpConfig::SharedCtor() {
+void PBTplLevelExpConfig::SharedCtor() {
   tempid_ = 0u;
   _cached_size_ = 0;
 }
 
-PBTplPlayerLevelExpConfig::~PBTplPlayerLevelExpConfig() {
-  // @@protoc_insertion_point(destructor:PBTplPlayerLevelExpConfig)
+PBTplLevelExpConfig::~PBTplLevelExpConfig() {
+  // @@protoc_insertion_point(destructor:PBTplLevelExpConfig)
   SharedDtor();
 }
 
-void PBTplPlayerLevelExpConfig::SharedDtor() {
+void PBTplLevelExpConfig::SharedDtor() {
 }
 
-void PBTplPlayerLevelExpConfig::SetCachedSize(int size) const {
+void PBTplLevelExpConfig::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* PBTplPlayerLevelExpConfig::descriptor() {
+const ::google::protobuf::Descriptor* PBTplLevelExpConfig::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return PBTplPlayerLevelExpConfig_descriptor_;
+  return PBTplLevelExpConfig_descriptor_;
 }
 
-const PBTplPlayerLevelExpConfig& PBTplPlayerLevelExpConfig::default_instance() {
+const PBTplLevelExpConfig& PBTplLevelExpConfig::default_instance() {
   protobuf_InitDefaults_template_2ehxx();
   return *internal_default_instance();
 }
 
-::google::protobuf::internal::ExplicitlyConstructed<PBTplPlayerLevelExpConfig> PBTplPlayerLevelExpConfig_default_instance_;
+::google::protobuf::internal::ExplicitlyConstructed<PBTplLevelExpConfig> PBTplLevelExpConfig_default_instance_;
 
-PBTplPlayerLevelExpConfig* PBTplPlayerLevelExpConfig::New(::google::protobuf::Arena* arena) const {
-  PBTplPlayerLevelExpConfig* n = new PBTplPlayerLevelExpConfig;
+PBTplLevelExpConfig* PBTplLevelExpConfig::New(::google::protobuf::Arena* arena) const {
+  PBTplLevelExpConfig* n = new PBTplLevelExpConfig;
   if (arena != NULL) {
     arena->Own(n);
   }
   return n;
 }
 
-void PBTplPlayerLevelExpConfig::Clear() {
-// @@protoc_insertion_point(message_clear_start:PBTplPlayerLevelExpConfig)
+void PBTplLevelExpConfig::Clear() {
+// @@protoc_insertion_point(message_clear_start:PBTplLevelExpConfig)
   tempid_ = 0u;
   levelupexp_.Clear();
 }
 
-bool PBTplPlayerLevelExpConfig::MergePartialFromCodedStream(
+bool PBTplLevelExpConfig::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:PBTplPlayerLevelExpConfig)
+  // @@protoc_insertion_point(parse_start:PBTplLevelExpConfig)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -2642,17 +2641,17 @@ bool PBTplPlayerLevelExpConfig::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:PBTplPlayerLevelExpConfig)
+  // @@protoc_insertion_point(parse_success:PBTplLevelExpConfig)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:PBTplPlayerLevelExpConfig)
+  // @@protoc_insertion_point(parse_failure:PBTplLevelExpConfig)
   return false;
 #undef DO_
 }
 
-void PBTplPlayerLevelExpConfig::SerializeWithCachedSizes(
+void PBTplLevelExpConfig::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:PBTplPlayerLevelExpConfig)
+  // @@protoc_insertion_point(serialize_start:PBTplLevelExpConfig)
   // optional uint32 TempID = 1;
   if (this->tempid() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->tempid(), output);
@@ -2668,13 +2667,13 @@ void PBTplPlayerLevelExpConfig::SerializeWithCachedSizes(
       this->levelupexp(i), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:PBTplPlayerLevelExpConfig)
+  // @@protoc_insertion_point(serialize_end:PBTplLevelExpConfig)
 }
 
-::google::protobuf::uint8* PBTplPlayerLevelExpConfig::InternalSerializeWithCachedSizesToArray(
+::google::protobuf::uint8* PBTplLevelExpConfig::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:PBTplPlayerLevelExpConfig)
+  // @@protoc_insertion_point(serialize_to_array_start:PBTplLevelExpConfig)
   // optional uint32 TempID = 1;
   if (this->tempid() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->tempid(), target);
@@ -2694,12 +2693,12 @@ void PBTplPlayerLevelExpConfig::SerializeWithCachedSizes(
       WriteUInt32NoTagToArray(this->levelupexp(i), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:PBTplPlayerLevelExpConfig)
+  // @@protoc_insertion_point(serialize_to_array_end:PBTplLevelExpConfig)
   return target;
 }
 
-size_t PBTplPlayerLevelExpConfig::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:PBTplPlayerLevelExpConfig)
+size_t PBTplLevelExpConfig::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:PBTplLevelExpConfig)
   size_t total_size = 0;
 
   // optional uint32 TempID = 1;
@@ -2735,23 +2734,23 @@ size_t PBTplPlayerLevelExpConfig::ByteSizeLong() const {
   return total_size;
 }
 
-void PBTplPlayerLevelExpConfig::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:PBTplPlayerLevelExpConfig)
+void PBTplLevelExpConfig::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:PBTplLevelExpConfig)
   if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const PBTplPlayerLevelExpConfig* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const PBTplPlayerLevelExpConfig>(
+  const PBTplLevelExpConfig* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const PBTplLevelExpConfig>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:PBTplPlayerLevelExpConfig)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:PBTplLevelExpConfig)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:PBTplPlayerLevelExpConfig)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:PBTplLevelExpConfig)
     UnsafeMergeFrom(*source);
   }
 }
 
-void PBTplPlayerLevelExpConfig::MergeFrom(const PBTplPlayerLevelExpConfig& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:PBTplPlayerLevelExpConfig)
+void PBTplLevelExpConfig::MergeFrom(const PBTplLevelExpConfig& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:PBTplLevelExpConfig)
   if (GOOGLE_PREDICT_TRUE(&from != this)) {
     UnsafeMergeFrom(from);
   } else {
@@ -2759,7 +2758,7 @@ void PBTplPlayerLevelExpConfig::MergeFrom(const PBTplPlayerLevelExpConfig& from)
   }
 }
 
-void PBTplPlayerLevelExpConfig::UnsafeMergeFrom(const PBTplPlayerLevelExpConfig& from) {
+void PBTplLevelExpConfig::UnsafeMergeFrom(const PBTplLevelExpConfig& from) {
   GOOGLE_DCHECK(&from != this);
   levelupexp_.UnsafeMergeFrom(from.levelupexp_);
   if (from.tempid() != 0) {
@@ -2767,93 +2766,93 @@ void PBTplPlayerLevelExpConfig::UnsafeMergeFrom(const PBTplPlayerLevelExpConfig&
   }
 }
 
-void PBTplPlayerLevelExpConfig::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:PBTplPlayerLevelExpConfig)
+void PBTplLevelExpConfig::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:PBTplLevelExpConfig)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void PBTplPlayerLevelExpConfig::CopyFrom(const PBTplPlayerLevelExpConfig& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:PBTplPlayerLevelExpConfig)
+void PBTplLevelExpConfig::CopyFrom(const PBTplLevelExpConfig& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:PBTplLevelExpConfig)
   if (&from == this) return;
   Clear();
   UnsafeMergeFrom(from);
 }
 
-bool PBTplPlayerLevelExpConfig::IsInitialized() const {
+bool PBTplLevelExpConfig::IsInitialized() const {
 
   return true;
 }
 
-void PBTplPlayerLevelExpConfig::Swap(PBTplPlayerLevelExpConfig* other) {
+void PBTplLevelExpConfig::Swap(PBTplLevelExpConfig* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void PBTplPlayerLevelExpConfig::InternalSwap(PBTplPlayerLevelExpConfig* other) {
+void PBTplLevelExpConfig::InternalSwap(PBTplLevelExpConfig* other) {
   std::swap(tempid_, other->tempid_);
   levelupexp_.UnsafeArenaSwap(&other->levelupexp_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
 
-::google::protobuf::Metadata PBTplPlayerLevelExpConfig::GetMetadata() const {
+::google::protobuf::Metadata PBTplLevelExpConfig::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = PBTplPlayerLevelExpConfig_descriptor_;
-  metadata.reflection = PBTplPlayerLevelExpConfig_reflection_;
+  metadata.descriptor = PBTplLevelExpConfig_descriptor_;
+  metadata.reflection = PBTplLevelExpConfig_reflection_;
   return metadata;
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
-// PBTplPlayerLevelExpConfig
+// PBTplLevelExpConfig
 
 // optional uint32 TempID = 1;
-void PBTplPlayerLevelExpConfig::clear_tempid() {
+void PBTplLevelExpConfig::clear_tempid() {
   tempid_ = 0u;
 }
-::google::protobuf::uint32 PBTplPlayerLevelExpConfig::tempid() const {
-  // @@protoc_insertion_point(field_get:PBTplPlayerLevelExpConfig.TempID)
+::google::protobuf::uint32 PBTplLevelExpConfig::tempid() const {
+  // @@protoc_insertion_point(field_get:PBTplLevelExpConfig.TempID)
   return tempid_;
 }
-void PBTplPlayerLevelExpConfig::set_tempid(::google::protobuf::uint32 value) {
+void PBTplLevelExpConfig::set_tempid(::google::protobuf::uint32 value) {
   
   tempid_ = value;
-  // @@protoc_insertion_point(field_set:PBTplPlayerLevelExpConfig.TempID)
+  // @@protoc_insertion_point(field_set:PBTplLevelExpConfig.TempID)
 }
 
 // repeated uint32 LevelUpExp = 2;
-int PBTplPlayerLevelExpConfig::levelupexp_size() const {
+int PBTplLevelExpConfig::levelupexp_size() const {
   return levelupexp_.size();
 }
-void PBTplPlayerLevelExpConfig::clear_levelupexp() {
+void PBTplLevelExpConfig::clear_levelupexp() {
   levelupexp_.Clear();
 }
-::google::protobuf::uint32 PBTplPlayerLevelExpConfig::levelupexp(int index) const {
-  // @@protoc_insertion_point(field_get:PBTplPlayerLevelExpConfig.LevelUpExp)
+::google::protobuf::uint32 PBTplLevelExpConfig::levelupexp(int index) const {
+  // @@protoc_insertion_point(field_get:PBTplLevelExpConfig.LevelUpExp)
   return levelupexp_.Get(index);
 }
-void PBTplPlayerLevelExpConfig::set_levelupexp(int index, ::google::protobuf::uint32 value) {
+void PBTplLevelExpConfig::set_levelupexp(int index, ::google::protobuf::uint32 value) {
   levelupexp_.Set(index, value);
-  // @@protoc_insertion_point(field_set:PBTplPlayerLevelExpConfig.LevelUpExp)
+  // @@protoc_insertion_point(field_set:PBTplLevelExpConfig.LevelUpExp)
 }
-void PBTplPlayerLevelExpConfig::add_levelupexp(::google::protobuf::uint32 value) {
+void PBTplLevelExpConfig::add_levelupexp(::google::protobuf::uint32 value) {
   levelupexp_.Add(value);
-  // @@protoc_insertion_point(field_add:PBTplPlayerLevelExpConfig.LevelUpExp)
+  // @@protoc_insertion_point(field_add:PBTplLevelExpConfig.LevelUpExp)
 }
 const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-PBTplPlayerLevelExpConfig::levelupexp() const {
-  // @@protoc_insertion_point(field_list:PBTplPlayerLevelExpConfig.LevelUpExp)
+PBTplLevelExpConfig::levelupexp() const {
+  // @@protoc_insertion_point(field_list:PBTplLevelExpConfig.LevelUpExp)
   return levelupexp_;
 }
 ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-PBTplPlayerLevelExpConfig::mutable_levelupexp() {
-  // @@protoc_insertion_point(field_mutable_list:PBTplPlayerLevelExpConfig.LevelUpExp)
+PBTplLevelExpConfig::mutable_levelupexp() {
+  // @@protoc_insertion_point(field_mutable_list:PBTplLevelExpConfig.LevelUpExp)
   return &levelupexp_;
 }
 
-inline const PBTplPlayerLevelExpConfig* PBTplPlayerLevelExpConfig::internal_default_instance() {
-  return &PBTplPlayerLevelExpConfig_default_instance_.get();
+inline const PBTplLevelExpConfig* PBTplLevelExpConfig::internal_default_instance() {
+  return &PBTplLevelExpConfig_default_instance_.get();
 }
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 

@@ -34,6 +34,9 @@
     <Filter Include="logicmodule\login">
       <UniqueIdentifier>{8d0c58c9-4875-4a95-aaef-0030a1d15acf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="logicmodule\task">
+      <UniqueIdentifier>{718988ec-c0e0-48e8-9632-9cb3ac109847}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\message\loginmessage.hxx.pb.cc">
@@ -96,9 +99,6 @@
     <ClCompile Include="..\dep\tinyxml\tinyxml2.cpp">
       <Filter>tinyxml</Filter>
     </ClCompile>
-    <ClCompile Include="src\taskunit.cpp">
-      <Filter>player</Filter>
-    </ClCompile>
     <ClCompile Include="src\propertymodule.cpp">
       <Filter>logicmodule</Filter>
     </ClCompile>
@@ -152,6 +152,18 @@
     </ClCompile>
     <ClCompile Include="src\dbmodule.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\taskunit.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\taskconfig.cpp">
+      <Filter>logicmodule\task</Filter>
+    </ClCompile>
+    <ClCompile Include="src\taskmodule.cpp">
+      <Filter>logicmodule</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\taskmodule.hxx.pb.cc">
+      <Filter>message</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -222,9 +234,6 @@
       <Filter>player</Filter>
     </ClInclude>
     <ClInclude Include="inc\propertyunit.h">
-      <Filter>player</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\taskunit.h">
       <Filter>player</Filter>
     </ClInclude>
     <ClInclude Include="inc\itemunit.h">
@@ -325,6 +334,21 @@
     </ClInclude>
     <ClInclude Include="inc\dbmodule.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\taskunit.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\taskconfig.h">
+      <Filter>logicmodule\task</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\taskmodule.h">
+      <Filter>logicmodule</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\taskmodule.hxx">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\taskmodule.hxx.pb.h">
+      <Filter>message</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

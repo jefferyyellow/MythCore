@@ -1,8 +1,14 @@
 #include "propertyunit.h"
 #include "template.h"
+#include "propertymodule.hxx.pb.h"
+#include "scenejob.h"
 /// 获得经验
 void CPropertyUnit::obtainExp(int nExp)
 {
+	if (nExp <= 0)
+	{
+		return;
+	}
 	// 最大等级了，不能再升级了
 	if (mLevel >= MAX_LEVEL)
 	{
@@ -11,9 +17,10 @@ void CPropertyUnit::obtainExp(int nExp)
 
 	mExp += nExp;
 
-	while (mLevel >= CTplPlayerLevelExpConfig::spConfig->mLevelUpExp[mLevel] && mLevel <= MAX_LEVEL)
+	byte nOldLevel = mLevel;
+	while (mLevel >= CTplLevelExpConfig::spConfig->mLevelUpExp[mLevel] && mLevel <= MAX_LEVEL)
 	{
-		mExp -= CTplPlayerLevelExpConfig::spConfig->mLevelUpExp[mLevel];
+		mExp -= CTplLevelExpConfig::spConfig->mLevelUpExp[mLevel];
 		++mLevel;
 		// 已经到达最大级了
 		if (mLevel >= MAX_LEVEL)
@@ -21,6 +28,13 @@ void CPropertyUnit::obtainExp(int nExp)
 			mExp = 0;
 			break;
 		}
+	}
+
+	if (mLevel > nOldLevel)
+	{
+		CLevelUpNotify tLevelUpNotify;
+		tLevelUpNotify.set_level(mLevel);
+		CSceneJob::Inst()->sendClientMessage(&mPlayer, ID_S2C_NOTIYF_PLAYER_LEVEL_UP, &tPlayerLevelUpNotify);
 	}
 }
 

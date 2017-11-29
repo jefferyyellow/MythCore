@@ -19,15 +19,15 @@
 
 namespace {
 
-const ::google::protobuf::Descriptor* CMessagePlayerMoneyUpdateNotify_descriptor_ = NULL;
+const ::google::protobuf::Descriptor* CMoneyUpdateNotify_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  CMessagePlayerMoneyUpdateNotify_reflection_ = NULL;
-const ::google::protobuf::Descriptor* CMessagePlayerDiamondUpdateNotify_descriptor_ = NULL;
+  CMoneyUpdateNotify_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CDiamondUpdateNotify_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  CMessagePlayerDiamondUpdateNotify_reflection_ = NULL;
-const ::google::protobuf::Descriptor* CMessageInsertItemNotify_descriptor_ = NULL;
+  CDiamondUpdateNotify_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CInsertItemNotify_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  CMessageInsertItemNotify_reflection_ = NULL;
+  CInsertItemNotify_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* ITEM_MODULE_MSG_ID_descriptor_ = NULL;
 
 }  // namespace
@@ -40,50 +40,50 @@ void protobuf_AssignDesc_itemmodule_2ehxx() {
     ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
       "itemmodule.hxx");
   GOOGLE_CHECK(file != NULL);
-  CMessagePlayerMoneyUpdateNotify_descriptor_ = file->message_type(0);
-  static const int CMessagePlayerMoneyUpdateNotify_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessagePlayerMoneyUpdateNotify, money_),
+  CMoneyUpdateNotify_descriptor_ = file->message_type(0);
+  static const int CMoneyUpdateNotify_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMoneyUpdateNotify, money_),
   };
-  CMessagePlayerMoneyUpdateNotify_reflection_ =
+  CMoneyUpdateNotify_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      CMessagePlayerMoneyUpdateNotify_descriptor_,
-      CMessagePlayerMoneyUpdateNotify::internal_default_instance(),
-      CMessagePlayerMoneyUpdateNotify_offsets_,
+      CMoneyUpdateNotify_descriptor_,
+      CMoneyUpdateNotify::internal_default_instance(),
+      CMoneyUpdateNotify_offsets_,
       -1,
       -1,
       -1,
-      sizeof(CMessagePlayerMoneyUpdateNotify),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessagePlayerMoneyUpdateNotify, _internal_metadata_));
-  CMessagePlayerDiamondUpdateNotify_descriptor_ = file->message_type(1);
-  static const int CMessagePlayerDiamondUpdateNotify_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessagePlayerDiamondUpdateNotify, diamond_),
+      sizeof(CMoneyUpdateNotify),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMoneyUpdateNotify, _internal_metadata_));
+  CDiamondUpdateNotify_descriptor_ = file->message_type(1);
+  static const int CDiamondUpdateNotify_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CDiamondUpdateNotify, diamond_),
   };
-  CMessagePlayerDiamondUpdateNotify_reflection_ =
+  CDiamondUpdateNotify_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      CMessagePlayerDiamondUpdateNotify_descriptor_,
-      CMessagePlayerDiamondUpdateNotify::internal_default_instance(),
-      CMessagePlayerDiamondUpdateNotify_offsets_,
+      CDiamondUpdateNotify_descriptor_,
+      CDiamondUpdateNotify::internal_default_instance(),
+      CDiamondUpdateNotify_offsets_,
       -1,
       -1,
       -1,
-      sizeof(CMessagePlayerDiamondUpdateNotify),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessagePlayerDiamondUpdateNotify, _internal_metadata_));
-  CMessageInsertItemNotify_descriptor_ = file->message_type(2);
-  static const int CMessageInsertItemNotify_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageInsertItemNotify, itemid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageInsertItemNotify, index_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageInsertItemNotify, number_),
+      sizeof(CDiamondUpdateNotify),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CDiamondUpdateNotify, _internal_metadata_));
+  CInsertItemNotify_descriptor_ = file->message_type(2);
+  static const int CInsertItemNotify_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CInsertItemNotify, itemid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CInsertItemNotify, index_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CInsertItemNotify, number_),
   };
-  CMessageInsertItemNotify_reflection_ =
+  CInsertItemNotify_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      CMessageInsertItemNotify_descriptor_,
-      CMessageInsertItemNotify::internal_default_instance(),
-      CMessageInsertItemNotify_offsets_,
+      CInsertItemNotify_descriptor_,
+      CInsertItemNotify::internal_default_instance(),
+      CInsertItemNotify_offsets_,
       -1,
       -1,
       -1,
-      sizeof(CMessageInsertItemNotify),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMessageInsertItemNotify, _internal_metadata_));
+      sizeof(CInsertItemNotify),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CInsertItemNotify, _internal_metadata_));
   ITEM_MODULE_MSG_ID_descriptor_ = file->enum_type(0);
 }
 
@@ -99,33 +99,33 @@ void protobuf_RegisterTypes(const ::std::string&) GOOGLE_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      CMessagePlayerMoneyUpdateNotify_descriptor_, CMessagePlayerMoneyUpdateNotify::internal_default_instance());
+      CMoneyUpdateNotify_descriptor_, CMoneyUpdateNotify::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      CMessagePlayerDiamondUpdateNotify_descriptor_, CMessagePlayerDiamondUpdateNotify::internal_default_instance());
+      CDiamondUpdateNotify_descriptor_, CDiamondUpdateNotify::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      CMessageInsertItemNotify_descriptor_, CMessageInsertItemNotify::internal_default_instance());
+      CInsertItemNotify_descriptor_, CInsertItemNotify::internal_default_instance());
 }
 
 }  // namespace
 
 void protobuf_ShutdownFile_itemmodule_2ehxx() {
-  CMessagePlayerMoneyUpdateNotify_default_instance_.Shutdown();
-  delete CMessagePlayerMoneyUpdateNotify_reflection_;
-  CMessagePlayerDiamondUpdateNotify_default_instance_.Shutdown();
-  delete CMessagePlayerDiamondUpdateNotify_reflection_;
-  CMessageInsertItemNotify_default_instance_.Shutdown();
-  delete CMessageInsertItemNotify_reflection_;
+  CMoneyUpdateNotify_default_instance_.Shutdown();
+  delete CMoneyUpdateNotify_reflection_;
+  CDiamondUpdateNotify_default_instance_.Shutdown();
+  delete CDiamondUpdateNotify_reflection_;
+  CInsertItemNotify_default_instance_.Shutdown();
+  delete CInsertItemNotify_reflection_;
 }
 
 void protobuf_InitDefaults_itemmodule_2ehxx_impl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-  CMessagePlayerMoneyUpdateNotify_default_instance_.DefaultConstruct();
-  CMessagePlayerDiamondUpdateNotify_default_instance_.DefaultConstruct();
-  CMessageInsertItemNotify_default_instance_.DefaultConstruct();
-  CMessagePlayerMoneyUpdateNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
-  CMessagePlayerDiamondUpdateNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
-  CMessageInsertItemNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CMoneyUpdateNotify_default_instance_.DefaultConstruct();
+  CDiamondUpdateNotify_default_instance_.DefaultConstruct();
+  CInsertItemNotify_default_instance_.DefaultConstruct();
+  CMoneyUpdateNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CDiamondUpdateNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CInsertItemNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
 }
 
 GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_InitDefaults_itemmodule_2ehxx_once_);
@@ -138,15 +138,14 @@ void protobuf_AddDesc_itemmodule_2ehxx_impl() {
 
   protobuf_InitDefaults_itemmodule_2ehxx();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\016itemmodule.hxx\"0\n\037CMessagePlayerMoneyU"
-    "pdateNotify\022\r\n\005Money\030\001 \001(\r\"4\n!CMessagePl"
-    "ayerDiamondUpdateNotify\022\017\n\007Diamond\030\001 \001(\r"
-    "\"I\n\030CMessageInsertItemNotify\022\016\n\006ItemID\030\001"
-    " \001(\r\022\r\n\005Index\030\002 \001(\r\022\016\n\006Number\030\003 \001(\r*\200\001\n\022"
-    "ITEM_MODULE_MSG_ID\022\030\n\024ID_ITEM_MODULE_ERR"
-    "OR\020\000\022&\n!ID_S2C_NOTIYF_PLAYER_MONEY_UPDAT"
-    "E\020\200\020\022(\n#ID_S2C_NOTIYF_PLAYER_DIAMOND_UPD"
-    "ATE\020\201\020b\006proto3", 334);
+    "\n\016itemmodule.hxx\"#\n\022CMoneyUpdateNotify\022\r"
+    "\n\005Money\030\001 \001(\r\"\'\n\024CDiamondUpdateNotify\022\017\n"
+    "\007Diamond\030\001 \001(\r\"B\n\021CInsertItemNotify\022\016\n\006I"
+    "temID\030\001 \001(\r\022\r\n\005Index\030\002 \001(\r\022\016\n\006Number\030\003 \001"
+    "(\r*r\n\022ITEM_MODULE_MSG_ID\022\030\n\024ID_ITEM_MODU"
+    "LE_ERROR\020\000\022\037\n\032ID_S2C_NOTIYF_MONEY_UPDATE"
+    "\020\200\020\022!\n\034ID_S2C_NOTIYF_DIAMOND_UPDATE\020\201\020b\006"
+    "proto3", 286);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "itemmodule.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_itemmodule_2ehxx);
@@ -192,75 +191,75 @@ static void MergeFromFail(int line) {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int CMessagePlayerMoneyUpdateNotify::kMoneyFieldNumber;
+const int CMoneyUpdateNotify::kMoneyFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-CMessagePlayerMoneyUpdateNotify::CMessagePlayerMoneyUpdateNotify()
+CMoneyUpdateNotify::CMoneyUpdateNotify()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   if (this != internal_default_instance()) protobuf_InitDefaults_itemmodule_2ehxx();
   SharedCtor();
-  // @@protoc_insertion_point(constructor:CMessagePlayerMoneyUpdateNotify)
+  // @@protoc_insertion_point(constructor:CMoneyUpdateNotify)
 }
 
-void CMessagePlayerMoneyUpdateNotify::InitAsDefaultInstance() {
+void CMoneyUpdateNotify::InitAsDefaultInstance() {
 }
 
-CMessagePlayerMoneyUpdateNotify::CMessagePlayerMoneyUpdateNotify(const CMessagePlayerMoneyUpdateNotify& from)
+CMoneyUpdateNotify::CMoneyUpdateNotify(const CMoneyUpdateNotify& from)
   : ::google::protobuf::Message(),
     _internal_metadata_(NULL) {
   SharedCtor();
   UnsafeMergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:CMessagePlayerMoneyUpdateNotify)
+  // @@protoc_insertion_point(copy_constructor:CMoneyUpdateNotify)
 }
 
-void CMessagePlayerMoneyUpdateNotify::SharedCtor() {
+void CMoneyUpdateNotify::SharedCtor() {
   money_ = 0u;
   _cached_size_ = 0;
 }
 
-CMessagePlayerMoneyUpdateNotify::~CMessagePlayerMoneyUpdateNotify() {
-  // @@protoc_insertion_point(destructor:CMessagePlayerMoneyUpdateNotify)
+CMoneyUpdateNotify::~CMoneyUpdateNotify() {
+  // @@protoc_insertion_point(destructor:CMoneyUpdateNotify)
   SharedDtor();
 }
 
-void CMessagePlayerMoneyUpdateNotify::SharedDtor() {
+void CMoneyUpdateNotify::SharedDtor() {
 }
 
-void CMessagePlayerMoneyUpdateNotify::SetCachedSize(int size) const {
+void CMoneyUpdateNotify::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* CMessagePlayerMoneyUpdateNotify::descriptor() {
+const ::google::protobuf::Descriptor* CMoneyUpdateNotify::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return CMessagePlayerMoneyUpdateNotify_descriptor_;
+  return CMoneyUpdateNotify_descriptor_;
 }
 
-const CMessagePlayerMoneyUpdateNotify& CMessagePlayerMoneyUpdateNotify::default_instance() {
+const CMoneyUpdateNotify& CMoneyUpdateNotify::default_instance() {
   protobuf_InitDefaults_itemmodule_2ehxx();
   return *internal_default_instance();
 }
 
-::google::protobuf::internal::ExplicitlyConstructed<CMessagePlayerMoneyUpdateNotify> CMessagePlayerMoneyUpdateNotify_default_instance_;
+::google::protobuf::internal::ExplicitlyConstructed<CMoneyUpdateNotify> CMoneyUpdateNotify_default_instance_;
 
-CMessagePlayerMoneyUpdateNotify* CMessagePlayerMoneyUpdateNotify::New(::google::protobuf::Arena* arena) const {
-  CMessagePlayerMoneyUpdateNotify* n = new CMessagePlayerMoneyUpdateNotify;
+CMoneyUpdateNotify* CMoneyUpdateNotify::New(::google::protobuf::Arena* arena) const {
+  CMoneyUpdateNotify* n = new CMoneyUpdateNotify;
   if (arena != NULL) {
     arena->Own(n);
   }
   return n;
 }
 
-void CMessagePlayerMoneyUpdateNotify::Clear() {
-// @@protoc_insertion_point(message_clear_start:CMessagePlayerMoneyUpdateNotify)
+void CMoneyUpdateNotify::Clear() {
+// @@protoc_insertion_point(message_clear_start:CMoneyUpdateNotify)
   money_ = 0u;
 }
 
-bool CMessagePlayerMoneyUpdateNotify::MergePartialFromCodedStream(
+bool CMoneyUpdateNotify::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:CMessagePlayerMoneyUpdateNotify)
+  // @@protoc_insertion_point(parse_start:CMoneyUpdateNotify)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -293,40 +292,40 @@ bool CMessagePlayerMoneyUpdateNotify::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:CMessagePlayerMoneyUpdateNotify)
+  // @@protoc_insertion_point(parse_success:CMoneyUpdateNotify)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:CMessagePlayerMoneyUpdateNotify)
+  // @@protoc_insertion_point(parse_failure:CMoneyUpdateNotify)
   return false;
 #undef DO_
 }
 
-void CMessagePlayerMoneyUpdateNotify::SerializeWithCachedSizes(
+void CMoneyUpdateNotify::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:CMessagePlayerMoneyUpdateNotify)
+  // @@protoc_insertion_point(serialize_start:CMoneyUpdateNotify)
   // optional uint32 Money = 1;
   if (this->money() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->money(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:CMessagePlayerMoneyUpdateNotify)
+  // @@protoc_insertion_point(serialize_end:CMoneyUpdateNotify)
 }
 
-::google::protobuf::uint8* CMessagePlayerMoneyUpdateNotify::InternalSerializeWithCachedSizesToArray(
+::google::protobuf::uint8* CMoneyUpdateNotify::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:CMessagePlayerMoneyUpdateNotify)
+  // @@protoc_insertion_point(serialize_to_array_start:CMoneyUpdateNotify)
   // optional uint32 Money = 1;
   if (this->money() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->money(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:CMessagePlayerMoneyUpdateNotify)
+  // @@protoc_insertion_point(serialize_to_array_end:CMoneyUpdateNotify)
   return target;
 }
 
-size_t CMessagePlayerMoneyUpdateNotify::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:CMessagePlayerMoneyUpdateNotify)
+size_t CMoneyUpdateNotify::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CMoneyUpdateNotify)
   size_t total_size = 0;
 
   // optional uint32 Money = 1;
@@ -343,23 +342,23 @@ size_t CMessagePlayerMoneyUpdateNotify::ByteSizeLong() const {
   return total_size;
 }
 
-void CMessagePlayerMoneyUpdateNotify::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:CMessagePlayerMoneyUpdateNotify)
+void CMoneyUpdateNotify::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CMoneyUpdateNotify)
   if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const CMessagePlayerMoneyUpdateNotify* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const CMessagePlayerMoneyUpdateNotify>(
+  const CMoneyUpdateNotify* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CMoneyUpdateNotify>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CMessagePlayerMoneyUpdateNotify)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CMoneyUpdateNotify)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:CMessagePlayerMoneyUpdateNotify)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CMoneyUpdateNotify)
     UnsafeMergeFrom(*source);
   }
 }
 
-void CMessagePlayerMoneyUpdateNotify::MergeFrom(const CMessagePlayerMoneyUpdateNotify& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:CMessagePlayerMoneyUpdateNotify)
+void CMoneyUpdateNotify::MergeFrom(const CMoneyUpdateNotify& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CMoneyUpdateNotify)
   if (GOOGLE_PREDICT_TRUE(&from != this)) {
     UnsafeMergeFrom(from);
   } else {
@@ -367,144 +366,144 @@ void CMessagePlayerMoneyUpdateNotify::MergeFrom(const CMessagePlayerMoneyUpdateN
   }
 }
 
-void CMessagePlayerMoneyUpdateNotify::UnsafeMergeFrom(const CMessagePlayerMoneyUpdateNotify& from) {
+void CMoneyUpdateNotify::UnsafeMergeFrom(const CMoneyUpdateNotify& from) {
   GOOGLE_DCHECK(&from != this);
   if (from.money() != 0) {
     set_money(from.money());
   }
 }
 
-void CMessagePlayerMoneyUpdateNotify::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:CMessagePlayerMoneyUpdateNotify)
+void CMoneyUpdateNotify::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CMoneyUpdateNotify)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void CMessagePlayerMoneyUpdateNotify::CopyFrom(const CMessagePlayerMoneyUpdateNotify& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:CMessagePlayerMoneyUpdateNotify)
+void CMoneyUpdateNotify::CopyFrom(const CMoneyUpdateNotify& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CMoneyUpdateNotify)
   if (&from == this) return;
   Clear();
   UnsafeMergeFrom(from);
 }
 
-bool CMessagePlayerMoneyUpdateNotify::IsInitialized() const {
+bool CMoneyUpdateNotify::IsInitialized() const {
 
   return true;
 }
 
-void CMessagePlayerMoneyUpdateNotify::Swap(CMessagePlayerMoneyUpdateNotify* other) {
+void CMoneyUpdateNotify::Swap(CMoneyUpdateNotify* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void CMessagePlayerMoneyUpdateNotify::InternalSwap(CMessagePlayerMoneyUpdateNotify* other) {
+void CMoneyUpdateNotify::InternalSwap(CMoneyUpdateNotify* other) {
   std::swap(money_, other->money_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
 
-::google::protobuf::Metadata CMessagePlayerMoneyUpdateNotify::GetMetadata() const {
+::google::protobuf::Metadata CMoneyUpdateNotify::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = CMessagePlayerMoneyUpdateNotify_descriptor_;
-  metadata.reflection = CMessagePlayerMoneyUpdateNotify_reflection_;
+  metadata.descriptor = CMoneyUpdateNotify_descriptor_;
+  metadata.reflection = CMoneyUpdateNotify_reflection_;
   return metadata;
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
-// CMessagePlayerMoneyUpdateNotify
+// CMoneyUpdateNotify
 
 // optional uint32 Money = 1;
-void CMessagePlayerMoneyUpdateNotify::clear_money() {
+void CMoneyUpdateNotify::clear_money() {
   money_ = 0u;
 }
-::google::protobuf::uint32 CMessagePlayerMoneyUpdateNotify::money() const {
-  // @@protoc_insertion_point(field_get:CMessagePlayerMoneyUpdateNotify.Money)
+::google::protobuf::uint32 CMoneyUpdateNotify::money() const {
+  // @@protoc_insertion_point(field_get:CMoneyUpdateNotify.Money)
   return money_;
 }
-void CMessagePlayerMoneyUpdateNotify::set_money(::google::protobuf::uint32 value) {
+void CMoneyUpdateNotify::set_money(::google::protobuf::uint32 value) {
   
   money_ = value;
-  // @@protoc_insertion_point(field_set:CMessagePlayerMoneyUpdateNotify.Money)
+  // @@protoc_insertion_point(field_set:CMoneyUpdateNotify.Money)
 }
 
-inline const CMessagePlayerMoneyUpdateNotify* CMessagePlayerMoneyUpdateNotify::internal_default_instance() {
-  return &CMessagePlayerMoneyUpdateNotify_default_instance_.get();
+inline const CMoneyUpdateNotify* CMoneyUpdateNotify::internal_default_instance() {
+  return &CMoneyUpdateNotify_default_instance_.get();
 }
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int CMessagePlayerDiamondUpdateNotify::kDiamondFieldNumber;
+const int CDiamondUpdateNotify::kDiamondFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-CMessagePlayerDiamondUpdateNotify::CMessagePlayerDiamondUpdateNotify()
+CDiamondUpdateNotify::CDiamondUpdateNotify()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   if (this != internal_default_instance()) protobuf_InitDefaults_itemmodule_2ehxx();
   SharedCtor();
-  // @@protoc_insertion_point(constructor:CMessagePlayerDiamondUpdateNotify)
+  // @@protoc_insertion_point(constructor:CDiamondUpdateNotify)
 }
 
-void CMessagePlayerDiamondUpdateNotify::InitAsDefaultInstance() {
+void CDiamondUpdateNotify::InitAsDefaultInstance() {
 }
 
-CMessagePlayerDiamondUpdateNotify::CMessagePlayerDiamondUpdateNotify(const CMessagePlayerDiamondUpdateNotify& from)
+CDiamondUpdateNotify::CDiamondUpdateNotify(const CDiamondUpdateNotify& from)
   : ::google::protobuf::Message(),
     _internal_metadata_(NULL) {
   SharedCtor();
   UnsafeMergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:CMessagePlayerDiamondUpdateNotify)
+  // @@protoc_insertion_point(copy_constructor:CDiamondUpdateNotify)
 }
 
-void CMessagePlayerDiamondUpdateNotify::SharedCtor() {
+void CDiamondUpdateNotify::SharedCtor() {
   diamond_ = 0u;
   _cached_size_ = 0;
 }
 
-CMessagePlayerDiamondUpdateNotify::~CMessagePlayerDiamondUpdateNotify() {
-  // @@protoc_insertion_point(destructor:CMessagePlayerDiamondUpdateNotify)
+CDiamondUpdateNotify::~CDiamondUpdateNotify() {
+  // @@protoc_insertion_point(destructor:CDiamondUpdateNotify)
   SharedDtor();
 }
 
-void CMessagePlayerDiamondUpdateNotify::SharedDtor() {
+void CDiamondUpdateNotify::SharedDtor() {
 }
 
-void CMessagePlayerDiamondUpdateNotify::SetCachedSize(int size) const {
+void CDiamondUpdateNotify::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* CMessagePlayerDiamondUpdateNotify::descriptor() {
+const ::google::protobuf::Descriptor* CDiamondUpdateNotify::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return CMessagePlayerDiamondUpdateNotify_descriptor_;
+  return CDiamondUpdateNotify_descriptor_;
 }
 
-const CMessagePlayerDiamondUpdateNotify& CMessagePlayerDiamondUpdateNotify::default_instance() {
+const CDiamondUpdateNotify& CDiamondUpdateNotify::default_instance() {
   protobuf_InitDefaults_itemmodule_2ehxx();
   return *internal_default_instance();
 }
 
-::google::protobuf::internal::ExplicitlyConstructed<CMessagePlayerDiamondUpdateNotify> CMessagePlayerDiamondUpdateNotify_default_instance_;
+::google::protobuf::internal::ExplicitlyConstructed<CDiamondUpdateNotify> CDiamondUpdateNotify_default_instance_;
 
-CMessagePlayerDiamondUpdateNotify* CMessagePlayerDiamondUpdateNotify::New(::google::protobuf::Arena* arena) const {
-  CMessagePlayerDiamondUpdateNotify* n = new CMessagePlayerDiamondUpdateNotify;
+CDiamondUpdateNotify* CDiamondUpdateNotify::New(::google::protobuf::Arena* arena) const {
+  CDiamondUpdateNotify* n = new CDiamondUpdateNotify;
   if (arena != NULL) {
     arena->Own(n);
   }
   return n;
 }
 
-void CMessagePlayerDiamondUpdateNotify::Clear() {
-// @@protoc_insertion_point(message_clear_start:CMessagePlayerDiamondUpdateNotify)
+void CDiamondUpdateNotify::Clear() {
+// @@protoc_insertion_point(message_clear_start:CDiamondUpdateNotify)
   diamond_ = 0u;
 }
 
-bool CMessagePlayerDiamondUpdateNotify::MergePartialFromCodedStream(
+bool CDiamondUpdateNotify::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:CMessagePlayerDiamondUpdateNotify)
+  // @@protoc_insertion_point(parse_start:CDiamondUpdateNotify)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -537,40 +536,40 @@ bool CMessagePlayerDiamondUpdateNotify::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:CMessagePlayerDiamondUpdateNotify)
+  // @@protoc_insertion_point(parse_success:CDiamondUpdateNotify)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:CMessagePlayerDiamondUpdateNotify)
+  // @@protoc_insertion_point(parse_failure:CDiamondUpdateNotify)
   return false;
 #undef DO_
 }
 
-void CMessagePlayerDiamondUpdateNotify::SerializeWithCachedSizes(
+void CDiamondUpdateNotify::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:CMessagePlayerDiamondUpdateNotify)
+  // @@protoc_insertion_point(serialize_start:CDiamondUpdateNotify)
   // optional uint32 Diamond = 1;
   if (this->diamond() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->diamond(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:CMessagePlayerDiamondUpdateNotify)
+  // @@protoc_insertion_point(serialize_end:CDiamondUpdateNotify)
 }
 
-::google::protobuf::uint8* CMessagePlayerDiamondUpdateNotify::InternalSerializeWithCachedSizesToArray(
+::google::protobuf::uint8* CDiamondUpdateNotify::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:CMessagePlayerDiamondUpdateNotify)
+  // @@protoc_insertion_point(serialize_to_array_start:CDiamondUpdateNotify)
   // optional uint32 Diamond = 1;
   if (this->diamond() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->diamond(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:CMessagePlayerDiamondUpdateNotify)
+  // @@protoc_insertion_point(serialize_to_array_end:CDiamondUpdateNotify)
   return target;
 }
 
-size_t CMessagePlayerDiamondUpdateNotify::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:CMessagePlayerDiamondUpdateNotify)
+size_t CDiamondUpdateNotify::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CDiamondUpdateNotify)
   size_t total_size = 0;
 
   // optional uint32 Diamond = 1;
@@ -587,23 +586,23 @@ size_t CMessagePlayerDiamondUpdateNotify::ByteSizeLong() const {
   return total_size;
 }
 
-void CMessagePlayerDiamondUpdateNotify::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:CMessagePlayerDiamondUpdateNotify)
+void CDiamondUpdateNotify::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CDiamondUpdateNotify)
   if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const CMessagePlayerDiamondUpdateNotify* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const CMessagePlayerDiamondUpdateNotify>(
+  const CDiamondUpdateNotify* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CDiamondUpdateNotify>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CMessagePlayerDiamondUpdateNotify)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CDiamondUpdateNotify)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:CMessagePlayerDiamondUpdateNotify)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CDiamondUpdateNotify)
     UnsafeMergeFrom(*source);
   }
 }
 
-void CMessagePlayerDiamondUpdateNotify::MergeFrom(const CMessagePlayerDiamondUpdateNotify& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:CMessagePlayerDiamondUpdateNotify)
+void CDiamondUpdateNotify::MergeFrom(const CDiamondUpdateNotify& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CDiamondUpdateNotify)
   if (GOOGLE_PREDICT_TRUE(&from != this)) {
     UnsafeMergeFrom(from);
   } else {
@@ -611,148 +610,148 @@ void CMessagePlayerDiamondUpdateNotify::MergeFrom(const CMessagePlayerDiamondUpd
   }
 }
 
-void CMessagePlayerDiamondUpdateNotify::UnsafeMergeFrom(const CMessagePlayerDiamondUpdateNotify& from) {
+void CDiamondUpdateNotify::UnsafeMergeFrom(const CDiamondUpdateNotify& from) {
   GOOGLE_DCHECK(&from != this);
   if (from.diamond() != 0) {
     set_diamond(from.diamond());
   }
 }
 
-void CMessagePlayerDiamondUpdateNotify::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:CMessagePlayerDiamondUpdateNotify)
+void CDiamondUpdateNotify::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CDiamondUpdateNotify)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void CMessagePlayerDiamondUpdateNotify::CopyFrom(const CMessagePlayerDiamondUpdateNotify& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:CMessagePlayerDiamondUpdateNotify)
+void CDiamondUpdateNotify::CopyFrom(const CDiamondUpdateNotify& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CDiamondUpdateNotify)
   if (&from == this) return;
   Clear();
   UnsafeMergeFrom(from);
 }
 
-bool CMessagePlayerDiamondUpdateNotify::IsInitialized() const {
+bool CDiamondUpdateNotify::IsInitialized() const {
 
   return true;
 }
 
-void CMessagePlayerDiamondUpdateNotify::Swap(CMessagePlayerDiamondUpdateNotify* other) {
+void CDiamondUpdateNotify::Swap(CDiamondUpdateNotify* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void CMessagePlayerDiamondUpdateNotify::InternalSwap(CMessagePlayerDiamondUpdateNotify* other) {
+void CDiamondUpdateNotify::InternalSwap(CDiamondUpdateNotify* other) {
   std::swap(diamond_, other->diamond_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
 
-::google::protobuf::Metadata CMessagePlayerDiamondUpdateNotify::GetMetadata() const {
+::google::protobuf::Metadata CDiamondUpdateNotify::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = CMessagePlayerDiamondUpdateNotify_descriptor_;
-  metadata.reflection = CMessagePlayerDiamondUpdateNotify_reflection_;
+  metadata.descriptor = CDiamondUpdateNotify_descriptor_;
+  metadata.reflection = CDiamondUpdateNotify_reflection_;
   return metadata;
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
-// CMessagePlayerDiamondUpdateNotify
+// CDiamondUpdateNotify
 
 // optional uint32 Diamond = 1;
-void CMessagePlayerDiamondUpdateNotify::clear_diamond() {
+void CDiamondUpdateNotify::clear_diamond() {
   diamond_ = 0u;
 }
-::google::protobuf::uint32 CMessagePlayerDiamondUpdateNotify::diamond() const {
-  // @@protoc_insertion_point(field_get:CMessagePlayerDiamondUpdateNotify.Diamond)
+::google::protobuf::uint32 CDiamondUpdateNotify::diamond() const {
+  // @@protoc_insertion_point(field_get:CDiamondUpdateNotify.Diamond)
   return diamond_;
 }
-void CMessagePlayerDiamondUpdateNotify::set_diamond(::google::protobuf::uint32 value) {
+void CDiamondUpdateNotify::set_diamond(::google::protobuf::uint32 value) {
   
   diamond_ = value;
-  // @@protoc_insertion_point(field_set:CMessagePlayerDiamondUpdateNotify.Diamond)
+  // @@protoc_insertion_point(field_set:CDiamondUpdateNotify.Diamond)
 }
 
-inline const CMessagePlayerDiamondUpdateNotify* CMessagePlayerDiamondUpdateNotify::internal_default_instance() {
-  return &CMessagePlayerDiamondUpdateNotify_default_instance_.get();
+inline const CDiamondUpdateNotify* CDiamondUpdateNotify::internal_default_instance() {
+  return &CDiamondUpdateNotify_default_instance_.get();
 }
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int CMessageInsertItemNotify::kItemIDFieldNumber;
-const int CMessageInsertItemNotify::kIndexFieldNumber;
-const int CMessageInsertItemNotify::kNumberFieldNumber;
+const int CInsertItemNotify::kItemIDFieldNumber;
+const int CInsertItemNotify::kIndexFieldNumber;
+const int CInsertItemNotify::kNumberFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-CMessageInsertItemNotify::CMessageInsertItemNotify()
+CInsertItemNotify::CInsertItemNotify()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   if (this != internal_default_instance()) protobuf_InitDefaults_itemmodule_2ehxx();
   SharedCtor();
-  // @@protoc_insertion_point(constructor:CMessageInsertItemNotify)
+  // @@protoc_insertion_point(constructor:CInsertItemNotify)
 }
 
-void CMessageInsertItemNotify::InitAsDefaultInstance() {
+void CInsertItemNotify::InitAsDefaultInstance() {
 }
 
-CMessageInsertItemNotify::CMessageInsertItemNotify(const CMessageInsertItemNotify& from)
+CInsertItemNotify::CInsertItemNotify(const CInsertItemNotify& from)
   : ::google::protobuf::Message(),
     _internal_metadata_(NULL) {
   SharedCtor();
   UnsafeMergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:CMessageInsertItemNotify)
+  // @@protoc_insertion_point(copy_constructor:CInsertItemNotify)
 }
 
-void CMessageInsertItemNotify::SharedCtor() {
+void CInsertItemNotify::SharedCtor() {
   ::memset(&itemid_, 0, reinterpret_cast<char*>(&number_) -
     reinterpret_cast<char*>(&itemid_) + sizeof(number_));
   _cached_size_ = 0;
 }
 
-CMessageInsertItemNotify::~CMessageInsertItemNotify() {
-  // @@protoc_insertion_point(destructor:CMessageInsertItemNotify)
+CInsertItemNotify::~CInsertItemNotify() {
+  // @@protoc_insertion_point(destructor:CInsertItemNotify)
   SharedDtor();
 }
 
-void CMessageInsertItemNotify::SharedDtor() {
+void CInsertItemNotify::SharedDtor() {
 }
 
-void CMessageInsertItemNotify::SetCachedSize(int size) const {
+void CInsertItemNotify::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* CMessageInsertItemNotify::descriptor() {
+const ::google::protobuf::Descriptor* CInsertItemNotify::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return CMessageInsertItemNotify_descriptor_;
+  return CInsertItemNotify_descriptor_;
 }
 
-const CMessageInsertItemNotify& CMessageInsertItemNotify::default_instance() {
+const CInsertItemNotify& CInsertItemNotify::default_instance() {
   protobuf_InitDefaults_itemmodule_2ehxx();
   return *internal_default_instance();
 }
 
-::google::protobuf::internal::ExplicitlyConstructed<CMessageInsertItemNotify> CMessageInsertItemNotify_default_instance_;
+::google::protobuf::internal::ExplicitlyConstructed<CInsertItemNotify> CInsertItemNotify_default_instance_;
 
-CMessageInsertItemNotify* CMessageInsertItemNotify::New(::google::protobuf::Arena* arena) const {
-  CMessageInsertItemNotify* n = new CMessageInsertItemNotify;
+CInsertItemNotify* CInsertItemNotify::New(::google::protobuf::Arena* arena) const {
+  CInsertItemNotify* n = new CInsertItemNotify;
   if (arena != NULL) {
     arena->Own(n);
   }
   return n;
 }
 
-void CMessageInsertItemNotify::Clear() {
-// @@protoc_insertion_point(message_clear_start:CMessageInsertItemNotify)
+void CInsertItemNotify::Clear() {
+// @@protoc_insertion_point(message_clear_start:CInsertItemNotify)
 #if defined(__clang__)
 #define ZR_HELPER_(f) \
   _Pragma("clang diagnostic push") \
   _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
-  __builtin_offsetof(CMessageInsertItemNotify, f) \
+  __builtin_offsetof(CInsertItemNotify, f) \
   _Pragma("clang diagnostic pop")
 #else
 #define ZR_HELPER_(f) reinterpret_cast<char*>(\
-  &reinterpret_cast<CMessageInsertItemNotify*>(16)->f)
+  &reinterpret_cast<CInsertItemNotify*>(16)->f)
 #endif
 
 #define ZR_(first, last) do {\
@@ -767,11 +766,11 @@ void CMessageInsertItemNotify::Clear() {
 
 }
 
-bool CMessageInsertItemNotify::MergePartialFromCodedStream(
+bool CInsertItemNotify::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:CMessageInsertItemNotify)
+  // @@protoc_insertion_point(parse_start:CInsertItemNotify)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -834,17 +833,17 @@ bool CMessageInsertItemNotify::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:CMessageInsertItemNotify)
+  // @@protoc_insertion_point(parse_success:CInsertItemNotify)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:CMessageInsertItemNotify)
+  // @@protoc_insertion_point(parse_failure:CInsertItemNotify)
   return false;
 #undef DO_
 }
 
-void CMessageInsertItemNotify::SerializeWithCachedSizes(
+void CInsertItemNotify::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:CMessageInsertItemNotify)
+  // @@protoc_insertion_point(serialize_start:CInsertItemNotify)
   // optional uint32 ItemID = 1;
   if (this->itemid() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->itemid(), output);
@@ -860,13 +859,13 @@ void CMessageInsertItemNotify::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->number(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:CMessageInsertItemNotify)
+  // @@protoc_insertion_point(serialize_end:CInsertItemNotify)
 }
 
-::google::protobuf::uint8* CMessageInsertItemNotify::InternalSerializeWithCachedSizesToArray(
+::google::protobuf::uint8* CInsertItemNotify::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:CMessageInsertItemNotify)
+  // @@protoc_insertion_point(serialize_to_array_start:CInsertItemNotify)
   // optional uint32 ItemID = 1;
   if (this->itemid() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->itemid(), target);
@@ -882,12 +881,12 @@ void CMessageInsertItemNotify::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->number(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:CMessageInsertItemNotify)
+  // @@protoc_insertion_point(serialize_to_array_end:CInsertItemNotify)
   return target;
 }
 
-size_t CMessageInsertItemNotify::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:CMessageInsertItemNotify)
+size_t CInsertItemNotify::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CInsertItemNotify)
   size_t total_size = 0;
 
   // optional uint32 ItemID = 1;
@@ -918,23 +917,23 @@ size_t CMessageInsertItemNotify::ByteSizeLong() const {
   return total_size;
 }
 
-void CMessageInsertItemNotify::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:CMessageInsertItemNotify)
+void CInsertItemNotify::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CInsertItemNotify)
   if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const CMessageInsertItemNotify* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const CMessageInsertItemNotify>(
+  const CInsertItemNotify* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CInsertItemNotify>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CMessageInsertItemNotify)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CInsertItemNotify)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:CMessageInsertItemNotify)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CInsertItemNotify)
     UnsafeMergeFrom(*source);
   }
 }
 
-void CMessageInsertItemNotify::MergeFrom(const CMessageInsertItemNotify& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:CMessageInsertItemNotify)
+void CInsertItemNotify::MergeFrom(const CInsertItemNotify& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CInsertItemNotify)
   if (GOOGLE_PREDICT_TRUE(&from != this)) {
     UnsafeMergeFrom(from);
   } else {
@@ -942,7 +941,7 @@ void CMessageInsertItemNotify::MergeFrom(const CMessageInsertItemNotify& from) {
   }
 }
 
-void CMessageInsertItemNotify::UnsafeMergeFrom(const CMessageInsertItemNotify& from) {
+void CInsertItemNotify::UnsafeMergeFrom(const CInsertItemNotify& from) {
   GOOGLE_DCHECK(&from != this);
   if (from.itemid() != 0) {
     set_itemid(from.itemid());
@@ -955,30 +954,30 @@ void CMessageInsertItemNotify::UnsafeMergeFrom(const CMessageInsertItemNotify& f
   }
 }
 
-void CMessageInsertItemNotify::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:CMessageInsertItemNotify)
+void CInsertItemNotify::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CInsertItemNotify)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void CMessageInsertItemNotify::CopyFrom(const CMessageInsertItemNotify& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:CMessageInsertItemNotify)
+void CInsertItemNotify::CopyFrom(const CInsertItemNotify& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CInsertItemNotify)
   if (&from == this) return;
   Clear();
   UnsafeMergeFrom(from);
 }
 
-bool CMessageInsertItemNotify::IsInitialized() const {
+bool CInsertItemNotify::IsInitialized() const {
 
   return true;
 }
 
-void CMessageInsertItemNotify::Swap(CMessageInsertItemNotify* other) {
+void CInsertItemNotify::Swap(CInsertItemNotify* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void CMessageInsertItemNotify::InternalSwap(CMessageInsertItemNotify* other) {
+void CInsertItemNotify::InternalSwap(CInsertItemNotify* other) {
   std::swap(itemid_, other->itemid_);
   std::swap(index_, other->index_);
   std::swap(number_, other->number_);
@@ -986,61 +985,61 @@ void CMessageInsertItemNotify::InternalSwap(CMessageInsertItemNotify* other) {
   std::swap(_cached_size_, other->_cached_size_);
 }
 
-::google::protobuf::Metadata CMessageInsertItemNotify::GetMetadata() const {
+::google::protobuf::Metadata CInsertItemNotify::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = CMessageInsertItemNotify_descriptor_;
-  metadata.reflection = CMessageInsertItemNotify_reflection_;
+  metadata.descriptor = CInsertItemNotify_descriptor_;
+  metadata.reflection = CInsertItemNotify_reflection_;
   return metadata;
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
-// CMessageInsertItemNotify
+// CInsertItemNotify
 
 // optional uint32 ItemID = 1;
-void CMessageInsertItemNotify::clear_itemid() {
+void CInsertItemNotify::clear_itemid() {
   itemid_ = 0u;
 }
-::google::protobuf::uint32 CMessageInsertItemNotify::itemid() const {
-  // @@protoc_insertion_point(field_get:CMessageInsertItemNotify.ItemID)
+::google::protobuf::uint32 CInsertItemNotify::itemid() const {
+  // @@protoc_insertion_point(field_get:CInsertItemNotify.ItemID)
   return itemid_;
 }
-void CMessageInsertItemNotify::set_itemid(::google::protobuf::uint32 value) {
+void CInsertItemNotify::set_itemid(::google::protobuf::uint32 value) {
   
   itemid_ = value;
-  // @@protoc_insertion_point(field_set:CMessageInsertItemNotify.ItemID)
+  // @@protoc_insertion_point(field_set:CInsertItemNotify.ItemID)
 }
 
 // optional uint32 Index = 2;
-void CMessageInsertItemNotify::clear_index() {
+void CInsertItemNotify::clear_index() {
   index_ = 0u;
 }
-::google::protobuf::uint32 CMessageInsertItemNotify::index() const {
-  // @@protoc_insertion_point(field_get:CMessageInsertItemNotify.Index)
+::google::protobuf::uint32 CInsertItemNotify::index() const {
+  // @@protoc_insertion_point(field_get:CInsertItemNotify.Index)
   return index_;
 }
-void CMessageInsertItemNotify::set_index(::google::protobuf::uint32 value) {
+void CInsertItemNotify::set_index(::google::protobuf::uint32 value) {
   
   index_ = value;
-  // @@protoc_insertion_point(field_set:CMessageInsertItemNotify.Index)
+  // @@protoc_insertion_point(field_set:CInsertItemNotify.Index)
 }
 
 // optional uint32 Number = 3;
-void CMessageInsertItemNotify::clear_number() {
+void CInsertItemNotify::clear_number() {
   number_ = 0u;
 }
-::google::protobuf::uint32 CMessageInsertItemNotify::number() const {
-  // @@protoc_insertion_point(field_get:CMessageInsertItemNotify.Number)
+::google::protobuf::uint32 CInsertItemNotify::number() const {
+  // @@protoc_insertion_point(field_get:CInsertItemNotify.Number)
   return number_;
 }
-void CMessageInsertItemNotify::set_number(::google::protobuf::uint32 value) {
+void CInsertItemNotify::set_number(::google::protobuf::uint32 value) {
   
   number_ = value;
-  // @@protoc_insertion_point(field_set:CMessageInsertItemNotify.Number)
+  // @@protoc_insertion_point(field_set:CInsertItemNotify.Number)
 }
 
-inline const CMessageInsertItemNotify* CMessageInsertItemNotify::internal_default_instance() {
-  return &CMessageInsertItemNotify_default_instance_.get();
+inline const CInsertItemNotify* CInsertItemNotify::internal_default_instance() {
+  return &CInsertItemNotify_default_instance_.get();
 }
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 

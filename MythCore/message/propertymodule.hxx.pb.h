@@ -36,13 +36,15 @@ void protobuf_InitDefaults_propertymodule_2ehxx();
 void protobuf_AssignDesc_propertymodule_2ehxx();
 void protobuf_ShutdownFile_propertymodule_2ehxx();
 
-class CMessageGMCommandRequest;
-class CMessageGMCommandResponse;
-class CMessagePlayerLevelUpNotify;
+class CGMCommandRequest;
+class CGMCommandResponse;
+class CLevelUpNotify;
+class CObtainExpNotify;
+class CObtainVIPExpNotify;
 
 enum PROPERTY_MODULE_MSG_ID {
   ID_PROPERTY_MODULE_ERROR = 0,
-  ID_S2C_NOTIYF_PLAYER_LEVEL_UP = 1024,
+  ID_S2C_NOTIYF_LEVEL_UP = 1024,
   ID_C2S_REQUEST_GM_COMMAND = 1025,
   ID_S2C_RESPONSE_GM_COMMAND = 1026,
   PROPERTY_MODULE_MSG_ID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
@@ -65,34 +67,34 @@ inline bool PROPERTY_MODULE_MSG_ID_Parse(
 }
 // ===================================================================
 
-class CMessagePlayerLevelUpNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CMessagePlayerLevelUpNotify) */ {
+class CLevelUpNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CLevelUpNotify) */ {
  public:
-  CMessagePlayerLevelUpNotify();
-  virtual ~CMessagePlayerLevelUpNotify();
+  CLevelUpNotify();
+  virtual ~CLevelUpNotify();
 
-  CMessagePlayerLevelUpNotify(const CMessagePlayerLevelUpNotify& from);
+  CLevelUpNotify(const CLevelUpNotify& from);
 
-  inline CMessagePlayerLevelUpNotify& operator=(const CMessagePlayerLevelUpNotify& from) {
+  inline CLevelUpNotify& operator=(const CLevelUpNotify& from) {
     CopyFrom(from);
     return *this;
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const CMessagePlayerLevelUpNotify& default_instance();
+  static const CLevelUpNotify& default_instance();
 
-  static const CMessagePlayerLevelUpNotify* internal_default_instance();
+  static const CLevelUpNotify* internal_default_instance();
 
-  void Swap(CMessagePlayerLevelUpNotify* other);
+  void Swap(CLevelUpNotify* other);
 
   // implements Message ----------------------------------------------
 
-  inline CMessagePlayerLevelUpNotify* New() const { return New(NULL); }
+  inline CLevelUpNotify* New() const { return New(NULL); }
 
-  CMessagePlayerLevelUpNotify* New(::google::protobuf::Arena* arena) const;
+  CLevelUpNotify* New(::google::protobuf::Arena* arena) const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const CMessagePlayerLevelUpNotify& from);
-  void MergeFrom(const CMessagePlayerLevelUpNotify& from);
+  void CopyFrom(const CLevelUpNotify& from);
+  void MergeFrom(const CLevelUpNotify& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -111,8 +113,8 @@ class CMessagePlayerLevelUpNotify : public ::google::protobuf::Message /* @@prot
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(CMessagePlayerLevelUpNotify* other);
-  void UnsafeMergeFrom(const CMessagePlayerLevelUpNotify& from);
+  void InternalSwap(CLevelUpNotify* other);
+  void UnsafeMergeFrom(const CLevelUpNotify& from);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _internal_metadata_.arena();
@@ -134,7 +136,7 @@ class CMessagePlayerLevelUpNotify : public ::google::protobuf::Message /* @@prot
   ::google::protobuf::uint32 level() const;
   void set_level(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:CMessagePlayerLevelUpNotify)
+  // @@protoc_insertion_point(class_scope:CLevelUpNotify)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -147,38 +149,38 @@ class CMessagePlayerLevelUpNotify : public ::google::protobuf::Message /* @@prot
 
   void InitAsDefaultInstance();
 };
-extern ::google::protobuf::internal::ExplicitlyConstructed<CMessagePlayerLevelUpNotify> CMessagePlayerLevelUpNotify_default_instance_;
+extern ::google::protobuf::internal::ExplicitlyConstructed<CLevelUpNotify> CLevelUpNotify_default_instance_;
 
 // -------------------------------------------------------------------
 
-class CMessageGMCommandRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CMessageGMCommandRequest) */ {
+class CGMCommandRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CGMCommandRequest) */ {
  public:
-  CMessageGMCommandRequest();
-  virtual ~CMessageGMCommandRequest();
+  CGMCommandRequest();
+  virtual ~CGMCommandRequest();
 
-  CMessageGMCommandRequest(const CMessageGMCommandRequest& from);
+  CGMCommandRequest(const CGMCommandRequest& from);
 
-  inline CMessageGMCommandRequest& operator=(const CMessageGMCommandRequest& from) {
+  inline CGMCommandRequest& operator=(const CGMCommandRequest& from) {
     CopyFrom(from);
     return *this;
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const CMessageGMCommandRequest& default_instance();
+  static const CGMCommandRequest& default_instance();
 
-  static const CMessageGMCommandRequest* internal_default_instance();
+  static const CGMCommandRequest* internal_default_instance();
 
-  void Swap(CMessageGMCommandRequest* other);
+  void Swap(CGMCommandRequest* other);
 
   // implements Message ----------------------------------------------
 
-  inline CMessageGMCommandRequest* New() const { return New(NULL); }
+  inline CGMCommandRequest* New() const { return New(NULL); }
 
-  CMessageGMCommandRequest* New(::google::protobuf::Arena* arena) const;
+  CGMCommandRequest* New(::google::protobuf::Arena* arena) const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const CMessageGMCommandRequest& from);
-  void MergeFrom(const CMessageGMCommandRequest& from);
+  void CopyFrom(const CGMCommandRequest& from);
+  void MergeFrom(const CGMCommandRequest& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -197,8 +199,8 @@ class CMessageGMCommandRequest : public ::google::protobuf::Message /* @@protoc_
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(CMessageGMCommandRequest* other);
-  void UnsafeMergeFrom(const CMessageGMCommandRequest& from);
+  void InternalSwap(CGMCommandRequest* other);
+  void UnsafeMergeFrom(const CGMCommandRequest& from);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _internal_metadata_.arena();
@@ -225,7 +227,7 @@ class CMessageGMCommandRequest : public ::google::protobuf::Message /* @@protoc_
   ::std::string* release_commandstring();
   void set_allocated_commandstring(::std::string* commandstring);
 
-  // @@protoc_insertion_point(class_scope:CMessageGMCommandRequest)
+  // @@protoc_insertion_point(class_scope:CGMCommandRequest)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -238,38 +240,38 @@ class CMessageGMCommandRequest : public ::google::protobuf::Message /* @@protoc_
 
   void InitAsDefaultInstance();
 };
-extern ::google::protobuf::internal::ExplicitlyConstructed<CMessageGMCommandRequest> CMessageGMCommandRequest_default_instance_;
+extern ::google::protobuf::internal::ExplicitlyConstructed<CGMCommandRequest> CGMCommandRequest_default_instance_;
 
 // -------------------------------------------------------------------
 
-class CMessageGMCommandResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CMessageGMCommandResponse) */ {
+class CGMCommandResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CGMCommandResponse) */ {
  public:
-  CMessageGMCommandResponse();
-  virtual ~CMessageGMCommandResponse();
+  CGMCommandResponse();
+  virtual ~CGMCommandResponse();
 
-  CMessageGMCommandResponse(const CMessageGMCommandResponse& from);
+  CGMCommandResponse(const CGMCommandResponse& from);
 
-  inline CMessageGMCommandResponse& operator=(const CMessageGMCommandResponse& from) {
+  inline CGMCommandResponse& operator=(const CGMCommandResponse& from) {
     CopyFrom(from);
     return *this;
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const CMessageGMCommandResponse& default_instance();
+  static const CGMCommandResponse& default_instance();
 
-  static const CMessageGMCommandResponse* internal_default_instance();
+  static const CGMCommandResponse* internal_default_instance();
 
-  void Swap(CMessageGMCommandResponse* other);
+  void Swap(CGMCommandResponse* other);
 
   // implements Message ----------------------------------------------
 
-  inline CMessageGMCommandResponse* New() const { return New(NULL); }
+  inline CGMCommandResponse* New() const { return New(NULL); }
 
-  CMessageGMCommandResponse* New(::google::protobuf::Arena* arena) const;
+  CGMCommandResponse* New(::google::protobuf::Arena* arena) const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const CMessageGMCommandResponse& from);
-  void MergeFrom(const CMessageGMCommandResponse& from);
+  void CopyFrom(const CGMCommandResponse& from);
+  void MergeFrom(const CGMCommandResponse& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -288,8 +290,8 @@ class CMessageGMCommandResponse : public ::google::protobuf::Message /* @@protoc
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(CMessageGMCommandResponse* other);
-  void UnsafeMergeFrom(const CMessageGMCommandResponse& from);
+  void InternalSwap(CGMCommandResponse* other);
+  void UnsafeMergeFrom(const CGMCommandResponse& from);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _internal_metadata_.arena();
@@ -311,7 +313,7 @@ class CMessageGMCommandResponse : public ::google::protobuf::Message /* @@protoc
   ::google::protobuf::uint32 result() const;
   void set_result(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:CMessageGMCommandResponse)
+  // @@protoc_insertion_point(class_scope:CGMCommandResponse)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -324,7 +326,172 @@ class CMessageGMCommandResponse : public ::google::protobuf::Message /* @@protoc
 
   void InitAsDefaultInstance();
 };
-extern ::google::protobuf::internal::ExplicitlyConstructed<CMessageGMCommandResponse> CMessageGMCommandResponse_default_instance_;
+extern ::google::protobuf::internal::ExplicitlyConstructed<CGMCommandResponse> CGMCommandResponse_default_instance_;
+
+// -------------------------------------------------------------------
+
+class CObtainExpNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CObtainExpNotify) */ {
+ public:
+  CObtainExpNotify();
+  virtual ~CObtainExpNotify();
+
+  CObtainExpNotify(const CObtainExpNotify& from);
+
+  inline CObtainExpNotify& operator=(const CObtainExpNotify& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CObtainExpNotify& default_instance();
+
+  static const CObtainExpNotify* internal_default_instance();
+
+  void Swap(CObtainExpNotify* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CObtainExpNotify* New() const { return New(NULL); }
+
+  CObtainExpNotify* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CObtainExpNotify& from);
+  void MergeFrom(const CObtainExpNotify& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CObtainExpNotify* other);
+  void UnsafeMergeFrom(const CObtainExpNotify& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 Exp = 1;
+  void clear_exp();
+  static const int kExpFieldNumber = 1;
+  ::google::protobuf::uint32 exp() const;
+  void set_exp(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:CObtainExpNotify)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 exp_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_propertymodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_propertymodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_propertymodule_2ehxx();
+  friend void protobuf_ShutdownFile_propertymodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CObtainExpNotify> CObtainExpNotify_default_instance_;
+
+// -------------------------------------------------------------------
+
+class CObtainVIPExpNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CObtainVIPExpNotify) */ {
+ public:
+  CObtainVIPExpNotify();
+  virtual ~CObtainVIPExpNotify();
+
+  CObtainVIPExpNotify(const CObtainVIPExpNotify& from);
+
+  inline CObtainVIPExpNotify& operator=(const CObtainVIPExpNotify& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CObtainVIPExpNotify& default_instance();
+
+  static const CObtainVIPExpNotify* internal_default_instance();
+
+  void Swap(CObtainVIPExpNotify* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CObtainVIPExpNotify* New() const { return New(NULL); }
+
+  CObtainVIPExpNotify* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CObtainVIPExpNotify& from);
+  void MergeFrom(const CObtainVIPExpNotify& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CObtainVIPExpNotify* other);
+  void UnsafeMergeFrom(const CObtainVIPExpNotify& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:CObtainVIPExpNotify)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_propertymodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_propertymodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_propertymodule_2ehxx();
+  friend void protobuf_ShutdownFile_propertymodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CObtainVIPExpNotify> CObtainVIPExpNotify_default_instance_;
 
 // ===================================================================
 
@@ -332,98 +499,130 @@ extern ::google::protobuf::internal::ExplicitlyConstructed<CMessageGMCommandResp
 // ===================================================================
 
 #if !PROTOBUF_INLINE_NOT_IN_HEADERS
-// CMessagePlayerLevelUpNotify
+// CLevelUpNotify
 
 // optional uint32 Level = 1;
-inline void CMessagePlayerLevelUpNotify::clear_level() {
+inline void CLevelUpNotify::clear_level() {
   level_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessagePlayerLevelUpNotify::level() const {
-  // @@protoc_insertion_point(field_get:CMessagePlayerLevelUpNotify.Level)
+inline ::google::protobuf::uint32 CLevelUpNotify::level() const {
+  // @@protoc_insertion_point(field_get:CLevelUpNotify.Level)
   return level_;
 }
-inline void CMessagePlayerLevelUpNotify::set_level(::google::protobuf::uint32 value) {
+inline void CLevelUpNotify::set_level(::google::protobuf::uint32 value) {
   
   level_ = value;
-  // @@protoc_insertion_point(field_set:CMessagePlayerLevelUpNotify.Level)
+  // @@protoc_insertion_point(field_set:CLevelUpNotify.Level)
 }
 
-inline const CMessagePlayerLevelUpNotify* CMessagePlayerLevelUpNotify::internal_default_instance() {
-  return &CMessagePlayerLevelUpNotify_default_instance_.get();
+inline const CLevelUpNotify* CLevelUpNotify::internal_default_instance() {
+  return &CLevelUpNotify_default_instance_.get();
 }
 // -------------------------------------------------------------------
 
-// CMessageGMCommandRequest
+// CGMCommandRequest
 
 // optional string CommandString = 1;
-inline void CMessageGMCommandRequest::clear_commandstring() {
+inline void CGMCommandRequest::clear_commandstring() {
   commandstring_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& CMessageGMCommandRequest::commandstring() const {
-  // @@protoc_insertion_point(field_get:CMessageGMCommandRequest.CommandString)
+inline const ::std::string& CGMCommandRequest::commandstring() const {
+  // @@protoc_insertion_point(field_get:CGMCommandRequest.CommandString)
   return commandstring_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void CMessageGMCommandRequest::set_commandstring(const ::std::string& value) {
+inline void CGMCommandRequest::set_commandstring(const ::std::string& value) {
   
   commandstring_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:CMessageGMCommandRequest.CommandString)
+  // @@protoc_insertion_point(field_set:CGMCommandRequest.CommandString)
 }
-inline void CMessageGMCommandRequest::set_commandstring(const char* value) {
+inline void CGMCommandRequest::set_commandstring(const char* value) {
   
   commandstring_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:CMessageGMCommandRequest.CommandString)
+  // @@protoc_insertion_point(field_set_char:CGMCommandRequest.CommandString)
 }
-inline void CMessageGMCommandRequest::set_commandstring(const char* value, size_t size) {
+inline void CGMCommandRequest::set_commandstring(const char* value, size_t size) {
   
   commandstring_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:CMessageGMCommandRequest.CommandString)
+  // @@protoc_insertion_point(field_set_pointer:CGMCommandRequest.CommandString)
 }
-inline ::std::string* CMessageGMCommandRequest::mutable_commandstring() {
+inline ::std::string* CGMCommandRequest::mutable_commandstring() {
   
-  // @@protoc_insertion_point(field_mutable:CMessageGMCommandRequest.CommandString)
+  // @@protoc_insertion_point(field_mutable:CGMCommandRequest.CommandString)
   return commandstring_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* CMessageGMCommandRequest::release_commandstring() {
-  // @@protoc_insertion_point(field_release:CMessageGMCommandRequest.CommandString)
+inline ::std::string* CGMCommandRequest::release_commandstring() {
+  // @@protoc_insertion_point(field_release:CGMCommandRequest.CommandString)
   
   return commandstring_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void CMessageGMCommandRequest::set_allocated_commandstring(::std::string* commandstring) {
+inline void CGMCommandRequest::set_allocated_commandstring(::std::string* commandstring) {
   if (commandstring != NULL) {
     
   } else {
     
   }
   commandstring_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), commandstring);
-  // @@protoc_insertion_point(field_set_allocated:CMessageGMCommandRequest.CommandString)
+  // @@protoc_insertion_point(field_set_allocated:CGMCommandRequest.CommandString)
 }
 
-inline const CMessageGMCommandRequest* CMessageGMCommandRequest::internal_default_instance() {
-  return &CMessageGMCommandRequest_default_instance_.get();
+inline const CGMCommandRequest* CGMCommandRequest::internal_default_instance() {
+  return &CGMCommandRequest_default_instance_.get();
 }
 // -------------------------------------------------------------------
 
-// CMessageGMCommandResponse
+// CGMCommandResponse
 
 // optional uint32 Result = 1;
-inline void CMessageGMCommandResponse::clear_result() {
+inline void CGMCommandResponse::clear_result() {
   result_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessageGMCommandResponse::result() const {
-  // @@protoc_insertion_point(field_get:CMessageGMCommandResponse.Result)
+inline ::google::protobuf::uint32 CGMCommandResponse::result() const {
+  // @@protoc_insertion_point(field_get:CGMCommandResponse.Result)
   return result_;
 }
-inline void CMessageGMCommandResponse::set_result(::google::protobuf::uint32 value) {
+inline void CGMCommandResponse::set_result(::google::protobuf::uint32 value) {
   
   result_ = value;
-  // @@protoc_insertion_point(field_set:CMessageGMCommandResponse.Result)
+  // @@protoc_insertion_point(field_set:CGMCommandResponse.Result)
 }
 
-inline const CMessageGMCommandResponse* CMessageGMCommandResponse::internal_default_instance() {
-  return &CMessageGMCommandResponse_default_instance_.get();
+inline const CGMCommandResponse* CGMCommandResponse::internal_default_instance() {
+  return &CGMCommandResponse_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
+// CObtainExpNotify
+
+// optional uint32 Exp = 1;
+inline void CObtainExpNotify::clear_exp() {
+  exp_ = 0u;
+}
+inline ::google::protobuf::uint32 CObtainExpNotify::exp() const {
+  // @@protoc_insertion_point(field_get:CObtainExpNotify.Exp)
+  return exp_;
+}
+inline void CObtainExpNotify::set_exp(::google::protobuf::uint32 value) {
+  
+  exp_ = value;
+  // @@protoc_insertion_point(field_set:CObtainExpNotify.Exp)
+}
+
+inline const CObtainExpNotify* CObtainExpNotify::internal_default_instance() {
+  return &CObtainExpNotify_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
+// CObtainVIPExpNotify
+
+inline const CObtainVIPExpNotify* CObtainVIPExpNotify::internal_default_instance() {
+  return &CObtainVIPExpNotify_default_instance_.get();
 }
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

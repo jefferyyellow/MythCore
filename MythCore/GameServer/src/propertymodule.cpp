@@ -25,39 +25,15 @@ void CPropertyModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMess
 	}
 }
 
-// 玩家获得经验
-void CPropertyModule::obtainExp(CEntityPlayer* pPlayer, int nExp)
-{
-	if (NULL == pPlayer || nExp <= 0)
-	{
-		return;
-	}
 
-	CPropertyUnit& rPropertyUnity = pPlayer->GetPropertyUnit();
-	int nOldLeve = rPropertyUnity.getLevel();
-	// 得到经验
-	rPropertyUnity.obtainExp(nExp);
-	// 升级了
-	if (rPropertyUnity.getLevel() > nOldLeve)
-	{
-		onPlayerLevelUp(pPlayer, rPropertyUnity.getLevel());
-	}
-}
 
-// 玩家等级升级
-void CPropertyModule::onPlayerLevelUp(CEntityPlayer* pPlayer, int nLevel)
-{
-	CMessagePlayerLevelUpNotify tPlayerLevelUpNotify;
-	tPlayerLevelUpNotify.set_level(nLevel);
-	CSceneJob::Inst()->sendClientMessage(pPlayer, ID_S2C_NOTIYF_PLAYER_LEVEL_UP, &tPlayerLevelUpNotify);
-}
 
 // GM命令请求
 void CPropertyModule::onMessageGMCommandRequest(CEntityPlayer* pPlayer, Message* pMessage)
 {
 	MYTH_ASSERT(NULL == pPlayer || NULL == pMessage, return);
 
-	CMessageGMCommandRequest* pGMCommandRequest = reinterpret_cast<CMessageGMCommandRequest*>(pMessage);
+	CGMCommandRequest* pGMCommandRequest = reinterpret_cast<CGMCommandRequest*>(pMessage);
 	if (NULL == pGMCommandRequest)
 	{
 		return;

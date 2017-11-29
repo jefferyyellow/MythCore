@@ -77,6 +77,7 @@
     <ClCompile Include="..\message\mapmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\message.hxx.pb.cc" />
     <ClCompile Include="..\message\propertymodule.hxx.pb.cc" />
+    <ClCompile Include="..\message\taskmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\template.hxx.pb.cc" />
     <ClCompile Include="inc\mapmodule.cpp" />
     <ClCompile Include="src\dbjob.cpp" />
@@ -108,6 +109,8 @@
     <ClCompile Include="src\propertyunit.cpp" />
     <ClCompile Include="src\scenejob.cpp" />
     <ClCompile Include="src\strutility.cpp" />
+    <ClCompile Include="src\taskconfig.cpp" />
+    <ClCompile Include="src\taskmodule.cpp" />
     <ClCompile Include="src\taskunit.cpp" />
     <ClCompile Include="src\template.cpp" />
   </ItemGroup>
@@ -123,6 +126,8 @@
     <ClInclude Include="..\message\message.hxx.pb.h" />
     <ClInclude Include="..\message\propertymodule.hxx" />
     <ClInclude Include="..\message\propertymodule.hxx.pb.h" />
+    <ClInclude Include="..\message\taskmodule.hxx" />
+    <ClInclude Include="..\message\taskmodule.hxx.pb.h" />
     <ClInclude Include="..\message\template.hxx" />
     <ClInclude Include="..\message\template.hxx.pb.h" />
     <ClInclude Include="inc\dbjob.h" />
@@ -165,7 +170,9 @@
     <ClInclude Include="inc\sharelist.h" />
     <ClInclude Include="inc\statemachine.h" />
     <ClInclude Include="inc\strutility.h" />
+    <ClInclude Include="inc\taskconfig.h" />
     <ClInclude Include="inc\taskmanager.h" />
+    <ClInclude Include="inc\taskmodule.h" />
     <ClInclude Include="inc\taskunit.h" />
     <ClInclude Include="inc\template.h" />
     <ClInclude Include="inc\propertymodule.h" />

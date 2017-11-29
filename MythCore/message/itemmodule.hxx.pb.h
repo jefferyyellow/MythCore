@@ -36,20 +36,20 @@ void protobuf_InitDefaults_itemmodule_2ehxx();
 void protobuf_AssignDesc_itemmodule_2ehxx();
 void protobuf_ShutdownFile_itemmodule_2ehxx();
 
-class CMessageInsertItemNotify;
-class CMessagePlayerDiamondUpdateNotify;
-class CMessagePlayerMoneyUpdateNotify;
+class CDiamondUpdateNotify;
+class CInsertItemNotify;
+class CMoneyUpdateNotify;
 
 enum ITEM_MODULE_MSG_ID {
   ID_ITEM_MODULE_ERROR = 0,
-  ID_S2C_NOTIYF_PLAYER_MONEY_UPDATE = 2048,
-  ID_S2C_NOTIYF_PLAYER_DIAMOND_UPDATE = 2049,
+  ID_S2C_NOTIYF_MONEY_UPDATE = 2048,
+  ID_S2C_NOTIYF_DIAMOND_UPDATE = 2049,
   ITEM_MODULE_MSG_ID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   ITEM_MODULE_MSG_ID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool ITEM_MODULE_MSG_ID_IsValid(int value);
 const ITEM_MODULE_MSG_ID ITEM_MODULE_MSG_ID_MIN = ID_ITEM_MODULE_ERROR;
-const ITEM_MODULE_MSG_ID ITEM_MODULE_MSG_ID_MAX = ID_S2C_NOTIYF_PLAYER_DIAMOND_UPDATE;
+const ITEM_MODULE_MSG_ID ITEM_MODULE_MSG_ID_MAX = ID_S2C_NOTIYF_DIAMOND_UPDATE;
 const int ITEM_MODULE_MSG_ID_ARRAYSIZE = ITEM_MODULE_MSG_ID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* ITEM_MODULE_MSG_ID_descriptor();
@@ -64,34 +64,34 @@ inline bool ITEM_MODULE_MSG_ID_Parse(
 }
 // ===================================================================
 
-class CMessagePlayerMoneyUpdateNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CMessagePlayerMoneyUpdateNotify) */ {
+class CMoneyUpdateNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CMoneyUpdateNotify) */ {
  public:
-  CMessagePlayerMoneyUpdateNotify();
-  virtual ~CMessagePlayerMoneyUpdateNotify();
+  CMoneyUpdateNotify();
+  virtual ~CMoneyUpdateNotify();
 
-  CMessagePlayerMoneyUpdateNotify(const CMessagePlayerMoneyUpdateNotify& from);
+  CMoneyUpdateNotify(const CMoneyUpdateNotify& from);
 
-  inline CMessagePlayerMoneyUpdateNotify& operator=(const CMessagePlayerMoneyUpdateNotify& from) {
+  inline CMoneyUpdateNotify& operator=(const CMoneyUpdateNotify& from) {
     CopyFrom(from);
     return *this;
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const CMessagePlayerMoneyUpdateNotify& default_instance();
+  static const CMoneyUpdateNotify& default_instance();
 
-  static const CMessagePlayerMoneyUpdateNotify* internal_default_instance();
+  static const CMoneyUpdateNotify* internal_default_instance();
 
-  void Swap(CMessagePlayerMoneyUpdateNotify* other);
+  void Swap(CMoneyUpdateNotify* other);
 
   // implements Message ----------------------------------------------
 
-  inline CMessagePlayerMoneyUpdateNotify* New() const { return New(NULL); }
+  inline CMoneyUpdateNotify* New() const { return New(NULL); }
 
-  CMessagePlayerMoneyUpdateNotify* New(::google::protobuf::Arena* arena) const;
+  CMoneyUpdateNotify* New(::google::protobuf::Arena* arena) const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const CMessagePlayerMoneyUpdateNotify& from);
-  void MergeFrom(const CMessagePlayerMoneyUpdateNotify& from);
+  void CopyFrom(const CMoneyUpdateNotify& from);
+  void MergeFrom(const CMoneyUpdateNotify& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -110,8 +110,8 @@ class CMessagePlayerMoneyUpdateNotify : public ::google::protobuf::Message /* @@
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(CMessagePlayerMoneyUpdateNotify* other);
-  void UnsafeMergeFrom(const CMessagePlayerMoneyUpdateNotify& from);
+  void InternalSwap(CMoneyUpdateNotify* other);
+  void UnsafeMergeFrom(const CMoneyUpdateNotify& from);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _internal_metadata_.arena();
@@ -133,7 +133,7 @@ class CMessagePlayerMoneyUpdateNotify : public ::google::protobuf::Message /* @@
   ::google::protobuf::uint32 money() const;
   void set_money(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:CMessagePlayerMoneyUpdateNotify)
+  // @@protoc_insertion_point(class_scope:CMoneyUpdateNotify)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -146,38 +146,38 @@ class CMessagePlayerMoneyUpdateNotify : public ::google::protobuf::Message /* @@
 
   void InitAsDefaultInstance();
 };
-extern ::google::protobuf::internal::ExplicitlyConstructed<CMessagePlayerMoneyUpdateNotify> CMessagePlayerMoneyUpdateNotify_default_instance_;
+extern ::google::protobuf::internal::ExplicitlyConstructed<CMoneyUpdateNotify> CMoneyUpdateNotify_default_instance_;
 
 // -------------------------------------------------------------------
 
-class CMessagePlayerDiamondUpdateNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CMessagePlayerDiamondUpdateNotify) */ {
+class CDiamondUpdateNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CDiamondUpdateNotify) */ {
  public:
-  CMessagePlayerDiamondUpdateNotify();
-  virtual ~CMessagePlayerDiamondUpdateNotify();
+  CDiamondUpdateNotify();
+  virtual ~CDiamondUpdateNotify();
 
-  CMessagePlayerDiamondUpdateNotify(const CMessagePlayerDiamondUpdateNotify& from);
+  CDiamondUpdateNotify(const CDiamondUpdateNotify& from);
 
-  inline CMessagePlayerDiamondUpdateNotify& operator=(const CMessagePlayerDiamondUpdateNotify& from) {
+  inline CDiamondUpdateNotify& operator=(const CDiamondUpdateNotify& from) {
     CopyFrom(from);
     return *this;
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const CMessagePlayerDiamondUpdateNotify& default_instance();
+  static const CDiamondUpdateNotify& default_instance();
 
-  static const CMessagePlayerDiamondUpdateNotify* internal_default_instance();
+  static const CDiamondUpdateNotify* internal_default_instance();
 
-  void Swap(CMessagePlayerDiamondUpdateNotify* other);
+  void Swap(CDiamondUpdateNotify* other);
 
   // implements Message ----------------------------------------------
 
-  inline CMessagePlayerDiamondUpdateNotify* New() const { return New(NULL); }
+  inline CDiamondUpdateNotify* New() const { return New(NULL); }
 
-  CMessagePlayerDiamondUpdateNotify* New(::google::protobuf::Arena* arena) const;
+  CDiamondUpdateNotify* New(::google::protobuf::Arena* arena) const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const CMessagePlayerDiamondUpdateNotify& from);
-  void MergeFrom(const CMessagePlayerDiamondUpdateNotify& from);
+  void CopyFrom(const CDiamondUpdateNotify& from);
+  void MergeFrom(const CDiamondUpdateNotify& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -196,8 +196,8 @@ class CMessagePlayerDiamondUpdateNotify : public ::google::protobuf::Message /* 
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(CMessagePlayerDiamondUpdateNotify* other);
-  void UnsafeMergeFrom(const CMessagePlayerDiamondUpdateNotify& from);
+  void InternalSwap(CDiamondUpdateNotify* other);
+  void UnsafeMergeFrom(const CDiamondUpdateNotify& from);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _internal_metadata_.arena();
@@ -219,7 +219,7 @@ class CMessagePlayerDiamondUpdateNotify : public ::google::protobuf::Message /* 
   ::google::protobuf::uint32 diamond() const;
   void set_diamond(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:CMessagePlayerDiamondUpdateNotify)
+  // @@protoc_insertion_point(class_scope:CDiamondUpdateNotify)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -232,38 +232,38 @@ class CMessagePlayerDiamondUpdateNotify : public ::google::protobuf::Message /* 
 
   void InitAsDefaultInstance();
 };
-extern ::google::protobuf::internal::ExplicitlyConstructed<CMessagePlayerDiamondUpdateNotify> CMessagePlayerDiamondUpdateNotify_default_instance_;
+extern ::google::protobuf::internal::ExplicitlyConstructed<CDiamondUpdateNotify> CDiamondUpdateNotify_default_instance_;
 
 // -------------------------------------------------------------------
 
-class CMessageInsertItemNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CMessageInsertItemNotify) */ {
+class CInsertItemNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CInsertItemNotify) */ {
  public:
-  CMessageInsertItemNotify();
-  virtual ~CMessageInsertItemNotify();
+  CInsertItemNotify();
+  virtual ~CInsertItemNotify();
 
-  CMessageInsertItemNotify(const CMessageInsertItemNotify& from);
+  CInsertItemNotify(const CInsertItemNotify& from);
 
-  inline CMessageInsertItemNotify& operator=(const CMessageInsertItemNotify& from) {
+  inline CInsertItemNotify& operator=(const CInsertItemNotify& from) {
     CopyFrom(from);
     return *this;
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const CMessageInsertItemNotify& default_instance();
+  static const CInsertItemNotify& default_instance();
 
-  static const CMessageInsertItemNotify* internal_default_instance();
+  static const CInsertItemNotify* internal_default_instance();
 
-  void Swap(CMessageInsertItemNotify* other);
+  void Swap(CInsertItemNotify* other);
 
   // implements Message ----------------------------------------------
 
-  inline CMessageInsertItemNotify* New() const { return New(NULL); }
+  inline CInsertItemNotify* New() const { return New(NULL); }
 
-  CMessageInsertItemNotify* New(::google::protobuf::Arena* arena) const;
+  CInsertItemNotify* New(::google::protobuf::Arena* arena) const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const CMessageInsertItemNotify& from);
-  void MergeFrom(const CMessageInsertItemNotify& from);
+  void CopyFrom(const CInsertItemNotify& from);
+  void MergeFrom(const CInsertItemNotify& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -282,8 +282,8 @@ class CMessageInsertItemNotify : public ::google::protobuf::Message /* @@protoc_
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(CMessageInsertItemNotify* other);
-  void UnsafeMergeFrom(const CMessageInsertItemNotify& from);
+  void InternalSwap(CInsertItemNotify* other);
+  void UnsafeMergeFrom(const CInsertItemNotify& from);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _internal_metadata_.arena();
@@ -317,7 +317,7 @@ class CMessageInsertItemNotify : public ::google::protobuf::Message /* @@protoc_
   ::google::protobuf::uint32 number() const;
   void set_number(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:CMessageInsertItemNotify)
+  // @@protoc_insertion_point(class_scope:CInsertItemNotify)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -332,7 +332,7 @@ class CMessageInsertItemNotify : public ::google::protobuf::Message /* @@protoc_
 
   void InitAsDefaultInstance();
 };
-extern ::google::protobuf::internal::ExplicitlyConstructed<CMessageInsertItemNotify> CMessageInsertItemNotify_default_instance_;
+extern ::google::protobuf::internal::ExplicitlyConstructed<CInsertItemNotify> CInsertItemNotify_default_instance_;
 
 // ===================================================================
 
@@ -340,94 +340,94 @@ extern ::google::protobuf::internal::ExplicitlyConstructed<CMessageInsertItemNot
 // ===================================================================
 
 #if !PROTOBUF_INLINE_NOT_IN_HEADERS
-// CMessagePlayerMoneyUpdateNotify
+// CMoneyUpdateNotify
 
 // optional uint32 Money = 1;
-inline void CMessagePlayerMoneyUpdateNotify::clear_money() {
+inline void CMoneyUpdateNotify::clear_money() {
   money_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessagePlayerMoneyUpdateNotify::money() const {
-  // @@protoc_insertion_point(field_get:CMessagePlayerMoneyUpdateNotify.Money)
+inline ::google::protobuf::uint32 CMoneyUpdateNotify::money() const {
+  // @@protoc_insertion_point(field_get:CMoneyUpdateNotify.Money)
   return money_;
 }
-inline void CMessagePlayerMoneyUpdateNotify::set_money(::google::protobuf::uint32 value) {
+inline void CMoneyUpdateNotify::set_money(::google::protobuf::uint32 value) {
   
   money_ = value;
-  // @@protoc_insertion_point(field_set:CMessagePlayerMoneyUpdateNotify.Money)
+  // @@protoc_insertion_point(field_set:CMoneyUpdateNotify.Money)
 }
 
-inline const CMessagePlayerMoneyUpdateNotify* CMessagePlayerMoneyUpdateNotify::internal_default_instance() {
-  return &CMessagePlayerMoneyUpdateNotify_default_instance_.get();
+inline const CMoneyUpdateNotify* CMoneyUpdateNotify::internal_default_instance() {
+  return &CMoneyUpdateNotify_default_instance_.get();
 }
 // -------------------------------------------------------------------
 
-// CMessagePlayerDiamondUpdateNotify
+// CDiamondUpdateNotify
 
 // optional uint32 Diamond = 1;
-inline void CMessagePlayerDiamondUpdateNotify::clear_diamond() {
+inline void CDiamondUpdateNotify::clear_diamond() {
   diamond_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessagePlayerDiamondUpdateNotify::diamond() const {
-  // @@protoc_insertion_point(field_get:CMessagePlayerDiamondUpdateNotify.Diamond)
+inline ::google::protobuf::uint32 CDiamondUpdateNotify::diamond() const {
+  // @@protoc_insertion_point(field_get:CDiamondUpdateNotify.Diamond)
   return diamond_;
 }
-inline void CMessagePlayerDiamondUpdateNotify::set_diamond(::google::protobuf::uint32 value) {
+inline void CDiamondUpdateNotify::set_diamond(::google::protobuf::uint32 value) {
   
   diamond_ = value;
-  // @@protoc_insertion_point(field_set:CMessagePlayerDiamondUpdateNotify.Diamond)
+  // @@protoc_insertion_point(field_set:CDiamondUpdateNotify.Diamond)
 }
 
-inline const CMessagePlayerDiamondUpdateNotify* CMessagePlayerDiamondUpdateNotify::internal_default_instance() {
-  return &CMessagePlayerDiamondUpdateNotify_default_instance_.get();
+inline const CDiamondUpdateNotify* CDiamondUpdateNotify::internal_default_instance() {
+  return &CDiamondUpdateNotify_default_instance_.get();
 }
 // -------------------------------------------------------------------
 
-// CMessageInsertItemNotify
+// CInsertItemNotify
 
 // optional uint32 ItemID = 1;
-inline void CMessageInsertItemNotify::clear_itemid() {
+inline void CInsertItemNotify::clear_itemid() {
   itemid_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessageInsertItemNotify::itemid() const {
-  // @@protoc_insertion_point(field_get:CMessageInsertItemNotify.ItemID)
+inline ::google::protobuf::uint32 CInsertItemNotify::itemid() const {
+  // @@protoc_insertion_point(field_get:CInsertItemNotify.ItemID)
   return itemid_;
 }
-inline void CMessageInsertItemNotify::set_itemid(::google::protobuf::uint32 value) {
+inline void CInsertItemNotify::set_itemid(::google::protobuf::uint32 value) {
   
   itemid_ = value;
-  // @@protoc_insertion_point(field_set:CMessageInsertItemNotify.ItemID)
+  // @@protoc_insertion_point(field_set:CInsertItemNotify.ItemID)
 }
 
 // optional uint32 Index = 2;
-inline void CMessageInsertItemNotify::clear_index() {
+inline void CInsertItemNotify::clear_index() {
   index_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessageInsertItemNotify::index() const {
-  // @@protoc_insertion_point(field_get:CMessageInsertItemNotify.Index)
+inline ::google::protobuf::uint32 CInsertItemNotify::index() const {
+  // @@protoc_insertion_point(field_get:CInsertItemNotify.Index)
   return index_;
 }
-inline void CMessageInsertItemNotify::set_index(::google::protobuf::uint32 value) {
+inline void CInsertItemNotify::set_index(::google::protobuf::uint32 value) {
   
   index_ = value;
-  // @@protoc_insertion_point(field_set:CMessageInsertItemNotify.Index)
+  // @@protoc_insertion_point(field_set:CInsertItemNotify.Index)
 }
 
 // optional uint32 Number = 3;
-inline void CMessageInsertItemNotify::clear_number() {
+inline void CInsertItemNotify::clear_number() {
   number_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessageInsertItemNotify::number() const {
-  // @@protoc_insertion_point(field_get:CMessageInsertItemNotify.Number)
+inline ::google::protobuf::uint32 CInsertItemNotify::number() const {
+  // @@protoc_insertion_point(field_get:CInsertItemNotify.Number)
   return number_;
 }
-inline void CMessageInsertItemNotify::set_number(::google::protobuf::uint32 value) {
+inline void CInsertItemNotify::set_number(::google::protobuf::uint32 value) {
   
   number_ = value;
-  // @@protoc_insertion_point(field_set:CMessageInsertItemNotify.Number)
+  // @@protoc_insertion_point(field_set:CInsertItemNotify.Number)
 }
 
-inline const CMessageInsertItemNotify* CMessageInsertItemNotify::internal_default_instance() {
-  return &CMessageInsertItemNotify_default_instance_.get();
+inline const CInsertItemNotify* CInsertItemNotify::internal_default_instance() {
+  return &CInsertItemNotify_default_instance_.get();
 }
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
 // -------------------------------------------------------------------

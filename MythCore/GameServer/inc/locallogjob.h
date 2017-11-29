@@ -34,9 +34,9 @@ enum EmLogType
 #	define LOG_ERROR(fmt, ... )				LogLocalLog(emLogType_Error, __FILE__, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__ )
 #	define LOG_DEBUG(logname, fmt, ... )	LogLocalDebugLog(logname, __FILE__, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__ )
 #ifdef MYTH_OS_WINDOWS
-#define LOG_FILE(pFile)	( ( strrchr( pFile, '\\' ) == NULL ) ? pFile :  strrchr( pFile, '\\' ) + 1 )
+#define LOG_FILE(pFile)	( ( (char* p = strrchr( pFile, '\\' )) == NULL ) ? pFile : p + 1)
 #else
-#define LOG_FILE(pFile)	( ( strrchr( pFile, '/' ) == NULL ) ? pFile :  strrchr( pFile, '/' ) + 1 )
+#define LOG_FILE(pFile)	( ((char* p = strrchr( pFile, '/' )) == NULL ) ? pFile : p + 1)
 #endif // MYTH_OS_WINDOWS
 
 

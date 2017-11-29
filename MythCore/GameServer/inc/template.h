@@ -13,7 +13,7 @@
 class CTemplate;
 class PBTplTemplate;
 class PBTplItem;
-class PBTplPlayerLevelExpConfig;
+class PBTplLevelExpConfig;
 class PBTplVIPConfig;
 class PBTplNPC;
 class PBTplFuncNPC;
@@ -157,7 +157,7 @@ public:
 // path		= Config/d等级经验表		## 路径
 // parent	=							## 父亲模版
 // ********************************************************************** //
-class CTplPlayerLevelExpConfig : public CTemplate
+class CTplLevelExpConfig : public CTemplate
 {
 public:
 	// FieldName: 第%d级升到下一级经验值
@@ -166,14 +166,14 @@ public:
 	int			mLevelUpExp[MAX_LEVEL];
 
 public:
-	static CTplPlayerLevelExpConfig* spConfig;
+	static CTplLevelExpConfig* spConfig;
 
 public:
-	CTplPlayerLevelExpConfig(){}
-	~CTplPlayerLevelExpConfig(){}
+	CTplLevelExpConfig(){}
+	~CTplLevelExpConfig(){}
 
-	void	setFromPB(PBTplPlayerLevelExpConfig* pbConfig);
-	void	createToPB(PBTplPlayerLevelExpConfig* pbConfig);
+	void	setFromPB(PBTplLevelExpConfig* pbConfig);
+	void	createToPB(PBTplLevelExpConfig* pbConfig);
 };
 
 // ********************************************************************** //

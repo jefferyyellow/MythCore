@@ -3,11 +3,11 @@
 #include "playersubunit.h"
 #include "commontype.h"
 class CEntityPlayer;
-class CPropertyUnit : public CPlayerSubUnit<CEntityPlayer>
+class CPropertyUnit : public CPlayerSubUnit
 {
 public:
-	CPropertyUnit(CEntityPlayer* pPlayer)
-	: CPlayerSubUnit(pPlayer)
+	CPropertyUnit(CEntityPlayer& rPlayer)
+	: CPlayerSubUnit(rPlayer)
 	{
 		// О­бщ
 		mExp = 0;

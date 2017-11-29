@@ -89,7 +89,7 @@ void CGameClient::LoginServer()
 	char acName[256] = {0};
 	for (int i = 0; i < 1000; ++ i)
 	{
-		CMessageLoginRequest tLoginRequest;
+		CLoginRequest tLoginRequest;
 		snprintf(acName, sizeof(acName), "hjh%d", i);
 		tLoginRequest.set_name(acName);
 		tLoginRequest.set_channelid(1);
@@ -191,14 +191,14 @@ void CGameClient::sendMessage(unsigned short uMessageID, Message* pMessage)
 void CGameClient::onMessageLoginResponse(Message* pMessage)
 {
 	char acName[256] = { 0 };
-	CMessageLoginResponse* pLoginResponse = (CMessageLoginResponse*)pMessage;
+	CLoginResponse* pLoginResponse = (CLoginResponse*)pMessage;
 	snprintf(acName, sizeof(acName), "hjh%d", pLoginResponse->accountid());
 
 	int nRoleID = pLoginResponse->roleid();
 	if (0 == nRoleID)
 	{
 		// ´´½¨½Ç
-		CMessageCreateRoleRequest tCreateRoleRequest;
+		CCreateRoleRequest tCreateRoleRequest;
 		tCreateRoleRequest.set_accountid(pLoginResponse->accountid());
 		tCreateRoleRequest.set_channelid(pLoginResponse->channelid());
 		tCreateRoleRequest.set_serverid(pLoginResponse->serverid());
@@ -207,7 +207,7 @@ void CGameClient::onMessageLoginResponse(Message* pMessage)
 	}
 	else
 	{
-		CMessageEnterSceneRequest tEnterSceneRequest;
+		CEnterSceneRequest tEnterSceneRequest;
 		tEnterSceneRequest.set_roleid(pLoginResponse->roleid());
 		tEnterSceneRequest.set_accountid(pLoginResponse->accountid());
 		tEnterSceneRequest.set_channelid(pLoginResponse->channelid());

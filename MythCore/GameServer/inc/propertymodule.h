@@ -26,12 +26,6 @@ public:
 	void		onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
 
 public:
-	/// 玩家获得经验
-	void		obtainExp(CEntityPlayer* pPlayer, int nExp);
-	/// 玩家等级升级
-	void		onPlayerLevelUp(CEntityPlayer* pPlayer, int nLevel);
-
-public:
 	// GM命令请求
 	void		onMessageGMCommandRequest(CEntityPlayer* pPlayer, Message* pMessage);
 

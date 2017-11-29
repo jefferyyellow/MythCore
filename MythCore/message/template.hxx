@@ -16,7 +16,7 @@ message PBTplItemSet
 
 message PBTplConfigSet
 {
-	repeated PBTplPlayerLevelExpConfig	LevelExpConfig			= 1;
+	repeated PBTplLevelExpConfig		LevelExpConfig			= 1;
 	repeated PBTplVIPConfig				VIPConfig				= 2;	
 
 }
@@ -42,7 +42,7 @@ message PBTplItem
 	uint32				PileLimit		= 5;	// 堆叠上限
 }
 
-message PBTplPlayerLevelExpConfig
+message PBTplLevelExpConfig
 {
 	uint32				TempID			= 1;	// 模板ID
 	repeated uint32		LevelUpExp		= 2;	// 升到下一级经验值

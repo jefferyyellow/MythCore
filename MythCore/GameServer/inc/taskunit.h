@@ -2,6 +2,7 @@
 #define __TASKUNIT_H__
 #include "playersubunit.h"
 #include "bit_set.h"
+#include "messagefactory.h"
 #define		MAX_TASK_ID		4096		// 最大的任务ID
 #define		MAX_TASK_NUM	20			// 最多的可接任务数目
 #define		MAX_TASK_PARAM	4			// 最多的任务参数数目
@@ -9,8 +10,19 @@
 enum EmTaskCondType
 {
 	emTaskCondType_None			= 0,	// 无类型
-	emTaskCondType_KillOgre		= 1,	// 刷怪	参数1：怪物ID，参数2：怪物数目
-	emTaskCondType_ObtainItem	= 2,	// 获得道具 参数1：道具ID，参数2：道具数目
+	emTaskCondType_Talk			= 1,	// 对话任务
+	emTaskCondType_KillOgre		= 2,	// 刷怪	参数1：怪物ID，参数2：怪物数目
+	emTaskCondType_ObtainItem	= 3,	// 获得道具 参数1：道具ID，参数2：道具数目
+	emTaskCondTypeMax
+};
+
+enum EmTaskState
+{
+	emTaskState_None			= 0,	// 无类型
+	emTaskState_Accept			= 1,	// 任务已接受
+	emTaskState_Complete		= 2,	// 任务已完成
+	emTaskState_Failure			= 3,	// 任务已失败
+	emTaskStateMax
 };
 
 /// 玩家任务
@@ -71,11 +83,11 @@ private:
 };
 
 class CEntityPlayer;
-class CTaskUnit : public CPlayerSubUnit < CEntityPlayer >
+class CTaskUnit : public CPlayerSubUnit
 {
 public:
-	CTaskUnit(CEntityPlayer* pPlayer)
-		: CPlayerSubUnit(pPlayer)
+	CTaskUnit(CEntityPlayer& rPlayer)
+		: CPlayerSubUnit(rPlayer)
 	{
 		mMaxCompleteTaskID = 0;
 		mTaskListNum = 0;
@@ -86,7 +98,7 @@ public:
 	}
 
 public:
-	void							refreshTaskProgress(EmTaskCondType eTaskCondType, int nParam1, int nParam2);
+	void							fireEvent(EmTaskCondType eTaskCondType, int nParam);
 	void							setTaskComplete(int nTaskID)
 	{
 		mCompleteTasks.setBit(nTaskID);
@@ -97,8 +109,12 @@ public:
 	}
 
 public:
-	short							getMaxCompleteTaskID() const { return mMaxCompleteTaskID; }
-	void							setMaxCompleteTaskID(short nValue) { mMaxCompleteTaskID = nValue; }
+	void onAcceptTaskRequest(Message* pMessage);
+	void sendAcceptTaskResponse(CEntityPlayer* pPlay);
+
+public:
+	short getMaxCompleteTaskID() const { return mMaxCompleteTaskID; }
+	void setMaxCompleteTaskID(short nValue) { mMaxCompleteTaskID = nValue; }
 
 private:
 	/// 所有已经完成的任务

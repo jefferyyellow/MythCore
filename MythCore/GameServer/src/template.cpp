@@ -14,7 +14,7 @@ using namespace Myth;
 CTemplate* CStaticData::spTemplate[ MAX_TEMPLATE_NUM ]							= { NULL };
 int	CStaticData::mVersion														= 0;
 
-CTplPlayerLevelExpConfig* CTplPlayerLevelExpConfig::spConfig				= NULL;
+CTplLevelExpConfig* CTplLevelExpConfig::spConfig								= NULL;
 CTplVIPConfig* CTplVIPConfig::spConfig											= NULL;
 
 CTemplate* CStaticData::searchTpl(unsigned int nTempID)
@@ -106,7 +106,7 @@ void CStaticData::createFromPB(PBTplTemplate* pTplTemplate)
 	PBTplSkillSet*	pbTplSkillSet = pTplTemplate->mutable_skillset();
 	PBTplNPCSet*	pbTplNPCSet = pTplTemplate->mutable_npcset();
 
-	TEMPLATE_SET_FROM_PB(CTplPlayerLevelExpConfig, pbTplConfigSet, levelexpconfig);
+	TEMPLATE_SET_FROM_PB(CTplLevelExpConfig, pbTplConfigSet, levelexpconfig);
 	TEMPLATE_SET_FROM_PB(CTplVIPConfig, pbTplConfigSet, vipconfig);
 	TEMPLATE_SET_FROM_PB(CTplFuncNPC, pbTplNPCSet, funcnpc);
 	TEMPLATE_SET_FROM_PB(CTplOgre, pbTplNPCSet, ogre);
@@ -140,7 +140,7 @@ void CTplItem::createToPB(PBTplItem* pbItem)
 }
 
 
-void CTplPlayerLevelExpConfig::setFromPB(PBTplPlayerLevelExpConfig* pbConfig)
+void CTplLevelExpConfig::setFromPB(PBTplLevelExpConfig* pbConfig)
 {
 	if (NULL == pbConfig)
 	{
@@ -154,7 +154,7 @@ void CTplPlayerLevelExpConfig::setFromPB(PBTplPlayerLevelExpConfig* pbConfig)
 	}
 }
 
-void CTplPlayerLevelExpConfig::createToPB(PBTplPlayerLevelExpConfig* pbConfig)
+void CTplLevelExpConfig::createToPB(PBTplLevelExpConfig* pbConfig)
 {
 	if (NULL == pbConfig)
 	{

@@ -95,7 +95,7 @@ void CMapModule::onEntityMove(CEntityCharacter* pEntity, CMythPoint& rDesPos)
 void CMapModule::onMessagePlayerMoveRequest(CEntityPlayer* pPlayer, Message* pMessage)
 {
 	MYTH_ASSERT(NULL == pPlayer || NULL == pMessage, return);
-	CMessagePlayerMoveRequest* pPlayerMoveRequest = (CMessagePlayerMoveRequest*)pMessage;
+	CPlayerMoveRequest* pPlayerMoveRequest = (CPlayerMoveRequest*)pMessage;
 	MYTH_ASSERT(NULL == pPlayerMoveRequest, return)
 
 	CMythPoint tPos((int)pPlayerMoveRequest->desposx(), (int)pPlayerMoveRequest->desposy());
@@ -106,7 +106,7 @@ void CMapModule::onMessagePlayerMoveRequest(CEntityPlayer* pPlayer, Message* pMe
 void CMapModule::sendPlayerMoveResponse(CEntityPlayer* pPlayer, int nResult)
 {
 	MYTH_ASSERT(NULL == pPlayer, return);
-	CMessagePlayerMoveResponse tPlayerMoveResponse;
+	CPlayerMoveResponse tPlayerMoveResponse;
 	tPlayerMoveResponse.set_result(nResult);
 
 	CSceneJob::Inst()->sendClientMessage(pPlayer, ID_S2C_RESPONSE_PLAYER_MOVE, &tPlayerMoveResponse);
@@ -116,7 +116,7 @@ void CMapModule::sendPlayerMoveResponse(CEntityPlayer* pPlayer, int nResult)
 void CMapModule::onMessagePlayerTeleportRequest(CEntityPlayer* pPlayer, Message* pMessage)
 {
 	MYTH_ASSERT(NULL == pPlayer || NULL == pMessage, return);
-	CMessagePlayerTeleportRequest* pPlayerTeleportRequest = (CMessagePlayerTeleportRequest*)pMessage;
+	CPlayerTeleportRequest* pPlayerTeleportRequest = (CPlayerTeleportRequest*)pMessage;
 	MYTH_ASSERT(NULL == pPlayerTeleportRequest, return);
 
 	unsigned short nMapID = pPlayerTeleportRequest->mapid();
@@ -136,7 +136,7 @@ void CMapModule::sendPlayerTeleportResponse(CEntityPlayer* pPlayer, int nResult)
 {
 	MYTH_ASSERT(NULL == pPlayer, return);
 
-	CMessagePlayerTeleportResponse tPlayerTeleportResponse;
+	CPlayerTeleportResponse tPlayerTeleportResponse;
 	tPlayerTeleportResponse.set_result(nResult);
 	CSceneJob::Inst()->sendClientMessage(pPlayer, ID_S2C_RESPONSE_PLAYER_TELEPORT, &tPlayerTeleportResponse);
 }

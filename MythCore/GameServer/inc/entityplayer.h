@@ -36,7 +36,9 @@ class CEntityPlayer : public CEntityCharacter
 {
 public:
 	CEntityPlayer()
-		:mPropertyUnit(this), mItemUnit(this), mTaskUnit(this)
+		:mPropertyUnit(*this), 
+		mItemUnit(*this), 
+		mTaskUnit(*this)
 	{
 		mName[0] = '\0';
 		mRoleID = 0;

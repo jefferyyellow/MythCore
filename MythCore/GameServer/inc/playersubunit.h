@@ -1,21 +1,21 @@
 #ifndef __PLAYERSUBMODULE_H__
 #define __PLAYERSUBMODULE_H__
-template <typename T>
+class CEntityPlayer;
 class CPlayerSubUnit
 {
 protected:
-	CPlayerSubUnit(T* pPlayer)
+	CPlayerSubUnit(CEntityPlayer& rPlayer)
+		:mPlayer(rPlayer)
 	{
-		mPlayer = pPlayer;
 	}
 	~CPlayerSubUnit()
 	{
 	}
 
 public:
-	T*	getPlayer(){ return mPlayer; }
+	CEntityPlayer& getPlayer(){ return mPlayer; }
 
 protected:
-	T*	mPlayer;
+	CEntityPlayer&	mPlayer;
 };
 #endif

@@ -36,12 +36,12 @@ void protobuf_InitDefaults_loginmessage_2ehxx();
 void protobuf_AssignDesc_loginmessage_2ehxx();
 void protobuf_ShutdownFile_loginmessage_2ehxx();
 
-class CMessageCreateRoleRequest;
-class CMessageCreateRoleResponse;
-class CMessageEnterSceneRequest;
-class CMessageEnterSceneResponse;
-class CMessageLoginRequest;
-class CMessageLoginResponse;
+class CCreateRoleRequest;
+class CCreateRoleResponse;
+class CEnterSceneRequest;
+class CEnterSceneResponse;
+class CLoginRequest;
+class CLoginResponse;
 
 enum LOGIN_MODULE_MSG_ID {
   ID_LOGIN_MODULE_ERROR = 0,
@@ -71,34 +71,34 @@ inline bool LOGIN_MODULE_MSG_ID_Parse(
 }
 // ===================================================================
 
-class CMessageLoginRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CMessageLoginRequest) */ {
+class CLoginRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CLoginRequest) */ {
  public:
-  CMessageLoginRequest();
-  virtual ~CMessageLoginRequest();
+  CLoginRequest();
+  virtual ~CLoginRequest();
 
-  CMessageLoginRequest(const CMessageLoginRequest& from);
+  CLoginRequest(const CLoginRequest& from);
 
-  inline CMessageLoginRequest& operator=(const CMessageLoginRequest& from) {
+  inline CLoginRequest& operator=(const CLoginRequest& from) {
     CopyFrom(from);
     return *this;
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const CMessageLoginRequest& default_instance();
+  static const CLoginRequest& default_instance();
 
-  static const CMessageLoginRequest* internal_default_instance();
+  static const CLoginRequest* internal_default_instance();
 
-  void Swap(CMessageLoginRequest* other);
+  void Swap(CLoginRequest* other);
 
   // implements Message ----------------------------------------------
 
-  inline CMessageLoginRequest* New() const { return New(NULL); }
+  inline CLoginRequest* New() const { return New(NULL); }
 
-  CMessageLoginRequest* New(::google::protobuf::Arena* arena) const;
+  CLoginRequest* New(::google::protobuf::Arena* arena) const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const CMessageLoginRequest& from);
-  void MergeFrom(const CMessageLoginRequest& from);
+  void CopyFrom(const CLoginRequest& from);
+  void MergeFrom(const CLoginRequest& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -117,8 +117,8 @@ class CMessageLoginRequest : public ::google::protobuf::Message /* @@protoc_inse
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(CMessageLoginRequest* other);
-  void UnsafeMergeFrom(const CMessageLoginRequest& from);
+  void InternalSwap(CLoginRequest* other);
+  void UnsafeMergeFrom(const CLoginRequest& from);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _internal_metadata_.arena();
@@ -157,7 +157,7 @@ class CMessageLoginRequest : public ::google::protobuf::Message /* @@protoc_inse
   ::google::protobuf::uint32 serverid() const;
   void set_serverid(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:CMessageLoginRequest)
+  // @@protoc_insertion_point(class_scope:CLoginRequest)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -172,38 +172,38 @@ class CMessageLoginRequest : public ::google::protobuf::Message /* @@protoc_inse
 
   void InitAsDefaultInstance();
 };
-extern ::google::protobuf::internal::ExplicitlyConstructed<CMessageLoginRequest> CMessageLoginRequest_default_instance_;
+extern ::google::protobuf::internal::ExplicitlyConstructed<CLoginRequest> CLoginRequest_default_instance_;
 
 // -------------------------------------------------------------------
 
-class CMessageLoginResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CMessageLoginResponse) */ {
+class CLoginResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CLoginResponse) */ {
  public:
-  CMessageLoginResponse();
-  virtual ~CMessageLoginResponse();
+  CLoginResponse();
+  virtual ~CLoginResponse();
 
-  CMessageLoginResponse(const CMessageLoginResponse& from);
+  CLoginResponse(const CLoginResponse& from);
 
-  inline CMessageLoginResponse& operator=(const CMessageLoginResponse& from) {
+  inline CLoginResponse& operator=(const CLoginResponse& from) {
     CopyFrom(from);
     return *this;
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const CMessageLoginResponse& default_instance();
+  static const CLoginResponse& default_instance();
 
-  static const CMessageLoginResponse* internal_default_instance();
+  static const CLoginResponse* internal_default_instance();
 
-  void Swap(CMessageLoginResponse* other);
+  void Swap(CLoginResponse* other);
 
   // implements Message ----------------------------------------------
 
-  inline CMessageLoginResponse* New() const { return New(NULL); }
+  inline CLoginResponse* New() const { return New(NULL); }
 
-  CMessageLoginResponse* New(::google::protobuf::Arena* arena) const;
+  CLoginResponse* New(::google::protobuf::Arena* arena) const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const CMessageLoginResponse& from);
-  void MergeFrom(const CMessageLoginResponse& from);
+  void CopyFrom(const CLoginResponse& from);
+  void MergeFrom(const CLoginResponse& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -222,8 +222,8 @@ class CMessageLoginResponse : public ::google::protobuf::Message /* @@protoc_ins
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(CMessageLoginResponse* other);
-  void UnsafeMergeFrom(const CMessageLoginResponse& from);
+  void InternalSwap(CLoginResponse* other);
+  void UnsafeMergeFrom(const CLoginResponse& from);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _internal_metadata_.arena();
@@ -263,7 +263,7 @@ class CMessageLoginResponse : public ::google::protobuf::Message /* @@protoc_ins
   ::google::protobuf::uint32 serverid() const;
   void set_serverid(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:CMessageLoginResponse)
+  // @@protoc_insertion_point(class_scope:CLoginResponse)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -279,38 +279,38 @@ class CMessageLoginResponse : public ::google::protobuf::Message /* @@protoc_ins
 
   void InitAsDefaultInstance();
 };
-extern ::google::protobuf::internal::ExplicitlyConstructed<CMessageLoginResponse> CMessageLoginResponse_default_instance_;
+extern ::google::protobuf::internal::ExplicitlyConstructed<CLoginResponse> CLoginResponse_default_instance_;
 
 // -------------------------------------------------------------------
 
-class CMessageCreateRoleRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CMessageCreateRoleRequest) */ {
+class CCreateRoleRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CCreateRoleRequest) */ {
  public:
-  CMessageCreateRoleRequest();
-  virtual ~CMessageCreateRoleRequest();
+  CCreateRoleRequest();
+  virtual ~CCreateRoleRequest();
 
-  CMessageCreateRoleRequest(const CMessageCreateRoleRequest& from);
+  CCreateRoleRequest(const CCreateRoleRequest& from);
 
-  inline CMessageCreateRoleRequest& operator=(const CMessageCreateRoleRequest& from) {
+  inline CCreateRoleRequest& operator=(const CCreateRoleRequest& from) {
     CopyFrom(from);
     return *this;
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const CMessageCreateRoleRequest& default_instance();
+  static const CCreateRoleRequest& default_instance();
 
-  static const CMessageCreateRoleRequest* internal_default_instance();
+  static const CCreateRoleRequest* internal_default_instance();
 
-  void Swap(CMessageCreateRoleRequest* other);
+  void Swap(CCreateRoleRequest* other);
 
   // implements Message ----------------------------------------------
 
-  inline CMessageCreateRoleRequest* New() const { return New(NULL); }
+  inline CCreateRoleRequest* New() const { return New(NULL); }
 
-  CMessageCreateRoleRequest* New(::google::protobuf::Arena* arena) const;
+  CCreateRoleRequest* New(::google::protobuf::Arena* arena) const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const CMessageCreateRoleRequest& from);
-  void MergeFrom(const CMessageCreateRoleRequest& from);
+  void CopyFrom(const CCreateRoleRequest& from);
+  void MergeFrom(const CCreateRoleRequest& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -329,8 +329,8 @@ class CMessageCreateRoleRequest : public ::google::protobuf::Message /* @@protoc
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(CMessageCreateRoleRequest* other);
-  void UnsafeMergeFrom(const CMessageCreateRoleRequest& from);
+  void InternalSwap(CCreateRoleRequest* other);
+  void UnsafeMergeFrom(const CCreateRoleRequest& from);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _internal_metadata_.arena();
@@ -375,7 +375,7 @@ class CMessageCreateRoleRequest : public ::google::protobuf::Message /* @@protoc
   ::std::string* release_rolename();
   void set_allocated_rolename(::std::string* rolename);
 
-  // @@protoc_insertion_point(class_scope:CMessageCreateRoleRequest)
+  // @@protoc_insertion_point(class_scope:CCreateRoleRequest)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -391,38 +391,38 @@ class CMessageCreateRoleRequest : public ::google::protobuf::Message /* @@protoc
 
   void InitAsDefaultInstance();
 };
-extern ::google::protobuf::internal::ExplicitlyConstructed<CMessageCreateRoleRequest> CMessageCreateRoleRequest_default_instance_;
+extern ::google::protobuf::internal::ExplicitlyConstructed<CCreateRoleRequest> CCreateRoleRequest_default_instance_;
 
 // -------------------------------------------------------------------
 
-class CMessageCreateRoleResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CMessageCreateRoleResponse) */ {
+class CCreateRoleResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CCreateRoleResponse) */ {
  public:
-  CMessageCreateRoleResponse();
-  virtual ~CMessageCreateRoleResponse();
+  CCreateRoleResponse();
+  virtual ~CCreateRoleResponse();
 
-  CMessageCreateRoleResponse(const CMessageCreateRoleResponse& from);
+  CCreateRoleResponse(const CCreateRoleResponse& from);
 
-  inline CMessageCreateRoleResponse& operator=(const CMessageCreateRoleResponse& from) {
+  inline CCreateRoleResponse& operator=(const CCreateRoleResponse& from) {
     CopyFrom(from);
     return *this;
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const CMessageCreateRoleResponse& default_instance();
+  static const CCreateRoleResponse& default_instance();
 
-  static const CMessageCreateRoleResponse* internal_default_instance();
+  static const CCreateRoleResponse* internal_default_instance();
 
-  void Swap(CMessageCreateRoleResponse* other);
+  void Swap(CCreateRoleResponse* other);
 
   // implements Message ----------------------------------------------
 
-  inline CMessageCreateRoleResponse* New() const { return New(NULL); }
+  inline CCreateRoleResponse* New() const { return New(NULL); }
 
-  CMessageCreateRoleResponse* New(::google::protobuf::Arena* arena) const;
+  CCreateRoleResponse* New(::google::protobuf::Arena* arena) const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const CMessageCreateRoleResponse& from);
-  void MergeFrom(const CMessageCreateRoleResponse& from);
+  void CopyFrom(const CCreateRoleResponse& from);
+  void MergeFrom(const CCreateRoleResponse& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -441,8 +441,8 @@ class CMessageCreateRoleResponse : public ::google::protobuf::Message /* @@proto
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(CMessageCreateRoleResponse* other);
-  void UnsafeMergeFrom(const CMessageCreateRoleResponse& from);
+  void InternalSwap(CCreateRoleResponse* other);
+  void UnsafeMergeFrom(const CCreateRoleResponse& from);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _internal_metadata_.arena();
@@ -470,7 +470,7 @@ class CMessageCreateRoleResponse : public ::google::protobuf::Message /* @@proto
   ::google::protobuf::uint32 roleid() const;
   void set_roleid(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:CMessageCreateRoleResponse)
+  // @@protoc_insertion_point(class_scope:CCreateRoleResponse)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -484,38 +484,38 @@ class CMessageCreateRoleResponse : public ::google::protobuf::Message /* @@proto
 
   void InitAsDefaultInstance();
 };
-extern ::google::protobuf::internal::ExplicitlyConstructed<CMessageCreateRoleResponse> CMessageCreateRoleResponse_default_instance_;
+extern ::google::protobuf::internal::ExplicitlyConstructed<CCreateRoleResponse> CCreateRoleResponse_default_instance_;
 
 // -------------------------------------------------------------------
 
-class CMessageEnterSceneRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CMessageEnterSceneRequest) */ {
+class CEnterSceneRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CEnterSceneRequest) */ {
  public:
-  CMessageEnterSceneRequest();
-  virtual ~CMessageEnterSceneRequest();
+  CEnterSceneRequest();
+  virtual ~CEnterSceneRequest();
 
-  CMessageEnterSceneRequest(const CMessageEnterSceneRequest& from);
+  CEnterSceneRequest(const CEnterSceneRequest& from);
 
-  inline CMessageEnterSceneRequest& operator=(const CMessageEnterSceneRequest& from) {
+  inline CEnterSceneRequest& operator=(const CEnterSceneRequest& from) {
     CopyFrom(from);
     return *this;
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const CMessageEnterSceneRequest& default_instance();
+  static const CEnterSceneRequest& default_instance();
 
-  static const CMessageEnterSceneRequest* internal_default_instance();
+  static const CEnterSceneRequest* internal_default_instance();
 
-  void Swap(CMessageEnterSceneRequest* other);
+  void Swap(CEnterSceneRequest* other);
 
   // implements Message ----------------------------------------------
 
-  inline CMessageEnterSceneRequest* New() const { return New(NULL); }
+  inline CEnterSceneRequest* New() const { return New(NULL); }
 
-  CMessageEnterSceneRequest* New(::google::protobuf::Arena* arena) const;
+  CEnterSceneRequest* New(::google::protobuf::Arena* arena) const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const CMessageEnterSceneRequest& from);
-  void MergeFrom(const CMessageEnterSceneRequest& from);
+  void CopyFrom(const CEnterSceneRequest& from);
+  void MergeFrom(const CEnterSceneRequest& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -534,8 +534,8 @@ class CMessageEnterSceneRequest : public ::google::protobuf::Message /* @@protoc
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(CMessageEnterSceneRequest* other);
-  void UnsafeMergeFrom(const CMessageEnterSceneRequest& from);
+  void InternalSwap(CEnterSceneRequest* other);
+  void UnsafeMergeFrom(const CEnterSceneRequest& from);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _internal_metadata_.arena();
@@ -575,7 +575,7 @@ class CMessageEnterSceneRequest : public ::google::protobuf::Message /* @@protoc
   ::google::protobuf::uint32 serverid() const;
   void set_serverid(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:CMessageEnterSceneRequest)
+  // @@protoc_insertion_point(class_scope:CEnterSceneRequest)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -591,38 +591,38 @@ class CMessageEnterSceneRequest : public ::google::protobuf::Message /* @@protoc
 
   void InitAsDefaultInstance();
 };
-extern ::google::protobuf::internal::ExplicitlyConstructed<CMessageEnterSceneRequest> CMessageEnterSceneRequest_default_instance_;
+extern ::google::protobuf::internal::ExplicitlyConstructed<CEnterSceneRequest> CEnterSceneRequest_default_instance_;
 
 // -------------------------------------------------------------------
 
-class CMessageEnterSceneResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CMessageEnterSceneResponse) */ {
+class CEnterSceneResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CEnterSceneResponse) */ {
  public:
-  CMessageEnterSceneResponse();
-  virtual ~CMessageEnterSceneResponse();
+  CEnterSceneResponse();
+  virtual ~CEnterSceneResponse();
 
-  CMessageEnterSceneResponse(const CMessageEnterSceneResponse& from);
+  CEnterSceneResponse(const CEnterSceneResponse& from);
 
-  inline CMessageEnterSceneResponse& operator=(const CMessageEnterSceneResponse& from) {
+  inline CEnterSceneResponse& operator=(const CEnterSceneResponse& from) {
     CopyFrom(from);
     return *this;
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const CMessageEnterSceneResponse& default_instance();
+  static const CEnterSceneResponse& default_instance();
 
-  static const CMessageEnterSceneResponse* internal_default_instance();
+  static const CEnterSceneResponse* internal_default_instance();
 
-  void Swap(CMessageEnterSceneResponse* other);
+  void Swap(CEnterSceneResponse* other);
 
   // implements Message ----------------------------------------------
 
-  inline CMessageEnterSceneResponse* New() const { return New(NULL); }
+  inline CEnterSceneResponse* New() const { return New(NULL); }
 
-  CMessageEnterSceneResponse* New(::google::protobuf::Arena* arena) const;
+  CEnterSceneResponse* New(::google::protobuf::Arena* arena) const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const CMessageEnterSceneResponse& from);
-  void MergeFrom(const CMessageEnterSceneResponse& from);
+  void CopyFrom(const CEnterSceneResponse& from);
+  void MergeFrom(const CEnterSceneResponse& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -641,8 +641,8 @@ class CMessageEnterSceneResponse : public ::google::protobuf::Message /* @@proto
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(CMessageEnterSceneResponse* other);
-  void UnsafeMergeFrom(const CMessageEnterSceneResponse& from);
+  void InternalSwap(CEnterSceneResponse* other);
+  void UnsafeMergeFrom(const CEnterSceneResponse& from);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _internal_metadata_.arena();
@@ -658,13 +658,13 @@ class CMessageEnterSceneResponse : public ::google::protobuf::Message /* @@proto
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 Result = 2;
+  // optional uint32 Result = 1;
   void clear_result();
-  static const int kResultFieldNumber = 2;
+  static const int kResultFieldNumber = 1;
   ::google::protobuf::uint32 result() const;
   void set_result(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:CMessageEnterSceneResponse)
+  // @@protoc_insertion_point(class_scope:CEnterSceneResponse)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -677,7 +677,7 @@ class CMessageEnterSceneResponse : public ::google::protobuf::Message /* @@proto
 
   void InitAsDefaultInstance();
 };
-extern ::google::protobuf::internal::ExplicitlyConstructed<CMessageEnterSceneResponse> CMessageEnterSceneResponse_default_instance_;
+extern ::google::protobuf::internal::ExplicitlyConstructed<CEnterSceneResponse> CEnterSceneResponse_default_instance_;
 
 // ===================================================================
 
@@ -685,357 +685,357 @@ extern ::google::protobuf::internal::ExplicitlyConstructed<CMessageEnterSceneRes
 // ===================================================================
 
 #if !PROTOBUF_INLINE_NOT_IN_HEADERS
-// CMessageLoginRequest
+// CLoginRequest
 
 // optional string Name = 1;
-inline void CMessageLoginRequest::clear_name() {
+inline void CLoginRequest::clear_name() {
   name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& CMessageLoginRequest::name() const {
-  // @@protoc_insertion_point(field_get:CMessageLoginRequest.Name)
+inline const ::std::string& CLoginRequest::name() const {
+  // @@protoc_insertion_point(field_get:CLoginRequest.Name)
   return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void CMessageLoginRequest::set_name(const ::std::string& value) {
+inline void CLoginRequest::set_name(const ::std::string& value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:CMessageLoginRequest.Name)
+  // @@protoc_insertion_point(field_set:CLoginRequest.Name)
 }
-inline void CMessageLoginRequest::set_name(const char* value) {
+inline void CLoginRequest::set_name(const char* value) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:CMessageLoginRequest.Name)
+  // @@protoc_insertion_point(field_set_char:CLoginRequest.Name)
 }
-inline void CMessageLoginRequest::set_name(const char* value, size_t size) {
+inline void CLoginRequest::set_name(const char* value, size_t size) {
   
   name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:CMessageLoginRequest.Name)
+  // @@protoc_insertion_point(field_set_pointer:CLoginRequest.Name)
 }
-inline ::std::string* CMessageLoginRequest::mutable_name() {
+inline ::std::string* CLoginRequest::mutable_name() {
   
-  // @@protoc_insertion_point(field_mutable:CMessageLoginRequest.Name)
+  // @@protoc_insertion_point(field_mutable:CLoginRequest.Name)
   return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* CMessageLoginRequest::release_name() {
-  // @@protoc_insertion_point(field_release:CMessageLoginRequest.Name)
+inline ::std::string* CLoginRequest::release_name() {
+  // @@protoc_insertion_point(field_release:CLoginRequest.Name)
   
   return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void CMessageLoginRequest::set_allocated_name(::std::string* name) {
+inline void CLoginRequest::set_allocated_name(::std::string* name) {
   if (name != NULL) {
     
   } else {
     
   }
   name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
-  // @@protoc_insertion_point(field_set_allocated:CMessageLoginRequest.Name)
+  // @@protoc_insertion_point(field_set_allocated:CLoginRequest.Name)
 }
 
 // optional uint32 ChannelID = 2;
-inline void CMessageLoginRequest::clear_channelid() {
+inline void CLoginRequest::clear_channelid() {
   channelid_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessageLoginRequest::channelid() const {
-  // @@protoc_insertion_point(field_get:CMessageLoginRequest.ChannelID)
+inline ::google::protobuf::uint32 CLoginRequest::channelid() const {
+  // @@protoc_insertion_point(field_get:CLoginRequest.ChannelID)
   return channelid_;
 }
-inline void CMessageLoginRequest::set_channelid(::google::protobuf::uint32 value) {
+inline void CLoginRequest::set_channelid(::google::protobuf::uint32 value) {
   
   channelid_ = value;
-  // @@protoc_insertion_point(field_set:CMessageLoginRequest.ChannelID)
+  // @@protoc_insertion_point(field_set:CLoginRequest.ChannelID)
 }
 
 // optional uint32 ServerID = 3;
-inline void CMessageLoginRequest::clear_serverid() {
+inline void CLoginRequest::clear_serverid() {
   serverid_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessageLoginRequest::serverid() const {
-  // @@protoc_insertion_point(field_get:CMessageLoginRequest.ServerID)
+inline ::google::protobuf::uint32 CLoginRequest::serverid() const {
+  // @@protoc_insertion_point(field_get:CLoginRequest.ServerID)
   return serverid_;
 }
-inline void CMessageLoginRequest::set_serverid(::google::protobuf::uint32 value) {
+inline void CLoginRequest::set_serverid(::google::protobuf::uint32 value) {
   
   serverid_ = value;
-  // @@protoc_insertion_point(field_set:CMessageLoginRequest.ServerID)
+  // @@protoc_insertion_point(field_set:CLoginRequest.ServerID)
 }
 
-inline const CMessageLoginRequest* CMessageLoginRequest::internal_default_instance() {
-  return &CMessageLoginRequest_default_instance_.get();
+inline const CLoginRequest* CLoginRequest::internal_default_instance() {
+  return &CLoginRequest_default_instance_.get();
 }
 // -------------------------------------------------------------------
 
-// CMessageLoginResponse
+// CLoginResponse
 
 // optional uint32 AccountID = 1;
-inline void CMessageLoginResponse::clear_accountid() {
+inline void CLoginResponse::clear_accountid() {
   accountid_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessageLoginResponse::accountid() const {
-  // @@protoc_insertion_point(field_get:CMessageLoginResponse.AccountID)
+inline ::google::protobuf::uint32 CLoginResponse::accountid() const {
+  // @@protoc_insertion_point(field_get:CLoginResponse.AccountID)
   return accountid_;
 }
-inline void CMessageLoginResponse::set_accountid(::google::protobuf::uint32 value) {
+inline void CLoginResponse::set_accountid(::google::protobuf::uint32 value) {
   
   accountid_ = value;
-  // @@protoc_insertion_point(field_set:CMessageLoginResponse.AccountID)
+  // @@protoc_insertion_point(field_set:CLoginResponse.AccountID)
 }
 
 // optional uint32 RoleID = 2;
-inline void CMessageLoginResponse::clear_roleid() {
+inline void CLoginResponse::clear_roleid() {
   roleid_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessageLoginResponse::roleid() const {
-  // @@protoc_insertion_point(field_get:CMessageLoginResponse.RoleID)
+inline ::google::protobuf::uint32 CLoginResponse::roleid() const {
+  // @@protoc_insertion_point(field_get:CLoginResponse.RoleID)
   return roleid_;
 }
-inline void CMessageLoginResponse::set_roleid(::google::protobuf::uint32 value) {
+inline void CLoginResponse::set_roleid(::google::protobuf::uint32 value) {
   
   roleid_ = value;
-  // @@protoc_insertion_point(field_set:CMessageLoginResponse.RoleID)
+  // @@protoc_insertion_point(field_set:CLoginResponse.RoleID)
 }
 
 // optional uint32 ChannelID = 3;
-inline void CMessageLoginResponse::clear_channelid() {
+inline void CLoginResponse::clear_channelid() {
   channelid_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessageLoginResponse::channelid() const {
-  // @@protoc_insertion_point(field_get:CMessageLoginResponse.ChannelID)
+inline ::google::protobuf::uint32 CLoginResponse::channelid() const {
+  // @@protoc_insertion_point(field_get:CLoginResponse.ChannelID)
   return channelid_;
 }
-inline void CMessageLoginResponse::set_channelid(::google::protobuf::uint32 value) {
+inline void CLoginResponse::set_channelid(::google::protobuf::uint32 value) {
   
   channelid_ = value;
-  // @@protoc_insertion_point(field_set:CMessageLoginResponse.ChannelID)
+  // @@protoc_insertion_point(field_set:CLoginResponse.ChannelID)
 }
 
 // optional uint32 ServerID = 4;
-inline void CMessageLoginResponse::clear_serverid() {
+inline void CLoginResponse::clear_serverid() {
   serverid_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessageLoginResponse::serverid() const {
-  // @@protoc_insertion_point(field_get:CMessageLoginResponse.ServerID)
+inline ::google::protobuf::uint32 CLoginResponse::serverid() const {
+  // @@protoc_insertion_point(field_get:CLoginResponse.ServerID)
   return serverid_;
 }
-inline void CMessageLoginResponse::set_serverid(::google::protobuf::uint32 value) {
+inline void CLoginResponse::set_serverid(::google::protobuf::uint32 value) {
   
   serverid_ = value;
-  // @@protoc_insertion_point(field_set:CMessageLoginResponse.ServerID)
+  // @@protoc_insertion_point(field_set:CLoginResponse.ServerID)
 }
 
-inline const CMessageLoginResponse* CMessageLoginResponse::internal_default_instance() {
-  return &CMessageLoginResponse_default_instance_.get();
+inline const CLoginResponse* CLoginResponse::internal_default_instance() {
+  return &CLoginResponse_default_instance_.get();
 }
 // -------------------------------------------------------------------
 
-// CMessageCreateRoleRequest
+// CCreateRoleRequest
 
 // optional uint32 AccountID = 1;
-inline void CMessageCreateRoleRequest::clear_accountid() {
+inline void CCreateRoleRequest::clear_accountid() {
   accountid_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessageCreateRoleRequest::accountid() const {
-  // @@protoc_insertion_point(field_get:CMessageCreateRoleRequest.AccountID)
+inline ::google::protobuf::uint32 CCreateRoleRequest::accountid() const {
+  // @@protoc_insertion_point(field_get:CCreateRoleRequest.AccountID)
   return accountid_;
 }
-inline void CMessageCreateRoleRequest::set_accountid(::google::protobuf::uint32 value) {
+inline void CCreateRoleRequest::set_accountid(::google::protobuf::uint32 value) {
   
   accountid_ = value;
-  // @@protoc_insertion_point(field_set:CMessageCreateRoleRequest.AccountID)
+  // @@protoc_insertion_point(field_set:CCreateRoleRequest.AccountID)
 }
 
 // optional uint32 ChannelID = 2;
-inline void CMessageCreateRoleRequest::clear_channelid() {
+inline void CCreateRoleRequest::clear_channelid() {
   channelid_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessageCreateRoleRequest::channelid() const {
-  // @@protoc_insertion_point(field_get:CMessageCreateRoleRequest.ChannelID)
+inline ::google::protobuf::uint32 CCreateRoleRequest::channelid() const {
+  // @@protoc_insertion_point(field_get:CCreateRoleRequest.ChannelID)
   return channelid_;
 }
-inline void CMessageCreateRoleRequest::set_channelid(::google::protobuf::uint32 value) {
+inline void CCreateRoleRequest::set_channelid(::google::protobuf::uint32 value) {
   
   channelid_ = value;
-  // @@protoc_insertion_point(field_set:CMessageCreateRoleRequest.ChannelID)
+  // @@protoc_insertion_point(field_set:CCreateRoleRequest.ChannelID)
 }
 
 // optional uint32 ServerID = 3;
-inline void CMessageCreateRoleRequest::clear_serverid() {
+inline void CCreateRoleRequest::clear_serverid() {
   serverid_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessageCreateRoleRequest::serverid() const {
-  // @@protoc_insertion_point(field_get:CMessageCreateRoleRequest.ServerID)
+inline ::google::protobuf::uint32 CCreateRoleRequest::serverid() const {
+  // @@protoc_insertion_point(field_get:CCreateRoleRequest.ServerID)
   return serverid_;
 }
-inline void CMessageCreateRoleRequest::set_serverid(::google::protobuf::uint32 value) {
+inline void CCreateRoleRequest::set_serverid(::google::protobuf::uint32 value) {
   
   serverid_ = value;
-  // @@protoc_insertion_point(field_set:CMessageCreateRoleRequest.ServerID)
+  // @@protoc_insertion_point(field_set:CCreateRoleRequest.ServerID)
 }
 
 // optional string RoleName = 4;
-inline void CMessageCreateRoleRequest::clear_rolename() {
+inline void CCreateRoleRequest::clear_rolename() {
   rolename_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& CMessageCreateRoleRequest::rolename() const {
-  // @@protoc_insertion_point(field_get:CMessageCreateRoleRequest.RoleName)
+inline const ::std::string& CCreateRoleRequest::rolename() const {
+  // @@protoc_insertion_point(field_get:CCreateRoleRequest.RoleName)
   return rolename_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void CMessageCreateRoleRequest::set_rolename(const ::std::string& value) {
+inline void CCreateRoleRequest::set_rolename(const ::std::string& value) {
   
   rolename_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:CMessageCreateRoleRequest.RoleName)
+  // @@protoc_insertion_point(field_set:CCreateRoleRequest.RoleName)
 }
-inline void CMessageCreateRoleRequest::set_rolename(const char* value) {
+inline void CCreateRoleRequest::set_rolename(const char* value) {
   
   rolename_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:CMessageCreateRoleRequest.RoleName)
+  // @@protoc_insertion_point(field_set_char:CCreateRoleRequest.RoleName)
 }
-inline void CMessageCreateRoleRequest::set_rolename(const char* value, size_t size) {
+inline void CCreateRoleRequest::set_rolename(const char* value, size_t size) {
   
   rolename_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:CMessageCreateRoleRequest.RoleName)
+  // @@protoc_insertion_point(field_set_pointer:CCreateRoleRequest.RoleName)
 }
-inline ::std::string* CMessageCreateRoleRequest::mutable_rolename() {
+inline ::std::string* CCreateRoleRequest::mutable_rolename() {
   
-  // @@protoc_insertion_point(field_mutable:CMessageCreateRoleRequest.RoleName)
+  // @@protoc_insertion_point(field_mutable:CCreateRoleRequest.RoleName)
   return rolename_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* CMessageCreateRoleRequest::release_rolename() {
-  // @@protoc_insertion_point(field_release:CMessageCreateRoleRequest.RoleName)
+inline ::std::string* CCreateRoleRequest::release_rolename() {
+  // @@protoc_insertion_point(field_release:CCreateRoleRequest.RoleName)
   
   return rolename_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void CMessageCreateRoleRequest::set_allocated_rolename(::std::string* rolename) {
+inline void CCreateRoleRequest::set_allocated_rolename(::std::string* rolename) {
   if (rolename != NULL) {
     
   } else {
     
   }
   rolename_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), rolename);
-  // @@protoc_insertion_point(field_set_allocated:CMessageCreateRoleRequest.RoleName)
+  // @@protoc_insertion_point(field_set_allocated:CCreateRoleRequest.RoleName)
 }
 
-inline const CMessageCreateRoleRequest* CMessageCreateRoleRequest::internal_default_instance() {
-  return &CMessageCreateRoleRequest_default_instance_.get();
+inline const CCreateRoleRequest* CCreateRoleRequest::internal_default_instance() {
+  return &CCreateRoleRequest_default_instance_.get();
 }
 // -------------------------------------------------------------------
 
-// CMessageCreateRoleResponse
+// CCreateRoleResponse
 
 // optional uint32 Result = 1;
-inline void CMessageCreateRoleResponse::clear_result() {
+inline void CCreateRoleResponse::clear_result() {
   result_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessageCreateRoleResponse::result() const {
-  // @@protoc_insertion_point(field_get:CMessageCreateRoleResponse.Result)
+inline ::google::protobuf::uint32 CCreateRoleResponse::result() const {
+  // @@protoc_insertion_point(field_get:CCreateRoleResponse.Result)
   return result_;
 }
-inline void CMessageCreateRoleResponse::set_result(::google::protobuf::uint32 value) {
+inline void CCreateRoleResponse::set_result(::google::protobuf::uint32 value) {
   
   result_ = value;
-  // @@protoc_insertion_point(field_set:CMessageCreateRoleResponse.Result)
+  // @@protoc_insertion_point(field_set:CCreateRoleResponse.Result)
 }
 
 // optional uint32 RoleID = 2;
-inline void CMessageCreateRoleResponse::clear_roleid() {
+inline void CCreateRoleResponse::clear_roleid() {
   roleid_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessageCreateRoleResponse::roleid() const {
-  // @@protoc_insertion_point(field_get:CMessageCreateRoleResponse.RoleID)
+inline ::google::protobuf::uint32 CCreateRoleResponse::roleid() const {
+  // @@protoc_insertion_point(field_get:CCreateRoleResponse.RoleID)
   return roleid_;
 }
-inline void CMessageCreateRoleResponse::set_roleid(::google::protobuf::uint32 value) {
+inline void CCreateRoleResponse::set_roleid(::google::protobuf::uint32 value) {
   
   roleid_ = value;
-  // @@protoc_insertion_point(field_set:CMessageCreateRoleResponse.RoleID)
+  // @@protoc_insertion_point(field_set:CCreateRoleResponse.RoleID)
 }
 
-inline const CMessageCreateRoleResponse* CMessageCreateRoleResponse::internal_default_instance() {
-  return &CMessageCreateRoleResponse_default_instance_.get();
+inline const CCreateRoleResponse* CCreateRoleResponse::internal_default_instance() {
+  return &CCreateRoleResponse_default_instance_.get();
 }
 // -------------------------------------------------------------------
 
-// CMessageEnterSceneRequest
+// CEnterSceneRequest
 
 // optional uint32 RoleID = 1;
-inline void CMessageEnterSceneRequest::clear_roleid() {
+inline void CEnterSceneRequest::clear_roleid() {
   roleid_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessageEnterSceneRequest::roleid() const {
-  // @@protoc_insertion_point(field_get:CMessageEnterSceneRequest.RoleID)
+inline ::google::protobuf::uint32 CEnterSceneRequest::roleid() const {
+  // @@protoc_insertion_point(field_get:CEnterSceneRequest.RoleID)
   return roleid_;
 }
-inline void CMessageEnterSceneRequest::set_roleid(::google::protobuf::uint32 value) {
+inline void CEnterSceneRequest::set_roleid(::google::protobuf::uint32 value) {
   
   roleid_ = value;
-  // @@protoc_insertion_point(field_set:CMessageEnterSceneRequest.RoleID)
+  // @@protoc_insertion_point(field_set:CEnterSceneRequest.RoleID)
 }
 
 // optional uint32 AccountID = 2;
-inline void CMessageEnterSceneRequest::clear_accountid() {
+inline void CEnterSceneRequest::clear_accountid() {
   accountid_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessageEnterSceneRequest::accountid() const {
-  // @@protoc_insertion_point(field_get:CMessageEnterSceneRequest.AccountID)
+inline ::google::protobuf::uint32 CEnterSceneRequest::accountid() const {
+  // @@protoc_insertion_point(field_get:CEnterSceneRequest.AccountID)
   return accountid_;
 }
-inline void CMessageEnterSceneRequest::set_accountid(::google::protobuf::uint32 value) {
+inline void CEnterSceneRequest::set_accountid(::google::protobuf::uint32 value) {
   
   accountid_ = value;
-  // @@protoc_insertion_point(field_set:CMessageEnterSceneRequest.AccountID)
+  // @@protoc_insertion_point(field_set:CEnterSceneRequest.AccountID)
 }
 
 // optional uint32 ChannelID = 3;
-inline void CMessageEnterSceneRequest::clear_channelid() {
+inline void CEnterSceneRequest::clear_channelid() {
   channelid_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessageEnterSceneRequest::channelid() const {
-  // @@protoc_insertion_point(field_get:CMessageEnterSceneRequest.ChannelID)
+inline ::google::protobuf::uint32 CEnterSceneRequest::channelid() const {
+  // @@protoc_insertion_point(field_get:CEnterSceneRequest.ChannelID)
   return channelid_;
 }
-inline void CMessageEnterSceneRequest::set_channelid(::google::protobuf::uint32 value) {
+inline void CEnterSceneRequest::set_channelid(::google::protobuf::uint32 value) {
   
   channelid_ = value;
-  // @@protoc_insertion_point(field_set:CMessageEnterSceneRequest.ChannelID)
+  // @@protoc_insertion_point(field_set:CEnterSceneRequest.ChannelID)
 }
 
 // optional uint32 ServerID = 4;
-inline void CMessageEnterSceneRequest::clear_serverid() {
+inline void CEnterSceneRequest::clear_serverid() {
   serverid_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessageEnterSceneRequest::serverid() const {
-  // @@protoc_insertion_point(field_get:CMessageEnterSceneRequest.ServerID)
+inline ::google::protobuf::uint32 CEnterSceneRequest::serverid() const {
+  // @@protoc_insertion_point(field_get:CEnterSceneRequest.ServerID)
   return serverid_;
 }
-inline void CMessageEnterSceneRequest::set_serverid(::google::protobuf::uint32 value) {
+inline void CEnterSceneRequest::set_serverid(::google::protobuf::uint32 value) {
   
   serverid_ = value;
-  // @@protoc_insertion_point(field_set:CMessageEnterSceneRequest.ServerID)
+  // @@protoc_insertion_point(field_set:CEnterSceneRequest.ServerID)
 }
 
-inline const CMessageEnterSceneRequest* CMessageEnterSceneRequest::internal_default_instance() {
-  return &CMessageEnterSceneRequest_default_instance_.get();
+inline const CEnterSceneRequest* CEnterSceneRequest::internal_default_instance() {
+  return &CEnterSceneRequest_default_instance_.get();
 }
 // -------------------------------------------------------------------
 
-// CMessageEnterSceneResponse
+// CEnterSceneResponse
 
-// optional uint32 Result = 2;
-inline void CMessageEnterSceneResponse::clear_result() {
+// optional uint32 Result = 1;
+inline void CEnterSceneResponse::clear_result() {
   result_ = 0u;
 }
-inline ::google::protobuf::uint32 CMessageEnterSceneResponse::result() const {
-  // @@protoc_insertion_point(field_get:CMessageEnterSceneResponse.Result)
+inline ::google::protobuf::uint32 CEnterSceneResponse::result() const {
+  // @@protoc_insertion_point(field_get:CEnterSceneResponse.Result)
   return result_;
 }
-inline void CMessageEnterSceneResponse::set_result(::google::protobuf::uint32 value) {
+inline void CEnterSceneResponse::set_result(::google::protobuf::uint32 value) {
   
   result_ = value;
-  // @@protoc_insertion_point(field_set:CMessageEnterSceneResponse.Result)
+  // @@protoc_insertion_point(field_set:CEnterSceneResponse.Result)
 }
 
-inline const CMessageEnterSceneResponse* CMessageEnterSceneResponse::internal_default_instance() {
-  return &CMessageEnterSceneResponse_default_instance_.get();
+inline const CEnterSceneResponse* CEnterSceneResponse::internal_default_instance() {
+  return &CEnterSceneResponse_default_instance_.get();
 }
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
 // -------------------------------------------------------------------

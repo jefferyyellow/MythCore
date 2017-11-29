@@ -81,7 +81,7 @@ COMMAND_HANDLER_IMPL(exp)
 		"exp command parameter number invalid, %d", tTokens.size());
 
 	int nExp = atoi(tTokens[0].c_str());
-	CPropertyModule::Inst()->obtainExp(pPlayer, nExp);
+	pPlayer->GetPropertyUnit().obtainExp(nExp);
 }
 
 COMMAND_HANDLER_IMPL(money)

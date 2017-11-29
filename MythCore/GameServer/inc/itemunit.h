@@ -5,11 +5,11 @@
 
 #define PLAYER_MONEY_LIMIT		1
 class CEntityPlayer;
-class CItemUnit : public CPlayerSubUnit<CEntityPlayer>
+class CItemUnit : public CPlayerSubUnit
 {
 public:
-	CItemUnit(CEntityPlayer* pPlayer)
-		:CPlayerSubUnit(pPlayer)
+	CItemUnit(CEntityPlayer& rPlayer)
+		:CPlayerSubUnit(rPlayer)
 	{
 		mMoney			= 0;
 		mDiamond		= 0;

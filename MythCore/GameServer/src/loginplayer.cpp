@@ -28,7 +28,7 @@ int CLoginPlayer::processStateNone()
 		return -1;
 	}
 
-	CMessageLoginRequest* pLoginRequest = reinterpret_cast<CMessageLoginRequest*>(mClientMessage);
+	CLoginRequest* pLoginRequest = reinterpret_cast<CLoginRequest*>(mClientMessage);
 	if (NULL == pLoginRequest)
 	{
 		return -1;
@@ -54,13 +54,13 @@ int CLoginPlayer::processAccountVerify()
 	mAccountID = mDBResponse->getInt();
 	mRoleID = mDBResponse->getInt();
 
-	CMessageLoginResponse tMessageLoginResponse;
-	tMessageLoginResponse.set_accountid(mAccountID);
-	tMessageLoginResponse.set_channelid(mChannelID);
-	tMessageLoginResponse.set_serverid(mServerID);
-	tMessageLoginResponse.set_roleid(mRoleID);
+	CLoginResponse tLoginResponse;
+	tLoginResponse.set_accountid(mAccountID);
+	tLoginResponse.set_channelid(mChannelID);
+	tLoginResponse.set_serverid(mServerID);
+	tLoginResponse.set_roleid(mRoleID);
 
-	CSceneJob::Inst()->sendClientMessage(mExchangeHead, ID_S2C_RESPONSE_LOGIN, &tMessageLoginResponse);
+	CSceneJob::Inst()->sendClientMessage(mExchangeHead, ID_S2C_RESPONSE_LOGIN, &tLoginResponse);
 	if (mRoleID == 0)
 	{
 		return emLoginState_WaitCreateRole;
@@ -77,7 +77,7 @@ int CLoginPlayer::processWaitCreateRole()
 	{
 		return -1;
 	}
-	CMessageCreateRoleRequest* pCreateRoleRequest = reinterpret_cast<CMessageCreateRoleRequest*>(mClientMessage);
+	CCreateRoleRequest* pCreateRoleRequest = reinterpret_cast<CCreateRoleRequest*>(mClientMessage);
 	if (NULL == pCreateRoleRequest)
 	{
 		return -1;
@@ -105,7 +105,7 @@ int CLoginPlayer::processCreateRoleing()
 
 	mRoleID = mDBResponse->getInt();
 
-	CMessageCreateRoleResponse tCreateRoleResponse;
+	CCreateRoleResponse tCreateRoleResponse;
 	tCreateRoleResponse.set_result(0);
 	tCreateRoleResponse.set_roleid(mRoleID);
 	CSceneJob::Inst()->sendClientMessage(mExchangeHead, ID_S2C_RESPONSE_CREATE_ROLE, &tCreateRoleResponse);
@@ -119,7 +119,7 @@ int CLoginPlayer::processWaitEnterGame()
 	{
 		return -1;
 	}
-	CMessageEnterSceneRequest* pEnterSceneRequest = reinterpret_cast<CMessageEnterSceneRequest*>(mClientMessage);
+	CEnterSceneRequest* pEnterSceneRequest = reinterpret_cast<CEnterSceneRequest*>(mClientMessage);
 	if (NULL == pEnterSceneRequest)
 	{
 		return -1;
@@ -152,7 +152,7 @@ int CLoginPlayer::processWaitPlaying()
 	}
 
 
-	CMessageEnterSceneResponse tEnterSceneResponse;
+	CEnterSceneResponse tEnterSceneResponse;
 	tEnterSceneResponse.set_result(0);
 	CSceneJob::Inst()->sendClientMessage(mExchangeHead, ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
 

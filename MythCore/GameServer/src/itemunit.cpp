@@ -18,7 +18,7 @@ int CItemUnit::obtainMoney(int nMoney)
 	int nCurrMoney = mMoney + nMoney;
 	mMoney = nCurrMoney > PLAYER_MONEY_LIMIT ? PLAYER_MONEY_LIMIT : nCurrMoney;
 
-	CMessagePlayerMoneyUpdateNotify tMsg;
+	CMoneyUpdateNotify tMsg;
 	tMsg.set_money(mMoney);
 	CSceneJob::Inst()->sendClientMessage(mPlayer, ID_S2C_NOTIYF_PLAYER_MONEY_UPDATE, &tMsg);
 	return SUCCESS;
@@ -43,7 +43,7 @@ int CItemUnit::consumeMoney(int nMoney)
 
 	mMoney = mMoney - nMoney;
 
-	CMessagePlayerMoneyUpdateNotify tMsg;
+	CMoneyUpdateNotify tMsg;
 	tMsg.set_money(mMoney);
 	CSceneJob::Inst()->sendClientMessage(mPlayer, ID_S2C_NOTIYF_PLAYER_MONEY_UPDATE, &tMsg);
 	return SUCCESS;
@@ -64,7 +64,7 @@ int	CItemUnit::obtainDiamond(int nDiamond)
 	int nCurrDiamond = mDiamond + nDiamond;
 	mDiamond = nCurrDiamond > PLAYER_MONEY_LIMIT ? PLAYER_MONEY_LIMIT : nCurrDiamond;
 
-	CMessagePlayerDiamondUpdateNotify tMsg;
+	CDiamondUpdateNotify tMsg;
 	tMsg.set_diamond(mDiamond);
 	CSceneJob::Inst()->sendClientMessage(mPlayer, ID_S2C_NOTIYF_PLAYER_DIAMOND_UPDATE, &tMsg);
 	return SUCCESS;
@@ -88,7 +88,7 @@ int	CItemUnit::consumeDiamond(int nDiamond)
 
 	mDiamond = mDiamond - nDiamond;
 
-	CMessagePlayerDiamondUpdateNotify tMsg;
+	CDiamondUpdateNotify tMsg;
 	tMsg.set_diamond(mDiamond);
 	CSceneJob::Inst()->sendClientMessage(mPlayer, ID_S2C_NOTIYF_PLAYER_DIAMOND_UPDATE, &tMsg);
 	return SUCCESS;
