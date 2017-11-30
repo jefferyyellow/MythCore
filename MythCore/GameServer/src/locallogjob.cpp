@@ -3,6 +3,7 @@
 #include "logmanager.h"
 #include "internalmsgpool.h"
 #include "internalmsg.h"
+char* gXXXXXXX = NULL;
 void LogLocalLog(EmLogType eLogType, char* pFile, int nLine, char* pFunction, const char* pFormat, ...)
 {
 	va_list valist;

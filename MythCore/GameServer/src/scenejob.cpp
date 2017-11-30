@@ -206,7 +206,7 @@ void CSceneJob::processClientMessage()
 }
 
 /// 发送前端消息
-void CSceneJob::sendClientMessage(CExchangeHead& rExchangeHead, unsigned short nMessageID, Message* pMessage)
+void CSceneJob::send2Player(CExchangeHead& rExchangeHead, unsigned short nMessageID, Message* pMessage)
 {
 	char* pTemp = mBuffer;
 	memcpy(pTemp, &rExchangeHead, sizeof(rExchangeHead));
@@ -226,13 +226,13 @@ void CSceneJob::sendClientMessage(CExchangeHead& rExchangeHead, unsigned short n
 
 }
 
-void CSceneJob::sendClientMessage(CEntityPlayer* pPlayer, unsigned short nMessageID, Message* pMessage)
+void CSceneJob::send2Player(CEntityPlayer* pPlayer, unsigned short nMessageID, Message* pMessage)
 {
 	if (NULL == pPlayer)
 	{
 		return;
 	}
-	sendClientMessage(pPlayer->GetExhangeHead(), nMessageID, pMessage);
+	send2Player(pPlayer->GetExhangeHead(), nMessageID, pMessage);
 }
 
 /// 分发前端消息

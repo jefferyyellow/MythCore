@@ -5,7 +5,6 @@
 #include "messagefactory.h"
 using namespace Myth;
 class CEntityPlayer;
-class Message;
 class CTaskModule : public CLogicModule, public CSingleton < CTaskModule >
 {
 	friend class CSingleton <CTaskModule> ;

@@ -39,7 +39,7 @@ int CMap::init(short nLength, short nWidth)
 	if (NULL == mMapUnit)
 	{
 		LOG_ERROR("create map unit failure!");
-		return ERROR_MAP_CREATE_MAP_UNIT_FAILURE;
+		return ERR_MAP_CREATE_MAP_UNIT_FAILURE;
 	}
 
 	mLength = nLength;
@@ -336,33 +336,33 @@ void CMap::createPlayer2PlayerList(CEntityPlayer* pPlayer, std::vector<CEntityPl
 	{
 		return;
 	}
-	CMessageCreatePlayerListNotify tCreatePlayerListNotify;
+	CCreatePlayerListNotify tCreatePlayerListNotify;
 	PBPlayerSceneInfo* pPlayerInfo = tCreatePlayerListNotify.add_playerinfo();
 	pPlayer->serializeSceneInfoToPB(pPlayerInfo);
 	for (unsigned int i = 0; i < rPlayerList.size(); ++ i)
 	{
 		pPlayer->addVisiblePlayer(rPlayerList[i]);
-		CSceneJob::Inst()->sendClientMessage(rPlayerList[i], ID_S2C_NOTIYF_CREATE_PLAYER_LIST, &tCreatePlayerListNotify);
+		CSceneJob::Inst()->send2Player(rPlayerList[i], ID_S2C_NOTIYF_CREATE_PLAYER_LIST, &tCreatePlayerListNotify);
 	}
 }
 
 /// 通知该玩家创建其他玩家
 void CMap::createPlayerList2Player(std::vector<CEntityPlayer*>& rPlayerList, CEntityPlayer* pPlayer)
 {
-	CMessageCreatePlayerListNotify tCreatePlayerListNotify;
+	CCreatePlayerListNotify tCreatePlayerListNotify;
 	for (unsigned int i = 0; i < rPlayerList.size(); ++ i)
 	{
 		rPlayerList[i]->addVisiblePlayer(pPlayer);
 		PBPlayerSceneInfo* pPlayerInfo = tCreatePlayerListNotify.add_playerinfo();
 		rPlayerList[i]->serializeSceneInfoToPB(pPlayerInfo);
 	}
-	CSceneJob::Inst()->sendClientMessage(pPlayer, ID_S2C_NOTIYF_CREATE_PLAYER_LIST, &tCreatePlayerListNotify);
+	CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIYF_CREATE_PLAYER_LIST, &tCreatePlayerListNotify);
 }
 
 /// 通知该玩家创建NPC列表
 void CMap::createNPCList2Player(std::vector<CEntityNPC*>& rNPCList, CEntityPlayer* pPlayer)
 {
-	CMessageCreateNPCListNotify tCreateNPCListNotify;
+	CCreateNPCListNotify tCreateNPCListNotify;
 	for (unsigned int i = 0; i < rNPCList.size(); ++ i)
 	{
 		rNPCList[i]->addVisiblePlayer(pPlayer);
@@ -370,7 +370,7 @@ void CMap::createNPCList2Player(std::vector<CEntityNPC*>& rNPCList, CEntityPlaye
 		rNPCList[i]->serializeSceneInfoToPB(pNpcSceneInfo);
 	}
 
-	CSceneJob::Inst()->sendClientMessage(pPlayer, ID_S2C_NOTIYF_CREATE_NPC_LIST, &tCreateNPCListNotify);
+	CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIYF_CREATE_NPC_LIST, &tCreateNPCListNotify);
 }
 
 /// 通知该玩家创建NPC
@@ -380,12 +380,12 @@ void CMap::createNPC2PlayerList(CEntityNPC* pNPC, std::vector<CEntityPlayer*>& r
 	{
 		return;
 	}
-	CMessageCreateNPCListNotify tCreateNPCListNotify;
+	CCreateNPCListNotify tCreateNPCListNotify;
 	pNPC->serializeSceneInfoToPB(tCreateNPCListNotify.add_npcinfo());
 	for (unsigned int i = 0; i < rPlayerList.size(); ++ i)
 	{
 		pNPC->addVisiblePlayer(rPlayerList[i]);
-		CSceneJob::Inst()->sendClientMessage(rPlayerList[i], ID_S2C_NOTIYF_CREATE_NPC_LIST, &tCreateNPCListNotify);
+		CSceneJob::Inst()->send2Player(rPlayerList[i], ID_S2C_NOTIYF_CREATE_NPC_LIST, &tCreateNPCListNotify);
 	}
 }
 
@@ -396,38 +396,38 @@ void CMap::destroyPlayer2PlayerList(CEntityPlayer* pPlayer, std::vector<CEntityP
 	{
 		return;
 	}
-	CMessageDestroyEntityNotify tDestroyEntityNotify;
+	CDestroyEntityNotify tDestroyEntityNotify;
 	tDestroyEntityNotify.add_entityid(pPlayer->getObjID());
 	for (unsigned int i = 0; i < rPlayerList.size(); ++i)
 	{
 		pPlayer->removeVisiblePlayer(rPlayerList[i]);
-		CSceneJob::Inst()->sendClientMessage(rPlayerList[i], ID_S2C_NOTIYF_DESTROY_ENTITY, &tDestroyEntityNotify);
+		CSceneJob::Inst()->send2Player(rPlayerList[i], ID_S2C_NOTIYF_DESTROY_ENTITY, &tDestroyEntityNotify);
 	}
 }
 
 /// 通知该玩家销毁其他玩家
 void CMap::destroyPlayerList2Player(std::vector<CEntityPlayer*>& rPlayerList, CEntityPlayer* pPlayer)
 {
-	CMessageDestroyEntityNotify tDestroyEntityNotify;
+	CDestroyEntityNotify tDestroyEntityNotify;
 	for (unsigned int i = 0; i < rPlayerList.size(); ++i)
 	{
 		rPlayerList[i]->removeVisiblePlayer(pPlayer);
 		tDestroyEntityNotify.add_entityid(rPlayerList[i]->getObjID());
 	}
 
-	CSceneJob::Inst()->sendClientMessage(pPlayer, ID_S2C_NOTIYF_DESTROY_ENTITY, &tDestroyEntityNotify);
+	CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIYF_DESTROY_ENTITY, &tDestroyEntityNotify);
 }
 
 /// 通知该玩家销毁NPC列表
 void CMap::destroyNPCList2Player(std::vector<CEntityNPC*>& rNPCList, CEntityPlayer* pPlayer)
 {
-	CMessageDestroyEntityNotify tDestroyEntityNotify;
+	CDestroyEntityNotify tDestroyEntityNotify;
 	for (unsigned int i = 0; i < rNPCList.size(); ++ i)
 	{
 		rNPCList[i]->removeVisiblePlayer(pPlayer);
 		tDestroyEntityNotify.add_entityid(rNPCList[i]->getObjID());
 	}
-	CSceneJob::Inst()->sendClientMessage(pPlayer, ID_S2C_NOTIYF_DESTROY_ENTITY, &tDestroyEntityNotify);
+	CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIYF_DESTROY_ENTITY, &tDestroyEntityNotify);
 }
 
 /// 通知其他玩家销毁该NPC
@@ -437,12 +437,12 @@ void CMap::destroyNPC2PlayerList(CEntityNPC* pNPC, std::vector<CEntityPlayer*>& 
 	{
 		return;
 	}
-	CMessageDestroyEntityNotify tDestroyEntityNotify;
+	CDestroyEntityNotify tDestroyEntityNotify;
 	tDestroyEntityNotify.add_entityid(pNPC->getObjID());
 	for (unsigned int i = 0; i < rPlayerList.size(); ++i)
 	{
 		pNPC->removeVisiblePlayer(rPlayerList[i]);
-		CSceneJob::Inst()->sendClientMessage(rPlayerList[i], ID_S2C_NOTIYF_DESTROY_ENTITY, &tDestroyEntityNotify);
+		CSceneJob::Inst()->send2Player(rPlayerList[i], ID_S2C_NOTIYF_DESTROY_ENTITY, &tDestroyEntityNotify);
 	}
 }
 

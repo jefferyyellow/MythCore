@@ -8,7 +8,7 @@ int CItemUnit::obtainMoney(int nMoney)
 {
 	if (nMoney < 0)
 	{
-		return ERROR_ITEM_OBTAIN_MONEY_INVALID;
+		return ERR_ITEM_OBTAIN_MONEY_INVALID;
 	}
 	if (0 == nMoney)
 	{
@@ -20,7 +20,7 @@ int CItemUnit::obtainMoney(int nMoney)
 
 	CMoneyUpdateNotify tMsg;
 	tMsg.set_money(mMoney);
-	CSceneJob::Inst()->sendClientMessage(mPlayer, ID_S2C_NOTIYF_PLAYER_MONEY_UPDATE, &tMsg);
+	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_NOTIYF_MONEY_UPDATE, &tMsg);
 	return SUCCESS;
 }
 
@@ -29,7 +29,7 @@ int CItemUnit::consumeMoney(int nMoney)
 {
 	if (nMoney < 0)
 	{
-		return ERROR_ITEM_CONSUME_MONEY_INVALID;
+		return ERR_ITEM_CONSUME_MONEY_INVALID;
 	}
 	if (0 == nMoney)
 	{
@@ -38,14 +38,14 @@ int CItemUnit::consumeMoney(int nMoney)
 
 	if (mMoney < nMoney)
 	{
-		return ERROR_MONEY_NOT_ENOUGH;
+		return ERR_MONEY_NOT_ENOUGH;
 	}
 
 	mMoney = mMoney - nMoney;
 
 	CMoneyUpdateNotify tMsg;
 	tMsg.set_money(mMoney);
-	CSceneJob::Inst()->sendClientMessage(mPlayer, ID_S2C_NOTIYF_PLAYER_MONEY_UPDATE, &tMsg);
+	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_NOTIYF_MONEY_UPDATE, &tMsg);
 	return SUCCESS;
 }
 
@@ -54,7 +54,7 @@ int	CItemUnit::obtainDiamond(int nDiamond)
 {
 	if (nDiamond < 0)
 	{
-		return ERROR_ITEM_OBTAIN_DIAMOND_INVALID;
+		return ERR_ITEM_OBTAIN_DIAMOND_INVALID;
 	}
 	if (0 == nDiamond)
 	{
@@ -66,7 +66,7 @@ int	CItemUnit::obtainDiamond(int nDiamond)
 
 	CDiamondUpdateNotify tMsg;
 	tMsg.set_diamond(mDiamond);
-	CSceneJob::Inst()->sendClientMessage(mPlayer, ID_S2C_NOTIYF_PLAYER_DIAMOND_UPDATE, &tMsg);
+	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_NOTIYF_DIAMOND_UPDATE, &tMsg);
 	return SUCCESS;
 }
 
@@ -75,7 +75,7 @@ int	CItemUnit::consumeDiamond(int nDiamond)
 {
 	if (nDiamond < 0)
 	{
-		return ERROR_ITEM_CONSUME_DIAMOND_INVALID;
+		return ERR_ITEM_CONSUME_DIAMOND_INVALID;
 	}
 	if (0 == nDiamond)
 	{
@@ -83,14 +83,14 @@ int	CItemUnit::consumeDiamond(int nDiamond)
 	}
 	if (mDiamond < nDiamond)
 	{
-		return ERROR_DIAMOND_NOT_ENOUGH;
+		return ERR_DIAMOND_NOT_ENOUGH;
 	}
 
 	mDiamond = mDiamond - nDiamond;
 
 	CDiamondUpdateNotify tMsg;
 	tMsg.set_diamond(mDiamond);
-	CSceneJob::Inst()->sendClientMessage(mPlayer, ID_S2C_NOTIYF_PLAYER_DIAMOND_UPDATE, &tMsg);
+	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_NOTIYF_DIAMOND_UPDATE, &tMsg);
 	return SUCCESS;
 }
 
@@ -110,7 +110,7 @@ int CItemUnit::insertItem(int* pItemID, int* pItemNum, int nSize)
 {
 	if (NULL == pItemID || NULL == pItemNum)
 	{
-		return ERROR_PARAMETER_INVALID;
+		return ERR_PARAMETER_INVALID;
 	}
 	
 	for (int i = 0; i < nSize; ++ i)

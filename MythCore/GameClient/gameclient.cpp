@@ -142,7 +142,7 @@ void CGameClient::onServerMessage(CTcpSocket* pTcpSocket)
 		return;
 	}
 
-	char* pTemp = pTcpSocket->getRecvBuff();
+	byte* pTemp = pTcpSocket->getRecvBuff();
 	if (pTcpSocket->getRecvBuffSize() < sizeof(unsigned short) * 2)
 	{
 		return;
@@ -178,7 +178,7 @@ void CGameClient::sendMessage(unsigned short uMessageID, Message* pMessage)
 {
 	// 一个 unsigned short是消息ID，另一个是消息长度
 	unsigned short nMessageLen = pMessage->ByteSize() + sizeof(unsigned short) * 2;
-	char* pTemp = mBuffer;
+	byte* pTemp = mBuffer;
 	memcpy(pTemp, &nMessageLen, sizeof(nMessageLen));
 	pTemp += sizeof(nMessageLen);
 	memcpy(pTemp, &uMessageID, sizeof(uMessageID));

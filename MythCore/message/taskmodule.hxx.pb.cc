@@ -87,8 +87,9 @@ void protobuf_AssignDesc_taskmodule_2ehxx() {
       sizeof(CSubmitTaskRequest),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSubmitTaskRequest, _internal_metadata_));
   CSubmitTaskResponse_descriptor_ = file->message_type(3);
-  static const int CSubmitTaskResponse_offsets_[1] = {
+  static const int CSubmitTaskResponse_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSubmitTaskResponse, result_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSubmitTaskResponse, taskid_),
   };
   CSubmitTaskResponse_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -163,13 +164,13 @@ void protobuf_AddDesc_taskmodule_2ehxx_impl() {
     "\n\016taskmodule.hxx\"$\n\022CAcceptTaskRequest\022\016"
     "\n\006TaskID\030\001 \001(\r\"5\n\023CAcceptTaskResponse\022\016\n"
     "\006Result\030\001 \001(\r\022\016\n\006TaskID\030\002 \001(\r\"$\n\022CSubmit"
-    "TaskRequest\022\016\n\006TaskID\030\001 \001(\r\"%\n\023CSubmitTa"
-    "skResponse\022\016\n\006Result\030\001 \001(\r*\264\001\n\022TASK_MODU"
-    "LE_MSG_ID\022\030\n\024ID_TASK_MODULE_ERROR\020\000\022\037\n\032I"
-    "D_C2S_REQUEST_ACCEPT_TASK\020\200 \022 \n\033ID_S2C_R"
-    "ESPONSE_ACCEPT_TASK\020\201 \022\037\n\032ID_C2S_REQUEST"
-    "_SUBMIT_TASK\020\202 \022 \n\033ID_S2C_RESPONSE_SUBMI"
-    "T_TASK\020\203 b\006proto3", 377);
+    "TaskRequest\022\016\n\006TaskID\030\001 \001(\r\"5\n\023CSubmitTa"
+    "skResponse\022\016\n\006Result\030\001 \001(\r\022\016\n\006TaskID\030\002 \001"
+    "(\r*\264\001\n\022TASK_MODULE_MSG_ID\022\030\n\024ID_TASK_MOD"
+    "ULE_ERROR\020\000\022\037\n\032ID_C2S_REQUEST_ACCEPT_TAS"
+    "K\020\200 \022 \n\033ID_S2C_RESPONSE_ACCEPT_TASK\020\201 \022\037"
+    "\n\032ID_C2S_REQUEST_SUBMIT_TASK\020\202 \022 \n\033ID_S2"
+    "C_RESPONSE_SUBMIT_TASK\020\203 b\006proto3", 393);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "taskmodule.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_taskmodule_2ehxx);
@@ -1022,6 +1023,7 @@ inline const CSubmitTaskRequest* CSubmitTaskRequest::internal_default_instance()
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int CSubmitTaskResponse::kResultFieldNumber;
+const int CSubmitTaskResponse::kTaskIDFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 CSubmitTaskResponse::CSubmitTaskResponse()
@@ -1043,7 +1045,8 @@ CSubmitTaskResponse::CSubmitTaskResponse(const CSubmitTaskResponse& from)
 }
 
 void CSubmitTaskResponse::SharedCtor() {
-  result_ = 0u;
+  ::memset(&result_, 0, reinterpret_cast<char*>(&taskid_) -
+    reinterpret_cast<char*>(&result_) + sizeof(taskid_));
   _cached_size_ = 0;
 }
 
@@ -1082,7 +1085,27 @@ CSubmitTaskResponse* CSubmitTaskResponse::New(::google::protobuf::Arena* arena) 
 
 void CSubmitTaskResponse::Clear() {
 // @@protoc_insertion_point(message_clear_start:CSubmitTaskResponse)
-  result_ = 0u;
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(CSubmitTaskResponse, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<CSubmitTaskResponse*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&(first), 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(result_, taskid_);
+
+#undef ZR_HELPER_
+#undef ZR_
+
 }
 
 bool CSubmitTaskResponse::MergePartialFromCodedStream(
@@ -1102,6 +1125,21 @@ bool CSubmitTaskResponse::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &result_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_TaskID;
+        break;
+      }
+
+      // optional uint32 TaskID = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_TaskID:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &taskid_)));
         } else {
           goto handle_unusual;
         }
@@ -1138,6 +1176,11 @@ void CSubmitTaskResponse::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->result(), output);
   }
 
+  // optional uint32 TaskID = 2;
+  if (this->taskid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->taskid(), output);
+  }
+
   // @@protoc_insertion_point(serialize_end:CSubmitTaskResponse)
 }
 
@@ -1148,6 +1191,11 @@ void CSubmitTaskResponse::SerializeWithCachedSizes(
   // optional uint32 Result = 1;
   if (this->result() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->result(), target);
+  }
+
+  // optional uint32 TaskID = 2;
+  if (this->taskid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->taskid(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:CSubmitTaskResponse)
@@ -1163,6 +1211,13 @@ size_t CSubmitTaskResponse::ByteSizeLong() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->result());
+  }
+
+  // optional uint32 TaskID = 2;
+  if (this->taskid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->taskid());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -1201,6 +1256,9 @@ void CSubmitTaskResponse::UnsafeMergeFrom(const CSubmitTaskResponse& from) {
   if (from.result() != 0) {
     set_result(from.result());
   }
+  if (from.taskid() != 0) {
+    set_taskid(from.taskid());
+  }
 }
 
 void CSubmitTaskResponse::CopyFrom(const ::google::protobuf::Message& from) {
@@ -1228,6 +1286,7 @@ void CSubmitTaskResponse::Swap(CSubmitTaskResponse* other) {
 }
 void CSubmitTaskResponse::InternalSwap(CSubmitTaskResponse* other) {
   std::swap(result_, other->result_);
+  std::swap(taskid_, other->taskid_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -1255,6 +1314,20 @@ void CSubmitTaskResponse::set_result(::google::protobuf::uint32 value) {
   
   result_ = value;
   // @@protoc_insertion_point(field_set:CSubmitTaskResponse.Result)
+}
+
+// optional uint32 TaskID = 2;
+void CSubmitTaskResponse::clear_taskid() {
+  taskid_ = 0u;
+}
+::google::protobuf::uint32 CSubmitTaskResponse::taskid() const {
+  // @@protoc_insertion_point(field_get:CSubmitTaskResponse.TaskID)
+  return taskid_;
+}
+void CSubmitTaskResponse::set_taskid(::google::protobuf::uint32 value) {
+  
+  taskid_ = value;
+  // @@protoc_insertion_point(field_set:CSubmitTaskResponse.TaskID)
 }
 
 inline const CSubmitTaskResponse* CSubmitTaskResponse::internal_default_instance() {

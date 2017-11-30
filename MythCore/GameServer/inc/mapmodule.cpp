@@ -69,7 +69,7 @@ void CMapModule::broadCastVisiblePlayer(CEntity* pEntity, unsigned short nMessag
 			continue;
 		}
 
-		CSceneJob::Inst()->sendClientMessage((CEntityPlayer*)pVisibleEntity, nMessageID, pMessage);
+		CSceneJob::Inst()->send2Player((CEntityPlayer*)pVisibleEntity, nMessageID, pMessage);
 		 ++ it;
 	}
 }
@@ -109,7 +109,7 @@ void CMapModule::sendPlayerMoveResponse(CEntityPlayer* pPlayer, int nResult)
 	CPlayerMoveResponse tPlayerMoveResponse;
 	tPlayerMoveResponse.set_result(nResult);
 
-	CSceneJob::Inst()->sendClientMessage(pPlayer, ID_S2C_RESPONSE_PLAYER_MOVE, &tPlayerMoveResponse);
+	CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_RESPONSE_PLAYER_MOVE, &tPlayerMoveResponse);
 }
 
 /// 处理玩家传送的消息
@@ -124,7 +124,7 @@ void CMapModule::onMessagePlayerTeleportRequest(CEntityPlayer* pPlayer, Message*
 	CMapConfigManager::Inst()->getMapPortalPos(pPlayer->getMapID(), nMapID, tPoint);
 	if (SUCCESS != teleportEntity(pPlayer, nMapID, tPoint))
 	{
-		sendPlayerTeleportResponse(pPlayer, ERROR_MAP_TELEPORT_MAP_FAILURE);
+		sendPlayerTeleportResponse(pPlayer, ERR_MAP_TELEPORT_MAP_FAILURE);
 		return;
 	}
 
@@ -138,5 +138,5 @@ void CMapModule::sendPlayerTeleportResponse(CEntityPlayer* pPlayer, int nResult)
 
 	CPlayerTeleportResponse tPlayerTeleportResponse;
 	tPlayerTeleportResponse.set_result(nResult);
-	CSceneJob::Inst()->sendClientMessage(pPlayer, ID_S2C_RESPONSE_PLAYER_TELEPORT, &tPlayerTeleportResponse);
+	CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_RESPONSE_PLAYER_TELEPORT, &tPlayerTeleportResponse);
 }

@@ -42,8 +42,8 @@ public:
 
 public:
 	/// 发送前端消息
-	void		sendClientMessage(CExchangeHead& rExchangeHead, unsigned short nMessageID, Message* pMessage);
-	void		sendClientMessage(CEntityPlayer* pPlayer, unsigned short nMessageID, Message* pMessage);
+	void		send2Player(CExchangeHead& rExchangeHead, unsigned short nMessageID, Message* pMessage);
+	void		send2Player(CEntityPlayer* pPlayer, unsigned short nMessageID, Message* pMessage);
 
 private:
 	void		onTask(CInternalMsg* pMsg);

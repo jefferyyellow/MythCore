@@ -1,11 +1,13 @@
 #ifndef __TASKCONFIG_H__
 #define __TASKCONFIG_H__
+#include "singleton.h"
 #include <vector>
 using namespace std;
+using namespace Myth;
 #define MAX_ACCEPT_CONDITION_PARAM		2			// 最大的接受条件参数
 #define MAX_COMPLETE_CONDITION_PARAM	2			// 最大的完成条件参数
 #define MAX_TASK_REWARD_PARAM			2			// 最大的任务奖励参数
-#define MAX_ALL_TASK_ID					3000		// 所有任务最大ID
+#define MAX_TASK_ID						4096		// 所有任务最大ID
 // 接受条件
 class CAcceptCondition
 {
@@ -33,6 +35,7 @@ class CTaskConfig
 public:
 	short					mID;					// 任务ID
 	short					mType;					// 任务类型
+	short					mRepeated;				// 可以重复完成
 	int						mAcceptNPCID;			// 接受任务NPC ID
 	int						mSubmitNPCID;			// 完成任务NPC ID
 	short					mAcceptMapID;			// 接受任务地图ID
@@ -43,9 +46,10 @@ public:
 };
 
 // 任务配置管理器
-class CTaskConfigManager
+class CTaskConfigManager : public CSingleton<CTaskConfigManager>
 {
-public:
+	friend class CSingleton <CTaskConfigManager>;
+private:
 	CTaskConfigManager()
 	{
 	}
@@ -57,7 +61,7 @@ public:
 	void					loadTaskConfig(const char* pPath);
 	CTaskConfig*			getTaskConfig(unsigned int nTaskID)
 	{
-		if (nTaskID >= MAX_ALL_TASK_ID)
+		if (nTaskID >= MAX_TASK_ID)
 		{
 			return NULL;
 		}
@@ -65,6 +69,6 @@ public:
 	}
 
 private:
-	CTaskConfig*			mTaskConfig[MAX_ALL_TASK_ID];	// 任务配置
+	CTaskConfig*			mTaskConfig[MAX_TASK_ID];	// 任务配置
 };
 #endif

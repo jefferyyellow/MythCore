@@ -33,10 +33,14 @@ enum EmLogType
 #	define LOG_WARN(fmt, ... )				LogLocalLog(emLogType_Warn, __FILE__, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__ )
 #	define LOG_ERROR(fmt, ... )				LogLocalLog(emLogType_Error, __FILE__, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__ )
 #	define LOG_DEBUG(logname, fmt, ... )	LogLocalDebugLog(logname, __FILE__, __LINE__, __FUNCTION__, fmt, ##__VA_ARGS__ )
+// 下面这个名字是随便起的，目的是和别的变量名不会重复，原来是这样
+// #define LOG_FILE(pFile)	( ( strrchr( pFile, '\\' ) == NULL ) ? pFile :  strrchr( pFile, '\\' ) + 1 )
+// 为了避免多次调用strchar，所以改成先用一个全局变量承载
+extern char* gXXXXXXX;
 #ifdef MYTH_OS_WINDOWS
-#define LOG_FILE(pFile)	( ( (char* p = strrchr( pFile, '\\' )) == NULL ) ? pFile : p + 1)
+#define LOG_FILE(pFile)	( ( (gXXXXXXX = strrchr( pFile, '\\' )) == NULL ) ? pFile : gXXXXXXX + 1)
 #else
-#define LOG_FILE(pFile)	( ((char* p = strrchr( pFile, '/' )) == NULL ) ? pFile : p + 1)
+#define LOG_FILE(pFile)	( ((gXXXXXXX = strrchr( pFile, '/' )) == NULL ) ? pFile : gXXXXXXX + 1)
 #endif // MYTH_OS_WINDOWS
 
 

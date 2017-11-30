@@ -60,7 +60,7 @@ int CLoginPlayer::processAccountVerify()
 	tLoginResponse.set_serverid(mServerID);
 	tLoginResponse.set_roleid(mRoleID);
 
-	CSceneJob::Inst()->sendClientMessage(mExchangeHead, ID_S2C_RESPONSE_LOGIN, &tLoginResponse);
+	CSceneJob::Inst()->send2Player(mExchangeHead, ID_S2C_RESPONSE_LOGIN, &tLoginResponse);
 	if (mRoleID == 0)
 	{
 		return emLoginState_WaitCreateRole;
@@ -108,7 +108,7 @@ int CLoginPlayer::processCreateRoleing()
 	CCreateRoleResponse tCreateRoleResponse;
 	tCreateRoleResponse.set_result(0);
 	tCreateRoleResponse.set_roleid(mRoleID);
-	CSceneJob::Inst()->sendClientMessage(mExchangeHead, ID_S2C_RESPONSE_CREATE_ROLE, &tCreateRoleResponse);
+	CSceneJob::Inst()->send2Player(mExchangeHead, ID_S2C_RESPONSE_CREATE_ROLE, &tCreateRoleResponse);
 
 	return emLoginState_WaitEnterGame;
 }
@@ -132,8 +132,6 @@ int CLoginPlayer::processWaitEnterGame()
 		return -1;
 	}
 
-
-
 	CEntityPlayer* pNewPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->allocObj(emObjType_Entity_Player));
 	if (NULL == pNewPlayer)
 	{
@@ -151,10 +149,9 @@ int CLoginPlayer::processWaitPlaying()
 		return -1;
 	}
 
-
 	CEnterSceneResponse tEnterSceneResponse;
 	tEnterSceneResponse.set_result(0);
-	CSceneJob::Inst()->sendClientMessage(mExchangeHead, ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
+	CSceneJob::Inst()->send2Player(mExchangeHead, ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
 
 	return emLoginState_None;
 }

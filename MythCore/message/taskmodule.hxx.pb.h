@@ -401,11 +401,18 @@ class CSubmitTaskResponse : public ::google::protobuf::Message /* @@protoc_inser
   ::google::protobuf::uint32 result() const;
   void set_result(::google::protobuf::uint32 value);
 
+  // optional uint32 TaskID = 2;
+  void clear_taskid();
+  static const int kTaskIDFieldNumber = 2;
+  ::google::protobuf::uint32 taskid() const;
+  void set_taskid(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:CSubmitTaskResponse)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::uint32 result_;
+  ::google::protobuf::uint32 taskid_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_taskmodule_2ehxx_impl();
   friend void  protobuf_AddDesc_taskmodule_2ehxx_impl();
@@ -513,6 +520,20 @@ inline void CSubmitTaskResponse::set_result(::google::protobuf::uint32 value) {
   
   result_ = value;
   // @@protoc_insertion_point(field_set:CSubmitTaskResponse.Result)
+}
+
+// optional uint32 TaskID = 2;
+inline void CSubmitTaskResponse::clear_taskid() {
+  taskid_ = 0u;
+}
+inline ::google::protobuf::uint32 CSubmitTaskResponse::taskid() const {
+  // @@protoc_insertion_point(field_get:CSubmitTaskResponse.TaskID)
+  return taskid_;
+}
+inline void CSubmitTaskResponse::set_taskid(::google::protobuf::uint32 value) {
+  
+  taskid_ = value;
+  // @@protoc_insertion_point(field_set:CSubmitTaskResponse.TaskID)
 }
 
 inline const CSubmitTaskResponse* CSubmitTaskResponse::internal_default_instance() {

@@ -33,4 +33,5 @@ message CSubmitTaskRequest
 message CSubmitTaskResponse
 {
 		uint32	Result	= 1;		// 结果
+		uint32	TaskID	= 2;		// 任务ID
 }

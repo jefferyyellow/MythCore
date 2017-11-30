@@ -3,9 +3,9 @@
 #include "playersubunit.h"
 #include "bit_set.h"
 #include "messagefactory.h"
-#define		MAX_TASK_ID		4096		// 最大的任务ID
-#define		MAX_TASK_NUM	20			// 最多的可接任务数目
-#define		MAX_TASK_PARAM	4			// 最多的任务参数数目
+#include "taskconfig.h"
+#define		MAX_PLAYER_TASK_NUM		20			// 最多的可接任务数目
+#define		MAX_PLAYER_TASK_PARAM	4			// 最多的任务参数数目
 /// 任务条件类型
 enum EmTaskCondType
 {
@@ -31,14 +31,18 @@ class CPlayerTask
 public:
 	CPlayerTask()
 	{
-		mTaskID = 0;
-		mTaskProgress = 0;
-		mTaskCondType = emTaskCondType_None;
-		memset(mTaskParam, 0, sizeof(mTaskParam));
+		init();
 	}
 	~CPlayerTask()
 	{
 
+	}
+	void			init()
+	{
+		mTaskID = 0;
+		mTaskProgress = 0;
+		mTaskCondType = emTaskCondType_None;
+		memset(mTaskParam, 0, sizeof(mTaskParam));
 	}
 public:
 	// 任务ID
@@ -55,7 +59,7 @@ public:
 
 	int			getTaskParam(int nIndex)
 	{
-		if (nIndex < 0 || nIndex >= MAX_TASK_PARAM)
+		if (nIndex < 0 || nIndex >= MAX_PLAYER_TASK_PARAM)
 		{
 			return 0;
 		}
@@ -64,7 +68,7 @@ public:
 
 	void			setTaskParam(int nIndex, int nTaskParam)
 	{
-		if (nIndex < 0 || nIndex >= MAX_TASK_PARAM)
+		if (nIndex < 0 || nIndex >= MAX_PLAYER_TASK_PARAM)
 		{
 			return;
 		}
@@ -79,7 +83,7 @@ private:
 	/// 任务条件类型
 	EmTaskCondType	mTaskCondType;
 	/// 任务参数
-	int				mTaskParam[MAX_TASK_PARAM];
+	int				mTaskParam[MAX_PLAYER_TASK_PARAM];
 };
 
 class CEntityPlayer;
@@ -110,19 +114,26 @@ public:
 
 public:
 	void onAcceptTaskRequest(Message* pMessage);
-	void sendAcceptTaskResponse(CEntityPlayer* pPlay);
+	void sendAcceptTaskResponse(int nResult, int nTaskID);
+
+	void onSubmitTaskRequest(Message* pMessage);
+	void sendSubmitTaskResponse(int nResult, int nTaskID);
 
 public:
 	short getMaxCompleteTaskID() const { return mMaxCompleteTaskID; }
 	void setMaxCompleteTaskID(short nValue) { mMaxCompleteTaskID = nValue; }
+	/// 检查任务是否能接受
+	int	checkAcceptTask(int nTaskID);
 
+	/// 得到一个空的任务
+	int	getFreeTask();
 private:
 	/// 所有已经完成的任务
 	Myth::CBitSet<MAX_TASK_ID>		mCompleteTasks;
 	/// 最大的已经完成的任务
 	short							mMaxCompleteTaskID;
 	/// 已经接受的任务列表
-	CPlayerTask						mTaskList[MAX_TASK_NUM];
+	CPlayerTask						mTaskList[MAX_PLAYER_TASK_NUM];
 	/// 已经接受任务列表数目
 	int								mTaskListNum;
 };
