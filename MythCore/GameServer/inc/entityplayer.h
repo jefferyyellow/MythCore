@@ -72,6 +72,8 @@ public:
 		strncpy(mName, pName, sizeof(mName)-1);
 	}
 
+	int				getLevel(){return mPropertyUnit.getLevel();}
+
 	/// 与TCP交换用的头
 	CExchangeHead	GetExhangeHead(){ return mExhangeHead; }
 	/// 属性单元

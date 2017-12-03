@@ -105,7 +105,6 @@ public:
 enum EmItemType
 {
 	emItemType_None		= 0,		// 无类型
-	emItemType_Common	= 1,		// 通用道具
 	emItemType_Equip	= 2,		// 装备道具
 };
 // ********************************************************************** //

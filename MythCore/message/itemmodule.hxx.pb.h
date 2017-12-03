@@ -28,6 +28,7 @@
 #include <google/protobuf/extension_set.h>
 #include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
+#include "common.hxx.pb.h"
 // @@protoc_insertion_point(includes)
 
 // Internal implementation detail -- do not call these.
@@ -38,18 +39,35 @@ void protobuf_ShutdownFile_itemmodule_2ehxx();
 
 class CDiamondUpdateNotify;
 class CInsertItemNotify;
+class CInsertItemObjNotify;
 class CMoneyUpdateNotify;
+class CPurchaseItemRequest;
+class CPurchaseItemResponse;
+class CRemoveItemNotify;
+class CSellItemRequest;
+class CSellItemResponse;
+class CUseItemRequest;
+class CUseItemResponse;
 
 enum ITEM_MODULE_MSG_ID {
   ID_ITEM_MODULE_ERROR = 0,
   ID_S2C_NOTIYF_MONEY_UPDATE = 2048,
   ID_S2C_NOTIYF_DIAMOND_UPDATE = 2049,
+  ID_S2C_NOTIYF_INSERT_ITEM = 2050,
+  ID_S2C_NOTIYF_INSERT_ITEM_OBJ = 2051,
+  ID_S2C_NOTIYF_REMOVE_ITEM = 2052,
+  ID_C2S_REQUEST_USE_ITEM = 2053,
+  ID_S2C_RESPONSE_USE_ITEM = 2054,
+  ID_C2S_REQUEST_SELL_ITEM = 2055,
+  ID_S2C_RESPONSE_SELL_ITEM = 2056,
+  ID_C2S_REQUEST_PURCHASE_ITEM = 2057,
+  ID_S2C_RESPONSE_PURCHASE_ITEM = 2058,
   ITEM_MODULE_MSG_ID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   ITEM_MODULE_MSG_ID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool ITEM_MODULE_MSG_ID_IsValid(int value);
 const ITEM_MODULE_MSG_ID ITEM_MODULE_MSG_ID_MIN = ID_ITEM_MODULE_ERROR;
-const ITEM_MODULE_MSG_ID ITEM_MODULE_MSG_ID_MAX = ID_S2C_NOTIYF_DIAMOND_UPDATE;
+const ITEM_MODULE_MSG_ID ITEM_MODULE_MSG_ID_MAX = ID_S2C_RESPONSE_PURCHASE_ITEM;
 const int ITEM_MODULE_MSG_ID_ARRAYSIZE = ITEM_MODULE_MSG_ID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* ITEM_MODULE_MSG_ID_descriptor();
@@ -305,23 +323,219 @@ class CInsertItemNotify : public ::google::protobuf::Message /* @@protoc_inserti
   ::google::protobuf::uint32 itemid() const;
   void set_itemid(::google::protobuf::uint32 value);
 
-  // optional uint32 Index = 2;
+  // repeated uint32 Index = 2;
+  int index_size() const;
   void clear_index();
   static const int kIndexFieldNumber = 2;
-  ::google::protobuf::uint32 index() const;
-  void set_index(::google::protobuf::uint32 value);
+  ::google::protobuf::uint32 index(int index) const;
+  void set_index(int index, ::google::protobuf::uint32 value);
+  void add_index(::google::protobuf::uint32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+      index() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+      mutable_index();
 
-  // optional uint32 Number = 3;
+  // repeated uint32 Number = 3;
+  int number_size() const;
   void clear_number();
   static const int kNumberFieldNumber = 3;
-  ::google::protobuf::uint32 number() const;
-  void set_number(::google::protobuf::uint32 value);
+  ::google::protobuf::uint32 number(int index) const;
+  void set_number(int index, ::google::protobuf::uint32 value);
+  void add_number(::google::protobuf::uint32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+      number() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+      mutable_number();
 
   // @@protoc_insertion_point(class_scope:CInsertItemNotify)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > index_;
+  mutable int _index_cached_byte_size_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > number_;
+  mutable int _number_cached_byte_size_;
   ::google::protobuf::uint32 itemid_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_itemmodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_itemmodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_itemmodule_2ehxx();
+  friend void protobuf_ShutdownFile_itemmodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CInsertItemNotify> CInsertItemNotify_default_instance_;
+
+// -------------------------------------------------------------------
+
+class CInsertItemObjNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CInsertItemObjNotify) */ {
+ public:
+  CInsertItemObjNotify();
+  virtual ~CInsertItemObjNotify();
+
+  CInsertItemObjNotify(const CInsertItemObjNotify& from);
+
+  inline CInsertItemObjNotify& operator=(const CInsertItemObjNotify& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CInsertItemObjNotify& default_instance();
+
+  static const CInsertItemObjNotify* internal_default_instance();
+
+  void Swap(CInsertItemObjNotify* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CInsertItemObjNotify* New() const { return New(NULL); }
+
+  CInsertItemObjNotify* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CInsertItemObjNotify& from);
+  void MergeFrom(const CInsertItemObjNotify& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CInsertItemObjNotify* other);
+  void UnsafeMergeFrom(const CInsertItemObjNotify& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .PBItemObject ItemObject = 1;
+  bool has_itemobject() const;
+  void clear_itemobject();
+  static const int kItemObjectFieldNumber = 1;
+  const ::PBItemObject& itemobject() const;
+  ::PBItemObject* mutable_itemobject();
+  ::PBItemObject* release_itemobject();
+  void set_allocated_itemobject(::PBItemObject* itemobject);
+
+  // @@protoc_insertion_point(class_scope:CInsertItemObjNotify)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PBItemObject* itemobject_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_itemmodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_itemmodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_itemmodule_2ehxx();
+  friend void protobuf_ShutdownFile_itemmodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CInsertItemObjNotify> CInsertItemObjNotify_default_instance_;
+
+// -------------------------------------------------------------------
+
+class CRemoveItemNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CRemoveItemNotify) */ {
+ public:
+  CRemoveItemNotify();
+  virtual ~CRemoveItemNotify();
+
+  CRemoveItemNotify(const CRemoveItemNotify& from);
+
+  inline CRemoveItemNotify& operator=(const CRemoveItemNotify& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CRemoveItemNotify& default_instance();
+
+  static const CRemoveItemNotify* internal_default_instance();
+
+  void Swap(CRemoveItemNotify* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CRemoveItemNotify* New() const { return New(NULL); }
+
+  CRemoveItemNotify* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CRemoveItemNotify& from);
+  void MergeFrom(const CRemoveItemNotify& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CRemoveItemNotify* other);
+  void UnsafeMergeFrom(const CRemoveItemNotify& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 Index = 1;
+  void clear_index();
+  static const int kIndexFieldNumber = 1;
+  ::google::protobuf::uint32 index() const;
+  void set_index(::google::protobuf::uint32 value);
+
+  // optional uint32 Number = 2;
+  void clear_number();
+  static const int kNumberFieldNumber = 2;
+  ::google::protobuf::uint32 number() const;
+  void set_number(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:CRemoveItemNotify)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::uint32 index_;
   ::google::protobuf::uint32 number_;
   mutable int _cached_size_;
@@ -332,7 +546,537 @@ class CInsertItemNotify : public ::google::protobuf::Message /* @@protoc_inserti
 
   void InitAsDefaultInstance();
 };
-extern ::google::protobuf::internal::ExplicitlyConstructed<CInsertItemNotify> CInsertItemNotify_default_instance_;
+extern ::google::protobuf::internal::ExplicitlyConstructed<CRemoveItemNotify> CRemoveItemNotify_default_instance_;
+
+// -------------------------------------------------------------------
+
+class CUseItemRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CUseItemRequest) */ {
+ public:
+  CUseItemRequest();
+  virtual ~CUseItemRequest();
+
+  CUseItemRequest(const CUseItemRequest& from);
+
+  inline CUseItemRequest& operator=(const CUseItemRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CUseItemRequest& default_instance();
+
+  static const CUseItemRequest* internal_default_instance();
+
+  void Swap(CUseItemRequest* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CUseItemRequest* New() const { return New(NULL); }
+
+  CUseItemRequest* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CUseItemRequest& from);
+  void MergeFrom(const CUseItemRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CUseItemRequest* other);
+  void UnsafeMergeFrom(const CUseItemRequest& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 Index = 1;
+  void clear_index();
+  static const int kIndexFieldNumber = 1;
+  ::google::protobuf::uint32 index() const;
+  void set_index(::google::protobuf::uint32 value);
+
+  // optional uint32 Number = 2;
+  void clear_number();
+  static const int kNumberFieldNumber = 2;
+  ::google::protobuf::uint32 number() const;
+  void set_number(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:CUseItemRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 index_;
+  ::google::protobuf::uint32 number_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_itemmodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_itemmodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_itemmodule_2ehxx();
+  friend void protobuf_ShutdownFile_itemmodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CUseItemRequest> CUseItemRequest_default_instance_;
+
+// -------------------------------------------------------------------
+
+class CUseItemResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CUseItemResponse) */ {
+ public:
+  CUseItemResponse();
+  virtual ~CUseItemResponse();
+
+  CUseItemResponse(const CUseItemResponse& from);
+
+  inline CUseItemResponse& operator=(const CUseItemResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CUseItemResponse& default_instance();
+
+  static const CUseItemResponse* internal_default_instance();
+
+  void Swap(CUseItemResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CUseItemResponse* New() const { return New(NULL); }
+
+  CUseItemResponse* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CUseItemResponse& from);
+  void MergeFrom(const CUseItemResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CUseItemResponse* other);
+  void UnsafeMergeFrom(const CUseItemResponse& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 Result = 1;
+  void clear_result();
+  static const int kResultFieldNumber = 1;
+  ::google::protobuf::uint32 result() const;
+  void set_result(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:CUseItemResponse)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 result_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_itemmodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_itemmodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_itemmodule_2ehxx();
+  friend void protobuf_ShutdownFile_itemmodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CUseItemResponse> CUseItemResponse_default_instance_;
+
+// -------------------------------------------------------------------
+
+class CSellItemRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CSellItemRequest) */ {
+ public:
+  CSellItemRequest();
+  virtual ~CSellItemRequest();
+
+  CSellItemRequest(const CSellItemRequest& from);
+
+  inline CSellItemRequest& operator=(const CSellItemRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CSellItemRequest& default_instance();
+
+  static const CSellItemRequest* internal_default_instance();
+
+  void Swap(CSellItemRequest* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CSellItemRequest* New() const { return New(NULL); }
+
+  CSellItemRequest* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CSellItemRequest& from);
+  void MergeFrom(const CSellItemRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CSellItemRequest* other);
+  void UnsafeMergeFrom(const CSellItemRequest& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 Index = 1;
+  void clear_index();
+  static const int kIndexFieldNumber = 1;
+  ::google::protobuf::uint32 index() const;
+  void set_index(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:CSellItemRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 index_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_itemmodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_itemmodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_itemmodule_2ehxx();
+  friend void protobuf_ShutdownFile_itemmodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CSellItemRequest> CSellItemRequest_default_instance_;
+
+// -------------------------------------------------------------------
+
+class CSellItemResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CSellItemResponse) */ {
+ public:
+  CSellItemResponse();
+  virtual ~CSellItemResponse();
+
+  CSellItemResponse(const CSellItemResponse& from);
+
+  inline CSellItemResponse& operator=(const CSellItemResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CSellItemResponse& default_instance();
+
+  static const CSellItemResponse* internal_default_instance();
+
+  void Swap(CSellItemResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CSellItemResponse* New() const { return New(NULL); }
+
+  CSellItemResponse* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CSellItemResponse& from);
+  void MergeFrom(const CSellItemResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CSellItemResponse* other);
+  void UnsafeMergeFrom(const CSellItemResponse& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 Result = 1;
+  void clear_result();
+  static const int kResultFieldNumber = 1;
+  ::google::protobuf::uint32 result() const;
+  void set_result(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:CSellItemResponse)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 result_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_itemmodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_itemmodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_itemmodule_2ehxx();
+  friend void protobuf_ShutdownFile_itemmodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CSellItemResponse> CSellItemResponse_default_instance_;
+
+// -------------------------------------------------------------------
+
+class CPurchaseItemRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CPurchaseItemRequest) */ {
+ public:
+  CPurchaseItemRequest();
+  virtual ~CPurchaseItemRequest();
+
+  CPurchaseItemRequest(const CPurchaseItemRequest& from);
+
+  inline CPurchaseItemRequest& operator=(const CPurchaseItemRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CPurchaseItemRequest& default_instance();
+
+  static const CPurchaseItemRequest* internal_default_instance();
+
+  void Swap(CPurchaseItemRequest* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CPurchaseItemRequest* New() const { return New(NULL); }
+
+  CPurchaseItemRequest* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CPurchaseItemRequest& from);
+  void MergeFrom(const CPurchaseItemRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CPurchaseItemRequest* other);
+  void UnsafeMergeFrom(const CPurchaseItemRequest& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 Index = 1;
+  void clear_index();
+  static const int kIndexFieldNumber = 1;
+  ::google::protobuf::uint32 index() const;
+  void set_index(::google::protobuf::uint32 value);
+
+  // optional uint32 Num = 2;
+  void clear_num();
+  static const int kNumFieldNumber = 2;
+  ::google::protobuf::uint32 num() const;
+  void set_num(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:CPurchaseItemRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 index_;
+  ::google::protobuf::uint32 num_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_itemmodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_itemmodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_itemmodule_2ehxx();
+  friend void protobuf_ShutdownFile_itemmodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CPurchaseItemRequest> CPurchaseItemRequest_default_instance_;
+
+// -------------------------------------------------------------------
+
+class CPurchaseItemResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CPurchaseItemResponse) */ {
+ public:
+  CPurchaseItemResponse();
+  virtual ~CPurchaseItemResponse();
+
+  CPurchaseItemResponse(const CPurchaseItemResponse& from);
+
+  inline CPurchaseItemResponse& operator=(const CPurchaseItemResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CPurchaseItemResponse& default_instance();
+
+  static const CPurchaseItemResponse* internal_default_instance();
+
+  void Swap(CPurchaseItemResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CPurchaseItemResponse* New() const { return New(NULL); }
+
+  CPurchaseItemResponse* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CPurchaseItemResponse& from);
+  void MergeFrom(const CPurchaseItemResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CPurchaseItemResponse* other);
+  void UnsafeMergeFrom(const CPurchaseItemResponse& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 Result = 1;
+  void clear_result();
+  static const int kResultFieldNumber = 1;
+  ::google::protobuf::uint32 result() const;
+  void set_result(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:CPurchaseItemResponse)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 result_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_itemmodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_itemmodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_itemmodule_2ehxx();
+  friend void protobuf_ShutdownFile_itemmodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CPurchaseItemResponse> CPurchaseItemResponse_default_instance_;
 
 // ===================================================================
 
@@ -398,38 +1142,321 @@ inline void CInsertItemNotify::set_itemid(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:CInsertItemNotify.ItemID)
 }
 
-// optional uint32 Index = 2;
+// repeated uint32 Index = 2;
+inline int CInsertItemNotify::index_size() const {
+  return index_.size();
+}
 inline void CInsertItemNotify::clear_index() {
-  index_ = 0u;
+  index_.Clear();
 }
-inline ::google::protobuf::uint32 CInsertItemNotify::index() const {
+inline ::google::protobuf::uint32 CInsertItemNotify::index(int index) const {
   // @@protoc_insertion_point(field_get:CInsertItemNotify.Index)
-  return index_;
+  return index_.Get(index);
 }
-inline void CInsertItemNotify::set_index(::google::protobuf::uint32 value) {
-  
-  index_ = value;
+inline void CInsertItemNotify::set_index(int index, ::google::protobuf::uint32 value) {
+  index_.Set(index, value);
   // @@protoc_insertion_point(field_set:CInsertItemNotify.Index)
 }
-
-// optional uint32 Number = 3;
-inline void CInsertItemNotify::clear_number() {
-  number_ = 0u;
+inline void CInsertItemNotify::add_index(::google::protobuf::uint32 value) {
+  index_.Add(value);
+  // @@protoc_insertion_point(field_add:CInsertItemNotify.Index)
 }
-inline ::google::protobuf::uint32 CInsertItemNotify::number() const {
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+CInsertItemNotify::index() const {
+  // @@protoc_insertion_point(field_list:CInsertItemNotify.Index)
+  return index_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+CInsertItemNotify::mutable_index() {
+  // @@protoc_insertion_point(field_mutable_list:CInsertItemNotify.Index)
+  return &index_;
+}
+
+// repeated uint32 Number = 3;
+inline int CInsertItemNotify::number_size() const {
+  return number_.size();
+}
+inline void CInsertItemNotify::clear_number() {
+  number_.Clear();
+}
+inline ::google::protobuf::uint32 CInsertItemNotify::number(int index) const {
   // @@protoc_insertion_point(field_get:CInsertItemNotify.Number)
+  return number_.Get(index);
+}
+inline void CInsertItemNotify::set_number(int index, ::google::protobuf::uint32 value) {
+  number_.Set(index, value);
+  // @@protoc_insertion_point(field_set:CInsertItemNotify.Number)
+}
+inline void CInsertItemNotify::add_number(::google::protobuf::uint32 value) {
+  number_.Add(value);
+  // @@protoc_insertion_point(field_add:CInsertItemNotify.Number)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+CInsertItemNotify::number() const {
+  // @@protoc_insertion_point(field_list:CInsertItemNotify.Number)
   return number_;
 }
-inline void CInsertItemNotify::set_number(::google::protobuf::uint32 value) {
-  
-  number_ = value;
-  // @@protoc_insertion_point(field_set:CInsertItemNotify.Number)
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+CInsertItemNotify::mutable_number() {
+  // @@protoc_insertion_point(field_mutable_list:CInsertItemNotify.Number)
+  return &number_;
 }
 
 inline const CInsertItemNotify* CInsertItemNotify::internal_default_instance() {
   return &CInsertItemNotify_default_instance_.get();
 }
+// -------------------------------------------------------------------
+
+// CInsertItemObjNotify
+
+// optional .PBItemObject ItemObject = 1;
+inline bool CInsertItemObjNotify::has_itemobject() const {
+  return this != internal_default_instance() && itemobject_ != NULL;
+}
+inline void CInsertItemObjNotify::clear_itemobject() {
+  if (GetArenaNoVirtual() == NULL && itemobject_ != NULL) delete itemobject_;
+  itemobject_ = NULL;
+}
+inline const ::PBItemObject& CInsertItemObjNotify::itemobject() const {
+  // @@protoc_insertion_point(field_get:CInsertItemObjNotify.ItemObject)
+  return itemobject_ != NULL ? *itemobject_
+                         : *::PBItemObject::internal_default_instance();
+}
+inline ::PBItemObject* CInsertItemObjNotify::mutable_itemobject() {
+  
+  if (itemobject_ == NULL) {
+    itemobject_ = new ::PBItemObject;
+  }
+  // @@protoc_insertion_point(field_mutable:CInsertItemObjNotify.ItemObject)
+  return itemobject_;
+}
+inline ::PBItemObject* CInsertItemObjNotify::release_itemobject() {
+  // @@protoc_insertion_point(field_release:CInsertItemObjNotify.ItemObject)
+  
+  ::PBItemObject* temp = itemobject_;
+  itemobject_ = NULL;
+  return temp;
+}
+inline void CInsertItemObjNotify::set_allocated_itemobject(::PBItemObject* itemobject) {
+  delete itemobject_;
+  itemobject_ = itemobject;
+  if (itemobject) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:CInsertItemObjNotify.ItemObject)
+}
+
+inline const CInsertItemObjNotify* CInsertItemObjNotify::internal_default_instance() {
+  return &CInsertItemObjNotify_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
+// CRemoveItemNotify
+
+// optional uint32 Index = 1;
+inline void CRemoveItemNotify::clear_index() {
+  index_ = 0u;
+}
+inline ::google::protobuf::uint32 CRemoveItemNotify::index() const {
+  // @@protoc_insertion_point(field_get:CRemoveItemNotify.Index)
+  return index_;
+}
+inline void CRemoveItemNotify::set_index(::google::protobuf::uint32 value) {
+  
+  index_ = value;
+  // @@protoc_insertion_point(field_set:CRemoveItemNotify.Index)
+}
+
+// optional uint32 Number = 2;
+inline void CRemoveItemNotify::clear_number() {
+  number_ = 0u;
+}
+inline ::google::protobuf::uint32 CRemoveItemNotify::number() const {
+  // @@protoc_insertion_point(field_get:CRemoveItemNotify.Number)
+  return number_;
+}
+inline void CRemoveItemNotify::set_number(::google::protobuf::uint32 value) {
+  
+  number_ = value;
+  // @@protoc_insertion_point(field_set:CRemoveItemNotify.Number)
+}
+
+inline const CRemoveItemNotify* CRemoveItemNotify::internal_default_instance() {
+  return &CRemoveItemNotify_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
+// CUseItemRequest
+
+// optional uint32 Index = 1;
+inline void CUseItemRequest::clear_index() {
+  index_ = 0u;
+}
+inline ::google::protobuf::uint32 CUseItemRequest::index() const {
+  // @@protoc_insertion_point(field_get:CUseItemRequest.Index)
+  return index_;
+}
+inline void CUseItemRequest::set_index(::google::protobuf::uint32 value) {
+  
+  index_ = value;
+  // @@protoc_insertion_point(field_set:CUseItemRequest.Index)
+}
+
+// optional uint32 Number = 2;
+inline void CUseItemRequest::clear_number() {
+  number_ = 0u;
+}
+inline ::google::protobuf::uint32 CUseItemRequest::number() const {
+  // @@protoc_insertion_point(field_get:CUseItemRequest.Number)
+  return number_;
+}
+inline void CUseItemRequest::set_number(::google::protobuf::uint32 value) {
+  
+  number_ = value;
+  // @@protoc_insertion_point(field_set:CUseItemRequest.Number)
+}
+
+inline const CUseItemRequest* CUseItemRequest::internal_default_instance() {
+  return &CUseItemRequest_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
+// CUseItemResponse
+
+// optional uint32 Result = 1;
+inline void CUseItemResponse::clear_result() {
+  result_ = 0u;
+}
+inline ::google::protobuf::uint32 CUseItemResponse::result() const {
+  // @@protoc_insertion_point(field_get:CUseItemResponse.Result)
+  return result_;
+}
+inline void CUseItemResponse::set_result(::google::protobuf::uint32 value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:CUseItemResponse.Result)
+}
+
+inline const CUseItemResponse* CUseItemResponse::internal_default_instance() {
+  return &CUseItemResponse_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
+// CSellItemRequest
+
+// optional uint32 Index = 1;
+inline void CSellItemRequest::clear_index() {
+  index_ = 0u;
+}
+inline ::google::protobuf::uint32 CSellItemRequest::index() const {
+  // @@protoc_insertion_point(field_get:CSellItemRequest.Index)
+  return index_;
+}
+inline void CSellItemRequest::set_index(::google::protobuf::uint32 value) {
+  
+  index_ = value;
+  // @@protoc_insertion_point(field_set:CSellItemRequest.Index)
+}
+
+inline const CSellItemRequest* CSellItemRequest::internal_default_instance() {
+  return &CSellItemRequest_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
+// CSellItemResponse
+
+// optional uint32 Result = 1;
+inline void CSellItemResponse::clear_result() {
+  result_ = 0u;
+}
+inline ::google::protobuf::uint32 CSellItemResponse::result() const {
+  // @@protoc_insertion_point(field_get:CSellItemResponse.Result)
+  return result_;
+}
+inline void CSellItemResponse::set_result(::google::protobuf::uint32 value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:CSellItemResponse.Result)
+}
+
+inline const CSellItemResponse* CSellItemResponse::internal_default_instance() {
+  return &CSellItemResponse_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
+// CPurchaseItemRequest
+
+// optional uint32 Index = 1;
+inline void CPurchaseItemRequest::clear_index() {
+  index_ = 0u;
+}
+inline ::google::protobuf::uint32 CPurchaseItemRequest::index() const {
+  // @@protoc_insertion_point(field_get:CPurchaseItemRequest.Index)
+  return index_;
+}
+inline void CPurchaseItemRequest::set_index(::google::protobuf::uint32 value) {
+  
+  index_ = value;
+  // @@protoc_insertion_point(field_set:CPurchaseItemRequest.Index)
+}
+
+// optional uint32 Num = 2;
+inline void CPurchaseItemRequest::clear_num() {
+  num_ = 0u;
+}
+inline ::google::protobuf::uint32 CPurchaseItemRequest::num() const {
+  // @@protoc_insertion_point(field_get:CPurchaseItemRequest.Num)
+  return num_;
+}
+inline void CPurchaseItemRequest::set_num(::google::protobuf::uint32 value) {
+  
+  num_ = value;
+  // @@protoc_insertion_point(field_set:CPurchaseItemRequest.Num)
+}
+
+inline const CPurchaseItemRequest* CPurchaseItemRequest::internal_default_instance() {
+  return &CPurchaseItemRequest_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
+// CPurchaseItemResponse
+
+// optional uint32 Result = 1;
+inline void CPurchaseItemResponse::clear_result() {
+  result_ = 0u;
+}
+inline ::google::protobuf::uint32 CPurchaseItemResponse::result() const {
+  // @@protoc_insertion_point(field_get:CPurchaseItemResponse.Result)
+  return result_;
+}
+inline void CPurchaseItemResponse::set_result(::google::protobuf::uint32 value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:CPurchaseItemResponse.Result)
+}
+
+inline const CPurchaseItemResponse* CPurchaseItemResponse::internal_default_instance() {
+  return &CPurchaseItemResponse_default_instance_.get();
+}
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -19,6 +19,11 @@ void CTaskModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageI
 			pPlayer->GetTaskUnit().onAcceptTaskRequest(pMessage);
 			break;
 		}
+		case ID_C2S_REQUEST_SUBMIT_TASK:
+		{
+			pPlayer->GetTaskUnit().onSubmitTaskRequest(pMessage);
+			break;
+		}
 		default:
 			break;
 	}

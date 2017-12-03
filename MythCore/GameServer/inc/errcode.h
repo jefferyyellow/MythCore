@@ -12,6 +12,7 @@ enum ERR_COMMON
 	ERR_PARAMETER_INVALID				= 257,				// 参数非法
 	ERR_MONEY_NOT_ENOUGH				= 258,				// 金币不足
 	ERR_DIAMOND_NOT_ENOUGH				= 259,				// 金币不足
+	ERR_TEMPLATE_INVALID				= 260,				// 模板非法
 };
 
 
@@ -39,6 +40,11 @@ enum ERR_TASK
 {
 	ERR_TASK_ID_INVALID					= 500,		// 任务ID非法
 	ERR_TASK_CONFIG_IS_NULL				= 501,		// 任务配置为空
-	ERR_TASK_
+	ERR_TASK_ALREADY_COMPLETE			= 502,		// 任务已经完成
+	ERR_TASK_PRE_TASK_NOT_COMPLETE		= 503,		// 接任务时前置任务没有完成
+	ERR_TASK_PLAYER_LEVEL_INVALID		= 504,		// 接任务时玩家等级不符合条件
+	ERR_TASK_TASK_LIST_FULL				= 505,		// 任务列表已满
+	ERR_TASK_PLAYER_HAS_NO_TASK			= 506,		// 玩家身上没有该任务
+	ERR_TASK_TASK_NOT_COMPLETE			= 507,		// 
 };
 #endif

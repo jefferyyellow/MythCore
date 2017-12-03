@@ -6,15 +6,6 @@
 #include "taskconfig.h"
 #define		MAX_PLAYER_TASK_NUM		20			// 最多的可接任务数目
 #define		MAX_PLAYER_TASK_PARAM	4			// 最多的任务参数数目
-/// 任务条件类型
-enum EmTaskCondType
-{
-	emTaskCondType_None			= 0,	// 无类型
-	emTaskCondType_Talk			= 1,	// 对话任务
-	emTaskCondType_KillOgre		= 2,	// 刷怪	参数1：怪物ID，参数2：怪物数目
-	emTaskCondType_ObtainItem	= 3,	// 获得道具 参数1：道具ID，参数2：道具数目
-	emTaskCondTypeMax
-};
 
 enum EmTaskState
 {
@@ -40,8 +31,7 @@ public:
 	void			init()
 	{
 		mTaskID = 0;
-		mTaskProgress = 0;
-		mTaskCondType = emTaskCondType_None;
+		mTaskStatus = 0;
 		memset(mTaskParam, 0, sizeof(mTaskParam));
 	}
 public:
@@ -50,12 +40,8 @@ public:
 	void			setTaskID(short nValue) { mTaskID = nValue; }
 
 	// 任务进度
-	short			getTaskProgress() const { return mTaskProgress; }
-	void			setTaskProgress(short nValue) { mTaskProgress = nValue; }
-
-	// 任务类型
-	EmTaskCondType	getTaskCondType() const { return mTaskCondType; }
-	void			setTaskCondType(EmTaskCondType nValue) { mTaskCondType = nValue; }
+	short			getTaskStatus() const { return mTaskStatus; }
+	void			setTaskStatus(short nValue) { mTaskStatus = nValue; }
 
 	int			getTaskParam(int nIndex)
 	{
@@ -79,9 +65,7 @@ private:
 	/// 任务ID
 	short			mTaskID;
 	/// 任务进度
-	short			mTaskProgress;
-	/// 任务条件类型
-	EmTaskCondType	mTaskCondType;
+	short			mTaskStatus;
 	/// 任务参数
 	int				mTaskParam[MAX_PLAYER_TASK_PARAM];
 };
@@ -89,12 +73,12 @@ private:
 class CEntityPlayer;
 class CTaskUnit : public CPlayerSubUnit
 {
+	typedef vector<CPlayerTask> PLAYER_TASK_LIST;
 public:
 	CTaskUnit(CEntityPlayer& rPlayer)
 		: CPlayerSubUnit(rPlayer)
 	{
 		mMaxCompleteTaskID = 0;
-		mTaskListNum = 0;
 	}
 	~CTaskUnit()
 	{
@@ -102,8 +86,8 @@ public:
 	}
 
 public:
-	void							fireEvent(EmTaskCondType eTaskCondType, int nParam);
-	void							setTaskComplete(int nTaskID)
+	void	fireEvent(EmCompleteCondition eCondition, int nParam1, int nParam2);
+	void	setTaskComplete(int nTaskID)
 	{
 		mCompleteTasks.setBit(nTaskID);
 		if (nTaskID > mMaxCompleteTaskID)
@@ -124,17 +108,21 @@ public:
 	void setMaxCompleteTaskID(short nValue) { mMaxCompleteTaskID = nValue; }
 	/// 检查任务是否能接受
 	int	checkAcceptTask(int nTaskID);
+	/// 任务接受后处理
+	void afterAcceptTask(int nTaskID);
+	/// 检查任务是否能提交
+	int checkSubmitTask(int nTaskID, short& bRepeated);
 
-	/// 得到一个空的任务
-	int	getFreeTask();
+	/// 根据ID得到玩家身上的任务
+	CPlayerTask* getPlayerTask(int nTaskID);
+	/// 删除玩家身上的任务
+	void removeTask(int nTaskID);
 private:
 	/// 所有已经完成的任务
 	Myth::CBitSet<MAX_TASK_ID>		mCompleteTasks;
 	/// 最大的已经完成的任务
 	short							mMaxCompleteTaskID;
 	/// 已经接受的任务列表
-	CPlayerTask						mTaskList[MAX_PLAYER_TASK_NUM];
-	/// 已经接受任务列表数目
-	int								mTaskListNum;
+	PLAYER_TASK_LIST				mTaskList;
 };
 #endif

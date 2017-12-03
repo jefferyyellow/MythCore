@@ -8,9 +8,25 @@ using namespace Myth;
 #define MAX_COMPLETE_CONDITION_PARAM	2			// 最大的完成条件参数
 #define MAX_TASK_REWARD_PARAM			2			// 最大的任务奖励参数
 #define MAX_TASK_ID						4096		// 所有任务最大ID
+enum EmAcceptCondition
+{
+	emAccept_None			= 0,		// 无
+	emAccept_PreTask		= 1,		// 前置任务, 第0个参数，前置任务ID
+	emAccept_Level			= 2,		// 等级,第0个参数，最小等级，第1个参数，最大等级
+};
+
+enum EmCompleteCondition
+{
+	emComplete_None				= 0,		// 无
+	emComplete_KillOgre			= 1,		// 杀怪计数 参数0：怪物ID，参数1：怪物数目
+	emComplete_HoldItem			= 2,		// 拥有道具 参数0：道具ID，参数1：道具数目
+};
+
+
 // 接受条件
 class CAcceptCondition
 {
+public:
 	short			mType;									// 条件类型
 	int				mParam[MAX_ACCEPT_CONDITION_PARAM];		// 参数
 };
@@ -18,6 +34,7 @@ class CAcceptCondition
 // 完成条件
 class CCompleteCondition
 {
+public:
 	short			mType;									// 条件类型
 	int				mParam[MAX_COMPLETE_CONDITION_PARAM];	// 参数
 };
@@ -25,8 +42,10 @@ class CCompleteCondition
 // 奖励
 class CTaskReward
 {
-	short			mType;									// 奖励类型
-	int				mParam[MAX_TASK_REWARD_PARAM];			// 参数
+public:
+	int				mItemID;								// 道具ID(金钱，钻石都抽象成道具)
+	int				mItemNum;								// 道具数量
+	int				mParam[MAX_TASK_REWARD_PARAM];
 };
 
 // 任务配置

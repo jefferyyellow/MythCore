@@ -3,6 +3,7 @@
 #define MAX_INSERT_TYPE_NUM 16
 #include "itemlist.h"
 #define  MAX_CONTAINER_ITEM_NUM 100
+class CItemObject;
 class CItemBox : public CItemList < MAX_CONTAINER_ITEM_NUM >
 {
 public:
@@ -27,8 +28,11 @@ public:
 	/// 删除道具
 	void	removeItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNumber, int &rOutLen);
 	/// 删除道具
-	bool	removeItem(unsigned int nIndex, unsigned int nNum);
-
+	bool	removeItem(unsigned int nIndex, int nNum);
+	/// 拥有道具的数目
+	int		hasItem(int nItemID);
+	/// 得到道具
+	CItemObject* getItem(unsigned int nIndex);
 public:
 	int		getSize(){return mSize;}
 	void	setSize(int nSize){mSize = nSize;}

@@ -3,6 +3,7 @@
 #include "itemobject.h"
 #include "objpool.h"
 #include "locallogjob.h"
+#include "errcode.h"
 bool CItemBox::checkSpace(int* pItemID, int* pNumber, int nSize)
 {
 	if (nSize > MAX_INSERT_TYPE_NUM)
@@ -123,7 +124,7 @@ int CItemBox::insertItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNum
 	rOutLen = 0;
 	if (NULL == pOutIndex || NULL == pOutNumber || 0 == nItemNum)
 	{
-		return -1;
+		return ERR_PARAMETER_INVALID;
 	}
 
 	// 如果数据模版找不到
@@ -132,7 +133,7 @@ int CItemBox::insertItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNum
 	{
 		// 道具模板数据为空
 		LOG_ERROR("item template data is null");
-		return -2;
+		return ERR_TEMPLATE_INVALID;
 	}
 
 	int nPileLimit = tpItem->mPileLimit;
@@ -142,7 +143,7 @@ int CItemBox::insertItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNum
 
 	int nInsertedNum = 0;
 	int nLeftPileNum = 0;
-	for (unsigned int i = 0; i < mSize; ++i)
+	for (int i = 0; i < mSize; ++i)
 	{
 		// 格子是空的
 		if (INVALID_OBJ_ID == mItemObjID[i])
@@ -178,7 +179,7 @@ int CItemBox::insertItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNum
 				// 已经全部插入了，重置ID与数量的关系
 				if (nItemNum <= 0)
 				{
-					return 0;
+					return SUCCESS;
 				}
 			}
 		}
@@ -215,13 +216,13 @@ int CItemBox::insertItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNum
 		}
 
 	}
-	return 0;
+	return SUCCESS;
 }
 
 // 背包里是否有足够数量的道具
 bool CItemBox::checkEnough(int nItemID, int nItemNum)
 {
-	for (unsigned int i = 0; i < mSize; ++i)
+	for (int i = 0; i < mSize; ++i)
 	{
 		// 格子是空的
 		if (INVALID_OBJ_ID == mItemObjID[i])
@@ -252,7 +253,7 @@ bool CItemBox::checkEnough(int nItemID, int nItemNum)
 /// 删除道具
 void CItemBox::removeItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNumber, int &rOutLen)
 {
-	for (unsigned int i = 0; i < mSize; ++i)
+	for (int i = 0; i < mSize; ++i)
 	{
 		// 格子是空的
 		if (INVALID_OBJ_ID == mItemObjID[i])
@@ -305,9 +306,9 @@ void CItemBox::removeItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNu
 }
 
 /// 删除道具
-bool CItemBox::removeItem(unsigned int nIndex, unsigned int nNum)
+bool CItemBox::removeItem(unsigned int nIndex, int nNum)
 {
-	if (nIndex >= mSize)
+	if (nIndex >= (unsigned int)mSize)
 	{
 		return false;
 	}
@@ -337,4 +338,47 @@ bool CItemBox::removeItem(unsigned int nIndex, unsigned int nNum)
 		CItemFactory::destroyItem(pItemObject->getObjID());
 	}
 	return true;
+}
+
+/// 拥有道具的数目
+int CItemBox::hasItem(int nItemID)
+{
+	int nNum = 0;
+	for (int i = 0; i < mSize; ++i)
+	{
+		// 格子是空的
+		if (INVALID_OBJ_ID == mItemObjID[i])
+		{
+			continue;
+		}
+
+		if (mItemID[i] != nItemID)
+		{
+			continue;
+		}
+		CItemObject* pItemObject = (CItemObject*)CObjPool::Inst()->getObj(mItemObjID[i]);
+		if (NULL == pItemObject)
+		{
+			continue;
+		}
+
+		nNum += pItemObject->GetItemNum();
+	}
+
+	return nNum;
+}
+
+/// 得到道具
+CItemObject* CItemBox::getItem(unsigned int nIndex)
+{
+	if (nIndex >= (unsigned int)mSize)
+	{
+		return NULL;
+	}
+	if (INVALID_OBJ_ID == mItemObjID[nIndex])
+	{
+		return NULL;
+	}
+
+	return (CItemObject*)CObjPool::Inst()->getObj(mItemObjID[nIndex]);
 }

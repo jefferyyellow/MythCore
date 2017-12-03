@@ -165,6 +165,9 @@
     <ClCompile Include="..\message\taskmodule.hxx.pb.cc">
       <Filter>message</Filter>
     </ClCompile>
+    <ClCompile Include="..\message\common.hxx.pb.cc">
+      <Filter>message</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -348,6 +351,12 @@
       <Filter>message</Filter>
     </ClInclude>
     <ClInclude Include="..\message\taskmodule.hxx.pb.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\common.hxx">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\common.hxx.pb.h">
       <Filter>message</Filter>
     </ClInclude>
   </ItemGroup>
