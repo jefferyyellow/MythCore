@@ -10,7 +10,7 @@ int CItemUnit::obtainMoney(int nMoney)
 {
 	if (nMoney < 0)
 	{
-		return ERR_ITEM_OBTAIN_MONEY_INVALID;
+		return ERR_OBTAIN_MONEY_INVALID;
 	}
 	if (0 == nMoney)
 	{
@@ -31,7 +31,7 @@ int CItemUnit::consumeMoney(int nMoney)
 {
 	if (nMoney < 0)
 	{
-		return ERR_ITEM_CONSUME_MONEY_INVALID;
+		return ERR_CONSUME_MONEY_INVALID;
 	}
 	if (0 == nMoney)
 	{
@@ -56,7 +56,7 @@ int	CItemUnit::obtainDiamond(int nDiamond)
 {
 	if (nDiamond < 0)
 	{
-		return ERR_ITEM_OBTAIN_DIAMOND_INVALID;
+		return ERR_OBTAIN_DIAMOND_INVALID;
 	}
 	if (0 == nDiamond)
 	{
@@ -77,7 +77,7 @@ int	CItemUnit::consumeDiamond(int nDiamond)
 {
 	if (nDiamond < 0)
 	{
-		return ERR_ITEM_CONSUME_DIAMOND_INVALID;
+		return ERR_CONSUME_DIAMOND_INVALID;
 	}
 	if (0 == nDiamond)
 	{
@@ -251,8 +251,48 @@ void CItemUnit::onUseItemRequest(Message* pMessage)
 	MYTH_ASSERT(NULL == pMessage, return);
 	CUseItemRequest* pUseItemRequest = reinterpret_cast<CUseItemRequest*>(pMessage);
 	MYTH_ASSERT(NULL == pUseItemRequest, return);
-
 	
+	int nItemIndex = pUseItemRequest->index();
+	int nItemNum = pUseItemRequest->number();
+	if (nItemNum <= 0)
+	{
+		sendUseItemResponse(ERR_PARAMETER_INVALID);
+		return;
+	}
+
+	CItemObject* pItemObject = mBag.getItem(nItemIndex);
+	if (NULL == pItemObject)
+	{
+		sendUseItemResponse(ERR_ITEM_INDEX_OBJ_DATA_NULL);
+		return;
+	}
+
+	CTplItem* pTplITem = (CTplItem*)CStaticData::searchTpl(pItemObject->GetItemID());
+	if (NULL == pTplITem)
+	{
+		sendUseItemResponse(ERR_TEMPLATE_INVALID);
+		return;
+	}
+
+	if (emTemplateType_Item != pTplITem->mTemplateType)
+	{
+		sendUseItemResponse(ERR_TEMPLATE_IS_NOT_ITEM);
+		return;
+	}
+
+	if (pItemObject->GetItemNum() < nItemNum)
+	{
+		sendUseItemResponse(ERR_ITEM_INDEX_NUM_NOT_ENOUGH);
+		return;
+	}
+
+	int nResult = SUCCESS;
+	//switch(pTplITem->mItemType)
+	//{
+	//	
+	//}
+
+	sendUseItemResponse(nResult);
 }
 
 void CItemUnit::sendUseItemResponse(int nResult)
@@ -266,7 +306,37 @@ void CItemUnit::sendUseItemResponse(int nResult)
 /// 卖出道具
 void CItemUnit::onSellItemRequest(Message* pMessage)
 {
-	
+	MYTH_ASSERT(NULL == pMessage, return);
+	CSellItemRequest* pSellItemRequest = reinterpret_cast<CSellItemRequest*>(pMessage);
+	MYTH_ASSERT(NULL == pSellItemRequest, return);
+
+	int nItemIndex = pSellItemRequest->index();
+
+
+	CItemObject* pItemObject = mBag.getItem(nItemIndex);
+	if (NULL == pItemObject)
+	{
+		sendSellItemResponse(ERR_ITEM_INDEX_OBJ_DATA_NULL);
+		return;
+	}
+
+	CTplItem* pTplITem = (CTplItem*)CStaticData::searchTpl(pItemObject->GetItemID());
+	if (NULL == pTplITem)
+	{
+		sendSellItemResponse(ERR_TEMPLATE_INVALID);
+		return;
+	}
+
+	if (emTemplateType_Item != pTplITem->mTemplateType)
+	{
+		sendSellItemResponse(ERR_TEMPLATE_IS_NOT_ITEM);
+		return;
+	}
+
+	int nMoney = pTplITem->mSellPrice * pItemObject->GetItemNum();
+	obtainMoney(nMoney);
+	removeItem(nItemIndex, pItemObject->GetItemNum());
+	sendSellItemResponse(SUCCESS);
 }
 
 void CItemUnit::sendSellItemResponse(int nResult)
@@ -280,7 +350,17 @@ void CItemUnit::sendSellItemResponse(int nResult)
 /// 购买道具
 void CItemUnit::onPurchaseItemRequest(Message* pMessage)
 {
-	
+	MYTH_ASSERT(NULL == pMessage, return);
+	CPurchaseItemRequest* pPurchaseItemRequest = reinterpret_cast<CPurchaseItemRequest*>(pMessage);
+	MYTH_ASSERT(NULL == pPurchaseItemRequest, return);
+
+	int nIndex = pPurchaseItemRequest->index();
+	int nNum = pPurchaseItemRequest->num();
+
+	// 建议商店还是走xml方式
+
+
+	sendPurchaseItemResponse(SUCCESS);
 }
 
 void CItemUnit::sendPurchaseItemResponse(int nResult)

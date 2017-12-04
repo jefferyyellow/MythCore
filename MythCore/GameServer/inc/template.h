@@ -63,8 +63,9 @@ public:
 enum EmTemplateType
 {
 	emTemplateType_None				= 0,
-	emTemplateType_FuncNPC			= 1,
-	emTemplateType_Ogre				= 2,
+	emTemplateType_FuncNPC			= 1,		// 功能NPC
+	emTemplateType_Ogre				= 2,		// 怪物
+	emTemplateType_Item				= 3,		// 道具
 	emTemplateTypeMax
 };
 
@@ -137,8 +138,18 @@ public:
 	// Type:	  EDITNUMBER(1,10000)
 	int		mPileLimit;
 
+	// FieldName: 卖出价格
+	// FieldType: INT4
+	// Type:	  EDITNUMBER(1,10000)
+	int		mSellPrice;
+
 public:
-	CTplItem(){}
+	CTplItem()
+	{
+#ifndef TEMPEDIT
+		mTemplateType = emTemplateType_Item;
+#endif
+	}
 	~CTplItem(){}
 	void	setFromPB(PBTplItem* pbItem);
 	void	createToPB(PBTplItem* pbItem);
