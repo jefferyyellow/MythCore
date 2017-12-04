@@ -166,7 +166,11 @@ int CItemUnit::hasItem(int nItemID)
 /// 删除道具
 int CItemUnit::removeItem(int nIndex, int nItemNum)
 {
-	mBag.removeItem(nIndex, nItemNum);
+	int nResult = mBag.removeItem(nIndex, nItemNum);
+	if (SUCCESS != nResult)
+	{
+		return nResult;
+	}
 	CItemObject* pItemObject = mBag.getItem(nIndex);
 
 	CRemoveItemNotify tRemoveItemNotify;
@@ -182,6 +186,8 @@ int CItemUnit::removeItem(int nIndex, int nItemNum)
 	}
 
 	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_NOTIYF_REMOVE_ITEM, &tRemoveItemNotify);
+
+	return SUCCESS;
 }
 
 /// 删除道具,首先保证有这么多道具,这个接口应该用得不多（如果很多需要优化一下消息）

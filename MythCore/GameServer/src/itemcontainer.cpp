@@ -306,27 +306,27 @@ void CItemBox::removeItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNu
 }
 
 /// 删除道具
-bool CItemBox::removeItem(unsigned int nIndex, int nNum)
+int CItemBox::removeItem(unsigned int nIndex, int nNum)
 {
 	if (nIndex >= (unsigned int)mSize)
 	{
-		return false;
+		return ERR_ITEM_INDEX_INVALID;
 	}
 
 	if (INVALID_OBJ_ID == mItemObjID[nIndex])
 	{
-		return false;
+		return ERR_ITEM_INDEX_OBJ_ID_INVALID;
 	}
 
 	CItemObject* pItemObject = (CItemObject*)CObjPool::Inst()->getObj(mItemObjID[nIndex]);
 	if (NULL == pItemObject)
 	{
-		return false;
+		return ERR_ITEM_INDEX_OBJ_DATA_NULL;
 	}
 
 	if (pItemObject->GetItemNum() < nNum)
 	{
-		return false;
+		return ERR_ITEM_INDEX_NUM_NOT_ENOUGH;
 	}
 
 	pItemObject->SetItemNum(pItemObject->GetItemNum() - nNum);
@@ -337,7 +337,7 @@ bool CItemBox::removeItem(unsigned int nIndex, int nNum)
 		mItemID[nIndex] = 0;
 		CItemFactory::destroyItem(pItemObject->getObjID());
 	}
-	return true;
+	return SUCCESS;
 }
 
 /// 拥有道具的数目

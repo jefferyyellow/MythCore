@@ -28,7 +28,7 @@ public:
 	/// 删除道具
 	void	removeItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNumber, int &rOutLen);
 	/// 删除道具
-	bool	removeItem(unsigned int nIndex, int nNum);
+	int		removeItem(unsigned int nIndex, int nNum);
 	/// 拥有道具的数目
 	int		hasItem(int nItemID);
 	/// 得到道具

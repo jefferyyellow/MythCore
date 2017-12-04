@@ -25,7 +25,10 @@ enum ERR_ITEM
 	ERR_ITEM_CONSUME_MONEY_INVALID		= 301,		// 消费的金币非法
 	ERR_ITEM_OBTAIN_DIAMOND_INVALID		= 302,		// 得到的钻石非法
 	ERR_ITEM_CONSUME_DIAMOND_INVALID	= 303,		// 消费的钻石非法
-
+	ERR_ITEM_INDEX_OBJ_ID_INVALID		= 304,		// 对应索引的道具ID非法
+	ERR_ITEM_INDEX_OBJ_DATA_NULL		= 305,		// 对应索引的道具数据为空
+	ERR_ITEM_INDEX_NUM_NOT_ENOUGH		= 306,		// 对应索引的道具数量不足
+	ERR_ITEM_INDEX_INVALID				= 307,		// 道具索引非法
 };
 
 // 400 - 499
