@@ -3,6 +3,7 @@
 #include "playersubunit.h"
 #include "itemcontainer.h"
 #include "messagefactory.h"
+#include "itemtype.h"
 #define PLAYER_MONEY_LIMIT		1
 class CEntityPlayer;
 class CItemUnit : public CPlayerSubUnit
@@ -75,5 +76,7 @@ private:
 	int						mMoney;
 	/// ×êÊ¯
 	int						mDiamond;
+
+	int						mCurrency[emCurrencyMax];
 };
 #endif
