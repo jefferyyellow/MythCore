@@ -149,6 +149,7 @@
     <ClInclude Include="inc\itemlist.h" />
     <ClInclude Include="inc\itemmodule.h" />
     <ClInclude Include="inc\itemobject.h" />
+    <ClInclude Include="inc\itemtype.h" />
     <ClInclude Include="inc\itemunit.h" />
     <ClInclude Include="inc\job.h" />
     <ClInclude Include="inc\locallogjob.h" />

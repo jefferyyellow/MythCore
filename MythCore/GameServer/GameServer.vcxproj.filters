@@ -359,5 +359,8 @@
     <ClInclude Include="..\message\common.hxx.pb.h">
       <Filter>message</Filter>
     </ClInclude>
+    <ClInclude Include="inc\itemtype.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
