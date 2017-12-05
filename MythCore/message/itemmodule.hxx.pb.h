@@ -37,10 +37,9 @@ void protobuf_InitDefaults_itemmodule_2ehxx();
 void protobuf_AssignDesc_itemmodule_2ehxx();
 void protobuf_ShutdownFile_itemmodule_2ehxx();
 
-class CDiamondUpdateNotify;
+class CCurrencyUpdateNotify;
 class CInsertItemNotify;
 class CInsertItemObjNotify;
-class CMoneyUpdateNotify;
 class CPurchaseItemRequest;
 class CPurchaseItemResponse;
 class CRemoveItemNotify;
@@ -51,8 +50,7 @@ class CUseItemResponse;
 
 enum ITEM_MODULE_MSG_ID {
   ID_ITEM_MODULE_ERROR = 0,
-  ID_S2C_NOTIYF_MONEY_UPDATE = 2048,
-  ID_S2C_NOTIYF_DIAMOND_UPDATE = 2049,
+  ID_S2C_NOTIYF_CURRENCY_UPDATE = 2048,
   ID_S2C_NOTIYF_INSERT_ITEM = 2050,
   ID_S2C_NOTIYF_INSERT_ITEM_OBJ = 2051,
   ID_S2C_NOTIYF_REMOVE_ITEM = 2052,
@@ -82,34 +80,34 @@ inline bool ITEM_MODULE_MSG_ID_Parse(
 }
 // ===================================================================
 
-class CMoneyUpdateNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CMoneyUpdateNotify) */ {
+class CCurrencyUpdateNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CCurrencyUpdateNotify) */ {
  public:
-  CMoneyUpdateNotify();
-  virtual ~CMoneyUpdateNotify();
+  CCurrencyUpdateNotify();
+  virtual ~CCurrencyUpdateNotify();
 
-  CMoneyUpdateNotify(const CMoneyUpdateNotify& from);
+  CCurrencyUpdateNotify(const CCurrencyUpdateNotify& from);
 
-  inline CMoneyUpdateNotify& operator=(const CMoneyUpdateNotify& from) {
+  inline CCurrencyUpdateNotify& operator=(const CCurrencyUpdateNotify& from) {
     CopyFrom(from);
     return *this;
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const CMoneyUpdateNotify& default_instance();
+  static const CCurrencyUpdateNotify& default_instance();
 
-  static const CMoneyUpdateNotify* internal_default_instance();
+  static const CCurrencyUpdateNotify* internal_default_instance();
 
-  void Swap(CMoneyUpdateNotify* other);
+  void Swap(CCurrencyUpdateNotify* other);
 
   // implements Message ----------------------------------------------
 
-  inline CMoneyUpdateNotify* New() const { return New(NULL); }
+  inline CCurrencyUpdateNotify* New() const { return New(NULL); }
 
-  CMoneyUpdateNotify* New(::google::protobuf::Arena* arena) const;
+  CCurrencyUpdateNotify* New(::google::protobuf::Arena* arena) const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const CMoneyUpdateNotify& from);
-  void MergeFrom(const CMoneyUpdateNotify& from);
+  void CopyFrom(const CCurrencyUpdateNotify& from);
+  void MergeFrom(const CCurrencyUpdateNotify& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -128,8 +126,8 @@ class CMoneyUpdateNotify : public ::google::protobuf::Message /* @@protoc_insert
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(CMoneyUpdateNotify* other);
-  void UnsafeMergeFrom(const CMoneyUpdateNotify& from);
+  void InternalSwap(CCurrencyUpdateNotify* other);
+  void UnsafeMergeFrom(const CCurrencyUpdateNotify& from);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _internal_metadata_.arena();
@@ -145,17 +143,24 @@ class CMoneyUpdateNotify : public ::google::protobuf::Message /* @@protoc_insert
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 Money = 1;
-  void clear_money();
-  static const int kMoneyFieldNumber = 1;
-  ::google::protobuf::uint32 money() const;
-  void set_money(::google::protobuf::uint32 value);
+  // optional uint32 CurrencyType = 1;
+  void clear_currencytype();
+  static const int kCurrencyTypeFieldNumber = 1;
+  ::google::protobuf::uint32 currencytype() const;
+  void set_currencytype(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:CMoneyUpdateNotify)
+  // optional uint32 CurrencyNum = 2;
+  void clear_currencynum();
+  static const int kCurrencyNumFieldNumber = 2;
+  ::google::protobuf::uint32 currencynum() const;
+  void set_currencynum(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:CCurrencyUpdateNotify)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::uint32 money_;
+  ::google::protobuf::uint32 currencytype_;
+  ::google::protobuf::uint32 currencynum_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_itemmodule_2ehxx_impl();
   friend void  protobuf_AddDesc_itemmodule_2ehxx_impl();
@@ -164,93 +169,7 @@ class CMoneyUpdateNotify : public ::google::protobuf::Message /* @@protoc_insert
 
   void InitAsDefaultInstance();
 };
-extern ::google::protobuf::internal::ExplicitlyConstructed<CMoneyUpdateNotify> CMoneyUpdateNotify_default_instance_;
-
-// -------------------------------------------------------------------
-
-class CDiamondUpdateNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CDiamondUpdateNotify) */ {
- public:
-  CDiamondUpdateNotify();
-  virtual ~CDiamondUpdateNotify();
-
-  CDiamondUpdateNotify(const CDiamondUpdateNotify& from);
-
-  inline CDiamondUpdateNotify& operator=(const CDiamondUpdateNotify& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const CDiamondUpdateNotify& default_instance();
-
-  static const CDiamondUpdateNotify* internal_default_instance();
-
-  void Swap(CDiamondUpdateNotify* other);
-
-  // implements Message ----------------------------------------------
-
-  inline CDiamondUpdateNotify* New() const { return New(NULL); }
-
-  CDiamondUpdateNotify* New(::google::protobuf::Arena* arena) const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const CDiamondUpdateNotify& from);
-  void MergeFrom(const CDiamondUpdateNotify& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  size_t ByteSizeLong() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
-    return InternalSerializeWithCachedSizesToArray(false, output);
-  }
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  void InternalSwap(CDiamondUpdateNotify* other);
-  void UnsafeMergeFrom(const CDiamondUpdateNotify& from);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return _internal_metadata_.arena();
-  }
-  inline void* MaybeArenaPtr() const {
-    return _internal_metadata_.raw_arena_ptr();
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // optional uint32 Diamond = 1;
-  void clear_diamond();
-  static const int kDiamondFieldNumber = 1;
-  ::google::protobuf::uint32 diamond() const;
-  void set_diamond(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:CDiamondUpdateNotify)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::uint32 diamond_;
-  mutable int _cached_size_;
-  friend void  protobuf_InitDefaults_itemmodule_2ehxx_impl();
-  friend void  protobuf_AddDesc_itemmodule_2ehxx_impl();
-  friend void protobuf_AssignDesc_itemmodule_2ehxx();
-  friend void protobuf_ShutdownFile_itemmodule_2ehxx();
-
-  void InitAsDefaultInstance();
-};
-extern ::google::protobuf::internal::ExplicitlyConstructed<CDiamondUpdateNotify> CDiamondUpdateNotify_default_instance_;
+extern ::google::protobuf::internal::ExplicitlyConstructed<CCurrencyUpdateNotify> CCurrencyUpdateNotify_default_instance_;
 
 // -------------------------------------------------------------------
 
@@ -1084,45 +1003,38 @@ extern ::google::protobuf::internal::ExplicitlyConstructed<CPurchaseItemResponse
 // ===================================================================
 
 #if !PROTOBUF_INLINE_NOT_IN_HEADERS
-// CMoneyUpdateNotify
+// CCurrencyUpdateNotify
 
-// optional uint32 Money = 1;
-inline void CMoneyUpdateNotify::clear_money() {
-  money_ = 0u;
+// optional uint32 CurrencyType = 1;
+inline void CCurrencyUpdateNotify::clear_currencytype() {
+  currencytype_ = 0u;
 }
-inline ::google::protobuf::uint32 CMoneyUpdateNotify::money() const {
-  // @@protoc_insertion_point(field_get:CMoneyUpdateNotify.Money)
-  return money_;
+inline ::google::protobuf::uint32 CCurrencyUpdateNotify::currencytype() const {
+  // @@protoc_insertion_point(field_get:CCurrencyUpdateNotify.CurrencyType)
+  return currencytype_;
 }
-inline void CMoneyUpdateNotify::set_money(::google::protobuf::uint32 value) {
+inline void CCurrencyUpdateNotify::set_currencytype(::google::protobuf::uint32 value) {
   
-  money_ = value;
-  // @@protoc_insertion_point(field_set:CMoneyUpdateNotify.Money)
+  currencytype_ = value;
+  // @@protoc_insertion_point(field_set:CCurrencyUpdateNotify.CurrencyType)
 }
 
-inline const CMoneyUpdateNotify* CMoneyUpdateNotify::internal_default_instance() {
-  return &CMoneyUpdateNotify_default_instance_.get();
+// optional uint32 CurrencyNum = 2;
+inline void CCurrencyUpdateNotify::clear_currencynum() {
+  currencynum_ = 0u;
 }
-// -------------------------------------------------------------------
-
-// CDiamondUpdateNotify
-
-// optional uint32 Diamond = 1;
-inline void CDiamondUpdateNotify::clear_diamond() {
-  diamond_ = 0u;
+inline ::google::protobuf::uint32 CCurrencyUpdateNotify::currencynum() const {
+  // @@protoc_insertion_point(field_get:CCurrencyUpdateNotify.CurrencyNum)
+  return currencynum_;
 }
-inline ::google::protobuf::uint32 CDiamondUpdateNotify::diamond() const {
-  // @@protoc_insertion_point(field_get:CDiamondUpdateNotify.Diamond)
-  return diamond_;
-}
-inline void CDiamondUpdateNotify::set_diamond(::google::protobuf::uint32 value) {
+inline void CCurrencyUpdateNotify::set_currencynum(::google::protobuf::uint32 value) {
   
-  diamond_ = value;
-  // @@protoc_insertion_point(field_set:CDiamondUpdateNotify.Diamond)
+  currencynum_ = value;
+  // @@protoc_insertion_point(field_set:CCurrencyUpdateNotify.CurrencyNum)
 }
 
-inline const CDiamondUpdateNotify* CDiamondUpdateNotify::internal_default_instance() {
-  return &CDiamondUpdateNotify_default_instance_.get();
+inline const CCurrencyUpdateNotify* CCurrencyUpdateNotify::internal_default_instance() {
+  return &CCurrencyUpdateNotify_default_instance_.get();
 }
 // -------------------------------------------------------------------
 
@@ -1441,8 +1353,6 @@ inline const CPurchaseItemResponse* CPurchaseItemResponse::internal_default_inst
   return &CPurchaseItemResponse_default_instance_.get();
 }
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
-// -------------------------------------------------------------------
-
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

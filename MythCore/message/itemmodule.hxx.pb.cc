@@ -19,12 +19,9 @@
 
 namespace {
 
-const ::google::protobuf::Descriptor* CMoneyUpdateNotify_descriptor_ = NULL;
+const ::google::protobuf::Descriptor* CCurrencyUpdateNotify_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  CMoneyUpdateNotify_reflection_ = NULL;
-const ::google::protobuf::Descriptor* CDiamondUpdateNotify_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  CDiamondUpdateNotify_reflection_ = NULL;
+  CCurrencyUpdateNotify_reflection_ = NULL;
 const ::google::protobuf::Descriptor* CInsertItemNotify_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   CInsertItemNotify_reflection_ = NULL;
@@ -64,35 +61,22 @@ void protobuf_AssignDesc_itemmodule_2ehxx() {
     ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
       "itemmodule.hxx");
   GOOGLE_CHECK(file != NULL);
-  CMoneyUpdateNotify_descriptor_ = file->message_type(0);
-  static const int CMoneyUpdateNotify_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMoneyUpdateNotify, money_),
+  CCurrencyUpdateNotify_descriptor_ = file->message_type(0);
+  static const int CCurrencyUpdateNotify_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CCurrencyUpdateNotify, currencytype_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CCurrencyUpdateNotify, currencynum_),
   };
-  CMoneyUpdateNotify_reflection_ =
+  CCurrencyUpdateNotify_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      CMoneyUpdateNotify_descriptor_,
-      CMoneyUpdateNotify::internal_default_instance(),
-      CMoneyUpdateNotify_offsets_,
+      CCurrencyUpdateNotify_descriptor_,
+      CCurrencyUpdateNotify::internal_default_instance(),
+      CCurrencyUpdateNotify_offsets_,
       -1,
       -1,
       -1,
-      sizeof(CMoneyUpdateNotify),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CMoneyUpdateNotify, _internal_metadata_));
-  CDiamondUpdateNotify_descriptor_ = file->message_type(1);
-  static const int CDiamondUpdateNotify_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CDiamondUpdateNotify, diamond_),
-  };
-  CDiamondUpdateNotify_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      CDiamondUpdateNotify_descriptor_,
-      CDiamondUpdateNotify::internal_default_instance(),
-      CDiamondUpdateNotify_offsets_,
-      -1,
-      -1,
-      -1,
-      sizeof(CDiamondUpdateNotify),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CDiamondUpdateNotify, _internal_metadata_));
-  CInsertItemNotify_descriptor_ = file->message_type(2);
+      sizeof(CCurrencyUpdateNotify),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CCurrencyUpdateNotify, _internal_metadata_));
+  CInsertItemNotify_descriptor_ = file->message_type(1);
   static const int CInsertItemNotify_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CInsertItemNotify, itemid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CInsertItemNotify, index_),
@@ -108,7 +92,7 @@ void protobuf_AssignDesc_itemmodule_2ehxx() {
       -1,
       sizeof(CInsertItemNotify),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CInsertItemNotify, _internal_metadata_));
-  CInsertItemObjNotify_descriptor_ = file->message_type(3);
+  CInsertItemObjNotify_descriptor_ = file->message_type(2);
   static const int CInsertItemObjNotify_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CInsertItemObjNotify, itemobject_),
   };
@@ -122,7 +106,7 @@ void protobuf_AssignDesc_itemmodule_2ehxx() {
       -1,
       sizeof(CInsertItemObjNotify),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CInsertItemObjNotify, _internal_metadata_));
-  CRemoveItemNotify_descriptor_ = file->message_type(4);
+  CRemoveItemNotify_descriptor_ = file->message_type(3);
   static const int CRemoveItemNotify_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CRemoveItemNotify, index_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CRemoveItemNotify, number_),
@@ -137,7 +121,7 @@ void protobuf_AssignDesc_itemmodule_2ehxx() {
       -1,
       sizeof(CRemoveItemNotify),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CRemoveItemNotify, _internal_metadata_));
-  CUseItemRequest_descriptor_ = file->message_type(5);
+  CUseItemRequest_descriptor_ = file->message_type(4);
   static const int CUseItemRequest_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CUseItemRequest, index_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CUseItemRequest, number_),
@@ -152,7 +136,7 @@ void protobuf_AssignDesc_itemmodule_2ehxx() {
       -1,
       sizeof(CUseItemRequest),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CUseItemRequest, _internal_metadata_));
-  CUseItemResponse_descriptor_ = file->message_type(6);
+  CUseItemResponse_descriptor_ = file->message_type(5);
   static const int CUseItemResponse_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CUseItemResponse, result_),
   };
@@ -166,7 +150,7 @@ void protobuf_AssignDesc_itemmodule_2ehxx() {
       -1,
       sizeof(CUseItemResponse),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CUseItemResponse, _internal_metadata_));
-  CSellItemRequest_descriptor_ = file->message_type(7);
+  CSellItemRequest_descriptor_ = file->message_type(6);
   static const int CSellItemRequest_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSellItemRequest, index_),
   };
@@ -180,7 +164,7 @@ void protobuf_AssignDesc_itemmodule_2ehxx() {
       -1,
       sizeof(CSellItemRequest),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSellItemRequest, _internal_metadata_));
-  CSellItemResponse_descriptor_ = file->message_type(8);
+  CSellItemResponse_descriptor_ = file->message_type(7);
   static const int CSellItemResponse_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSellItemResponse, result_),
   };
@@ -194,7 +178,7 @@ void protobuf_AssignDesc_itemmodule_2ehxx() {
       -1,
       sizeof(CSellItemResponse),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSellItemResponse, _internal_metadata_));
-  CPurchaseItemRequest_descriptor_ = file->message_type(9);
+  CPurchaseItemRequest_descriptor_ = file->message_type(8);
   static const int CPurchaseItemRequest_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPurchaseItemRequest, index_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPurchaseItemRequest, num_),
@@ -209,7 +193,7 @@ void protobuf_AssignDesc_itemmodule_2ehxx() {
       -1,
       sizeof(CPurchaseItemRequest),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPurchaseItemRequest, _internal_metadata_));
-  CPurchaseItemResponse_descriptor_ = file->message_type(10);
+  CPurchaseItemResponse_descriptor_ = file->message_type(9);
   static const int CPurchaseItemResponse_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPurchaseItemResponse, result_),
   };
@@ -238,9 +222,7 @@ void protobuf_RegisterTypes(const ::std::string&) GOOGLE_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      CMoneyUpdateNotify_descriptor_, CMoneyUpdateNotify::internal_default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      CDiamondUpdateNotify_descriptor_, CDiamondUpdateNotify::internal_default_instance());
+      CCurrencyUpdateNotify_descriptor_, CCurrencyUpdateNotify::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       CInsertItemNotify_descriptor_, CInsertItemNotify::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
@@ -264,10 +246,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
 }  // namespace
 
 void protobuf_ShutdownFile_itemmodule_2ehxx() {
-  CMoneyUpdateNotify_default_instance_.Shutdown();
-  delete CMoneyUpdateNotify_reflection_;
-  CDiamondUpdateNotify_default_instance_.Shutdown();
-  delete CDiamondUpdateNotify_reflection_;
+  CCurrencyUpdateNotify_default_instance_.Shutdown();
+  delete CCurrencyUpdateNotify_reflection_;
   CInsertItemNotify_default_instance_.Shutdown();
   delete CInsertItemNotify_reflection_;
   CInsertItemObjNotify_default_instance_.Shutdown();
@@ -292,8 +272,7 @@ void protobuf_InitDefaults_itemmodule_2ehxx_impl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::protobuf_InitDefaults_common_2ehxx();
-  CMoneyUpdateNotify_default_instance_.DefaultConstruct();
-  CDiamondUpdateNotify_default_instance_.DefaultConstruct();
+  CCurrencyUpdateNotify_default_instance_.DefaultConstruct();
   CInsertItemNotify_default_instance_.DefaultConstruct();
   CInsertItemObjNotify_default_instance_.DefaultConstruct();
   CRemoveItemNotify_default_instance_.DefaultConstruct();
@@ -303,8 +282,7 @@ void protobuf_InitDefaults_itemmodule_2ehxx_impl() {
   CSellItemResponse_default_instance_.DefaultConstruct();
   CPurchaseItemRequest_default_instance_.DefaultConstruct();
   CPurchaseItemResponse_default_instance_.DefaultConstruct();
-  CMoneyUpdateNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
-  CDiamondUpdateNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CCurrencyUpdateNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
   CInsertItemNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
   CInsertItemObjNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
   CRemoveItemNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
@@ -326,30 +304,29 @@ void protobuf_AddDesc_itemmodule_2ehxx_impl() {
 
   protobuf_InitDefaults_itemmodule_2ehxx();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\016itemmodule.hxx\032\ncommon.hxx\"#\n\022CMoneyUp"
-    "dateNotify\022\r\n\005Money\030\001 \001(\r\"\'\n\024CDiamondUpd"
-    "ateNotify\022\017\n\007Diamond\030\001 \001(\r\"B\n\021CInsertIte"
-    "mNotify\022\016\n\006ItemID\030\001 \001(\r\022\r\n\005Index\030\002 \003(\r\022\016"
-    "\n\006Number\030\003 \003(\r\"9\n\024CInsertItemObjNotify\022!"
-    "\n\nItemObject\030\001 \001(\0132\r.PBItemObject\"2\n\021CRe"
-    "moveItemNotify\022\r\n\005Index\030\001 \001(\r\022\016\n\006Number\030"
-    "\002 \001(\r\"0\n\017CUseItemRequest\022\r\n\005Index\030\001 \001(\r\022"
-    "\016\n\006Number\030\002 \001(\r\"\"\n\020CUseItemResponse\022\016\n\006R"
-    "esult\030\001 \001(\r\"!\n\020CSellItemRequest\022\r\n\005Index"
-    "\030\001 \001(\r\"#\n\021CSellItemResponse\022\016\n\006Result\030\001 "
-    "\001(\r\"2\n\024CPurchaseItemRequest\022\r\n\005Index\030\001 \001"
-    "(\r\022\013\n\003Num\030\002 \001(\r\"\'\n\025CPurchaseItemResponse"
-    "\022\016\n\006Result\030\001 \001(\r*\231\003\n\022ITEM_MODULE_MSG_ID\022"
-    "\030\n\024ID_ITEM_MODULE_ERROR\020\000\022\037\n\032ID_S2C_NOTI"
-    "YF_MONEY_UPDATE\020\200\020\022!\n\034ID_S2C_NOTIYF_DIAM"
-    "OND_UPDATE\020\201\020\022\036\n\031ID_S2C_NOTIYF_INSERT_IT"
-    "EM\020\202\020\022\"\n\035ID_S2C_NOTIYF_INSERT_ITEM_OBJ\020\203"
-    "\020\022\036\n\031ID_S2C_NOTIYF_REMOVE_ITEM\020\204\020\022\034\n\027ID_"
-    "C2S_REQUEST_USE_ITEM\020\205\020\022\035\n\030ID_S2C_RESPON"
-    "SE_USE_ITEM\020\206\020\022\035\n\030ID_C2S_REQUEST_SELL_IT"
-    "EM\020\207\020\022\036\n\031ID_S2C_RESPONSE_SELL_ITEM\020\210\020\022!\n"
-    "\034ID_C2S_REQUEST_PURCHASE_ITEM\020\211\020\022\"\n\035ID_S"
-    "2C_RESPONSE_PURCHASE_ITEM\020\212\020b\006proto3", 956);
+    "\n\016itemmodule.hxx\032\ncommon.hxx\"B\n\025CCurrenc"
+    "yUpdateNotify\022\024\n\014CurrencyType\030\001 \001(\r\022\023\n\013C"
+    "urrencyNum\030\002 \001(\r\"B\n\021CInsertItemNotify\022\016\n"
+    "\006ItemID\030\001 \001(\r\022\r\n\005Index\030\002 \003(\r\022\016\n\006Number\030\003"
+    " \003(\r\"9\n\024CInsertItemObjNotify\022!\n\nItemObje"
+    "ct\030\001 \001(\0132\r.PBItemObject\"2\n\021CRemoveItemNo"
+    "tify\022\r\n\005Index\030\001 \001(\r\022\016\n\006Number\030\002 \001(\r\"0\n\017C"
+    "UseItemRequest\022\r\n\005Index\030\001 \001(\r\022\016\n\006Number\030"
+    "\002 \001(\r\"\"\n\020CUseItemResponse\022\016\n\006Result\030\001 \001("
+    "\r\"!\n\020CSellItemRequest\022\r\n\005Index\030\001 \001(\r\"#\n\021"
+    "CSellItemResponse\022\016\n\006Result\030\001 \001(\r\"2\n\024CPu"
+    "rchaseItemRequest\022\r\n\005Index\030\001 \001(\r\022\013\n\003Num\030"
+    "\002 \001(\r\"\'\n\025CPurchaseItemResponse\022\016\n\006Result"
+    "\030\001 \001(\r*\371\002\n\022ITEM_MODULE_MSG_ID\022\030\n\024ID_ITEM"
+    "_MODULE_ERROR\020\000\022\"\n\035ID_S2C_NOTIYF_CURRENC"
+    "Y_UPDATE\020\200\020\022\036\n\031ID_S2C_NOTIYF_INSERT_ITEM"
+    "\020\202\020\022\"\n\035ID_S2C_NOTIYF_INSERT_ITEM_OBJ\020\203\020\022"
+    "\036\n\031ID_S2C_NOTIYF_REMOVE_ITEM\020\204\020\022\034\n\027ID_C2"
+    "S_REQUEST_USE_ITEM\020\205\020\022\035\n\030ID_S2C_RESPONSE"
+    "_USE_ITEM\020\206\020\022\035\n\030ID_C2S_REQUEST_SELL_ITEM"
+    "\020\207\020\022\036\n\031ID_S2C_RESPONSE_SELL_ITEM\020\210\020\022!\n\034I"
+    "D_C2S_REQUEST_PURCHASE_ITEM\020\211\020\022\"\n\035ID_S2C"
+    "_RESPONSE_PURCHASE_ITEM\020\212\020b\006proto3", 914);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "itemmodule.hxx", &protobuf_RegisterTypes);
   ::protobuf_AddDesc_common_2ehxx();
@@ -375,7 +352,6 @@ bool ITEM_MODULE_MSG_ID_IsValid(int value) {
   switch (value) {
     case 0:
     case 2048:
-    case 2049:
     case 2050:
     case 2051:
     case 2052:
@@ -405,87 +381,124 @@ static void MergeFromFail(int line) {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int CMoneyUpdateNotify::kMoneyFieldNumber;
+const int CCurrencyUpdateNotify::kCurrencyTypeFieldNumber;
+const int CCurrencyUpdateNotify::kCurrencyNumFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-CMoneyUpdateNotify::CMoneyUpdateNotify()
+CCurrencyUpdateNotify::CCurrencyUpdateNotify()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   if (this != internal_default_instance()) protobuf_InitDefaults_itemmodule_2ehxx();
   SharedCtor();
-  // @@protoc_insertion_point(constructor:CMoneyUpdateNotify)
+  // @@protoc_insertion_point(constructor:CCurrencyUpdateNotify)
 }
 
-void CMoneyUpdateNotify::InitAsDefaultInstance() {
+void CCurrencyUpdateNotify::InitAsDefaultInstance() {
 }
 
-CMoneyUpdateNotify::CMoneyUpdateNotify(const CMoneyUpdateNotify& from)
+CCurrencyUpdateNotify::CCurrencyUpdateNotify(const CCurrencyUpdateNotify& from)
   : ::google::protobuf::Message(),
     _internal_metadata_(NULL) {
   SharedCtor();
   UnsafeMergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:CMoneyUpdateNotify)
+  // @@protoc_insertion_point(copy_constructor:CCurrencyUpdateNotify)
 }
 
-void CMoneyUpdateNotify::SharedCtor() {
-  money_ = 0u;
+void CCurrencyUpdateNotify::SharedCtor() {
+  ::memset(&currencytype_, 0, reinterpret_cast<char*>(&currencynum_) -
+    reinterpret_cast<char*>(&currencytype_) + sizeof(currencynum_));
   _cached_size_ = 0;
 }
 
-CMoneyUpdateNotify::~CMoneyUpdateNotify() {
-  // @@protoc_insertion_point(destructor:CMoneyUpdateNotify)
+CCurrencyUpdateNotify::~CCurrencyUpdateNotify() {
+  // @@protoc_insertion_point(destructor:CCurrencyUpdateNotify)
   SharedDtor();
 }
 
-void CMoneyUpdateNotify::SharedDtor() {
+void CCurrencyUpdateNotify::SharedDtor() {
 }
 
-void CMoneyUpdateNotify::SetCachedSize(int size) const {
+void CCurrencyUpdateNotify::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* CMoneyUpdateNotify::descriptor() {
+const ::google::protobuf::Descriptor* CCurrencyUpdateNotify::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return CMoneyUpdateNotify_descriptor_;
+  return CCurrencyUpdateNotify_descriptor_;
 }
 
-const CMoneyUpdateNotify& CMoneyUpdateNotify::default_instance() {
+const CCurrencyUpdateNotify& CCurrencyUpdateNotify::default_instance() {
   protobuf_InitDefaults_itemmodule_2ehxx();
   return *internal_default_instance();
 }
 
-::google::protobuf::internal::ExplicitlyConstructed<CMoneyUpdateNotify> CMoneyUpdateNotify_default_instance_;
+::google::protobuf::internal::ExplicitlyConstructed<CCurrencyUpdateNotify> CCurrencyUpdateNotify_default_instance_;
 
-CMoneyUpdateNotify* CMoneyUpdateNotify::New(::google::protobuf::Arena* arena) const {
-  CMoneyUpdateNotify* n = new CMoneyUpdateNotify;
+CCurrencyUpdateNotify* CCurrencyUpdateNotify::New(::google::protobuf::Arena* arena) const {
+  CCurrencyUpdateNotify* n = new CCurrencyUpdateNotify;
   if (arena != NULL) {
     arena->Own(n);
   }
   return n;
 }
 
-void CMoneyUpdateNotify::Clear() {
-// @@protoc_insertion_point(message_clear_start:CMoneyUpdateNotify)
-  money_ = 0u;
+void CCurrencyUpdateNotify::Clear() {
+// @@protoc_insertion_point(message_clear_start:CCurrencyUpdateNotify)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(CCurrencyUpdateNotify, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<CCurrencyUpdateNotify*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&(first), 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(currencytype_, currencynum_);
+
+#undef ZR_HELPER_
+#undef ZR_
+
 }
 
-bool CMoneyUpdateNotify::MergePartialFromCodedStream(
+bool CCurrencyUpdateNotify::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:CMoneyUpdateNotify)
+  // @@protoc_insertion_point(parse_start:CCurrencyUpdateNotify)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 Money = 1;
+      // optional uint32 CurrencyType = 1;
       case 1: {
         if (tag == 8) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &money_)));
+                 input, &currencytype_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_CurrencyNum;
+        break;
+      }
+
+      // optional uint32 CurrencyNum = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_CurrencyNum:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &currencynum_)));
         } else {
           goto handle_unusual;
         }
@@ -506,47 +519,64 @@ bool CMoneyUpdateNotify::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:CMoneyUpdateNotify)
+  // @@protoc_insertion_point(parse_success:CCurrencyUpdateNotify)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:CMoneyUpdateNotify)
+  // @@protoc_insertion_point(parse_failure:CCurrencyUpdateNotify)
   return false;
 #undef DO_
 }
 
-void CMoneyUpdateNotify::SerializeWithCachedSizes(
+void CCurrencyUpdateNotify::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:CMoneyUpdateNotify)
-  // optional uint32 Money = 1;
-  if (this->money() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->money(), output);
+  // @@protoc_insertion_point(serialize_start:CCurrencyUpdateNotify)
+  // optional uint32 CurrencyType = 1;
+  if (this->currencytype() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->currencytype(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:CMoneyUpdateNotify)
+  // optional uint32 CurrencyNum = 2;
+  if (this->currencynum() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->currencynum(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:CCurrencyUpdateNotify)
 }
 
-::google::protobuf::uint8* CMoneyUpdateNotify::InternalSerializeWithCachedSizesToArray(
+::google::protobuf::uint8* CCurrencyUpdateNotify::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:CMoneyUpdateNotify)
-  // optional uint32 Money = 1;
-  if (this->money() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->money(), target);
+  // @@protoc_insertion_point(serialize_to_array_start:CCurrencyUpdateNotify)
+  // optional uint32 CurrencyType = 1;
+  if (this->currencytype() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->currencytype(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:CMoneyUpdateNotify)
+  // optional uint32 CurrencyNum = 2;
+  if (this->currencynum() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->currencynum(), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:CCurrencyUpdateNotify)
   return target;
 }
 
-size_t CMoneyUpdateNotify::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:CMoneyUpdateNotify)
+size_t CCurrencyUpdateNotify::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CCurrencyUpdateNotify)
   size_t total_size = 0;
 
-  // optional uint32 Money = 1;
-  if (this->money() != 0) {
+  // optional uint32 CurrencyType = 1;
+  if (this->currencytype() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->money());
+        this->currencytype());
+  }
+
+  // optional uint32 CurrencyNum = 2;
+  if (this->currencynum() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->currencynum());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -556,23 +586,23 @@ size_t CMoneyUpdateNotify::ByteSizeLong() const {
   return total_size;
 }
 
-void CMoneyUpdateNotify::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:CMoneyUpdateNotify)
+void CCurrencyUpdateNotify::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CCurrencyUpdateNotify)
   if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const CMoneyUpdateNotify* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const CMoneyUpdateNotify>(
+  const CCurrencyUpdateNotify* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CCurrencyUpdateNotify>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CMoneyUpdateNotify)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CCurrencyUpdateNotify)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:CMoneyUpdateNotify)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CCurrencyUpdateNotify)
     UnsafeMergeFrom(*source);
   }
 }
 
-void CMoneyUpdateNotify::MergeFrom(const CMoneyUpdateNotify& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:CMoneyUpdateNotify)
+void CCurrencyUpdateNotify::MergeFrom(const CCurrencyUpdateNotify& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CCurrencyUpdateNotify)
   if (GOOGLE_PREDICT_TRUE(&from != this)) {
     UnsafeMergeFrom(from);
   } else {
@@ -580,313 +610,87 @@ void CMoneyUpdateNotify::MergeFrom(const CMoneyUpdateNotify& from) {
   }
 }
 
-void CMoneyUpdateNotify::UnsafeMergeFrom(const CMoneyUpdateNotify& from) {
+void CCurrencyUpdateNotify::UnsafeMergeFrom(const CCurrencyUpdateNotify& from) {
   GOOGLE_DCHECK(&from != this);
-  if (from.money() != 0) {
-    set_money(from.money());
+  if (from.currencytype() != 0) {
+    set_currencytype(from.currencytype());
+  }
+  if (from.currencynum() != 0) {
+    set_currencynum(from.currencynum());
   }
 }
 
-void CMoneyUpdateNotify::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:CMoneyUpdateNotify)
+void CCurrencyUpdateNotify::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CCurrencyUpdateNotify)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void CMoneyUpdateNotify::CopyFrom(const CMoneyUpdateNotify& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:CMoneyUpdateNotify)
+void CCurrencyUpdateNotify::CopyFrom(const CCurrencyUpdateNotify& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CCurrencyUpdateNotify)
   if (&from == this) return;
   Clear();
   UnsafeMergeFrom(from);
 }
 
-bool CMoneyUpdateNotify::IsInitialized() const {
+bool CCurrencyUpdateNotify::IsInitialized() const {
 
   return true;
 }
 
-void CMoneyUpdateNotify::Swap(CMoneyUpdateNotify* other) {
+void CCurrencyUpdateNotify::Swap(CCurrencyUpdateNotify* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void CMoneyUpdateNotify::InternalSwap(CMoneyUpdateNotify* other) {
-  std::swap(money_, other->money_);
+void CCurrencyUpdateNotify::InternalSwap(CCurrencyUpdateNotify* other) {
+  std::swap(currencytype_, other->currencytype_);
+  std::swap(currencynum_, other->currencynum_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
 
-::google::protobuf::Metadata CMoneyUpdateNotify::GetMetadata() const {
+::google::protobuf::Metadata CCurrencyUpdateNotify::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = CMoneyUpdateNotify_descriptor_;
-  metadata.reflection = CMoneyUpdateNotify_reflection_;
+  metadata.descriptor = CCurrencyUpdateNotify_descriptor_;
+  metadata.reflection = CCurrencyUpdateNotify_reflection_;
   return metadata;
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
-// CMoneyUpdateNotify
+// CCurrencyUpdateNotify
 
-// optional uint32 Money = 1;
-void CMoneyUpdateNotify::clear_money() {
-  money_ = 0u;
+// optional uint32 CurrencyType = 1;
+void CCurrencyUpdateNotify::clear_currencytype() {
+  currencytype_ = 0u;
 }
-::google::protobuf::uint32 CMoneyUpdateNotify::money() const {
-  // @@protoc_insertion_point(field_get:CMoneyUpdateNotify.Money)
-  return money_;
+::google::protobuf::uint32 CCurrencyUpdateNotify::currencytype() const {
+  // @@protoc_insertion_point(field_get:CCurrencyUpdateNotify.CurrencyType)
+  return currencytype_;
 }
-void CMoneyUpdateNotify::set_money(::google::protobuf::uint32 value) {
+void CCurrencyUpdateNotify::set_currencytype(::google::protobuf::uint32 value) {
   
-  money_ = value;
-  // @@protoc_insertion_point(field_set:CMoneyUpdateNotify.Money)
+  currencytype_ = value;
+  // @@protoc_insertion_point(field_set:CCurrencyUpdateNotify.CurrencyType)
 }
 
-inline const CMoneyUpdateNotify* CMoneyUpdateNotify::internal_default_instance() {
-  return &CMoneyUpdateNotify_default_instance_.get();
+// optional uint32 CurrencyNum = 2;
+void CCurrencyUpdateNotify::clear_currencynum() {
+  currencynum_ = 0u;
 }
-#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
-
-// ===================================================================
-
-#if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int CDiamondUpdateNotify::kDiamondFieldNumber;
-#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
-
-CDiamondUpdateNotify::CDiamondUpdateNotify()
-  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  if (this != internal_default_instance()) protobuf_InitDefaults_itemmodule_2ehxx();
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:CDiamondUpdateNotify)
+::google::protobuf::uint32 CCurrencyUpdateNotify::currencynum() const {
+  // @@protoc_insertion_point(field_get:CCurrencyUpdateNotify.CurrencyNum)
+  return currencynum_;
 }
-
-void CDiamondUpdateNotify::InitAsDefaultInstance() {
-}
-
-CDiamondUpdateNotify::CDiamondUpdateNotify(const CDiamondUpdateNotify& from)
-  : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
-  SharedCtor();
-  UnsafeMergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:CDiamondUpdateNotify)
-}
-
-void CDiamondUpdateNotify::SharedCtor() {
-  diamond_ = 0u;
-  _cached_size_ = 0;
-}
-
-CDiamondUpdateNotify::~CDiamondUpdateNotify() {
-  // @@protoc_insertion_point(destructor:CDiamondUpdateNotify)
-  SharedDtor();
-}
-
-void CDiamondUpdateNotify::SharedDtor() {
-}
-
-void CDiamondUpdateNotify::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const ::google::protobuf::Descriptor* CDiamondUpdateNotify::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return CDiamondUpdateNotify_descriptor_;
-}
-
-const CDiamondUpdateNotify& CDiamondUpdateNotify::default_instance() {
-  protobuf_InitDefaults_itemmodule_2ehxx();
-  return *internal_default_instance();
-}
-
-::google::protobuf::internal::ExplicitlyConstructed<CDiamondUpdateNotify> CDiamondUpdateNotify_default_instance_;
-
-CDiamondUpdateNotify* CDiamondUpdateNotify::New(::google::protobuf::Arena* arena) const {
-  CDiamondUpdateNotify* n = new CDiamondUpdateNotify;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
-}
-
-void CDiamondUpdateNotify::Clear() {
-// @@protoc_insertion_point(message_clear_start:CDiamondUpdateNotify)
-  diamond_ = 0u;
-}
-
-bool CDiamondUpdateNotify::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:CDiamondUpdateNotify)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 Diamond = 1;
-      case 1: {
-        if (tag == 8) {
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &diamond_)));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:CDiamondUpdateNotify)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:CDiamondUpdateNotify)
-  return false;
-#undef DO_
-}
-
-void CDiamondUpdateNotify::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:CDiamondUpdateNotify)
-  // optional uint32 Diamond = 1;
-  if (this->diamond() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->diamond(), output);
-  }
-
-  // @@protoc_insertion_point(serialize_end:CDiamondUpdateNotify)
-}
-
-::google::protobuf::uint8* CDiamondUpdateNotify::InternalSerializeWithCachedSizesToArray(
-    bool deterministic, ::google::protobuf::uint8* target) const {
-  (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:CDiamondUpdateNotify)
-  // optional uint32 Diamond = 1;
-  if (this->diamond() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->diamond(), target);
-  }
-
-  // @@protoc_insertion_point(serialize_to_array_end:CDiamondUpdateNotify)
-  return target;
-}
-
-size_t CDiamondUpdateNotify::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:CDiamondUpdateNotify)
-  size_t total_size = 0;
-
-  // optional uint32 Diamond = 1;
-  if (this->diamond() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->diamond());
-  }
-
-  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = cached_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void CDiamondUpdateNotify::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:CDiamondUpdateNotify)
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const CDiamondUpdateNotify* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const CDiamondUpdateNotify>(
-          &from);
-  if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CDiamondUpdateNotify)
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:CDiamondUpdateNotify)
-    UnsafeMergeFrom(*source);
-  }
-}
-
-void CDiamondUpdateNotify::MergeFrom(const CDiamondUpdateNotify& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:CDiamondUpdateNotify)
-  if (GOOGLE_PREDICT_TRUE(&from != this)) {
-    UnsafeMergeFrom(from);
-  } else {
-    MergeFromFail(__LINE__);
-  }
-}
-
-void CDiamondUpdateNotify::UnsafeMergeFrom(const CDiamondUpdateNotify& from) {
-  GOOGLE_DCHECK(&from != this);
-  if (from.diamond() != 0) {
-    set_diamond(from.diamond());
-  }
-}
-
-void CDiamondUpdateNotify::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:CDiamondUpdateNotify)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void CDiamondUpdateNotify::CopyFrom(const CDiamondUpdateNotify& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:CDiamondUpdateNotify)
-  if (&from == this) return;
-  Clear();
-  UnsafeMergeFrom(from);
-}
-
-bool CDiamondUpdateNotify::IsInitialized() const {
-
-  return true;
-}
-
-void CDiamondUpdateNotify::Swap(CDiamondUpdateNotify* other) {
-  if (other == this) return;
-  InternalSwap(other);
-}
-void CDiamondUpdateNotify::InternalSwap(CDiamondUpdateNotify* other) {
-  std::swap(diamond_, other->diamond_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
-}
-
-::google::protobuf::Metadata CDiamondUpdateNotify::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = CDiamondUpdateNotify_descriptor_;
-  metadata.reflection = CDiamondUpdateNotify_reflection_;
-  return metadata;
-}
-
-#if PROTOBUF_INLINE_NOT_IN_HEADERS
-// CDiamondUpdateNotify
-
-// optional uint32 Diamond = 1;
-void CDiamondUpdateNotify::clear_diamond() {
-  diamond_ = 0u;
-}
-::google::protobuf::uint32 CDiamondUpdateNotify::diamond() const {
-  // @@protoc_insertion_point(field_get:CDiamondUpdateNotify.Diamond)
-  return diamond_;
-}
-void CDiamondUpdateNotify::set_diamond(::google::protobuf::uint32 value) {
+void CCurrencyUpdateNotify::set_currencynum(::google::protobuf::uint32 value) {
   
-  diamond_ = value;
-  // @@protoc_insertion_point(field_set:CDiamondUpdateNotify.Diamond)
+  currencynum_ = value;
+  // @@protoc_insertion_point(field_set:CCurrencyUpdateNotify.CurrencyNum)
 }
 
-inline const CDiamondUpdateNotify* CDiamondUpdateNotify::internal_default_instance() {
-  return &CDiamondUpdateNotify_default_instance_.get();
+inline const CCurrencyUpdateNotify* CCurrencyUpdateNotify::internal_default_instance() {
+  return &CCurrencyUpdateNotify_default_instance_.get();
 }
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 

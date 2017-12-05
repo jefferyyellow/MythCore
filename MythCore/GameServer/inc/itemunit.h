@@ -4,7 +4,6 @@
 #include "itemcontainer.h"
 #include "messagefactory.h"
 #include "itemtype.h"
-#define PLAYER_MONEY_LIMIT		1
 class CEntityPlayer;
 class CItemUnit : public CPlayerSubUnit
 {
@@ -21,14 +20,10 @@ public:
 	}
 
 public:
-	/// 得到金钱
-	int			obtainMoney(int nMoney);
-	/// 消费金钱
-	int			consumeMoney(int nMoney);
-	/// 得到钻石
-	int			obtainDiamond(int nDiamond);
-	/// 消费钻石
-	int			consumeDiamond(int nDiamond);
+	/// 获得货币
+	int			obtainCurrency(EmCurrencyType eCurrencyType, int nCurrencyNum);
+	/// 消费货币
+	int			consumeCurrency(EmCurrencyType eCurrencyType, int nCurrencyNum);
 	/// 包裹是否能装下这些道具
 	bool		checkItemSpace(int* pItemID, int* pItemNum, int nSize);
 	/// 插入道具

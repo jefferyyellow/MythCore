@@ -32,8 +32,7 @@ Message* CMessageFactory::createClientMessage(unsigned short nMessageID)
 
 
 		/// item module
-		CASE_NEW_MSG(CMoneyUpdateNotify, ID_S2C_NOTIYF_MONEY_UPDATE)
-		CASE_NEW_MSG(CDiamondUpdateNotify, ID_S2C_NOTIYF_DIAMOND_UPDATE)
+		CASE_NEW_MSG(CCurrencyUpdateNotify, ID_S2C_NOTIYF_CURRENCY_UPDATE)
 		CASE_NEW_MSG(CInsertItemNotify, ID_S2C_NOTIYF_INSERT_ITEM)
 		CASE_NEW_MSG(CInsertItemObjNotify, ID_S2C_NOTIYF_INSERT_ITEM_OBJ)
 		CASE_NEW_MSG(CRemoveItemNotify, ID_S2C_NOTIYF_REMOVE_ITEM)

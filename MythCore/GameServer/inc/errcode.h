@@ -10,8 +10,7 @@ enum ERR_COMMON
 {
 	ERR_UNKNOWN							= 256,				// 未知错误
 	ERR_PARAMETER_INVALID				= 257,				// 参数非法
-	ERR_MONEY_NOT_ENOUGH				= 258,				// 金币不足
-	ERR_DIAMOND_NOT_ENOUGH				= 259,				// 金币不足
+	ERR_CURRENCY_NOT_ENOUGH				= 258,				// 币不足
 	ERR_TEMPLATE_INVALID				= 260,				// 模板非法
 };
 

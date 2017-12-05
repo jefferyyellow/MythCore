@@ -5,94 +5,62 @@
 #include "itemobject.h"
 #include "template.h"
 #include "locallogjob.h"
-/// 获得金钱
-int CItemUnit::obtainMoney(int nMoney)
+
+/// 获得货币
+int CItemUnit::obtainCurrency(EmCurrencyType eCurrencyType, int nCurrencyNum)
 {
-	if (nMoney < 0)
+	if (eCurrencyType < 0 || eCurrencyType >= emCurrencyMax)
 	{
-		return ERR_OBTAIN_MONEY_INVALID;
-	}
-	if (0 == nMoney)
-	{
-		return SUCCESS;
+		return ERR_PARAMETER_INVALID;
 	}
 
-	int nCurrMoney = mMoney + nMoney;
-	mMoney = nCurrMoney > PLAYER_MONEY_LIMIT ? PLAYER_MONEY_LIMIT : nCurrMoney;
-
-	CMoneyUpdateNotify tMsg;
-	tMsg.set_money(mMoney);
-	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_NOTIYF_MONEY_UPDATE, &tMsg);
-	return SUCCESS;
-}
-
-/// 消费金钱
-int CItemUnit::consumeMoney(int nMoney)
-{
-	if (nMoney < 0)
-	{
-		return ERR_CONSUME_MONEY_INVALID;
-	}
-	if (0 == nMoney)
-	{
-		return SUCCESS;
-	}
-
-	if (mMoney < nMoney)
-	{
-		return ERR_MONEY_NOT_ENOUGH;
-	}
-
-	mMoney = mMoney - nMoney;
-
-	CMoneyUpdateNotify tMsg;
-	tMsg.set_money(mMoney);
-	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_NOTIYF_MONEY_UPDATE, &tMsg);
-	return SUCCESS;
-}
-
-/// 获得钻石
-int	CItemUnit::obtainDiamond(int nDiamond)
-{
-	if (nDiamond < 0)
+	if (nCurrencyNum < 0)
 	{
 		return ERR_OBTAIN_DIAMOND_INVALID;
 	}
-	if (0 == nDiamond)
+	if (0 == nCurrencyNum)
 	{
 		return SUCCESS;
 	}
 
-	int nCurrDiamond = mDiamond + nDiamond;
-	mDiamond = nCurrDiamond > PLAYER_MONEY_LIMIT ? PLAYER_MONEY_LIMIT : nCurrDiamond;
+	int nCurrentCurrencyNum = mCurrency[eCurrencyType] + nCurrencyNum;
+	mCurrency[eCurrencyType] = nCurrentCurrencyNum > MAX_CURRENCY_NUM ? MAX_CURRENCY_NUM : nCurrentCurrencyNum;
 
-	CDiamondUpdateNotify tMsg;
-	tMsg.set_diamond(mDiamond);
-	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_NOTIYF_DIAMOND_UPDATE, &tMsg);
+	CCurrencyUpdateNotify tMsg;
+	tMsg.set_currencytype(eCurrencyType);
+	tMsg.set_currencynum(mCurrency[eCurrencyType]);
+
+	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_NOTIYF_CURRENCY_UPDATE, &tMsg);
 	return SUCCESS;
 }
 
-/// 消费钻石 
-int	CItemUnit::consumeDiamond(int nDiamond)
+/// 消费货币
+int CItemUnit::consumeCurrency(EmCurrencyType eCurrencyType, int nCurrencyNum)
 {
-	if (nDiamond < 0)
+	if (eCurrencyType < 0 || eCurrencyType >= emCurrencyMax)
 	{
-		return ERR_CONSUME_DIAMOND_INVALID;
+		return ERR_PARAMETER_INVALID;
 	}
-	if (0 == nDiamond)
+
+	if (nCurrencyNum < 0)
+	{
+		return ERR_PARAMETER_INVALID;
+	}
+	if (0 == nCurrencyNum)
 	{
 		return SUCCESS;
 	}
-	if (mDiamond < nDiamond)
+	if (mCurrency[eCurrencyType] < nCurrencyNum)
 	{
-		return ERR_DIAMOND_NOT_ENOUGH;
+		return ERR_CURRENCY_NOT_ENOUGH;
 	}
 
-	mDiamond = mDiamond - nDiamond;
+	mCurrency[eCurrencyType] = mCurrency[eCurrencyType] - nCurrencyNum;
 
-	CDiamondUpdateNotify tMsg;
-	tMsg.set_diamond(mDiamond);
-	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_NOTIYF_DIAMOND_UPDATE, &tMsg);
+	CCurrencyUpdateNotify tMsg;
+	tMsg.set_currencytype(eCurrencyType);
+	tMsg.set_currencynum(mCurrency[eCurrencyType]);
+	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_NOTIYF_CURRENCY_UPDATE, &tMsg);
 	return SUCCESS;
 }
 
@@ -104,7 +72,23 @@ bool CItemUnit::checkItemSpace(int* pItemID, int* pItemNum, int nSize)
 		return false;
 	}
 
-	return mBag.checkSpace(pItemID, pItemNum, nSize);
+	int nItemID[MAX_CONTAINER_ITEM_NUM];
+	int nItemNum[MAX_CONTAINER_ITEM_NUM];
+	int nItemCount = 0;
+	for (int i = 0; i < nSize; ++ i)
+	{
+		if (pItemID[i] > MAX_CURRENCY_ID)
+		{
+			nItemID[nItemCount] = pItemID[i];
+			nItemNum[nItemCount]= pItemNum[i];
+			++ nItemCount;
+		}
+	}
+	if (nItemCount > 0)
+	{
+		return mBag.checkSpace(pItemID, pItemNum, nSize);
+	}
+	return true;
 }
 
 /// 插入道具
@@ -117,7 +101,14 @@ int CItemUnit::insertItem(int* pItemID, int* pItemNum, int nSize)
 	
 	for (int i = 0; i < nSize; ++ i)
 	{
-		insertItem(pItemID[i], pItemNum[i]);
+		if (pItemID[i] <= MAX_CURRENCY_ID)
+		{
+			obtainCurrency((EmCurrencyType)CURRENCY_ID_2_TYPE(pItemID[i]), pItemNum[i]);
+		}
+		else
+		{
+			insertItem(pItemID[i], pItemNum[i]);
+		}
 	}
 	
 
@@ -127,6 +118,11 @@ int CItemUnit::insertItem(int* pItemID, int* pItemNum, int nSize)
 /// 插入道具
 int CItemUnit::insertItem(int nItemID, int nItemNum)
 {
+	if (nItemID <= MAX_CURRENCY_ID)
+	{
+		return ERR_PARAMETER_INVALID;
+	}
+
 	int nOutItemIndex[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutItemNum[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutSize = 0;
@@ -193,6 +189,12 @@ int CItemUnit::removeItem(int nIndex, int nItemNum)
 /// 删除道具,首先保证有这么多道具,这个接口应该用得不多（如果很多需要优化一下消息）
 void CItemUnit::removeItemByID(int nItemID, int nItemNum)
 {
+	if (nItemID <= MAX_CURRENCY_ID)
+	{
+		consumeCurrency((EmCurrencyType)CURRENCY_ID_2_TYPE(nItemID), nItemNum);
+		return;
+	}
+
 	int nOutItemIndex[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutItemNum[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutSize = 0;
@@ -334,7 +336,7 @@ void CItemUnit::onSellItemRequest(Message* pMessage)
 	}
 
 	int nMoney = pTplITem->mSellPrice * pItemObject->GetItemNum();
-	obtainMoney(nMoney);
+	obtainCurrency(emCurrency_Money, nMoney);
 	removeItem(nItemIndex, pItemObject->GetItemNum());
 	sendSellItemResponse(SUCCESS);
 }

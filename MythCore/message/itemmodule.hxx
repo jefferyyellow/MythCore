@@ -5,8 +5,7 @@ import "common.hxx";
 enum ITEM_MODULE_MSG_ID
 {
 	ID_ITEM_MODULE_ERROR					= 0x0;
-	ID_S2C_NOTIYF_MONEY_UPDATE				= 0x0800;	// 玩家金钱更新通知
-	ID_S2C_NOTIYF_DIAMOND_UPDATE			= 0x0801;	// 玩家钻石更新通知
+	ID_S2C_NOTIYF_CURRENCY_UPDATE			= 0x0800;	// 玩家金钱更新通知
 	ID_S2C_NOTIYF_INSERT_ITEM				= 0x0802;	// 插入道具通知(没有特殊属性的道具)
 	ID_S2C_NOTIYF_INSERT_ITEM_OBJ			= 0x0803;	// 插入道具通知(有特殊属性的道具)
 	ID_S2C_NOTIYF_REMOVE_ITEM				= 0x0804;	// 删除道具通知
@@ -18,16 +17,11 @@ enum ITEM_MODULE_MSG_ID
 	ID_S2C_RESPONSE_PURCHASE_ITEM			= 0x080A;	// 购买道具回应
 };
 
-// 玩家金钱更新通知 ID_S2C_NOTIYF_MONEY_UPDATE
-message CMoneyUpdateNotify
+// 玩家货币更新通知 ID_S2C_NOTIYF_CURRENCY_UPDATE
+message CCurrencyUpdateNotify
 {
-	uint32	Money				= 1;		// 玩家当前的金钱
-}
-
-// 玩家钻石更新通知 ID_S2C_NOTIYF_DIAMOND_UPDATE
-message CDiamondUpdateNotify
-{
-	uint32	Diamond				= 1;		// 玩家当前的钻石
+	uint32	CurrencyType		= 1;		// 货币类型
+	uint32	CurrencyNum			= 2;		// 该类型玩家的货币数目
 }
 
 // 插入道具通知(没有特殊属性的道具) ID_S2C_NOTIYF_INSERT_ITEM
