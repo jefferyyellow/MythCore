@@ -42,6 +42,10 @@ Message* CMessageFactory::createClientMessage(unsigned short nMessageID)
 		CASE_NEW_MSG(CSellItemResponse, ID_S2C_RESPONSE_SELL_ITEM)
 		CASE_NEW_MSG(CPurchaseItemRequest, ID_C2S_REQUEST_PURCHASE_ITEM)
 		CASE_NEW_MSG(CPurchaseItemResponse, ID_S2C_RESPONSE_PURCHASE_ITEM)
+		CASE_NEW_MSG(CEquipItemRequest, ID_C2S_REQUEST_EQUIP_ITEM)
+		CASE_NEW_MSG(CEquipItemResponse, ID_S2C_RESPONSE_EQUIP_ITEM)
+		CASE_NEW_MSG(CUnEquipItemRequest, ID_C2S_REQUEST_UNEQUIP_ITEM)
+		CASE_NEW_MSG(CUnEquipItemResponse, ID_S2C_RESPONSE_UNEQUIP_ITEM)
 
 		/// map module
 		CASE_NEW_MSG(CEntityMoveNotify, ID_S2C_NOTIYF_ENTITY_MOVE)

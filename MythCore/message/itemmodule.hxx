@@ -15,6 +15,10 @@ enum ITEM_MODULE_MSG_ID
 	ID_S2C_RESPONSE_SELL_ITEM				= 0x0808;	// 卖出道具回应
 	ID_C2S_REQUEST_PURCHASE_ITEM			= 0x0809;	// 购买道具请求
 	ID_S2C_RESPONSE_PURCHASE_ITEM			= 0x080A;	// 购买道具回应
+	ID_C2S_REQUEST_EQUIP_ITEM				= 0x080B;	// 装备道具的请求
+	ID_S2C_RESPONSE_EQUIP_ITEM				= 0x080C;	// 装备道具的回应
+	ID_C2S_REQUEST_UNEQUIP_ITEM				= 0x080D;	// 卸载装备的请求
+	ID_S2C_RESPONSE_UNEQUIP_ITEM			= 0x080E;	// 卸载装备的回应
 };
 
 // 玩家货币更新通知 ID_S2C_NOTIYF_CURRENCY_UPDATE
@@ -81,4 +85,32 @@ message CPurchaseItemRequest
 message CPurchaseItemResponse
 {
 	uint32 Result		= 1;		// 结果
+}
+
+// 装备道具的请求 ID_C2S_REQUEST_EQUIP_ITEM
+message CEquipItemRequest
+{
+	uint32	ItemIndex	= 1;		// 装备的道具
+}
+
+// 装备道具的回应 ID_S2C_RESPONSE_EQUIP_ITEM
+message CEquipItemResponse
+{
+	uint32	Result		= 1;		// 结果	
+	uint32	ItemIndex	= 2;		// 装备的道具
+}
+
+// 卸载装备的请求 ID_C2S_REQUEST_UNEQUIP_ITEM
+message CUnEquipItemRequest
+{
+	uint32	EquipIndex	= 1;		// 装备的索引
+	uint32	ItemIndex	= 2;		// 装备在包裹里的索引
+}
+
+// 卸载装备的回应 ID_S2C_RESPONSE_UNEQUIP_ITEM
+message CUnEquipItemResponse
+{
+	uint32	Result		= 1;		// 结果
+	uint32	EquipIndex	= 2;		// 装备的索引
+	uint32	ItemIndex	= 3;		// 装备在包裹里的索引
 }

@@ -86,7 +86,7 @@ bool CItemUnit::checkItemSpace(int* pItemID, int* pItemNum, int nSize)
 	}
 	if (nItemCount > 0)
 	{
-		return mBag.checkSpace(pItemID, pItemNum, nSize);
+		return mBag.checkSpace(nItemID, nItemNum, nItemCount);
 	}
 	return true;
 }
@@ -189,12 +189,6 @@ int CItemUnit::removeItem(int nIndex, int nItemNum)
 /// 删除道具,首先保证有这么多道具,这个接口应该用得不多（如果很多需要优化一下消息）
 void CItemUnit::removeItemByID(int nItemID, int nItemNum)
 {
-	if (nItemID <= MAX_CURRENCY_ID)
-	{
-		consumeCurrency((EmCurrencyType)CURRENCY_ID_2_TYPE(nItemID), nItemNum);
-		return;
-	}
-
 	int nOutItemIndex[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutItemNum[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutSize = 0;

@@ -9,6 +9,7 @@ enum EmCurrencyType
 };
 
 // 货币ID, 这个顺序和EmCurrencyType一致才行
+// 在模板里定义货币的ID道具
 #define MONEY_ID			80			// 金币
 #define DIAMOND_ID			81			// 钻石
 

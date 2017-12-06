@@ -48,6 +48,7 @@ enum ERR_TASK
 	ERR_TASK_PLAYER_LEVEL_INVALID		= 504,		// 接任务时玩家等级不符合条件
 	ERR_TASK_TASK_LIST_FULL				= 505,		// 任务列表已满
 	ERR_TASK_PLAYER_HAS_NO_TASK			= 506,		// 玩家身上没有该任务
-	ERR_TASK_TASK_NOT_COMPLETE			= 507,		// 
+	ERR_TASK_KILL_OGRE_NOT_ENOUGH		= 507,		// 杀怪的数目不够
+	ERR_TASK_ITEM_NUM_NOT_ENOUGH		= 508,		// 道具的数目不够
 };
 #endif

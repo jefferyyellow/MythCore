@@ -31,17 +31,12 @@ public:
 	void			init()
 	{
 		mTaskID = 0;
-		mTaskStatus = 0;
 		memset(mTaskParam, 0, sizeof(mTaskParam));
 	}
 public:
 	// 任务ID
 	short			getTaskID() const { return mTaskID; }
 	void			setTaskID(short nValue) { mTaskID = nValue; }
-
-	// 任务进度
-	short			getTaskStatus() const { return mTaskStatus; }
-	void			setTaskStatus(short nValue) { mTaskStatus = nValue; }
 
 	int			getTaskParam(int nIndex)
 	{
@@ -64,8 +59,6 @@ public:
 private:
 	/// 任务ID
 	short			mTaskID;
-	/// 任务进度
-	short			mTaskStatus;
 	/// 任务参数
 	int				mTaskParam[MAX_PLAYER_TASK_PARAM];
 };

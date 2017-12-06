@@ -57,7 +57,6 @@ void CTaskUnit::onSubmitTaskRequest(Message* pMessage)
 	{
 		mCompleteTasks.setBit(nTaskID);
 	}
-
 }
 
 void CTaskUnit::sendSubmitTaskResponse(int nResult, int nTaskID)
@@ -156,11 +155,18 @@ int CTaskUnit::checkSubmitTask(int nTaskID, short& bRepeated)
 		switch(pTaskConfig->mCompleteCondition[i].mType)
 		{
 			case emComplete_KillOgre:
-			case emComplete_HoldItem:
 			{
 				if (pPlayerTask->getTaskParam(i) < pTaskConfig->mCompleteCondition[i].mParam[1])
 				{
-					return ERR_TASK_TASK_NOT_COMPLETE;
+					return ERR_TASK_KILL_OGRE_NOT_ENOUGH;
+				}
+				break;
+			}
+			case emComplete_HoldItem:
+			{
+				if (mPlayer.GetItemUnit().hasItem(pTaskConfig->mCompleteCondition[i].mParam[0]) < pTaskConfig->mCompleteCondition[i].mParam[1])
+				{
+					return ERR_TASK_ITEM_NUM_NOT_ENOUGH;
 				}
 				break;
 			}

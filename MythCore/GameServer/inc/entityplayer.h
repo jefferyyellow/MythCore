@@ -74,14 +74,21 @@ public:
 
 	int				getLevel(){return mPropertyUnit.getLevel();}
 
+	// 用mTempID保存职业属性
+	int				getMetier(){return mTempID;}
+	void			setMetier(int nMetier){mTempID = nMetier;}
+
 	/// 与TCP交换用的头
 	CExchangeHead	GetExhangeHead(){ return mExhangeHead; }
+
+	/// 各种单元
 	/// 属性单元
 	CPropertyUnit&	GetPropertyUnit(){ return mPropertyUnit; }
 	/// 道具单元
 	CItemUnit&		GetItemUnit(){ return mItemUnit; }
 	/// 任务单元
 	CTaskUnit&		GetTaskUnit(){ return mTaskUnit; }
+	
 private:
 	/// socket连接信息
 	CExchangeHead	mExhangeHead;
