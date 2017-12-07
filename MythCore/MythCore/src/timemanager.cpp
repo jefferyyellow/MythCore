@@ -64,7 +64,6 @@ namespace Myth
 
 	int	CTimeManager::Init()
 	{
-		mCurrTime = 0;
 	#ifdef MYTH_OS_WINDOWS
 		LARGE_INTEGER lFrequency;
 		QueryPerformanceFrequency(&lFrequency);
@@ -76,11 +75,6 @@ namespace Myth
 	void CTimeManager::Finial()
 	{
 
-	}
-
-	void CTimeManager::UpdateCurrTime()
-	{
-		mCurrTime = time(NULL);
 	}
 
 	/// get the time in milliseconds.

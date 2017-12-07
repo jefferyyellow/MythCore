@@ -37,7 +37,7 @@ bool CTcpServer::init()
 	}
 
 	bResult = initSocket();
-
+	mCurrTime = time(NULL);
 	return true;
 }
 
@@ -168,7 +168,7 @@ bool CTcpServer::initSocket()
 		return false;
 	}
 
-	time_t tNowTime = CTimeManager::Inst()->GetCurrTime();
+	time_t tNowTime = GetCurrTime();
 	for (int i = 0; i < MAX_LISTEN_PORT_NUM; ++ i)
 	{
 		if (mTcpConfig.mListenPort[i] == 0)
@@ -251,7 +251,7 @@ void CTcpServer::run()
 {
 	while (true)
 	{
-		CTimeManager::Inst()->UpdateCurrTime();
+		mCurrTime = time(NULL);
 
 #ifdef MYTH_OS_WINDOWS
 		mSelectModel->selectAllFd();
@@ -273,7 +273,7 @@ void CTcpServer::run()
 /// ¼ì²éÊÇ·ñ³¬Ê±
 void CTcpServer::checkTimeOut()
 {
-	time_t tTimeNow = CTimeManager::Inst()->GetCurrTime();
+	time_t tTimeNow = GetCurrTime();
 	if (tTimeNow - mLastStatisticsTime > mTcpConfig.mWriteStatisticsTime)
 	{
 		writeTcpStatisticsData();
@@ -361,7 +361,7 @@ void CTcpServer::receiveMessage()
 				pNewSocket->setRecvBuffSize(0);
 				mSelectModel->addNewSocket(pNewSocket, nSocketIndex);
 
-				time_t tNowTime = CTimeManager::Inst()->GetCurrTime();
+				time_t tNowTime = GetCurrTime();
 				if (nSocketIndex>= 0 && nSocketIndex < MAX_SOCKET_NUM)
 				{
 					mSocketInfo[nSocketIndex].mCreateTime = tNowTime;
@@ -519,7 +519,7 @@ void CTcpServer::onReceiveMessage(CTcpSocket* pSocket, int nIndex)
 	byte* pBuffer = pSocket->getRecvBuff();
 
 	int nTotalSize = 0;
-	time_t tNowTime = CTimeManager::Inst()->GetCurrTime();
+	time_t tNowTime = GetCurrTime();
 	while (true)
 	{
 		if (nBuffSize < 4)

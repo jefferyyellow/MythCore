@@ -24,7 +24,7 @@ void CLoginModule::OnTimer(unsigned int nTickOffset)
 {
 	if (mLoginCheckTime.elapse(nTickOffset))
 	{
-		time_t tTimeNow = CTimeManager::Inst()->GetCurrTime();
+		time_t tTimeNow = CGameServer::Inst()->GetCurrTime();
 		LOGIN_LIST::iterator it = mLoginList.begin();
 		for (; it != mLoginList.end(); )
 		{

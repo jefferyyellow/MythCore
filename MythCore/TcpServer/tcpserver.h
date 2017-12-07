@@ -150,6 +150,11 @@ public:
 	void		writeTcpStatisticsData();
 	/// 清除日志
 	void		clearLog(CLog* pLog);
+	// 得到当前时间
+	inline time_t	GetCurrTime()
+	{
+		return mCurrTime;
+	}
 
 private:
 	CLog*					mDefaultLog;				// 默认日志
@@ -171,5 +176,6 @@ private:
 	time_t					mLastKeepLiveTime;			// 检查保持活跃的时间
 	time_t					mLastStatisticsTime;		// 写统计信息时间
 	CTcpServerStatistics	mServerStatistics;			// 统计信息
+	time_t					mCurrTime;
 };
 #endif

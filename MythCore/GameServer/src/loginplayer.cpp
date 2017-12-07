@@ -139,6 +139,7 @@ int CLoginPlayer::processWaitEnterGame()
 	}
 
 	pNewPlayer->setRoleID(pEnterSceneRequest->roleid());
+	pNewPlayer->setLastSaveTime(CGameServer::Inst()->GetCurrTime());
 	CDBModule::Inst()->pushDBTask(getObjID(), emSessionType_LoadPlayerInfo, 0, 0, "call LoadPlayerInfo(%d)", mRoleID);
 	return emLoginState_Playing;
 }

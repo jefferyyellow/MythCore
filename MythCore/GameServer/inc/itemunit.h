@@ -51,6 +51,14 @@ public:
 	void		onPurchaseItemRequest(Message* pMessage);
 	void		sendPurchaseItemResponse(int nResult);
 
+	/// 装备道具
+	void		onEquipItemRequest(Message* pMessage);
+	void		sendEquipItemResponse(int nResult, int nItemIndex);
+
+	/// 卸载道具
+	void		onUnEquipItemRequest(Message* pMessage);
+	void		sendUnEquipItemResponse(int nResult, int nEquipIndex, int nItemIndex);
+
 public:
 	/// 常用的货币接口单独出来
 	/// 得到金币

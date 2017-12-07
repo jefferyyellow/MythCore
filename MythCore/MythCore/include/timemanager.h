@@ -125,13 +125,10 @@ namespace Myth
 		void	Finial();
 
 	public:
-		inline time_t	GetCurrTime(){return mCurrTime;}
 	#ifdef MYTH_OS_WINDOWS
 		static sint64	GetQueryPerformanceFrequency(){return mQueryPerformanceFrequency;}
 	#endif
 	public:
-		/// update mCurrTime to time()
-		void	UpdateCurrTime();
 		/// get the time in milliseconds.
 		sint64	GetMSTime();
 		/// get the time in microsecond
@@ -144,7 +141,6 @@ namespace Myth
 		static uint64 GetWindowsToUnixBaseTimeOffset();
 	private:
 		/// cache the time from time(),no need call function time() when we want get the second from 19700101 00:00:00
-		time_t	mCurrTime;
 	#ifdef MYTH_OS_WINDOWS
 		static	sint64 mQueryPerformanceFrequency;
 	#endif

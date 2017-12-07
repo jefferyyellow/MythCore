@@ -7,12 +7,6 @@
 enum EmInternalMsgID
 {
 	IM_REQUEST_LOCAL_LOG				= 1,			// 玩家本地日志要求
-	IM_REQUEST_PLAYER_LOGIN				= 2,			// 玩家登陆消息
-	IM_RESPONSE_PLAYER_LOGIN			= 3,			// 玩家登陆回应
-	IM_REQUEST_CREATE_ROLE				= 4,			// 玩家创建角色请求
-	IM_RESPONSE_CREATE_ROLE				= 5,			// 玩家创建角色回应
-	IM_REQUEST_ENTER_SCENE				= 6,			// 玩家进入场景的请求
-	IM_RESPONSE_ENTER_SCENE				= 7,			// 玩家进入场景的回应
 };
 
 #define MAX_DEBUG_LOG_NAME			32

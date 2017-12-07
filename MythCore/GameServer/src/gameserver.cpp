@@ -177,8 +177,8 @@ void CGameServer::run()
 	MYTH_ASSERT_INFO(1,;,"I love you macro!");
 	while (true)
 	{
+		mCurrTime = time(NULL);
 		//printf("*dddd*");
-		CTimeManager::Inst()->UpdateCurrTime();
 		mThreadPool->run();
 #ifdef MYTH_OS_WINDOWS
 		Sleep(1);

@@ -366,3 +366,44 @@ void CItemUnit::sendPurchaseItemResponse(int nResult)
 	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_RESPONSE_PURCHASE_ITEM, &tPurchaseItemResponse);
 
 }
+
+/// 装备道具
+void CItemUnit::onEquipItemRequest(Message* pMessage)
+{
+	MYTH_ASSERT(NULL == pMessage, return);
+	CEquipItemRequest* pEquipItemRequest = reinterpret_cast<CEquipItemRequest*>(pMessage);
+	MYTH_ASSERT(NULL == pEquipItemRequest, return);
+
+	int nItemIndex = pEquipItemRequest->itemindex();
+
+
+	sendEquipItemResponse(SUCCESS, nItemIndex);
+}
+
+void CItemUnit::sendEquipItemResponse(int nResult, int nItemIndex)
+{
+	CEquipItemResponse tEquipItemResponse;
+	tEquipItemResponse.set_result(nResult);
+	tEquipItemResponse.set_itemindex(nItemIndex);
+
+	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_RESPONSE_EQUIP_ITEM, &tEquipItemResponse);
+}
+
+/// 卸载道具
+void CItemUnit::onUnEquipItemRequest(Message* pMessage)
+{
+	MYTH_ASSERT(NULL == pMessage, return);
+	CUnEquipItemRequest* pUnEquipItemRequest = reinterpret_cast<CUnEquipItemRequest*>(pMessage);
+	MYTH_ASSERT(NULL == pUnEquipItemRequest, return);
+
+}
+
+void CItemUnit::sendUnEquipItemResponse(int nResult, int nEquipIndex, int nItemIndex)
+{
+	CUnEquipItemResponse tUnEquipItemResponse;
+	tUnEquipItemResponse.set_result(nResult);
+	tUnEquipItemResponse.set_equipindex(nEquipIndex);
+	tUnEquipItemResponse.set_itemindex(nItemIndex);
+
+	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_RESPONSE_UNEQUIP_ITEM, &tUnEquipItemResponse);
+}

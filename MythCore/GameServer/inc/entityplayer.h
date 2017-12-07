@@ -81,6 +81,15 @@ public:
 	/// 与TCP交换用的头
 	CExchangeHead	GetExhangeHead(){ return mExhangeHead; }
 
+	time_t			getLastSaveTime() const
+	{
+		return mLastSaveTime;
+	}
+	void			setLastSaveTime(time_t val)
+	{
+		mLastSaveTime = val;
+	}
+
 	/// 各种单元
 	/// 属性单元
 	CPropertyUnit&	GetPropertyUnit(){ return mPropertyUnit; }
@@ -109,5 +118,8 @@ private:
 	time_t			mOnTime;
 	/// 基础属性
 	CBaseProperty	mBaseProperty[emPropertyTypeMax];
+	/// 上次存盘的时间
+	time_t			mLastSaveTime;
+
 };
 #endif 
