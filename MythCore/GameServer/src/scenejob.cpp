@@ -25,6 +25,17 @@ void CSceneJob::doing(int uParam)
 
 		CInternalMsgPool::Inst()->freeMsg(pIMMsg);
 	}
+
+	int nElapseTime = (int)(CGameServer::Inst()->GetCurrTime() - mLastTimerTick);
+	if (nElapseTime > 100)
+	{
+		LOGIC_MODULE_LIST::iterator it = mLogicModuleList.begin();
+		for (; it != mLogicModuleList.end(); ++ it)
+		{
+			(*it)->OnTimer(nElapseTime);
+		}
+		mLastTimerTick = CGameServer::Inst()->GetCurrTime();
+	}
 }
 
 void CSceneJob::onTask(CInternalMsg* pMsg)
@@ -42,6 +53,9 @@ void CSceneJob::onTask(CInternalMsg* pMsg)
 
 bool CSceneJob::init(int nDBBuffSize)
 {
+	// 初始化时间变量
+	mLastTimerTick = CGameServer::Inst()->GetCurrTime();
+
 	bool bResult = initShareMemory();
 	if (!bResult)
 	{
@@ -50,6 +64,10 @@ bool CSceneJob::init(int nDBBuffSize)
 	
 	mDBBuffer = new byte[nDBBuffSize];
 	mDBStream.Initialize(mDBBuffer, nDBBuffSize);
+
+	// 逻辑模块
+	mLogicModuleList.push_back(CLoginModule::CreateInst());
+	mLogicModuleList.push_back(CPropertyModule::CreateInst());
 	return true;
 }
 
@@ -256,3 +274,23 @@ void CSceneJob::dispatchClientMessage(CEntityPlayer* pPlayer, unsigned short nMe
 	}
 }
 
+/// 登录了一个玩家（只是登录校验完成，数据还没有加载完成）
+bool CSceneJob::onPlayerLogin(CEntityPlayer* pNewPlayer)
+{
+	std::pair<PLAYER_SOCKET_LIST::iterator, bool> tSocketIndexRet = mPlayerSocketList.insert(
+		PLAYER_SOCKET_LIST::value_type(pNewPlayer->GetExhangeHead().mSocketIndex, pNewPlayer->getObjID()));
+		if (!tSocketIndexRet.second)
+		{
+			return false;
+		}
+
+	std::pair<PLAYER_LIST::iterator, bool> tPlayerListRet = mPlayerList.insert(
+		PLAYER_LIST::value_type(pNewPlayer->getRoleID(), pNewPlayer->getObjID()));
+		if (!tPlayerListRet.second)
+		{
+			mPlayerSocketList.erase(tSocketIndexRet.first);
+			return false;
+		}
+
+	return true;
+}

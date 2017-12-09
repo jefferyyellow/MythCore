@@ -16,6 +16,10 @@
 /// 初始化
 bool CGameServer::init()
 {
+	// 优先初始化这两个变量
+	mCurrTime = time(NULL);
+	mTickCount = GetTickCount64();
+
 	bool bResult = initLog();
 	if (!bResult)
 	{
@@ -96,10 +100,6 @@ bool CGameServer::initLogicModule()
 	CObjPool::CreateInst();
 	CTimeManager::CreateInst();
 
-	// 逻辑模块
-	CLoginModule::CreateInst();
-	CPropertyModule::CreateInst();
-
 	CMapConfigManager::CreateInst();
 	CMapManager::CreateInst();
 	CMapModule::CreateInst();
@@ -178,6 +178,7 @@ void CGameServer::run()
 	while (true)
 	{
 		mCurrTime = time(NULL);
+		mTickCount = GetTickCount64();
 		//printf("*dddd*");
 		mThreadPool->run();
 #ifdef MYTH_OS_WINDOWS

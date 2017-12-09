@@ -11,8 +11,9 @@ enum EMLoginState
 	emLoginState_AccountVerify		= 1,	// 登录验证
 	emLoginState_WaitCreateRole		= 2,	// 等待创建角色
 	emLoginState_CreateRoleing		= 3,	// 创建角色中
-	emLoginState_WaitEnterGame		= 4,	// 等待进入游戏
-	emLoginState_Playing			= 5,	// 游戏状态
+	emLoginState_LoginComplete		= 4,	// 登录完成
+	//emLoginState_WaitEnterGame		= 4,	// 等待进入游戏
+	//emLoginState_Playing			= 5,	// 游戏状态
 	emLoginStateMax
 };
 
@@ -33,8 +34,6 @@ public:
 	int			processAccountVerify();
 	int			processWaitCreateRole();
 	int			processCreateRoleing();
-	int			processWaitEnterGame();
-	int			processWaitPlaying();
 	bool		elapse(unsigned int nTickOffset);
 public:
 	unsigned int getAccountID() const { return mAccountID; }
@@ -73,6 +72,7 @@ public:
 	EmSessionType getDBSessionType() const { return mDBSessionType; }
 	void		setDBSessionType(EmSessionType eValue) { mDBSessionType = eValue; }
 
+	EMLoginState getLoginState(){return (EMLoginState)mStateMachine.getCurState();}
 private:
 	unsigned int					mAccountID;								// 账号ID
 	short							mChannelID;								// 渠道

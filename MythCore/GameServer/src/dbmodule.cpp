@@ -1,6 +1,6 @@
 #include "dbmodule.h"
 #include "gameserver.h"
-
+#include "propertymodule.h"
 void CDBModule::OnTimer(unsigned int nTickOffset)
 {
 
@@ -22,7 +22,7 @@ void CDBModule::pushDBTask(int nPlayerID, int nSessionType, int nParam1, int nPa
 	mDBRequest.mSqlLenth = nLength;
 
 	int nTotalLength = nLength + sizeof(CDBRequestHeader);
-	CGameServer::Inst()->pushDBTask(0, (byte*)(&mDBRequest), nTotalLength);
+	CGameServer::Inst()->pushDBTask(nPlayerID, (byte*)(&mDBRequest), nTotalLength);
 }
 
 void CDBModule::onDBSession()
@@ -32,10 +32,20 @@ void CDBModule::onDBSession()
 	{
 		case emSessionType_AccountVerify:
 		case emSessionType_CreateRole:
-		case emSessionType_LoadPlayerInfo:
 		{
 			CLoginModule::Inst()->OnDBMessage(&mDBResponse);
 			break;
 		}
+		case emSessionType_LoadPlayerInfo:
+		{
+			CPropertyModule::Inst()->onLoadPlayerInfo(mDBResponse);
+			break;
+		}
+		case emSessionType_LoadPlayerBaseProperty:
+		{
+			CPropertyModule::Inst()->onLoadPlayerBaseProperty(mDBResponse);
+			break;
+		}
 	}
 }
+

@@ -40,6 +40,8 @@ public:
 	void		exit();
 public:
 	inline time_t	GetCurrTime(){return mCurrTime;}
+	uint64 getTickCount()const{	return mTickCount;}
+
 public:
 	void		pushTask(EmTaskType eTaskType, CInternalMsg* pMsg);
 	void		pushDBTask(int nUid, byte* pData, int nDataLength);
@@ -52,6 +54,8 @@ private:
 	CLocalLogJob			mLocalLogJob;
 	CSceneJob				mSceneJob;
 
-	time_t	mCurrTime;
+	time_t					mCurrTime;
+	uint64					mTickCount;
+
 };
 #endif

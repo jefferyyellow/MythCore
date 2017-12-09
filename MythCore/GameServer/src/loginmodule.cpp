@@ -7,6 +7,7 @@
 #include "objpool.h"
 #include "timemanager.h"
 #include "loginplayer.h"
+#include "dbmodule.h"
 CLoginModule::CLoginModule()
 :mLoginCheckTime(1000)
 {
@@ -64,7 +65,7 @@ void CLoginModule::onClientMessage(CExchangeHead& rExchangeHead, unsigned int nM
 		{
 			return;
 		}
-		std::pair<LOGIN_LIST::iterator,bool> ret = mLoginList.insert(LOGIN_LIST::value_type(rExchangeHead.mSocketIndex, pLoginPlayer->getObjID()));
+		std::pair<LOGIN_LIST::iterator, bool> ret = mLoginList.insert(LOGIN_LIST::value_type(rExchangeHead.mSocketIndex, pLoginPlayer->getObjID()));
 		// 插入列表失败
 		if (!ret.second)
 		{
@@ -82,9 +83,19 @@ void CLoginModule::onClientMessage(CExchangeHead& rExchangeHead, unsigned int nM
 	{
 		return;
 	}
-	pLoginPlayer->setClientMessage(pMessage);
-	pLoginPlayer->setClientMessageID(nMessageID);
-	pLoginPlayer->checkState();
+
+	if (nMessageID == ID_C2S_REQUEST_ENTER_SCENE)
+	{
+		processWaitEnterGame(pLoginPlayer, pMessage);
+		// 完成使命，释放掉
+		CObjPool::Inst()->free(pLoginPlayer->getObjID());
+	}
+	else
+	{
+		pLoginPlayer->setClientMessage(pMessage);
+		pLoginPlayer->setClientMessageID(nMessageID);
+		pLoginPlayer->checkState();
+	}
 }
 
 void CLoginModule::OnDBMessage(CDBResponse* pMsg)
@@ -93,8 +104,8 @@ void CLoginModule::OnDBMessage(CDBResponse* pMsg)
 	{
 		return;
 	}
-	int nPlayerID  = pMsg->mPlayerID;
-	CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::Inst()->getObj(nPlayerID));
+	int nLoginPlayerObjID  = pMsg->mParam1;
+	CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::Inst()->getObj(nLoginPlayerObjID));
 	if (NULL == pLoginPlayer)
 	{
 		return;
@@ -104,5 +115,55 @@ void CLoginModule::OnDBMessage(CDBResponse* pMsg)
 	pLoginPlayer->checkState();
 	pLoginPlayer->setDBMessage(NULL);
 	pLoginPlayer->setDBSessionType(emSessionType_None);
+}
 
+/// 处理等待玩家进入游戏
+void CLoginModule::processWaitEnterGame(CLoginPlayer* pLoginPlayer, Message* pMessage)
+{
+	if (NULL == pLoginPlayer || NULL == pMessage)
+	{
+		return;
+	}
+	if (pLoginPlayer->getLoginState() != emLoginState_LoginComplete)
+	{
+		return;
+	}
+	CEnterSceneRequest* pEnterSceneRequest = reinterpret_cast<CEnterSceneRequest*>(pMessage);
+	if (NULL == pEnterSceneRequest)
+	{
+		return;
+	}
+
+	if (pLoginPlayer->getServerID() != pEnterSceneRequest->serverid()
+	|| pLoginPlayer->getChannelID() != pEnterSceneRequest->channelid()
+	|| pLoginPlayer->getAccountID() != pEnterSceneRequest->accountid()
+	|| pLoginPlayer->getRoleID() != pEnterSceneRequest->roleid())
+	{
+		return;
+	}
+
+	CEntityPlayer* pNewPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->allocObj(emObjType_Entity_Player));
+	if (NULL == pNewPlayer)
+	{
+		return;
+	}
+
+	pNewPlayer->setPlayerStauts(emPlayerStatus_Loading);
+	pNewPlayer->setRoleID(pEnterSceneRequest->roleid());
+	pNewPlayer->GetExhangeHead() = pLoginPlayer->getExchangeHead();
+
+
+	bool bResult = CSceneJob::Inst()->onPlayerLogin(pNewPlayer);
+	if (!bResult)
+	{
+		CObjPool::Inst()->free(pNewPlayer->getObjID());
+		return;
+	}
+
+	CDBModule::Inst()->pushDBTask(pLoginPlayer->getRoleID(), emSessionType_LoadPlayerInfo, pLoginPlayer->getObjID(), 0, "call LoadPlayerInfo(%d)", pLoginPlayer->getRoleID());
+	CDBModule::Inst()->pushDBTask(pLoginPlayer->getRoleID(), emSessionType_LoadPlayerInfo, pLoginPlayer->getObjID(), 0, "call LoadPlayerBaseProperty(%d)", pLoginPlayer->getRoleID());
+
+	CEnterSceneResponse tEnterSceneResponse;
+	tEnterSceneResponse.set_result(0);
+	CSceneJob::Inst()->send2Player(pNewPlayer->GetExhangeHead(), ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
 }

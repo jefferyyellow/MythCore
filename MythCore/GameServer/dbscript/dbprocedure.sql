@@ -65,7 +65,17 @@ DROP PROCEDURE IF EXISTS `LoadPlayerInfo`;
 DELIMITER ;;
 CREATE PROCEDURE `LoadPlayerInfo`(RoleID int unsigned)
 BEGIN
-	select role_name, role_level, role_exp from PlayerRole WHERE role_id=RoleID;
+	select role_name, level, exp, vip_level, vip_exp, money, diamond from PlayerRole WHERE role_id=RoleID;
+END
+;;
+DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS `LoadPlayerBaseProperty`;
+DELIMITER ;;
+CREATE PROCEDURE `LoadPlayerBaseProperty`(RoleID int unsigned)
+BEGIN
+	select bag, task, from PlayerBaseProperty WHERE role_id=RoleID;
 END
 ;;
 DELIMITER ;

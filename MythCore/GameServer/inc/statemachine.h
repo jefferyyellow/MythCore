@@ -28,9 +28,9 @@ private:
 			mMaxTime = 0;
 		}
 		~CState(){}
-		StateFunc mStateFunc;		// 状态函数
-		time_t mLeftTime;			// 剩余时间(毫秒)
-		time_t mMaxTime;			// 最大的时间(毫秒)
+		StateFunc	mStateFunc;		// 状态函数
+		int			mLeftTime;		// 剩余时间(毫秒)
+		int			mMaxTime;		// 最大的时间(毫秒)
 	};
 	
 public:

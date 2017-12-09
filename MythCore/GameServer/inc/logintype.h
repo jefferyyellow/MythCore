@@ -16,4 +16,12 @@ struct CExchangeHead
 
 
 #define MAX_PLAYER_NAME_LEN		32		// 玩家名字最大长度
+
+enum EmPlayerStatus
+{
+	emPlayerStatus_None			= 0,	// 无状态
+	emPlayerStatus_Loading		= 1,	// 加载状态
+	emPlayerStatus_Gameing		= 2,	// 游戏状态
+	emPlayerStatus_Exiting		= 3,	// 退出状态
+};
 #endif

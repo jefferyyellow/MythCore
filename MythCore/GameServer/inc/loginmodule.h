@@ -10,6 +10,7 @@
 
 using namespace Myth;
 class CDBResponse;
+class CLoginPlayer;
 #define  MAKE_LOGIN_KEY(AccountID, ChannelID, ServerID) ( (ChannelID << 48) | (ServerID << 32) | AccountID)
 class CLoginModule : public CLogicModule, public CSingleton < CLoginModule >
 {
@@ -29,7 +30,8 @@ public:
 	void		onClientMessage(CExchangeHead& rExchangeHead, unsigned int nMessageID, Message* pMessage);
 	/// 处理数据库消息
 	void		OnDBMessage(CDBResponse* pMsg);
-
+	/// 处理等待玩家进入游戏
+	void		processWaitEnterGame(CLoginPlayer* pLoginPlayer, Message* pMessage);
 private:
 	LOGIN_LIST			mLoginList;				// 登录列表
 	CAutoResetTimer		mLoginCheckTime;		// 登录校验时间

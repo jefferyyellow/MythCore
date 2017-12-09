@@ -63,8 +63,12 @@ public:
 	/// 常用的货币接口单独出来
 	/// 得到金币
 	int			getMoney() const { return mCurrency[emCurrency_Money]; }
+	/// 设置金币
+	void		setMoney(int nMoney){mCurrency[emCurrency_Money] = nMoney;}
 	/// 得到钻石
 	int			getDiamond() const { return mCurrency[emCurrency_Diamond]; }
+	/// 设置钻石
+	void		setDiamond(int nDiamond){mCurrency[emCurrency_Diamond] = nDiamond;}
 
 	CItemBox&	getBag(){ return mBag; }
 private:

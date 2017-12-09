@@ -7,6 +7,7 @@
 
 using namespace Myth;
 class CEntityPlayer;
+class CDBResponse;
 class CPropertyModule : public CLogicModule, public CSingleton < CPropertyModule >
 {
 	friend class CSingleton < CPropertyModule >;
@@ -29,6 +30,11 @@ public:
 	// GM命令请求
 	void		onMessageGMCommandRequest(CEntityPlayer* pPlayer, Message* pMessage);
 
+public:
+	/// 加载玩家信息
+	void			onLoadPlayerInfo(CDBResponse& rResponse);
+	/// 加载玩家基础属性
+	void			onLoadPlayerBaseProperty(CDBResponse& rResponse);
 public:
 	CGMCommandManager&		getGMCmdManager(){return mGMCmdManager;}
 

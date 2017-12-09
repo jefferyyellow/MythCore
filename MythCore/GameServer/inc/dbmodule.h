@@ -17,7 +17,6 @@ public:
 	void			pushDBTask(int nPlayerID, int nSessionType, int nParam1, int nParam2, char* pSql, ...);
 	CDBResponse*	getDBResponse(){return &mDBResponse;}
 	void			onDBSession();
-
 private:
 
 private:

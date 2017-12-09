@@ -8,12 +8,12 @@
 void CLoginPlayer::init()
 {
 	mStateMachine.init(this, emLoginState_None);
-	mStateMachine.addState(emLoginState_None,			10, &CLoginPlayer::processStateNone);
-	mStateMachine.addState(emLoginState_AccountVerify,	10, &CLoginPlayer::processAccountVerify);
-	mStateMachine.addState(emLoginState_WaitCreateRole, 10, &CLoginPlayer::processWaitCreateRole);
-	mStateMachine.addState(emLoginState_CreateRoleing,	10, &CLoginPlayer::processCreateRoleing);
-	mStateMachine.addState(emLoginState_WaitEnterGame,	10, &CLoginPlayer::processWaitEnterGame);
-	mStateMachine.addState(emLoginState_Playing,		10, &CLoginPlayer::processWaitPlaying);
+	mStateMachine.addState(emLoginState_None,			5000, &CLoginPlayer::processStateNone);
+	mStateMachine.addState(emLoginState_AccountVerify,	5000, &CLoginPlayer::processAccountVerify);
+	mStateMachine.addState(emLoginState_WaitCreateRole, 30000, &CLoginPlayer::processWaitCreateRole);
+	mStateMachine.addState(emLoginState_CreateRoleing,	5000, &CLoginPlayer::processCreateRoleing);
+	//mStateMachine.addState(emLoginState_WaitEnterGame,	10, &CLoginPlayer::processWaitEnterGame);
+	//mStateMachine.addState(emLoginState_Playing,		10, &CLoginPlayer::processWaitPlaying);
 }
 
 void CLoginPlayer::checkState()
@@ -38,7 +38,7 @@ int CLoginPlayer::processStateNone()
 	setChannelID(pLoginRequest->channelid());
 	setServerID(pLoginRequest->serverid());
 
-	CDBModule::Inst()->pushDBTask(getObjID(), emSessionType_AccountVerify,0, 0, "call CheckUserName('%s', %d, %d)", 
+	CDBModule::Inst()->pushDBTask(0, emSessionType_AccountVerify,getObjID(), 0, "call CheckUserName('%s', %d, %d)", 
 		pLoginRequest->name().c_str(), pLoginRequest->channelid(), pLoginRequest->serverid());
 	return emLoginState_AccountVerify;
 }
@@ -67,7 +67,7 @@ int CLoginPlayer::processAccountVerify()
 	}
 	else
 	{
-		return emLoginState_WaitEnterGame;
+		return emLoginState_LoginComplete;
 	}
 }
 
@@ -90,7 +90,7 @@ int CLoginPlayer::processWaitCreateRole()
 		return -1;
 	}
 
-	CDBModule::Inst()->pushDBTask(getObjID(), emSessionType_CreateRole, 0, 0, "call CreateRole(%d, '%s', %d, %d, %d)",
+	CDBModule::Inst()->pushDBTask(0, emSessionType_CreateRole, getObjID(), 0, "call CreateRole(%d, '%s', %d, %d, %d)",
 	pCreateRoleRequest->rolename().c_str(), mAccountID, mChannelID, mServerID);
 
 	return emLoginState_CreateRoleing;
@@ -110,51 +110,7 @@ int CLoginPlayer::processCreateRoleing()
 	tCreateRoleResponse.set_roleid(mRoleID);
 	CSceneJob::Inst()->send2Player(mExchangeHead, ID_S2C_RESPONSE_CREATE_ROLE, &tCreateRoleResponse);
 
-	return emLoginState_WaitEnterGame;
-}
-
-int CLoginPlayer::processWaitEnterGame()
-{
-	if (NULL == mClientMessage || ID_C2S_REQUEST_ENTER_SCENE != mClientMessageID)
-	{
-		return -1;
-	}
-	CEnterSceneRequest* pEnterSceneRequest = reinterpret_cast<CEnterSceneRequest*>(mClientMessage);
-	if (NULL == pEnterSceneRequest)
-	{
-		return -1;
-	}
-
-	if (mServerID != pEnterSceneRequest->serverid()
-		|| mChannelID != pEnterSceneRequest->channelid()
-		|| mAccountID != pEnterSceneRequest->accountid())
-	{
-		return -1;
-	}
-
-	CEntityPlayer* pNewPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->allocObj(emObjType_Entity_Player));
-	if (NULL == pNewPlayer)
-	{
-		return -1;
-	}
-
-	pNewPlayer->setRoleID(pEnterSceneRequest->roleid());
-	pNewPlayer->setLastSaveTime(CGameServer::Inst()->GetCurrTime());
-	CDBModule::Inst()->pushDBTask(getObjID(), emSessionType_LoadPlayerInfo, 0, 0, "call LoadPlayerInfo(%d)", mRoleID);
-	return emLoginState_Playing;
-}
-int CLoginPlayer::processWaitPlaying()
-{
-	if (NULL == mDBResponse || emSessionType_LoadPlayerInfo != mDBSessionType)
-	{
-		return -1;
-	}
-
-	CEnterSceneResponse tEnterSceneResponse;
-	tEnterSceneResponse.set_result(0);
-	CSceneJob::Inst()->send2Player(mExchangeHead, ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
-
-	return emLoginState_None;
+	return emLoginState_LoginComplete;
 }
 
 bool CLoginPlayer::elapse(unsigned int nTickOffset)

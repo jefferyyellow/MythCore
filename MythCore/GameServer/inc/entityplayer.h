@@ -79,16 +79,15 @@ public:
 	void			setMetier(int nMetier){mTempID = nMetier;}
 
 	/// 与TCP交换用的头
-	CExchangeHead	GetExhangeHead(){ return mExhangeHead; }
 
-	time_t			getLastSaveTime() const
-	{
-		return mLastSaveTime;
-	}
-	void			setLastSaveTime(time_t val)
-	{
-		mLastSaveTime = val;
-	}
+	CExchangeHead&	GetExhangeHead(){ return mExhangeHead; }
+
+	time_t			getLastSaveTime() const{return mLastSaveTime;}
+	void			setLastSaveTime(time_t val)	{mLastSaveTime = val;}
+
+	EmPlayerStatus getPlayerStauts(){ return mPlayerStauts;	}
+	void setPlayerStauts(EmPlayerStatus val){ mPlayerStauts = val;}
+
 
 	/// 各种单元
 	/// 属性单元
@@ -120,6 +119,7 @@ private:
 	CBaseProperty	mBaseProperty[emPropertyTypeMax];
 	/// 上次存盘的时间
 	time_t			mLastSaveTime;
-
+	/// 玩家状态
+	EmPlayerStatus	mPlayerStauts;
 };
 #endif 

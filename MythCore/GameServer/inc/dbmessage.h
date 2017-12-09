@@ -61,6 +61,14 @@ public:
 		return tInt;
 	}
 
+	sint64 getInt64()
+	{
+		sint64 tInt64 = atoll((const char*)mpValue);
+		mpValue += (*mpLength + 1);
+		++mpLength;
+		return tInt64;
+	} 
+
 	void	getString(char* pDest, unsigned int nSize)
 	{
 		if (nSize <= *mpLength)
@@ -73,8 +81,14 @@ public:
 		mpValue += (*mpLength + 1);
 		++mpLength;
 	}
-
-
+	/// 数据
+	byte* getValue()const{return mpValue;}
+	void setValue(byte* val){mpValue = val;}
+	/// 数据长度
+	unsigned long* getLength()const{return mpLength;}
+	void setLength(unsigned long* val){mpLength = val;}
+	/// 增加长度
+	void increaseLength(){ ++mpLength;}
 public:
 	byte				mSqlBuffer[65000];		// 数据缓冲区
 	// 下面一定要在最后面,只有在CSceneJob中解析字段的时候才需要
@@ -86,9 +100,10 @@ public:
 enum EmSessionType
 {
 	emSessionType_None					= 0,
-	emSessionType_AccountVerify			= 1,
-	emSessionType_CreateRole			= 2,
-	emSessionType_LoadPlayerInfo		= 3,
+	emSessionType_AccountVerify			= 1,			// 账号校验
+	emSessionType_CreateRole			= 2,			// 创建角色
+	emSessionType_LoadPlayerInfo		= 3,			// 加载玩家信息
+	emSessionType_LoadPlayerBaseProperty= 4,			// 加载玩家属性
 };
 
 
