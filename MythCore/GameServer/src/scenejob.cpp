@@ -29,11 +29,7 @@ void CSceneJob::doing(int uParam)
 	int nElapseTime = (int)(CGameServer::Inst()->GetCurrTime() - mLastTimerTick);
 	if (nElapseTime > 100)
 	{
-		LOGIC_MODULE_LIST::iterator it = mLogicModuleList.begin();
-		for (; it != mLogicModuleList.end(); ++ it)
-		{
-			(*it)->OnTimer(nElapseTime);
-		}
+		OnTimer(nElapseTime);
 		mLastTimerTick = CGameServer::Inst()->GetCurrTime();
 	}
 }
@@ -293,4 +289,80 @@ bool CSceneJob::onPlayerLogin(CEntityPlayer* pNewPlayer)
 		}
 
 	return true;
+}
+
+/// 时间函数
+void CSceneJob::OnTimer(unsigned int nTickOffset)
+{
+	LOGIC_MODULE_LIST::iterator it = mLogicModuleList.begin();
+	for (; it != mLogicModuleList.end(); ++it)
+	{
+		(*it)->OnTimer(nTickOffset);
+	}
+
+	time_t tTimeNow = CGameServer::Inst()->GetCurrTime();
+	int nSavePlayerCount = 0;
+	PLAYER_LIST::iterator tPlayerIt = mPlayerList.begin();
+	for (; tPlayerIt != mPlayerList.end(); ++tPlayerIt)
+	{
+		CEntityPlayer* pPlayer = (CEntityPlayer*)CObjPool::Inst()->getObj(tPlayerIt->second);
+		if (NULL == pPlayer)
+		{
+			LOG_ERROR("player charid  %d don't exist", tPlayerIt->first );
+			continue;
+		}
+
+		// 游戏里面
+		if (pPlayer->getPlayerStauts() == emPlayerStatus_Gameing)
+		{
+			if (tTimeNow - pPlayer->getLastSaveTime() > 60)
+			{
+				SavePlayer(pPlayer);
+				pPlayer->setLastSaveTime(tTimeNow);
+				++ nSavePlayerCount;
+				if (nSavePlayerCount >= 50)
+				{
+					break;
+				}
+			}
+		}
+		else
+		{
+		}
+
+	}
+}
+
+
+/// 玩家存盘
+void CSceneJob::SavePlayer(CEntityPlayer* pPlayer)
+{
+	if (NULL == pPlayer)
+	{
+		return;
+	}
+	SavePlayerInfo(pPlayer);
+	SavePlayerBaseProperty(pPlayer);
+}
+
+void CSceneJob::SavePlayerInfo(CEntityPlayer* pPlayer)
+{
+	if (NULL == pPlayer)
+	{
+		return;
+	}
+
+	CDBModule::Inst()->pushDBTask(pPlayer->getRoleID(), emSessionType_SavePlayerInfo, pPlayer->getObjID(), 0, 
+		"call UpdatePlayerInfo(%d,%lld,%d,%d,%d,%d)",
+		pPlayer->GetPropertyUnit().getLevel(), pPlayer->GetPropertyUnit().getRoleExp(), 
+		pPlayer->GetPropertyUnit().getVIPLevel(), pPlayer->GetPropertyUnit().GetVIPExp(),
+		pPlayer->GetItemUnit().getMoney(), pPlayer->GetItemUnit().getDiamond());
+}
+
+void CSceneJob::SavePlayerBaseProperty(CEntityPlayer* pPlayer)
+{
+	if (NULL == pPlayer)
+	{
+		return;
+	}
 }

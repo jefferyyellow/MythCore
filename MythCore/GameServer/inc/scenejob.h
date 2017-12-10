@@ -49,7 +49,14 @@ public:
 	void		send2Player(CEntityPlayer* pPlayer, unsigned short nMessageID, Message* pMessage);
 	/// 登录了一个玩家（只是登录校验完成，数据还没有加载完成）
 	bool		onPlayerLogin(CEntityPlayer* pNewPlayer);
-
+	/// 时间函数
+	void		OnTimer(unsigned int nTickOffset);
+	/// 玩家存盘
+	void		SavePlayer(CEntityPlayer* pPlayer);
+	/// 保存玩家信息
+	void		SavePlayerInfo(CEntityPlayer* pPlayer);
+	/// 保存玩家基本属性
+	void		SavePlayerBaseProperty(CEntityPlayer* pPlayer);
 private:
 	void		onTask(CInternalMsg* pMsg);
 	/// 处理前端消息

@@ -104,6 +104,8 @@ enum EmSessionType
 	emSessionType_CreateRole			= 2,			// 创建角色
 	emSessionType_LoadPlayerInfo		= 3,			// 加载玩家信息
 	emSessionType_LoadPlayerBaseProperty= 4,			// 加载玩家属性
+	emSessionType_SavePlayerInfo		= 5,			// 保存玩家属性
+	emSessionType_SavePlayerBaseProperty= 6,			// 保存玩家基础属性
 };
 
 

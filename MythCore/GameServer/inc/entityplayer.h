@@ -82,12 +82,23 @@ public:
 
 	CExchangeHead&	GetExhangeHead(){ return mExhangeHead; }
 
+	/// 上次的存储时间
 	time_t			getLastSaveTime() const{return mLastSaveTime;}
 	void			setLastSaveTime(time_t val)	{mLastSaveTime = val;}
 
-	EmPlayerStatus getPlayerStauts(){ return mPlayerStauts;	}
-	void setPlayerStauts(EmPlayerStatus val){ mPlayerStauts = val;}
+	/// 玩家状态
+	byte			getPlayerStauts(){ return mPlayerStauts;	}
+	void			setPlayerStauts(byte val){ mPlayerStauts = val;}
 
+	/// 存储状态
+	byte			getSaveStatus()const{return mSaveStatus;}
+	void			setSaveStatus(byte val){mSaveStatus = val;}
+	void			setSaveStatusBit(byte val){mSaveStatus |= val;}
+
+	/// 加载状态
+	byte			getLoadStatus()const{return mLoadStatus;}
+	void			setLoadStatus(byte val){mLoadStatus = val;}
+	void			setLoadStatusBit(byte val){mLoadStatus |= val;}
 
 	/// 各种单元
 	/// 属性单元
@@ -120,6 +131,10 @@ private:
 	/// 上次存盘的时间
 	time_t			mLastSaveTime;
 	/// 玩家状态
-	EmPlayerStatus	mPlayerStauts;
+	byte			mPlayerStauts;
+	/// 玩家存储状态
+	byte			mSaveStatus;
+	/// 玩家加载状态
+	byte			mLoadStatus;
 };
 #endif 

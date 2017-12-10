@@ -24,4 +24,20 @@ enum EmPlayerStatus
 	emPlayerStatus_Gameing		= 2,	// 游戏状态
 	emPlayerStatus_Exiting		= 3,	// 退出状态
 };
+
+enum EmPlayerSaveStatus
+{
+	emSaveStatus_None			= 0x0000,	// 玩家没有保存成功任何一部分数据
+	emSaveStatus_Info			= 0x0001,	// 已经保存成功主要信息部分
+	emSaveStatus_BaseProperty	= 0x0002,	// 已经保存成功基础属性部分
+	emSaveStatusAll				= 0x0003,	// 所有的都已经存盘完成
+};
+
+enum EmPlayerLoadStatus
+{
+	emLoadStatus_None			= 0x0000,	// 玩家没有加载成功任何一部分数据
+	emLoadStatus_Info			= 0x0001,	// 已经加载成功主要信息部分
+	emLoadStatus_BaseProperty	= 0x0002,	// 已经加载成功基础属性部分
+	emLoadStatusAll				= 0x0003,	// 所有的都已经加载完成
+};
 #endif

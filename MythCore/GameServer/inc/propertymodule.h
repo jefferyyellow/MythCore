@@ -35,6 +35,8 @@ public:
 	void			onLoadPlayerInfo(CDBResponse& rResponse);
 	/// 加载玩家基础属性
 	void			onLoadPlayerBaseProperty(CDBResponse& rResponse);
+	/// 玩家属性加载完成
+	void			onLoadComplete(CEntityPlayer* pPlayer);
 public:
 	CGMCommandManager&		getGMCmdManager(){return mGMCmdManager;}
 

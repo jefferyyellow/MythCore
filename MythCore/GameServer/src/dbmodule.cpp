@@ -1,6 +1,8 @@
 #include "dbmodule.h"
 #include "gameserver.h"
 #include "propertymodule.h"
+#include "objpool.h"
+#include "entityplayer.h"
 void CDBModule::OnTimer(unsigned int nTickOffset)
 {
 
@@ -44,6 +46,34 @@ void CDBModule::onDBSession()
 		case emSessionType_LoadPlayerBaseProperty:
 		{
 			CPropertyModule::Inst()->onLoadPlayerBaseProperty(mDBResponse);
+			break;
+		}
+		case emSessionType_SavePlayerInfo:
+		{
+			if (mDBResponse.mResult != 0)
+			{
+				// ´æÅÌÊ§°Ü
+				break;
+			}
+			CEntityPlayer* pPlayer = (CEntityPlayer*)CObjPool::Inst()->getObj(mDBResponse.mParam1);
+			if (NULL != pPlayer)
+			{
+				pPlayer->setSaveStatus(emSaveStatus_Info);
+			}
+			break;
+		}
+		case emSessionType_SavePlayerBaseProperty:
+		{
+			if (mDBResponse.mResult != 0)
+			{
+				// ´æÅÌÊ§°Ü
+				break;
+			}
+			CEntityPlayer* pPlayer = (CEntityPlayer*)CObjPool::Inst()->getObj(mDBResponse.mParam1);
+			if (NULL != pPlayer)
+			{
+				pPlayer->setSaveStatus(emSaveStatus_BaseProperty);
+			}
 			break;
 		}
 	}

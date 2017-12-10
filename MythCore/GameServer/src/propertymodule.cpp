@@ -26,8 +26,6 @@ void CPropertyModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMess
 }
 
 
-
-
 // GM命令请求
 void CPropertyModule::onMessageGMCommandRequest(CEntityPlayer* pPlayer, Message* pMessage)
 {
@@ -67,6 +65,8 @@ void CPropertyModule::onLoadPlayerInfo(CDBResponse& rResponse)
 
 	pPlayer->GetItemUnit().setMoney(rResponse.getInt());
 	pPlayer->GetItemUnit().setDiamond(rResponse.getInt());
+
+	pPlayer->setLoadStatusBit(emLoadStatus_Info);
 }
 
 /// 加载玩家基础属性
@@ -74,6 +74,17 @@ void CPropertyModule::onLoadPlayerBaseProperty(CDBResponse& rResponse)
 {
 	CEntityPlayer* pPlayer = (CEntityPlayer*)CObjPool::Inst()->getObj(rResponse.mParam1);
 	if (NULL == pPlayer)
+	{
+		return;
+	}
+	pPlayer->setLoadStatusBit(emLoadStatus_BaseProperty);
+}
+
+/// 玩家属性加载完成
+void CPropertyModule::onLoadComplete(CEntityPlayer* pPlayer)
+{
+	// 玩家属性是否加载完成
+	if (NULL == pPlayer || emLoadStatusAll != pPlayer->getLoadStatus())
 	{
 		return;
 	}

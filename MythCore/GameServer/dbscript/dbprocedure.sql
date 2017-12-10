@@ -79,3 +79,25 @@ BEGIN
 END
 ;;
 DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS `UpdatePlayerInfo`;
+DELIMITER ;;
+CREATE PROCEDURE `UpdatePlayerInfo`(tLevel smallint UNSIGNED, 
+									tExp bigint UNSIGNED,
+									tVipLevel tinyint,
+									tVipExp int,
+									tMoney int,
+									tDiamond int)
+BEGIN
+	update PlayerRole set
+		level = tLevel,
+		exp = tExp,
+		vip_level = tVipLevel,
+		vip_exp = tVipExp,
+		money = tMoney,
+		diamond = tDiamond
+	WHERE role_id=RoleID;
+END
+;;
+DELIMITER ;
