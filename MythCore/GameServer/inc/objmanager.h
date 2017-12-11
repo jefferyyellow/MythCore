@@ -23,6 +23,7 @@ public:
 		{
 			return NULL;
 		}
+		new (pNode)T;
 		int nID = generalID(nMemIndex);
 		pNode->setObjID(nID);
 		return pNode;

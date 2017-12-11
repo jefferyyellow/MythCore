@@ -3,10 +3,10 @@ CREATE TABLE `PlayerAccount` (
 	`account_id`			int(11) UNSIGNED			NOT NULL AUTO_INCREMENT,
 	`channel_id`			smallint(11) UNSIGNED		NOT NULL,
 	`server_id`				smallint(11) UNSIGNED		NOT NULL,
-	`user_name`				char(32) NOT NULL,
-	`create_time`			timestamp NOT NULL,
+	`user_name`				char(32)					NOT NULL,
+	`create_time`			timestamp					NOT NULL,
 	PRIMARY KEY(`account_id`, `channel_id`, `server_id`)
-) ENGINE=INNODB;
+)ENGINE=INNODB;
 
 DROP TABLE IF EXISTS `PlayerRole`;
 CREATE TABLE `PlayerRole` (
@@ -21,7 +21,7 @@ CREATE TABLE `PlayerRole` (
 	`vip_exp`				int(11) UNSIGNED			NOT NULL DEFAULT '0',
 	`money`					int(11) UNSIGNED			NOT NULL DEFAULT '0',
 	`diamond`				int(11) UNSIGNED			NOT NULL DEFAULT '0',
-	`LastOffTime`			timestamp					NOT NULL DEFAULT '0',
+	`LastOffTime`			timestamp					NOT NULL DEFAULT  0,
 	PRIMARY KEY(`role_id`),
 	KEY `IDX_ROLE_BY_ACCOUT_ID` (`account_id`)
 )ENGINE=INNODB;
@@ -31,6 +31,5 @@ CREATE TABLE `PlayerBaseProperty` (
 	`role_id`				int(11) UNSIGNED			NOT NULL,
 	`bag`					blob						DEFAULT NULL,
 	`task`					blob						DEFAULT NULL,
-	PRIMARY KEY(`role_id`),
-	KEY `IDX_ROLE_BY_ACCOUT_ID` (`account_id`)
+	PRIMARY KEY(`role_id`)
 )ENGINE=INNODB;

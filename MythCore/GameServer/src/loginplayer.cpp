@@ -8,10 +8,10 @@
 void CLoginPlayer::init()
 {
 	mStateMachine.init(this, emLoginState_None);
-	mStateMachine.addState(emLoginState_None,			5000, &CLoginPlayer::processStateNone);
-	mStateMachine.addState(emLoginState_AccountVerify,	5000, &CLoginPlayer::processAccountVerify);
-	mStateMachine.addState(emLoginState_WaitCreateRole, 30000, &CLoginPlayer::processWaitCreateRole);
-	mStateMachine.addState(emLoginState_CreateRoleing,	5000, &CLoginPlayer::processCreateRoleing);
+	mStateMachine.addState(emLoginState_None,			5, &CLoginPlayer::processStateNone);
+	mStateMachine.addState(emLoginState_AccountVerify,	5, &CLoginPlayer::processAccountVerify);
+	mStateMachine.addState(emLoginState_WaitCreateRole, 10, &CLoginPlayer::processWaitCreateRole);
+	mStateMachine.addState(emLoginState_CreateRoleing,	5, &CLoginPlayer::processCreateRoleing);
 	//mStateMachine.addState(emLoginState_WaitEnterGame,	10, &CLoginPlayer::processWaitEnterGame);
 	//mStateMachine.addState(emLoginState_Playing,		10, &CLoginPlayer::processWaitPlaying);
 }
@@ -33,6 +33,7 @@ int CLoginPlayer::processStateNone()
 	{
 		return -1;
 	}
+	printf("\nCLoginPlayer::processStateNone\n");
 
 	setAccountName(pLoginRequest->name().c_str());
 	setChannelID(pLoginRequest->channelid());
@@ -45,6 +46,8 @@ int CLoginPlayer::processStateNone()
 
 int CLoginPlayer::processAccountVerify()
 {
+	printf("\nprocessStateNone\n");
+
 	if (NULL == mDBResponse || emSessionType_AccountVerify != mDBSessionType)
 	{
 		return -1;
@@ -59,7 +62,7 @@ int CLoginPlayer::processAccountVerify()
 	tLoginResponse.set_channelid(mChannelID);
 	tLoginResponse.set_serverid(mServerID);
 	tLoginResponse.set_roleid(mRoleID);
-
+	printf("\nCLoginPlayer::processAccountVerify\n");
 	CSceneJob::Inst()->send2Player(mExchangeHead, ID_S2C_RESPONSE_LOGIN, &tLoginResponse);
 	if (mRoleID == 0)
 	{

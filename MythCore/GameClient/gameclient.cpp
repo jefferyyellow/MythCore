@@ -14,6 +14,7 @@ CGameClient::CGameClient()
 /// ≥ı ºªØ
 bool CGameClient::init()
 {
+	CMessageFactory::CreateInst();
 	CSelectModel::initSocketSystem();
 	mTcpSocket.createSocket();
 	int nResult = mTcpSocket.connectServer("127.0.0.1", 6688);
@@ -24,7 +25,7 @@ bool CGameClient::init()
 	mTcpSocket.setRecvBuff(mTcpRecData);
 	mTcpSocket.setRecvBuffSize(0);
 	mTcpSocket.setMaxRecvBuffSize(sizeof(mTcpRecData));
-	mSelectModel.addNewSocket(&mTcpSocket, 0);
+	mSelectModel.addNewSocket(&mTcpSocket, 0);\
 	return true;
 }
 
@@ -86,17 +87,17 @@ void CGameClient::run()
 
 void CGameClient::LoginServer()
 {
-	char acName[256] = {0};
-	for (int i = 0; i < 1000; ++ i)
-	{
+	//char acName[256] = {0};
+	//for (int i = 0; i < 1000; ++ i)
+	//{
 		CLoginRequest tLoginRequest;
-		snprintf(acName, sizeof(acName), "hjh%d", i);
-		tLoginRequest.set_name(acName);
+		//snprintf(acName, sizeof(acName), "hjh%d", i);
+		tLoginRequest.set_name("hjh");
 		tLoginRequest.set_channelid(1);
 		tLoginRequest.set_serverid(1);
 		sendMessage(ID_C2S_REQUEST_LOGIN, &tLoginRequest);
-		Sleep(100);
-	}
+		//Sleep(100);
+	//}
 
 }
 

@@ -26,11 +26,11 @@ void CSceneJob::doing(int uParam)
 		CInternalMsgPool::Inst()->freeMsg(pIMMsg);
 	}
 
-	int nElapseTime = (int)(CGameServer::Inst()->GetCurrTime() - mLastTimerTick);
+	int nElapseTime = (int)(CGameServer::Inst()->getTickCount() - mLastTimerTick);
 	if (nElapseTime > 100)
 	{
 		OnTimer(nElapseTime);
-		mLastTimerTick = CGameServer::Inst()->GetCurrTime();
+		mLastTimerTick = CGameServer::Inst()->getTickCount();
 	}
 }
 
@@ -50,7 +50,7 @@ void CSceneJob::onTask(CInternalMsg* pMsg)
 bool CSceneJob::init(int nDBBuffSize)
 {
 	// 初始化时间变量
-	mLastTimerTick = CGameServer::Inst()->GetCurrTime();
+	mLastTimerTick = CGameServer::Inst()->getTickCount();
 
 	bool bResult = initShareMemory();
 	if (!bResult)

@@ -75,7 +75,7 @@ DROP PROCEDURE IF EXISTS `LoadPlayerBaseProperty`;
 DELIMITER ;;
 CREATE PROCEDURE `LoadPlayerBaseProperty`(RoleID int unsigned)
 BEGIN
-	select bag, task, from PlayerBaseProperty WHERE role_id=RoleID;
+	select bag, task from PlayerBaseProperty WHERE role_id=RoleID;
 END
 ;;
 DELIMITER ;

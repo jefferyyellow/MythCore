@@ -16,6 +16,8 @@ CTcpServer::~CTcpServer()
 /// ³õÊ¼»¯
 bool CTcpServer::init()
 {
+	mCurrTime = time(NULL);
+
 	bool bResult = initLog();
 	if (!bResult)
 	{
@@ -37,7 +39,6 @@ bool CTcpServer::init()
 	}
 
 	bResult = initSocket();
-	mCurrTime = time(NULL);
 	return true;
 }
 
@@ -219,7 +220,7 @@ bool CTcpServer::initSocket()
 	}
 	mEpollModel->initEpollSocket();
 
-	time_t tNowTime = CTimeManager::Inst()->GetCurrTime();
+	time_t tNowTime = GetCurrTime();
 	for (int i = 0; i < MAX_LISTEN_PORT_NUM; ++ i)
 	{
 		if (mTcpConfig.mListenPort[i] == 0)
@@ -463,7 +464,7 @@ void CTcpServer::receiveMessage()
 			pNewSocket->setMaxRecvBuffSize(MAX_SOCKET_BUFF_SIZE);
 			pNewSocket->setRecvBuffSize(0);
 
-			time_t tNowTime = CTimeManager::Inst()->GetCurrTime();
+			time_t tNowTime = GetCurrTime();  
 			int nFd = pNewSocket->getSocketFd();
 			if (nFd>= 0 && nFd < MAX_SOCKET_NUM)
 			{
