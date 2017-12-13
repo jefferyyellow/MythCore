@@ -7,7 +7,7 @@ public:
 	CLogicModule()
 	{}
 
-	~CLogicModule()
+	virtual ~CLogicModule()
 	{}
 public:
 	/// Ê±¼äº¯Êý

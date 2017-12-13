@@ -5,10 +5,48 @@
 #include "scenejob.h"
 #include "locallogjob.h"
 #include "dbmessage.h"
+#include "gameserver.h"
+#include "dbmodule.h"
+CPropertyModule::CPropertyModule()
+:mSavePlayerTimer(1000)
+{
+	
+}
+
 /// 时间函数
 void CPropertyModule::OnTimer(unsigned int nTickOffset)
 {
+	if (mSavePlayerTimer.elapse(nTickOffset))
+	{
+		time_t tTimeNow = CGameServer::Inst()->GetCurrTime();
+		int nSavePlayerCount = 0;
+		CSceneJob::PLAYER_LIST rPlayerList = CSceneJob::Inst()->getPlayerList();
+		CSceneJob::PLAYER_LIST::iterator tPlayerIt = rPlayerList.begin();
+		for (; tPlayerIt != rPlayerList.end(); ++tPlayerIt)
+		{
+			CEntityPlayer* pPlayer = (CEntityPlayer*)CObjPool::Inst()->getObj(tPlayerIt->second);
+			if (NULL == pPlayer)
+			{
+				LOG_ERROR("player charid  %d don't exist", tPlayerIt->first);
+				continue;
+			}
 
+			// 游戏里面
+			if (pPlayer->getPlayerStauts() == emPlayerStatus_Gameing)
+			{
+				if (tTimeNow - pPlayer->getLastSaveTime() > 60)
+				{
+					SavePlayer(pPlayer);
+					pPlayer->setLastSaveTime(tTimeNow);
+					++nSavePlayerCount;
+					if (nSavePlayerCount >= 50)
+					{
+						break;
+					}
+				}
+			}
+		}
+	}
 }
 
 void CPropertyModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)
@@ -89,4 +127,38 @@ void CPropertyModule::onLoadComplete(CEntityPlayer* pPlayer)
 		return;
 	}
 
+}
+
+
+/// 玩家存盘
+void CPropertyModule::SavePlayer(CEntityPlayer* pPlayer)
+{
+	if (NULL == pPlayer)
+	{
+		return;
+	}
+	SavePlayerInfo(pPlayer);
+	SavePlayerBaseProperty(pPlayer);
+}
+
+void CPropertyModule::SavePlayerInfo(CEntityPlayer* pPlayer)
+{
+	if (NULL == pPlayer)
+	{
+		return;
+	}
+
+	CDBModule::Inst()->pushDBTask(pPlayer->getRoleID(), emSessionType_SavePlayerInfo, pPlayer->getObjID(), 0,
+		"call UpdatePlayerInfo(%d,%lld,%d,%d,%d,%d)",
+		pPlayer->GetPropertyUnit().getLevel(), pPlayer->GetPropertyUnit().getRoleExp(),
+		pPlayer->GetPropertyUnit().getVIPLevel(), pPlayer->GetPropertyUnit().GetVIPExp(),
+		pPlayer->GetItemUnit().getMoney(), pPlayer->GetItemUnit().getDiamond());
+}
+
+void CPropertyModule::SavePlayerBaseProperty(CEntityPlayer* pPlayer)
+{
+	if (NULL == pPlayer)
+	{
+		return;
+	}
 }

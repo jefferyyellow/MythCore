@@ -38,6 +38,8 @@ void protobuf_ShutdownFile_propertymodule_2ehxx();
 
 class CGMCommandRequest;
 class CGMCommandResponse;
+class CLeaveGameRequest;
+class CLeaveGameResponse;
 class CLevelUpNotify;
 class CObtainExpNotify;
 class CObtainVIPExpNotify;
@@ -47,12 +49,16 @@ enum PROPERTY_MODULE_MSG_ID {
   ID_S2C_NOTIYF_LEVEL_UP = 1024,
   ID_C2S_REQUEST_GM_COMMAND = 1025,
   ID_S2C_RESPONSE_GM_COMMAND = 1026,
+  ID_S2C_NOTIFY_OBTAIN_EXP = 1027,
+  ID_S2C_NOTIFY_OBTAIN_VIP_EXP = 1028,
+  ID_C2S_REQUEST_LEAVE_GAME = 1029,
+  ID_S2C_RESPONSE_LEAVE_GAME = 1030,
   PROPERTY_MODULE_MSG_ID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   PROPERTY_MODULE_MSG_ID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool PROPERTY_MODULE_MSG_ID_IsValid(int value);
 const PROPERTY_MODULE_MSG_ID PROPERTY_MODULE_MSG_ID_MIN = ID_PROPERTY_MODULE_ERROR;
-const PROPERTY_MODULE_MSG_ID PROPERTY_MODULE_MSG_ID_MAX = ID_S2C_RESPONSE_GM_COMMAND;
+const PROPERTY_MODULE_MSG_ID PROPERTY_MODULE_MSG_ID_MAX = ID_S2C_RESPONSE_LEAVE_GAME;
 const int PROPERTY_MODULE_MSG_ID_ARRAYSIZE = PROPERTY_MODULE_MSG_ID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* PROPERTY_MODULE_MSG_ID_descriptor();
@@ -493,6 +499,164 @@ class CObtainVIPExpNotify : public ::google::protobuf::Message /* @@protoc_inser
 };
 extern ::google::protobuf::internal::ExplicitlyConstructed<CObtainVIPExpNotify> CObtainVIPExpNotify_default_instance_;
 
+// -------------------------------------------------------------------
+
+class CLeaveGameRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CLeaveGameRequest) */ {
+ public:
+  CLeaveGameRequest();
+  virtual ~CLeaveGameRequest();
+
+  CLeaveGameRequest(const CLeaveGameRequest& from);
+
+  inline CLeaveGameRequest& operator=(const CLeaveGameRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CLeaveGameRequest& default_instance();
+
+  static const CLeaveGameRequest* internal_default_instance();
+
+  void Swap(CLeaveGameRequest* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CLeaveGameRequest* New() const { return New(NULL); }
+
+  CLeaveGameRequest* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CLeaveGameRequest& from);
+  void MergeFrom(const CLeaveGameRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CLeaveGameRequest* other);
+  void UnsafeMergeFrom(const CLeaveGameRequest& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:CLeaveGameRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_propertymodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_propertymodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_propertymodule_2ehxx();
+  friend void protobuf_ShutdownFile_propertymodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CLeaveGameRequest> CLeaveGameRequest_default_instance_;
+
+// -------------------------------------------------------------------
+
+class CLeaveGameResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CLeaveGameResponse) */ {
+ public:
+  CLeaveGameResponse();
+  virtual ~CLeaveGameResponse();
+
+  CLeaveGameResponse(const CLeaveGameResponse& from);
+
+  inline CLeaveGameResponse& operator=(const CLeaveGameResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CLeaveGameResponse& default_instance();
+
+  static const CLeaveGameResponse* internal_default_instance();
+
+  void Swap(CLeaveGameResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CLeaveGameResponse* New() const { return New(NULL); }
+
+  CLeaveGameResponse* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CLeaveGameResponse& from);
+  void MergeFrom(const CLeaveGameResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CLeaveGameResponse* other);
+  void UnsafeMergeFrom(const CLeaveGameResponse& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:CLeaveGameResponse)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_propertymodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_propertymodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_propertymodule_2ehxx();
+  friend void protobuf_ShutdownFile_propertymodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CLeaveGameResponse> CLeaveGameResponse_default_instance_;
+
 // ===================================================================
 
 
@@ -618,7 +782,25 @@ inline const CObtainExpNotify* CObtainExpNotify::internal_default_instance() {
 inline const CObtainVIPExpNotify* CObtainVIPExpNotify::internal_default_instance() {
   return &CObtainVIPExpNotify_default_instance_.get();
 }
+// -------------------------------------------------------------------
+
+// CLeaveGameRequest
+
+inline const CLeaveGameRequest* CLeaveGameRequest::internal_default_instance() {
+  return &CLeaveGameRequest_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
+// CLeaveGameResponse
+
+inline const CLeaveGameResponse* CLeaveGameResponse::internal_default_instance() {
+  return &CLeaveGameResponse_default_instance_.get();
+}
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

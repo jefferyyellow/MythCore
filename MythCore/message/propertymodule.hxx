@@ -5,9 +5,13 @@ syntax = "proto3";
 enum PROPERTY_MODULE_MSG_ID
 {
 	ID_PROPERTY_MODULE_ERROR			= 0x0;
-	ID_S2C_NOTIYF_LEVEL_UP				= 0x0400;		// 服务器->客户端 玩家升级通知
-	ID_C2S_REQUEST_GM_COMMAND			= 0x0401;		// 客户端->服务器 玩家GM命令请求
-	ID_S2C_RESPONSE_GM_COMMAND			= 0x0402;		// 服务器->客户端 玩家GM命令回应
+	ID_S2C_NOTIYF_LEVEL_UP				= 0x0400;		// 玩家升级通知
+	ID_C2S_REQUEST_GM_COMMAND			= 0x0401;		// 玩家GM命令请求
+	ID_S2C_RESPONSE_GM_COMMAND			= 0x0402;		// 玩家GM命令回应
+	ID_S2C_NOTIFY_OBTAIN_EXP			= 0x0403;		// 获得经验通知
+	ID_S2C_NOTIFY_OBTAIN_VIP_EXP		= 0x0404;		// 获得VIP经验通知
+	ID_C2S_REQUEST_LEAVE_GAME			= 0x0405;		// 离开游戏请求
+	ID_S2C_RESPONSE_LEAVE_GAME			= 0x0406;		// 离开游戏回应
 }
 
 /// 玩家升级通知 ID_S2C_NOTIYF_LEVEL_UP
@@ -38,4 +42,16 @@ message CObtainExpNotify
 message CObtainVIPExpNotify
 {
 
+}
+
+/// 玩家离开游戏的请求 ID_C2S_REQUEST_LEAVE_GAME
+message CLeaveGameRequest
+{
+	
+}
+
+/// 玩家离开游戏的回应 ID_S2C_RESPONSE_LEAVE_GAME
+message CLeaveGameResponse 
+{
+	
 }

@@ -18,6 +18,7 @@ class CEntityPlayer;
 class CLogicModule;
 class CSceneJob : public CJob < 1000, 100 >, public CSingleton<CSceneJob>
 {
+public:
 	friend class CSingleton<CSceneJob>;
 	/// 键是role id,值是obj id
 	typedef std::map<int, int> PLAYER_LIST;
@@ -51,12 +52,9 @@ public:
 	bool		onPlayerLogin(CEntityPlayer* pNewPlayer);
 	/// 时间函数
 	void		OnTimer(unsigned int nTickOffset);
-	/// 玩家存盘
-	void		SavePlayer(CEntityPlayer* pPlayer);
-	/// 保存玩家信息
-	void		SavePlayerInfo(CEntityPlayer* pPlayer);
-	/// 保存玩家基本属性
-	void		SavePlayerBaseProperty(CEntityPlayer* pPlayer);
+		/// 得到所有的玩家列表
+	PLAYER_LIST getPlayerList(){	return mPlayerList;	}
+
 private:
 	void		onTask(CInternalMsg* pMsg);
 	/// 处理前端消息
@@ -65,6 +63,7 @@ private:
 	void		dispatchClientMessage(CEntityPlayer* pPlayer, unsigned short nMessageID, Message* pMessage);
 	/// 初始化共享内存
 	bool		initShareMemory();
+
 private:
 	CShareMemory*			mShareMemory;
 	CSocketStream*			mTcp2ServerMemory;

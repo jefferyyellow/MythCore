@@ -4,6 +4,7 @@
 #include "logicmodule.h"
 #include "gmcommandmanager.h"
 #include "messagefactory.h"
+#include "timemanager.h"
 
 using namespace Myth;
 class CEntityPlayer;
@@ -12,10 +13,8 @@ class CPropertyModule : public CLogicModule, public CSingleton < CPropertyModule
 {
 	friend class CSingleton < CPropertyModule >;
 private:
-	CPropertyModule()
-	{
-	}
-	~CPropertyModule()
+	CPropertyModule();
+	virtual ~CPropertyModule()
 	{
 	}
 
@@ -37,10 +36,18 @@ public:
 	void			onLoadPlayerBaseProperty(CDBResponse& rResponse);
 	/// 玩家属性加载完成
 	void			onLoadComplete(CEntityPlayer* pPlayer);
+	/// 玩家存盘
+	void		SavePlayer(CEntityPlayer* pPlayer);
+	/// 保存玩家信息
+	void		SavePlayerInfo(CEntityPlayer* pPlayer);
+	/// 保存玩家基本属性
+	void		SavePlayerBaseProperty(CEntityPlayer* pPlayer);
+
 public:
 	CGMCommandManager&		getGMCmdManager(){return mGMCmdManager;}
 
 private:
 	CGMCommandManager		mGMCmdManager;
+	CAutoResetTimer			mSavePlayerTimer;
 };
 #endif

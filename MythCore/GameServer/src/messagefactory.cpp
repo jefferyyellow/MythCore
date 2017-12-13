@@ -29,7 +29,10 @@ Message* CMessageFactory::createClientMessage(unsigned short nMessageID)
 		CASE_NEW_MSG(CLevelUpNotify, ID_S2C_NOTIYF_LEVEL_UP)
 		CASE_NEW_MSG(CGMCommandRequest, ID_C2S_REQUEST_GM_COMMAND)
 		CASE_NEW_MSG(CGMCommandResponse, ID_S2C_RESPONSE_GM_COMMAND)
-
+		CASE_NEW_MSG(CObtainExpNotify, ID_S2C_NOTIFY_OBTAIN_EXP)
+		CASE_NEW_MSG(CObtainVIPExpNotify, ID_S2C_NOTIFY_OBTAIN_VIP_EXP)
+		CASE_NEW_MSG(CLeaveGameRequest, ID_C2S_REQUEST_LEAVE_GAME)
+		CASE_NEW_MSG(CLeaveGameResponse, ID_S2C_RESPONSE_LEAVE_GAME)
 
 		/// item module
 		CASE_NEW_MSG(CCurrencyUpdateNotify, ID_S2C_NOTIYF_CURRENCY_UPDATE)

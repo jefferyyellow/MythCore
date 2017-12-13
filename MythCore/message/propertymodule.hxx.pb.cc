@@ -34,6 +34,12 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* CObtainVIPExpNotify_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   CObtainVIPExpNotify_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CLeaveGameRequest_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CLeaveGameRequest_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CLeaveGameResponse_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CLeaveGameResponse_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* PROPERTY_MODULE_MSG_ID_descriptor_ = NULL;
 
 }  // namespace
@@ -115,6 +121,32 @@ void protobuf_AssignDesc_propertymodule_2ehxx() {
       -1,
       sizeof(CObtainVIPExpNotify),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CObtainVIPExpNotify, _internal_metadata_));
+  CLeaveGameRequest_descriptor_ = file->message_type(5);
+  static const int CLeaveGameRequest_offsets_[1] = {
+  };
+  CLeaveGameRequest_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      CLeaveGameRequest_descriptor_,
+      CLeaveGameRequest::internal_default_instance(),
+      CLeaveGameRequest_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(CLeaveGameRequest),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CLeaveGameRequest, _internal_metadata_));
+  CLeaveGameResponse_descriptor_ = file->message_type(6);
+  static const int CLeaveGameResponse_offsets_[1] = {
+  };
+  CLeaveGameResponse_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      CLeaveGameResponse_descriptor_,
+      CLeaveGameResponse::internal_default_instance(),
+      CLeaveGameResponse_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(CLeaveGameResponse),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CLeaveGameResponse, _internal_metadata_));
   PROPERTY_MODULE_MSG_ID_descriptor_ = file->enum_type(0);
 }
 
@@ -139,6 +171,10 @@ void protobuf_RegisterTypes(const ::std::string&) {
       CObtainExpNotify_descriptor_, CObtainExpNotify::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       CObtainVIPExpNotify_descriptor_, CObtainVIPExpNotify::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      CLeaveGameRequest_descriptor_, CLeaveGameRequest::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      CLeaveGameResponse_descriptor_, CLeaveGameResponse::internal_default_instance());
 }
 
 }  // namespace
@@ -154,6 +190,10 @@ void protobuf_ShutdownFile_propertymodule_2ehxx() {
   delete CObtainExpNotify_reflection_;
   CObtainVIPExpNotify_default_instance_.Shutdown();
   delete CObtainVIPExpNotify_reflection_;
+  CLeaveGameRequest_default_instance_.Shutdown();
+  delete CLeaveGameRequest_reflection_;
+  CLeaveGameResponse_default_instance_.Shutdown();
+  delete CLeaveGameResponse_reflection_;
 }
 
 void protobuf_InitDefaults_propertymodule_2ehxx_impl() {
@@ -165,11 +205,15 @@ void protobuf_InitDefaults_propertymodule_2ehxx_impl() {
   CGMCommandResponse_default_instance_.DefaultConstruct();
   CObtainExpNotify_default_instance_.DefaultConstruct();
   CObtainVIPExpNotify_default_instance_.DefaultConstruct();
+  CLeaveGameRequest_default_instance_.DefaultConstruct();
+  CLeaveGameResponse_default_instance_.DefaultConstruct();
   CLevelUpNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
   CGMCommandRequest_default_instance_.get_mutable()->InitAsDefaultInstance();
   CGMCommandResponse_default_instance_.get_mutable()->InitAsDefaultInstance();
   CObtainExpNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
   CObtainVIPExpNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CLeaveGameRequest_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CLeaveGameResponse_default_instance_.get_mutable()->InitAsDefaultInstance();
 }
 
 GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_InitDefaults_propertymodule_2ehxx_once_);
@@ -186,11 +230,16 @@ void protobuf_AddDesc_propertymodule_2ehxx_impl() {
     "\n\005Level\030\001 \001(\r\"*\n\021CGMCommandRequest\022\025\n\rCo"
     "mmandString\030\001 \001(\t\"$\n\022CGMCommandResponse\022"
     "\016\n\006Result\030\001 \001(\r\"\037\n\020CObtainExpNotify\022\013\n\003E"
-    "xp\030\001 \001(\r\"\025\n\023CObtainVIPExpNotify*\224\001\n\026PROP"
-    "ERTY_MODULE_MSG_ID\022\034\n\030ID_PROPERTY_MODULE"
-    "_ERROR\020\000\022\033\n\026ID_S2C_NOTIYF_LEVEL_UP\020\200\010\022\036\n"
-    "\031ID_C2S_REQUEST_GM_COMMAND\020\201\010\022\037\n\032ID_S2C_"
-    "RESPONSE_GM_COMMAND\020\202\010b\006proto3", 350);
+    "xp\030\001 \001(\r\"\025\n\023CObtainVIPExpNotify\"\023\n\021CLeav"
+    "eGameRequest\"\024\n\022CLeaveGameResponse*\227\002\n\026P"
+    "ROPERTY_MODULE_MSG_ID\022\034\n\030ID_PROPERTY_MOD"
+    "ULE_ERROR\020\000\022\033\n\026ID_S2C_NOTIYF_LEVEL_UP\020\200\010"
+    "\022\036\n\031ID_C2S_REQUEST_GM_COMMAND\020\201\010\022\037\n\032ID_S"
+    "2C_RESPONSE_GM_COMMAND\020\202\010\022\035\n\030ID_S2C_NOTI"
+    "FY_OBTAIN_EXP\020\203\010\022!\n\034ID_S2C_NOTIFY_OBTAIN"
+    "_VIP_EXP\020\204\010\022\036\n\031ID_C2S_REQUEST_LEAVE_GAME"
+    "\020\205\010\022\037\n\032ID_S2C_RESPONSE_LEAVE_GAME\020\206\010b\006pr"
+    "oto3", 524);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "propertymodule.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_propertymodule_2ehxx);
@@ -217,6 +266,10 @@ bool PROPERTY_MODULE_MSG_ID_IsValid(int value) {
     case 1024:
     case 1025:
     case 1026:
+    case 1027:
+    case 1028:
+    case 1029:
+    case 1030:
       return true;
     default:
       return false;
@@ -1439,6 +1492,380 @@ void CObtainVIPExpNotify::InternalSwap(CObtainVIPExpNotify* other) {
 
 inline const CObtainVIPExpNotify* CObtainVIPExpNotify::internal_default_instance() {
   return &CObtainVIPExpNotify_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+CLeaveGameRequest::CLeaveGameRequest()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_propertymodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CLeaveGameRequest)
+}
+
+void CLeaveGameRequest::InitAsDefaultInstance() {
+}
+
+CLeaveGameRequest::CLeaveGameRequest(const CLeaveGameRequest& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:CLeaveGameRequest)
+}
+
+void CLeaveGameRequest::SharedCtor() {
+  _cached_size_ = 0;
+}
+
+CLeaveGameRequest::~CLeaveGameRequest() {
+  // @@protoc_insertion_point(destructor:CLeaveGameRequest)
+  SharedDtor();
+}
+
+void CLeaveGameRequest::SharedDtor() {
+}
+
+void CLeaveGameRequest::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CLeaveGameRequest::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CLeaveGameRequest_descriptor_;
+}
+
+const CLeaveGameRequest& CLeaveGameRequest::default_instance() {
+  protobuf_InitDefaults_propertymodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<CLeaveGameRequest> CLeaveGameRequest_default_instance_;
+
+CLeaveGameRequest* CLeaveGameRequest::New(::google::protobuf::Arena* arena) const {
+  CLeaveGameRequest* n = new CLeaveGameRequest;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void CLeaveGameRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:CLeaveGameRequest)
+}
+
+bool CLeaveGameRequest::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:CLeaveGameRequest)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+  handle_unusual:
+    if (tag == 0 ||
+        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+      goto success;
+    }
+    DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+  }
+success:
+  // @@protoc_insertion_point(parse_success:CLeaveGameRequest)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:CLeaveGameRequest)
+  return false;
+#undef DO_
+}
+
+void CLeaveGameRequest::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:CLeaveGameRequest)
+  // @@protoc_insertion_point(serialize_end:CLeaveGameRequest)
+}
+
+::google::protobuf::uint8* CLeaveGameRequest::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:CLeaveGameRequest)
+  // @@protoc_insertion_point(serialize_to_array_end:CLeaveGameRequest)
+  return target;
+}
+
+size_t CLeaveGameRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CLeaveGameRequest)
+  size_t total_size = 0;
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CLeaveGameRequest::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CLeaveGameRequest)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const CLeaveGameRequest* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CLeaveGameRequest>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CLeaveGameRequest)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CLeaveGameRequest)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void CLeaveGameRequest::MergeFrom(const CLeaveGameRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CLeaveGameRequest)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void CLeaveGameRequest::UnsafeMergeFrom(const CLeaveGameRequest& from) {
+  GOOGLE_DCHECK(&from != this);
+}
+
+void CLeaveGameRequest::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CLeaveGameRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CLeaveGameRequest::CopyFrom(const CLeaveGameRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CLeaveGameRequest)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool CLeaveGameRequest::IsInitialized() const {
+
+  return true;
+}
+
+void CLeaveGameRequest::Swap(CLeaveGameRequest* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void CLeaveGameRequest::InternalSwap(CLeaveGameRequest* other) {
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata CLeaveGameRequest::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CLeaveGameRequest_descriptor_;
+  metadata.reflection = CLeaveGameRequest_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// CLeaveGameRequest
+
+inline const CLeaveGameRequest* CLeaveGameRequest::internal_default_instance() {
+  return &CLeaveGameRequest_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+CLeaveGameResponse::CLeaveGameResponse()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_propertymodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CLeaveGameResponse)
+}
+
+void CLeaveGameResponse::InitAsDefaultInstance() {
+}
+
+CLeaveGameResponse::CLeaveGameResponse(const CLeaveGameResponse& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:CLeaveGameResponse)
+}
+
+void CLeaveGameResponse::SharedCtor() {
+  _cached_size_ = 0;
+}
+
+CLeaveGameResponse::~CLeaveGameResponse() {
+  // @@protoc_insertion_point(destructor:CLeaveGameResponse)
+  SharedDtor();
+}
+
+void CLeaveGameResponse::SharedDtor() {
+}
+
+void CLeaveGameResponse::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CLeaveGameResponse::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CLeaveGameResponse_descriptor_;
+}
+
+const CLeaveGameResponse& CLeaveGameResponse::default_instance() {
+  protobuf_InitDefaults_propertymodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<CLeaveGameResponse> CLeaveGameResponse_default_instance_;
+
+CLeaveGameResponse* CLeaveGameResponse::New(::google::protobuf::Arena* arena) const {
+  CLeaveGameResponse* n = new CLeaveGameResponse;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void CLeaveGameResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:CLeaveGameResponse)
+}
+
+bool CLeaveGameResponse::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:CLeaveGameResponse)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+  handle_unusual:
+    if (tag == 0 ||
+        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+      goto success;
+    }
+    DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+  }
+success:
+  // @@protoc_insertion_point(parse_success:CLeaveGameResponse)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:CLeaveGameResponse)
+  return false;
+#undef DO_
+}
+
+void CLeaveGameResponse::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:CLeaveGameResponse)
+  // @@protoc_insertion_point(serialize_end:CLeaveGameResponse)
+}
+
+::google::protobuf::uint8* CLeaveGameResponse::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:CLeaveGameResponse)
+  // @@protoc_insertion_point(serialize_to_array_end:CLeaveGameResponse)
+  return target;
+}
+
+size_t CLeaveGameResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CLeaveGameResponse)
+  size_t total_size = 0;
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CLeaveGameResponse::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CLeaveGameResponse)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const CLeaveGameResponse* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CLeaveGameResponse>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CLeaveGameResponse)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CLeaveGameResponse)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void CLeaveGameResponse::MergeFrom(const CLeaveGameResponse& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CLeaveGameResponse)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void CLeaveGameResponse::UnsafeMergeFrom(const CLeaveGameResponse& from) {
+  GOOGLE_DCHECK(&from != this);
+}
+
+void CLeaveGameResponse::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CLeaveGameResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CLeaveGameResponse::CopyFrom(const CLeaveGameResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CLeaveGameResponse)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool CLeaveGameResponse::IsInitialized() const {
+
+  return true;
+}
+
+void CLeaveGameResponse::Swap(CLeaveGameResponse* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void CLeaveGameResponse::InternalSwap(CLeaveGameResponse* other) {
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata CLeaveGameResponse::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CLeaveGameResponse_descriptor_;
+  metadata.reflection = CLeaveGameResponse_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// CLeaveGameResponse
+
+inline const CLeaveGameResponse* CLeaveGameResponse::internal_default_instance() {
+  return &CLeaveGameResponse_default_instance_.get();
 }
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
