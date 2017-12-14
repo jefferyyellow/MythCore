@@ -26,10 +26,6 @@ public:
 	void		onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
 
 public:
-	// GM命令请求
-	void		onMessageGMCommandRequest(CEntityPlayer* pPlayer, Message* pMessage);
-
-public:
 	/// 加载玩家信息
 	void			onLoadPlayerInfo(CDBResponse& rResponse);
 	/// 加载玩家基础属性
@@ -37,15 +33,25 @@ public:
 	/// 玩家属性加载完成
 	void			onLoadComplete(CEntityPlayer* pPlayer);
 	/// 玩家存盘
-	void		SavePlayer(CEntityPlayer* pPlayer);
+	void			savePlayer(CEntityPlayer* pPlayer);
 	/// 保存玩家信息
-	void		SavePlayerInfo(CEntityPlayer* pPlayer);
+	void			savePlayerInfo(CEntityPlayer* pPlayer);
 	/// 保存玩家基本属性
-	void		SavePlayerBaseProperty(CEntityPlayer* pPlayer);
+	void			savePlayerBaseProperty(CEntityPlayer* pPlayer);
+	/// 玩家存盘完成
+	void			onSavePlayerComplete(CEntityPlayer* pPlayer);
+	/// 玩家离开游戏
+	void			onPlayerLeaveGame(CEntityPlayer* pPlayer);
 
 public:
 	CGMCommandManager&		getGMCmdManager(){return mGMCmdManager;}
 
+private:
+	/// GM命令请求
+	void		onGMCommandRequest(CEntityPlayer* pPlayer, Message* pMessage);
+	/// 玩家离开游戏的请求
+	void		onLeaveGameRequest(CEntityPlayer* pPlayer, Message* pMessage);
+	
 private:
 	CGMCommandManager		mGMCmdManager;
 	CAutoResetTimer			mSavePlayerTimer;

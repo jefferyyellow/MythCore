@@ -83,7 +83,8 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `UpdatePlayerInfo`;
 DELIMITER ;;
-CREATE PROCEDURE `UpdatePlayerInfo`(tLevel smallint UNSIGNED, 
+CREATE PROCEDURE `UpdatePlayerInfo`(RoleID int unsigned,
+									tLevel smallint UNSIGNED, 
 									tExp bigint UNSIGNED,
 									tVipLevel tinyint,
 									tVipExp int,
@@ -97,6 +98,20 @@ BEGIN
 		vip_exp = tVipExp,
 		money = tMoney,
 		diamond = tDiamond
+	WHERE role_id=RoleID;
+END
+;;
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `UpdatePlayerBaseProperty`;
+DELIMITER ;;
+CREATE PROCEDURE `UpdatePlayerBaseProperty`(RoleID int unsigned,
+											tBag Blob,
+											tTask Blob)
+BEGIN
+	update PlayerRole set
+		bag = Bag,
+		task = tTask,
 	WHERE role_id=RoleID;
 END
 ;;

@@ -59,6 +59,7 @@ void CDBModule::onDBSession()
 			if (NULL != pPlayer)
 			{
 				pPlayer->setSaveStatus(emSaveStatus_Info);
+				CPropertyModule::Inst()->onSavePlayerComplete(pPlayer);
 			}
 			break;
 		}
@@ -73,6 +74,7 @@ void CDBModule::onDBSession()
 			if (NULL != pPlayer)
 			{
 				pPlayer->setSaveStatus(emSaveStatus_BaseProperty);
+				CPropertyModule::Inst()->onSavePlayerComplete(pPlayer);
 			}
 			break;
 		}

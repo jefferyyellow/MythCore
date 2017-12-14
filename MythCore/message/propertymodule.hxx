@@ -53,5 +53,5 @@ message CLeaveGameRequest
 /// 玩家离开游戏的回应 ID_S2C_RESPONSE_LEAVE_GAME
 message CLeaveGameResponse 
 {
-	
+	uint32 Result				= 1;		// 结果
 }

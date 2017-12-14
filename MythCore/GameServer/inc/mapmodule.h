@@ -24,6 +24,8 @@ public:
 	virtual		void	OnTimer(unsigned int nTickOffset);
 
 public:
+	void		onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
+public:
 	int			teleportEntity(CEntity* pEntity, unsigned short nMapID, CMythPoint& rPos);
 
 public:

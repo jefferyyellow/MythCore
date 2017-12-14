@@ -197,10 +197,17 @@ void CSceneJob::processClientMessage()
 			int nModule = nMessageID & MESSAGE_MODULE_MASK;
 			if (nModule == MESSAGE_MODULE_LOGIN)
 			{
+				// 如果已经在场景中了，发登录的消息没有意义
+				PLAYER_SOCKET_LIST::iterator it = mPlayerSocketList.find(pExchangeHead->mSocketIndex);
+				if (it != mPlayerSocketList.end())
+				{
+					return;
+				}
 				CLoginModule::Inst()->onClientMessage(*pExchangeHead, nMessageID, pMessage);
 			}
 			else
 			{
+				// 还没有登录玩家，发其他的消息没有意义
 				PLAYER_SOCKET_LIST::iterator it = mPlayerSocketList.find(pExchangeHead->mSocketIndex);
 				if (it == mPlayerSocketList.end())
 				{
@@ -209,6 +216,12 @@ void CSceneJob::processClientMessage()
 
 				CEntityPlayer* pPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
 				if (NULL == pPlayer)
+				{
+					return;
+				}
+
+				// 只有在游戏状态下才接受正常的消息，避免数据的不一致
+				if (emPlayerStatus_Gameing != pPlayer->getPlayerStauts())
 				{
 					return;
 				}
@@ -249,6 +262,26 @@ void CSceneJob::send2Player(CEntityPlayer* pPlayer, unsigned short nMessageID, M
 	send2Player(pPlayer->GetExhangeHead(), nMessageID, pMessage);
 }
 
+
+/// 断开玩家的连接
+void CSceneJob::disconnectPlayer(CExchangeHead& rExchangeHead)
+{
+	char* pTemp = mBuffer;
+	rExchangeHead.mSocketError = emTcpError_OffLineClose;
+	memcpy(pTemp, &rExchangeHead, sizeof(rExchangeHead));
+
+	mServer2TcpMemory->PushPacket((byte*)mBuffer, sizeof(rExchangeHead));
+}
+
+void CSceneJob::disconnectPlayer(CEntityPlayer* pPlayer)
+{
+	if (NULL == pPlayer)
+	{
+		return;
+	}
+	disconnectPlayer(pPlayer->GetExhangeHead());
+}
+
 /// 分发前端消息
 void CSceneJob::dispatchClientMessage(CEntityPlayer* pPlayer, unsigned short nMessageID, Message* pMessage)
 {
@@ -263,6 +296,16 @@ void CSceneJob::dispatchClientMessage(CEntityPlayer* pPlayer, unsigned short nMe
 		case MESSAGE_MODULE_ITEM:
 		{
 			CItemModule::Inst()->onClientMessage(pPlayer, nMessageID, pMessage);
+			break;
+		}
+		case MESSAGE_MODULE_MAP:
+		{
+			CMapModule::Inst()->onClientMessage(pPlayer, nMessageID, pMessage);
+			break;
+		}
+		case MESSAGE_MODULE_TASK:
+		{
+			CTaskModule::Inst()->onClientMessage(pPlayer, nMessageID, pMessage);
 			break;
 		}
 		default:
@@ -289,6 +332,13 @@ bool CSceneJob::onPlayerLogin(CEntityPlayer* pNewPlayer)
 		}
 
 	return true;
+}
+
+/// 离开了一个玩家
+void CSceneJob::onPlayerLeaveGame(CEntityPlayer* pPlayer)
+{
+	mPlayerSocketList.erase(pPlayer->GetExhangeHead().mSocketIndex);
+	mPlayerList.erase(pPlayer->getRoleID());
 }
 
 /// 时间函数

@@ -643,10 +643,17 @@ class CLeaveGameResponse : public ::google::protobuf::Message /* @@protoc_insert
 
   // accessors -------------------------------------------------------
 
+  // optional uint32 Result = 1;
+  void clear_result();
+  static const int kResultFieldNumber = 1;
+  ::google::protobuf::uint32 result() const;
+  void set_result(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:CLeaveGameResponse)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 result_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_propertymodule_2ehxx_impl();
   friend void  protobuf_AddDesc_propertymodule_2ehxx_impl();
@@ -792,6 +799,20 @@ inline const CLeaveGameRequest* CLeaveGameRequest::internal_default_instance() {
 // -------------------------------------------------------------------
 
 // CLeaveGameResponse
+
+// optional uint32 Result = 1;
+inline void CLeaveGameResponse::clear_result() {
+  result_ = 0u;
+}
+inline ::google::protobuf::uint32 CLeaveGameResponse::result() const {
+  // @@protoc_insertion_point(field_get:CLeaveGameResponse.Result)
+  return result_;
+}
+inline void CLeaveGameResponse::set_result(::google::protobuf::uint32 value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:CLeaveGameResponse.Result)
+}
 
 inline const CLeaveGameResponse* CLeaveGameResponse::internal_default_instance() {
   return &CLeaveGameResponse_default_instance_.get();

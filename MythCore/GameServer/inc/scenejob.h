@@ -48,13 +48,19 @@ public:
 	/// 发送前端消息
 	void		send2Player(CExchangeHead& rExchangeHead, unsigned short nMessageID, Message* pMessage);
 	void		send2Player(CEntityPlayer* pPlayer, unsigned short nMessageID, Message* pMessage);
+	/// 断开玩家的连接
+	void		disconnectPlayer(CExchangeHead& rExchangeHead);
+	void		disconnectPlayer(CEntityPlayer* pPlayer);
 	/// 登录了一个玩家（只是登录校验完成，数据还没有加载完成）
 	bool		onPlayerLogin(CEntityPlayer* pNewPlayer);
+	/// 离开了一个玩家
+	void		onPlayerLeaveGame(CEntityPlayer* pPlayer);
 	/// 时间函数
 	void		OnTimer(unsigned int nTickOffset);
-		/// 得到所有的玩家列表
-	PLAYER_LIST getPlayerList(){	return mPlayerList;	}
-
+	/// 得到所有的玩家列表
+	PLAYER_LIST& getPlayerList(){	return mPlayerList;	}
+	/// 得到所有玩家的socket列表
+	PLAYER_SOCKET_LIST& getPlayerSocketList(){return mPlayerSocketList;};
 private:
 	void		onTask(CInternalMsg* pMsg);
 	/// 处理前端消息

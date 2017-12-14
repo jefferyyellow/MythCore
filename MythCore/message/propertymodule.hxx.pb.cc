@@ -136,6 +136,7 @@ void protobuf_AssignDesc_propertymodule_2ehxx() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CLeaveGameRequest, _internal_metadata_));
   CLeaveGameResponse_descriptor_ = file->message_type(6);
   static const int CLeaveGameResponse_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CLeaveGameResponse, result_),
   };
   CLeaveGameResponse_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -231,15 +232,15 @@ void protobuf_AddDesc_propertymodule_2ehxx_impl() {
     "mmandString\030\001 \001(\t\"$\n\022CGMCommandResponse\022"
     "\016\n\006Result\030\001 \001(\r\"\037\n\020CObtainExpNotify\022\013\n\003E"
     "xp\030\001 \001(\r\"\025\n\023CObtainVIPExpNotify\"\023\n\021CLeav"
-    "eGameRequest\"\024\n\022CLeaveGameResponse*\227\002\n\026P"
-    "ROPERTY_MODULE_MSG_ID\022\034\n\030ID_PROPERTY_MOD"
-    "ULE_ERROR\020\000\022\033\n\026ID_S2C_NOTIYF_LEVEL_UP\020\200\010"
-    "\022\036\n\031ID_C2S_REQUEST_GM_COMMAND\020\201\010\022\037\n\032ID_S"
-    "2C_RESPONSE_GM_COMMAND\020\202\010\022\035\n\030ID_S2C_NOTI"
-    "FY_OBTAIN_EXP\020\203\010\022!\n\034ID_S2C_NOTIFY_OBTAIN"
-    "_VIP_EXP\020\204\010\022\036\n\031ID_C2S_REQUEST_LEAVE_GAME"
-    "\020\205\010\022\037\n\032ID_S2C_RESPONSE_LEAVE_GAME\020\206\010b\006pr"
-    "oto3", 524);
+    "eGameRequest\"$\n\022CLeaveGameResponse\022\016\n\006Re"
+    "sult\030\001 \001(\r*\227\002\n\026PROPERTY_MODULE_MSG_ID\022\034\n"
+    "\030ID_PROPERTY_MODULE_ERROR\020\000\022\033\n\026ID_S2C_NO"
+    "TIYF_LEVEL_UP\020\200\010\022\036\n\031ID_C2S_REQUEST_GM_CO"
+    "MMAND\020\201\010\022\037\n\032ID_S2C_RESPONSE_GM_COMMAND\020\202"
+    "\010\022\035\n\030ID_S2C_NOTIFY_OBTAIN_EXP\020\203\010\022!\n\034ID_S"
+    "2C_NOTIFY_OBTAIN_VIP_EXP\020\204\010\022\036\n\031ID_C2S_RE"
+    "QUEST_LEAVE_GAME\020\205\010\022\037\n\032ID_S2C_RESPONSE_L"
+    "EAVE_GAME\020\206\010b\006proto3", 540);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "propertymodule.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_propertymodule_2ehxx);
@@ -1685,6 +1686,7 @@ inline const CLeaveGameRequest* CLeaveGameRequest::internal_default_instance() {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int CLeaveGameResponse::kResultFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 CLeaveGameResponse::CLeaveGameResponse()
@@ -1706,6 +1708,7 @@ CLeaveGameResponse::CLeaveGameResponse(const CLeaveGameResponse& from)
 }
 
 void CLeaveGameResponse::SharedCtor() {
+  result_ = 0u;
   _cached_size_ = 0;
 }
 
@@ -1744,6 +1747,7 @@ CLeaveGameResponse* CLeaveGameResponse::New(::google::protobuf::Arena* arena) co
 
 void CLeaveGameResponse::Clear() {
 // @@protoc_insertion_point(message_clear_start:CLeaveGameResponse)
+  result_ = 0u;
 }
 
 bool CLeaveGameResponse::MergePartialFromCodedStream(
@@ -1755,13 +1759,32 @@ bool CLeaveGameResponse::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 Result = 1;
+      case 1: {
+        if (tag == 8) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &result_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
     }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
   }
 success:
   // @@protoc_insertion_point(parse_success:CLeaveGameResponse)
@@ -1775,6 +1798,11 @@ failure:
 void CLeaveGameResponse::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:CLeaveGameResponse)
+  // optional uint32 Result = 1;
+  if (this->result() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->result(), output);
+  }
+
   // @@protoc_insertion_point(serialize_end:CLeaveGameResponse)
 }
 
@@ -1782,6 +1810,11 @@ void CLeaveGameResponse::SerializeWithCachedSizes(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:CLeaveGameResponse)
+  // optional uint32 Result = 1;
+  if (this->result() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->result(), target);
+  }
+
   // @@protoc_insertion_point(serialize_to_array_end:CLeaveGameResponse)
   return target;
 }
@@ -1789,6 +1822,13 @@ void CLeaveGameResponse::SerializeWithCachedSizes(
 size_t CLeaveGameResponse::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:CLeaveGameResponse)
   size_t total_size = 0;
+
+  // optional uint32 Result = 1;
+  if (this->result() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->result());
+  }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -1823,6 +1863,9 @@ void CLeaveGameResponse::MergeFrom(const CLeaveGameResponse& from) {
 
 void CLeaveGameResponse::UnsafeMergeFrom(const CLeaveGameResponse& from) {
   GOOGLE_DCHECK(&from != this);
+  if (from.result() != 0) {
+    set_result(from.result());
+  }
 }
 
 void CLeaveGameResponse::CopyFrom(const ::google::protobuf::Message& from) {
@@ -1849,6 +1892,7 @@ void CLeaveGameResponse::Swap(CLeaveGameResponse* other) {
   InternalSwap(other);
 }
 void CLeaveGameResponse::InternalSwap(CLeaveGameResponse* other) {
+  std::swap(result_, other->result_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -1863,6 +1907,20 @@ void CLeaveGameResponse::InternalSwap(CLeaveGameResponse* other) {
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // CLeaveGameResponse
+
+// optional uint32 Result = 1;
+void CLeaveGameResponse::clear_result() {
+  result_ = 0u;
+}
+::google::protobuf::uint32 CLeaveGameResponse::result() const {
+  // @@protoc_insertion_point(field_get:CLeaveGameResponse.Result)
+  return result_;
+}
+void CLeaveGameResponse::set_result(::google::protobuf::uint32 value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:CLeaveGameResponse.Result)
+}
 
 inline const CLeaveGameResponse* CLeaveGameResponse::internal_default_instance() {
   return &CLeaveGameResponse_default_instance_.get();

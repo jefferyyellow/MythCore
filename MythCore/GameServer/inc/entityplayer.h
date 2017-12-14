@@ -130,11 +130,11 @@ private:
 	CBaseProperty	mBaseProperty[emPropertyTypeMax];
 	/// 上次存盘的时间
 	time_t			mLastSaveTime;
-	/// 玩家状态
+	/// 玩家状态 EmPlayerStatus
 	byte			mPlayerStauts;
-	/// 玩家存储状态
+	/// 玩家存储状态 EmPlayerSaveStatus
 	byte			mSaveStatus;
-	/// 玩家加载状态
+	/// 玩家加载状态 EmPlayerLoadStatus
 	byte			mLoadStatus;
 };
 #endif 

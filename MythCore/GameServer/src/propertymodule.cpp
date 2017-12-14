@@ -36,7 +36,7 @@ void CPropertyModule::OnTimer(unsigned int nTickOffset)
 			{
 				if (tTimeNow - pPlayer->getLastSaveTime() > 60)
 				{
-					SavePlayer(pPlayer);
+					savePlayer(pPlayer);
 					pPlayer->setLastSaveTime(tTimeNow);
 					++nSavePlayerCount;
 					if (nSavePlayerCount >= 50)
@@ -55,7 +55,12 @@ void CPropertyModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMess
 	{
 		case ID_C2S_REQUEST_GM_COMMAND:
 		{
-			onMessageGMCommandRequest(pPlayer, pMessage);
+			onGMCommandRequest(pPlayer, pMessage);
+			break;
+		}
+		case ID_C2S_REQUEST_LEAVE_GAME:
+		{
+
 			break;
 		}
 		default:
@@ -65,7 +70,7 @@ void CPropertyModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMess
 
 
 // GM命令请求
-void CPropertyModule::onMessageGMCommandRequest(CEntityPlayer* pPlayer, Message* pMessage)
+void CPropertyModule::onGMCommandRequest(CEntityPlayer* pPlayer, Message* pMessage)
 {
 	MYTH_ASSERT(NULL == pPlayer || NULL == pMessage, return);
 
@@ -82,6 +87,14 @@ void CPropertyModule::onMessageGMCommandRequest(CEntityPlayer* pPlayer, Message*
 	const char* pCommandName = tTokens[0].c_str();
 	tTokens.erase(tTokens.begin());
 	mGMCmdManager.excuteCommand(pCommandName, tTokens, pPlayer);
+}
+
+/// 玩家离开游戏的请求
+void CPropertyModule::onLeaveGameRequest(CEntityPlayer* pPlayer, Message* pMessage)
+{
+	MYTH_ASSERT(NULL == pPlayer || NULL == pMessage, return);
+	
+	savePlayer(pPlayer);
 }
 
 /// 加载玩家信息
@@ -127,21 +140,24 @@ void CPropertyModule::onLoadComplete(CEntityPlayer* pPlayer)
 		return;
 	}
 
+	// 将玩家放入地图
+	// 通知各个模块有玩家创建
+	// 往客户端推送数据
 }
 
 
 /// 玩家存盘
-void CPropertyModule::SavePlayer(CEntityPlayer* pPlayer)
+void CPropertyModule::savePlayer(CEntityPlayer* pPlayer)
 {
 	if (NULL == pPlayer)
 	{
 		return;
 	}
-	SavePlayerInfo(pPlayer);
-	SavePlayerBaseProperty(pPlayer);
+	savePlayerInfo(pPlayer);
+	savePlayerBaseProperty(pPlayer);
 }
 
-void CPropertyModule::SavePlayerInfo(CEntityPlayer* pPlayer)
+void CPropertyModule::savePlayerInfo(CEntityPlayer* pPlayer)
 {
 	if (NULL == pPlayer)
 	{
@@ -149,16 +165,46 @@ void CPropertyModule::SavePlayerInfo(CEntityPlayer* pPlayer)
 	}
 
 	CDBModule::Inst()->pushDBTask(pPlayer->getRoleID(), emSessionType_SavePlayerInfo, pPlayer->getObjID(), 0,
-		"call UpdatePlayerInfo(%d,%lld,%d,%d,%d,%d)",
+		"call UpdatePlayerInfo(%d, %d,%lld,%d,%d,%d,%d)", pPlayer->getRoleID(),
 		pPlayer->GetPropertyUnit().getLevel(), pPlayer->GetPropertyUnit().getRoleExp(),
 		pPlayer->GetPropertyUnit().getVIPLevel(), pPlayer->GetPropertyUnit().GetVIPExp(),
 		pPlayer->GetItemUnit().getMoney(), pPlayer->GetItemUnit().getDiamond());
+
 }
 
-void CPropertyModule::SavePlayerBaseProperty(CEntityPlayer* pPlayer)
+void CPropertyModule::savePlayerBaseProperty(CEntityPlayer* pPlayer)
 {
 	if (NULL == pPlayer)
 	{
 		return;
 	}
+	CDBModule::Inst()->pushDBTask(pPlayer->getRoleID(), emSessionType_SavePlayerBaseProperty, pPlayer->getObjID(), 0,
+		"call UpdatePlayerBaseProperty(%d,%s,%s)", pPlayer->getRoleID(),
+		NULL, NULL);
+}
+/// 玩家存盘完成
+void CPropertyModule::onSavePlayerComplete(CEntityPlayer* pPlayer)
+{
+	// 没完全存盘就直接返回
+	if (emSaveStatusAll !=pPlayer->getSaveStatus())
+	{
+		return;
+	}
+	// 退出状态
+	if (pPlayer->getPlayerStauts() == emPlayerStatus_Exiting)
+	{
+		onPlayerLeaveGame(pPlayer);
+	}
+}
+
+/// 玩家离开游戏
+void CPropertyModule::onPlayerLeaveGame(CEntityPlayer* pPlayer)
+{
+	if (NULL == pPlayer)
+	{
+		return;
+	}
+
+	CSceneJob::Inst()->onPlayerLeaveGame(pPlayer);
+	CObjPool::Inst()->free(pPlayer->getObjID());
 }
