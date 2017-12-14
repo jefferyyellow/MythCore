@@ -9,6 +9,8 @@
 #include "itemmodule.h"
 #include "gameserver.h"
 #include "dbmodule.h"
+#include "taskmodule.h"
+#include "mapmodule.h"
 void CSceneJob::doing(int uParam)
 {
 	processClientMessage();

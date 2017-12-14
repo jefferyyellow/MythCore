@@ -31,17 +31,20 @@ void CLoginModule::OnTimer(unsigned int nTickOffset)
 		{
 			int nObjID = it->second;
 			CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::Inst()->getObj(nObjID));
+			LOGIN_LIST::iterator itOld = it;
 			if (NULL == pLoginPlayer)
 			{
-				mLoginList.erase(it++);
+				++ it;
+				mLoginList.erase(itOld);
 				continue;
 			}
 			// ³¬Ê±
 			if (pLoginPlayer->elapse(1))
 			{
 				printf("\n***************\n");
+				++ it;
+				mLoginList.erase(itOld);
 				CObjPool::Inst()->free(nObjID);
-				mLoginList.erase(it++);
 				continue;
 			}
 

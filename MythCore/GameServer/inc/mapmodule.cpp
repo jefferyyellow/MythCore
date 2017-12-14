@@ -15,6 +15,11 @@ void CMapModule::OnTimer(unsigned int nTickOffset)
 
 }
 
+void CMapModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)
+{
+	
+}
+
 int CMapModule::teleportEntity(CEntity* pEntity, unsigned short nMapID, CMythPoint& rPos)
 {
 	if (NULL == pEntity)

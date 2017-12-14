@@ -35,12 +35,16 @@ public:
 
 private:
 	void		onMessageLoginResponse(Message* pMessage);
-
+	void		onCreateRoleResponse(Message* pMessage);
 private:
 	CLog*					mDefaultLog;
 	CTcpSocket				mTcpSocket;
 	CSelectModel			mSelectModel;
 	byte					mTcpRecData[MAX_SOCKET_BUFF_SIZE];
 	byte					mBuffer[MAX_SOCKET_BUFF_SIZE];
+	unsigned int			mAccountID;
+	int						mChannelID;
+	int						mServerID;
+	unsigned int			mRoleID;						
 };
 #endif

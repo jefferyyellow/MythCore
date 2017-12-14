@@ -166,6 +166,11 @@ void CGameClient::onServerMessage(CTcpSocket* pTcpSocket)
 				onMessageLoginResponse(pMessage);
 				break;
 			}
+			case ID_S2C_RESPONSE_CREATE_ROLE:
+			{
+				onCreateRoleResponse(pMessage);
+				break;
+			}
 			default:
 
 				break;
@@ -196,6 +201,11 @@ void CGameClient::onMessageLoginResponse(Message* pMessage)
 	snprintf(acName, sizeof(acName), "hjh%d", pLoginResponse->accountid());
 
 	int nRoleID = pLoginResponse->roleid();
+
+	mAccountID = pLoginResponse->accountid();
+	mChannelID = pLoginResponse->channelid();
+	mServerID = pLoginResponse->serverid();
+	mRoleID = pLoginResponse->roleid();
 	if (0 == nRoleID)
 	{
 		// ´´½¨½Ç
@@ -215,4 +225,22 @@ void CGameClient::onMessageLoginResponse(Message* pMessage)
 		tEnterSceneRequest.set_serverid(pLoginResponse->serverid());
 		sendMessage(ID_C2S_REQUEST_ENTER_SCENE, &tEnterSceneRequest);
 	}
+}
+
+void CGameClient::onCreateRoleResponse(Message* pMessage)
+{
+	MYTH_ASSERT(NULL == pMessage, return);
+	CCreateRoleResponse* pRoleResponse = (CCreateRoleResponse*)pMessage;
+	MYTH_ASSERT(NULL == pRoleResponse, return);
+
+	int nResult = pRoleResponse->result();
+	unsigned int nRoleID = pRoleResponse->roleid();
+	mRoleID = nRoleID;
+
+	CEnterSceneRequest tEnterSceneRequest;
+	tEnterSceneRequest.set_roleid(mRoleID);
+	tEnterSceneRequest.set_accountid(mAccountID);
+	tEnterSceneRequest.set_channelid(mChannelID);
+	tEnterSceneRequest.set_serverid(mServerID);
+
 }

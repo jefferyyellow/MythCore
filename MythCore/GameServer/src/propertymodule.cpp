@@ -60,7 +60,7 @@ void CPropertyModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMess
 		}
 		case ID_C2S_REQUEST_LEAVE_GAME:
 		{
-
+			onLeaveGameRequest(pPlayer, pMessage);
 			break;
 		}
 		default:

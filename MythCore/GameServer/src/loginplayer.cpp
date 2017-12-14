@@ -12,6 +12,8 @@ void CLoginPlayer::init()
 	mStateMachine.addState(emLoginState_AccountVerify,	5, &CLoginPlayer::processAccountVerify);
 	mStateMachine.addState(emLoginState_WaitCreateRole, 10, &CLoginPlayer::processWaitCreateRole);
 	mStateMachine.addState(emLoginState_CreateRoleing,	5, &CLoginPlayer::processCreateRoleing);
+	mStateMachine.addState(emLoginState_LoginComplete, 5, NULL);
+
 	//mStateMachine.addState(emLoginState_WaitEnterGame,	10, &CLoginPlayer::processWaitEnterGame);
 	//mStateMachine.addState(emLoginState_Playing,		10, &CLoginPlayer::processWaitPlaying);
 }
@@ -94,7 +96,7 @@ int CLoginPlayer::processWaitCreateRole()
 	}
 
 	CDBModule::Inst()->pushDBTask(0, emSessionType_CreateRole, getObjID(), 0, "call CreateRole(%d, '%s', %d, %d, %d)",
-	pCreateRoleRequest->rolename().c_str(), mAccountID, mChannelID, mServerID);
+	1, pCreateRoleRequest->rolename().c_str(), mAccountID, mChannelID, mServerID);
 
 	return emLoginState_CreateRoleing;
 }
