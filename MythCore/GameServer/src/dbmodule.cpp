@@ -16,7 +16,7 @@ void CDBModule::pushDBTask(int nPlayerID, int nSessionType, int nParam1, int nPa
 	// +1表示吧终止符也拷贝过去
 	int nLength = ::vsnprintf((char*)mDBRequest.mSqlBuffer, sizeof(mDBRequest.mSqlBuffer) - 1, pSql, tArgs) + 1;
 	va_end(tArgs);
-
+	printf("\n%s\n", mDBRequest.mSqlBuffer);
 	mDBRequest.mPlayerID = nPlayerID;
 	mDBRequest.mParam1 = nParam1;
 	mDBRequest.mParam2 = nParam2;

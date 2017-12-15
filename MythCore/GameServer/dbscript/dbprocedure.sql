@@ -8,7 +8,7 @@ BEGIN
 
 	SELECT account_id INTO AccountID FROM PlayerAccount where user_name=UserName and channel_id=ChannelID and server_id=ServerID;
 	IF FOUND_ROWS() = 0 THEN
-		INSERT INTO PlayerAccount(user_name,channel_id, server_id, create_time) VALUES(UserName, ChannelID, ServerID, unix_timestamp());
+		INSERT INTO PlayerAccount(user_name,channel_id, server_id,account_id) VALUES(UserName, ChannelID, ServerID,AccountID);
 		SELECT LAST_INSERT_ID() INTO AccountID;
 	END IF;
 
@@ -111,7 +111,7 @@ CREATE PROCEDURE `UpdatePlayerBaseProperty`(RoleID int unsigned,
 BEGIN
 	update PlayerRole set
 		bag = Bag,
-		task = tTask,
+		task = tTask
 	WHERE role_id=RoleID;
 END
 ;;

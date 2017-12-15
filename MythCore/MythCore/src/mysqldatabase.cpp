@@ -147,9 +147,9 @@ namespace Myth
 				pValue += pColumn[nCount] + 1;
 			}
 		}
-
 		mysql_free_result(pResult);
 		clearResult();
+		
 
 		return 0;
 	}
@@ -193,11 +193,15 @@ namespace Myth
 	void CMysqlDataBase::clearResult()
 	{
 		if (mMysql == NULL) return;
-
+		// ¥¶¿Ìmysql 2014¥ÌŒÛ£¨»•µÙª∫¥Ê
 		MYSQL_RES* tRes = NULL;
 		while (mysql_next_result(mMysql) == 0)
 		{
-			mysql_free_result(tRes);
+			if(tRes = mysql_store_result(mMysql))
+			{
+				mysql_free_result(tRes);
+			}
+			
 		}
 	}
 }

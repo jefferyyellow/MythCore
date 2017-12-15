@@ -229,9 +229,7 @@ void CGameClient::onMessageLoginResponse(Message* pMessage)
 
 void CGameClient::onCreateRoleResponse(Message* pMessage)
 {
-	MYTH_ASSERT(NULL == pMessage, return);
 	CCreateRoleResponse* pRoleResponse = (CCreateRoleResponse*)pMessage;
-	MYTH_ASSERT(NULL == pRoleResponse, return);
 
 	int nResult = pRoleResponse->result();
 	unsigned int nRoleID = pRoleResponse->roleid();
