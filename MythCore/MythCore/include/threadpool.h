@@ -19,11 +19,21 @@ namespace Myth
 		typedef CArray<IJob*, 32> JobArray;
 
 	public:
-		CThreadPool(int nThreadSize)
+		CThreadPool()
+		{
+			mIdleListNum = 0;
+			mJobIndex = 0;
+		}
+		~CThreadPool()
+		{
+			
+		}
+
+		void				init(int nThreadSize)
 		{
 			mJobIndex = 0;
 			mIdleListNum = nThreadSize;
-			for (int i = 0; i < nThreadSize; ++ i)
+			for (int i = 0; i < nThreadSize; ++i)
 			{
 				IThread* pThread = NULL;
 
@@ -55,11 +65,6 @@ namespace Myth
 			//	//pIdleThread = *it;
 			//}
 		}
-		~CThreadPool()
-		{
-
-		}
-
 	public:
 		void				pushBackJob(IJob* pJob)
 		{
@@ -143,12 +148,10 @@ namespace Myth
 		void				run();
 
 	private:
-		ThreadList			mIdleList;
-		byte				mIdleListNum; 
-
-		JobArray			mJobArray;
+		byte				mIdleListNum;
 		byte				mJobIndex;
-
+		ThreadList			mIdleList;
+		JobArray			mJobArray;
 		CSimpleLock			mSimpleLock;
 	};
 }

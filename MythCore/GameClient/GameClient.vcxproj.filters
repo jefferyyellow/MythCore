@@ -68,9 +68,6 @@
     <ClInclude Include="..\message\message.hxx.pb.h">
       <Filter>message</Filter>
     </ClInclude>
-    <ClInclude Include="..\GameServer\messagefactory.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
     <ClInclude Include="..\message\itemmodule.hxx">
       <Filter>message</Filter>
     </ClInclude>
@@ -106,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="..\message\taskmodule.hxx.pb.h">
       <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GameServer\inc\messagefactory.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

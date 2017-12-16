@@ -146,28 +146,47 @@ void CLoginModule::processWaitEnterGame(CLoginPlayer* pLoginPlayer, Message* pMe
 		return;
 	}
 
-	CEntityPlayer* pNewPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->allocObj(emObjType_Entity_Player));
-	if (NULL == pNewPlayer)
+	CEntityPlayer* pPlayer = CSceneJob::Inst()->getPlayerByRoleID(pEnterSceneRequest->roleid());
+	if (NULL != pPlayer)
 	{
-		return;
+		printf("Kick out by other: %d\n", pEnterSceneRequest->roleid());
+		if (pPlayer->getPlayerStauts() == emPlayerStatus_Exiting)
+		{
+			pPlayer->setPlayerStauts(emPlayerStatus_Gameing);
+		}
+		CSceneJob::Inst()->disconnectPlayer(pPlayer);
+		pPlayer->GetExhangeHead() = pLoginPlayer->getExchangeHead();
+
+		CEnterSceneResponse tEnterSceneResponse;
+		tEnterSceneResponse.set_result(0);
+		CSceneJob::Inst()->send2Player(pPlayer->GetExhangeHead(), ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
 	}
-
-	pNewPlayer->setPlayerStauts(emPlayerStatus_Loading);
-	pNewPlayer->setRoleID(pEnterSceneRequest->roleid());
-	pNewPlayer->GetExhangeHead() = pLoginPlayer->getExchangeHead();
-
-
-	bool bResult = CSceneJob::Inst()->onPlayerLogin(pNewPlayer);
-	if (!bResult)
+	else
 	{
-		CObjPool::Inst()->free(pNewPlayer->getObjID());
-		return;
+		printf("new player login: %d", pEnterSceneRequest->roleid());
+		CEntityPlayer* pNewPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->allocObj(emObjType_Entity_Player));
+		if (NULL == pNewPlayer)
+		{
+			return;
+		}
+
+		pNewPlayer->setPlayerStauts(emPlayerStatus_Loading);
+		pNewPlayer->setRoleID(pEnterSceneRequest->roleid());
+		pNewPlayer->GetExhangeHead() = pLoginPlayer->getExchangeHead();
+
+
+		bool bResult = CSceneJob::Inst()->onPlayerLogin(pNewPlayer);
+		if (!bResult)
+		{
+			CObjPool::Inst()->free(pNewPlayer->getObjID());
+			return;
+		}
+
+		CDBModule::Inst()->pushDBTask(pLoginPlayer->getRoleID(), emSessionType_LoadPlayerInfo, pLoginPlayer->getObjID(), 0, "call LoadPlayerInfo(%d)", pLoginPlayer->getRoleID());
+		CDBModule::Inst()->pushDBTask(pLoginPlayer->getRoleID(), emSessionType_LoadPlayerInfo, pLoginPlayer->getObjID(), 0, "call LoadPlayerBaseProperty(%d)", pLoginPlayer->getRoleID());
+
+		CEnterSceneResponse tEnterSceneResponse;
+		tEnterSceneResponse.set_result(0);
+		CSceneJob::Inst()->send2Player(pNewPlayer->GetExhangeHead(), ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
 	}
-
-	CDBModule::Inst()->pushDBTask(pLoginPlayer->getRoleID(), emSessionType_LoadPlayerInfo, pLoginPlayer->getObjID(), 0, "call LoadPlayerInfo(%d)", pLoginPlayer->getRoleID());
-	CDBModule::Inst()->pushDBTask(pLoginPlayer->getRoleID(), emSessionType_LoadPlayerInfo, pLoginPlayer->getObjID(), 0, "call LoadPlayerBaseProperty(%d)", pLoginPlayer->getRoleID());
-
-	CEnterSceneResponse tEnterSceneResponse;
-	tEnterSceneResponse.set_result(0);
-	CSceneJob::Inst()->send2Player(pNewPlayer->GetExhangeHead(), ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
 }

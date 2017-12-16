@@ -129,7 +129,6 @@ void CGameClient::processServerMessage()
 			{
 				pAllSocket[i].setRecvBuffSize(pAllSocket[i].getRecvBuffSize() + nResult);
 				onServerMessage(&pAllSocket[i]);
-				printf("receive message");
 			}
 		}
 	}
@@ -154,13 +153,15 @@ void CGameClient::onServerMessage(CTcpSocket* pTcpSocket)
 
 	short nMessageID = *(short*)pTemp;
 	pTemp += sizeof(short);
-
+	printf("receive message MessageID : %d\n", nMessageID);
 	Message* pMessage = CMessageFactory::Inst()->createClientMessage(nMessageID);
 	if (NULL != pMessage)
 	{
 		pMessage->ParseFromArray(pTemp, nLength - sizeof(unsigned short) * 2);
+		pTcpSocket->resetRecvBuffPoint(nLength);
 		switch (nMessageID)
 		{
+			
 			case ID_S2C_RESPONSE_LOGIN:
 			{
 				onMessageLoginResponse(pMessage);
@@ -182,6 +183,7 @@ void CGameClient::onServerMessage(CTcpSocket* pTcpSocket)
 /// 发送消息给服务器
 void CGameClient::sendMessage(unsigned short uMessageID, Message* pMessage)
 {
+	printf("sendMessage ID: %d\n", uMessageID);
 	// 一个 unsigned short是消息ID，另一个是消息长度
 	unsigned short nMessageLen = pMessage->ByteSize() + sizeof(unsigned short) * 2;
 	byte* pTemp = mBuffer;

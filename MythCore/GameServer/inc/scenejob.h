@@ -21,9 +21,9 @@ class CSceneJob : public CJob < 1000, 100 >, public CSingleton<CSceneJob>
 public:
 	friend class CSingleton<CSceneJob>;
 	/// 键是role id,值是obj id
-	typedef std::map<int, int> PLAYER_LIST;
+	typedef std::map<unsigned int, int> PLAYER_LIST;
 	/// 键是socket index, 值是obj id
-	typedef std::map<int, int> PLAYER_SOCKET_LIST;
+	typedef std::map<unsigned int, int> PLAYER_SOCKET_LIST;
 	/// 逻辑模块列表
 	typedef std::list<CLogicModule*> LOGIC_MODULE_LIST;
 public:
@@ -61,6 +61,10 @@ public:
 	PLAYER_LIST& getPlayerList(){	return mPlayerList;	}
 	/// 得到所有玩家的socket列表
 	PLAYER_SOCKET_LIST& getPlayerSocketList(){return mPlayerSocketList;};
+	/// 通过角色ID得到玩家
+	CEntityPlayer* getPlayerByRoleID(unsigned int nRoleID);
+	/// 通过SocketIndex得到玩家
+	CEntityPlayer* getPlayerBySocketIndex(short nSocketIndex);
 private:
 	void		onTask(CInternalMsg* pMsg);
 	/// 处理前端消息

@@ -48,7 +48,6 @@ public:
 
 private:
 	CLog*					mDefaultLog;
-	Myth::CThreadPool*		mThreadPool;
 
 	CDBJob					mDBJob;
 	CLocalLogJob			mLocalLogJob;
@@ -56,6 +55,6 @@ private:
 
 	time_t					mCurrTime;
 	uint64					mTickCount;
-
+	Myth::CThreadPool		mThreadPool;
 };
 #endif

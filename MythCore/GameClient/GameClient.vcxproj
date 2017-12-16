@@ -82,7 +82,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\GameServer\messagefactory.h" />
+    <ClInclude Include="..\GameServer\inc\messagefactory.h" />
     <ClInclude Include="..\message\common.hxx" />
     <ClInclude Include="..\message\common.hxx.pb.h" />
     <ClInclude Include="..\message\itemmodule.hxx" />

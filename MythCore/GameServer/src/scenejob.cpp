@@ -13,6 +13,7 @@
 #include "mapmodule.h"
 void CSceneJob::doing(int uParam)
 {
+	//printf("CSceneJob::doing %d\n", uParam);
 	processClientMessage();
 	checkDBStream();
 	while (true)
@@ -34,6 +35,7 @@ void CSceneJob::doing(int uParam)
 		OnTimer(nElapseTime);
 		mLastTimerTick = CGameServer::Inst()->getTickCount();
 	}
+	//Sleep(3000);
 }
 
 void CSceneJob::onTask(CInternalMsg* pMsg)
@@ -195,6 +197,7 @@ void CSceneJob::processClientMessage()
 		Message* pMessage = CMessageFactory::Inst()->createClientMessage(nMessageID);
 		if (NULL != pMessage)
 		{
+			printf("Recive MessageID: %d\n", nMessageID);
 			pMessage->ParseFromArray(pTemp, nMessageLen);
 			int nModule = nMessageID & MESSAGE_MODULE_MASK;
 			if (nModule == MESSAGE_MODULE_LOGIN)
@@ -250,7 +253,7 @@ void CSceneJob::send2Player(CExchangeHead& rExchangeHead, unsigned short nMessag
 	pTemp += sizeof(nMessageID);
 
 	pMessage->SerializeToArray(pTemp, sizeof(mBuffer) - sizeof(rExchangeHead) - sizeof(unsigned short) * 2);
-	printf("PushPacket");
+	printf("PushPacket nMessageID: %d\n", nMessageID);
 	mServer2TcpMemory->PushPacket((byte*)mBuffer, pMessage->ByteSize() + sizeof(rExchangeHead) + sizeof(unsigned short) * 2);
 
 }
@@ -271,7 +274,7 @@ void CSceneJob::disconnectPlayer(CExchangeHead& rExchangeHead)
 	char* pTemp = mBuffer;
 	rExchangeHead.mSocketError = emTcpError_OffLineClose;
 	memcpy(pTemp, &rExchangeHead, sizeof(rExchangeHead));
-
+	//printf("disconnectPlayer\n");
 	mServer2TcpMemory->PushPacket((byte*)mBuffer, sizeof(rExchangeHead));
 }
 
@@ -351,4 +354,27 @@ void CSceneJob::OnTimer(unsigned int nTickOffset)
 	{
 		(*it)->OnTimer(nTickOffset);
 	}
+}
+
+/// 通过角色ID得到玩家
+CEntityPlayer* CSceneJob::getPlayerByRoleID(unsigned int nRoleID)
+{
+	PLAYER_LIST::iterator it = mPlayerList.find(nRoleID);
+	if (it != mPlayerList.end())
+	{
+		return reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
+	}
+	return NULL;
+}
+
+/// 通过SocketIndex得到玩家
+CEntityPlayer* CSceneJob::getPlayerBySocketIndex(short nSocketIndex)
+{
+	PLAYER_SOCKET_LIST::iterator it = mPlayerSocketList.find(nSocketIndex);
+	if (it != mPlayerSocketList.end())
+	{
+		return reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
+	}
+
+	return NULL;
 }

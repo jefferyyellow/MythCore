@@ -375,7 +375,7 @@ void CTcpServer::receiveMessage()
 				// 连接总数加一
 				++ mServerStatistics.mTotalConnects;
 
-				printf("IP: %s connect success", pNewSocket->getIP());
+				printf("IP: %s connect success\n", pNewSocket->getIP());
 			}
 			else
 			{
@@ -584,28 +584,24 @@ void CTcpServer::sendMessage()
 		{
 			break;
 		}
-		printf("CTcpServer::sendMessage");
 		byte* pTemp = mBuffer;
 		CExchangeHead* pExchangeHead = (CExchangeHead*)mBuffer;
 
 		pTemp += sizeof(CExchangeHead);
 		nMessageLen -= sizeof(CExchangeHead);
 
-		short nLength = *(short*)pTemp;
-		if (nLength != nMessageLen)
-		{
-			continue;
-		}
-
 		int nTcpIndex = pExchangeHead->mSocketIndex;
 		if (nTcpIndex <= 0 || nTcpIndex >= MAX_SOCKET_NUM)
 		{
 			continue;
 		}
+
+
 		if (mSocketInfo[nTcpIndex].mCreateTime != pExchangeHead->mSocketTime)
 		{
 			continue;
 		}
+		printf("CTcpServer::sendMessage nMessageLen: %d\n", nMessageLen);
 
 #ifdef MYTH_OS_WINDOWS
 		CTcpSocket* pSocket = mSelectModel->getSocket(nTcpIndex);
@@ -617,10 +613,17 @@ void CTcpServer::sendMessage()
 		{
 			continue;
 		}
+
 		// 游戏服务器已经关闭socket，所以不需要通知游戏服务器了
 		if (pExchangeHead->mSocketError == emTcpError_OffLineClose)
 		{
 			clearSocketInfo(nTcpIndex, pSocket);
+			continue;
+		}
+
+		short nLength = *(short*)pTemp;
+		if (nLength != nMessageLen)
+		{
 			continue;
 		}
 
@@ -647,6 +650,12 @@ void CTcpServer::sendMessage()
 		if (pExchangeHead->mSocketError == emTcpError_OffLineClose)
 		{
 			clearSocketInfo(nTcpIndex, pSocket);
+			continue;
+		}
+
+		short nLength = *(short*)pTemp;
+		if (nLength != nMessageLen)
+		{
 			continue;
 		}
 

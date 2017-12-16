@@ -133,11 +133,11 @@ void CMap::onAddEntityToMapUnit(CEntity* pEntity, CMythRect& rSrcRect, CMythRect
 	if (emEntityType_Player == pEntity->getEntityType())
 	{
 		// 告诉周边的玩家创建该玩家
-		createPlayerList2Player(tSearch.mPlayerList, (CEntityPlayer*)pEntity);
+		createPlayerList2Player(tSearch.mPlayerList, reinterpret_cast<CEntityPlayer*>(pEntity));
 		// 告诉该玩家创建周边玩家
-		createPlayer2PlayerList((CEntityPlayer*)pEntity, tSearch.mPlayerList);
+		createPlayer2PlayerList(reinterpret_cast<CEntityPlayer*>(pEntity), tSearch.mPlayerList);
 		// 告诉该玩家创建NPC
-		createNPCList2Player(tSearch.mNPCList, (CEntityPlayer*)pEntity);
+		createNPCList2Player(tSearch.mNPCList, reinterpret_cast<CEntityPlayer*>(pEntity));
 	}
 	else
 	{
@@ -182,11 +182,11 @@ void CMap::onRemoveEntityFromMapUnit(CEntity* pEntity, CMythRect& rSrcRect, CMyt
 	if (emEntityType_Player == pEntity->getEntityType())
 	{
 		// 通知周边玩家移除该玩家
-		destroyPlayer2PlayerList((CEntityPlayer*)pEntity, tSearch.mPlayerList);
+		destroyPlayer2PlayerList(reinterpret_cast<CEntityPlayer*>(pEntity), tSearch.mPlayerList);
 		// 通知该玩家移除周边玩家
-		destroyPlayerList2Player(tSearch.mPlayerList, (CEntityPlayer*)pEntity);
+		destroyPlayerList2Player(tSearch.mPlayerList, reinterpret_cast<CEntityPlayer*>(pEntity));
 		// 通知该玩家移除周边NPC列表
-		destroyNPCList2Player(tSearch.mNPCList, (CEntityPlayer*)pEntity);
+		destroyNPCList2Player(tSearch.mNPCList, reinterpret_cast<CEntityPlayer*>(pEntity));
 	}
 	else
 	{
@@ -231,11 +231,11 @@ void CMap::onCreateEntityToMap(CEntity* pEntity)
 	if (emEntityType_Player == pEntity->getEntityType())
 	{
 		// 告诉周边的玩家创建该玩家
-		createPlayerList2Player(tSearch.mPlayerList, (CEntityPlayer*)pEntity);
+		createPlayerList2Player(tSearch.mPlayerList, reinterpret_cast<CEntityPlayer*>(pEntity));
 		// 告诉该玩家创建周边玩家
-		createPlayer2PlayerList((CEntityPlayer*)pEntity, tSearch.mPlayerList);
+		createPlayer2PlayerList(reinterpret_cast<CEntityPlayer*>(pEntity), tSearch.mPlayerList);
 		// 告诉该玩家创建NPC
-		createNPCList2Player(tSearch.mNPCList, (CEntityPlayer*)pEntity);
+		createNPCList2Player(tSearch.mNPCList, reinterpret_cast<CEntityPlayer*>(pEntity));
 	}
 	else
 	{
@@ -278,11 +278,11 @@ void CMap::onRemoveEntityFromMap(CEntity* pEntity)
 	if (emEntityType_Player == pEntity->getEntityType())
 	{
 		// 通知周边玩家移除该玩家
-		destroyPlayer2PlayerList((CEntityPlayer*)pEntity, tSearch.mPlayerList);
+		destroyPlayer2PlayerList(reinterpret_cast<CEntityPlayer*>(pEntity), tSearch.mPlayerList);
 		// 通知该玩家移除周边玩家
-		destroyPlayerList2Player(tSearch.mPlayerList, (CEntityPlayer*)pEntity);
+		destroyPlayerList2Player(tSearch.mPlayerList, reinterpret_cast<CEntityPlayer*>(pEntity));
 		// 通知该玩家移除周边NPC列表
-		destroyNPCList2Player(tSearch.mNPCList, (CEntityPlayer*)pEntity);
+		destroyNPCList2Player(tSearch.mNPCList, reinterpret_cast<CEntityPlayer*>(pEntity));
 	}
 	else
 	{

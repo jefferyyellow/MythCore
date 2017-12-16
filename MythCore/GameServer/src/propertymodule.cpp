@@ -24,7 +24,7 @@ void CPropertyModule::OnTimer(unsigned int nTickOffset)
 		CSceneJob::PLAYER_LIST::iterator tPlayerIt = rPlayerList.begin();
 		for (; tPlayerIt != rPlayerList.end(); ++tPlayerIt)
 		{
-			CEntityPlayer* pPlayer = (CEntityPlayer*)CObjPool::Inst()->getObj(tPlayerIt->second);
+			CEntityPlayer* pPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(tPlayerIt->second));
 			if (NULL == pPlayer)
 			{
 				LOG_ERROR("player charid  %d don't exist", tPlayerIt->first);
@@ -100,7 +100,7 @@ void CPropertyModule::onLeaveGameRequest(CEntityPlayer* pPlayer, Message* pMessa
 /// 加载玩家信息
 void CPropertyModule::onLoadPlayerInfo(CDBResponse& rResponse)
 {
-	CEntityPlayer* pPlayer = (CEntityPlayer*)CObjPool::Inst()->getObj(rResponse.mParam1);
+	CEntityPlayer* pPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(rResponse.mParam1));
 	if (NULL == pPlayer)
 	{
 		return;
@@ -123,7 +123,7 @@ void CPropertyModule::onLoadPlayerInfo(CDBResponse& rResponse)
 /// 加载玩家基础属性
 void CPropertyModule::onLoadPlayerBaseProperty(CDBResponse& rResponse)
 {
-	CEntityPlayer* pPlayer = (CEntityPlayer*)CObjPool::Inst()->getObj(rResponse.mParam1);
+	CEntityPlayer* pPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(rResponse.mParam1));
 	if (NULL == pPlayer)
 	{
 		return;

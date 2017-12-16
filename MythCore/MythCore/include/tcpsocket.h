@@ -151,11 +151,13 @@ namespace Myth
 
 		void		resetRecvBuffPoint(int nSize)
 		{
-			if (mRecvBuffSize <= 0 || nSize <= 0)
+
+			mRecvBuffSize -= nSize;
+			if (mRecvBuffSize <= 0)
 			{
+				mRecvBuffSize = 0;
 				return;
 			}
-
 			memmove(mpRecvBuff, mpRecvBuff + nSize, mRecvBuffSize);
 		}
 

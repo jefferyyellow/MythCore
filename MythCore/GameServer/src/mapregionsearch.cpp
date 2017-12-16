@@ -36,11 +36,11 @@ void CMapRegionSearch::searchMapUnity(CMapUnit* pMapUnit)
 		}
 		if (emEntityType_Player == pEntity->getEntityType())
 		{
-			mPlayerList.push_back((CEntityPlayer*)pEntity);
+			mPlayerList.push_back(reinterpret_cast<CEntityPlayer*>(pEntity));
 		}
 		else
 		{
-			mNPCList.push_back((CEntityNPC*)pEntity);
+			mNPCList.push_back(reinterpret_cast<CEntityNPC*>(pEntity));
 		}
 	}
 }

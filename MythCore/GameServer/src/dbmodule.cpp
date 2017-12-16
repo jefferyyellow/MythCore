@@ -55,7 +55,7 @@ void CDBModule::onDBSession()
 				// ´æÅÌÊ§°Ü
 				break;
 			}
-			CEntityPlayer* pPlayer = (CEntityPlayer*)CObjPool::Inst()->getObj(mDBResponse.mParam1);
+			CEntityPlayer* pPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(mDBResponse.mParam1));
 			if (NULL != pPlayer)
 			{
 				pPlayer->setSaveStatus(emSaveStatus_Info);
@@ -70,7 +70,7 @@ void CDBModule::onDBSession()
 				// ´æÅÌÊ§°Ü
 				break;
 			}
-			CEntityPlayer* pPlayer = (CEntityPlayer*)CObjPool::Inst()->getObj(mDBResponse.mParam1);
+			CEntityPlayer* pPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(mDBResponse.mParam1));
 			if (NULL != pPlayer)
 			{
 				pPlayer->setSaveStatus(emSaveStatus_BaseProperty);

@@ -141,11 +141,9 @@ bool CGameServer::initStaticData()
 /// 初始线程
 bool CGameServer::initThread()
 {
-	mThreadPool = new Myth::CThreadPool(10);
-	if (NULL == mThreadPool)
-	{
-		return false;
-	}
+	mThreadPool.init(10);
+
+	//Sleep(3000);
 	
 	if (0 != mDBJob.init(CGameServerConfig::Inst()->getDBHost(),
 		CGameServerConfig::Inst()->getDBUserName(), CGameServerConfig::Inst()->getDBPasswd(),
@@ -162,9 +160,9 @@ bool CGameServer::initThread()
 	}
 	mDBJob.setBuffer(MAX_DB_JOB_BUFFER_SIZE);
 
-	mThreadPool->pushBackJob(&mSceneJob);
-	mThreadPool->pushBackJob(&mDBJob);
-	mThreadPool->pushBackJob(&mLocalLogJob);
+	mThreadPool.pushBackJob(&mSceneJob);
+	mThreadPool.pushBackJob(&mDBJob);
+	mThreadPool.pushBackJob(&mLocalLogJob);
 
 	return true;
 }
@@ -172,15 +170,15 @@ bool CGameServer::initThread()
 /// 运行
 void CGameServer::run()
 {
-	LOG_ERROR("Hello World");
-	MYTH_ASSERT(1,;);
-	MYTH_ASSERT_INFO(1,;,"I love you macro!");
+	//LOG_ERROR("Hello World");
+	//MYTH_ASSERT(1,;);
+	//MYTH_ASSERT_INFO(1,;,"I love you macro!");
 	while (true)
 	{
 		mCurrTime = time(NULL);
 		mTickCount = GetTickCount64();
 		//printf("*dddd*");
-		mThreadPool->run();
+		mThreadPool.run();
 #ifdef MYTH_OS_WINDOWS
 		Sleep(1);
 #else
