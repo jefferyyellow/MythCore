@@ -123,6 +123,7 @@ void CGameClient::processServerMessage()
 				int nRemoveFd = pAllSocket[i].getSocketFd();
 				pAllSocket[i].closeSocket();
 				mSelectModel.removeSocket(nRemoveFd);
+				printf("disconnect with server!!!");
 				break;
 			}
 			else

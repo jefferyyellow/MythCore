@@ -74,6 +74,12 @@ namespace Myth
 
 		virtual int getSerialNum() = 0;
 		virtual void setSerialNum(int nSerialNum) = 0;
+
+		bool	getBusy(){return mBusy;}
+		void	setBusy(bool bBusy){mBusy = bBusy;}
+
+	private:
+		bool mBusy;
 	};
 }
 #endif

@@ -36,6 +36,7 @@ void CPropertyModule::OnTimer(unsigned int nTickOffset)
 			{
 				if (tTimeNow - pPlayer->getLastSaveTime() > 60)
 				{
+					printf("CPropertyModule::OnTimer\n");
 					savePlayer(pPlayer);
 					pPlayer->setLastSaveTime(tTimeNow);
 					++nSavePlayerCount;
@@ -118,6 +119,7 @@ void CPropertyModule::onLoadPlayerInfo(CDBResponse& rResponse)
 	pPlayer->GetItemUnit().setDiamond(rResponse.getInt());
 
 	pPlayer->setLoadStatusBit(emLoadStatus_Info);
+	onLoadComplete(pPlayer);
 }
 
 /// 加载玩家基础属性
@@ -129,6 +131,7 @@ void CPropertyModule::onLoadPlayerBaseProperty(CDBResponse& rResponse)
 		return;
 	}
 	pPlayer->setLoadStatusBit(emLoadStatus_BaseProperty);
+	onLoadComplete(pPlayer);
 }
 
 /// 玩家属性加载完成
@@ -139,7 +142,7 @@ void CPropertyModule::onLoadComplete(CEntityPlayer* pPlayer)
 	{
 		return;
 	}
-
+	pPlayer->setPlayerStauts(emPlayerStatus_Gameing);
 	// 将玩家放入地图
 	// 通知各个模块有玩家创建
 	// 往客户端推送数据

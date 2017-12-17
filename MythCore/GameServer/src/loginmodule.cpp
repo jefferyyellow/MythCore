@@ -150,13 +150,22 @@ void CLoginModule::processWaitEnterGame(CLoginPlayer* pLoginPlayer, Message* pMe
 	if (NULL != pPlayer)
 	{
 		printf("Kick out by other: %d\n", pEnterSceneRequest->roleid());
+		// 如果加入不了到列表，就踢不下线
+		if (!CSceneJob::Inst()->addPlayerSocketIndex(pLoginPlayer->getExchangeHead().mSocketIndex, pPlayer->getObjID()))
+		{
+			CSceneJob::Inst()->disconnectPlayer(pLoginPlayer->getExchangeHead());
+			return;
+		}
+		// 如果已经是下线状态，改成正常的游戏状态
 		if (pPlayer->getPlayerStauts() == emPlayerStatus_Exiting)
 		{
 			pPlayer->setPlayerStauts(emPlayerStatus_Gameing);
 		}
+		// 将原来的玩家下线
 		CSceneJob::Inst()->disconnectPlayer(pPlayer);
-		pPlayer->GetExhangeHead() = pLoginPlayer->getExchangeHead();
 
+		// 换成新的玩家socket信息
+		pPlayer->GetExhangeHead() = pLoginPlayer->getExchangeHead();
 		CEnterSceneResponse tEnterSceneResponse;
 		tEnterSceneResponse.set_result(0);
 		CSceneJob::Inst()->send2Player(pPlayer->GetExhangeHead(), ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
@@ -182,8 +191,8 @@ void CLoginModule::processWaitEnterGame(CLoginPlayer* pLoginPlayer, Message* pMe
 			return;
 		}
 
-		CDBModule::Inst()->pushDBTask(pLoginPlayer->getRoleID(), emSessionType_LoadPlayerInfo, pLoginPlayer->getObjID(), 0, "call LoadPlayerInfo(%d)", pLoginPlayer->getRoleID());
-		CDBModule::Inst()->pushDBTask(pLoginPlayer->getRoleID(), emSessionType_LoadPlayerInfo, pLoginPlayer->getObjID(), 0, "call LoadPlayerBaseProperty(%d)", pLoginPlayer->getRoleID());
+		CDBModule::Inst()->pushDBTask(pLoginPlayer->getRoleID(), emSessionType_LoadPlayerInfo, pNewPlayer->getObjID(), 0, "call LoadPlayerInfo(%d)", pLoginPlayer->getRoleID());
+		CDBModule::Inst()->pushDBTask(pLoginPlayer->getRoleID(), emSessionType_LoadPlayerBaseProperty, pNewPlayer->getObjID(), 0, "call LoadPlayerBaseProperty(%d)", pLoginPlayer->getRoleID());
 
 		CEnterSceneResponse tEnterSceneResponse;
 		tEnterSceneResponse.set_result(0);

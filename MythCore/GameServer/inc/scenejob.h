@@ -65,6 +65,10 @@ public:
 	CEntityPlayer* getPlayerByRoleID(unsigned int nRoleID);
 	/// 通过SocketIndex得到玩家
 	CEntityPlayer* getPlayerBySocketIndex(short nSocketIndex);
+	/// 添加socket index
+	bool			addPlayerSocketIndex(short nSocketIndex, int nObjID);
+	/// 删除socket index
+	void			removePlayerSocketIndex(short nSocketIndex);
 private:
 	void		onTask(CInternalMsg* pMsg);
 	/// 处理前端消息

@@ -274,7 +274,6 @@ void CSceneJob::disconnectPlayer(CExchangeHead& rExchangeHead)
 	char* pTemp = mBuffer;
 	rExchangeHead.mSocketError = emTcpError_OffLineClose;
 	memcpy(pTemp, &rExchangeHead, sizeof(rExchangeHead));
-	//printf("disconnectPlayer\n");
 	mServer2TcpMemory->PushPacket((byte*)mBuffer, sizeof(rExchangeHead));
 }
 
@@ -284,6 +283,8 @@ void CSceneJob::disconnectPlayer(CEntityPlayer* pPlayer)
 	{
 		return;
 	}
+	// 端口连接的时候，将玩家的socket信息清除
+	removePlayerSocketIndex(pPlayer->GetExhangeHead().mSocketIndex);
 	disconnectPlayer(pPlayer->GetExhangeHead());
 }
 
@@ -377,4 +378,22 @@ CEntityPlayer* CSceneJob::getPlayerBySocketIndex(short nSocketIndex)
 	}
 
 	return NULL;
+}
+
+/// 添加socket index
+bool CSceneJob::addPlayerSocketIndex(short nSocketIndex, int nObjID)
+{
+	std::pair<PLAYER_SOCKET_LIST::iterator, bool> tSocketIndexRet = mPlayerSocketList.insert(
+	PLAYER_SOCKET_LIST::value_type(nSocketIndex, nObjID));
+	if (tSocketIndexRet.second)
+	{
+		return true;
+	}
+	return false;
+}
+
+/// 删除socket index
+void CSceneJob::removePlayerSocketIndex(short nSocketIndex)
+{
+	mPlayerSocketList.erase(nSocketIndex);
 }

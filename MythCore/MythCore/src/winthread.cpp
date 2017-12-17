@@ -7,6 +7,7 @@ namespace Myth
 {
 	unsigned long __stdcall ThreadFunction(void* arg)
 	{
+		printf("ThreadFunction\n");
 		CWinThread* pThead = (CWinThread*)arg;
 		if (NULL == pThead)
 		{

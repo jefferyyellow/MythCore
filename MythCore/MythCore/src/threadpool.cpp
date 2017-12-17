@@ -6,8 +6,7 @@ namespace Myth
 	{
 		mSimpleLock.lock();
 		mJobIndex = 0;
-		int nSize = mJobArray.size() > mIdleListNum ? mIdleListNum : mJobArray.size();
-		for (int i = 0; i < nSize; ++ i)
+		for (int i = 0; i < mThreadNum; ++ i)
 		{
 			IThread* pThread = popIdleThread();
 			if (NULL != pThread)

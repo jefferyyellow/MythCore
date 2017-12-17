@@ -15,13 +15,13 @@ namespace Myth
 	class CThreadPool
 	{
 	public:
-		typedef std::list<IThread*> ThreadList;
+		
 		typedef CArray<IJob*, 32> JobArray;
 
 	public:
 		CThreadPool()
 		{
-			mIdleListNum = 0;
+			mThreadNum = 0;
 			mJobIndex = 0;
 		}
 		~CThreadPool()
@@ -32,24 +32,22 @@ namespace Myth
 		void				init(int nThreadSize)
 		{
 			mJobIndex = 0;
-			mIdleListNum = nThreadSize;
+			mThreadNum = nThreadSize;
 			for (int i = 0; i < nThreadSize; ++i)
 			{
-				IThread* pThread = NULL;
-
 #ifdef MYTH_OS_WINDOWS
-				pThread = new CWinThread;
+				mThreadList[i] = new CWinThread;
 #else
-				pThread = new CPThread;
+				mThreadList[i] = new CPThread;
 #endif			
 
-				if (NULL != pThread)
+				if (NULL != mThreadList[i])
 				{
-					pThread->setThreadPool(this);
-					pThread->setSerialNum(i);
-					pThread->start();
-					mIdleList.push_back(pThread);
-					printf("%x\n", pThread);
+					mThreadList[i]->setThreadPool(this);
+					mThreadList[i]->setSerialNum(i);
+					mThreadList[i]->setBusy(true);
+					mThreadList[i]->start();
+					printf("%x\n", mThreadList[i]);
 				}
 			}
 			//printf("*************\n");
@@ -111,30 +109,29 @@ namespace Myth
 		IThread*			popIdleThread()
 		{
 			mSimpleLock.lock();
-			if (mIdleList.empty())
+			IThread* pIdleThread = NULL;
+			for (int i = 0; i < mThreadNum; ++ i)
 			{
-				mSimpleLock.unlock();
-				return NULL;
+				if (!mThreadList[i]->getBusy())
+				{
+					mThreadList[i]->setBusy(true);
+					pIdleThread = mThreadList[i];
+					break;
+				}
 			}
-			ThreadList::iterator it = mIdleList.begin();
-			IThread* pIdleThread = *it;
-			mIdleList.pop_front();
-			-- mIdleListNum;
 			mSimpleLock.unlock();
-
 			return pIdleThread;
 		}
 
 		void				pushIdleThread(IThread* pIdleThread)
 		{
 			mSimpleLock.lock();
-			mIdleList.push_back(pIdleThread);
+			pIdleThread->setBusy(false);
 			//printf("\npushIdleThread: %p\n", pIdleThread);
 			if (pIdleThread == (void*)0xcdcdcdcd)
 			{
 				int i = 0;
 			}
-			++ mIdleListNum;
 			mSimpleLock.unlock();
 		}
 
@@ -148,9 +145,13 @@ namespace Myth
 		void				run();
 
 	private:
-		byte				mIdleListNum;
 		byte				mJobIndex;
-		ThreadList			mIdleList;
+		byte				mThreadNum;
+#ifdef MYTH_OS_WINDOWS
+		CWinThread*			mThreadList[32];
+#else
+		CPThread*			mThreadList[32];
+#endif
 		JobArray			mJobArray;
 		CSimpleLock			mSimpleLock;
 	};

@@ -160,10 +160,10 @@ bool CGameServer::initThread()
 	}
 	mDBJob.setBuffer(MAX_DB_JOB_BUFFER_SIZE);
 
+	printf("initThread\n");
 	mThreadPool.pushBackJob(&mSceneJob);
 	mThreadPool.pushBackJob(&mDBJob);
 	mThreadPool.pushBackJob(&mLocalLogJob);
-
 	return true;
 }
 
