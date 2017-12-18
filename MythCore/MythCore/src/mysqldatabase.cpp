@@ -87,7 +87,7 @@ namespace Myth
 
 		if (NULL == pResult)
 		{
-			return -1;
+			return 0;
 		}
 		// 初始化查询结果
 		rQueryResult.init(pResult, nRowCount, nFieldCount);
@@ -115,7 +115,7 @@ namespace Myth
 		rColNum = nFieldCount;
 		if (NULL == pResult)
 		{
-			return -1;
+			return 0;
 		}
 
 		unsigned long* pValueLength = (unsigned long*)pBuffer;

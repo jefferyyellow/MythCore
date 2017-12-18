@@ -27,12 +27,16 @@ int CLoginPlayer::processStateNone()
 {
 	if (NULL == mClientMessage || ID_C2S_REQUEST_LOGIN != mClientMessageID)
 	{
+		// 将当前的状态时间置零
+		setCurStateTime(0);
 		return -1;
 	}
 
 	CLoginRequest* pLoginRequest = reinterpret_cast<CLoginRequest*>(mClientMessage);
 	if (NULL == pLoginRequest)
 	{
+		// 将当前的状态时间置零
+		setCurStateTime(0);
 		return -1;
 	}
 	printf("\nCLoginPlayer::processStateNone\n");
@@ -52,6 +56,8 @@ int CLoginPlayer::processAccountVerify()
 
 	if (NULL == mDBResponse || emSessionType_AccountVerify != mDBSessionType)
 	{
+		// 将当前的状态时间置零
+		setCurStateTime(0);
 		return -1;
 	}
 
@@ -80,11 +86,15 @@ int CLoginPlayer::processWaitCreateRole()
 {
 	if (NULL == mClientMessage || ID_C2S_REQUEST_CREATE_ROLE != mClientMessageID)
 	{
+		// 将当前的状态时间置零
+		setCurStateTime(0);
 		return -1;
 	}
 	CCreateRoleRequest* pCreateRoleRequest = reinterpret_cast<CCreateRoleRequest*>(mClientMessage);
 	if (NULL == pCreateRoleRequest)
 	{
+		// 将当前的状态时间置零
+		setCurStateTime(0);
 		return -1;
 	}
 
@@ -92,6 +102,8 @@ int CLoginPlayer::processWaitCreateRole()
 		|| mChannelID != pCreateRoleRequest->channelid()
 		|| mAccountID != pCreateRoleRequest->accountid())
 	{
+		// 将当前的状态时间置零
+		setCurStateTime(0);
 		return -1;
 	}
 
@@ -105,6 +117,8 @@ int CLoginPlayer::processCreateRoleing()
 {
 	if (NULL == mDBResponse || emSessionType_CreateRole != mDBSessionType)
 	{
+		// 将当前的状态时间置零
+		setCurStateTime(0);
 		return -1;
 	}
 
@@ -121,4 +135,9 @@ int CLoginPlayer::processCreateRoleing()
 bool CLoginPlayer::elapse(unsigned int nTickOffset)
 {
 	return mStateMachine.elapse(nTickOffset);
+}
+
+void CLoginPlayer::setCurStateTime(int nTime)
+{
+	mStateMachine.setTime(nTime);
 }

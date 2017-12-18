@@ -109,8 +109,8 @@ CREATE PROCEDURE `UpdatePlayerBaseProperty`(RoleID int unsigned,
 											tBag Blob,
 											tTask Blob)
 BEGIN
-	update PlayerRole set
-		bag = Bag,
+	update PlayerBaseProperty set
+		bag = tBag,
 		task = tTask
 	WHERE role_id=RoleID;
 END

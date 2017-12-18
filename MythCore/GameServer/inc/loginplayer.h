@@ -35,6 +35,7 @@ public:
 	int			processWaitCreateRole();
 	int			processCreateRoleing();
 	bool		elapse(unsigned int nTickOffset);
+	void		setCurStateTime(int nTime);
 public:
 	unsigned int getAccountID() const { return mAccountID; }
 	void		setAccountID(int nValue) { mAccountID = nValue; }

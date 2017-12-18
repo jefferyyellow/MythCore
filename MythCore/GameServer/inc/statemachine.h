@@ -92,6 +92,11 @@ public:
 		return false;
 	}
 
+	void setTime(unsigned int nTime)
+	{
+		mStateData[mCurState].mLeftTime = nTime;
+	}
+
 
 private:
 	CState		mStateData[Size];		// ×´Ì¬»úËùÓĞ×´Ì¬

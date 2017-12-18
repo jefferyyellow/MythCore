@@ -91,6 +91,7 @@ void CLoginModule::onClientMessage(CExchangeHead& rExchangeHead, unsigned int nM
 	if (nMessageID == ID_C2S_REQUEST_ENTER_SCENE)
 	{
 		processWaitEnterGame(pLoginPlayer, pMessage);
+		mLoginList.erase(rExchangeHead.mSocketIndex);
 		// 完成使命，释放掉
 		CObjPool::Inst()->free(pLoginPlayer->getObjID());
 	}

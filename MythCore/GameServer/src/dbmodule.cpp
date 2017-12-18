@@ -60,6 +60,7 @@ void CDBModule::onDBSession()
 			{
 				pPlayer->setSaveStatus(emSaveStatus_Info);
 				CPropertyModule::Inst()->onSavePlayerComplete(pPlayer);
+				printf("SavePlayerInfo complete\n");
 			}
 			break;
 		}
@@ -75,6 +76,7 @@ void CDBModule::onDBSession()
 			{
 				pPlayer->setSaveStatus(emSaveStatus_BaseProperty);
 				CPropertyModule::Inst()->onSavePlayerComplete(pPlayer);
+				printf("SavePlayerBaseProperty complete\n");
 			}
 			break;
 		}
