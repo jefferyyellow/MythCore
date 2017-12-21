@@ -243,5 +243,6 @@ void CGameClient::onCreateRoleResponse(Message* pMessage)
 	tEnterSceneRequest.set_accountid(mAccountID);
 	tEnterSceneRequest.set_channelid(mChannelID);
 	tEnterSceneRequest.set_serverid(mServerID);
+	sendMessage(ID_C2S_REQUEST_ENTER_SCENE, &tEnterSceneRequest);
 
 }

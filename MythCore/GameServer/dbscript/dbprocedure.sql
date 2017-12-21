@@ -43,7 +43,7 @@ DELIMITER ;;
 CREATE PROCEDURE `CreateRole`(RoleID int unsigned, RoleName char(32), AccountID int unsigned, ChannelID int unsigned, ServerID int unsigned)
 BEGIN
 	DECLARE tmpRoleID INT UNSIGNED;
-	SELECT role_id from PlayerRole where account_id=AccountID and channel_id=ChannelID and server_id=ServerID;
+	SELECT role_id INTO tmpRoleID from PlayerRole where account_id=AccountID and channel_id=ChannelID and server_id=ServerID;
 	IF FOUND_ROWS() = 0 THEN
 		
 		INSERT INTO PlayerRole (role_id,role_name,account_id,channel_id,server_id) values(RoleID, RoleName, AccountID, ChannelID, ServerID);
