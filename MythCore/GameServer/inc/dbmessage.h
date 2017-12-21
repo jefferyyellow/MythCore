@@ -15,7 +15,9 @@ public:
 class CDBRequest : public CDBRequestHeader
 {
 public:
-	byte		mSqlBuffer[65000];		// 数据缓冲区
+	// 扩展成65000 * 2,mysql_real_escape_string直接在这上面操作
+	// mysql_real_escape_string的空间要求length*2+1 
+	byte		mSqlBuffer[130000];		// 数据缓冲区
 };
 
 class CDBResponseHeader

@@ -52,7 +52,8 @@ namespace Myth
 		{
 			return mysql_error(mMysql);
 		}
-
+		
+		MYSQL * GetMysql() const { return mMysql; }
 	private:
 		/// 引用计数
 		static short	mDBCount;

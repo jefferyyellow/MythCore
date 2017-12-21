@@ -5,6 +5,8 @@
 #include "gameserver.h"
 #include "entityplayer.h"
 #include "objpool.h"
+#include "dbmodule.hxx.pb.h"
+#include "errcode.h"
 CDBJob::CDBJob()
 {
 
@@ -90,14 +92,30 @@ void CDBJob::checkDBStream()
 		{
 			return;
 		}
+		nLength -= sizeof(CDBRequestHeader);
 
 		int nResultLength = sizeof(mDBResponse.mSqlBuffer) - 1;
 
 		int nRowNum = 0;
 		int nColNum = 0;
-		int nResult = mDataBase.query((char*)mDBRequest.mSqlBuffer, (byte*)mDBResponse.mSqlBuffer, nResultLength,
-			nRowNum, nColNum);
-
+		int nResult = SUCCESS;
+		switch (mDBRequest.mSessionType)
+		{
+			case emSessionType_SavePlayerBaseProperty:
+			{
+				nResult = onSavePlayerBaseProperty(nLength);
+				break;
+			}
+			default:
+			{
+				break;
+			}
+		}
+		if (SUCCESS == nResult)
+		{
+			nResult = mDataBase.query((char*)mDBRequest.mSqlBuffer, (byte*)mDBResponse.mSqlBuffer, nResultLength,
+				nRowNum, nColNum);
+		}
 
 		mDBResponse.mPlayerID = mDBRequest.mPlayerID;
 		mDBResponse.mResult = nResult;
@@ -111,12 +129,276 @@ void CDBJob::checkDBStream()
 	}
 }
 
+/// 处理保存玩家基本属性
+int CDBJob::onSavePlayerBaseProperty(int nLength)
+{
+	PBSavePlayer tSavePlayer;
+	if (!tSavePlayer.ParseFromArray(mDBRequest.mSqlBuffer, nLength))
+	{
+		LOG_ERROR("Player Base Property Parse From Array Error, PlayerID: %d", mDBRequest.mPlayerID);
+		return -1;
+	}
+	//mSqlLength = 0;
+	//int tLen = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+	//	"update PlayerBaseProperty set ");
+	//mSqlLength += tLen;
+	//int nResult = parsePBForSql(tSavePlayer);
+	//if (SUCCESS != nResult)
+	//{
+	//	return nResult;
+	//}
+
+	//tLen = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+	//	" where role_id=%d", mDBRequest.mPlayerID);
+
+	mSqlLength = 0;
+	int tLen = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+		"call UpdatePlayerBaseProperty(%d,", mDBRequest.mPlayerID);
+	mSqlLength += tLen;
+	int nResult = parsePBForPrecedure(tSavePlayer);
+	if (SUCCESS != nResult)
+	{
+		return nResult;
+	}
+
+	tLen = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+		")");
+	return SUCCESS;
+}
+
+/// 分析PB结构，组成sql语句
+int CDBJob::parsePBForSql(Message& rMessage)
+{
+	const ::google::protobuf::Descriptor* pDesc = rMessage.GetDescriptor();
+	const ::google::protobuf::Reflection* pRef = rMessage.GetReflection();
+	MYSQL *pMysql = mDataBase.GetMysql();
+
+
+	int nLength = 0;
+	char tBuffer[65000] = { 0 };
+	int nCount = 0;
+	for (int i = 0; i < pDesc->field_count(); ++ i)
+	{
+		const ::google::protobuf::FieldDescriptor* pFieldDescriptor = pDesc->field(i);
+		// repeated不处理
+		if (pFieldDescriptor->is_repeated())
+		{
+			continue;
+		}
+		// 消息里没有这个字段
+		if (!pRef->HasField(rMessage, pFieldDescriptor))
+		{
+			continue;
+		}
+		if (nCount > 0)
+		{
+			nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+				"%s", ",");
+			mSqlLength += nLength;
+		}
+		++ nCount;
+		switch (pFieldDescriptor->cpp_type())
+		{
+			//case ::google::protobuf::FieldDescriptor::CPPTYPE_BOOL:
+			//case ::google::protobuf::FieldDescriptor::CPPTYPE_ENUM:
+			case ::google::protobuf::FieldDescriptor::CPPTYPE_INT32:
+			{
+				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength, 
+					"%s=%d", pFieldDescriptor->name().c_str(), pRef->GetInt32(rMessage, pFieldDescriptor));
+				mSqlLength += nLength;
+				break;
+			}
+			case ::google::protobuf::FieldDescriptor::CPPTYPE_INT64:
+			{
+				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+					"%s=%lld", pFieldDescriptor->name().c_str(), pRef->GetInt64(rMessage, pFieldDescriptor));
+				mSqlLength += nLength;
+				break;
+			}
+			case ::google::protobuf::FieldDescriptor::CPPTYPE_UINT32:
+			{
+				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+					"%s=%u", pFieldDescriptor->name().c_str(), pRef->GetUInt32(rMessage, pFieldDescriptor));
+				mSqlLength += nLength;
+				break;
+			}
+			case ::google::protobuf::FieldDescriptor::CPPTYPE_UINT64:
+			{
+				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+					"%s=%llu", pFieldDescriptor->name().c_str(), pRef->GetUInt64(rMessage, pFieldDescriptor));
+				mSqlLength += nLength;
+				break;
+			}
+			case ::google::protobuf::FieldDescriptor::CPPTYPE_DOUBLE:
+			{
+				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+					"%s=%lf", pFieldDescriptor->name().c_str(), pRef->GetDouble(rMessage, pFieldDescriptor));
+				mSqlLength += nLength;
+				break;
+			}
+			case ::google::protobuf::FieldDescriptor::CPPTYPE_FLOAT:
+			{
+				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+					"%s=%f", pFieldDescriptor->name().c_str(), pRef->GetFloat(rMessage, pFieldDescriptor));
+				mSqlLength += nLength;
+				break;
+			}
+			case ::google::protobuf::FieldDescriptor::CPPTYPE_STRING:
+			{
+				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+					"%s=%s", pFieldDescriptor->name().c_str(), pRef->GetString(rMessage, pFieldDescriptor).c_str());
+				mSqlLength += nLength;
+				break;
+			}
+			case ::google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE:
+			{
+				const Message &rSubMsg = pRef->GetMessage(rMessage, pFieldDescriptor);
+				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+					"%s=", pFieldDescriptor->name().c_str());
+				mSqlLength += nLength;
+				if (rSubMsg.SerializeToArray(tBuffer, sizeof(tBuffer) - 1))
+				{
+					nLength = mysql_real_escape_string(pMysql, (char*)&(mDBRequest.mSqlBuffer[mSqlLength]), tBuffer, rSubMsg.ByteSize());
+					if (nLength == 0)
+					{
+						nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+							"%s", "NULL");
+					}
+					else if (nLength < 0)
+					{
+						return -1;
+					}
+					mSqlLength += nLength;
+				}
+				else
+				{
+					return -1;
+				}
+
+				break;
+			}
+			default:
+				break;
+		}
+	}
+	return SUCCESS;
+}
+
+/// 分析PB结构，组成调用precedure语句
+int CDBJob::parsePBForPrecedure(Message& rMessage)
+{
+	const ::google::protobuf::Descriptor* pDesc = rMessage.GetDescriptor();
+	const ::google::protobuf::Reflection* pRef = rMessage.GetReflection();
+	MYSQL *pMysql = mDataBase.GetMysql();
+
+
+	int nLength = 0;
+	char tBuffer[65000] = { 0 };
+	int nCount = 0;
+	for (int i = 0; i < pDesc->field_count(); ++i)
+	{
+		const ::google::protobuf::FieldDescriptor* pFieldDescriptor = pDesc->field(i);
+		// repeated不处理
+		if (pFieldDescriptor->is_repeated())
+		{
+			continue;
+		}
+		// 消息里没有这个字段
+		if (!pRef->HasField(rMessage, pFieldDescriptor))
+		{
+			continue;
+		}
+		if (nCount > 0)
+		{
+			nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+				"%s", ",");
+			mSqlLength += nLength;
+		}
+		++nCount;
+		switch (pFieldDescriptor->cpp_type())
+		{
+			//case ::google::protobuf::FieldDescriptor::CPPTYPE_BOOL:
+			//case ::google::protobuf::FieldDescriptor::CPPTYPE_ENUM:
+			case ::google::protobuf::FieldDescriptor::CPPTYPE_INT32:
+			{
+				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+					"%d", pFieldDescriptor->name().c_str(), pRef->GetInt32(rMessage, pFieldDescriptor));
+				mSqlLength += nLength;
+				break;
+			}
+			case ::google::protobuf::FieldDescriptor::CPPTYPE_INT64:
+			{
+				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+					"%lld", pFieldDescriptor->name().c_str(), pRef->GetInt64(rMessage, pFieldDescriptor));
+				mSqlLength += nLength;
+				break;
+			}
+			case ::google::protobuf::FieldDescriptor::CPPTYPE_UINT32:
+			{
+				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+					"%u", pFieldDescriptor->name().c_str(), pRef->GetUInt32(rMessage, pFieldDescriptor));
+				mSqlLength += nLength;
+				break;
+			}
+			case ::google::protobuf::FieldDescriptor::CPPTYPE_UINT64:
+			{
+				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+					"%llu", pFieldDescriptor->name().c_str(), pRef->GetUInt64(rMessage, pFieldDescriptor));
+				mSqlLength += nLength;
+				break;
+			}
+			case ::google::protobuf::FieldDescriptor::CPPTYPE_DOUBLE:
+			{
+				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+					"%lf", pFieldDescriptor->name().c_str(), pRef->GetDouble(rMessage, pFieldDescriptor));
+				mSqlLength += nLength;
+				break;
+			}
+			case ::google::protobuf::FieldDescriptor::CPPTYPE_FLOAT:
+			{
+				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+					"%f", pFieldDescriptor->name().c_str(), pRef->GetFloat(rMessage, pFieldDescriptor));
+				mSqlLength += nLength;
+				break;
+			}
+			case ::google::protobuf::FieldDescriptor::CPPTYPE_STRING:
+			{
+				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+					"%s", pFieldDescriptor->name().c_str(), pRef->GetString(rMessage, pFieldDescriptor).c_str());
+				mSqlLength += nLength;
+				break;
+			}
+			case ::google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE:
+			{
+				const Message &rSubMsg = pRef->GetMessage(rMessage, pFieldDescriptor);
+				if (rSubMsg.SerializeToArray(tBuffer, sizeof(tBuffer) - 1))
+				{
+					nLength = mysql_real_escape_string(pMysql, (char*)&(mDBRequest.mSqlBuffer[mSqlLength]), tBuffer, rSubMsg.ByteSize());
+					if (nLength == 0)
+					{
+						nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+							"%s", "NULL");
+					}
+					else if (nLength < 0)
+					{
+						return -1;
+					}
+					mSqlLength += nLength;
+				}
+				else
+				{
+					return -1;
+				}
+
+				break;
+			}
+			default:
+				break;
+		}
+	}
+	return SUCCESS;
+}
+
 void CDBJob::onTask(CInternalMsg* pMsg)
 {
-	switch (pMsg->getMsgID())
-	{
-	
-		default:
-			break;
-	}
 }

@@ -2,6 +2,7 @@
 #define __DBMODULE_H__
 #include "dbmessage.h"
 #include "loginmodule.h"
+#include "messagefactory.h"
 class CDBModule : public CLogicModule, public CSingleton < CDBModule >
 {
 	friend class CSingleton < CDBModule >;
@@ -15,6 +16,7 @@ public:
 public:
 	/// —π»ÎDB»ŒŒÒ
 	void			pushDBTask(int nPlayerID, int nSessionType, int nParam1, int nParam2, char* pSql, ...);
+	void			pushDBTask(int nPlayerID, int nSessionType, int nParam1, int nParam2, Message* pMessage);
 	CDBResponse*	getDBResponse(){return &mDBResponse;}
 	void			onDBSession();
 private:

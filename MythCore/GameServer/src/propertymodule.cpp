@@ -7,6 +7,7 @@
 #include "dbmessage.h"
 #include "gameserver.h"
 #include "dbmodule.h"
+#include "dbmodule.hxx.pb.h"
 CPropertyModule::CPropertyModule()
 :mSavePlayerTimer(1000)
 {
@@ -181,9 +182,11 @@ void CPropertyModule::savePlayerBaseProperty(CEntityPlayer* pPlayer)
 	{
 		return;
 	}
-	CDBModule::Inst()->pushDBTask(pPlayer->getRoleID(), emSessionType_SavePlayerBaseProperty, pPlayer->getObjID(), 0,
-		"call UpdatePlayerBaseProperty(%d,%s,%s)", pPlayer->getRoleID(),
-		NULL, NULL);
+	PBSavePlayer tSavePlayer;
+	tSavePlayer.mutable_bag();
+	tSavePlayer.mutable_task();
+
+	CDBModule::Inst()->pushDBTask(pPlayer->getRoleID(), emSessionType_SavePlayerBaseProperty, pPlayer->getObjID(), 0, &tSavePlayer);
 }
 /// Íæ¼Ò´æÅÌÍê³É
 void CPropertyModule::onSavePlayerComplete(CEntityPlayer* pPlayer)

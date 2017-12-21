@@ -14,3 +14,14 @@ message PBItemEquip
 	uint32			Level		= 4;			// 等级
 }
 
+// 包裹
+message PBBag
+{
+
+}
+
+// 任务
+message PBTask
+{
+
+}

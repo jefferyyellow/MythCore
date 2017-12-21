@@ -27,6 +27,23 @@ void CDBModule::pushDBTask(int nPlayerID, int nSessionType, int nParam1, int nPa
 	CGameServer::Inst()->pushDBTask(nPlayerID, (byte*)(&mDBRequest), nTotalLength);
 }
 
+void CDBModule::pushDBTask(int nPlayerID, int nSessionType, int nParam1, int nParam2, Message* pMessage)
+{
+	if (!pMessage->SerializeToArray(mDBRequest.mSqlBuffer, sizeof(mDBRequest.mSqlBuffer) - 1))
+	{
+		LOG_ERROR("PushDBTask Error, SerializeToArray Failure, Session Type: %d", nSessionType);
+		return;
+	}
+	mDBRequest.mPlayerID = nPlayerID;
+	mDBRequest.mParam1 = nParam1;
+	mDBRequest.mParam2 = nParam2;
+	mDBRequest.mSessionType = nSessionType;
+	mDBRequest.mSqlLenth = pMessage->ByteSize();
+
+	int nTotalLength = pMessage->ByteSize() + sizeof(CDBRequestHeader);
+	CGameServer::Inst()->pushDBTask(nPlayerID, (byte*)(&mDBRequest), nTotalLength);
+}
+
 void CDBModule::onDBSession()
 {
 	mDBResponse.resetPoint();

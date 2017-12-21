@@ -35,8 +35,10 @@ void protobuf_InitDefaults_common_2ehxx();
 void protobuf_AssignDesc_common_2ehxx();
 void protobuf_ShutdownFile_common_2ehxx();
 
+class PBBag;
 class PBItemEquip;
 class PBItemObject;
+class PBTask;
 
 // ===================================================================
 
@@ -234,6 +236,164 @@ class PBItemEquip : public ::google::protobuf::Message /* @@protoc_insertion_poi
 };
 extern ::google::protobuf::internal::ExplicitlyConstructed<PBItemEquip> PBItemEquip_default_instance_;
 
+// -------------------------------------------------------------------
+
+class PBBag : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PBBag) */ {
+ public:
+  PBBag();
+  virtual ~PBBag();
+
+  PBBag(const PBBag& from);
+
+  inline PBBag& operator=(const PBBag& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBBag& default_instance();
+
+  static const PBBag* internal_default_instance();
+
+  void Swap(PBBag* other);
+
+  // implements Message ----------------------------------------------
+
+  inline PBBag* New() const { return New(NULL); }
+
+  PBBag* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PBBag& from);
+  void MergeFrom(const PBBag& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(PBBag* other);
+  void UnsafeMergeFrom(const PBBag& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:PBBag)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_common_2ehxx_impl();
+  friend void  protobuf_AddDesc_common_2ehxx_impl();
+  friend void protobuf_AssignDesc_common_2ehxx();
+  friend void protobuf_ShutdownFile_common_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<PBBag> PBBag_default_instance_;
+
+// -------------------------------------------------------------------
+
+class PBTask : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PBTask) */ {
+ public:
+  PBTask();
+  virtual ~PBTask();
+
+  PBTask(const PBTask& from);
+
+  inline PBTask& operator=(const PBTask& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBTask& default_instance();
+
+  static const PBTask* internal_default_instance();
+
+  void Swap(PBTask* other);
+
+  // implements Message ----------------------------------------------
+
+  inline PBTask* New() const { return New(NULL); }
+
+  PBTask* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PBTask& from);
+  void MergeFrom(const PBTask& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(PBTask* other);
+  void UnsafeMergeFrom(const PBTask& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:PBTask)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_common_2ehxx_impl();
+  friend void  protobuf_AddDesc_common_2ehxx_impl();
+  friend void protobuf_AssignDesc_common_2ehxx();
+  friend void protobuf_ShutdownFile_common_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<PBTask> PBTask_default_instance_;
+
 // ===================================================================
 
 
@@ -347,7 +507,25 @@ inline void PBItemEquip::set_level(::google::protobuf::uint32 value) {
 inline const PBItemEquip* PBItemEquip::internal_default_instance() {
   return &PBItemEquip_default_instance_.get();
 }
+// -------------------------------------------------------------------
+
+// PBBag
+
+inline const PBBag* PBBag::internal_default_instance() {
+  return &PBBag_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
+// PBTask
+
+inline const PBTask* PBTask::internal_default_instance() {
+  return &PBTask_default_instance_.get();
+}
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 

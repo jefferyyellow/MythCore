@@ -4,6 +4,7 @@
 #include "mysqldatabase.h"
 #include "bytestream.h"
 #include "dbmessage.h"
+#include "messagefactory.h"
 using namespace Myth;
 
 class CInternalMsg;
@@ -26,6 +27,12 @@ public:
 	void	popUpJobData(byte* pData, int &rLength);
 	/// 处理DB流里的数据
 	void	checkDBStream();
+	/// 处理保存玩家基本属性
+	int		onSavePlayerBaseProperty(int nLength);
+	/// 分析PB结构，组成update的sql语句
+	int		parsePBForSql(Message& rMessage);
+	/// 分析PB结构，组成调用precedure语句
+	int		parsePBForPrecedure(Message& rMessage);
 private:
 	void	onTask(CInternalMsg* pMsg);
 
@@ -36,5 +43,6 @@ private:
 	CSimpleLock		mJobStreamLock;
 	CDBRequest		mDBRequest;
 	CDBResponse		mDBResponse;
+	int				mSqlLength;
 };
 #endif

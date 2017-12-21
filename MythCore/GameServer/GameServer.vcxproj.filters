@@ -168,6 +168,9 @@
     <ClCompile Include="..\message\common.hxx.pb.cc">
       <Filter>message</Filter>
     </ClCompile>
+    <ClCompile Include="..\message\dbmodule.hxx.pb.cc">
+      <Filter>message</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -361,6 +364,12 @@
     </ClInclude>
     <ClInclude Include="inc\itemtype.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\dbmodule.hxx">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\dbmodule.hxx.pb.h">
+      <Filter>message</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

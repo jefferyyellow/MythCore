@@ -73,6 +73,7 @@
   <ItemGroup>
     <ClCompile Include="..\dep\tinyxml\tinyxml2.cpp" />
     <ClCompile Include="..\message\common.hxx.pb.cc" />
+    <ClCompile Include="..\message\dbmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\itemmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\loginmessage.hxx.pb.cc" />
     <ClCompile Include="..\message\mapmodule.hxx.pb.cc" />
@@ -119,6 +120,8 @@
     <ClInclude Include="..\dep\tinyxml\tinyxml2.h" />
     <ClInclude Include="..\message\common.hxx" />
     <ClInclude Include="..\message\common.hxx.pb.h" />
+    <ClInclude Include="..\message\dbmodule.hxx" />
+    <ClInclude Include="..\message\dbmodule.hxx.pb.h" />
     <ClInclude Include="..\message\itemmodule.hxx" />
     <ClInclude Include="..\message\itemmodule.hxx.pb.h" />
     <ClInclude Include="..\message\loginmessage.hxx" />
