@@ -387,6 +387,7 @@ void CTcpServer::receiveMessage()
 					{
 						// 客户端已经退出
 						clearSocketInfo(i, pSocket);
+						sendSocketErrToGameServer(i, emTcpError_SendData);
 					}
 					break;
 				}
@@ -489,6 +490,7 @@ void CTcpServer::receiveMessage()
 				if (NULL != pSocket)
 				{
 					clearSocketInfo(rTcpSocket.getSocketFd(), pSocket);
+					sendSocketErrToGameServer(rTcpSocket.getSocketFd(), emTcpError_SendData);
 				}
 				break;
 			}
@@ -596,11 +598,11 @@ void CTcpServer::sendMessage()
 			continue;
 		}
 
-
 		if (mSocketInfo[nTcpIndex].mCreateTime != pExchangeHead->mSocketTime)
 		{
 			continue;
 		}
+
 		printf("CTcpServer::sendMessage nMessageLen: %d\n", nMessageLen);
 
 #ifdef MYTH_OS_WINDOWS
@@ -621,6 +623,10 @@ void CTcpServer::sendMessage()
 			continue;
 		}
 
+		if (nMessageLen <= 0)
+		{
+			continue;
+		}
 		short nLength = *(short*)pTemp;
 		if (nLength != nMessageLen)
 		{
@@ -709,6 +715,7 @@ void CTcpServer::clearSocketInfo(int nTcpIndex, CTcpSocket* pSocket)
 	pSocket->closeSocket();
 	// 总连接数减一
 	-- mServerStatistics.mTotalConnects;
+	printf("client disconnect, nTcpIndex: %d", nTcpIndex);
 }
 
 // 加载TCP服务器配置

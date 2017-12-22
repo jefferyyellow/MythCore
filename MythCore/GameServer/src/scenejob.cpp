@@ -180,6 +180,14 @@ void CSceneJob::processClientMessage()
 
 		pTemp += sizeof(CExchangeHead);
 		nMessageLen -= sizeof(CExchangeHead);
+		if (nMessageLen <= 0)
+		{
+			if (pExchangeHead->mSocketError)
+			{
+				onSocketDisconnect(pExchangeHead->mSocketIndex);
+			}
+			continue;
+		}
 
 		short nLength = *(short*)pTemp;
 		if (nLength != nMessageLen)
@@ -345,6 +353,28 @@ void CSceneJob::onPlayerLeaveGame(CEntityPlayer* pPlayer)
 {
 	mPlayerSocketList.erase(pPlayer->GetExhangeHead().mSocketIndex);
 	mPlayerList.erase(pPlayer->getRoleID());
+}
+
+/// 一个Socket断开
+void CSceneJob::onSocketDisconnect(int nSocketIndex)
+{
+	printf("Socket disconnect\n");
+	CLoginModule::Inst()->onSocketDisconnect(nSocketIndex);
+	PLAYER_SOCKET_LIST::iterator it = mPlayerSocketList.find(nSocketIndex);
+	if (it != mPlayerSocketList.end())
+	{
+		CEntityPlayer* pPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
+		if (NULL != pPlayer)
+		{
+			// 将玩家置为下线状态
+			pPlayer->setPlayerStauts(emPlayerStatus_Exiting);
+			CPropertyModule::Inst()->savePlayer(pPlayer);
+		}
+		else
+		{
+			mPlayerSocketList.erase(it);
+		}
+	}
 }
 
 /// 时间函数

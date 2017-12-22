@@ -45,6 +45,7 @@ void CLoginModule::OnTimer(unsigned int nTickOffset)
 				++ it;
 				mLoginList.erase(itOld);
 				CObjPool::Inst()->free(nObjID);
+				CSceneJob::Inst()->disconnectPlayer(pLoginPlayer->getExchangeHead());
 				continue;
 			}
 
@@ -198,5 +199,17 @@ void CLoginModule::processWaitEnterGame(CLoginPlayer* pLoginPlayer, Message* pMe
 		CEnterSceneResponse tEnterSceneResponse;
 		tEnterSceneResponse.set_result(0);
 		CSceneJob::Inst()->send2Player(pNewPlayer->GetExhangeHead(), ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
+	}
+}
+
+///  一个Socket断开
+void CLoginModule::onSocketDisconnect(int nSocketIndex)
+{
+	LOGIN_LIST::iterator it = mLoginList.find(nSocketIndex);
+	if (it != mLoginList.end())
+	{
+		mLoginList.erase(nSocketIndex);
+		// 完成使命，释放掉
+		CObjPool::Inst()->free(it->second);
 	}
 }

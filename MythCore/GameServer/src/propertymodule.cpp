@@ -95,7 +95,8 @@ void CPropertyModule::onGMCommandRequest(CEntityPlayer* pPlayer, Message* pMessa
 void CPropertyModule::onLeaveGameRequest(CEntityPlayer* pPlayer, Message* pMessage)
 {
 	MYTH_ASSERT(NULL == pPlayer || NULL == pMessage, return);
-	
+	// 将玩家置为下线状态
+	pPlayer->setPlayerStauts(emPlayerStatus_Exiting);
 	savePlayer(pPlayer);
 }
 

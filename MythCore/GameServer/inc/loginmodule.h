@@ -32,6 +32,8 @@ public:
 	void		OnDBMessage(CDBResponse* pMsg);
 	/// 处理等待玩家进入游戏
 	void		processWaitEnterGame(CLoginPlayer* pLoginPlayer, Message* pMessage);
+	///  一个Socket断开
+	void		onSocketDisconnect(int nSocketIndex);
 private:
 	LOGIN_LIST			mLoginList;				// 登录列表
 	CAutoResetTimer		mLoginCheckTime;		// 登录校验时间
