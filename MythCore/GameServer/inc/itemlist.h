@@ -1,6 +1,9 @@
 #ifndef __ITEMLIST_H__
 #define __ITEMLIST_H__
 #include "objpool.h"
+#include "itemobject.h"
+class PBItemObject;
+class PBItemList;
 template<int Capacity>
 class CItemList
 {
@@ -20,6 +23,7 @@ public:
 		for (int i = 0; i < Capacity; ++i)
 		{
 			mItemObjID[i] = INVALID_OBJ_ID;
+			mItemID[i] = 0;
 		}
 	}
 
@@ -29,7 +33,9 @@ public:
 		{
 			if (INVALID_OBJ_ID != mItemObjID[i])
 			{
-				//CObjPool::Inst()->free(mItemObjID[i]);
+				CObjPool::Inst()->free(mItemObjID[i]);
+				mItemID[i] = 0;
+				mItemObjID[i] = INVALID_OBJ_ID;
 			}
 		}
 	}
@@ -74,16 +80,77 @@ public:
 		return mItemObjID[nIndex];
 	}
 
-	void		getItemID(int nIndex)
+	int		getItemID(int nIndex)
 	{
 		if (nIndex < 0 || nIndex >= Capacity)
 		{
-			return;
+			return 0;
 		}
 
 		return mItemID[nIndex];
 	}
 	int		getCapacity(){return Capacity;}
+
+	void setFromPB(PBItemList* pbItemList)
+	{
+		if (NULL == pbItemList)
+		{
+			return;
+		}
+		for (int i = 0; i < pbItemList->itemobject_size() && i < Capacity; ++i)
+		{
+			PBItemObject* pbObject = pbItemList->mutable_itemobject(i);
+			if (NULL == pbObject)
+			{
+				continue;
+			}
+			int nIndex = pbObject->index();
+			if (nIndex < 0 || nIndex >= Capacity)
+			{
+				continue;
+			}
+			int nItemID = pbObject->itemid();
+			CItemObject* pItemObject = CItemFactory::createItem(nItemID);
+			if (NULL == pItemObject)
+			{
+				continue;
+			}
+
+			pItemObject->setFromPB(pbObject);
+			mItemObjID[nIndex] = pItemObject->getObjID();
+			mItemID[nIndex] = nItemID;
+		}
+
+	}
+
+	void createToPB(PBItemList* pbItemList, int nSize = Capacity)
+	{
+		if (NULL == pbItemList)
+		{
+			return;
+		}
+		for (int i = 0; i < nSize; ++ i)
+		{
+			if (INVALID_OBJ_ID == mItemObjID[i])
+			{
+				continue;
+			}
+
+			CItemObject* pItemObject = reinterpret_cast<CItemObject*>(CObjPool::Inst()->getObj(mItemObjID[i]));
+			if (NULL == pItemObject)
+			{
+				continue;
+			}
+			PBItemObject* pbObject = pbItemList->add_itemobject();
+			if (NULL == pbObject)
+			{
+				continue;
+			}
+			pbObject->set_index(i);
+			pItemObject->createToPB(pbObject);
+		}
+
+	}
 
 protected:
 	/// Obj IDÁÐ±í

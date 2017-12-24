@@ -83,14 +83,17 @@ public:
 		mpValue += (*mpLength + 1);
 		++mpLength;
 	}
+
 	/// 数据
 	byte* getValue()const{return mpValue;}
-	void setValue(byte* val){mpValue = val;}
 	/// 数据长度
-	unsigned long* getLength()const{return mpLength;}
-	void setLength(unsigned long* val){mpLength = val;}
+	unsigned long getLength()const{return *mpLength;}
 	/// 增加长度
-	void increaseLength(){ ++mpLength;}
+	void next()
+	{ 
+		mpValue += (*mpLength + 1);
+		++mpLength;
+	}
 public:
 	byte				mSqlBuffer[65000];		// 数据缓冲区
 	// 下面一定要在最后面,只有在CSceneJob中解析字段的时候才需要

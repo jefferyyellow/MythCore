@@ -16,12 +16,12 @@ void CTaskModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageI
 	{
 		case ID_C2S_REQUEST_ACCEPT_TASK:
 		{
-			pPlayer->GetTaskUnit().onAcceptTaskRequest(pMessage);
+			pPlayer->getTaskUnit().onAcceptTaskRequest(pMessage);
 			break;
 		}
 		case ID_C2S_REQUEST_SUBMIT_TASK:
 		{
-			pPlayer->GetTaskUnit().onSubmitTaskRequest(pMessage);
+			pPlayer->getTaskUnit().onSubmitTaskRequest(pMessage);
 			break;
 		}
 		default:

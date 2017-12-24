@@ -4,6 +4,7 @@
 #include "itemcontainer.h"
 #include "messagefactory.h"
 #include "itemtype.h"
+#include "equip.h"
 class CEntityPlayer;
 class CItemUnit : public CPlayerSubUnit
 {
@@ -29,9 +30,9 @@ public:
 	int			insertItem(int* pItemID, int* pItemNum, int nSize);
 	/// 拥有道具的数目（注意，不出来货币道具）
 	int			hasItem(int nItemID);
-	/// 删除道具（注意，不出来货币道具）
+	/// 删除道具（注意，不处理货币道具）
 	int			removeItem(int nIndex, int nItemNum);
-	/// 删除道具（注意，不出来货币道具）
+	/// 删除道具（注意，不处理货币道具）
 	void		removeItemByID(int nItemID, int nItemNum);
 
 	/// 插入道具通知(没有特殊属性的道具)
@@ -57,27 +58,32 @@ public:
 
 	/// 卸载道具
 	void		onUnEquipItemRequest(Message* pMessage);
-	void		sendUnEquipItemResponse(int nResult, int nEquipIndex, int nItemIndex);
-
+	/// 卸载装备回应
+	void		sendUnEquipItemResponse(int nResult, int nEquipPart, int nItemIndex);
+	/// 广播装备改变通知
+	void		broadcastChangeNotify(int nEntityID, int nEquipPart, int nEquipItemID);
 public:
 	/// 常用的货币接口单独出来
 	/// 得到金币
 	int			getMoney() const { return mCurrency[emCurrency_Money]; }
-	/// 设置金币
+	/// 设置金币（一般情况下不能用该接口）
 	void		setMoney(int nMoney){mCurrency[emCurrency_Money] = nMoney;}
 	/// 得到钻石
 	int			getDiamond() const { return mCurrency[emCurrency_Diamond]; }
-	/// 设置钻石
+	/// 设置钻石（一般情况下不能用该接口）
 	void		setDiamond(int nDiamond){mCurrency[emCurrency_Diamond] = nDiamond;}
 
 	CItemBox&	getBag(){ return mBag; }
+	CEquipList& getEquipList(){return mEquip;}
 private:
 	/// 插入道具
 	int			insertItem(int nItemID, int nItemNum);
 
 private:
 	/// 背包
-	CItemBox				mBag;				
+	CItemBox				mBag;
+	/// 装备
+	CEquipList				mEquip;				
 	/// 货币
 	int						mCurrency[emCurrencyMax];
 };

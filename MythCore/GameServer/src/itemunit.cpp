@@ -5,6 +5,7 @@
 #include "itemobject.h"
 #include "template.h"
 #include "locallogjob.h"
+#include "entityplayer.h"
 
 /// 获得货币
 int CItemUnit::obtainCurrency(EmCurrencyType eCurrencyType, int nCurrencyNum)
@@ -237,7 +238,12 @@ void CItemUnit::sendInsertItemObjNotify(int nIndex)
 	}
 
 	CInsertItemObjNotify tInsertItemObjNotify;
-	pItemObject->createToPB(tInsertItemObjNotify.mutable_itemobject());
+	PBItemObject* pbItemObject = tInsertItemObjNotify.mutable_itemobject();
+	if (NULL != pbItemObject)
+	{
+		pbItemObject->set_index(nIndex);
+		pItemObject->createToPB(pbItemObject);
+	}
 	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_NOTIYF_INSERT_ITEM_OBJ, &tInsertItemObjNotify);
 }
 
@@ -375,8 +381,14 @@ void CItemUnit::onEquipItemRequest(Message* pMessage)
 	MYTH_ASSERT(NULL == pEquipItemRequest, return);
 
 	int nItemIndex = pEquipItemRequest->itemindex();
-
-
+	int nEquipPart = 0;
+	int nResult = mEquip.equip(mPlayer, mBag, nItemIndex, nEquipPart);
+	if (SUCCESS != nResult)
+	{
+		sendEquipItemResponse(nResult, nItemIndex);
+		return;
+	}
+	broadcastChangeNotify(mPlayer.getObjID(), nEquipPart, mEquip.getItemID(nEquipPart));
 	sendEquipItemResponse(SUCCESS, nItemIndex);
 }
 
@@ -395,15 +407,37 @@ void CItemUnit::onUnEquipItemRequest(Message* pMessage)
 	MYTH_ASSERT(NULL == pMessage, return);
 	CUnEquipItemRequest* pUnEquipItemRequest = reinterpret_cast<CUnEquipItemRequest*>(pMessage);
 	MYTH_ASSERT(NULL == pUnEquipItemRequest, return);
-
+	int nEquipPart = pUnEquipItemRequest->equippart();
+	int nItemIndex = pUnEquipItemRequest->itemindex();
+	int nResult = mEquip.unequip(mPlayer, nEquipPart, mBag, nItemIndex);
+	if (SUCCESS != nResult)
+	{
+		sendUnEquipItemResponse(nResult, nEquipPart, nItemIndex);
+		return;
+	}
+	
+	sendUnEquipItemResponse(SUCCESS, nEquipPart, nItemIndex);
+	broadcastChangeNotify(mPlayer.getObjID(), nEquipPart, mEquip.getItemID(nEquipPart));
 }
 
-void CItemUnit::sendUnEquipItemResponse(int nResult, int nEquipIndex, int nItemIndex)
+/// 卸载装备回应
+void CItemUnit::sendUnEquipItemResponse(int nResult, int nEquipPart, int nItemIndex)
 {
 	CUnEquipItemResponse tUnEquipItemResponse;
 	tUnEquipItemResponse.set_result(nResult);
-	tUnEquipItemResponse.set_equipindex(nEquipIndex);
+	tUnEquipItemResponse.set_equippart(nEquipPart);
 	tUnEquipItemResponse.set_itemindex(nItemIndex);
 
 	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_RESPONSE_UNEQUIP_ITEM, &tUnEquipItemResponse);
+}
+
+/// 广播装备改变通知
+void CItemUnit::broadcastChangeNotify(int nEntityID, int nEquipPart, int nEquipItemID)
+{
+	CEquipChangeNotify tEquipChangeNotify;
+	tEquipChangeNotify.set_entityid(nEntityID);
+	tEquipChangeNotify.set_equippart(nEquipPart);
+	tEquipChangeNotify.set_equipitemid(nEquipItemID);
+
+	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_NOTIYF_EQUIP_CHANGE, &tEquipChangeNotify);
 }

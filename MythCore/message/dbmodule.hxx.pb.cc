@@ -34,8 +34,9 @@ void protobuf_AssignDesc_dbmodule_2ehxx() {
       "dbmodule.hxx");
   GOOGLE_CHECK(file != NULL);
   PBSavePlayer_descriptor_ = file->message_type(0);
-  static const int PBSavePlayer_offsets_[2] = {
+  static const int PBSavePlayer_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBSavePlayer, bag_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBSavePlayer, equip_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBSavePlayer, task_),
   };
   PBSavePlayer_reflection_ =
@@ -90,9 +91,10 @@ void protobuf_AddDesc_dbmodule_2ehxx_impl() {
 
   protobuf_InitDefaults_dbmodule_2ehxx();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\014dbmodule.hxx\032\ncommon.hxx\":\n\014PBSavePlay"
-    "er\022\023\n\003bag\030\001 \001(\0132\006.PBBag\022\025\n\004task\030\002 \001(\0132\007."
-    "PBTaskb\006proto3", 94);
+    "\n\014dbmodule.hxx\032\ncommon.hxx\"[\n\014PBSavePlay"
+    "er\022\030\n\003bag\030\001 \001(\0132\013.PBItemList\022\032\n\005equip\030\002 "
+    "\001(\0132\013.PBItemList\022\025\n\004task\030\003 \001(\0132\007.PBTaskb"
+    "\006proto3", 127);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "dbmodule.hxx", &protobuf_RegisterTypes);
   ::protobuf_AddDesc_common_2ehxx();
@@ -125,6 +127,7 @@ static void MergeFromFail(int line) {
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int PBSavePlayer::kBagFieldNumber;
+const int PBSavePlayer::kEquipFieldNumber;
 const int PBSavePlayer::kTaskFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -136,8 +139,10 @@ PBSavePlayer::PBSavePlayer()
 }
 
 void PBSavePlayer::InitAsDefaultInstance() {
-  bag_ = const_cast< ::PBBag*>(
-      ::PBBag::internal_default_instance());
+  bag_ = const_cast< ::PBItemList*>(
+      ::PBItemList::internal_default_instance());
+  equip_ = const_cast< ::PBItemList*>(
+      ::PBItemList::internal_default_instance());
   task_ = const_cast< ::PBTask*>(
       ::PBTask::internal_default_instance());
 }
@@ -152,6 +157,7 @@ PBSavePlayer::PBSavePlayer(const PBSavePlayer& from)
 
 void PBSavePlayer::SharedCtor() {
   bag_ = NULL;
+  equip_ = NULL;
   task_ = NULL;
   _cached_size_ = 0;
 }
@@ -164,6 +170,7 @@ PBSavePlayer::~PBSavePlayer() {
 void PBSavePlayer::SharedDtor() {
   if (this != &PBSavePlayer_default_instance_.get()) {
     delete bag_;
+    delete equip_;
     delete task_;
   }
 }
@@ -197,6 +204,8 @@ void PBSavePlayer::Clear() {
 // @@protoc_insertion_point(message_clear_start:PBSavePlayer)
   if (GetArenaNoVirtual() == NULL && bag_ != NULL) delete bag_;
   bag_ = NULL;
+  if (GetArenaNoVirtual() == NULL && equip_ != NULL) delete equip_;
+  equip_ = NULL;
   if (GetArenaNoVirtual() == NULL && task_ != NULL) delete task_;
   task_ = NULL;
 }
@@ -211,7 +220,7 @@ bool PBSavePlayer::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .PBBag bag = 1;
+      // optional .PBItemList bag = 1;
       case 1: {
         if (tag == 10) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
@@ -219,13 +228,26 @@ bool PBSavePlayer::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_task;
+        if (input->ExpectTag(18)) goto parse_equip;
         break;
       }
 
-      // optional .PBTask task = 2;
+      // optional .PBItemList equip = 2;
       case 2: {
         if (tag == 18) {
+         parse_equip:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_equip()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_task;
+        break;
+      }
+
+      // optional .PBTask task = 3;
+      case 3: {
+        if (tag == 26) {
          parse_task:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_task()));
@@ -260,16 +282,22 @@ failure:
 void PBSavePlayer::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:PBSavePlayer)
-  // optional .PBBag bag = 1;
+  // optional .PBItemList bag = 1;
   if (this->has_bag()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       1, *this->bag_, output);
   }
 
-  // optional .PBTask task = 2;
+  // optional .PBItemList equip = 2;
+  if (this->has_equip()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      2, *this->equip_, output);
+  }
+
+  // optional .PBTask task = 3;
   if (this->has_task()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, *this->task_, output);
+      3, *this->task_, output);
   }
 
   // @@protoc_insertion_point(serialize_end:PBSavePlayer)
@@ -279,18 +307,25 @@ void PBSavePlayer::SerializeWithCachedSizes(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:PBSavePlayer)
-  // optional .PBBag bag = 1;
+  // optional .PBItemList bag = 1;
   if (this->has_bag()) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
         1, *this->bag_, false, target);
   }
 
-  // optional .PBTask task = 2;
+  // optional .PBItemList equip = 2;
+  if (this->has_equip()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageNoVirtualToArray(
+        2, *this->equip_, false, target);
+  }
+
+  // optional .PBTask task = 3;
   if (this->has_task()) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
-        2, *this->task_, false, target);
+        3, *this->task_, false, target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:PBSavePlayer)
@@ -301,14 +336,21 @@ size_t PBSavePlayer::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:PBSavePlayer)
   size_t total_size = 0;
 
-  // optional .PBBag bag = 1;
+  // optional .PBItemList bag = 1;
   if (this->has_bag()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->bag_);
   }
 
-  // optional .PBTask task = 2;
+  // optional .PBItemList equip = 2;
+  if (this->has_equip()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->equip_);
+  }
+
+  // optional .PBTask task = 3;
   if (this->has_task()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -349,7 +391,10 @@ void PBSavePlayer::MergeFrom(const PBSavePlayer& from) {
 void PBSavePlayer::UnsafeMergeFrom(const PBSavePlayer& from) {
   GOOGLE_DCHECK(&from != this);
   if (from.has_bag()) {
-    mutable_bag()->::PBBag::MergeFrom(from.bag());
+    mutable_bag()->::PBItemList::MergeFrom(from.bag());
+  }
+  if (from.has_equip()) {
+    mutable_equip()->::PBItemList::MergeFrom(from.equip());
   }
   if (from.has_task()) {
     mutable_task()->::PBTask::MergeFrom(from.task());
@@ -381,6 +426,7 @@ void PBSavePlayer::Swap(PBSavePlayer* other) {
 }
 void PBSavePlayer::InternalSwap(PBSavePlayer* other) {
   std::swap(bag_, other->bag_);
+  std::swap(equip_, other->equip_);
   std::swap(task_, other->task_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -397,7 +443,7 @@ void PBSavePlayer::InternalSwap(PBSavePlayer* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // PBSavePlayer
 
-// optional .PBBag bag = 1;
+// optional .PBItemList bag = 1;
 bool PBSavePlayer::has_bag() const {
   return this != internal_default_instance() && bag_ != NULL;
 }
@@ -405,27 +451,27 @@ void PBSavePlayer::clear_bag() {
   if (GetArenaNoVirtual() == NULL && bag_ != NULL) delete bag_;
   bag_ = NULL;
 }
-const ::PBBag& PBSavePlayer::bag() const {
+const ::PBItemList& PBSavePlayer::bag() const {
   // @@protoc_insertion_point(field_get:PBSavePlayer.bag)
   return bag_ != NULL ? *bag_
-                         : *::PBBag::internal_default_instance();
+                         : *::PBItemList::internal_default_instance();
 }
-::PBBag* PBSavePlayer::mutable_bag() {
+::PBItemList* PBSavePlayer::mutable_bag() {
   
   if (bag_ == NULL) {
-    bag_ = new ::PBBag;
+    bag_ = new ::PBItemList;
   }
   // @@protoc_insertion_point(field_mutable:PBSavePlayer.bag)
   return bag_;
 }
-::PBBag* PBSavePlayer::release_bag() {
+::PBItemList* PBSavePlayer::release_bag() {
   // @@protoc_insertion_point(field_release:PBSavePlayer.bag)
   
-  ::PBBag* temp = bag_;
+  ::PBItemList* temp = bag_;
   bag_ = NULL;
   return temp;
 }
-void PBSavePlayer::set_allocated_bag(::PBBag* bag) {
+void PBSavePlayer::set_allocated_bag(::PBItemList* bag) {
   delete bag_;
   bag_ = bag;
   if (bag) {
@@ -436,7 +482,46 @@ void PBSavePlayer::set_allocated_bag(::PBBag* bag) {
   // @@protoc_insertion_point(field_set_allocated:PBSavePlayer.bag)
 }
 
-// optional .PBTask task = 2;
+// optional .PBItemList equip = 2;
+bool PBSavePlayer::has_equip() const {
+  return this != internal_default_instance() && equip_ != NULL;
+}
+void PBSavePlayer::clear_equip() {
+  if (GetArenaNoVirtual() == NULL && equip_ != NULL) delete equip_;
+  equip_ = NULL;
+}
+const ::PBItemList& PBSavePlayer::equip() const {
+  // @@protoc_insertion_point(field_get:PBSavePlayer.equip)
+  return equip_ != NULL ? *equip_
+                         : *::PBItemList::internal_default_instance();
+}
+::PBItemList* PBSavePlayer::mutable_equip() {
+  
+  if (equip_ == NULL) {
+    equip_ = new ::PBItemList;
+  }
+  // @@protoc_insertion_point(field_mutable:PBSavePlayer.equip)
+  return equip_;
+}
+::PBItemList* PBSavePlayer::release_equip() {
+  // @@protoc_insertion_point(field_release:PBSavePlayer.equip)
+  
+  ::PBItemList* temp = equip_;
+  equip_ = NULL;
+  return temp;
+}
+void PBSavePlayer::set_allocated_equip(::PBItemList* equip) {
+  delete equip_;
+  equip_ = equip;
+  if (equip) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:PBSavePlayer.equip)
+}
+
+// optional .PBTask task = 3;
 bool PBSavePlayer::has_task() const {
   return this != internal_default_instance() && task_ != NULL;
 }

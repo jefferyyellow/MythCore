@@ -4,6 +4,7 @@
 #include "objpool.h"
 #include "locallogjob.h"
 #include "errcode.h"
+#include "common.hxx.pb.h"
 bool CItemBox::checkSpace(int* pItemID, int* pNumber, int nSize)
 {
 	if (nSize > MAX_INSERT_TYPE_NUM)
@@ -22,7 +23,7 @@ bool CItemBox::checkSpace(int* pItemID, int* pNumber, int nSize)
 	for (int i = 0; i < nSize; ++i)
 	{
 		nNum[i] = pNumber[i];
-		CTplItem* pTplItem = (CTplItem*)CStaticData::searchTpl(pItemID[i]);
+		CTplItem* pTplItem = reinterpret_cast<CTplItem*>(CStaticData::searchTpl(pItemID[i]));
 		if (NULL == pTplItem)
 		{
 			nPileLimit[i] = 0;
@@ -48,7 +49,7 @@ bool CItemBox::checkSpace(int* pItemID, int* pNumber, int nSize)
 			{
 				if (mItemID[i] == pItemID[j] && nPileLimit[i] > 1 && nNum[j] > 0)
 				{
-					CItemObject* pItemObject = (CItemObject*)CObjPool::Inst()->getObj(mItemObjID[i]);
+					CItemObject* pItemObject = reinterpret_cast<CItemObject*>(CObjPool::Inst()->getObj(mItemObjID[i]));
 					if (NULL != pItemObject)
 					{
 						nNum[i] -= nPileLimit[j] - pItemObject->GetItemNum();
@@ -87,7 +88,7 @@ bool CItemBox::checkSpace(int* pItemID, int* pNumber, int nSize)
 // 可以先使用空格子
 bool CItemBox::checkSpace(int nItemID, int nNumber)
 {
-	CTplItem* pTplItem = (CTplItem*)CStaticData::searchTpl(nItemID);
+	CTplItem* pTplItem = reinterpret_cast<CTplItem*>(CStaticData::searchTpl(nItemID));
 	if (NULL == pTplItem)
 	{
 		return true;
@@ -103,7 +104,7 @@ bool CItemBox::checkSpace(int nItemID, int nNumber)
 		// 堆叠
 		else if (nItemID == mItemID[i])
 		{
-			CItemObject* pItemObject = (CItemObject*)CObjPool::Inst()->getObj(mItemObjID[i]);
+			CItemObject* pItemObject = reinterpret_cast<CItemObject*>(CObjPool::Inst()->getObj(mItemObjID[i]));
 			if (NULL != pItemObject)
 			{
 				nNumber -= pTplItem->mPileLimit - pItemObject->GetItemNum();
@@ -128,7 +129,7 @@ int CItemBox::insertItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNum
 	}
 
 	// 如果数据模版找不到
-	CTplItem* tpItem = (CTplItem*)CStaticData::searchTpl(nItemID);
+	CTplItem* tpItem = reinterpret_cast<CTplItem*>(CStaticData::searchTpl(nItemID));
 	if (NULL == tpItem)
 	{
 		// 道具模板数据为空
@@ -157,7 +158,7 @@ int CItemBox::insertItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNum
 		}
 		else if (mItemID[i] == nItemID && nPileLimit > 1) // 在非空格子上插入
 		{
-			CItemObject* pItemObject = (CItemObject*)CObjPool::Inst()->getObj(mItemObjID[i]);
+			CItemObject* pItemObject = reinterpret_cast<CItemObject*>(CObjPool::Inst()->getObj(mItemObjID[i]));
 			if (NULL != pItemObject)
 			{
 				nLeftPileNum = nPileLimit - pItemObject->GetItemNum();
@@ -235,7 +236,7 @@ bool CItemBox::checkEnough(int nItemID, int nItemNum)
 			continue;
 		}
 
-		CItemObject* pItemObject = (CItemObject*)CObjPool::Inst()->getObj(mItemObjID[i]);
+		CItemObject* pItemObject = reinterpret_cast<CItemObject*>(CObjPool::Inst()->getObj(mItemObjID[i]));
 		if (NULL == pItemObject)
 		{
 			continue;
@@ -266,7 +267,7 @@ void CItemBox::removeItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNu
 			continue;
 		}
 
-		CItemObject* pItemObject = (CItemObject*)CObjPool::Inst()->getObj(mItemObjID[i]);
+		CItemObject* pItemObject = reinterpret_cast<CItemObject*>(CObjPool::Inst()->getObj(mItemObjID[i]));
 		if (NULL == pItemObject)
 		{
 			continue;
@@ -318,7 +319,7 @@ int CItemBox::removeItem(unsigned int nIndex, int nNum)
 		return ERR_ITEM_INDEX_OBJ_ID_INVALID;
 	}
 
-	CItemObject* pItemObject = (CItemObject*)CObjPool::Inst()->getObj(mItemObjID[nIndex]);
+	CItemObject* pItemObject = reinterpret_cast<CItemObject*>(CObjPool::Inst()->getObj(mItemObjID[nIndex]));
 	if (NULL == pItemObject)
 	{
 		return ERR_ITEM_INDEX_OBJ_DATA_NULL;
@@ -356,7 +357,7 @@ int CItemBox::hasItem(int nItemID)
 		{
 			continue;
 		}
-		CItemObject* pItemObject = (CItemObject*)CObjPool::Inst()->getObj(mItemObjID[i]);
+		CItemObject* pItemObject = reinterpret_cast<CItemObject*>(CObjPool::Inst()->getObj(mItemObjID[i]));
 		if (NULL == pItemObject)
 		{
 			continue;
@@ -380,5 +381,32 @@ CItemObject* CItemBox::getItem(unsigned int nIndex)
 		return NULL;
 	}
 
-	return (CItemObject*)CObjPool::Inst()->getObj(mItemObjID[nIndex]);
+	return reinterpret_cast<CItemObject*>(CObjPool::Inst()->getObj(mItemObjID[nIndex]));
+}
+
+/// 序列化
+void CItemBox::createToPB(PBItemList* pbItemList)
+{
+	if (NULL == pbItemList)
+	{
+		return;
+	}
+	if (mSize > MAX_CONTAINER_ITEM_NUM)
+	{
+		mSize = MAX_CONTAINER_ITEM_NUM;
+	}
+	pbItemList->set_size(mSize);
+	CItemList < MAX_CONTAINER_ITEM_NUM >::createToPB(pbItemList, mSize);
+}
+
+/// 反序列化
+void CItemBox::setFromPB(PBItemList* pbItemList)
+{
+	if (NULL == pbItemList)
+	{
+		return;
+	}
+
+	mSize = pbItemList->size();
+	CItemList < MAX_CONTAINER_ITEM_NUM >::setFromPB(pbItemList);
 }

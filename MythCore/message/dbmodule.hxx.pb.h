@@ -103,19 +103,28 @@ class PBSavePlayer : public ::google::protobuf::Message /* @@protoc_insertion_po
 
   // accessors -------------------------------------------------------
 
-  // optional .PBBag bag = 1;
+  // optional .PBItemList bag = 1;
   bool has_bag() const;
   void clear_bag();
   static const int kBagFieldNumber = 1;
-  const ::PBBag& bag() const;
-  ::PBBag* mutable_bag();
-  ::PBBag* release_bag();
-  void set_allocated_bag(::PBBag* bag);
+  const ::PBItemList& bag() const;
+  ::PBItemList* mutable_bag();
+  ::PBItemList* release_bag();
+  void set_allocated_bag(::PBItemList* bag);
 
-  // optional .PBTask task = 2;
+  // optional .PBItemList equip = 2;
+  bool has_equip() const;
+  void clear_equip();
+  static const int kEquipFieldNumber = 2;
+  const ::PBItemList& equip() const;
+  ::PBItemList* mutable_equip();
+  ::PBItemList* release_equip();
+  void set_allocated_equip(::PBItemList* equip);
+
+  // optional .PBTask task = 3;
   bool has_task() const;
   void clear_task();
-  static const int kTaskFieldNumber = 2;
+  static const int kTaskFieldNumber = 3;
   const ::PBTask& task() const;
   ::PBTask* mutable_task();
   ::PBTask* release_task();
@@ -125,7 +134,8 @@ class PBSavePlayer : public ::google::protobuf::Message /* @@protoc_insertion_po
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::PBBag* bag_;
+  ::PBItemList* bag_;
+  ::PBItemList* equip_;
   ::PBTask* task_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_dbmodule_2ehxx_impl();
@@ -145,7 +155,7 @@ extern ::google::protobuf::internal::ExplicitlyConstructed<PBSavePlayer> PBSaveP
 #if !PROTOBUF_INLINE_NOT_IN_HEADERS
 // PBSavePlayer
 
-// optional .PBBag bag = 1;
+// optional .PBItemList bag = 1;
 inline bool PBSavePlayer::has_bag() const {
   return this != internal_default_instance() && bag_ != NULL;
 }
@@ -153,27 +163,27 @@ inline void PBSavePlayer::clear_bag() {
   if (GetArenaNoVirtual() == NULL && bag_ != NULL) delete bag_;
   bag_ = NULL;
 }
-inline const ::PBBag& PBSavePlayer::bag() const {
+inline const ::PBItemList& PBSavePlayer::bag() const {
   // @@protoc_insertion_point(field_get:PBSavePlayer.bag)
   return bag_ != NULL ? *bag_
-                         : *::PBBag::internal_default_instance();
+                         : *::PBItemList::internal_default_instance();
 }
-inline ::PBBag* PBSavePlayer::mutable_bag() {
+inline ::PBItemList* PBSavePlayer::mutable_bag() {
   
   if (bag_ == NULL) {
-    bag_ = new ::PBBag;
+    bag_ = new ::PBItemList;
   }
   // @@protoc_insertion_point(field_mutable:PBSavePlayer.bag)
   return bag_;
 }
-inline ::PBBag* PBSavePlayer::release_bag() {
+inline ::PBItemList* PBSavePlayer::release_bag() {
   // @@protoc_insertion_point(field_release:PBSavePlayer.bag)
   
-  ::PBBag* temp = bag_;
+  ::PBItemList* temp = bag_;
   bag_ = NULL;
   return temp;
 }
-inline void PBSavePlayer::set_allocated_bag(::PBBag* bag) {
+inline void PBSavePlayer::set_allocated_bag(::PBItemList* bag) {
   delete bag_;
   bag_ = bag;
   if (bag) {
@@ -184,7 +194,46 @@ inline void PBSavePlayer::set_allocated_bag(::PBBag* bag) {
   // @@protoc_insertion_point(field_set_allocated:PBSavePlayer.bag)
 }
 
-// optional .PBTask task = 2;
+// optional .PBItemList equip = 2;
+inline bool PBSavePlayer::has_equip() const {
+  return this != internal_default_instance() && equip_ != NULL;
+}
+inline void PBSavePlayer::clear_equip() {
+  if (GetArenaNoVirtual() == NULL && equip_ != NULL) delete equip_;
+  equip_ = NULL;
+}
+inline const ::PBItemList& PBSavePlayer::equip() const {
+  // @@protoc_insertion_point(field_get:PBSavePlayer.equip)
+  return equip_ != NULL ? *equip_
+                         : *::PBItemList::internal_default_instance();
+}
+inline ::PBItemList* PBSavePlayer::mutable_equip() {
+  
+  if (equip_ == NULL) {
+    equip_ = new ::PBItemList;
+  }
+  // @@protoc_insertion_point(field_mutable:PBSavePlayer.equip)
+  return equip_;
+}
+inline ::PBItemList* PBSavePlayer::release_equip() {
+  // @@protoc_insertion_point(field_release:PBSavePlayer.equip)
+  
+  ::PBItemList* temp = equip_;
+  equip_ = NULL;
+  return temp;
+}
+inline void PBSavePlayer::set_allocated_equip(::PBItemList* equip) {
+  delete equip_;
+  equip_ = equip;
+  if (equip) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:PBSavePlayer.equip)
+}
+
+// optional .PBTask task = 3;
 inline bool PBSavePlayer::has_task() const {
   return this != internal_default_instance() && task_ != NULL;
 }

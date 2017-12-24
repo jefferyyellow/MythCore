@@ -111,14 +111,14 @@ void CPropertyModule::onLoadPlayerInfo(CDBResponse& rResponse)
 	// 	select role_name, level, exp, vip_level, vip_exp, money, diamond from PlayerRole WHERE role_id=RoleID;
 	
 	rResponse.getString(pPlayer->getName(), PLAYER_NAME_LENGTH - 1);
-	pPlayer->GetPropertyUnit().setLevel((byte)rResponse.getShort());
-	pPlayer->GetPropertyUnit().setRoleExp(rResponse.getInt64());
-	pPlayer->GetPropertyUnit().setVIPLevel(rResponse.getByte());
-	pPlayer->GetPropertyUnit().SetVIPExp(rResponse.getInt());
+	pPlayer->getPropertyUnit().setLevel((byte)rResponse.getShort());
+	pPlayer->getPropertyUnit().setRoleExp(rResponse.getInt64());
+	pPlayer->getPropertyUnit().setVIPLevel(rResponse.getByte());
+	pPlayer->getPropertyUnit().SetVIPExp(rResponse.getInt());
 
 
-	pPlayer->GetItemUnit().setMoney(rResponse.getInt());
-	pPlayer->GetItemUnit().setDiamond(rResponse.getInt());
+	pPlayer->getItemUnit().setMoney(rResponse.getInt());
+	pPlayer->getItemUnit().setDiamond(rResponse.getInt());
 
 	pPlayer->setLoadStatusBit(emLoadStatus_Info);
 	onLoadComplete(pPlayer);
@@ -132,6 +132,17 @@ void CPropertyModule::onLoadPlayerBaseProperty(CDBResponse& rResponse)
 	{
 		return;
 	}
+
+	PBItemList tBag;
+	tBag.ParseFromArray(rResponse.getValue(), rResponse.getLength());
+	rResponse.next();
+	pPlayer->getItemUnit().getBag().setFromPB(&tBag);
+
+	PBItemList tEquip;
+	tEquip.ParseFromArray(rResponse.getValue(), rResponse.getLength());
+	rResponse.next();
+	pPlayer->getItemUnit().getEquipList().setFromPB(&tEquip);
+
 	pPlayer->setLoadStatusBit(emLoadStatus_BaseProperty);
 	onLoadComplete(pPlayer);
 }
@@ -171,9 +182,9 @@ void CPropertyModule::savePlayerInfo(CEntityPlayer* pPlayer)
 
 	CDBModule::Inst()->pushDBTask(pPlayer->getRoleID(), emSessionType_SavePlayerInfo, pPlayer->getObjID(), 0,
 		"call UpdatePlayerInfo(%d, %d,%lld,%d,%d,%d,%d)", pPlayer->getRoleID(),
-		pPlayer->GetPropertyUnit().getLevel(), pPlayer->GetPropertyUnit().getRoleExp(),
-		pPlayer->GetPropertyUnit().getVIPLevel(), pPlayer->GetPropertyUnit().GetVIPExp(),
-		pPlayer->GetItemUnit().getMoney(), pPlayer->GetItemUnit().getDiamond());
+		pPlayer->getPropertyUnit().getLevel(), pPlayer->getPropertyUnit().getRoleExp(),
+		pPlayer->getPropertyUnit().getVIPLevel(), pPlayer->getPropertyUnit().GetVIPExp(),
+		pPlayer->getItemUnit().getMoney(), pPlayer->getItemUnit().getDiamond());
 
 }
 
@@ -184,7 +195,8 @@ void CPropertyModule::savePlayerBaseProperty(CEntityPlayer* pPlayer)
 		return;
 	}
 	PBSavePlayer tSavePlayer;
-	tSavePlayer.mutable_bag();
+	pPlayer->getItemUnit().getBag().createToPB(tSavePlayer.mutable_bag());
+	pPlayer->getItemUnit().getEquipList().createToPB(tSavePlayer.mutable_equip());
 	tSavePlayer.mutable_task();
 
 	CDBModule::Inst()->pushDBTask(pPlayer->getRoleID(), emSessionType_SavePlayerBaseProperty, pPlayer->getObjID(), 0, &tSavePlayer);

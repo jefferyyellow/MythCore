@@ -1,4 +1,9 @@
 syntax = "proto3";
+message PBItemList
+{
+	repeated	PBItemObject	ItemObject	= 1;
+				uint32			Size		= 2;
+}
 
 message PBItemObject
 {
@@ -12,12 +17,6 @@ message PBItemObject
 message PBItemEquip
 {
 	uint32			Level		= 4;			// 等级
-}
-
-// 包裹
-message PBBag
-{
-
 }
 
 // 任务

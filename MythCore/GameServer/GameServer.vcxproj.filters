@@ -37,6 +37,9 @@
     <Filter Include="logicmodule\task">
       <UniqueIdentifier>{718988ec-c0e0-48e8-9632-9cb3ac109847}</UniqueIdentifier>
     </Filter>
+    <Filter Include="logicmodule\item">
+      <UniqueIdentifier>{25611dfd-f5f9-45f9-ae17-d9078f3bc602}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\message\loginmessage.hxx.pb.cc">
@@ -72,13 +75,7 @@
     <ClCompile Include="src\objpool.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\itemcontainer.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\template.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\itemobject.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\entityplayer.cpp">
@@ -107,9 +104,6 @@
     </ClCompile>
     <ClCompile Include="..\message\propertymodule.hxx.pb.cc">
       <Filter>message</Filter>
-    </ClCompile>
-    <ClCompile Include="src\itemunit.cpp">
-      <Filter>player</Filter>
     </ClCompile>
     <ClCompile Include="src\itemmodule.cpp">
       <Filter>logicmodule</Filter>
@@ -153,14 +147,8 @@
     <ClCompile Include="src\dbmodule.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\taskunit.cpp">
-      <Filter>player</Filter>
-    </ClCompile>
     <ClCompile Include="src\taskconfig.cpp">
       <Filter>logicmodule\task</Filter>
-    </ClCompile>
-    <ClCompile Include="src\taskmodule.cpp">
-      <Filter>logicmodule</Filter>
     </ClCompile>
     <ClCompile Include="..\message\taskmodule.hxx.pb.cc">
       <Filter>message</Filter>
@@ -170,6 +158,24 @@
     </ClCompile>
     <ClCompile Include="..\message\dbmodule.hxx.pb.cc">
       <Filter>message</Filter>
+    </ClCompile>
+    <ClCompile Include="src\taskmodule.cpp">
+      <Filter>logicmodule\task</Filter>
+    </ClCompile>
+    <ClCompile Include="src\taskunit.cpp">
+      <Filter>logicmodule\task</Filter>
+    </ClCompile>
+    <ClCompile Include="src\itemunit.cpp">
+      <Filter>logicmodule\item</Filter>
+    </ClCompile>
+    <ClCompile Include="src\itemcontainer.cpp">
+      <Filter>logicmodule\item</Filter>
+    </ClCompile>
+    <ClCompile Include="src\itemobject.cpp">
+      <Filter>logicmodule\item</Filter>
+    </ClCompile>
+    <ClCompile Include="src\equip.cpp">
+      <Filter>logicmodule\item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -212,19 +218,7 @@
     <ClInclude Include="inc\objpool.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="inc\taskmanager.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="inc\logintype.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\itemcontainer.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\itemlist.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\itemobject.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="inc\template.h">
@@ -240,9 +234,6 @@
       <Filter>player</Filter>
     </ClInclude>
     <ClInclude Include="inc\propertyunit.h">
-      <Filter>player</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\itemunit.h">
       <Filter>player</Filter>
     </ClInclude>
     <ClInclude Include="inc\locallogjob.h">
@@ -341,14 +332,8 @@
     <ClInclude Include="inc\dbmodule.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="inc\taskunit.h">
-      <Filter>player</Filter>
-    </ClInclude>
     <ClInclude Include="inc\taskconfig.h">
       <Filter>logicmodule\task</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\taskmodule.h">
-      <Filter>logicmodule</Filter>
     </ClInclude>
     <ClInclude Include="..\message\taskmodule.hxx">
       <Filter>message</Filter>
@@ -362,14 +347,38 @@
     <ClInclude Include="..\message\common.hxx.pb.h">
       <Filter>message</Filter>
     </ClInclude>
-    <ClInclude Include="inc\itemtype.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="..\message\dbmodule.hxx">
       <Filter>message</Filter>
     </ClInclude>
     <ClInclude Include="..\message\dbmodule.hxx.pb.h">
       <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\taskmodule.h">
+      <Filter>logicmodule\task</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\taskmanager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\taskunit.h">
+      <Filter>logicmodule\task</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\itemunit.h">
+      <Filter>logicmodule\item</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\itemcontainer.h">
+      <Filter>logicmodule\item</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\itemlist.h">
+      <Filter>logicmodule\item</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\itemobject.h">
+      <Filter>logicmodule\item</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\itemtype.h">
+      <Filter>logicmodule\item</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\equip.h">
+      <Filter>logicmodule\item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

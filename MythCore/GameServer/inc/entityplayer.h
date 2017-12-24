@@ -49,9 +49,9 @@ public:
 
 public:
 	/// 刷新基本属性
-	void			RefreshBaseProperty();
+	void			refreshBaseProperty();
 	/// 刷新战斗属性
-	virtual void	RefreshFightProperty();
+	virtual void	refreshFightProperty();
 
 public:
 	/// 序列化场景信息到PB·
@@ -102,11 +102,11 @@ public:
 
 	/// 各种单元
 	/// 属性单元
-	CPropertyUnit&	GetPropertyUnit(){ return mPropertyUnit; }
+	CPropertyUnit&	getPropertyUnit(){ return mPropertyUnit; }
 	/// 道具单元
-	CItemUnit&		GetItemUnit(){ return mItemUnit; }
+	CItemUnit&		getItemUnit(){ return mItemUnit; }
 	/// 任务单元
-	CTaskUnit&		GetTaskUnit(){ return mTaskUnit; }
+	CTaskUnit&		getTaskUnit(){ return mTaskUnit; }
 	
 private:
 	/// socket连接信息

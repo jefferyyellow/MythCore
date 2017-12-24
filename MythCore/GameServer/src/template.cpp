@@ -110,10 +110,11 @@ void CStaticData::createFromPB(PBTplTemplate* pTplTemplate)
 	TEMPLATE_SET_FROM_PB(CTplVIPConfig, pbTplConfigSet, vipconfig);
 	TEMPLATE_SET_FROM_PB(CTplFuncNPC, pbTplNPCSet, funcnpc);
 	TEMPLATE_SET_FROM_PB(CTplOgre, pbTplNPCSet, ogre);
+	TEMPLATE_SET_FROM_PB(CTplEquip, pbTplItemSet, equip);
 }
 
 
-void CTplItem::setFromPB(PBTplItem* pbItem)
+void CTplItem::setFromPB(PBItem* pbItem)
 {
 	if (NULL == pbItem)
 	{
@@ -126,7 +127,7 @@ void CTplItem::setFromPB(PBTplItem* pbItem)
 	mPileLimit = pbItem->pilelimit();
 }
 
-void CTplItem::createToPB(PBTplItem* pbItem)
+void CTplItem::createToPB(PBItem* pbItem)
 {
 	if (NULL == pbItem)
 	{
@@ -137,6 +138,22 @@ void CTplItem::createToPB(PBTplItem* pbItem)
 	pbItem->set_describe(mDescribe);
 	pbItem->set_itemtype(mItemType);
 	pbItem->set_pilelimit(mPileLimit);
+}
+
+void CTplEquip::setFromPB(PBEquip* pbData)
+{
+	CTplItem::setFromPB(pbData->mutable_super());
+	strncpy(mEquipModal, pbData->equipmodal().c_str(), sizeof(mEquipModal)-1);
+	mEquipPart = pbData->equippart();
+	mLevelRequire = pbData->levelrequire();
+}
+
+void CTplEquip::createToPB(PBEquip* pbData)
+{
+	CTplItem::createToPB(pbData->mutable_super());
+	pbData->set_equipmodal(mEquipModal);
+	pbData->set_equippart(mEquipPart);
+	pbData->set_levelrequire(mLevelRequire);
 }
 
 

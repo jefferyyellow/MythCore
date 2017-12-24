@@ -61,6 +61,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* CUnEquipItemResponse_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   CUnEquipItemResponse_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CEquipChangeNotify_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CEquipChangeNotify_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* ITEM_MODULE_MSG_ID_descriptor_ = NULL;
 
 }  // namespace
@@ -250,7 +253,7 @@ void protobuf_AssignDesc_itemmodule_2ehxx() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CEquipItemResponse, _internal_metadata_));
   CUnEquipItemRequest_descriptor_ = file->message_type(12);
   static const int CUnEquipItemRequest_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CUnEquipItemRequest, equipindex_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CUnEquipItemRequest, equippart_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CUnEquipItemRequest, itemindex_),
   };
   CUnEquipItemRequest_reflection_ =
@@ -266,7 +269,7 @@ void protobuf_AssignDesc_itemmodule_2ehxx() {
   CUnEquipItemResponse_descriptor_ = file->message_type(13);
   static const int CUnEquipItemResponse_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CUnEquipItemResponse, result_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CUnEquipItemResponse, equipindex_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CUnEquipItemResponse, equippart_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CUnEquipItemResponse, itemindex_),
   };
   CUnEquipItemResponse_reflection_ =
@@ -279,6 +282,22 @@ void protobuf_AssignDesc_itemmodule_2ehxx() {
       -1,
       sizeof(CUnEquipItemResponse),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CUnEquipItemResponse, _internal_metadata_));
+  CEquipChangeNotify_descriptor_ = file->message_type(14);
+  static const int CEquipChangeNotify_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CEquipChangeNotify, entityid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CEquipChangeNotify, equippart_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CEquipChangeNotify, equipitemid_),
+  };
+  CEquipChangeNotify_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      CEquipChangeNotify_descriptor_,
+      CEquipChangeNotify::internal_default_instance(),
+      CEquipChangeNotify_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(CEquipChangeNotify),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CEquipChangeNotify, _internal_metadata_));
   ITEM_MODULE_MSG_ID_descriptor_ = file->enum_type(0);
 }
 
@@ -321,6 +340,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
       CUnEquipItemRequest_descriptor_, CUnEquipItemRequest::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       CUnEquipItemResponse_descriptor_, CUnEquipItemResponse::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      CEquipChangeNotify_descriptor_, CEquipChangeNotify::internal_default_instance());
 }
 
 }  // namespace
@@ -354,6 +375,8 @@ void protobuf_ShutdownFile_itemmodule_2ehxx() {
   delete CUnEquipItemRequest_reflection_;
   CUnEquipItemResponse_default_instance_.Shutdown();
   delete CUnEquipItemResponse_reflection_;
+  CEquipChangeNotify_default_instance_.Shutdown();
+  delete CEquipChangeNotify_reflection_;
 }
 
 void protobuf_InitDefaults_itemmodule_2ehxx_impl() {
@@ -374,6 +397,7 @@ void protobuf_InitDefaults_itemmodule_2ehxx_impl() {
   CEquipItemResponse_default_instance_.DefaultConstruct();
   CUnEquipItemRequest_default_instance_.DefaultConstruct();
   CUnEquipItemResponse_default_instance_.DefaultConstruct();
+  CEquipChangeNotify_default_instance_.DefaultConstruct();
   CCurrencyUpdateNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
   CInsertItemNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
   CInsertItemObjNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
@@ -388,6 +412,7 @@ void protobuf_InitDefaults_itemmodule_2ehxx_impl() {
   CEquipItemResponse_default_instance_.get_mutable()->InitAsDefaultInstance();
   CUnEquipItemRequest_default_instance_.get_mutable()->InitAsDefaultInstance();
   CUnEquipItemResponse_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CEquipChangeNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
 }
 
 GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_InitDefaults_itemmodule_2ehxx_once_);
@@ -415,24 +440,26 @@ void protobuf_AddDesc_itemmodule_2ehxx_impl() {
     "\002 \001(\r\"\'\n\025CPurchaseItemResponse\022\016\n\006Result"
     "\030\001 \001(\r\"&\n\021CEquipItemRequest\022\021\n\tItemIndex"
     "\030\001 \001(\r\"7\n\022CEquipItemResponse\022\016\n\006Result\030\001"
-    " \001(\r\022\021\n\tItemIndex\030\002 \001(\r\"<\n\023CUnEquipItemR"
-    "equest\022\022\n\nEquipIndex\030\001 \001(\r\022\021\n\tItemIndex\030"
-    "\002 \001(\r\"M\n\024CUnEquipItemResponse\022\016\n\006Result\030"
-    "\001 \001(\r\022\022\n\nEquipIndex\030\002 \001(\r\022\021\n\tItemIndex\030\003"
-    " \001(\r*\377\003\n\022ITEM_MODULE_MSG_ID\022\030\n\024ID_ITEM_M"
-    "ODULE_ERROR\020\000\022\"\n\035ID_S2C_NOTIYF_CURRENCY_"
-    "UPDATE\020\200\020\022\036\n\031ID_S2C_NOTIYF_INSERT_ITEM\020\202"
-    "\020\022\"\n\035ID_S2C_NOTIYF_INSERT_ITEM_OBJ\020\203\020\022\036\n"
-    "\031ID_S2C_NOTIYF_REMOVE_ITEM\020\204\020\022\034\n\027ID_C2S_"
-    "REQUEST_USE_ITEM\020\205\020\022\035\n\030ID_S2C_RESPONSE_U"
-    "SE_ITEM\020\206\020\022\035\n\030ID_C2S_REQUEST_SELL_ITEM\020\207"
-    "\020\022\036\n\031ID_S2C_RESPONSE_SELL_ITEM\020\210\020\022!\n\034ID_"
-    "C2S_REQUEST_PURCHASE_ITEM\020\211\020\022\"\n\035ID_S2C_R"
-    "ESPONSE_PURCHASE_ITEM\020\212\020\022\036\n\031ID_C2S_REQUE"
-    "ST_EQUIP_ITEM\020\213\020\022\037\n\032ID_S2C_RESPONSE_EQUI"
-    "P_ITEM\020\214\020\022 \n\033ID_C2S_REQUEST_UNEQUIP_ITEM"
-    "\020\215\020\022!\n\034ID_S2C_RESPONSE_UNEQUIP_ITEM\020\216\020b\006"
-    "proto3", 1286);
+    " \001(\r\022\021\n\tItemIndex\030\002 \001(\r\";\n\023CUnEquipItemR"
+    "equest\022\021\n\tEquipPart\030\001 \001(\r\022\021\n\tItemIndex\030\002"
+    " \001(\r\"L\n\024CUnEquipItemResponse\022\016\n\006Result\030\001"
+    " \001(\r\022\021\n\tEquipPart\030\002 \001(\r\022\021\n\tItemIndex\030\003 \001"
+    "(\r\"N\n\022CEquipChangeNotify\022\020\n\010EntityID\030\001 \001"
+    "(\r\022\021\n\tEquipPart\030\002 \001(\r\022\023\n\013EquipItemID\030\003 \001"
+    "(\r*\240\004\n\022ITEM_MODULE_MSG_ID\022\030\n\024ID_ITEM_MOD"
+    "ULE_ERROR\020\000\022\"\n\035ID_S2C_NOTIYF_CURRENCY_UP"
+    "DATE\020\200\020\022\036\n\031ID_S2C_NOTIYF_INSERT_ITEM\020\202\020\022"
+    "\"\n\035ID_S2C_NOTIYF_INSERT_ITEM_OBJ\020\203\020\022\036\n\031I"
+    "D_S2C_NOTIYF_REMOVE_ITEM\020\204\020\022\034\n\027ID_C2S_RE"
+    "QUEST_USE_ITEM\020\205\020\022\035\n\030ID_S2C_RESPONSE_USE"
+    "_ITEM\020\206\020\022\035\n\030ID_C2S_REQUEST_SELL_ITEM\020\207\020\022"
+    "\036\n\031ID_S2C_RESPONSE_SELL_ITEM\020\210\020\022!\n\034ID_C2"
+    "S_REQUEST_PURCHASE_ITEM\020\211\020\022\"\n\035ID_S2C_RES"
+    "PONSE_PURCHASE_ITEM\020\212\020\022\036\n\031ID_C2S_REQUEST"
+    "_EQUIP_ITEM\020\213\020\022\037\n\032ID_S2C_RESPONSE_EQUIP_"
+    "ITEM\020\214\020\022 \n\033ID_C2S_REQUEST_UNEQUIP_ITEM\020\215"
+    "\020\022!\n\034ID_S2C_RESPONSE_UNEQUIP_ITEM\020\216\020\022\037\n\032"
+    "ID_S2C_NOTIYF_EQUIP_CHANGE\020\217\020b\006proto3", 1397);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "itemmodule.hxx", &protobuf_RegisterTypes);
   ::protobuf_AddDesc_common_2ehxx();
@@ -471,6 +498,7 @@ bool ITEM_MODULE_MSG_ID_IsValid(int value) {
     case 2060:
     case 2061:
     case 2062:
+    case 2063:
       return true;
     default:
       return false;
@@ -4001,7 +4029,7 @@ inline const CEquipItemResponse* CEquipItemResponse::internal_default_instance()
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int CUnEquipItemRequest::kEquipIndexFieldNumber;
+const int CUnEquipItemRequest::kEquipPartFieldNumber;
 const int CUnEquipItemRequest::kItemIndexFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -4024,8 +4052,8 @@ CUnEquipItemRequest::CUnEquipItemRequest(const CUnEquipItemRequest& from)
 }
 
 void CUnEquipItemRequest::SharedCtor() {
-  ::memset(&equipindex_, 0, reinterpret_cast<char*>(&itemindex_) -
-    reinterpret_cast<char*>(&equipindex_) + sizeof(itemindex_));
+  ::memset(&equippart_, 0, reinterpret_cast<char*>(&itemindex_) -
+    reinterpret_cast<char*>(&equippart_) + sizeof(itemindex_));
   _cached_size_ = 0;
 }
 
@@ -4080,7 +4108,7 @@ void CUnEquipItemRequest::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(equipindex_, itemindex_);
+  ZR_(equippart_, itemindex_);
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -4097,13 +4125,13 @@ bool CUnEquipItemRequest::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 EquipIndex = 1;
+      // optional uint32 EquipPart = 1;
       case 1: {
         if (tag == 8) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &equipindex_)));
+                 input, &equippart_)));
         } else {
           goto handle_unusual;
         }
@@ -4150,9 +4178,9 @@ failure:
 void CUnEquipItemRequest::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:CUnEquipItemRequest)
-  // optional uint32 EquipIndex = 1;
-  if (this->equipindex() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->equipindex(), output);
+  // optional uint32 EquipPart = 1;
+  if (this->equippart() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->equippart(), output);
   }
 
   // optional uint32 ItemIndex = 2;
@@ -4167,9 +4195,9 @@ void CUnEquipItemRequest::SerializeWithCachedSizes(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:CUnEquipItemRequest)
-  // optional uint32 EquipIndex = 1;
-  if (this->equipindex() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->equipindex(), target);
+  // optional uint32 EquipPart = 1;
+  if (this->equippart() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->equippart(), target);
   }
 
   // optional uint32 ItemIndex = 2;
@@ -4185,11 +4213,11 @@ size_t CUnEquipItemRequest::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:CUnEquipItemRequest)
   size_t total_size = 0;
 
-  // optional uint32 EquipIndex = 1;
-  if (this->equipindex() != 0) {
+  // optional uint32 EquipPart = 1;
+  if (this->equippart() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->equipindex());
+        this->equippart());
   }
 
   // optional uint32 ItemIndex = 2;
@@ -4232,8 +4260,8 @@ void CUnEquipItemRequest::MergeFrom(const CUnEquipItemRequest& from) {
 
 void CUnEquipItemRequest::UnsafeMergeFrom(const CUnEquipItemRequest& from) {
   GOOGLE_DCHECK(&from != this);
-  if (from.equipindex() != 0) {
-    set_equipindex(from.equipindex());
+  if (from.equippart() != 0) {
+    set_equippart(from.equippart());
   }
   if (from.itemindex() != 0) {
     set_itemindex(from.itemindex());
@@ -4264,7 +4292,7 @@ void CUnEquipItemRequest::Swap(CUnEquipItemRequest* other) {
   InternalSwap(other);
 }
 void CUnEquipItemRequest::InternalSwap(CUnEquipItemRequest* other) {
-  std::swap(equipindex_, other->equipindex_);
+  std::swap(equippart_, other->equippart_);
   std::swap(itemindex_, other->itemindex_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -4281,18 +4309,18 @@ void CUnEquipItemRequest::InternalSwap(CUnEquipItemRequest* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // CUnEquipItemRequest
 
-// optional uint32 EquipIndex = 1;
-void CUnEquipItemRequest::clear_equipindex() {
-  equipindex_ = 0u;
+// optional uint32 EquipPart = 1;
+void CUnEquipItemRequest::clear_equippart() {
+  equippart_ = 0u;
 }
-::google::protobuf::uint32 CUnEquipItemRequest::equipindex() const {
-  // @@protoc_insertion_point(field_get:CUnEquipItemRequest.EquipIndex)
-  return equipindex_;
+::google::protobuf::uint32 CUnEquipItemRequest::equippart() const {
+  // @@protoc_insertion_point(field_get:CUnEquipItemRequest.EquipPart)
+  return equippart_;
 }
-void CUnEquipItemRequest::set_equipindex(::google::protobuf::uint32 value) {
+void CUnEquipItemRequest::set_equippart(::google::protobuf::uint32 value) {
   
-  equipindex_ = value;
-  // @@protoc_insertion_point(field_set:CUnEquipItemRequest.EquipIndex)
+  equippart_ = value;
+  // @@protoc_insertion_point(field_set:CUnEquipItemRequest.EquipPart)
 }
 
 // optional uint32 ItemIndex = 2;
@@ -4318,7 +4346,7 @@ inline const CUnEquipItemRequest* CUnEquipItemRequest::internal_default_instance
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int CUnEquipItemResponse::kResultFieldNumber;
-const int CUnEquipItemResponse::kEquipIndexFieldNumber;
+const int CUnEquipItemResponse::kEquipPartFieldNumber;
 const int CUnEquipItemResponse::kItemIndexFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -4424,18 +4452,18 @@ bool CUnEquipItemResponse::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_EquipIndex;
+        if (input->ExpectTag(16)) goto parse_EquipPart;
         break;
       }
 
-      // optional uint32 EquipIndex = 2;
+      // optional uint32 EquipPart = 2;
       case 2: {
         if (tag == 16) {
-         parse_EquipIndex:
+         parse_EquipPart:
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &equipindex_)));
+                 input, &equippart_)));
         } else {
           goto handle_unusual;
         }
@@ -4487,9 +4515,9 @@ void CUnEquipItemResponse::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->result(), output);
   }
 
-  // optional uint32 EquipIndex = 2;
-  if (this->equipindex() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->equipindex(), output);
+  // optional uint32 EquipPart = 2;
+  if (this->equippart() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->equippart(), output);
   }
 
   // optional uint32 ItemIndex = 3;
@@ -4509,9 +4537,9 @@ void CUnEquipItemResponse::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->result(), target);
   }
 
-  // optional uint32 EquipIndex = 2;
-  if (this->equipindex() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->equipindex(), target);
+  // optional uint32 EquipPart = 2;
+  if (this->equippart() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->equippart(), target);
   }
 
   // optional uint32 ItemIndex = 3;
@@ -4534,11 +4562,11 @@ size_t CUnEquipItemResponse::ByteSizeLong() const {
         this->result());
   }
 
-  // optional uint32 EquipIndex = 2;
-  if (this->equipindex() != 0) {
+  // optional uint32 EquipPart = 2;
+  if (this->equippart() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->equipindex());
+        this->equippart());
   }
 
   // optional uint32 ItemIndex = 3;
@@ -4584,8 +4612,8 @@ void CUnEquipItemResponse::UnsafeMergeFrom(const CUnEquipItemResponse& from) {
   if (from.result() != 0) {
     set_result(from.result());
   }
-  if (from.equipindex() != 0) {
-    set_equipindex(from.equipindex());
+  if (from.equippart() != 0) {
+    set_equippart(from.equippart());
   }
   if (from.itemindex() != 0) {
     set_itemindex(from.itemindex());
@@ -4617,7 +4645,7 @@ void CUnEquipItemResponse::Swap(CUnEquipItemResponse* other) {
 }
 void CUnEquipItemResponse::InternalSwap(CUnEquipItemResponse* other) {
   std::swap(result_, other->result_);
-  std::swap(equipindex_, other->equipindex_);
+  std::swap(equippart_, other->equippart_);
   std::swap(itemindex_, other->itemindex_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -4648,18 +4676,18 @@ void CUnEquipItemResponse::set_result(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:CUnEquipItemResponse.Result)
 }
 
-// optional uint32 EquipIndex = 2;
-void CUnEquipItemResponse::clear_equipindex() {
-  equipindex_ = 0u;
+// optional uint32 EquipPart = 2;
+void CUnEquipItemResponse::clear_equippart() {
+  equippart_ = 0u;
 }
-::google::protobuf::uint32 CUnEquipItemResponse::equipindex() const {
-  // @@protoc_insertion_point(field_get:CUnEquipItemResponse.EquipIndex)
-  return equipindex_;
+::google::protobuf::uint32 CUnEquipItemResponse::equippart() const {
+  // @@protoc_insertion_point(field_get:CUnEquipItemResponse.EquipPart)
+  return equippart_;
 }
-void CUnEquipItemResponse::set_equipindex(::google::protobuf::uint32 value) {
+void CUnEquipItemResponse::set_equippart(::google::protobuf::uint32 value) {
   
-  equipindex_ = value;
-  // @@protoc_insertion_point(field_set:CUnEquipItemResponse.EquipIndex)
+  equippart_ = value;
+  // @@protoc_insertion_point(field_set:CUnEquipItemResponse.EquipPart)
 }
 
 // optional uint32 ItemIndex = 3;
@@ -4678,6 +4706,373 @@ void CUnEquipItemResponse::set_itemindex(::google::protobuf::uint32 value) {
 
 inline const CUnEquipItemResponse* CUnEquipItemResponse::internal_default_instance() {
   return &CUnEquipItemResponse_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int CEquipChangeNotify::kEntityIDFieldNumber;
+const int CEquipChangeNotify::kEquipPartFieldNumber;
+const int CEquipChangeNotify::kEquipItemIDFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+CEquipChangeNotify::CEquipChangeNotify()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_itemmodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CEquipChangeNotify)
+}
+
+void CEquipChangeNotify::InitAsDefaultInstance() {
+}
+
+CEquipChangeNotify::CEquipChangeNotify(const CEquipChangeNotify& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:CEquipChangeNotify)
+}
+
+void CEquipChangeNotify::SharedCtor() {
+  ::memset(&entityid_, 0, reinterpret_cast<char*>(&equipitemid_) -
+    reinterpret_cast<char*>(&entityid_) + sizeof(equipitemid_));
+  _cached_size_ = 0;
+}
+
+CEquipChangeNotify::~CEquipChangeNotify() {
+  // @@protoc_insertion_point(destructor:CEquipChangeNotify)
+  SharedDtor();
+}
+
+void CEquipChangeNotify::SharedDtor() {
+}
+
+void CEquipChangeNotify::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CEquipChangeNotify::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CEquipChangeNotify_descriptor_;
+}
+
+const CEquipChangeNotify& CEquipChangeNotify::default_instance() {
+  protobuf_InitDefaults_itemmodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<CEquipChangeNotify> CEquipChangeNotify_default_instance_;
+
+CEquipChangeNotify* CEquipChangeNotify::New(::google::protobuf::Arena* arena) const {
+  CEquipChangeNotify* n = new CEquipChangeNotify;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void CEquipChangeNotify::Clear() {
+// @@protoc_insertion_point(message_clear_start:CEquipChangeNotify)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(CEquipChangeNotify, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<CEquipChangeNotify*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&(first), 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(entityid_, equipitemid_);
+
+#undef ZR_HELPER_
+#undef ZR_
+
+}
+
+bool CEquipChangeNotify::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:CEquipChangeNotify)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 EntityID = 1;
+      case 1: {
+        if (tag == 8) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &entityid_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_EquipPart;
+        break;
+      }
+
+      // optional uint32 EquipPart = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_EquipPart:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &equippart_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_EquipItemID;
+        break;
+      }
+
+      // optional uint32 EquipItemID = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_EquipItemID:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &equipitemid_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:CEquipChangeNotify)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:CEquipChangeNotify)
+  return false;
+#undef DO_
+}
+
+void CEquipChangeNotify::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:CEquipChangeNotify)
+  // optional uint32 EntityID = 1;
+  if (this->entityid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->entityid(), output);
+  }
+
+  // optional uint32 EquipPart = 2;
+  if (this->equippart() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->equippart(), output);
+  }
+
+  // optional uint32 EquipItemID = 3;
+  if (this->equipitemid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->equipitemid(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:CEquipChangeNotify)
+}
+
+::google::protobuf::uint8* CEquipChangeNotify::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:CEquipChangeNotify)
+  // optional uint32 EntityID = 1;
+  if (this->entityid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->entityid(), target);
+  }
+
+  // optional uint32 EquipPart = 2;
+  if (this->equippart() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->equippart(), target);
+  }
+
+  // optional uint32 EquipItemID = 3;
+  if (this->equipitemid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->equipitemid(), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:CEquipChangeNotify)
+  return target;
+}
+
+size_t CEquipChangeNotify::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CEquipChangeNotify)
+  size_t total_size = 0;
+
+  // optional uint32 EntityID = 1;
+  if (this->entityid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->entityid());
+  }
+
+  // optional uint32 EquipPart = 2;
+  if (this->equippart() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->equippart());
+  }
+
+  // optional uint32 EquipItemID = 3;
+  if (this->equipitemid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->equipitemid());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CEquipChangeNotify::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CEquipChangeNotify)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const CEquipChangeNotify* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CEquipChangeNotify>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CEquipChangeNotify)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CEquipChangeNotify)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void CEquipChangeNotify::MergeFrom(const CEquipChangeNotify& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CEquipChangeNotify)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void CEquipChangeNotify::UnsafeMergeFrom(const CEquipChangeNotify& from) {
+  GOOGLE_DCHECK(&from != this);
+  if (from.entityid() != 0) {
+    set_entityid(from.entityid());
+  }
+  if (from.equippart() != 0) {
+    set_equippart(from.equippart());
+  }
+  if (from.equipitemid() != 0) {
+    set_equipitemid(from.equipitemid());
+  }
+}
+
+void CEquipChangeNotify::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CEquipChangeNotify)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CEquipChangeNotify::CopyFrom(const CEquipChangeNotify& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CEquipChangeNotify)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool CEquipChangeNotify::IsInitialized() const {
+
+  return true;
+}
+
+void CEquipChangeNotify::Swap(CEquipChangeNotify* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void CEquipChangeNotify::InternalSwap(CEquipChangeNotify* other) {
+  std::swap(entityid_, other->entityid_);
+  std::swap(equippart_, other->equippart_);
+  std::swap(equipitemid_, other->equipitemid_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata CEquipChangeNotify::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CEquipChangeNotify_descriptor_;
+  metadata.reflection = CEquipChangeNotify_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// CEquipChangeNotify
+
+// optional uint32 EntityID = 1;
+void CEquipChangeNotify::clear_entityid() {
+  entityid_ = 0u;
+}
+::google::protobuf::uint32 CEquipChangeNotify::entityid() const {
+  // @@protoc_insertion_point(field_get:CEquipChangeNotify.EntityID)
+  return entityid_;
+}
+void CEquipChangeNotify::set_entityid(::google::protobuf::uint32 value) {
+  
+  entityid_ = value;
+  // @@protoc_insertion_point(field_set:CEquipChangeNotify.EntityID)
+}
+
+// optional uint32 EquipPart = 2;
+void CEquipChangeNotify::clear_equippart() {
+  equippart_ = 0u;
+}
+::google::protobuf::uint32 CEquipChangeNotify::equippart() const {
+  // @@protoc_insertion_point(field_get:CEquipChangeNotify.EquipPart)
+  return equippart_;
+}
+void CEquipChangeNotify::set_equippart(::google::protobuf::uint32 value) {
+  
+  equippart_ = value;
+  // @@protoc_insertion_point(field_set:CEquipChangeNotify.EquipPart)
+}
+
+// optional uint32 EquipItemID = 3;
+void CEquipChangeNotify::clear_equipitemid() {
+  equipitemid_ = 0u;
+}
+::google::protobuf::uint32 CEquipChangeNotify::equipitemid() const {
+  // @@protoc_insertion_point(field_get:CEquipChangeNotify.EquipItemID)
+  return equipitemid_;
+}
+void CEquipChangeNotify::set_equipitemid(::google::protobuf::uint32 value) {
+  
+  equipitemid_ = value;
+  // @@protoc_insertion_point(field_set:CEquipChangeNotify.EquipItemID)
+}
+
+inline const CEquipChangeNotify* CEquipChangeNotify::internal_default_instance() {
+  return &CEquipChangeNotify_default_instance_.get();
 }
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 

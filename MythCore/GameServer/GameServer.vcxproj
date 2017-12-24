@@ -86,6 +86,7 @@
     <ClCompile Include="src\dbmodule.cpp" />
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\entityplayer.cpp" />
+    <ClCompile Include="src\equip.cpp" />
     <ClCompile Include="src\gameserver.cpp" />
     <ClCompile Include="src\gameserverconfig.cpp" />
     <ClCompile Include="src\gmcommandmanager.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="inc\entity.h" />
     <ClInclude Include="inc\entityplayer.h" />
     <ClInclude Include="inc\entitytype.h" />
+    <ClInclude Include="inc\equip.h" />
     <ClInclude Include="inc\errcode.h" />
     <ClInclude Include="inc\gameserver.h" />
     <ClInclude Include="inc\gameserverconfig.h" />

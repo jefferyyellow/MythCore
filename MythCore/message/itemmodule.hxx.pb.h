@@ -38,6 +38,7 @@ void protobuf_AssignDesc_itemmodule_2ehxx();
 void protobuf_ShutdownFile_itemmodule_2ehxx();
 
 class CCurrencyUpdateNotify;
+class CEquipChangeNotify;
 class CEquipItemRequest;
 class CEquipItemResponse;
 class CInsertItemNotify;
@@ -68,12 +69,13 @@ enum ITEM_MODULE_MSG_ID {
   ID_S2C_RESPONSE_EQUIP_ITEM = 2060,
   ID_C2S_REQUEST_UNEQUIP_ITEM = 2061,
   ID_S2C_RESPONSE_UNEQUIP_ITEM = 2062,
+  ID_S2C_NOTIYF_EQUIP_CHANGE = 2063,
   ITEM_MODULE_MSG_ID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   ITEM_MODULE_MSG_ID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool ITEM_MODULE_MSG_ID_IsValid(int value);
 const ITEM_MODULE_MSG_ID ITEM_MODULE_MSG_ID_MIN = ID_ITEM_MODULE_ERROR;
-const ITEM_MODULE_MSG_ID ITEM_MODULE_MSG_ID_MAX = ID_S2C_RESPONSE_UNEQUIP_ITEM;
+const ITEM_MODULE_MSG_ID ITEM_MODULE_MSG_ID_MAX = ID_S2C_NOTIYF_EQUIP_CHANGE;
 const int ITEM_MODULE_MSG_ID_ARRAYSIZE = ITEM_MODULE_MSG_ID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* ITEM_MODULE_MSG_ID_descriptor();
@@ -1249,11 +1251,11 @@ class CUnEquipItemRequest : public ::google::protobuf::Message /* @@protoc_inser
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 EquipIndex = 1;
-  void clear_equipindex();
-  static const int kEquipIndexFieldNumber = 1;
-  ::google::protobuf::uint32 equipindex() const;
-  void set_equipindex(::google::protobuf::uint32 value);
+  // optional uint32 EquipPart = 1;
+  void clear_equippart();
+  static const int kEquipPartFieldNumber = 1;
+  ::google::protobuf::uint32 equippart() const;
+  void set_equippart(::google::protobuf::uint32 value);
 
   // optional uint32 ItemIndex = 2;
   void clear_itemindex();
@@ -1265,7 +1267,7 @@ class CUnEquipItemRequest : public ::google::protobuf::Message /* @@protoc_inser
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::uint32 equipindex_;
+  ::google::protobuf::uint32 equippart_;
   ::google::protobuf::uint32 itemindex_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_itemmodule_2ehxx_impl();
@@ -1348,11 +1350,11 @@ class CUnEquipItemResponse : public ::google::protobuf::Message /* @@protoc_inse
   ::google::protobuf::uint32 result() const;
   void set_result(::google::protobuf::uint32 value);
 
-  // optional uint32 EquipIndex = 2;
-  void clear_equipindex();
-  static const int kEquipIndexFieldNumber = 2;
-  ::google::protobuf::uint32 equipindex() const;
-  void set_equipindex(::google::protobuf::uint32 value);
+  // optional uint32 EquipPart = 2;
+  void clear_equippart();
+  static const int kEquipPartFieldNumber = 2;
+  ::google::protobuf::uint32 equippart() const;
+  void set_equippart(::google::protobuf::uint32 value);
 
   // optional uint32 ItemIndex = 3;
   void clear_itemindex();
@@ -1365,7 +1367,7 @@ class CUnEquipItemResponse : public ::google::protobuf::Message /* @@protoc_inse
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::uint32 result_;
-  ::google::protobuf::uint32 equipindex_;
+  ::google::protobuf::uint32 equippart_;
   ::google::protobuf::uint32 itemindex_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_itemmodule_2ehxx_impl();
@@ -1376,6 +1378,106 @@ class CUnEquipItemResponse : public ::google::protobuf::Message /* @@protoc_inse
   void InitAsDefaultInstance();
 };
 extern ::google::protobuf::internal::ExplicitlyConstructed<CUnEquipItemResponse> CUnEquipItemResponse_default_instance_;
+
+// -------------------------------------------------------------------
+
+class CEquipChangeNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CEquipChangeNotify) */ {
+ public:
+  CEquipChangeNotify();
+  virtual ~CEquipChangeNotify();
+
+  CEquipChangeNotify(const CEquipChangeNotify& from);
+
+  inline CEquipChangeNotify& operator=(const CEquipChangeNotify& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CEquipChangeNotify& default_instance();
+
+  static const CEquipChangeNotify* internal_default_instance();
+
+  void Swap(CEquipChangeNotify* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CEquipChangeNotify* New() const { return New(NULL); }
+
+  CEquipChangeNotify* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CEquipChangeNotify& from);
+  void MergeFrom(const CEquipChangeNotify& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CEquipChangeNotify* other);
+  void UnsafeMergeFrom(const CEquipChangeNotify& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 EntityID = 1;
+  void clear_entityid();
+  static const int kEntityIDFieldNumber = 1;
+  ::google::protobuf::uint32 entityid() const;
+  void set_entityid(::google::protobuf::uint32 value);
+
+  // optional uint32 EquipPart = 2;
+  void clear_equippart();
+  static const int kEquipPartFieldNumber = 2;
+  ::google::protobuf::uint32 equippart() const;
+  void set_equippart(::google::protobuf::uint32 value);
+
+  // optional uint32 EquipItemID = 3;
+  void clear_equipitemid();
+  static const int kEquipItemIDFieldNumber = 3;
+  ::google::protobuf::uint32 equipitemid() const;
+  void set_equipitemid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:CEquipChangeNotify)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 entityid_;
+  ::google::protobuf::uint32 equippart_;
+  ::google::protobuf::uint32 equipitemid_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_itemmodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_itemmodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_itemmodule_2ehxx();
+  friend void protobuf_ShutdownFile_itemmodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CEquipChangeNotify> CEquipChangeNotify_default_instance_;
 
 // ===================================================================
 
@@ -1792,18 +1894,18 @@ inline const CEquipItemResponse* CEquipItemResponse::internal_default_instance()
 
 // CUnEquipItemRequest
 
-// optional uint32 EquipIndex = 1;
-inline void CUnEquipItemRequest::clear_equipindex() {
-  equipindex_ = 0u;
+// optional uint32 EquipPart = 1;
+inline void CUnEquipItemRequest::clear_equippart() {
+  equippart_ = 0u;
 }
-inline ::google::protobuf::uint32 CUnEquipItemRequest::equipindex() const {
-  // @@protoc_insertion_point(field_get:CUnEquipItemRequest.EquipIndex)
-  return equipindex_;
+inline ::google::protobuf::uint32 CUnEquipItemRequest::equippart() const {
+  // @@protoc_insertion_point(field_get:CUnEquipItemRequest.EquipPart)
+  return equippart_;
 }
-inline void CUnEquipItemRequest::set_equipindex(::google::protobuf::uint32 value) {
+inline void CUnEquipItemRequest::set_equippart(::google::protobuf::uint32 value) {
   
-  equipindex_ = value;
-  // @@protoc_insertion_point(field_set:CUnEquipItemRequest.EquipIndex)
+  equippart_ = value;
+  // @@protoc_insertion_point(field_set:CUnEquipItemRequest.EquipPart)
 }
 
 // optional uint32 ItemIndex = 2;
@@ -1841,18 +1943,18 @@ inline void CUnEquipItemResponse::set_result(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:CUnEquipItemResponse.Result)
 }
 
-// optional uint32 EquipIndex = 2;
-inline void CUnEquipItemResponse::clear_equipindex() {
-  equipindex_ = 0u;
+// optional uint32 EquipPart = 2;
+inline void CUnEquipItemResponse::clear_equippart() {
+  equippart_ = 0u;
 }
-inline ::google::protobuf::uint32 CUnEquipItemResponse::equipindex() const {
-  // @@protoc_insertion_point(field_get:CUnEquipItemResponse.EquipIndex)
-  return equipindex_;
+inline ::google::protobuf::uint32 CUnEquipItemResponse::equippart() const {
+  // @@protoc_insertion_point(field_get:CUnEquipItemResponse.EquipPart)
+  return equippart_;
 }
-inline void CUnEquipItemResponse::set_equipindex(::google::protobuf::uint32 value) {
+inline void CUnEquipItemResponse::set_equippart(::google::protobuf::uint32 value) {
   
-  equipindex_ = value;
-  // @@protoc_insertion_point(field_set:CUnEquipItemResponse.EquipIndex)
+  equippart_ = value;
+  // @@protoc_insertion_point(field_set:CUnEquipItemResponse.EquipPart)
 }
 
 // optional uint32 ItemIndex = 3;
@@ -1872,7 +1974,58 @@ inline void CUnEquipItemResponse::set_itemindex(::google::protobuf::uint32 value
 inline const CUnEquipItemResponse* CUnEquipItemResponse::internal_default_instance() {
   return &CUnEquipItemResponse_default_instance_.get();
 }
+// -------------------------------------------------------------------
+
+// CEquipChangeNotify
+
+// optional uint32 EntityID = 1;
+inline void CEquipChangeNotify::clear_entityid() {
+  entityid_ = 0u;
+}
+inline ::google::protobuf::uint32 CEquipChangeNotify::entityid() const {
+  // @@protoc_insertion_point(field_get:CEquipChangeNotify.EntityID)
+  return entityid_;
+}
+inline void CEquipChangeNotify::set_entityid(::google::protobuf::uint32 value) {
+  
+  entityid_ = value;
+  // @@protoc_insertion_point(field_set:CEquipChangeNotify.EntityID)
+}
+
+// optional uint32 EquipPart = 2;
+inline void CEquipChangeNotify::clear_equippart() {
+  equippart_ = 0u;
+}
+inline ::google::protobuf::uint32 CEquipChangeNotify::equippart() const {
+  // @@protoc_insertion_point(field_get:CEquipChangeNotify.EquipPart)
+  return equippart_;
+}
+inline void CEquipChangeNotify::set_equippart(::google::protobuf::uint32 value) {
+  
+  equippart_ = value;
+  // @@protoc_insertion_point(field_set:CEquipChangeNotify.EquipPart)
+}
+
+// optional uint32 EquipItemID = 3;
+inline void CEquipChangeNotify::clear_equipitemid() {
+  equipitemid_ = 0u;
+}
+inline ::google::protobuf::uint32 CEquipChangeNotify::equipitemid() const {
+  // @@protoc_insertion_point(field_get:CEquipChangeNotify.EquipItemID)
+  return equipitemid_;
+}
+inline void CEquipChangeNotify::set_equipitemid(::google::protobuf::uint32 value) {
+  
+  equipitemid_ = value;
+  // @@protoc_insertion_point(field_set:CEquipChangeNotify.EquipItemID)
+}
+
+inline const CEquipChangeNotify* CEquipChangeNotify::internal_default_instance() {
+  return &CEquipChangeNotify_default_instance_.get();
+}
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

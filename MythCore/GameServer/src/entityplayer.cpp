@@ -1,7 +1,7 @@
 #include "entityplayer.h"
 #include "mapmodule.hxx.pb.h"
 /// 刷新基本属性
-void CEntityPlayer::RefreshBaseProperty()
+void CEntityPlayer::refreshBaseProperty()
 {
 	for (int i = 0; i < emPropertyTypeMax; ++ i)
 	{
@@ -15,7 +15,7 @@ void CEntityPlayer::RefreshBaseProperty()
 }
 
 /// 刷新战斗属性
-void CEntityPlayer::RefreshFightProperty()
+void CEntityPlayer::refreshFightProperty()
 {
 	for (int i = 0; i < emPropertyTypeMax; ++i)
 	{

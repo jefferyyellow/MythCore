@@ -33,6 +33,10 @@ public:
 	int		hasItem(int nItemID);
 	/// 得到道具
 	CItemObject* getItem(unsigned int nIndex);
+	/// 序列化
+	void createToPB(PBItemList* pbItemList);
+	/// 反序列化
+	void setFromPB(PBItemList* pbItemList);
 public:
 	int		getSize(){return mSize;}
 	void	setSize(int nSize){mSize = nSize;}

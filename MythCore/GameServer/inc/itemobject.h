@@ -1,8 +1,8 @@
 #ifndef __ITEMOBJECT_H__
 #define __ITEMOBJECT_H__
 #include "obj.h"
-#include "itemmodule.hxx.pb.h"
 class CItemObject;
+class PBItemObject;
 class CItemFactory
 {
 public:

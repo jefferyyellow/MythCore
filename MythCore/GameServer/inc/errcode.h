@@ -51,4 +51,15 @@ enum ERR_TASK
 	ERR_TASK_KILL_OGRE_NOT_ENOUGH		= 507,		// 杀怪的数目不够
 	ERR_TASK_ITEM_NUM_NOT_ENOUGH		= 508,		// 道具的数目不够
 };
+
+// 600 - 699
+enum ERR_EQUIP
+{	
+	ERR_EQUIP_SRC_ITEM_DATA_NULL		= 600,		// 装备的道具数据为空
+	ERR_EQUIP_ITEM_IS_NOT_EQUIP			= 601,		// 道具不是装备
+	ERR_EQUIP_PART_IS_INVALID			= 602,		// 装备部位非法
+	ERR_EQUIP_DES_INDEX_DATA_NOT_NULL	= 603,		// 目标索引数据不为空
+	ERR_EQUIP_PLAYER_LEVEL_NOT_ENOUGH	= 604,		// 装备等级不足
+	ERR_EQUIP_ITEM_CANNOT_EQUIP			= 605,		// 道具不能装备
+};
 #endif

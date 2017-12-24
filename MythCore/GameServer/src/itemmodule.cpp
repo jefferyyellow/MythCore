@@ -18,17 +18,17 @@ void CItemModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageI
 	{
 		case ID_C2S_REQUEST_USE_ITEM:
 		{
-			pPlayer->GetItemUnit().onUseItemRequest(pMessage);
+			pPlayer->getItemUnit().onUseItemRequest(pMessage);
 			break;
 		}
 		case ID_C2S_REQUEST_SELL_ITEM:
 		{
-			pPlayer->GetItemUnit().onSellItemRequest(pMessage);
+			pPlayer->getItemUnit().onSellItemRequest(pMessage);
 			break;
 		}
 		case ID_C2S_REQUEST_PURCHASE_ITEM:
 		{
-			pPlayer->GetItemUnit().onPurchaseItemRequest(pMessage);
+			pPlayer->getItemUnit().onPurchaseItemRequest(pMessage);
 			break;
 		}
 		case ID_C2S_REQUEST_EQUIP_ITEM:

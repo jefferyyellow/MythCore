@@ -1,0 +1,1 @@
+TemplateCoder.exe CTplEquip

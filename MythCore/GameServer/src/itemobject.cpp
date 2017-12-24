@@ -1,6 +1,7 @@
 #include "itemobject.h"
 #include "template.h"
 #include "objpool.h"
+#include "itemmodule.hxx.pb.h"
 CItemObject* CItemFactory::createItem(int nItemID)
 {
 	CTplItem* pTplItem = (CTplItem*)CStaticData::searchTpl(nItemID);
@@ -32,21 +33,56 @@ void CItemFactory::destroyItem(int nObjID)
 
 void CItemCommon::setFromPB(PBItemObject* pItemObject)
 {
-	
+	if (NULL == pItemObject)
+	{
+		return;
+	}
+	SetItemID(pItemObject->itemid());
+	SetItemNum(pItemObject->number());
 }
 
 void CItemCommon::createToPB(PBItemObject* pItemObject)
 {
-	
+	if (NULL == pItemObject)
+	{
+		return;
+	}
+	pItemObject->set_itemid(GetItemID());
+	pItemObject->set_number(GetItemNum());
 }
 
 
 void CItemEquip::setFromPB(PBItemObject* pItemObject)
 {
-	
+	if (NULL == pItemObject)
+	{
+		return;
+	}
+	PBItemEquip* pbItemEqup = pItemObject->mutable_itemequip();
+	if (NULL != pbItemEqup)
+	{
+		return;
+	}
+
+	SetItemID(pItemObject->itemid());
+	SetItemNum(pItemObject->number());
+	mLevel = pbItemEqup->level();
+
 }
 
 void CItemEquip::createToPB(PBItemObject* pItemObject)
 {
+	if (NULL == pItemObject)
+	{
+		return;
+	}
+	PBItemEquip* pbItemEqup = pItemObject->mutable_itemequip();
+	if (NULL != pbItemEqup)
+	{
+		return;
+	}
+	pItemObject->set_itemid(GetItemID());
+	pItemObject->set_number(GetItemNum());
 
+	pbItemEqup->set_level(mLevel);
 }

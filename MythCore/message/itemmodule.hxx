@@ -19,6 +19,7 @@ enum ITEM_MODULE_MSG_ID
 	ID_S2C_RESPONSE_EQUIP_ITEM				= 0x080C;	// 装备道具的回应
 	ID_C2S_REQUEST_UNEQUIP_ITEM				= 0x080D;	// 卸载装备的请求
 	ID_S2C_RESPONSE_UNEQUIP_ITEM			= 0x080E;	// 卸载装备的回应
+	ID_S2C_NOTIYF_EQUIP_CHANGE				= 0x080F;	// 装备改变的通知
 };
 
 // 玩家货币更新通知 ID_S2C_NOTIYF_CURRENCY_UPDATE
@@ -103,7 +104,7 @@ message CEquipItemResponse
 // 卸载装备的请求 ID_C2S_REQUEST_UNEQUIP_ITEM
 message CUnEquipItemRequest
 {
-	uint32	EquipIndex	= 1;		// 装备的索引
+	uint32	EquipPart	= 1;		// 装备部位
 	uint32	ItemIndex	= 2;		// 装备在包裹里的索引
 }
 
@@ -111,6 +112,14 @@ message CUnEquipItemRequest
 message CUnEquipItemResponse
 {
 	uint32	Result		= 1;		// 结果
-	uint32	EquipIndex	= 2;		// 装备的索引
+	uint32	EquipPart	= 2;		// 装备部位
 	uint32	ItemIndex	= 3;		// 装备在包裹里的索引
+}
+
+// 装备改变通知 ID_S2C_NOTIYF_EQUIP_CHANGE
+message CEquipChangeNotify
+{
+	uint32	EntityID	= 1;		// 角色ID
+	uint32	EquipPart	= 2;		// 装备部位
+	uint32	EquipItemID	= 3;		// 装备道具ID
 }

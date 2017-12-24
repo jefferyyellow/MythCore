@@ -30,6 +30,7 @@ DROP TABLE IF EXISTS `PlayerBaseProperty`;
 CREATE TABLE `PlayerBaseProperty` (
 	`role_id`				int(11) UNSIGNED			NOT NULL,
 	`bag`					blob						DEFAULT NULL,
+	`equip`					blob						DEFAULT NULL,
 	`task`					blob						DEFAULT NULL,
 	PRIMARY KEY(`role_id`)
 )ENGINE=INNODB;

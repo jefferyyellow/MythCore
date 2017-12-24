@@ -77,14 +77,12 @@ public:
 	~CEntityCharacter(){}
 
 public:
-
+	/// 刷新战斗属性
+	virtual void	refreshFightProperty(){}
 
 public:
 	int			getTempID() const { return mTempID; }
 	void		setTempID(int nValue) { mTempID = nValue; }
-	/// 刷新战斗属性
-	virtual void	RefreshFightProperty(){}
-
 	// 当前血值
 	int			getCurHP() const { return mCurHP; }
 	void		setCurHP(int nValue){ mCurHP = nValue; }
@@ -125,7 +123,7 @@ public:
 
 public:
 	/// 刷新战斗属性
-	virtual void	RefreshFightProperty();
+	virtual void	refreshFightProperty();
 };
 
 /// 功能NPC

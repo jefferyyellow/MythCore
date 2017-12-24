@@ -81,7 +81,7 @@ void CEntityNPC::serializeSceneInfoToPB(PBNpcSceneInfo* pbNpcInfo)
 
 
 /// À¢–¬’Ω∂∑ Ù–‘
-void	CEntityOgre::RefreshFightProperty()
+void	CEntityOgre::refreshFightProperty()
 {
 
 }

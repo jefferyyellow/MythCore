@@ -75,7 +75,7 @@ DROP PROCEDURE IF EXISTS `LoadPlayerBaseProperty`;
 DELIMITER ;;
 CREATE PROCEDURE `LoadPlayerBaseProperty`(RoleID int unsigned)
 BEGIN
-	select bag, task from PlayerBaseProperty WHERE role_id=RoleID;
+	select bag, equip, task from PlayerBaseProperty WHERE role_id=RoleID;
 END
 ;;
 DELIMITER ;
@@ -107,10 +107,12 @@ DROP PROCEDURE IF EXISTS `UpdatePlayerBaseProperty`;
 DELIMITER ;;
 CREATE PROCEDURE `UpdatePlayerBaseProperty`(RoleID int unsigned,
 											tBag Blob,
+											tEquip Blob,
 											tTask Blob)
 BEGIN
 	update PlayerBaseProperty set
 		bag = tBag,
+		equip = tEquip,
 		task = tTask
 	WHERE role_id=RoleID;
 END

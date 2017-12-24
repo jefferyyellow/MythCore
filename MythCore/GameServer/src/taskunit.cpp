@@ -164,7 +164,7 @@ int CTaskUnit::checkSubmitTask(int nTaskID, short& bRepeated)
 			}
 			case emComplete_HoldItem:
 			{
-				if (mPlayer.GetItemUnit().hasItem(pTaskConfig->mCompleteCondition[i].mParam[0]) < pTaskConfig->mCompleteCondition[i].mParam[1])
+				if (mPlayer.getItemUnit().hasItem(pTaskConfig->mCompleteCondition[i].mParam[0]) < pTaskConfig->mCompleteCondition[i].mParam[1])
 				{
 					return ERR_TASK_ITEM_NUM_NOT_ENOUGH;
 				}

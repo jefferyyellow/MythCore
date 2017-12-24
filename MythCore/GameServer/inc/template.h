@@ -12,13 +12,13 @@
 #define TEMPLATE_CACHE_SIZE			10 * 1024 * 1024	// 大Cache
 class CTemplate;
 class PBTplTemplate;
-class PBTplItem;
+class PBItem;
 class PBTplLevelExpConfig;
 class PBTplVIPConfig;
 class PBTplNPC;
 class PBTplFuncNPC;
 class PBTplOgre;
-
+class PBEquip;
 #define TEMPLATE_SET_FROM_PB(ClassName, PBParent, PBName) \
 	{ \
 			for (int i = 0; i < (int)PBParent->PBName##_size(); ++ i) \
@@ -151,10 +151,46 @@ public:
 #endif
 	}
 	~CTplItem(){}
-	void	setFromPB(PBTplItem* pbItem);
-	void	createToPB(PBTplItem* pbItem);
+	void	setFromPB(PBItem* pbItem);
+	void	createToPB(PBItem* pbItem);
 };
 
+// ********************************************************************** //
+// ENDMAKE
+// ********************************************************************** //
+
+// ********************************************************************** //
+// BEGINMAKE
+// virtual	= false						## 代表不生成到数据库中
+// name		= 装备						## 模版名称
+// path		=							## 路径
+// parent	=							## 父亲模版
+// ********************************************************************** //
+class CTplEquip : public CTplItem
+{
+public:
+	// FieldName: 装备模型名称
+	// FieldType: STRING32
+	// Type:	  EDITSTRING
+	char	mEquipModal[STRING32];
+
+	// FieldName: 装备部位
+	// FieldType: INT4
+	// Type:	  COMBOENUM(TmTplEquipPart)
+	int		mEquipPart;
+
+	// FieldName: 等级限制
+	// FieldType: INT4
+	// Type:	  EDITNUMBER(0,1000)
+	int		mLevelRequire;
+
+public:
+	CTplEquip(){};
+	~CTplEquip(){};
+	void setFromPB(PBEquip* pbData);
+	void createToPB(PBEquip* pbData);
+
+};
 // ********************************************************************** //
 // ENDMAKE
 // ********************************************************************** //

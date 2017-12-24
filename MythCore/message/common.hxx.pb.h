@@ -35,12 +35,111 @@ void protobuf_InitDefaults_common_2ehxx();
 void protobuf_AssignDesc_common_2ehxx();
 void protobuf_ShutdownFile_common_2ehxx();
 
-class PBBag;
 class PBItemEquip;
+class PBItemList;
 class PBItemObject;
 class PBTask;
 
 // ===================================================================
+
+class PBItemList : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PBItemList) */ {
+ public:
+  PBItemList();
+  virtual ~PBItemList();
+
+  PBItemList(const PBItemList& from);
+
+  inline PBItemList& operator=(const PBItemList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBItemList& default_instance();
+
+  static const PBItemList* internal_default_instance();
+
+  void Swap(PBItemList* other);
+
+  // implements Message ----------------------------------------------
+
+  inline PBItemList* New() const { return New(NULL); }
+
+  PBItemList* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PBItemList& from);
+  void MergeFrom(const PBItemList& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(PBItemList* other);
+  void UnsafeMergeFrom(const PBItemList& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .PBItemObject ItemObject = 1;
+  int itemobject_size() const;
+  void clear_itemobject();
+  static const int kItemObjectFieldNumber = 1;
+  const ::PBItemObject& itemobject(int index) const;
+  ::PBItemObject* mutable_itemobject(int index);
+  ::PBItemObject* add_itemobject();
+  ::google::protobuf::RepeatedPtrField< ::PBItemObject >*
+      mutable_itemobject();
+  const ::google::protobuf::RepeatedPtrField< ::PBItemObject >&
+      itemobject() const;
+
+  // optional uint32 Size = 2;
+  void clear_size();
+  static const int kSizeFieldNumber = 2;
+  ::google::protobuf::uint32 size() const;
+  void set_size(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:PBItemList)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedPtrField< ::PBItemObject > itemobject_;
+  ::google::protobuf::uint32 size_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_common_2ehxx_impl();
+  friend void  protobuf_AddDesc_common_2ehxx_impl();
+  friend void protobuf_AssignDesc_common_2ehxx();
+  friend void protobuf_ShutdownFile_common_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<PBItemList> PBItemList_default_instance_;
+
+// -------------------------------------------------------------------
 
 class PBItemObject : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PBItemObject) */ {
  public:
@@ -238,85 +337,6 @@ extern ::google::protobuf::internal::ExplicitlyConstructed<PBItemEquip> PBItemEq
 
 // -------------------------------------------------------------------
 
-class PBBag : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PBBag) */ {
- public:
-  PBBag();
-  virtual ~PBBag();
-
-  PBBag(const PBBag& from);
-
-  inline PBBag& operator=(const PBBag& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const PBBag& default_instance();
-
-  static const PBBag* internal_default_instance();
-
-  void Swap(PBBag* other);
-
-  // implements Message ----------------------------------------------
-
-  inline PBBag* New() const { return New(NULL); }
-
-  PBBag* New(::google::protobuf::Arena* arena) const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const PBBag& from);
-  void MergeFrom(const PBBag& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  size_t ByteSizeLong() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
-    return InternalSerializeWithCachedSizesToArray(false, output);
-  }
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  void InternalSwap(PBBag* other);
-  void UnsafeMergeFrom(const PBBag& from);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return _internal_metadata_.arena();
-  }
-  inline void* MaybeArenaPtr() const {
-    return _internal_metadata_.raw_arena_ptr();
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // @@protoc_insertion_point(class_scope:PBBag)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  mutable int _cached_size_;
-  friend void  protobuf_InitDefaults_common_2ehxx_impl();
-  friend void  protobuf_AddDesc_common_2ehxx_impl();
-  friend void protobuf_AssignDesc_common_2ehxx();
-  friend void protobuf_ShutdownFile_common_2ehxx();
-
-  void InitAsDefaultInstance();
-};
-extern ::google::protobuf::internal::ExplicitlyConstructed<PBBag> PBBag_default_instance_;
-
-// -------------------------------------------------------------------
-
 class PBTask : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PBTask) */ {
  public:
   PBTask();
@@ -400,6 +420,57 @@ extern ::google::protobuf::internal::ExplicitlyConstructed<PBTask> PBTask_defaul
 // ===================================================================
 
 #if !PROTOBUF_INLINE_NOT_IN_HEADERS
+// PBItemList
+
+// repeated .PBItemObject ItemObject = 1;
+inline int PBItemList::itemobject_size() const {
+  return itemobject_.size();
+}
+inline void PBItemList::clear_itemobject() {
+  itemobject_.Clear();
+}
+inline const ::PBItemObject& PBItemList::itemobject(int index) const {
+  // @@protoc_insertion_point(field_get:PBItemList.ItemObject)
+  return itemobject_.Get(index);
+}
+inline ::PBItemObject* PBItemList::mutable_itemobject(int index) {
+  // @@protoc_insertion_point(field_mutable:PBItemList.ItemObject)
+  return itemobject_.Mutable(index);
+}
+inline ::PBItemObject* PBItemList::add_itemobject() {
+  // @@protoc_insertion_point(field_add:PBItemList.ItemObject)
+  return itemobject_.Add();
+}
+inline ::google::protobuf::RepeatedPtrField< ::PBItemObject >*
+PBItemList::mutable_itemobject() {
+  // @@protoc_insertion_point(field_mutable_list:PBItemList.ItemObject)
+  return &itemobject_;
+}
+inline const ::google::protobuf::RepeatedPtrField< ::PBItemObject >&
+PBItemList::itemobject() const {
+  // @@protoc_insertion_point(field_list:PBItemList.ItemObject)
+  return itemobject_;
+}
+
+// optional uint32 Size = 2;
+inline void PBItemList::clear_size() {
+  size_ = 0u;
+}
+inline ::google::protobuf::uint32 PBItemList::size() const {
+  // @@protoc_insertion_point(field_get:PBItemList.Size)
+  return size_;
+}
+inline void PBItemList::set_size(::google::protobuf::uint32 value) {
+  
+  size_ = value;
+  // @@protoc_insertion_point(field_set:PBItemList.Size)
+}
+
+inline const PBItemList* PBItemList::internal_default_instance() {
+  return &PBItemList_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
 // PBItemObject
 
 // optional uint32 ItemID = 1;
@@ -506,13 +577,6 @@ inline void PBItemEquip::set_level(::google::protobuf::uint32 value) {
 
 inline const PBItemEquip* PBItemEquip::internal_default_instance() {
   return &PBItemEquip_default_instance_.get();
-}
-// -------------------------------------------------------------------
-
-// PBBag
-
-inline const PBBag* PBBag::internal_default_instance() {
-  return &PBBag_default_instance_.get();
 }
 // -------------------------------------------------------------------
 

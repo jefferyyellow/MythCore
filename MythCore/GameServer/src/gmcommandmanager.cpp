@@ -81,7 +81,7 @@ COMMAND_HANDLER_IMPL(exp)
 		"exp command parameter number invalid, %d", tTokens.size());
 
 	int nExp = atoi(tTokens[0].c_str());
-	pPlayer->GetPropertyUnit().obtainExp(nExp);
+	pPlayer->getPropertyUnit().obtainExp(nExp);
 }
 
 //COMMAND_HANDLER_IMPL(money)
