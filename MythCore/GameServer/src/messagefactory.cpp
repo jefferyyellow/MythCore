@@ -4,6 +4,7 @@
 #include "propertymodule.hxx.pb.h"
 #include "itemmodule.hxx.pb.h"
 #include "mapmodule.hxx.pb.h"
+#include "taskmodule.hxx.pb.h"
 #define CASE_NEW_MSG(msg, msgid)						\
 		case msgid:										\
 		{												\
@@ -60,6 +61,16 @@ Message* CMessageFactory::createClientMessage(unsigned short nMessageID)
 		CASE_NEW_MSG(CPlayerTeleportRequest, ID_C2S_REQUEST_PLAYER_TELEPORT)
 		CASE_NEW_MSG(CPlayerTeleportResponse, ID_S2C_RESPONSE_PLAYER_TELEPORT)
 
+
+		// task module
+		CASE_NEW_MSG(CAcceptTaskRequest, ID_C2S_REQUEST_ACCEPT_TASK)
+		CASE_NEW_MSG(CAcceptTaskResponse, ID_S2C_RESPONSE_ACCEPT_TASK)
+		CASE_NEW_MSG(CSubmitTaskRequest, ID_C2S_REQUEST_SUBMIT_TASK)
+		CASE_NEW_MSG(CSubmitTaskResponse, ID_S2C_RESPONSE_SUBMIT_TASK)
+		CASE_NEW_MSG(CAbortTaskRequest, ID_C2S_REQUEST_ABORT_TASK)
+		CASE_NEW_MSG(CAbortTaskResponse, ID_S2C_RESPONSE_ABORT_TASK)
+		CASE_NEW_MSG(CUpdateTaskProcessNotify, ID_S2C_NOTIFY_UPDATE_TASK_PROCESS)
+
 		default:
 			break;
 	}
@@ -69,12 +80,12 @@ Message* CMessageFactory::createClientMessage(unsigned short nMessageID)
 
 Message* CMessageFactory::createServerMessage(unsigned short nMessageID)
 {
-	switch (nMessageID)
-	{
+	//switch (nMessageID)
+	//{
 
-		default:
-			break;
-	}
+	//	default:
+	//		break;
+	//}
 
 	return NULL;
 }

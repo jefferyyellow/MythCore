@@ -132,7 +132,7 @@ namespace Myth
 		/// get function for mBitSet
 		int	getBitSet(unsigned int uIndex)
 		{
-			if (uIndex >= mBitSetSize)
+			if (uIndex >= (unsigned int)mBitSetSize)
 			{
 				return 0;
 			}
@@ -143,12 +143,18 @@ namespace Myth
 		/// set function for mBitSet
 		void	setBitSet(unsigned int uIndex, int uBitSet)
 		{
-			if (uIndex >= mBitSetSize)
+			if (uIndex >= (unsigned int)mBitSetSize)
 			{
 				return;
 			}
 
 			mBitSet[uIndex] = uBitSet;
+		}
+
+		/// get size function for mBitSet
+		int		getBitSetSize()
+		{
+			return mBitSetSize;
 		}
 
 	private:

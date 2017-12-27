@@ -39,6 +39,7 @@ class PBItemEquip;
 class PBItemList;
 class PBItemObject;
 class PBTask;
+class PBTaskList;
 
 // ===================================================================
 
@@ -400,10 +401,31 @@ class PBTask : public ::google::protobuf::Message /* @@protoc_insertion_point(cl
 
   // accessors -------------------------------------------------------
 
+  // optional uint32 TaskID = 1;
+  void clear_taskid();
+  static const int kTaskIDFieldNumber = 1;
+  ::google::protobuf::uint32 taskid() const;
+  void set_taskid(::google::protobuf::uint32 value);
+
+  // repeated uint32 Param = 2;
+  int param_size() const;
+  void clear_param();
+  static const int kParamFieldNumber = 2;
+  ::google::protobuf::uint32 param(int index) const;
+  void set_param(int index, ::google::protobuf::uint32 value);
+  void add_param(::google::protobuf::uint32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+      param() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+      mutable_param();
+
   // @@protoc_insertion_point(class_scope:PBTask)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > param_;
+  mutable int _param_cached_byte_size_;
+  ::google::protobuf::uint32 taskid_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_common_2ehxx_impl();
   friend void  protobuf_AddDesc_common_2ehxx_impl();
@@ -413,6 +435,119 @@ class PBTask : public ::google::protobuf::Message /* @@protoc_insertion_point(cl
   void InitAsDefaultInstance();
 };
 extern ::google::protobuf::internal::ExplicitlyConstructed<PBTask> PBTask_default_instance_;
+
+// -------------------------------------------------------------------
+
+class PBTaskList : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PBTaskList) */ {
+ public:
+  PBTaskList();
+  virtual ~PBTaskList();
+
+  PBTaskList(const PBTaskList& from);
+
+  inline PBTaskList& operator=(const PBTaskList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBTaskList& default_instance();
+
+  static const PBTaskList* internal_default_instance();
+
+  void Swap(PBTaskList* other);
+
+  // implements Message ----------------------------------------------
+
+  inline PBTaskList* New() const { return New(NULL); }
+
+  PBTaskList* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PBTaskList& from);
+  void MergeFrom(const PBTaskList& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(PBTaskList* other);
+  void UnsafeMergeFrom(const PBTaskList& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 MaxCompleteTaskID = 1;
+  void clear_maxcompletetaskid();
+  static const int kMaxCompleteTaskIDFieldNumber = 1;
+  ::google::protobuf::uint32 maxcompletetaskid() const;
+  void set_maxcompletetaskid(::google::protobuf::uint32 value);
+
+  // repeated fixed32 CompleteTasks = 2;
+  int completetasks_size() const;
+  void clear_completetasks();
+  static const int kCompleteTasksFieldNumber = 2;
+  ::google::protobuf::uint32 completetasks(int index) const;
+  void set_completetasks(int index, ::google::protobuf::uint32 value);
+  void add_completetasks(::google::protobuf::uint32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+      completetasks() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+      mutable_completetasks();
+
+  // repeated .PBTask TaskList = 3;
+  int tasklist_size() const;
+  void clear_tasklist();
+  static const int kTaskListFieldNumber = 3;
+  const ::PBTask& tasklist(int index) const;
+  ::PBTask* mutable_tasklist(int index);
+  ::PBTask* add_tasklist();
+  ::google::protobuf::RepeatedPtrField< ::PBTask >*
+      mutable_tasklist();
+  const ::google::protobuf::RepeatedPtrField< ::PBTask >&
+      tasklist() const;
+
+  // @@protoc_insertion_point(class_scope:PBTaskList)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > completetasks_;
+  mutable int _completetasks_cached_byte_size_;
+  ::google::protobuf::RepeatedPtrField< ::PBTask > tasklist_;
+  ::google::protobuf::uint32 maxcompletetaskid_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_common_2ehxx_impl();
+  friend void  protobuf_AddDesc_common_2ehxx_impl();
+  friend void protobuf_AssignDesc_common_2ehxx();
+  friend void protobuf_ShutdownFile_common_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<PBTaskList> PBTaskList_default_instance_;
 
 // ===================================================================
 
@@ -582,10 +717,137 @@ inline const PBItemEquip* PBItemEquip::internal_default_instance() {
 
 // PBTask
 
+// optional uint32 TaskID = 1;
+inline void PBTask::clear_taskid() {
+  taskid_ = 0u;
+}
+inline ::google::protobuf::uint32 PBTask::taskid() const {
+  // @@protoc_insertion_point(field_get:PBTask.TaskID)
+  return taskid_;
+}
+inline void PBTask::set_taskid(::google::protobuf::uint32 value) {
+  
+  taskid_ = value;
+  // @@protoc_insertion_point(field_set:PBTask.TaskID)
+}
+
+// repeated uint32 Param = 2;
+inline int PBTask::param_size() const {
+  return param_.size();
+}
+inline void PBTask::clear_param() {
+  param_.Clear();
+}
+inline ::google::protobuf::uint32 PBTask::param(int index) const {
+  // @@protoc_insertion_point(field_get:PBTask.Param)
+  return param_.Get(index);
+}
+inline void PBTask::set_param(int index, ::google::protobuf::uint32 value) {
+  param_.Set(index, value);
+  // @@protoc_insertion_point(field_set:PBTask.Param)
+}
+inline void PBTask::add_param(::google::protobuf::uint32 value) {
+  param_.Add(value);
+  // @@protoc_insertion_point(field_add:PBTask.Param)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+PBTask::param() const {
+  // @@protoc_insertion_point(field_list:PBTask.Param)
+  return param_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+PBTask::mutable_param() {
+  // @@protoc_insertion_point(field_mutable_list:PBTask.Param)
+  return &param_;
+}
+
 inline const PBTask* PBTask::internal_default_instance() {
   return &PBTask_default_instance_.get();
 }
+// -------------------------------------------------------------------
+
+// PBTaskList
+
+// optional uint32 MaxCompleteTaskID = 1;
+inline void PBTaskList::clear_maxcompletetaskid() {
+  maxcompletetaskid_ = 0u;
+}
+inline ::google::protobuf::uint32 PBTaskList::maxcompletetaskid() const {
+  // @@protoc_insertion_point(field_get:PBTaskList.MaxCompleteTaskID)
+  return maxcompletetaskid_;
+}
+inline void PBTaskList::set_maxcompletetaskid(::google::protobuf::uint32 value) {
+  
+  maxcompletetaskid_ = value;
+  // @@protoc_insertion_point(field_set:PBTaskList.MaxCompleteTaskID)
+}
+
+// repeated fixed32 CompleteTasks = 2;
+inline int PBTaskList::completetasks_size() const {
+  return completetasks_.size();
+}
+inline void PBTaskList::clear_completetasks() {
+  completetasks_.Clear();
+}
+inline ::google::protobuf::uint32 PBTaskList::completetasks(int index) const {
+  // @@protoc_insertion_point(field_get:PBTaskList.CompleteTasks)
+  return completetasks_.Get(index);
+}
+inline void PBTaskList::set_completetasks(int index, ::google::protobuf::uint32 value) {
+  completetasks_.Set(index, value);
+  // @@protoc_insertion_point(field_set:PBTaskList.CompleteTasks)
+}
+inline void PBTaskList::add_completetasks(::google::protobuf::uint32 value) {
+  completetasks_.Add(value);
+  // @@protoc_insertion_point(field_add:PBTaskList.CompleteTasks)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+PBTaskList::completetasks() const {
+  // @@protoc_insertion_point(field_list:PBTaskList.CompleteTasks)
+  return completetasks_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+PBTaskList::mutable_completetasks() {
+  // @@protoc_insertion_point(field_mutable_list:PBTaskList.CompleteTasks)
+  return &completetasks_;
+}
+
+// repeated .PBTask TaskList = 3;
+inline int PBTaskList::tasklist_size() const {
+  return tasklist_.size();
+}
+inline void PBTaskList::clear_tasklist() {
+  tasklist_.Clear();
+}
+inline const ::PBTask& PBTaskList::tasklist(int index) const {
+  // @@protoc_insertion_point(field_get:PBTaskList.TaskList)
+  return tasklist_.Get(index);
+}
+inline ::PBTask* PBTaskList::mutable_tasklist(int index) {
+  // @@protoc_insertion_point(field_mutable:PBTaskList.TaskList)
+  return tasklist_.Mutable(index);
+}
+inline ::PBTask* PBTaskList::add_tasklist() {
+  // @@protoc_insertion_point(field_add:PBTaskList.TaskList)
+  return tasklist_.Add();
+}
+inline ::google::protobuf::RepeatedPtrField< ::PBTask >*
+PBTaskList::mutable_tasklist() {
+  // @@protoc_insertion_point(field_mutable_list:PBTaskList.TaskList)
+  return &tasklist_;
+}
+inline const ::google::protobuf::RepeatedPtrField< ::PBTask >&
+PBTaskList::tasklist() const {
+  // @@protoc_insertion_point(field_list:PBTaskList.TaskList)
+  return tasklist_;
+}
+
+inline const PBTaskList* PBTaskList::internal_default_instance() {
+  return &PBTaskList_default_instance_.get();
+}
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

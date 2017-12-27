@@ -19,8 +19,15 @@ message PBItemEquip
 	uint32			Level		= 4;			// 等级
 }
 
-// 任务
 message PBTask
 {
+				uint32				TaskID			= 1;		// 任务ID
+	repeated	uint32				Param			= 2;		// 任务参数
+};
 
-}
+message PBTaskList
+{
+				uint32				MaxCompleteTaskID=1;		// 最大的已经完成的任务ID
+	repeated	fixed32				CompleteTasks	= 2;		// 功能开启
+	repeated	PBTask				TaskList		= 3;		// 任务列表
+};

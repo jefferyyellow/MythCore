@@ -91,10 +91,10 @@ void protobuf_AddDesc_dbmodule_2ehxx_impl() {
 
   protobuf_InitDefaults_dbmodule_2ehxx();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\014dbmodule.hxx\032\ncommon.hxx\"[\n\014PBSavePlay"
+    "\n\014dbmodule.hxx\032\ncommon.hxx\"_\n\014PBSavePlay"
     "er\022\030\n\003bag\030\001 \001(\0132\013.PBItemList\022\032\n\005equip\030\002 "
-    "\001(\0132\013.PBItemList\022\025\n\004task\030\003 \001(\0132\007.PBTaskb"
-    "\006proto3", 127);
+    "\001(\0132\013.PBItemList\022\031\n\004task\030\003 \001(\0132\013.PBTaskL"
+    "istb\006proto3", 131);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "dbmodule.hxx", &protobuf_RegisterTypes);
   ::protobuf_AddDesc_common_2ehxx();
@@ -143,8 +143,8 @@ void PBSavePlayer::InitAsDefaultInstance() {
       ::PBItemList::internal_default_instance());
   equip_ = const_cast< ::PBItemList*>(
       ::PBItemList::internal_default_instance());
-  task_ = const_cast< ::PBTask*>(
-      ::PBTask::internal_default_instance());
+  task_ = const_cast< ::PBTaskList*>(
+      ::PBTaskList::internal_default_instance());
 }
 
 PBSavePlayer::PBSavePlayer(const PBSavePlayer& from)
@@ -245,7 +245,7 @@ bool PBSavePlayer::MergePartialFromCodedStream(
         break;
       }
 
-      // optional .PBTask task = 3;
+      // optional .PBTaskList task = 3;
       case 3: {
         if (tag == 26) {
          parse_task:
@@ -294,7 +294,7 @@ void PBSavePlayer::SerializeWithCachedSizes(
       2, *this->equip_, output);
   }
 
-  // optional .PBTask task = 3;
+  // optional .PBTaskList task = 3;
   if (this->has_task()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       3, *this->task_, output);
@@ -321,7 +321,7 @@ void PBSavePlayer::SerializeWithCachedSizes(
         2, *this->equip_, false, target);
   }
 
-  // optional .PBTask task = 3;
+  // optional .PBTaskList task = 3;
   if (this->has_task()) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
@@ -350,7 +350,7 @@ size_t PBSavePlayer::ByteSizeLong() const {
         *this->equip_);
   }
 
-  // optional .PBTask task = 3;
+  // optional .PBTaskList task = 3;
   if (this->has_task()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -397,7 +397,7 @@ void PBSavePlayer::UnsafeMergeFrom(const PBSavePlayer& from) {
     mutable_equip()->::PBItemList::MergeFrom(from.equip());
   }
   if (from.has_task()) {
-    mutable_task()->::PBTask::MergeFrom(from.task());
+    mutable_task()->::PBTaskList::MergeFrom(from.task());
   }
 }
 
@@ -521,7 +521,7 @@ void PBSavePlayer::set_allocated_equip(::PBItemList* equip) {
   // @@protoc_insertion_point(field_set_allocated:PBSavePlayer.equip)
 }
 
-// optional .PBTask task = 3;
+// optional .PBTaskList task = 3;
 bool PBSavePlayer::has_task() const {
   return this != internal_default_instance() && task_ != NULL;
 }
@@ -529,27 +529,27 @@ void PBSavePlayer::clear_task() {
   if (GetArenaNoVirtual() == NULL && task_ != NULL) delete task_;
   task_ = NULL;
 }
-const ::PBTask& PBSavePlayer::task() const {
+const ::PBTaskList& PBSavePlayer::task() const {
   // @@protoc_insertion_point(field_get:PBSavePlayer.task)
   return task_ != NULL ? *task_
-                         : *::PBTask::internal_default_instance();
+                         : *::PBTaskList::internal_default_instance();
 }
-::PBTask* PBSavePlayer::mutable_task() {
+::PBTaskList* PBSavePlayer::mutable_task() {
   
   if (task_ == NULL) {
-    task_ = new ::PBTask;
+    task_ = new ::PBTaskList;
   }
   // @@protoc_insertion_point(field_mutable:PBSavePlayer.task)
   return task_;
 }
-::PBTask* PBSavePlayer::release_task() {
+::PBTaskList* PBSavePlayer::release_task() {
   // @@protoc_insertion_point(field_release:PBSavePlayer.task)
   
-  ::PBTask* temp = task_;
+  ::PBTaskList* temp = task_;
   task_ = NULL;
   return temp;
 }
-void PBSavePlayer::set_allocated_task(::PBTask* task) {
+void PBSavePlayer::set_allocated_task(::PBTaskList* task) {
   delete task_;
   task_ = task;
   if (task) {

@@ -121,14 +121,14 @@ class PBSavePlayer : public ::google::protobuf::Message /* @@protoc_insertion_po
   ::PBItemList* release_equip();
   void set_allocated_equip(::PBItemList* equip);
 
-  // optional .PBTask task = 3;
+  // optional .PBTaskList task = 3;
   bool has_task() const;
   void clear_task();
   static const int kTaskFieldNumber = 3;
-  const ::PBTask& task() const;
-  ::PBTask* mutable_task();
-  ::PBTask* release_task();
-  void set_allocated_task(::PBTask* task);
+  const ::PBTaskList& task() const;
+  ::PBTaskList* mutable_task();
+  ::PBTaskList* release_task();
+  void set_allocated_task(::PBTaskList* task);
 
   // @@protoc_insertion_point(class_scope:PBSavePlayer)
  private:
@@ -136,7 +136,7 @@ class PBSavePlayer : public ::google::protobuf::Message /* @@protoc_insertion_po
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::PBItemList* bag_;
   ::PBItemList* equip_;
-  ::PBTask* task_;
+  ::PBTaskList* task_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_dbmodule_2ehxx_impl();
   friend void  protobuf_AddDesc_dbmodule_2ehxx_impl();
@@ -233,7 +233,7 @@ inline void PBSavePlayer::set_allocated_equip(::PBItemList* equip) {
   // @@protoc_insertion_point(field_set_allocated:PBSavePlayer.equip)
 }
 
-// optional .PBTask task = 3;
+// optional .PBTaskList task = 3;
 inline bool PBSavePlayer::has_task() const {
   return this != internal_default_instance() && task_ != NULL;
 }
@@ -241,27 +241,27 @@ inline void PBSavePlayer::clear_task() {
   if (GetArenaNoVirtual() == NULL && task_ != NULL) delete task_;
   task_ = NULL;
 }
-inline const ::PBTask& PBSavePlayer::task() const {
+inline const ::PBTaskList& PBSavePlayer::task() const {
   // @@protoc_insertion_point(field_get:PBSavePlayer.task)
   return task_ != NULL ? *task_
-                         : *::PBTask::internal_default_instance();
+                         : *::PBTaskList::internal_default_instance();
 }
-inline ::PBTask* PBSavePlayer::mutable_task() {
+inline ::PBTaskList* PBSavePlayer::mutable_task() {
   
   if (task_ == NULL) {
-    task_ = new ::PBTask;
+    task_ = new ::PBTaskList;
   }
   // @@protoc_insertion_point(field_mutable:PBSavePlayer.task)
   return task_;
 }
-inline ::PBTask* PBSavePlayer::release_task() {
+inline ::PBTaskList* PBSavePlayer::release_task() {
   // @@protoc_insertion_point(field_release:PBSavePlayer.task)
   
-  ::PBTask* temp = task_;
+  ::PBTaskList* temp = task_;
   task_ = NULL;
   return temp;
 }
-inline void PBSavePlayer::set_allocated_task(::PBTask* task) {
+inline void PBSavePlayer::set_allocated_task(::PBTaskList* task) {
   delete task_;
   task_ = task;
   if (task) {

@@ -380,5 +380,8 @@
     <ClInclude Include="inc\equip.h">
       <Filter>logicmodule\item</Filter>
     </ClInclude>
+    <ClInclude Include="inc\tasktype.h">
+      <Filter>logicmodule\task</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

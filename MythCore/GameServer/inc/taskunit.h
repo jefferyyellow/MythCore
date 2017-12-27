@@ -4,18 +4,7 @@
 #include "bit_set.h"
 #include "messagefactory.h"
 #include "taskconfig.h"
-#define		MAX_PLAYER_TASK_NUM		20			// 最多的可接任务数目
-#define		MAX_PLAYER_TASK_PARAM	4			// 最多的任务参数数目
-
-enum EmTaskState
-{
-	emTaskState_None			= 0,	// 无类型
-	emTaskState_Accept			= 1,	// 任务已接受
-	emTaskState_Complete		= 2,	// 任务已完成
-	emTaskState_Failure			= 3,	// 任务已失败
-	emTaskStateMax
-};
-
+class PBTaskList;
 /// 玩家任务
 class CPlayerTask
 {
@@ -96,20 +85,63 @@ public:
 	void onSubmitTaskRequest(Message* pMessage);
 	void sendSubmitTaskResponse(int nResult, int nTaskID);
 
-public:
-	short getMaxCompleteTaskID() const { return mMaxCompleteTaskID; }
-	void setMaxCompleteTaskID(short nValue) { mMaxCompleteTaskID = nValue; }
-	/// 检查任务是否能接受
-	int	checkAcceptTask(int nTaskID);
-	/// 任务接受后处理
-	void afterAcceptTask(int nTaskID);
-	/// 检查任务是否能提交
-	int checkSubmitTask(int nTaskID, short& bRepeated);
+	/// 处理放弃任务请求
+	void onAbortTaskRequest(Message* pMessage);
+	/// 发送放弃任务回应
+	void sendAbortTaskResponse(int nResult, int nTaskID);
+	/// 发送更新任务进度通知
+	void sendUpdateTaskProcessNotify(int nTaskID, int nParam1);
 
-	/// 根据ID得到玩家身上的任务
+	// 检查是否可以接受任务
+	int		checkAcceptTask(int nTaskID);
+	// 检查是否满足接受任务条件
+	int		checkAcceptCondition(EmAcceptCondition eCondition, int nParam1, int nParam2);
+	// 检查是否可以关闭任务
+	int		checkCloseTask(int nTaskID);
+	// 检查是否满足关闭任务条件
+	int		checkCloseCondition(CTaskCondition& rCondition);
+	// 检查是否可以提交任务
+	int		checkCommitTask(int nTaskID, int nItemIndex);
+	// 检查是否满足提交任务条件
+	int		checkCommitCondition(CPlayerTask* pPlayerTask, int nItemIndex, CTaskCondition& rCondition);
+	// 扣除任务道具
+	void	removeTaskItem(int nTaskID, int nItemIndex);
+	// 刷新任务条件
+	void	refreshTask(CEntityPlayer* pPlayer, EmCompleteCondition eCondition, int nParam0, int nParam1 = 0, int nParam2 = 0, int nParam3 = 0);
+	// 给完成任务奖励
+	void	giveCompleteTaskReward(int nTaskID);
+	// 给接受任务奖励
+	void	giveAcceptTaskReward(int nTaskID);
+	// 给任务奖励
+	void	giveTaskReward(CTaskConfig::TASK_PRIZE_LIST& rPrizeList);
+	// 检查是否可以得到奖励
+	int		checkTaskReward(int nTaskID);
+public:
+	/// 玩家身上是否有这个任务
+	bool checkPlayerHasTask(int nTaskID);
+	/// 通过任务ID得到任务
 	CPlayerTask* getPlayerTask(int nTaskID);
-	/// 删除玩家身上的任务
+	void setFromPB(PBTaskList* pbTaskList);
+	void createToPB(PBTaskList* pbTaskList);
+	/// 加入玩家任务
+	void pushBackPlayerTask(int nTaskID);
+	bool checkPlayerTaskListFull()
+	{
+		if (mTaskList.size() >= MAX_PLAYER_TASK_NUM)
+		{
+			return true;
+		}
+		return false;
+	}
+	void resetCompleteTask(int nTaskID)
+	{
+		mCompleteTasks.clearBit(nTaskID);
+	}
+
+	void completeTask(int nTaskID);
+	bool checkTaskComplete(int nTaskID);
 	void removeTask(int nTaskID);
+
 private:
 	/// 所有已经完成的任务
 	Myth::CBitSet<MAX_TASK_ID>		mCompleteTasks;

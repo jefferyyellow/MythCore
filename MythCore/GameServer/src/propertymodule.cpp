@@ -143,6 +143,11 @@ void CPropertyModule::onLoadPlayerBaseProperty(CDBResponse& rResponse)
 	rResponse.next();
 	pPlayer->getItemUnit().getEquipList().setFromPB(&tEquip);
 
+	PBTaskList tTaskList;
+	tTaskList.ParseFromArray(rResponse.getValue(), rResponse.getLength());
+	rResponse.next();
+	pPlayer->getTaskUnit().setFromPB(&tTaskList);
+
 	pPlayer->setLoadStatusBit(emLoadStatus_BaseProperty);
 	onLoadComplete(pPlayer);
 }
@@ -197,7 +202,8 @@ void CPropertyModule::savePlayerBaseProperty(CEntityPlayer* pPlayer)
 	PBSavePlayer tSavePlayer;
 	pPlayer->getItemUnit().getBag().createToPB(tSavePlayer.mutable_bag());
 	pPlayer->getItemUnit().getEquipList().createToPB(tSavePlayer.mutable_equip());
-	tSavePlayer.mutable_task();
+	pPlayer->getTaskUnit().createToPB(tSavePlayer.mutable_task());
+	
 
 	CDBModule::Inst()->pushDBTask(pPlayer->getRoleID(), emSessionType_SavePlayerBaseProperty, pPlayer->getObjID(), 0, &tSavePlayer);
 }

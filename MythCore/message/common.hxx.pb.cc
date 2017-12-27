@@ -31,6 +31,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* PBTask_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   PBTask_reflection_ = NULL;
+const ::google::protobuf::Descriptor* PBTaskList_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  PBTaskList_reflection_ = NULL;
 
 }  // namespace
 
@@ -89,7 +92,9 @@ void protobuf_AssignDesc_common_2ehxx() {
       sizeof(PBItemEquip),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBItemEquip, _internal_metadata_));
   PBTask_descriptor_ = file->message_type(3);
-  static const int PBTask_offsets_[1] = {
+  static const int PBTask_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTask, taskid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTask, param_),
   };
   PBTask_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -101,6 +106,22 @@ void protobuf_AssignDesc_common_2ehxx() {
       -1,
       sizeof(PBTask),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTask, _internal_metadata_));
+  PBTaskList_descriptor_ = file->message_type(4);
+  static const int PBTaskList_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTaskList, maxcompletetaskid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTaskList, completetasks_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTaskList, tasklist_),
+  };
+  PBTaskList_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      PBTaskList_descriptor_,
+      PBTaskList::internal_default_instance(),
+      PBTaskList_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(PBTaskList),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTaskList, _internal_metadata_));
 }
 
 namespace {
@@ -122,6 +143,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
       PBItemEquip_descriptor_, PBItemEquip::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       PBTask_descriptor_, PBTask::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      PBTaskList_descriptor_, PBTaskList::internal_default_instance());
 }
 
 }  // namespace
@@ -135,6 +158,8 @@ void protobuf_ShutdownFile_common_2ehxx() {
   delete PBItemEquip_reflection_;
   PBTask_default_instance_.Shutdown();
   delete PBTask_reflection_;
+  PBTaskList_default_instance_.Shutdown();
+  delete PBTaskList_reflection_;
 }
 
 void protobuf_InitDefaults_common_2ehxx_impl() {
@@ -144,10 +169,12 @@ void protobuf_InitDefaults_common_2ehxx_impl() {
   PBItemObject_default_instance_.DefaultConstruct();
   PBItemEquip_default_instance_.DefaultConstruct();
   PBTask_default_instance_.DefaultConstruct();
+  PBTaskList_default_instance_.DefaultConstruct();
   PBItemList_default_instance_.get_mutable()->InitAsDefaultInstance();
   PBItemObject_default_instance_.get_mutable()->InitAsDefaultInstance();
   PBItemEquip_default_instance_.get_mutable()->InitAsDefaultInstance();
   PBTask_default_instance_.get_mutable()->InitAsDefaultInstance();
+  PBTaskList_default_instance_.get_mutable()->InitAsDefaultInstance();
 }
 
 GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_InitDefaults_common_2ehxx_once_);
@@ -165,7 +192,10 @@ void protobuf_AddDesc_common_2ehxx_impl() {
     "BItemObject\022\016\n\006ItemID\030\001 \001(\r\022\016\n\006Number\030\002 "
     "\001(\r\022\r\n\005Index\030\003 \001(\r\022\037\n\tItemEquip\030\004 \001(\0132\014."
     "PBItemEquip\"\034\n\013PBItemEquip\022\r\n\005Level\030\004 \001("
-    "\r\"\010\n\006PBTaskb\006proto3", 219);
+    "\r\"\'\n\006PBTask\022\016\n\006TaskID\030\001 \001(\r\022\r\n\005Param\030\002 \003"
+    "(\r\"Y\n\nPBTaskList\022\031\n\021MaxCompleteTaskID\030\001 "
+    "\001(\r\022\025\n\rCompleteTasks\030\002 \003(\007\022\031\n\010TaskList\030\003"
+    " \003(\0132\007.PBTaskb\006proto3", 341);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "common.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_common_2ehxx);
@@ -1211,6 +1241,8 @@ inline const PBItemEquip* PBItemEquip::internal_default_instance() {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int PBTask::kTaskIDFieldNumber;
+const int PBTask::kParamFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 PBTask::PBTask()
@@ -1232,6 +1264,7 @@ PBTask::PBTask(const PBTask& from)
 }
 
 void PBTask::SharedCtor() {
+  taskid_ = 0u;
   _cached_size_ = 0;
 }
 
@@ -1270,6 +1303,8 @@ PBTask* PBTask::New(::google::protobuf::Arena* arena) const {
 
 void PBTask::Clear() {
 // @@protoc_insertion_point(message_clear_start:PBTask)
+  taskid_ = 0u;
+  param_.Clear();
 }
 
 bool PBTask::MergePartialFromCodedStream(
@@ -1281,13 +1316,50 @@ bool PBTask::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 TaskID = 1;
+      case 1: {
+        if (tag == 8) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &taskid_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_Param;
+        break;
+      }
+
+      // repeated uint32 Param = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_Param:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, this->mutable_param())));
+        } else if (tag == 16) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 1, 18, input, this->mutable_param())));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
     }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
   }
 success:
   // @@protoc_insertion_point(parse_success:PBTask)
@@ -1301,6 +1373,21 @@ failure:
 void PBTask::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:PBTask)
+  // optional uint32 TaskID = 1;
+  if (this->taskid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->taskid(), output);
+  }
+
+  // repeated uint32 Param = 2;
+  if (this->param_size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteTag(2, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    output->WriteVarint32(_param_cached_byte_size_);
+  }
+  for (int i = 0; i < this->param_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32NoTag(
+      this->param(i), output);
+  }
+
   // @@protoc_insertion_point(serialize_end:PBTask)
 }
 
@@ -1308,6 +1395,25 @@ void PBTask::SerializeWithCachedSizes(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:PBTask)
+  // optional uint32 TaskID = 1;
+  if (this->taskid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->taskid(), target);
+  }
+
+  // repeated uint32 Param = 2;
+  if (this->param_size() > 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteTagToArray(
+      2,
+      ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED,
+      target);
+    target = ::google::protobuf::io::CodedOutputStream::WriteVarint32ToArray(
+      _param_cached_byte_size_, target);
+  }
+  for (int i = 0; i < this->param_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteUInt32NoTagToArray(this->param(i), target);
+  }
+
   // @@protoc_insertion_point(serialize_to_array_end:PBTask)
   return target;
 }
@@ -1315,6 +1421,32 @@ void PBTask::SerializeWithCachedSizes(
 size_t PBTask::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:PBTask)
   size_t total_size = 0;
+
+  // optional uint32 TaskID = 1;
+  if (this->taskid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->taskid());
+  }
+
+  // repeated uint32 Param = 2;
+  {
+    size_t data_size = 0;
+    unsigned int count = this->param_size();
+    for (unsigned int i = 0; i < count; i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::
+        UInt32Size(this->param(i));
+    }
+    if (data_size > 0) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);
+    }
+    int cached_size = ::google::protobuf::internal::ToCachedSize(data_size);
+    GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+    _param_cached_byte_size_ = cached_size;
+    GOOGLE_SAFE_CONCURRENT_WRITES_END();
+    total_size += data_size;
+  }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -1349,6 +1481,10 @@ void PBTask::MergeFrom(const PBTask& from) {
 
 void PBTask::UnsafeMergeFrom(const PBTask& from) {
   GOOGLE_DCHECK(&from != this);
+  param_.UnsafeMergeFrom(from.param_);
+  if (from.taskid() != 0) {
+    set_taskid(from.taskid());
+  }
 }
 
 void PBTask::CopyFrom(const ::google::protobuf::Message& from) {
@@ -1375,6 +1511,8 @@ void PBTask::Swap(PBTask* other) {
   InternalSwap(other);
 }
 void PBTask::InternalSwap(PBTask* other) {
+  std::swap(taskid_, other->taskid_);
+  param_.UnsafeArenaSwap(&other->param_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -1390,8 +1528,463 @@ void PBTask::InternalSwap(PBTask* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // PBTask
 
+// optional uint32 TaskID = 1;
+void PBTask::clear_taskid() {
+  taskid_ = 0u;
+}
+::google::protobuf::uint32 PBTask::taskid() const {
+  // @@protoc_insertion_point(field_get:PBTask.TaskID)
+  return taskid_;
+}
+void PBTask::set_taskid(::google::protobuf::uint32 value) {
+  
+  taskid_ = value;
+  // @@protoc_insertion_point(field_set:PBTask.TaskID)
+}
+
+// repeated uint32 Param = 2;
+int PBTask::param_size() const {
+  return param_.size();
+}
+void PBTask::clear_param() {
+  param_.Clear();
+}
+::google::protobuf::uint32 PBTask::param(int index) const {
+  // @@protoc_insertion_point(field_get:PBTask.Param)
+  return param_.Get(index);
+}
+void PBTask::set_param(int index, ::google::protobuf::uint32 value) {
+  param_.Set(index, value);
+  // @@protoc_insertion_point(field_set:PBTask.Param)
+}
+void PBTask::add_param(::google::protobuf::uint32 value) {
+  param_.Add(value);
+  // @@protoc_insertion_point(field_add:PBTask.Param)
+}
+const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+PBTask::param() const {
+  // @@protoc_insertion_point(field_list:PBTask.Param)
+  return param_;
+}
+::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+PBTask::mutable_param() {
+  // @@protoc_insertion_point(field_mutable_list:PBTask.Param)
+  return &param_;
+}
+
 inline const PBTask* PBTask::internal_default_instance() {
   return &PBTask_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int PBTaskList::kMaxCompleteTaskIDFieldNumber;
+const int PBTaskList::kCompleteTasksFieldNumber;
+const int PBTaskList::kTaskListFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+PBTaskList::PBTaskList()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_common_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:PBTaskList)
+}
+
+void PBTaskList::InitAsDefaultInstance() {
+}
+
+PBTaskList::PBTaskList(const PBTaskList& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:PBTaskList)
+}
+
+void PBTaskList::SharedCtor() {
+  maxcompletetaskid_ = 0u;
+  _cached_size_ = 0;
+}
+
+PBTaskList::~PBTaskList() {
+  // @@protoc_insertion_point(destructor:PBTaskList)
+  SharedDtor();
+}
+
+void PBTaskList::SharedDtor() {
+}
+
+void PBTaskList::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* PBTaskList::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return PBTaskList_descriptor_;
+}
+
+const PBTaskList& PBTaskList::default_instance() {
+  protobuf_InitDefaults_common_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<PBTaskList> PBTaskList_default_instance_;
+
+PBTaskList* PBTaskList::New(::google::protobuf::Arena* arena) const {
+  PBTaskList* n = new PBTaskList;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void PBTaskList::Clear() {
+// @@protoc_insertion_point(message_clear_start:PBTaskList)
+  maxcompletetaskid_ = 0u;
+  completetasks_.Clear();
+  tasklist_.Clear();
+}
+
+bool PBTaskList::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:PBTaskList)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 MaxCompleteTaskID = 1;
+      case 1: {
+        if (tag == 8) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &maxcompletetaskid_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_CompleteTasks;
+        break;
+      }
+
+      // repeated fixed32 CompleteTasks = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_CompleteTasks:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_FIXED32>(
+                 input, this->mutable_completetasks())));
+        } else if (tag == 21) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_FIXED32>(
+                 1, 18, input, this->mutable_completetasks())));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_TaskList;
+        break;
+      }
+
+      // repeated .PBTask TaskList = 3;
+      case 3: {
+        if (tag == 26) {
+         parse_TaskList:
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_TaskList:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+                input, add_tasklist()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_loop_TaskList;
+        input->UnsafeDecrementRecursionDepth();
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:PBTaskList)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:PBTaskList)
+  return false;
+#undef DO_
+}
+
+void PBTaskList::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:PBTaskList)
+  // optional uint32 MaxCompleteTaskID = 1;
+  if (this->maxcompletetaskid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->maxcompletetaskid(), output);
+  }
+
+  // repeated fixed32 CompleteTasks = 2;
+  if (this->completetasks_size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteTag(2, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    output->WriteVarint32(_completetasks_cached_byte_size_);
+  }
+  for (int i = 0; i < this->completetasks_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteFixed32NoTag(
+      this->completetasks(i), output);
+  }
+
+  // repeated .PBTask TaskList = 3;
+  for (unsigned int i = 0, n = this->tasklist_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      3, this->tasklist(i), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:PBTaskList)
+}
+
+::google::protobuf::uint8* PBTaskList::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:PBTaskList)
+  // optional uint32 MaxCompleteTaskID = 1;
+  if (this->maxcompletetaskid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->maxcompletetaskid(), target);
+  }
+
+  // repeated fixed32 CompleteTasks = 2;
+  if (this->completetasks_size() > 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteTagToArray(
+      2,
+      ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED,
+      target);
+    target = ::google::protobuf::io::CodedOutputStream::WriteVarint32ToArray(
+      _completetasks_cached_byte_size_, target);
+  }
+  for (int i = 0; i < this->completetasks_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteFixed32NoTagToArray(this->completetasks(i), target);
+  }
+
+  // repeated .PBTask TaskList = 3;
+  for (unsigned int i = 0, n = this->tasklist_size(); i < n; i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageNoVirtualToArray(
+        3, this->tasklist(i), false, target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:PBTaskList)
+  return target;
+}
+
+size_t PBTaskList::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:PBTaskList)
+  size_t total_size = 0;
+
+  // optional uint32 MaxCompleteTaskID = 1;
+  if (this->maxcompletetaskid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->maxcompletetaskid());
+  }
+
+  // repeated fixed32 CompleteTasks = 2;
+  {
+    size_t data_size = 0;
+    unsigned int count = this->completetasks_size();
+    data_size = 4UL * count;
+    if (data_size > 0) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);
+    }
+    int cached_size = ::google::protobuf::internal::ToCachedSize(data_size);
+    GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+    _completetasks_cached_byte_size_ = cached_size;
+    GOOGLE_SAFE_CONCURRENT_WRITES_END();
+    total_size += data_size;
+  }
+
+  // repeated .PBTask TaskList = 3;
+  {
+    unsigned int count = this->tasklist_size();
+    total_size += 1UL * count;
+    for (unsigned int i = 0; i < count; i++) {
+      total_size +=
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->tasklist(i));
+    }
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void PBTaskList::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:PBTaskList)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const PBTaskList* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const PBTaskList>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:PBTaskList)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:PBTaskList)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void PBTaskList::MergeFrom(const PBTaskList& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:PBTaskList)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void PBTaskList::UnsafeMergeFrom(const PBTaskList& from) {
+  GOOGLE_DCHECK(&from != this);
+  completetasks_.UnsafeMergeFrom(from.completetasks_);
+  tasklist_.MergeFrom(from.tasklist_);
+  if (from.maxcompletetaskid() != 0) {
+    set_maxcompletetaskid(from.maxcompletetaskid());
+  }
+}
+
+void PBTaskList::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:PBTaskList)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void PBTaskList::CopyFrom(const PBTaskList& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:PBTaskList)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool PBTaskList::IsInitialized() const {
+
+  return true;
+}
+
+void PBTaskList::Swap(PBTaskList* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void PBTaskList::InternalSwap(PBTaskList* other) {
+  std::swap(maxcompletetaskid_, other->maxcompletetaskid_);
+  completetasks_.UnsafeArenaSwap(&other->completetasks_);
+  tasklist_.UnsafeArenaSwap(&other->tasklist_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata PBTaskList::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = PBTaskList_descriptor_;
+  metadata.reflection = PBTaskList_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// PBTaskList
+
+// optional uint32 MaxCompleteTaskID = 1;
+void PBTaskList::clear_maxcompletetaskid() {
+  maxcompletetaskid_ = 0u;
+}
+::google::protobuf::uint32 PBTaskList::maxcompletetaskid() const {
+  // @@protoc_insertion_point(field_get:PBTaskList.MaxCompleteTaskID)
+  return maxcompletetaskid_;
+}
+void PBTaskList::set_maxcompletetaskid(::google::protobuf::uint32 value) {
+  
+  maxcompletetaskid_ = value;
+  // @@protoc_insertion_point(field_set:PBTaskList.MaxCompleteTaskID)
+}
+
+// repeated fixed32 CompleteTasks = 2;
+int PBTaskList::completetasks_size() const {
+  return completetasks_.size();
+}
+void PBTaskList::clear_completetasks() {
+  completetasks_.Clear();
+}
+::google::protobuf::uint32 PBTaskList::completetasks(int index) const {
+  // @@protoc_insertion_point(field_get:PBTaskList.CompleteTasks)
+  return completetasks_.Get(index);
+}
+void PBTaskList::set_completetasks(int index, ::google::protobuf::uint32 value) {
+  completetasks_.Set(index, value);
+  // @@protoc_insertion_point(field_set:PBTaskList.CompleteTasks)
+}
+void PBTaskList::add_completetasks(::google::protobuf::uint32 value) {
+  completetasks_.Add(value);
+  // @@protoc_insertion_point(field_add:PBTaskList.CompleteTasks)
+}
+const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+PBTaskList::completetasks() const {
+  // @@protoc_insertion_point(field_list:PBTaskList.CompleteTasks)
+  return completetasks_;
+}
+::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+PBTaskList::mutable_completetasks() {
+  // @@protoc_insertion_point(field_mutable_list:PBTaskList.CompleteTasks)
+  return &completetasks_;
+}
+
+// repeated .PBTask TaskList = 3;
+int PBTaskList::tasklist_size() const {
+  return tasklist_.size();
+}
+void PBTaskList::clear_tasklist() {
+  tasklist_.Clear();
+}
+const ::PBTask& PBTaskList::tasklist(int index) const {
+  // @@protoc_insertion_point(field_get:PBTaskList.TaskList)
+  return tasklist_.Get(index);
+}
+::PBTask* PBTaskList::mutable_tasklist(int index) {
+  // @@protoc_insertion_point(field_mutable:PBTaskList.TaskList)
+  return tasklist_.Mutable(index);
+}
+::PBTask* PBTaskList::add_tasklist() {
+  // @@protoc_insertion_point(field_add:PBTaskList.TaskList)
+  return tasklist_.Add();
+}
+::google::protobuf::RepeatedPtrField< ::PBTask >*
+PBTaskList::mutable_tasklist() {
+  // @@protoc_insertion_point(field_mutable_list:PBTaskList.TaskList)
+  return &tasklist_;
+}
+const ::google::protobuf::RepeatedPtrField< ::PBTask >&
+PBTaskList::tasklist() const {
+  // @@protoc_insertion_point(field_list:PBTaskList.TaskList)
+  return tasklist_;
+}
+
+inline const PBTaskList* PBTaskList::internal_default_instance() {
+  return &PBTaskList_default_instance_.get();
 }
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 

@@ -44,7 +44,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>MYTH_OS_WINDOWS;_CRT_SECURE_NO_WARNINGS;__DEBUG__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MYTH_OS_WINDOWS;_CRT_SECURE_NO_WARNINGS;__DEBUG__;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>../MythCore/include;../dep/protobuffer;../message;../dep/mysql/include;./inc;../dep/tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -182,6 +182,7 @@
     <ClInclude Include="inc\taskconfig.h" />
     <ClInclude Include="inc\taskmanager.h" />
     <ClInclude Include="inc\taskmodule.h" />
+    <ClInclude Include="inc\tasktype.h" />
     <ClInclude Include="inc\taskunit.h" />
     <ClInclude Include="inc\template.h" />
     <ClInclude Include="inc\propertymodule.h" />

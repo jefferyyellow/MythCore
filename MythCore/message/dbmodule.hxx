@@ -5,5 +5,5 @@ message PBSavePlayer
 {
 	PBItemList		bag				= 1;	// 包裹
 	PBItemList		equip			= 2;	// 装备
-	PBTask			task			= 3;	// 任务
+	PBTaskList		task			= 3;	// 任务
 }
