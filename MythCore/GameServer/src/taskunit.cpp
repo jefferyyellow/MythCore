@@ -148,7 +148,7 @@ void CTaskUnit::sendAbortTaskResponse(int nResult, int nTaskID)
 }
 
 /// 发送更新任务进度通知
-void CTaskUnit::sendUpdateTaskProcessNotify(int nTaskID, int nParam1)
+void CTaskUnit::sendUpdateTaskProcessNotify(int nTaskID, int nCondType, int nParam)
 {
 
 }
@@ -204,9 +204,13 @@ void CTaskUnit::setFromPB(PBTaskList* pbTaskList)
 		}
 
 		tPlayerTask.setTaskID(pbTask->taskid());
-		for (int j = 0; j < MAX_PLAYER_TASK_PARAM && j < pbTask->param_size(); ++j)
+		for (int j = 0; j < MAX_COMPLETE_CONDITION && j < pbTask->param_size(); ++j)
 		{
 			tPlayerTask.setTaskParam(j, pbTask->param(j));
+		}
+		for (int j = 0; j < MAX_COMPLETE_CONDITION && j < pbTask->condtype_size(); ++ j)
+		{
+			tPlayerTask.setCondType(j, pbTask->condtype(j));
 		}
 		mTaskList.push_back(tPlayerTask);
 	}
@@ -235,9 +239,10 @@ void CTaskUnit::createToPB(PBTaskList* pbTaskList)
 		}
 
 		pbTask->set_taskid(mTaskList[i].getTaskID());
-		for (int j = 0; j < MAX_PLAYER_TASK_PARAM; ++j)
+		for (int j = 0; j < MAX_COMPLETE_CONDITION; ++j)
 		{
 			pbTask->add_param(mTaskList[i].getTaskParam(j));
+			pbTask->add_condtype(mTaskList[i].getCondType(j));
 		}
 	}
 }
@@ -439,7 +444,7 @@ int CTaskUnit::checkCommitCondition(CPlayerTask* pPlayerTask, int nItemIndex, CT
 	{
 		case emComplete_KillOgre:
 		{
-			if (pPlayerTask->getTaskParam(0) < rCondition.mParam[1])
+			if (pPlayerTask->getParamByCondType(rCondition.mType) < rCondition.mParam[1])
 			{
 				return ERROR_TASK_KILL_OGRE_NOT_ENOUGH;
 			}
@@ -486,7 +491,7 @@ int CTaskUnit::checkCommitCondition(CPlayerTask* pPlayerTask, int nItemIndex, CT
 		}
 		case emComplete_PassFB:
 		{
-			if (pPlayerTask->getTaskParam(0) < rCondition.mParam[3])
+			if (pPlayerTask->getParamByCondType(rCondition.mType) < rCondition.mParam[3])
 			{
 				return ERROR_TASK_INSTANCE_TIMES_NOT_ENOUGH;
 			}
@@ -494,7 +499,7 @@ int CTaskUnit::checkCommitCondition(CPlayerTask* pPlayerTask, int nItemIndex, CT
 		}
 		case emComplete_Collect:
 		{
-			if (pPlayerTask->getTaskParam(0) < rCondition.mParam[1])
+			if (pPlayerTask->getParamByCondType(rCondition.mType) < rCondition.mParam[1])
 			{
 				return ERROR_TASK_COLLECT_NUM_NOT_MATCH;
 			}
@@ -562,6 +567,12 @@ void CTaskUnit::refreshTask(CEntityPlayer* pPlayer, EmCompleteCondition eConditi
 			{
 				break;
 			}
+			
+			if (eCondition != pTaskConfig->mCompleteCondition[nConditionNum].mType)
+			{
+				continue;
+			}
+
 			switch (pTaskConfig->mCompleteCondition[nConditionNum].mType)
 			{
 				case emComplete_KillOgre:
@@ -569,8 +580,7 @@ void CTaskUnit::refreshTask(CEntityPlayer* pPlayer, EmCompleteCondition eConditi
 				{
 					if (pTaskConfig->mCompleteCondition[nConditionNum].mParam[0] == nParam0)
 					{
-						rPlayerTask.setTaskParam(0, rPlayerTask.getTaskParam(0) + nParam1);
-						sendUpdateTaskProcessNotify(rPlayerTask.getTaskID(), rPlayerTask.getTaskParam(0));
+						refreshTaskCond(rPlayerTask, eCondition, nParam1);
 					}
 					break;
 				}
@@ -579,8 +589,7 @@ void CTaskUnit::refreshTask(CEntityPlayer* pPlayer, EmCompleteCondition eConditi
 					CTaskCondition& rCondition = pTaskConfig->mCompleteCondition[nConditionNum];
 					if (rCondition.mParam[0] == nParam0 && rCondition.mParam[1] == nParam1 && rCondition.mParam[2] == nParam2)
 					{
-						rPlayerTask.setTaskParam(0, rPlayerTask.getTaskParam(0) + 1);
-						sendUpdateTaskProcessNotify(rPlayerTask.getTaskID(), rPlayerTask.getTaskParam(0));
+						refreshTaskCond(rPlayerTask, eCondition, 1);
 					}
 					break;
 				}
@@ -662,4 +671,26 @@ int CTaskUnit::checkTaskReward(int nTaskID)
 	}
 
 	return SUCCESS;
+}
+
+// 刷新任务条件
+void CTaskUnit::refreshTaskCond(CPlayerTask& rPlayerTask, EmCompleteCondition eCondition, int nParam)
+{
+	for (int i = 0; i < MAX_COMPLETE_CONDITION; ++i)
+	{
+		// 没有对应的条件，末尾加上
+		if (emComplete_None == rPlayerTask.getCondType(i))
+		{
+			rPlayerTask.setCondType(i, eCondition);
+			rPlayerTask.setTaskParam(i, nParam);
+			sendUpdateTaskProcessNotify(rPlayerTask.getTaskID(), eCondition, rPlayerTask.getTaskParam(i));
+			break;
+		}
+
+		if (eCondition == rPlayerTask.getCondType(i))
+		{
+			rPlayerTask.setTaskParam(i, rPlayerTask.getTaskParam(i) + nParam);
+			sendUpdateTaskProcessNotify(rPlayerTask.getTaskID(), eCondition, rPlayerTask.getTaskParam(i));
+		}
+	}
 }

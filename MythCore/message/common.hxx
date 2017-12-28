@@ -23,6 +23,7 @@ message PBTask
 {
 				uint32				TaskID			= 1;		// 任务ID
 	repeated	uint32				Param			= 2;		// 任务参数
+	repeated	uint32				CondType		= 3;		// 条件类型
 };
 
 message PBTaskList

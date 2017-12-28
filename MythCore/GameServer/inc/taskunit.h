@@ -29,7 +29,7 @@ public:
 
 	int			getTaskParam(int nIndex)
 	{
-		if (nIndex < 0 || nIndex >= MAX_PLAYER_TASK_PARAM)
+		if (nIndex < 0 || nIndex >= MAX_COMPLETE_CONDITION)
 		{
 			return 0;
 		}
@@ -38,18 +38,52 @@ public:
 
 	void			setTaskParam(int nIndex, int nTaskParam)
 	{
-		if (nIndex < 0 || nIndex >= MAX_PLAYER_TASK_PARAM)
+		if (nIndex < 0 || nIndex >= MAX_COMPLETE_CONDITION)
 		{
 			return;
 		}
 
 		mTaskParam[nIndex] = nTaskParam;
 	}
+
+	int				getCondType(int nIndex)
+	{
+		if (nIndex < 0 || nIndex >= MAX_COMPLETE_CONDITION)
+		{
+			return 0;
+		}
+		return mCondType[nIndex];
+	}
+
+	void			setCondType(int nIndex, int nCondType)
+	{
+		if (nIndex < 0 || nIndex >= MAX_COMPLETE_CONDITION)
+		{
+			return;
+		}
+
+		mCondType[nIndex] = nCondType;
+	}
+
+	int				getParamByCondType(int nType)
+	{
+		for (int i = 0; i < MAX_COMPLETE_CONDITION; ++i)
+		{
+			if (mCondType[i] == nType)
+			{
+				return mTaskParam[i];
+			}
+		}
+
+		return 0;
+	}
 private:
 	/// 任务ID
 	short			mTaskID;
 	/// 任务参数
-	int				mTaskParam[MAX_PLAYER_TASK_PARAM];
+	int				mTaskParam[MAX_COMPLETE_CONDITION];
+	/// 条件类型
+	int				mCondType[MAX_COMPLETE_CONDITION];
 };
 
 class CEntityPlayer;
@@ -90,7 +124,7 @@ public:
 	/// 发送放弃任务回应
 	void sendAbortTaskResponse(int nResult, int nTaskID);
 	/// 发送更新任务进度通知
-	void sendUpdateTaskProcessNotify(int nTaskID, int nParam1);
+	void sendUpdateTaskProcessNotify(int nTaskID, int nCondType, int nParam);
 
 	// 检查是否可以接受任务
 	int		checkAcceptTask(int nTaskID);
@@ -116,6 +150,9 @@ public:
 	void	giveTaskReward(CTaskConfig::TASK_PRIZE_LIST& rPrizeList);
 	// 检查是否可以得到奖励
 	int		checkTaskReward(int nTaskID);
+	// 刷新任务条件
+	void	refreshTaskCond(CPlayerTask& rPlayerTask, EmCompleteCondition eCondition, int nParam);
+
 public:
 	/// 玩家身上是否有这个任务
 	bool checkPlayerHasTask(int nTaskID);

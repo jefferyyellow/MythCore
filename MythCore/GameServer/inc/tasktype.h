@@ -2,7 +2,6 @@
 #define __TASKTYPE_H__
 
 #define		MAX_PLAYER_TASK_NUM			20			// 最多的可接任务数目
-#define		MAX_PLAYER_TASK_PARAM		2			// 最多的任务参数数目
 
 #define MAX_ACCEPT_CONDITION_PARAM		4			// 最大的接受条件参数
 #define MAX_COMPLETE_CONDITION_PARAM	4			// 最大的完成条件参数

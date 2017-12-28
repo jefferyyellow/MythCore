@@ -13,10 +13,15 @@ class CTaskModule : public CLogicModule, public CSingleton < CTaskModule >
 private:
 	CTaskModule()
 	{
-		memset(mTaskConfig, 0, sizeof(mTaskConfig));
+		init();
 	}
 	~CTaskModule()
 	{
+	}
+
+	int init()
+	{
+
 	}
 
 	/// Ê±¼äº¯Êý

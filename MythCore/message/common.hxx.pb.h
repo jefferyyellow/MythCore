@@ -419,12 +419,26 @@ class PBTask : public ::google::protobuf::Message /* @@protoc_insertion_point(cl
   ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
       mutable_param();
 
+  // repeated uint32 CondType = 3;
+  int condtype_size() const;
+  void clear_condtype();
+  static const int kCondTypeFieldNumber = 3;
+  ::google::protobuf::uint32 condtype(int index) const;
+  void set_condtype(int index, ::google::protobuf::uint32 value);
+  void add_condtype(::google::protobuf::uint32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+      condtype() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+      mutable_condtype();
+
   // @@protoc_insertion_point(class_scope:PBTask)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > param_;
   mutable int _param_cached_byte_size_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > condtype_;
+  mutable int _condtype_cached_byte_size_;
   ::google::protobuf::uint32 taskid_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_common_2ehxx_impl();
@@ -759,6 +773,36 @@ inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
 PBTask::mutable_param() {
   // @@protoc_insertion_point(field_mutable_list:PBTask.Param)
   return &param_;
+}
+
+// repeated uint32 CondType = 3;
+inline int PBTask::condtype_size() const {
+  return condtype_.size();
+}
+inline void PBTask::clear_condtype() {
+  condtype_.Clear();
+}
+inline ::google::protobuf::uint32 PBTask::condtype(int index) const {
+  // @@protoc_insertion_point(field_get:PBTask.CondType)
+  return condtype_.Get(index);
+}
+inline void PBTask::set_condtype(int index, ::google::protobuf::uint32 value) {
+  condtype_.Set(index, value);
+  // @@protoc_insertion_point(field_set:PBTask.CondType)
+}
+inline void PBTask::add_condtype(::google::protobuf::uint32 value) {
+  condtype_.Add(value);
+  // @@protoc_insertion_point(field_add:PBTask.CondType)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+PBTask::condtype() const {
+  // @@protoc_insertion_point(field_list:PBTask.CondType)
+  return condtype_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+PBTask::mutable_condtype() {
+  // @@protoc_insertion_point(field_mutable_list:PBTask.CondType)
+  return &condtype_;
 }
 
 inline const PBTask* PBTask::internal_default_instance() {
