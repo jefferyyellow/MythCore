@@ -11,7 +11,24 @@ private:
 	~CDBModule(){};
 
 public:
-	virtual		void	OnTimer(unsigned int nTickOffset);
+	/// 启动服务器
+	virtual void onLaunchServer();
+	/// 启动完成检查
+	virtual bool onCheckLaunch();
+	/// 服务器启动成功
+	virtual void onLaunchComplete();
+	/// 退出服务器
+	virtual void onExitServer();
+	/// 新一天到来
+	virtual void onNewDayCome();
+	/// 新一周到来
+	virtual void onNewWeekCome();
+	/// 建立实体
+	virtual void onCreatePlayer(CEntity* pEntity);
+	/// 销毁实体
+	virtual void onDestroyPlayer(CEntity* pEntity);
+	/// 时间
+	virtual void onTimer(unsigned int nTickOffset);
 
 public:
 	/// 压入DB任务

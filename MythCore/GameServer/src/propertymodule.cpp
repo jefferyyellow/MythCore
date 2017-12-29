@@ -14,8 +14,56 @@ CPropertyModule::CPropertyModule()
 	
 }
 
+/// 启动服务器
+void CPropertyModule::onLaunchServer()
+{
+
+}
+
+/// 启动完成检查
+bool CPropertyModule::onCheckLaunch()
+{
+	return true;
+}
+
+/// 服务器启动成功
+void CPropertyModule::onLaunchComplete()
+{
+
+}
+
+/// 退出服务器
+void CPropertyModule::onExitServer()
+{
+	kickAllPlayer();
+}
+
+/// 新一天到来
+void CPropertyModule::onNewDayCome()
+{
+
+}
+
+/// 新一周到来
+void CPropertyModule::onNewWeekCome()
+{
+
+}
+
+/// 建立实体
+void CPropertyModule::onCreatePlayer(CEntity* pEntity)
+{
+
+}
+
+/// 销毁实体
+void CPropertyModule::onDestroyPlayer(CEntity* pEntity)
+{
+
+}
+
 /// 时间函数
-void CPropertyModule::OnTimer(unsigned int nTickOffset)
+void CPropertyModule::onTimer(unsigned int nTickOffset)
 {
 	if (mSavePlayerTimer.elapse(nTickOffset))
 	{
@@ -98,6 +146,35 @@ void CPropertyModule::onLeaveGameRequest(CEntityPlayer* pPlayer, Message* pMessa
 	// 将玩家置为下线状态
 	pPlayer->setPlayerStauts(emPlayerStatus_Exiting);
 	savePlayer(pPlayer);
+}
+
+/// 踢出所以玩家
+void CPropertyModule::kickAllPlayer()
+{
+	int nCount = 0;
+	CSceneJob::PLAYER_LIST& rPlayerList = CSceneJob::Inst()->getPlayerList();
+	for (CSceneJob::PLAYER_LIST::iterator it = rPlayerList.begin(); it != rPlayerList.end(); ++ it)
+	{
+		CEntityPlayer* pPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
+		if (NULL == pPlayer)
+		{
+			continue;
+		}
+
+		if (pPlayer->getPlayerStauts() == emPlayerStatus_Exiting)
+		{
+			continue;
+		}
+
+		pPlayer->setPlayerStauts(emPlayerStatus_Exiting);
+		savePlayer(pPlayer);
+		++ nCount;
+		// 每次30个
+		if (nCount >= 30)
+		{
+			break;
+		}
+	}
 }
 
 /// 加载玩家信息

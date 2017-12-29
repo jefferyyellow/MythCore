@@ -3,7 +3,56 @@
 #include "propertymodule.h"
 #include "objpool.h"
 #include "entityplayer.h"
-void CDBModule::OnTimer(unsigned int nTickOffset)
+
+/// 启动服务器
+void CDBModule::onLaunchServer()
+{
+
+}
+
+/// 启动完成检查
+bool CDBModule::onCheckLaunch()
+{
+	return true;
+}
+
+/// 服务器启动成功
+void CDBModule::onLaunchComplete()
+{
+
+}
+
+/// 退出服务器
+void CDBModule::onExitServer()
+{
+
+}
+
+/// 新一天到来
+void CDBModule::onNewDayCome()
+{
+
+}
+
+/// 新一周到来
+void CDBModule::onNewWeekCome()
+{
+
+}
+
+/// 建立实体
+void CDBModule::onCreatePlayer(CEntity* pEntity)
+{
+
+}
+
+/// 销毁实体
+void CDBModule::onDestroyPlayer(CEntity* pEntity)
+{
+
+}
+
+void CDBModule::onTimer(unsigned int nTickOffset)
 {
 
 }

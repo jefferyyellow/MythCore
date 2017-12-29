@@ -20,8 +20,56 @@ CLoginModule::~CLoginModule()
 
 }
 
+/// 启动服务器
+void CLoginModule::onLaunchServer()
+{
+
+}
+
+/// 启动完成检查
+bool CLoginModule::onCheckLaunch()
+{
+	return true;
+}
+
+/// 服务器启动成功
+void CLoginModule::onLaunchComplete()
+{
+
+}
+
+/// 退出服务器
+void CLoginModule::onExitServer()
+{
+
+}
+
+/// 新一天到来
+void CLoginModule::onNewDayCome()
+{
+
+}
+
+/// 新一周到来
+void CLoginModule::onNewWeekCome()
+{
+
+}
+
+/// 建立实体
+void CLoginModule::onCreatePlayer(CEntity* pEntity)
+{
+
+}
+
+/// 销毁实体
+void CLoginModule::onDestroyPlayer(CEntity* pEntity)
+{
+
+}
+
 /// 时间函数
-void CLoginModule::OnTimer(unsigned int nTickOffset)
+void CLoginModule::onTimer(unsigned int nTickOffset)
 {
 	if (mLoginCheckTime.elapse(nTickOffset))
 	{

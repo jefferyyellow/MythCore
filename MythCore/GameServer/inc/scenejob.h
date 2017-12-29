@@ -7,15 +7,26 @@
 #include "singleton.h"
 #include "logintype.h"
 #include "bytestream.h"
+#include "timemanager.h"
 #include <map>
 #include <list>
+
 using namespace Myth;
 
 #define PIPE_SIZE					((int)0x1000000)	/*内存管道的大小*/
 #define MAX_SOCKET_BUFF_SIZE		4096				// Socket缓冲区大小
+#define CHECK_NEW_DAY_INTERVAL		30000				// 30秒检查一次新的一天
+enum EmServerState
+{
+	emServerStateInit		= 0,	// 初始状态
+	emServerStateLaunch		= 1,	// 启动状态
+	emServerStateRun		= 2,	// 游戏状态
+	emServerStateExit		= 3,	// 退出状态
+};
 
 class CEntityPlayer;
 class CLogicModule;
+class CEntity;
 class CSceneJob : public CJob < 1000, 100 >, public CSingleton<CSceneJob>
 {
 public:
@@ -27,7 +38,7 @@ public:
 	/// 逻辑模块列表
 	typedef std::list<CLogicModule*> LOGIC_MODULE_LIST;
 public:
-	CSceneJob(){}
+	CSceneJob();
 	~CSceneJob(){}
 
 public:
@@ -43,6 +54,25 @@ public:
 
 public:
 	virtual void doing(int uParam);
+	// 状态少，暂时不用状态机了
+	void		doInit();
+	void		doLaunch();
+	void		doRun();
+	void		doExit();
+
+public:
+	void		launchServer();
+	bool		checkLaunch();
+	void		launchComplete();
+	void		exitServer();
+	void		newDayCome();
+	void		newWeekCome();
+	void		createPlayer(CEntityPlayer* pPlayer);
+	void		destroyPlayer(CEntityPlayer* pPlayer);
+	void		timer(unsigned int nTickOffset);
+
+public:
+	void		checkNewDayCome();
 
 public:
 	/// 发送前端消息
@@ -57,8 +87,6 @@ public:
 	void		onPlayerLeaveGame(CEntityPlayer* pPlayer);
 	/// 一个Socket断开
 	void		onSocketDisconnect(int nSocketIndex);
-	/// 时间函数
-	void		OnTimer(unsigned int nTickOffset);
 	/// 得到所有的玩家列表
 	PLAYER_LIST& getPlayerList(){	return mPlayerList;	}
 	/// 得到所有玩家的socket列表
@@ -80,6 +108,11 @@ private:
 	/// 初始化共享内存
 	bool		initShareMemory();
 
+public:
+	/// 服务器状态
+	EmServerState getServerState() const { return mServerState; }
+	void setServerState(EmServerState nValue) { mServerState = nValue; }
+
 private:
 	CShareMemory*			mShareMemory;
 	CSocketStream*			mTcp2ServerMemory;
@@ -96,5 +129,9 @@ private:
 	LOGIC_MODULE_LIST		mLogicModuleList;
 	/// 上一次刷新计时器的时间
 	uint64					mLastTimerTick;
+	/// 服务器状态
+	EmServerState			mServerState;
+	/// 新的一天检查计时器
+	CAutoResetTimer			mNewDayTimer;
 };
 #endif

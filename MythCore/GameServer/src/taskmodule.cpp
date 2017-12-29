@@ -1,7 +1,56 @@
 #include "taskmodule.h"
 #include "taskmodule.hxx.pb.h"
 #include "entityplayer.h"
-void CTaskModule::OnTimer(unsigned int nTickOffset)
+
+/// 启动服务器
+void CTaskModule::onLaunchServer()
+{
+
+}
+
+/// 启动完成检查
+bool CTaskModule::onCheckLaunch()
+{
+	return true;
+}
+
+/// 服务器启动成功
+void CTaskModule::onLaunchComplete()
+{
+
+}
+
+/// 退出服务器
+void CTaskModule::onExitServer()
+{
+
+}
+
+/// 新一天到来
+void CTaskModule::onNewDayCome()
+{
+
+}
+
+/// 新一周到来
+void CTaskModule::onNewWeekCome()
+{
+
+}
+
+/// 建立实体
+void CTaskModule::onCreatePlayer(CEntity* pEntity)
+{
+
+}
+
+/// 销毁实体
+void CTaskModule::onDestroyPlayer(CEntity* pEntity)
+{
+
+}
+
+void CTaskModule::onTimer(unsigned int nTickOffset)
 {
 
 }

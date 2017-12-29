@@ -10,7 +10,56 @@
 #include "mapconfigmanager.h"
 #include "errcode.h"
 
-void CMapModule::OnTimer(unsigned int nTickOffset)
+/// 启动服务器
+void CMapModule::onLaunchServer()
+{
+	CMapConfigManager::Inst()->loadMapConfig("gameserverconfig/map/maplist.xml");
+	CMapConfigManager::Inst()->createAllMapFromConfig();
+}
+
+/// 启动完成检查
+bool CMapModule::onCheckLaunch()
+{
+	return true;
+}
+
+/// 服务器启动成功
+void CMapModule::onLaunchComplete()
+{
+
+}
+
+/// 退出服务器
+void CMapModule::onExitServer()
+{
+
+}
+
+/// 新一天到来
+void CMapModule::onNewDayCome()
+{
+
+}
+
+/// 新一周到来
+void CMapModule::onNewWeekCome()
+{
+
+}
+
+/// 建立实体
+void CMapModule::onCreatePlayer(CEntity* pEntity)
+{
+
+}
+
+/// 销毁实体
+void CMapModule::onDestroyPlayer(CEntity* pEntity)
+{
+
+}
+
+void CMapModule::onTimer(unsigned int nTickOffset)
 {
 
 }

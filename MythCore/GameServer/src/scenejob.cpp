@@ -11,9 +11,83 @@
 #include "dbmodule.h"
 #include "taskmodule.h"
 #include "mapmodule.h"
+#include "mapconfigmanager.h"
+#include "mapmamager.h"
+
+CSceneJob::CSceneJob()
+	:mNewDayTimer(CHECK_NEW_DAY_INTERVAL)
+{
+
+}
+
 void CSceneJob::doing(int uParam)
 {
 	//printf("CSceneJob::doing %d\n", uParam);
+	switch (mServerState)
+	{
+		case emServerStateInit:
+		{
+			doInit();
+			break;
+		}
+		case emServerStateLaunch:
+		{
+			doLaunch();
+			break;
+		}
+		case emServerStateRun:
+		{
+			doLaunch();
+			break;
+		}
+		case emServerStateExit:
+		{
+			doExit();
+			break;
+		}
+		default:
+		{
+			break;
+		}
+	}
+
+
+
+	//Sleep(3000);
+}
+
+void CSceneJob::doInit()
+{
+	launchServer();
+	printf("Begin Launch Server");
+	mServerState = emServerStateLaunch;
+}
+
+void CSceneJob::doLaunch()
+{
+	checkDBStream();
+	while (true)
+	{
+		CInternalMsg* pIMMsg = mTaskManager.popTask();
+		// 如果
+		if (NULL == pIMMsg)
+		{
+			break;
+		}
+		onTask(pIMMsg);
+
+		CInternalMsgPool::Inst()->freeMsg(pIMMsg);
+	}
+	if (checkLaunch())
+	{
+		printf("Server Launch Complete");
+		launchComplete();
+		mServerState = emServerStateRun;
+	}
+}
+
+void CSceneJob::doRun()
+{
 	processClientMessage();
 	checkDBStream();
 	while (true)
@@ -28,14 +102,152 @@ void CSceneJob::doing(int uParam)
 
 		CInternalMsgPool::Inst()->freeMsg(pIMMsg);
 	}
-
 	int nElapseTime = (int)(CGameServer::Inst()->getTickCount() - mLastTimerTick);
 	if (nElapseTime > 100)
 	{
-		OnTimer(nElapseTime);
+		timer(nElapseTime);
 		mLastTimerTick = CGameServer::Inst()->getTickCount();
 	}
-	//Sleep(3000);
+}
+
+void CSceneJob::doExit()
+{
+	exitServer();
+	checkDBStream();
+	while (true)
+	{
+		CInternalMsg* pIMMsg = mTaskManager.popTask();
+		// 如果
+		if (NULL == pIMMsg)
+		{
+			break;
+		}
+		onTask(pIMMsg);
+
+		CInternalMsgPool::Inst()->freeMsg(pIMMsg);
+	}
+	if (0 == mPlayerList.size())
+	{
+		printf("All Player Kick Out");
+	}
+}
+
+void CSceneJob::launchServer()
+{
+	LOGIC_MODULE_LIST::iterator it = mLogicModuleList.begin();
+	for (; it != mLogicModuleList.end(); ++ it)
+	{
+		(*it)->onLaunchServer();
+	}
+}
+
+bool CSceneJob::checkLaunch()
+{
+	bool bResult = false;
+	LOGIC_MODULE_LIST::iterator it = mLogicModuleList.begin();
+	for (; it != mLogicModuleList.end(); ++it)
+	{
+		bResult = (*it)->onCheckLaunch();
+		if (!bResult)
+		{
+			return bResult;
+		}
+	}
+
+	return true;
+}
+
+void CSceneJob::launchComplete()
+{
+	LOGIC_MODULE_LIST::iterator it = mLogicModuleList.begin();
+	for (; it != mLogicModuleList.end(); ++it)
+	{
+		(*it)->onLaunchComplete();
+	}
+}
+
+void CSceneJob::exitServer()
+{
+	LOGIC_MODULE_LIST::iterator it = mLogicModuleList.begin();
+	for (; it != mLogicModuleList.end(); ++it)
+	{
+		(*it)->onExitServer();
+	}
+}
+
+void CSceneJob::newDayCome()
+{
+	LOGIC_MODULE_LIST::iterator it = mLogicModuleList.begin();
+	for (; it != mLogicModuleList.end(); ++it)
+	{
+		(*it)->onNewDayCome();
+	}
+}
+
+void CSceneJob::newWeekCome()
+{
+	LOGIC_MODULE_LIST::iterator it = mLogicModuleList.begin();
+	for (; it != mLogicModuleList.end(); ++it)
+	{
+		(*it)->onNewWeekCome();
+	}
+}
+
+void CSceneJob::createPlayer(CEntityPlayer* pPlayer)
+{
+	LOGIC_MODULE_LIST::iterator it = mLogicModuleList.begin();
+	for (; it != mLogicModuleList.end(); ++it)
+	{
+		(*it)->onCreatePlayer(pPlayer);
+	}
+}
+
+void CSceneJob::destroyPlayer(CEntityPlayer* pPlayer)
+{
+	LOGIC_MODULE_LIST::iterator it = mLogicModuleList.begin();
+	for (; it != mLogicModuleList.end(); ++it)
+	{
+		(*it)->onDestroyPlayer(pPlayer);
+	}
+}
+
+/// 时间函数
+void CSceneJob::timer(unsigned int nTickOffset)
+{
+	LOGIC_MODULE_LIST::iterator it = mLogicModuleList.begin();
+	for (; it != mLogicModuleList.end(); ++it)
+	{
+		(*it)->onTimer(nTickOffset);
+	}
+
+	if (mNewDayTimer.elapse(nTickOffset))
+	{
+		checkNewDayCome();
+	}
+}
+
+void CSceneJob::checkNewDayCome()
+{
+	time_t tTime = CGameServer::Inst()->GetCurrTime();
+	struct tm tmNow;
+	// 注意不能直接用localtime,这个函数不是线程安全了
+#ifdef MYTH_OS_WINDOWS
+	localtime_s(&tmNow, &tTime);	
+#else
+	localtime_r(&tTime, &tmNow);  
+#endif // MYTH_OS_WINDOWS
+
+	if (0 == tmNow.tm_hour && 0 == tmNow.tm_min)
+	{
+		newDayCome();
+		// 0表示星期天，1表示星期一
+		if (1 == tmNow.tm_wday)
+		{
+			newWeekCome();
+		}
+		// 300秒以后在检查，然后恢复30秒检查一次
+		mNewDayTimer.setLeftTime(CHECK_NEW_DAY_INTERVAL * 10);
+	}
 }
 
 void CSceneJob::onTask(CInternalMsg* pMsg)
@@ -44,18 +256,18 @@ void CSceneJob::onTask(CInternalMsg* pMsg)
 	{
 		return;
 	}
-	switch (pMsg->getMsgID())
-	{
-		default:
-			break;
-	}
+	//switch (pMsg->getMsgID())
+	//{
+	//	default:
+	//		break;
+	//}
 }
 
 bool CSceneJob::init(int nDBBuffSize)
 {
 	// 初始化时间变量
 	mLastTimerTick = CGameServer::Inst()->getTickCount();
-
+	mServerState = emServerStateInit;
 	bool bResult = initShareMemory();
 	if (!bResult)
 	{
@@ -66,8 +278,14 @@ bool CSceneJob::init(int nDBBuffSize)
 	mDBStream.Initialize(mDBBuffer, nDBBuffSize);
 
 	// 逻辑模块
+	CMapConfigManager::CreateInst();
+	CMapManager::CreateInst();
+
 	mLogicModuleList.push_back(CLoginModule::CreateInst());
 	mLogicModuleList.push_back(CPropertyModule::CreateInst());
+	mLogicModuleList.push_back(CMapModule::CreateInst());
+	mLogicModuleList.push_back(CDBModule::CreateInst());
+
 	return true;
 }
 
@@ -377,15 +595,7 @@ void CSceneJob::onSocketDisconnect(int nSocketIndex)
 	}
 }
 
-/// 时间函数
-void CSceneJob::OnTimer(unsigned int nTickOffset)
-{
-	LOGIC_MODULE_LIST::iterator it = mLogicModuleList.begin();
-	for (; it != mLogicModuleList.end(); ++it)
-	{
-		(*it)->OnTimer(nTickOffset);
-	}
-}
+
 
 /// 通过角色ID得到玩家
 CEntityPlayer* CSceneJob::getPlayerByRoleID(unsigned int nRoleID)

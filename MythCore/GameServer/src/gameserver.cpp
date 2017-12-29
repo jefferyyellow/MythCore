@@ -7,12 +7,8 @@
 #include "gameserverconfig.h"
 #include "objpool.h"
 #include "timemanager.h"
-#include "propertymodule.h"
-#include "mapmodule.h"
-#include "mapmamager.h"
-#include "mapconfigmanager.h"
 #include "template.h"
-#include "dbmodule.h"
+
 /// ³õÊ¼»¯
 bool CGameServer::init()
 {
@@ -100,11 +96,6 @@ bool CGameServer::initLogicModule()
 	CObjPool::CreateInst();
 	CTimeManager::CreateInst();
 
-	CMapConfigManager::CreateInst();
-	CMapManager::CreateInst();
-	CMapModule::CreateInst();
-	CDBModule::CreateInst();
-
 	return true;
 }
 
@@ -113,18 +104,6 @@ bool CGameServer::initLogicModule()
 bool CGameServer::initStaticData()
 {
 	bool bResult = CGameServerConfig::Inst()->loadGameServerConfigFromXml("config/gameserverconfig.xml");
-	if (!bResult)
-	{
-		return bResult;
-	}
-
-	bResult = CMapConfigManager::Inst()->loadMapConfig("gameserverconfig/map/maplist.xml");
-	if (!bResult)
-	{
-		return bResult;
-	}
-
-	bResult = CMapConfigManager::Inst()->createAllMapFromConfig();
 	if (!bResult)
 	{
 		return bResult;
