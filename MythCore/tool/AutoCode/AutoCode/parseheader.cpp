@@ -133,6 +133,11 @@ void CParseHeader::parseLine(const char* pLine, int nLineLength)
 	if (strncmp(acWord, "class", MAX_PATH - 1) == 0
 		|| strncmp(acWord, "struct", MAX_PATH - 1) == 0)
 	{
+		// 类声明
+		if (strchr(pLine, ';') != NULL)
+		{
+			return;
+		}
 		// 分配一个新的类
 		CPlusClass* pNewClass = new CPlusClass;
 		if (NULL == mCurClass)

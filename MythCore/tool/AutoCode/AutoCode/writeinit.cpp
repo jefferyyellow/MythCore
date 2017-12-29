@@ -95,6 +95,12 @@ void CParseHeader::writeHeaderLine(FILE* pFile, const char* pLine, int nLineLeng
 	if (strncmp(acWord, "class", MAX_PATH - 1) == 0
 		|| strncmp(acWord, "struct", MAX_PATH - 1) == 0)
 	{
+		// ÀàÉùÃ÷
+		if (strchr(pLine, ';') != NULL)
+		{
+			return;
+		}
+
 		if (NULL == mCurClass)
 		{
 			mCurClass = mClassList[mCurClassIndex];
