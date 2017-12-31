@@ -4,6 +4,7 @@
 #include "propertyunit.h"
 #include "itemunit.h"
 #include "taskunit.h"
+#include "skillunit.h"
 class PBPlayerSceneInfo;
 
 class CBaseProperty
@@ -38,7 +39,8 @@ public:
 	CEntityPlayer()
 		:mPropertyUnit(*this), 
 		mItemUnit(*this), 
-		mTaskUnit(*this)
+		mTaskUnit(*this),
+		mSkillUnit(*this)
 	{
 		mName[0] = '\0';
 		mRoleID = 0;
@@ -52,7 +54,7 @@ public:
 	void			refreshBaseProperty();
 	/// 刷新战斗属性
 	virtual void	refreshFightProperty();
-
+	void			refreshFightProperty(int nPropertyType);
 public:
 	/// 序列化场景信息到PB·
 	void			serializeSceneInfoToPB(PBPlayerSceneInfo* pbSceneInfo);
@@ -107,7 +109,9 @@ public:
 	CItemUnit&		getItemUnit(){ return mItemUnit; }
 	/// 任务单元
 	CTaskUnit&		getTaskUnit(){ return mTaskUnit; }
-	
+	/// 技能单元
+	CSkillUnit&		getSkillUnit(){return mSkillUnit;}
+
 private:
 	/// socket连接信息
 	CExchangeHead	mExhangeHead;
@@ -117,6 +121,8 @@ private:
 	CItemUnit		mItemUnit;
 	/// 任务单元
 	CTaskUnit		mTaskUnit;
+	/// 技能单元
+	CSkillUnit		mSkillUnit;
 
 	/// 角色名字
 	char			mName[PLAYER_NAME_LENGTH];

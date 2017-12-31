@@ -102,7 +102,6 @@ public:
 	}
 
 public:
-	void	fireEvent(EmCompleteCondition eCondition, int nParam1, int nParam2);
 	void	setTaskComplete(int nTaskID)
 	{
 		mCompleteTasks.setBit(nTaskID);
@@ -141,7 +140,7 @@ public:
 	// 扣除任务道具
 	void	removeTaskItem(int nTaskID, int nItemIndex);
 	// 刷新任务条件
-	void	refreshTask(CEntityPlayer* pPlayer, EmCompleteCondition eCondition, int nParam0, int nParam1 = 0, int nParam2 = 0, int nParam3 = 0);
+	void	refreshTask(EmCompleteCondition eCondition, int nParam0, int nParam1 = 0, int nParam2 = 0, int nParam3 = 0);
 	// 给完成任务奖励
 	void	giveCompleteTaskReward(int nTaskID);
 	// 给接受任务奖励

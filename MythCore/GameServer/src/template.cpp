@@ -111,6 +111,9 @@ void CStaticData::createFromPB(PBTplTemplate* pTplTemplate)
 	TEMPLATE_SET_FROM_PB(CTplFuncNPC, pbTplNPCSet, funcnpc);
 	TEMPLATE_SET_FROM_PB(CTplOgre, pbTplNPCSet, ogre);
 	TEMPLATE_SET_FROM_PB(CTplEquip, pbTplItemSet, equip);
+	TEMPLATE_SET_FROM_PB(CTplSkill, pbTplSkillSet, skill);
+	TEMPLATE_SET_FROM_PB(CTplSkill, pbTplSkillSet, skill);
+	TEMPLATE_SET_FROM_PB(CTplDropTable, pbTplConfigSet, droptable);
 }
 
 
@@ -253,22 +256,84 @@ void CTplFuncNPC::createToPB(PBTplFuncNPC* pbFuncNpc)
 	CTplNPC::createToPB(pbFuncNpc->mutable_baseinfo());
 }
 
-void CTplOgre::setFromPB(PBTplOgre* pbOgre)
+void CTplOgre::setFromPB(PBTplOgre* pbData)
 {
-	if (NULL == pbOgre)
+	CTplNPC::setFromPB(pbData->mutable_super());
+	mExp = pbData->exp();
+	for (int i = 0; i < MAX_OGRE_DROP && i < pbData->droptable_size(); ++i)
 	{
-		return;
+		mDropTable[i] = pbData->droptable(i);
 	}
-
-	CTplNPC::setFromPB(pbOgre->mutable_baseinfo());
 }
 
-void CTplOgre::createToPB(PBTplOgre* pbOgre)
+void CTplOgre::createToPB(PBTplOgre* pbData)
 {
-	if (NULL == pbOgre)
+	CTplNPC::createToPB(pbData->mutable_super());
+	pbData->set_exp(mExp);
+	for (int i = 0; i < MAX_OGRE_DROP; ++i)
 	{
-		return;
+		pbData->add_droptable(mDropTable[i]);
+	}
+}
+
+void CTplSkill::setFromPB(PBTplSkill* pbData)
+{
+	mTempID = pbData->tempid();
+	strncpy(mName, pbData->name().c_str(), sizeof(mName)-1);
+	strncpy(mDescription, pbData->description().c_str(), sizeof(mDescription)-1);
+	mSkillCD = pbData->skillcd();
+	mAddDamage = pbData->adddamage();
+}
+void CTplSkill::createToPB(PBTplSkill* pbData)
+{
+	pbData->set_tempid(mTempID);
+	pbData->set_name(mName);
+	pbData->set_description(mDescription);
+	pbData->set_skillcd(mSkillCD);
+	pbData->set_adddamage(mAddDamage);
+}
+
+
+void CTplDropTable::setFromPB(PBTplDropTable* pbData)
+{
+	mTempID = pbData->tempid();
+	for (int i = 0; i < MAX_DROP_ITEM && i < pbData->dropitem_size(); ++i)
+	{
+		mDropItem[i].setFromPB(pbData->mutable_dropitem(i));
 	}
 
-	CTplNPC::createToPB(pbOgre->mutable_baseinfo());
+	for (int i = 1; i < MAX_DROP_ITEM; i++)
+	{
+		mDropItem[i].mProbability = mDropItem[i].mProbability + mDropItem[i - 1].mProbability;
+	}
+
+
+	// 加载后的处理
+	if (mDropItem[MAX_DROP_ITEM - 1].mProbability > 10000)
+	{
+		printf("drop table probability is invalid %d", mTempID);
+		return ;
+	}
+}
+void CTplDropTable::createToPB(PBTplDropTable* pbData)
+{
+	pbData->set_tempid(mTempID);
+	for (int i = 0; i < MAX_DROP_ITEM; ++i)
+	{
+		mDropItem[i].createToPB(pbData->add_dropitem());
+	}
+}
+
+
+void CTplDropTable::CDropItem::setFromPB(PBTplDropItem* pbData)
+{
+	mItemID = pbData->itemid();
+	mItemNum = pbData->itemnum();
+	mProbability = pbData->probability();
+}
+void CTplDropTable::CDropItem::createToPB(PBTplDropItem* pbData)
+{
+	pbData->set_itemid(mItemID);
+	pbData->set_itemnum(mItemNum);
+	pbData->set_probability(mProbability);
 }

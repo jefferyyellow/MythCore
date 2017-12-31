@@ -55,6 +55,15 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* PBTplOgre_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   PBTplOgre_reflection_ = NULL;
+const ::google::protobuf::Descriptor* PBTplSkill_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  PBTplSkill_reflection_ = NULL;
+const ::google::protobuf::Descriptor* PBTplDropItem_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  PBTplDropItem_reflection_ = NULL;
+const ::google::protobuf::Descriptor* PBTplDropTable_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  PBTplDropTable_reflection_ = NULL;
 
 }  // namespace
 
@@ -98,9 +107,10 @@ void protobuf_AssignDesc_template_2ehxx() {
       sizeof(PBTplItemSet),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplItemSet, _internal_metadata_));
   PBTplConfigSet_descriptor_ = file->message_type(2);
-  static const int PBTplConfigSet_offsets_[2] = {
+  static const int PBTplConfigSet_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplConfigSet, levelexpconfig_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplConfigSet, vipconfig_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplConfigSet, droptable_),
   };
   PBTplConfigSet_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -114,6 +124,7 @@ void protobuf_AssignDesc_template_2ehxx() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplConfigSet, _internal_metadata_));
   PBTplSkillSet_descriptor_ = file->message_type(3);
   static const int PBTplSkillSet_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplSkillSet, skill_),
   };
   PBTplSkillSet_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -235,8 +246,10 @@ void protobuf_AssignDesc_template_2ehxx() {
       sizeof(PBTplFuncNPC),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplFuncNPC, _internal_metadata_));
   PBTplOgre_descriptor_ = file->message_type(11);
-  static const int PBTplOgre_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplOgre, baseinfo_),
+  static const int PBTplOgre_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplOgre, super_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplOgre, exp_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplOgre, droptable_),
   };
   PBTplOgre_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -248,6 +261,55 @@ void protobuf_AssignDesc_template_2ehxx() {
       -1,
       sizeof(PBTplOgre),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplOgre, _internal_metadata_));
+  PBTplSkill_descriptor_ = file->message_type(12);
+  static const int PBTplSkill_offsets_[5] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplSkill, tempid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplSkill, name_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplSkill, description_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplSkill, skillcd_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplSkill, adddamage_),
+  };
+  PBTplSkill_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      PBTplSkill_descriptor_,
+      PBTplSkill::internal_default_instance(),
+      PBTplSkill_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(PBTplSkill),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplSkill, _internal_metadata_));
+  PBTplDropItem_descriptor_ = file->message_type(13);
+  static const int PBTplDropItem_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplDropItem, itemid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplDropItem, itemnum_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplDropItem, probability_),
+  };
+  PBTplDropItem_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      PBTplDropItem_descriptor_,
+      PBTplDropItem::internal_default_instance(),
+      PBTplDropItem_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(PBTplDropItem),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplDropItem, _internal_metadata_));
+  PBTplDropTable_descriptor_ = file->message_type(14);
+  static const int PBTplDropTable_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplDropTable, tempid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplDropTable, dropitem_),
+  };
+  PBTplDropTable_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      PBTplDropTable_descriptor_,
+      PBTplDropTable::internal_default_instance(),
+      PBTplDropTable_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(PBTplDropTable),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplDropTable, _internal_metadata_));
 }
 
 namespace {
@@ -285,6 +347,12 @@ void protobuf_RegisterTypes(const ::std::string&) {
       PBTplFuncNPC_descriptor_, PBTplFuncNPC::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       PBTplOgre_descriptor_, PBTplOgre::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      PBTplSkill_descriptor_, PBTplSkill::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      PBTplDropItem_descriptor_, PBTplDropItem::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      PBTplDropTable_descriptor_, PBTplDropTable::internal_default_instance());
 }
 
 }  // namespace
@@ -314,6 +382,12 @@ void protobuf_ShutdownFile_template_2ehxx() {
   delete PBTplFuncNPC_reflection_;
   PBTplOgre_default_instance_.Shutdown();
   delete PBTplOgre_reflection_;
+  PBTplSkill_default_instance_.Shutdown();
+  delete PBTplSkill_reflection_;
+  PBTplDropItem_default_instance_.Shutdown();
+  delete PBTplDropItem_reflection_;
+  PBTplDropTable_default_instance_.Shutdown();
+  delete PBTplDropTable_reflection_;
 }
 
 void protobuf_InitDefaults_template_2ehxx_impl() {
@@ -334,6 +408,10 @@ void protobuf_InitDefaults_template_2ehxx_impl() {
   PBTplNPC_default_instance_.DefaultConstruct();
   PBTplFuncNPC_default_instance_.DefaultConstruct();
   PBTplOgre_default_instance_.DefaultConstruct();
+  ::google::protobuf::internal::GetEmptyString();
+  PBTplSkill_default_instance_.DefaultConstruct();
+  PBTplDropItem_default_instance_.DefaultConstruct();
+  PBTplDropTable_default_instance_.DefaultConstruct();
   PBTplTemplate_default_instance_.get_mutable()->InitAsDefaultInstance();
   PBTplItemSet_default_instance_.get_mutable()->InitAsDefaultInstance();
   PBTplConfigSet_default_instance_.get_mutable()->InitAsDefaultInstance();
@@ -346,6 +424,9 @@ void protobuf_InitDefaults_template_2ehxx_impl() {
   PBTplNPC_default_instance_.get_mutable()->InitAsDefaultInstance();
   PBTplFuncNPC_default_instance_.get_mutable()->InitAsDefaultInstance();
   PBTplOgre_default_instance_.get_mutable()->InitAsDefaultInstance();
+  PBTplSkill_default_instance_.get_mutable()->InitAsDefaultInstance();
+  PBTplDropItem_default_instance_.get_mutable()->InitAsDefaultInstance();
+  PBTplDropTable_default_instance_.get_mutable()->InitAsDefaultInstance();
 }
 
 GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_InitDefaults_template_2ehxx_once_);
@@ -363,22 +444,31 @@ void protobuf_AddDesc_template_2ehxx_impl() {
     "\001(\0132\017.PBTplConfigSet\022 \n\010SkillSet\030\003 \001(\0132\016"
     ".PBTplSkillSet\022\034\n\006NPCSet\030\004 \001(\0132\014.PBTplNP"
     "CSet\"\'\n\014PBTplItemSet\022\027\n\005equip\030\001 \003(\0132\010.PB"
-    "Equip\"b\n\016PBTplConfigSet\022,\n\016LevelExpConfi"
-    "g\030\001 \003(\0132\024.PBTplLevelExpConfig\022\"\n\tVIPConf"
-    "ig\030\002 \003(\0132\017.PBTplVIPConfig\"\017\n\rPBTplSkillS"
-    "et\"G\n\013PBTplNPCSet\022\036\n\007FuncNpc\030\001 \003(\0132\r.PBT"
-    "plFuncNPC\022\030\n\004Ogre\030\002 \003(\0132\n.PBTplOgre\"]\n\006P"
-    "BItem\022\016\n\006TempID\030\001 \001(\r\022\014\n\004Name\030\002 \001(\t\022\020\n\010D"
-    "escribe\030\003 \001(\t\022\020\n\010ItemType\030\004 \001(\r\022\021\n\tPileL"
-    "imit\030\005 \001(\r\"^\n\007PBEquip\022\026\n\005Super\030\001 \001(\0132\007.P"
-    "BItem\022\022\n\nEquipModal\030\002 \001(\t\022\021\n\tEquipPart\030\003"
-    " \001(\r\022\024\n\014LevelRequire\030\004 \001(\r\"9\n\023PBTplLevel"
-    "ExpConfig\022\016\n\006TempID\030\001 \001(\r\022\022\n\nLevelUpExp\030"
-    "\002 \003(\r\"0\n\016PBTplVIPConfig\022\016\n\006TempID\030\001 \001(\r\022"
-    "\016\n\006VIPExp\030\002 \003(\r\"(\n\010PBTplNPC\022\016\n\006TempID\030\001 "
-    "\001(\r\022\014\n\004Name\030\002 \001(\t\"+\n\014PBTplFuncNPC\022\033\n\010Bas"
-    "eInfo\030\001 \001(\0132\t.PBTplNPC\"(\n\tPBTplOgre\022\033\n\010B"
-    "aseInfo\030\001 \001(\0132\t.PBTplNPCb\006proto3", 832);
+    "Equip\"\206\001\n\016PBTplConfigSet\022,\n\016LevelExpConf"
+    "ig\030\001 \003(\0132\024.PBTplLevelExpConfig\022\"\n\tVIPCon"
+    "fig\030\002 \003(\0132\017.PBTplVIPConfig\022\"\n\tDroptable\030"
+    "\003 \003(\0132\017.PBTplDropTable\"+\n\rPBTplSkillSet\022"
+    "\032\n\005Skill\030\001 \003(\0132\013.PBTplSkill\"G\n\013PBTplNPCS"
+    "et\022\036\n\007FuncNpc\030\001 \003(\0132\r.PBTplFuncNPC\022\030\n\004Og"
+    "re\030\002 \003(\0132\n.PBTplOgre\"]\n\006PBItem\022\016\n\006TempID"
+    "\030\001 \001(\r\022\014\n\004Name\030\002 \001(\t\022\020\n\010Describe\030\003 \001(\t\022\020"
+    "\n\010ItemType\030\004 \001(\r\022\021\n\tPileLimit\030\005 \001(\r\"^\n\007P"
+    "BEquip\022\026\n\005Super\030\001 \001(\0132\007.PBItem\022\022\n\nEquipM"
+    "odal\030\002 \001(\t\022\021\n\tEquipPart\030\003 \001(\r\022\024\n\014LevelRe"
+    "quire\030\004 \001(\r\"9\n\023PBTplLevelExpConfig\022\016\n\006Te"
+    "mpID\030\001 \001(\r\022\022\n\nLevelUpExp\030\002 \003(\r\"0\n\016PBTplV"
+    "IPConfig\022\016\n\006TempID\030\001 \001(\r\022\016\n\006VIPExp\030\002 \003(\r"
+    "\"(\n\010PBTplNPC\022\016\n\006TempID\030\001 \001(\r\022\014\n\004Name\030\002 \001"
+    "(\t\"+\n\014PBTplFuncNPC\022\033\n\010BaseInfo\030\001 \001(\0132\t.P"
+    "BTplNPC\"E\n\tPBTplOgre\022\030\n\005Super\030\001 \001(\0132\t.PB"
+    "TplNPC\022\013\n\003Exp\030\002 \001(\r\022\021\n\tDropTable\030\003 \003(\r\"c"
+    "\n\nPBTplSkill\022\016\n\006TempID\030\001 \001(\r\022\014\n\004Name\030\002 \001"
+    "(\t\022\023\n\013Description\030\003 \001(\t\022\017\n\007SkillCD\030\004 \001(\r"
+    "\022\021\n\tAddDamage\030\005 \001(\r\"E\n\rPBTplDropItem\022\016\n\006"
+    "ItemID\030\001 \001(\r\022\017\n\007ItemNum\030\002 \001(\r\022\023\n\013Probabi"
+    "lity\030\003 \001(\r\"B\n\016PBTplDropTable\022\016\n\006TempID\030\001"
+    " \001(\r\022 \n\010DropItem\030\002 \003(\0132\016.PBTplDropItemb\006"
+    "proto3", 1166);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "template.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_template_2ehxx);
@@ -1202,6 +1292,7 @@ inline const PBTplItemSet* PBTplItemSet::internal_default_instance() {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int PBTplConfigSet::kLevelExpConfigFieldNumber;
 const int PBTplConfigSet::kVIPConfigFieldNumber;
+const int PBTplConfigSet::kDroptableFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 PBTplConfigSet::PBTplConfigSet()
@@ -1263,6 +1354,7 @@ void PBTplConfigSet::Clear() {
 // @@protoc_insertion_point(message_clear_start:PBTplConfigSet)
   levelexpconfig_.Clear();
   vipconfig_.Clear();
+  droptable_.Clear();
 }
 
 bool PBTplConfigSet::MergePartialFromCodedStream(
@@ -1302,6 +1394,22 @@ bool PBTplConfigSet::MergePartialFromCodedStream(
           goto handle_unusual;
         }
         if (input->ExpectTag(18)) goto parse_loop_VIPConfig;
+        if (input->ExpectTag(26)) goto parse_loop_Droptable;
+        input->UnsafeDecrementRecursionDepth();
+        break;
+      }
+
+      // repeated .PBTplDropTable Droptable = 3;
+      case 3: {
+        if (tag == 26) {
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_Droptable:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+                input, add_droptable()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_loop_Droptable;
         input->UnsafeDecrementRecursionDepth();
         if (input->ExpectAtEnd()) goto success;
         break;
@@ -1343,6 +1451,12 @@ void PBTplConfigSet::SerializeWithCachedSizes(
       2, this->vipconfig(i), output);
   }
 
+  // repeated .PBTplDropTable Droptable = 3;
+  for (unsigned int i = 0, n = this->droptable_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      3, this->droptable(i), output);
+  }
+
   // @@protoc_insertion_point(serialize_end:PBTplConfigSet)
 }
 
@@ -1362,6 +1476,13 @@ void PBTplConfigSet::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
         2, this->vipconfig(i), false, target);
+  }
+
+  // repeated .PBTplDropTable Droptable = 3;
+  for (unsigned int i = 0, n = this->droptable_size(); i < n; i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageNoVirtualToArray(
+        3, this->droptable(i), false, target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:PBTplConfigSet)
@@ -1391,6 +1512,17 @@ size_t PBTplConfigSet::ByteSizeLong() const {
       total_size +=
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->vipconfig(i));
+    }
+  }
+
+  // repeated .PBTplDropTable Droptable = 3;
+  {
+    unsigned int count = this->droptable_size();
+    total_size += 1UL * count;
+    for (unsigned int i = 0; i < count; i++) {
+      total_size +=
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->droptable(i));
     }
   }
 
@@ -1429,6 +1561,7 @@ void PBTplConfigSet::UnsafeMergeFrom(const PBTplConfigSet& from) {
   GOOGLE_DCHECK(&from != this);
   levelexpconfig_.MergeFrom(from.levelexpconfig_);
   vipconfig_.MergeFrom(from.vipconfig_);
+  droptable_.MergeFrom(from.droptable_);
 }
 
 void PBTplConfigSet::CopyFrom(const ::google::protobuf::Message& from) {
@@ -1457,6 +1590,7 @@ void PBTplConfigSet::Swap(PBTplConfigSet* other) {
 void PBTplConfigSet::InternalSwap(PBTplConfigSet* other) {
   levelexpconfig_.UnsafeArenaSwap(&other->levelexpconfig_);
   vipconfig_.UnsafeArenaSwap(&other->vipconfig_);
+  droptable_.UnsafeArenaSwap(&other->droptable_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -1532,6 +1666,36 @@ PBTplConfigSet::vipconfig() const {
   return vipconfig_;
 }
 
+// repeated .PBTplDropTable Droptable = 3;
+int PBTplConfigSet::droptable_size() const {
+  return droptable_.size();
+}
+void PBTplConfigSet::clear_droptable() {
+  droptable_.Clear();
+}
+const ::PBTplDropTable& PBTplConfigSet::droptable(int index) const {
+  // @@protoc_insertion_point(field_get:PBTplConfigSet.Droptable)
+  return droptable_.Get(index);
+}
+::PBTplDropTable* PBTplConfigSet::mutable_droptable(int index) {
+  // @@protoc_insertion_point(field_mutable:PBTplConfigSet.Droptable)
+  return droptable_.Mutable(index);
+}
+::PBTplDropTable* PBTplConfigSet::add_droptable() {
+  // @@protoc_insertion_point(field_add:PBTplConfigSet.Droptable)
+  return droptable_.Add();
+}
+::google::protobuf::RepeatedPtrField< ::PBTplDropTable >*
+PBTplConfigSet::mutable_droptable() {
+  // @@protoc_insertion_point(field_mutable_list:PBTplConfigSet.Droptable)
+  return &droptable_;
+}
+const ::google::protobuf::RepeatedPtrField< ::PBTplDropTable >&
+PBTplConfigSet::droptable() const {
+  // @@protoc_insertion_point(field_list:PBTplConfigSet.Droptable)
+  return droptable_;
+}
+
 inline const PBTplConfigSet* PBTplConfigSet::internal_default_instance() {
   return &PBTplConfigSet_default_instance_.get();
 }
@@ -1540,6 +1704,7 @@ inline const PBTplConfigSet* PBTplConfigSet::internal_default_instance() {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int PBTplSkillSet::kSkillFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 PBTplSkillSet::PBTplSkillSet()
@@ -1599,6 +1764,7 @@ PBTplSkillSet* PBTplSkillSet::New(::google::protobuf::Arena* arena) const {
 
 void PBTplSkillSet::Clear() {
 // @@protoc_insertion_point(message_clear_start:PBTplSkillSet)
+  skill_.Clear();
 }
 
 bool PBTplSkillSet::MergePartialFromCodedStream(
@@ -1610,13 +1776,34 @@ bool PBTplSkillSet::MergePartialFromCodedStream(
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // repeated .PBTplSkill Skill = 1;
+      case 1: {
+        if (tag == 10) {
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_Skill:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+                input, add_skill()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(10)) goto parse_loop_Skill;
+        input->UnsafeDecrementRecursionDepth();
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
     }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
   }
 success:
   // @@protoc_insertion_point(parse_success:PBTplSkillSet)
@@ -1630,6 +1817,12 @@ failure:
 void PBTplSkillSet::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:PBTplSkillSet)
+  // repeated .PBTplSkill Skill = 1;
+  for (unsigned int i = 0, n = this->skill_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->skill(i), output);
+  }
+
   // @@protoc_insertion_point(serialize_end:PBTplSkillSet)
 }
 
@@ -1637,6 +1830,13 @@ void PBTplSkillSet::SerializeWithCachedSizes(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:PBTplSkillSet)
+  // repeated .PBTplSkill Skill = 1;
+  for (unsigned int i = 0, n = this->skill_size(); i < n; i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageNoVirtualToArray(
+        1, this->skill(i), false, target);
+  }
+
   // @@protoc_insertion_point(serialize_to_array_end:PBTplSkillSet)
   return target;
 }
@@ -1644,6 +1844,17 @@ void PBTplSkillSet::SerializeWithCachedSizes(
 size_t PBTplSkillSet::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:PBTplSkillSet)
   size_t total_size = 0;
+
+  // repeated .PBTplSkill Skill = 1;
+  {
+    unsigned int count = this->skill_size();
+    total_size += 1UL * count;
+    for (unsigned int i = 0; i < count; i++) {
+      total_size +=
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->skill(i));
+    }
+  }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -1678,6 +1889,7 @@ void PBTplSkillSet::MergeFrom(const PBTplSkillSet& from) {
 
 void PBTplSkillSet::UnsafeMergeFrom(const PBTplSkillSet& from) {
   GOOGLE_DCHECK(&from != this);
+  skill_.MergeFrom(from.skill_);
 }
 
 void PBTplSkillSet::CopyFrom(const ::google::protobuf::Message& from) {
@@ -1704,6 +1916,7 @@ void PBTplSkillSet::Swap(PBTplSkillSet* other) {
   InternalSwap(other);
 }
 void PBTplSkillSet::InternalSwap(PBTplSkillSet* other) {
+  skill_.UnsafeArenaSwap(&other->skill_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -1718,6 +1931,36 @@ void PBTplSkillSet::InternalSwap(PBTplSkillSet* other) {
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // PBTplSkillSet
+
+// repeated .PBTplSkill Skill = 1;
+int PBTplSkillSet::skill_size() const {
+  return skill_.size();
+}
+void PBTplSkillSet::clear_skill() {
+  skill_.Clear();
+}
+const ::PBTplSkill& PBTplSkillSet::skill(int index) const {
+  // @@protoc_insertion_point(field_get:PBTplSkillSet.Skill)
+  return skill_.Get(index);
+}
+::PBTplSkill* PBTplSkillSet::mutable_skill(int index) {
+  // @@protoc_insertion_point(field_mutable:PBTplSkillSet.Skill)
+  return skill_.Mutable(index);
+}
+::PBTplSkill* PBTplSkillSet::add_skill() {
+  // @@protoc_insertion_point(field_add:PBTplSkillSet.Skill)
+  return skill_.Add();
+}
+::google::protobuf::RepeatedPtrField< ::PBTplSkill >*
+PBTplSkillSet::mutable_skill() {
+  // @@protoc_insertion_point(field_mutable_list:PBTplSkillSet.Skill)
+  return &skill_;
+}
+const ::google::protobuf::RepeatedPtrField< ::PBTplSkill >&
+PBTplSkillSet::skill() const {
+  // @@protoc_insertion_point(field_list:PBTplSkillSet.Skill)
+  return skill_;
+}
 
 inline const PBTplSkillSet* PBTplSkillSet::internal_default_instance() {
   return &PBTplSkillSet_default_instance_.get();
@@ -4425,7 +4668,9 @@ inline const PBTplFuncNPC* PBTplFuncNPC::internal_default_instance() {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int PBTplOgre::kBaseInfoFieldNumber;
+const int PBTplOgre::kSuperFieldNumber;
+const int PBTplOgre::kExpFieldNumber;
+const int PBTplOgre::kDropTableFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 PBTplOgre::PBTplOgre()
@@ -4436,7 +4681,7 @@ PBTplOgre::PBTplOgre()
 }
 
 void PBTplOgre::InitAsDefaultInstance() {
-  baseinfo_ = const_cast< ::PBTplNPC*>(
+  super_ = const_cast< ::PBTplNPC*>(
       ::PBTplNPC::internal_default_instance());
 }
 
@@ -4449,7 +4694,8 @@ PBTplOgre::PBTplOgre(const PBTplOgre& from)
 }
 
 void PBTplOgre::SharedCtor() {
-  baseinfo_ = NULL;
+  super_ = NULL;
+  exp_ = 0u;
   _cached_size_ = 0;
 }
 
@@ -4460,7 +4706,7 @@ PBTplOgre::~PBTplOgre() {
 
 void PBTplOgre::SharedDtor() {
   if (this != &PBTplOgre_default_instance_.get()) {
-    delete baseinfo_;
+    delete super_;
   }
 }
 
@@ -4491,8 +4737,10 @@ PBTplOgre* PBTplOgre::New(::google::protobuf::Arena* arena) const {
 
 void PBTplOgre::Clear() {
 // @@protoc_insertion_point(message_clear_start:PBTplOgre)
-  if (GetArenaNoVirtual() == NULL && baseinfo_ != NULL) delete baseinfo_;
-  baseinfo_ = NULL;
+  if (GetArenaNoVirtual() == NULL && super_ != NULL) delete super_;
+  super_ = NULL;
+  exp_ = 0u;
+  droptable_.Clear();
 }
 
 bool PBTplOgre::MergePartialFromCodedStream(
@@ -4505,11 +4753,44 @@ bool PBTplOgre::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .PBTplNPC BaseInfo = 1;
+      // optional .PBTplNPC Super = 1;
       case 1: {
         if (tag == 10) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_baseinfo()));
+               input, mutable_super()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_Exp;
+        break;
+      }
+
+      // optional uint32 Exp = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_Exp:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &exp_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_DropTable;
+        break;
+      }
+
+      // repeated uint32 DropTable = 3;
+      case 3: {
+        if (tag == 26) {
+         parse_DropTable:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, this->mutable_droptable())));
+        } else if (tag == 24) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 1, 26, input, this->mutable_droptable())));
         } else {
           goto handle_unusual;
         }
@@ -4541,10 +4822,25 @@ failure:
 void PBTplOgre::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:PBTplOgre)
-  // optional .PBTplNPC BaseInfo = 1;
-  if (this->has_baseinfo()) {
+  // optional .PBTplNPC Super = 1;
+  if (this->has_super()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      1, *this->baseinfo_, output);
+      1, *this->super_, output);
+  }
+
+  // optional uint32 Exp = 2;
+  if (this->exp() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->exp(), output);
+  }
+
+  // repeated uint32 DropTable = 3;
+  if (this->droptable_size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteTag(3, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    output->WriteVarint32(_droptable_cached_byte_size_);
+  }
+  for (int i = 0; i < this->droptable_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32NoTag(
+      this->droptable(i), output);
   }
 
   // @@protoc_insertion_point(serialize_end:PBTplOgre)
@@ -4554,11 +4850,30 @@ void PBTplOgre::SerializeWithCachedSizes(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:PBTplOgre)
-  // optional .PBTplNPC BaseInfo = 1;
-  if (this->has_baseinfo()) {
+  // optional .PBTplNPC Super = 1;
+  if (this->has_super()) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
-        1, *this->baseinfo_, false, target);
+        1, *this->super_, false, target);
+  }
+
+  // optional uint32 Exp = 2;
+  if (this->exp() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->exp(), target);
+  }
+
+  // repeated uint32 DropTable = 3;
+  if (this->droptable_size() > 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteTagToArray(
+      3,
+      ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED,
+      target);
+    target = ::google::protobuf::io::CodedOutputStream::WriteVarint32ToArray(
+      _droptable_cached_byte_size_, target);
+  }
+  for (int i = 0; i < this->droptable_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteUInt32NoTagToArray(this->droptable(i), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:PBTplOgre)
@@ -4569,11 +4884,37 @@ size_t PBTplOgre::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:PBTplOgre)
   size_t total_size = 0;
 
-  // optional .PBTplNPC BaseInfo = 1;
-  if (this->has_baseinfo()) {
+  // optional .PBTplNPC Super = 1;
+  if (this->has_super()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        *this->baseinfo_);
+        *this->super_);
+  }
+
+  // optional uint32 Exp = 2;
+  if (this->exp() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->exp());
+  }
+
+  // repeated uint32 DropTable = 3;
+  {
+    size_t data_size = 0;
+    unsigned int count = this->droptable_size();
+    for (unsigned int i = 0; i < count; i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::
+        UInt32Size(this->droptable(i));
+    }
+    if (data_size > 0) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);
+    }
+    int cached_size = ::google::protobuf::internal::ToCachedSize(data_size);
+    GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+    _droptable_cached_byte_size_ = cached_size;
+    GOOGLE_SAFE_CONCURRENT_WRITES_END();
+    total_size += data_size;
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -4609,8 +4950,12 @@ void PBTplOgre::MergeFrom(const PBTplOgre& from) {
 
 void PBTplOgre::UnsafeMergeFrom(const PBTplOgre& from) {
   GOOGLE_DCHECK(&from != this);
-  if (from.has_baseinfo()) {
-    mutable_baseinfo()->::PBTplNPC::MergeFrom(from.baseinfo());
+  droptable_.UnsafeMergeFrom(from.droptable_);
+  if (from.has_super()) {
+    mutable_super()->::PBTplNPC::MergeFrom(from.super());
+  }
+  if (from.exp() != 0) {
+    set_exp(from.exp());
   }
 }
 
@@ -4638,7 +4983,9 @@ void PBTplOgre::Swap(PBTplOgre* other) {
   InternalSwap(other);
 }
 void PBTplOgre::InternalSwap(PBTplOgre* other) {
-  std::swap(baseinfo_, other->baseinfo_);
+  std::swap(super_, other->super_);
+  std::swap(exp_, other->exp_);
+  droptable_.UnsafeArenaSwap(&other->droptable_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -4654,47 +5001,1340 @@ void PBTplOgre::InternalSwap(PBTplOgre* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // PBTplOgre
 
-// optional .PBTplNPC BaseInfo = 1;
-bool PBTplOgre::has_baseinfo() const {
-  return this != internal_default_instance() && baseinfo_ != NULL;
+// optional .PBTplNPC Super = 1;
+bool PBTplOgre::has_super() const {
+  return this != internal_default_instance() && super_ != NULL;
 }
-void PBTplOgre::clear_baseinfo() {
-  if (GetArenaNoVirtual() == NULL && baseinfo_ != NULL) delete baseinfo_;
-  baseinfo_ = NULL;
+void PBTplOgre::clear_super() {
+  if (GetArenaNoVirtual() == NULL && super_ != NULL) delete super_;
+  super_ = NULL;
 }
-const ::PBTplNPC& PBTplOgre::baseinfo() const {
-  // @@protoc_insertion_point(field_get:PBTplOgre.BaseInfo)
-  return baseinfo_ != NULL ? *baseinfo_
+const ::PBTplNPC& PBTplOgre::super() const {
+  // @@protoc_insertion_point(field_get:PBTplOgre.Super)
+  return super_ != NULL ? *super_
                          : *::PBTplNPC::internal_default_instance();
 }
-::PBTplNPC* PBTplOgre::mutable_baseinfo() {
+::PBTplNPC* PBTplOgre::mutable_super() {
   
-  if (baseinfo_ == NULL) {
-    baseinfo_ = new ::PBTplNPC;
+  if (super_ == NULL) {
+    super_ = new ::PBTplNPC;
   }
-  // @@protoc_insertion_point(field_mutable:PBTplOgre.BaseInfo)
-  return baseinfo_;
+  // @@protoc_insertion_point(field_mutable:PBTplOgre.Super)
+  return super_;
 }
-::PBTplNPC* PBTplOgre::release_baseinfo() {
-  // @@protoc_insertion_point(field_release:PBTplOgre.BaseInfo)
+::PBTplNPC* PBTplOgre::release_super() {
+  // @@protoc_insertion_point(field_release:PBTplOgre.Super)
   
-  ::PBTplNPC* temp = baseinfo_;
-  baseinfo_ = NULL;
+  ::PBTplNPC* temp = super_;
+  super_ = NULL;
   return temp;
 }
-void PBTplOgre::set_allocated_baseinfo(::PBTplNPC* baseinfo) {
-  delete baseinfo_;
-  baseinfo_ = baseinfo;
-  if (baseinfo) {
+void PBTplOgre::set_allocated_super(::PBTplNPC* super) {
+  delete super_;
+  super_ = super;
+  if (super) {
     
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:PBTplOgre.BaseInfo)
+  // @@protoc_insertion_point(field_set_allocated:PBTplOgre.Super)
+}
+
+// optional uint32 Exp = 2;
+void PBTplOgre::clear_exp() {
+  exp_ = 0u;
+}
+::google::protobuf::uint32 PBTplOgre::exp() const {
+  // @@protoc_insertion_point(field_get:PBTplOgre.Exp)
+  return exp_;
+}
+void PBTplOgre::set_exp(::google::protobuf::uint32 value) {
+  
+  exp_ = value;
+  // @@protoc_insertion_point(field_set:PBTplOgre.Exp)
+}
+
+// repeated uint32 DropTable = 3;
+int PBTplOgre::droptable_size() const {
+  return droptable_.size();
+}
+void PBTplOgre::clear_droptable() {
+  droptable_.Clear();
+}
+::google::protobuf::uint32 PBTplOgre::droptable(int index) const {
+  // @@protoc_insertion_point(field_get:PBTplOgre.DropTable)
+  return droptable_.Get(index);
+}
+void PBTplOgre::set_droptable(int index, ::google::protobuf::uint32 value) {
+  droptable_.Set(index, value);
+  // @@protoc_insertion_point(field_set:PBTplOgre.DropTable)
+}
+void PBTplOgre::add_droptable(::google::protobuf::uint32 value) {
+  droptable_.Add(value);
+  // @@protoc_insertion_point(field_add:PBTplOgre.DropTable)
+}
+const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+PBTplOgre::droptable() const {
+  // @@protoc_insertion_point(field_list:PBTplOgre.DropTable)
+  return droptable_;
+}
+::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+PBTplOgre::mutable_droptable() {
+  // @@protoc_insertion_point(field_mutable_list:PBTplOgre.DropTable)
+  return &droptable_;
 }
 
 inline const PBTplOgre* PBTplOgre::internal_default_instance() {
   return &PBTplOgre_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int PBTplSkill::kTempIDFieldNumber;
+const int PBTplSkill::kNameFieldNumber;
+const int PBTplSkill::kDescriptionFieldNumber;
+const int PBTplSkill::kSkillCDFieldNumber;
+const int PBTplSkill::kAddDamageFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+PBTplSkill::PBTplSkill()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_template_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:PBTplSkill)
+}
+
+void PBTplSkill::InitAsDefaultInstance() {
+}
+
+PBTplSkill::PBTplSkill(const PBTplSkill& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:PBTplSkill)
+}
+
+void PBTplSkill::SharedCtor() {
+  name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  description_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&tempid_, 0, reinterpret_cast<char*>(&adddamage_) -
+    reinterpret_cast<char*>(&tempid_) + sizeof(adddamage_));
+  _cached_size_ = 0;
+}
+
+PBTplSkill::~PBTplSkill() {
+  // @@protoc_insertion_point(destructor:PBTplSkill)
+  SharedDtor();
+}
+
+void PBTplSkill::SharedDtor() {
+  name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  description_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+void PBTplSkill::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* PBTplSkill::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return PBTplSkill_descriptor_;
+}
+
+const PBTplSkill& PBTplSkill::default_instance() {
+  protobuf_InitDefaults_template_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<PBTplSkill> PBTplSkill_default_instance_;
+
+PBTplSkill* PBTplSkill::New(::google::protobuf::Arena* arena) const {
+  PBTplSkill* n = new PBTplSkill;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void PBTplSkill::Clear() {
+// @@protoc_insertion_point(message_clear_start:PBTplSkill)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(PBTplSkill, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<PBTplSkill*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&(first), 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(tempid_, adddamage_);
+  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  description_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+
+#undef ZR_HELPER_
+#undef ZR_
+
+}
+
+bool PBTplSkill::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:PBTplSkill)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 TempID = 1;
+      case 1: {
+        if (tag == 8) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &tempid_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_Name;
+        break;
+      }
+
+      // optional string Name = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_Name:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_name()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->name().data(), this->name().length(),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "PBTplSkill.Name"));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_Description;
+        break;
+      }
+
+      // optional string Description = 3;
+      case 3: {
+        if (tag == 26) {
+         parse_Description:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_description()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->description().data(), this->description().length(),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "PBTplSkill.Description"));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(32)) goto parse_SkillCD;
+        break;
+      }
+
+      // optional uint32 SkillCD = 4;
+      case 4: {
+        if (tag == 32) {
+         parse_SkillCD:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &skillcd_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(40)) goto parse_AddDamage;
+        break;
+      }
+
+      // optional uint32 AddDamage = 5;
+      case 5: {
+        if (tag == 40) {
+         parse_AddDamage:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &adddamage_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:PBTplSkill)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:PBTplSkill)
+  return false;
+#undef DO_
+}
+
+void PBTplSkill::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:PBTplSkill)
+  // optional uint32 TempID = 1;
+  if (this->tempid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->tempid(), output);
+  }
+
+  // optional string Name = 2;
+  if (this->name().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->name().data(), this->name().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "PBTplSkill.Name");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->name(), output);
+  }
+
+  // optional string Description = 3;
+  if (this->description().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->description().data(), this->description().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "PBTplSkill.Description");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      3, this->description(), output);
+  }
+
+  // optional uint32 SkillCD = 4;
+  if (this->skillcd() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->skillcd(), output);
+  }
+
+  // optional uint32 AddDamage = 5;
+  if (this->adddamage() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->adddamage(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:PBTplSkill)
+}
+
+::google::protobuf::uint8* PBTplSkill::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:PBTplSkill)
+  // optional uint32 TempID = 1;
+  if (this->tempid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->tempid(), target);
+  }
+
+  // optional string Name = 2;
+  if (this->name().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->name().data(), this->name().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "PBTplSkill.Name");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->name(), target);
+  }
+
+  // optional string Description = 3;
+  if (this->description().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->description().data(), this->description().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "PBTplSkill.Description");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        3, this->description(), target);
+  }
+
+  // optional uint32 SkillCD = 4;
+  if (this->skillcd() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->skillcd(), target);
+  }
+
+  // optional uint32 AddDamage = 5;
+  if (this->adddamage() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->adddamage(), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:PBTplSkill)
+  return target;
+}
+
+size_t PBTplSkill::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:PBTplSkill)
+  size_t total_size = 0;
+
+  // optional uint32 TempID = 1;
+  if (this->tempid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->tempid());
+  }
+
+  // optional string Name = 2;
+  if (this->name().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->name());
+  }
+
+  // optional string Description = 3;
+  if (this->description().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->description());
+  }
+
+  // optional uint32 SkillCD = 4;
+  if (this->skillcd() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->skillcd());
+  }
+
+  // optional uint32 AddDamage = 5;
+  if (this->adddamage() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->adddamage());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void PBTplSkill::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:PBTplSkill)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const PBTplSkill* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const PBTplSkill>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:PBTplSkill)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:PBTplSkill)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void PBTplSkill::MergeFrom(const PBTplSkill& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:PBTplSkill)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void PBTplSkill::UnsafeMergeFrom(const PBTplSkill& from) {
+  GOOGLE_DCHECK(&from != this);
+  if (from.tempid() != 0) {
+    set_tempid(from.tempid());
+  }
+  if (from.name().size() > 0) {
+
+    name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
+  }
+  if (from.description().size() > 0) {
+
+    description_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.description_);
+  }
+  if (from.skillcd() != 0) {
+    set_skillcd(from.skillcd());
+  }
+  if (from.adddamage() != 0) {
+    set_adddamage(from.adddamage());
+  }
+}
+
+void PBTplSkill::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:PBTplSkill)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void PBTplSkill::CopyFrom(const PBTplSkill& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:PBTplSkill)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool PBTplSkill::IsInitialized() const {
+
+  return true;
+}
+
+void PBTplSkill::Swap(PBTplSkill* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void PBTplSkill::InternalSwap(PBTplSkill* other) {
+  std::swap(tempid_, other->tempid_);
+  name_.Swap(&other->name_);
+  description_.Swap(&other->description_);
+  std::swap(skillcd_, other->skillcd_);
+  std::swap(adddamage_, other->adddamage_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata PBTplSkill::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = PBTplSkill_descriptor_;
+  metadata.reflection = PBTplSkill_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// PBTplSkill
+
+// optional uint32 TempID = 1;
+void PBTplSkill::clear_tempid() {
+  tempid_ = 0u;
+}
+::google::protobuf::uint32 PBTplSkill::tempid() const {
+  // @@protoc_insertion_point(field_get:PBTplSkill.TempID)
+  return tempid_;
+}
+void PBTplSkill::set_tempid(::google::protobuf::uint32 value) {
+  
+  tempid_ = value;
+  // @@protoc_insertion_point(field_set:PBTplSkill.TempID)
+}
+
+// optional string Name = 2;
+void PBTplSkill::clear_name() {
+  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+const ::std::string& PBTplSkill::name() const {
+  // @@protoc_insertion_point(field_get:PBTplSkill.Name)
+  return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+void PBTplSkill::set_name(const ::std::string& value) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:PBTplSkill.Name)
+}
+void PBTplSkill::set_name(const char* value) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:PBTplSkill.Name)
+}
+void PBTplSkill::set_name(const char* value, size_t size) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:PBTplSkill.Name)
+}
+::std::string* PBTplSkill::mutable_name() {
+  
+  // @@protoc_insertion_point(field_mutable:PBTplSkill.Name)
+  return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+::std::string* PBTplSkill::release_name() {
+  // @@protoc_insertion_point(field_release:PBTplSkill.Name)
+  
+  return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+void PBTplSkill::set_allocated_name(::std::string* name) {
+  if (name != NULL) {
+    
+  } else {
+    
+  }
+  name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
+  // @@protoc_insertion_point(field_set_allocated:PBTplSkill.Name)
+}
+
+// optional string Description = 3;
+void PBTplSkill::clear_description() {
+  description_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+const ::std::string& PBTplSkill::description() const {
+  // @@protoc_insertion_point(field_get:PBTplSkill.Description)
+  return description_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+void PBTplSkill::set_description(const ::std::string& value) {
+  
+  description_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:PBTplSkill.Description)
+}
+void PBTplSkill::set_description(const char* value) {
+  
+  description_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:PBTplSkill.Description)
+}
+void PBTplSkill::set_description(const char* value, size_t size) {
+  
+  description_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:PBTplSkill.Description)
+}
+::std::string* PBTplSkill::mutable_description() {
+  
+  // @@protoc_insertion_point(field_mutable:PBTplSkill.Description)
+  return description_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+::std::string* PBTplSkill::release_description() {
+  // @@protoc_insertion_point(field_release:PBTplSkill.Description)
+  
+  return description_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+void PBTplSkill::set_allocated_description(::std::string* description) {
+  if (description != NULL) {
+    
+  } else {
+    
+  }
+  description_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), description);
+  // @@protoc_insertion_point(field_set_allocated:PBTplSkill.Description)
+}
+
+// optional uint32 SkillCD = 4;
+void PBTplSkill::clear_skillcd() {
+  skillcd_ = 0u;
+}
+::google::protobuf::uint32 PBTplSkill::skillcd() const {
+  // @@protoc_insertion_point(field_get:PBTplSkill.SkillCD)
+  return skillcd_;
+}
+void PBTplSkill::set_skillcd(::google::protobuf::uint32 value) {
+  
+  skillcd_ = value;
+  // @@protoc_insertion_point(field_set:PBTplSkill.SkillCD)
+}
+
+// optional uint32 AddDamage = 5;
+void PBTplSkill::clear_adddamage() {
+  adddamage_ = 0u;
+}
+::google::protobuf::uint32 PBTplSkill::adddamage() const {
+  // @@protoc_insertion_point(field_get:PBTplSkill.AddDamage)
+  return adddamage_;
+}
+void PBTplSkill::set_adddamage(::google::protobuf::uint32 value) {
+  
+  adddamage_ = value;
+  // @@protoc_insertion_point(field_set:PBTplSkill.AddDamage)
+}
+
+inline const PBTplSkill* PBTplSkill::internal_default_instance() {
+  return &PBTplSkill_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int PBTplDropItem::kItemIDFieldNumber;
+const int PBTplDropItem::kItemNumFieldNumber;
+const int PBTplDropItem::kProbabilityFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+PBTplDropItem::PBTplDropItem()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_template_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:PBTplDropItem)
+}
+
+void PBTplDropItem::InitAsDefaultInstance() {
+}
+
+PBTplDropItem::PBTplDropItem(const PBTplDropItem& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:PBTplDropItem)
+}
+
+void PBTplDropItem::SharedCtor() {
+  ::memset(&itemid_, 0, reinterpret_cast<char*>(&probability_) -
+    reinterpret_cast<char*>(&itemid_) + sizeof(probability_));
+  _cached_size_ = 0;
+}
+
+PBTplDropItem::~PBTplDropItem() {
+  // @@protoc_insertion_point(destructor:PBTplDropItem)
+  SharedDtor();
+}
+
+void PBTplDropItem::SharedDtor() {
+}
+
+void PBTplDropItem::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* PBTplDropItem::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return PBTplDropItem_descriptor_;
+}
+
+const PBTplDropItem& PBTplDropItem::default_instance() {
+  protobuf_InitDefaults_template_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<PBTplDropItem> PBTplDropItem_default_instance_;
+
+PBTplDropItem* PBTplDropItem::New(::google::protobuf::Arena* arena) const {
+  PBTplDropItem* n = new PBTplDropItem;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void PBTplDropItem::Clear() {
+// @@protoc_insertion_point(message_clear_start:PBTplDropItem)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(PBTplDropItem, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<PBTplDropItem*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&(first), 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(itemid_, probability_);
+
+#undef ZR_HELPER_
+#undef ZR_
+
+}
+
+bool PBTplDropItem::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:PBTplDropItem)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 ItemID = 1;
+      case 1: {
+        if (tag == 8) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &itemid_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_ItemNum;
+        break;
+      }
+
+      // optional uint32 ItemNum = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_ItemNum:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &itemnum_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_Probability;
+        break;
+      }
+
+      // optional uint32 Probability = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_Probability:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &probability_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:PBTplDropItem)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:PBTplDropItem)
+  return false;
+#undef DO_
+}
+
+void PBTplDropItem::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:PBTplDropItem)
+  // optional uint32 ItemID = 1;
+  if (this->itemid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->itemid(), output);
+  }
+
+  // optional uint32 ItemNum = 2;
+  if (this->itemnum() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->itemnum(), output);
+  }
+
+  // optional uint32 Probability = 3;
+  if (this->probability() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->probability(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:PBTplDropItem)
+}
+
+::google::protobuf::uint8* PBTplDropItem::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:PBTplDropItem)
+  // optional uint32 ItemID = 1;
+  if (this->itemid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->itemid(), target);
+  }
+
+  // optional uint32 ItemNum = 2;
+  if (this->itemnum() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->itemnum(), target);
+  }
+
+  // optional uint32 Probability = 3;
+  if (this->probability() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->probability(), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:PBTplDropItem)
+  return target;
+}
+
+size_t PBTplDropItem::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:PBTplDropItem)
+  size_t total_size = 0;
+
+  // optional uint32 ItemID = 1;
+  if (this->itemid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->itemid());
+  }
+
+  // optional uint32 ItemNum = 2;
+  if (this->itemnum() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->itemnum());
+  }
+
+  // optional uint32 Probability = 3;
+  if (this->probability() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->probability());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void PBTplDropItem::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:PBTplDropItem)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const PBTplDropItem* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const PBTplDropItem>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:PBTplDropItem)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:PBTplDropItem)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void PBTplDropItem::MergeFrom(const PBTplDropItem& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:PBTplDropItem)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void PBTplDropItem::UnsafeMergeFrom(const PBTplDropItem& from) {
+  GOOGLE_DCHECK(&from != this);
+  if (from.itemid() != 0) {
+    set_itemid(from.itemid());
+  }
+  if (from.itemnum() != 0) {
+    set_itemnum(from.itemnum());
+  }
+  if (from.probability() != 0) {
+    set_probability(from.probability());
+  }
+}
+
+void PBTplDropItem::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:PBTplDropItem)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void PBTplDropItem::CopyFrom(const PBTplDropItem& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:PBTplDropItem)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool PBTplDropItem::IsInitialized() const {
+
+  return true;
+}
+
+void PBTplDropItem::Swap(PBTplDropItem* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void PBTplDropItem::InternalSwap(PBTplDropItem* other) {
+  std::swap(itemid_, other->itemid_);
+  std::swap(itemnum_, other->itemnum_);
+  std::swap(probability_, other->probability_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata PBTplDropItem::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = PBTplDropItem_descriptor_;
+  metadata.reflection = PBTplDropItem_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// PBTplDropItem
+
+// optional uint32 ItemID = 1;
+void PBTplDropItem::clear_itemid() {
+  itemid_ = 0u;
+}
+::google::protobuf::uint32 PBTplDropItem::itemid() const {
+  // @@protoc_insertion_point(field_get:PBTplDropItem.ItemID)
+  return itemid_;
+}
+void PBTplDropItem::set_itemid(::google::protobuf::uint32 value) {
+  
+  itemid_ = value;
+  // @@protoc_insertion_point(field_set:PBTplDropItem.ItemID)
+}
+
+// optional uint32 ItemNum = 2;
+void PBTplDropItem::clear_itemnum() {
+  itemnum_ = 0u;
+}
+::google::protobuf::uint32 PBTplDropItem::itemnum() const {
+  // @@protoc_insertion_point(field_get:PBTplDropItem.ItemNum)
+  return itemnum_;
+}
+void PBTplDropItem::set_itemnum(::google::protobuf::uint32 value) {
+  
+  itemnum_ = value;
+  // @@protoc_insertion_point(field_set:PBTplDropItem.ItemNum)
+}
+
+// optional uint32 Probability = 3;
+void PBTplDropItem::clear_probability() {
+  probability_ = 0u;
+}
+::google::protobuf::uint32 PBTplDropItem::probability() const {
+  // @@protoc_insertion_point(field_get:PBTplDropItem.Probability)
+  return probability_;
+}
+void PBTplDropItem::set_probability(::google::protobuf::uint32 value) {
+  
+  probability_ = value;
+  // @@protoc_insertion_point(field_set:PBTplDropItem.Probability)
+}
+
+inline const PBTplDropItem* PBTplDropItem::internal_default_instance() {
+  return &PBTplDropItem_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int PBTplDropTable::kTempIDFieldNumber;
+const int PBTplDropTable::kDropItemFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+PBTplDropTable::PBTplDropTable()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_template_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:PBTplDropTable)
+}
+
+void PBTplDropTable::InitAsDefaultInstance() {
+}
+
+PBTplDropTable::PBTplDropTable(const PBTplDropTable& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:PBTplDropTable)
+}
+
+void PBTplDropTable::SharedCtor() {
+  tempid_ = 0u;
+  _cached_size_ = 0;
+}
+
+PBTplDropTable::~PBTplDropTable() {
+  // @@protoc_insertion_point(destructor:PBTplDropTable)
+  SharedDtor();
+}
+
+void PBTplDropTable::SharedDtor() {
+}
+
+void PBTplDropTable::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* PBTplDropTable::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return PBTplDropTable_descriptor_;
+}
+
+const PBTplDropTable& PBTplDropTable::default_instance() {
+  protobuf_InitDefaults_template_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<PBTplDropTable> PBTplDropTable_default_instance_;
+
+PBTplDropTable* PBTplDropTable::New(::google::protobuf::Arena* arena) const {
+  PBTplDropTable* n = new PBTplDropTable;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void PBTplDropTable::Clear() {
+// @@protoc_insertion_point(message_clear_start:PBTplDropTable)
+  tempid_ = 0u;
+  dropitem_.Clear();
+}
+
+bool PBTplDropTable::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:PBTplDropTable)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 TempID = 1;
+      case 1: {
+        if (tag == 8) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &tempid_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_DropItem;
+        break;
+      }
+
+      // repeated .PBTplDropItem DropItem = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_DropItem:
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_DropItem:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+                input, add_dropitem()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_loop_DropItem;
+        input->UnsafeDecrementRecursionDepth();
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:PBTplDropTable)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:PBTplDropTable)
+  return false;
+#undef DO_
+}
+
+void PBTplDropTable::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:PBTplDropTable)
+  // optional uint32 TempID = 1;
+  if (this->tempid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->tempid(), output);
+  }
+
+  // repeated .PBTplDropItem DropItem = 2;
+  for (unsigned int i = 0, n = this->dropitem_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      2, this->dropitem(i), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:PBTplDropTable)
+}
+
+::google::protobuf::uint8* PBTplDropTable::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:PBTplDropTable)
+  // optional uint32 TempID = 1;
+  if (this->tempid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->tempid(), target);
+  }
+
+  // repeated .PBTplDropItem DropItem = 2;
+  for (unsigned int i = 0, n = this->dropitem_size(); i < n; i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageNoVirtualToArray(
+        2, this->dropitem(i), false, target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:PBTplDropTable)
+  return target;
+}
+
+size_t PBTplDropTable::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:PBTplDropTable)
+  size_t total_size = 0;
+
+  // optional uint32 TempID = 1;
+  if (this->tempid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->tempid());
+  }
+
+  // repeated .PBTplDropItem DropItem = 2;
+  {
+    unsigned int count = this->dropitem_size();
+    total_size += 1UL * count;
+    for (unsigned int i = 0; i < count; i++) {
+      total_size +=
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->dropitem(i));
+    }
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void PBTplDropTable::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:PBTplDropTable)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const PBTplDropTable* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const PBTplDropTable>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:PBTplDropTable)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:PBTplDropTable)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void PBTplDropTable::MergeFrom(const PBTplDropTable& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:PBTplDropTable)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void PBTplDropTable::UnsafeMergeFrom(const PBTplDropTable& from) {
+  GOOGLE_DCHECK(&from != this);
+  dropitem_.MergeFrom(from.dropitem_);
+  if (from.tempid() != 0) {
+    set_tempid(from.tempid());
+  }
+}
+
+void PBTplDropTable::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:PBTplDropTable)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void PBTplDropTable::CopyFrom(const PBTplDropTable& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:PBTplDropTable)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool PBTplDropTable::IsInitialized() const {
+
+  return true;
+}
+
+void PBTplDropTable::Swap(PBTplDropTable* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void PBTplDropTable::InternalSwap(PBTplDropTable* other) {
+  std::swap(tempid_, other->tempid_);
+  dropitem_.UnsafeArenaSwap(&other->dropitem_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata PBTplDropTable::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = PBTplDropTable_descriptor_;
+  metadata.reflection = PBTplDropTable_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// PBTplDropTable
+
+// optional uint32 TempID = 1;
+void PBTplDropTable::clear_tempid() {
+  tempid_ = 0u;
+}
+::google::protobuf::uint32 PBTplDropTable::tempid() const {
+  // @@protoc_insertion_point(field_get:PBTplDropTable.TempID)
+  return tempid_;
+}
+void PBTplDropTable::set_tempid(::google::protobuf::uint32 value) {
+  
+  tempid_ = value;
+  // @@protoc_insertion_point(field_set:PBTplDropTable.TempID)
+}
+
+// repeated .PBTplDropItem DropItem = 2;
+int PBTplDropTable::dropitem_size() const {
+  return dropitem_.size();
+}
+void PBTplDropTable::clear_dropitem() {
+  dropitem_.Clear();
+}
+const ::PBTplDropItem& PBTplDropTable::dropitem(int index) const {
+  // @@protoc_insertion_point(field_get:PBTplDropTable.DropItem)
+  return dropitem_.Get(index);
+}
+::PBTplDropItem* PBTplDropTable::mutable_dropitem(int index) {
+  // @@protoc_insertion_point(field_mutable:PBTplDropTable.DropItem)
+  return dropitem_.Mutable(index);
+}
+::PBTplDropItem* PBTplDropTable::add_dropitem() {
+  // @@protoc_insertion_point(field_add:PBTplDropTable.DropItem)
+  return dropitem_.Add();
+}
+::google::protobuf::RepeatedPtrField< ::PBTplDropItem >*
+PBTplDropTable::mutable_dropitem() {
+  // @@protoc_insertion_point(field_mutable_list:PBTplDropTable.DropItem)
+  return &dropitem_;
+}
+const ::google::protobuf::RepeatedPtrField< ::PBTplDropItem >&
+PBTplDropTable::dropitem() const {
+  // @@protoc_insertion_point(field_list:PBTplDropTable.DropItem)
+  return dropitem_;
+}
+
+inline const PBTplDropTable* PBTplDropTable::internal_default_instance() {
+  return &PBTplDropTable_default_instance_.get();
 }
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 

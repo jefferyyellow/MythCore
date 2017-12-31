@@ -2,6 +2,7 @@
 #include "itemmodule.h"
 #include "entityplayer.h"
 #include "errcode.h"
+#include "servercommon.h"
 /// 启动服务器
 void CItemModule::onLaunchServer()
 {
@@ -92,3 +93,33 @@ void CItemModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageI
 	}
 }
 
+int	CItemModule::getFromDropTable(int nDropTableID, int& rDropItemNum)
+{
+	// 得到具体的掉落表
+	CTemplate* tpTempalte = CStaticData::searchTpl(nDropTableID);
+	MYTH_ASSERT(tpTempalte == NULL, return 0);
+
+	if (tpTempalte->mTemplateType != emTemplateType_DropTable)
+	{
+		return 0;
+	}
+	CTplDropTable* pTplDropTable = reinterpret_cast<CTplDropTable*>(tpTempalte);
+
+	int nRandom = RAND(MYTH_PERCENT_INT);
+	// 得到掉落ID
+	for (int i = 0; i < MAX_DROP_ITEM; i++)
+	{
+		if (pTplDropTable->mDropItem[i].mItemID == 0)
+		{
+			break;
+		}
+		if (nRandom >= pTplDropTable->mDropItem[i].mProbability)
+		{
+			continue;
+		}
+
+		rDropItemNum = pTplDropTable->mDropItem[i].mItemNum;
+		return pTplDropTable->mDropItem[i].mItemID;
+	}
+	return 0;
+}

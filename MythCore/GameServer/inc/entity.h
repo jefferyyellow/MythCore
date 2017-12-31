@@ -10,6 +10,7 @@
 using namespace Myth;
 class PBNpcSceneInfo;
 #define PLAYER_NAME_LENGTH   32
+class CEntityPlayer;
 class CEntity : public CObj
 {
 public:
@@ -53,6 +54,7 @@ public:
 	EmEntityType	getEntityType() const { return mEntityType; }
 	void			setEntityType(EmEntityType nValue) { mEntityType = nValue; }
 
+	bool			isPlayer(){return mEntityType == emEntityType_Player;}
 protected:
 	/// 看见玩家
 	PLAYER_LIST				mVisiblePlayer;
@@ -90,6 +92,12 @@ public:
 	// 当前魔值
 	int			getCurMP() const { return mCurMP; }
 	void		setCurMP(int nValue) { mCurMP = nValue; }
+
+public:
+	void		reduceHp(CEntityCharacter* pSrcEntity, int nNum);
+	void		addHp(CEntityCharacter* pSrcEntity, int nNum);
+	/// 实体死亡处理
+	virtual void	onDie(CEntityCharacter* pKiller);
 protected:
 	/// 模板ID
 	int					mTempID;
@@ -124,6 +132,10 @@ public:
 public:
 	/// 刷新战斗属性
 	virtual void	refreshFightProperty();
+	/// 实体死亡处理
+	virtual void	onDead(CEntityCharacter* pKiller);
+	/// 死亡掉落
+	void			deadDrop(CEntityPlayer* pPlayer, CTplOgre* pTplOgre);
 };
 
 /// 功能NPC
@@ -144,6 +156,10 @@ public:
 	~CEntityItem()
 	{
 	}
+
+public:
+	short getItemNum()const{return mItemNum;}
+	void setItemNum(short val){mItemNum = val;}
 
 private:
 	/// 道具数目

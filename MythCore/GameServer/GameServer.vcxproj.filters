@@ -40,6 +40,15 @@
     <Filter Include="logicmodule\item">
       <UniqueIdentifier>{25611dfd-f5f9-45f9-ae17-d9078f3bc602}</UniqueIdentifier>
     </Filter>
+    <Filter Include="logicmodule\skillmodule">
+      <UniqueIdentifier>{d5d427dd-c508-4109-9559-fa43b7acf616}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logicmodule\chat">
+      <UniqueIdentifier>{dd57df47-51bf-4ded-be4f-e027da08196a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logicmodule\rank">
+      <UniqueIdentifier>{5be5c953-bbc5-4e25-b055-5b17e08d8f90}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\message\loginmessage.hxx.pb.cc">
@@ -176,6 +185,21 @@
     </ClCompile>
     <ClCompile Include="src\equip.cpp">
       <Filter>logicmodule\item</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skillmodule.cpp">
+      <Filter>logicmodule\skillmodule</Filter>
+    </ClCompile>
+    <ClCompile Include="src\chatmodule.cpp">
+      <Filter>logicmodule\chat</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rankmodule.cpp">
+      <Filter>logicmodule\rank</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skillunit.cpp">
+      <Filter>logicmodule\skillmodule</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\skillmodule.hxx.pb.cc">
+      <Filter>message</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -382,6 +406,30 @@
     </ClInclude>
     <ClInclude Include="inc\tasktype.h">
       <Filter>logicmodule\task</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\skillmodule.h">
+      <Filter>logicmodule\skillmodule</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\chatmodule.h">
+      <Filter>logicmodule\chat</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\rankmodule.h">
+      <Filter>logicmodule\rank</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\skillunit.h">
+      <Filter>logicmodule\skillmodule</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\skilltype.h">
+      <Filter>logicmodule\task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\skillmodule.hxx">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\skillmodule.hxx.pb.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\servercommon.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

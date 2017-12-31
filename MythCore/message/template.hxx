@@ -18,12 +18,12 @@ message PBTplConfigSet
 {
 	repeated PBTplLevelExpConfig		LevelExpConfig			= 1;
 	repeated PBTplVIPConfig				VIPConfig				= 2;	
-
+	repeated PBTplDropTable				Droptable				= 3;
 }
 
 message PBTplSkillSet
 {
-	
+	repeated PBTplSkill					Skill					= 1;
 }
 
 message PBTplNPCSet
@@ -77,5 +77,30 @@ message	PBTplFuncNPC
 // 怪物NPC
 message PBTplOgre
 {
-	PBTplNPC			BaseInfo		= 1;	// NPC基本信息
+	PBTplNPC			Super			= 1;	// NPC基本信息
+	uint32				Exp				= 2;	// 经验
+	repeated uint32		DropTable		= 3;	// 掉落表
+}
+
+message PBTplSkill
+{
+	uint32	TempID = 1;
+	string	Name = 2;
+	string	Description = 3;
+	uint32	SkillCD = 4;
+	uint32	AddDamage = 5;
+}
+
+
+message PBTplDropItem
+{
+	uint32	ItemID = 1;
+	uint32	ItemNum = 2;
+	uint32	Probability = 3;
+}
+
+message PBTplDropTable
+{
+	uint32	TempID = 1;
+	repeated	PBTplDropItem	DropItem = 2;
 }

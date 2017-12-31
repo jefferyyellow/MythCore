@@ -8,6 +8,7 @@ class CEntity;
 class CEntityPlayer;
 class CEntityCharacter;
 class CMythPoint;
+class CEntityNPC;
 using namespace Myth;
 class CMapModule : public CLogicModule, public CSingleton < CMapModule >
 {
@@ -44,7 +45,8 @@ public:
 	void		onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
 public:
 	int			teleportEntity(CEntity* pEntity, unsigned short nMapID, CMythPoint& rPos);
-
+	/// 创建道具
+	CEntityNPC*	createItem(int nItemID, int nItemNum, CEntity* pEntity);
 public:
 	/// 广播给附近的可见玩家
 	void		broadCastVisiblePlayer(CEntity* pEntity, unsigned short nMessageID, Message* pMessage);

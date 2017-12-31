@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <Data>
   <DBInfo>
-    <Host value="192.168.10.13"/>
+    <Host value="127.0.0.1"/>
     <UserName value="root"/>
-    <PassWord value="webgame"/>
+    <PassWord value="wanjie520"/>
     <DefaultDataBase value="Myth"/>
     <Port value="3306"/>
   </DBInfo>

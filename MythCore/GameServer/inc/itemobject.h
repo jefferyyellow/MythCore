@@ -1,6 +1,7 @@
 #ifndef __ITEMOBJECT_H__
 #define __ITEMOBJECT_H__
 #include "obj.h"
+#include "itemtype.h"
 class CItemObject;
 class PBItemObject;
 class CItemFactory
@@ -65,6 +66,8 @@ public:
 	virtual void setFromPB(PBItemObject* pItemObject);
 	virtual void createToPB(PBItemObject* pItemObject);
 
+public:
+	int	getProperty(int nPropertyType);
 
 public:
 	int		getLevel() const { return mLevel; }
@@ -73,5 +76,8 @@ public:
 private:
 	/// 等级
 	int			mLevel;
+	int			mPropertyType[EQUIP_PROPERTY_NUM];			// 属性类型,每种装备最多六种
+	int			mPropertyValue[EQUIP_PROPERTY_NUM];				// 属性值
+
 };
 #endif

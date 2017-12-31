@@ -3,13 +3,14 @@
 /// 刷新基本属性
 void CEntityPlayer::refreshBaseProperty()
 {
-	for (int i = 0; i < emPropertyTypeMax; ++ i)
+	for (int i = emPropertyType_MaxHp; i < emPropertyTypeMax; ++ i)
 	{
 		if (mBaseProperty[i].getDirty())
 		{
 			/// 刷新对应的属性
-			//mBaseProperty[i] = 
-			// mFightProperty[i] = 
+			int nValue = mItemUnit.getEquipList().getProperty(i);
+			mBaseProperty[i].setValue(nValue);
+			refreshFightProperty(i);
 		}
 	}
 }
@@ -17,10 +18,22 @@ void CEntityPlayer::refreshBaseProperty()
 /// 刷新战斗属性
 void CEntityPlayer::refreshFightProperty()
 {
-	for (int i = 0; i < emPropertyTypeMax; ++i)
+	for (int i = emPropertyType_MaxHp; i < emPropertyTypeMax; ++i)
 	{
-		
+		refreshFightProperty(i);
 	}
+}
+
+void CEntityPlayer::refreshFightProperty(int nPropertyType)
+{
+	if (nPropertyType < emPropertyType_MaxHp || nPropertyType >= emPropertyTypeMax)
+	{
+		return;
+	}
+
+	int nPropertyValue = mBaseProperty[nPropertyType].getValue();
+
+	mFightProperty[nPropertyType] = nPropertyValue;
 }
 
 /// 序列化场景信息到PB·

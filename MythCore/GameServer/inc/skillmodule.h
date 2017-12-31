@@ -1,17 +1,18 @@
-#ifndef __ITEMMODULE_H__
-#define __ITEMMODULE_H__
+#ifndef __SKILLMODULE_H__
+#define __SKILLMODULE_H__
 #include "logicmodule.h"
 #include "singleton.h"
 #include "messagefactory.h"
-
 using namespace Myth;
 class CEntityPlayer;
-class CItemModule : public CLogicModule, public CSingleton < CItemModule >
+class CEntityCharacter;
+class CTplSkill;
+class CSkillModule : public CLogicModule, public CSingleton<CSkillModule>
 {
-	friend class CSingleton < CItemModule >;
+	friend class CSingleton<CSkillModule>;
 private:
-	CItemModule();
-	~CItemModule();
+	CSkillModule();
+	~CSkillModule();
 
 public:
 	/// Æô¶¯·þÎñÆ÷
@@ -34,9 +35,11 @@ public:
 	virtual	void onTimer(unsigned int nTickOffset);
 
 public:
-	void onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
+	void		onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
 
 public:
-	int	getFromDropTable(int nDropTableID, int& rDropItemNum);
+	void		onUseSkillRequest(CEntityPlayer* pPlayer, Message* pMessage);
+
+	int			getSkillDamage(CEntityCharacter* pSrcEntity, CTplSkill* pTplSkill, int nSkillLevel, CEntityCharacter* pTargetEntity);
 };
 #endif

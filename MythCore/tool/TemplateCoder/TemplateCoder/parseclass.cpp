@@ -746,8 +746,8 @@ void CParseClass::writeClassHeadFile(CClass* pClass, FILE* pFile)
 	getRealClassName(pClass->getName(), acClassName, sizeof(acClassName));
 
 	char acBuffer[MAX_WRITE_BUFFER] = { 0 };
-	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tvoid SetFromPB(PB%s* pbData);\n", acBuffer, acClassName);
-	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tvoid CreateToPB(PB%s* pbData);\n", acBuffer, acClassName);
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tvoid setFromPB(PBTpl%s* pbData);\n", acBuffer, acClassName);
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tvoid createToPB(PBTpl%s* pbData);\n", acBuffer, acClassName);
 	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\n", acBuffer);
 	fwrite(acBuffer, strlen(acBuffer), 1, pFile);
 
@@ -801,7 +801,7 @@ void CParseClass::writeSetFromPB(CClass* pClass, FILE* pFile)
 	getClassDomainName(pClass, acClassDomainName, sizeof(acClassDomainName)-1);
 
 	char acBuffer[MAX_WRITE_BUFFER] = { 0 };
-	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%svoid %sSetFromPB(PB%s* pbData)\n", acBuffer, acClassDomainName, acClassName);
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%svoid %ssetFromPB(PBTpl%s* pbData)\n", acBuffer, acClassDomainName, acClassName);
 	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s{\n", acBuffer);
 
 	// 如果有父类
@@ -819,7 +819,7 @@ void CParseClass::writeSetFromPB(CClass* pClass, FILE* pFile)
 			getRealClassName(pClass->getParentName(), acClassName, sizeof(acClassName));
 
 			// 自定义类型
-			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t%s::SetFromPB(pbData->mutable_super());\n", acBuffer, pClass->getParentName());
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t%s::setFromPB(pbData->mutable_super());\n", acBuffer, pClass->getParentName());
 		}
 	}
 
@@ -861,7 +861,7 @@ void CParseClass::writeSetFromPB(CClass* pClass, FILE* pFile)
 					if (NULL == pPBType)
 					{
 						// 自定义类型
-						_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t%s[i].SetFromPB(pbData->mutable_%s(i));\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName));
+						_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t%s[i].setFromPB(pbData->mutable_%s(i));\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName));
 					}
 					else
 					{
@@ -885,7 +885,7 @@ void CParseClass::writeSetFromPB(CClass* pClass, FILE* pFile)
 					if (NULL == pPBType)
 					{
 						// 自定义类型
-						_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t\t%s[i][j].SetFromPB(pbData->mutable_%s(%s));\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName), acRealVariableName);
+						_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t\t%s[i][j].setFromPB(pbData->mutable_%s(%s));\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName), acRealVariableName);
 					}
 					else
 					{
@@ -905,7 +905,7 @@ void CParseClass::writeSetFromPB(CClass* pClass, FILE* pFile)
 		if (NULL == pPBType)
 		{
 			// 自定义类型
-			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t%s.SetFromPB(pbData->mutable_%s());\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName));
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t%s.setFromPB(pbData->mutable_%s());\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName));
 		}
 		else
 		{
@@ -929,7 +929,7 @@ void CParseClass::writeCreatePB(CClass* pClass, FILE* pFile)
 
 	char acBuffer[MAX_WRITE_BUFFER] = { 0 };
 
-	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%svoid %sCreateToPB(PB%s* pbData)\n", acBuffer, acClassDomainName, acClassName);
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%svoid %screateToPB(PBTpl%s* pbData)\n", acBuffer, acClassDomainName, acClassName);
 	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s{\n", acBuffer);
 
 
@@ -950,7 +950,7 @@ void CParseClass::writeCreatePB(CClass* pClass, FILE* pFile)
 			getRealClassName(pClass->getParentName(), acClassName, sizeof(acClassName));
 
 			// 自定义类型
-			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t%s::CreateToPB(pbData->mutable_super());\n", acBuffer, pClass->getParentName());
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t%s::createToPB(pbData->mutable_super());\n", acBuffer, pClass->getParentName());
 		}
 	}
 
@@ -992,7 +992,7 @@ void CParseClass::writeCreatePB(CClass* pClass, FILE* pFile)
 					if (NULL == pPBType)
 					{
 						// 自定义类型
-						_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t%s[i].CreateToPB(pbData->add_%s());\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName));
+						_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t%s[i].createToPB(pbData->add_%s());\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName));
 					}
 					else
 					{
@@ -1014,7 +1014,7 @@ void CParseClass::writeCreatePB(CClass* pClass, FILE* pFile)
 					if (NULL == pPBType)
 					{
 						// 自定义类型
-						_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t\t%s[i][j].CreateToPB(pbData->add_%s());\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName));
+						_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t\t%s[i][j].createToPB(pbData->add_%s());\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName));
 					}
 					else
 					{
@@ -1034,7 +1034,7 @@ void CParseClass::writeCreatePB(CClass* pClass, FILE* pFile)
 		if (NULL == pPBType)
 		{
 			// 自定义类型
-			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t%s.CreateToPB(pbData->mutable_%s());\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName));
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t%s.createToPB(pbData->mutable_%s());\n", acBuffer, pVariable->getName(), _strlwr(acRealVariableName));
 		}
 		else
 		{
@@ -1086,7 +1086,7 @@ void CParseClass::writeClassPBFile(CClass* pClass, FILE* pFile)
 	getRealClassName(pClass->getName(), acClassName, sizeof(acClassName));
 
 	char acBuffer[MAX_WRITE_BUFFER] = { 0 };
-	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%smessage PB%s\n", acBuffer, acClassName);
+	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%smessage PBTpl%s\n", acBuffer, acClassName);
 	_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s{\n", acBuffer);
 	
 	int nFieldCount = 1;
@@ -1105,7 +1105,7 @@ void CParseClass::writeClassPBFile(CClass* pClass, FILE* pFile)
 			getRealClassName(pClass->getParentName(), acClassName, sizeof(acClassName));
 
 			// 自定义类型
-			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t\t\tPB%s\t%s\t=%d;\n", acBuffer, acClassName, "Super", nFieldCount);
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\t\t\t\tPBTpl%s\t%s\t=%d;\n", acBuffer, acClassName, "Super", nFieldCount);
 		}
 		++ nFieldCount;
 	}
@@ -1142,7 +1142,7 @@ void CParseClass::writeClassPBFile(CClass* pClass, FILE* pFile)
 			getRealClassName(pVariable->getType(), acClassName, sizeof(acClassName));
 
 			// 自定义类型
-			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tPB%s\t%s\t=%d;\n", acBuffer, acClassName, pRealVariableName, nFieldCount);
+			_snprintf_s(acBuffer, sizeof(acBuffer)-1, "%s\tPBTpl%s\t%s\t=%d;\n", acBuffer, acClassName, pRealVariableName, nFieldCount);
 		}
 		else
 		{

@@ -90,3 +90,19 @@ int CEquipList::unequip(CEntityPlayer& rPlayer, int nEquipPart, CItemBox& rBox, 
 	rBox.setItem(nBoxIndex, pItemObject->getObjID(), pItemObject->GetItemID());
 	return SUCCESS;
 }
+
+int CEquipList::getProperty(int nPropertyType)
+{
+	int nPropertyValue = 0;
+	for (int i = 0; i < MAX_EQUIP_LIST; ++ i)
+	{
+		CItemEquip* pEquip = reinterpret_cast<CItemEquip*>(getItem(i));
+		if (NULL == pEquip)
+		{
+			continue;
+		}
+		nPropertyValue += pEquip->getProperty(nPropertyType);
+	}
+
+	return nPropertyValue;
+}

@@ -97,6 +97,8 @@ public:
 
 	/// 创建NPC
 	CEntityNPC*		createNPC(int nNPCID, CMythPoint& rPos);
+	/// 创建道具
+	CEntityNPC*		createItem(int nItemID, int nNum, CMythPoint& rPos);
 	/// 创建玩家
 	CEntityPlayer*	createPlayer(CEntityPlayer* pPlayer);
 	/// 

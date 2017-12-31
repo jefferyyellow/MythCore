@@ -369,21 +369,6 @@ int CItemBox::hasItem(int nItemID)
 	return nNum;
 }
 
-/// 得到道具
-CItemObject* CItemBox::getItem(unsigned int nIndex)
-{
-	if (nIndex >= (unsigned int)mSize)
-	{
-		return NULL;
-	}
-	if (INVALID_OBJ_ID == mItemObjID[nIndex])
-	{
-		return NULL;
-	}
-
-	return reinterpret_cast<CItemObject*>(CObjPool::Inst()->getObj(mItemObjID[nIndex]));
-}
-
 /// 序列化
 void CItemBox::createToPB(PBItemList* pbItemList)
 {

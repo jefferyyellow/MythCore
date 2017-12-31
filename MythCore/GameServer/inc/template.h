@@ -19,6 +19,9 @@ class PBTplNPC;
 class PBTplFuncNPC;
 class PBTplOgre;
 class PBEquip;
+class PBTplDropItem;
+class PBTplDropTable;
+class PBTplSkill;
 #define TEMPLATE_SET_FROM_PB(ClassName, PBParent, PBName) \
 	{ \
 			for (int i = 0; i < (int)PBParent->PBName##_size(); ++ i) \
@@ -63,20 +66,30 @@ public:
 enum EmTemplateType
 {
 	emTemplateType_None				= 0,
-	emTemplateType_FuncNPC			= 1,		// 功能NPC
+	emTemplateType_FuncNpc			= 1,		// 功能NPC
 	emTemplateType_Ogre				= 2,		// 怪物
 	emTemplateType_Item				= 3,		// 道具
+	emTemplateType_DropTable		= 4,		// 掉落表
 	emTemplateTypeMax
 };
 
 
 enum EmPropertyType
 {
-	emPropertyType_MaxHP			= 0,	// 最大血值
-	emPropertyType_MaxMP			= 1,	// 最大魔值
-	emPropertyType_Attack			= 2,	// 攻击力
-	emPropertyType_Defence			= 3,	// 防御力
+	emPropertyType_None				= 0,	// 无
+	emPropertyType_MaxHp			= 1,	// 最大血值
+	emPropertyType_MaxMp			= 2,	// 最大魔值
+	emPropertyType_Attack			= 3,	// 攻击力
+	emPropertyType_Defence			= 4,	// 防御力
 	emPropertyTypeMax
+};
+
+enum EmBuffEffect
+{
+	emBuffEffect_None				= 0,	// 无
+	emBuffEffect_Hp					= 1,	// 加/减血
+	emBuffEffect_Mp					= 2,	// 加/减魔
+	emBuffEffectMax
 };
 
 /// 主要规则，所以的模板都以CTpl开头
@@ -161,8 +174,8 @@ public:
 
 // ********************************************************************** //
 // BEGINMAKE
-// virtual	= false						## 代表不生成到数据库中
-// name		= 装备						## 模版名称
+// virtual	= false						## 
+// name		= z装备						## 模版名称
 // path		=							## 路径
 // parent	=							## 父亲模版
 // ********************************************************************** //
@@ -198,7 +211,7 @@ public:
 #define MAX_LEVEL		100
 // ********************************************************************** //
 // BEGINMAKE
-// virtual	= false						## 代表不生成到数据库中
+// virtual	= false						##
 // name		= d等级经验表				## 模版名称
 // path		= Config/d等级经验表		## 路径
 // parent	=							## 父亲模版
@@ -229,7 +242,7 @@ public:
 #define MAX_VIP_LEVEL 20
 // ********************************************************************** //
 // BEGINMAKE
-// virtual	= false						## 代表不生成到数据库中
+// virtual	= false						##
 // name		= VIP经验表					## 模版名称
 // path		= Config/VIP经验表			## 路径
 // parent	=							## 父亲模版
@@ -283,7 +296,7 @@ public:
 
 // ********************************************************************** //
 // BEGINMAKE
-// virtual	= false						## 代表不生成到数据库中
+// virtual	= false						##
 // name		= g功能NPC					## 模版名称
 // path		= NPC/g功能NPC				## 路径
 // parent	= NPC基本信息				## 父亲模版
@@ -294,7 +307,7 @@ public:
 	CTplFuncNPC()
 	{
 #ifndef TEMPEDIT
-		mTemplateType = emTemplateType_FuncNPC;
+		mTemplateType = emTemplateType_FuncNpc;
 #endif
 	}
 	~CTplFuncNPC(){}
@@ -307,13 +320,25 @@ public:
 
 // ********************************************************************** //
 // BEGINMAKE
-// virtual	= false						## 代表不生成到数据库中
+// virtual	= false						##
 // name		= g怪物						## 模版名称
 // path		= NPC/g怪物					## 路径
 // parent	= NPC基本信息				## 父亲模版
 // ********************************************************************** //
+#define MAX_OGRE_DROP	4
 class CTplOgre : public CTplNPC
 {
+public:
+	// FieldName: 杀怪经验
+	// FieldType: INT4
+	// Type:	  EDITNUMBER(1,100000000)
+	int			mExp;
+
+	// FieldName: 怪物掉落
+	// FieldType: INT4
+	// Type:	  TEMPPATH
+	int			mDropTable[MAX_OGRE_DROP];
+
 public:
 	CTplOgre()
 	{
@@ -326,11 +351,104 @@ public:
 	void	setFromPB(PBTplOgre* pbOgre);
 	void	createToPB(PBTplOgre* pbOgre);
 };
-
-#ifdef TEMPEDIT
-#pragma pack(pop)
-#endif
 // ********************************************************************** //
 // ENDMAKE
 // ********************************************************************** //
+
+// ********************************************************************** //
+// BEGINMAKE
+// virtual	= false						## 
+// name		= j技能						## 模版名称
+// path		= j技能/j技能				## 路径
+// parent	=							## 父亲模版
+// ********************************************************************** //
+class CTplSkill : public CTemplate
+{
+public:
+	// FieldName: $技能名称
+	// FieldType: STRING32
+	// Type:	  EDITSTRING
+	char	mName[STRING32];
+
+	// FieldName: $技能描述
+	// FieldType: STRING256
+	// Type:	  EDITSTRING
+	char	mDescription[STRING256];
+
+	// FieldName: 技能CD(秒)
+	// FieldType: INT4
+	// Type:	  EDITNUMBER(1,10000)
+	int		mSkillCD;
+
+	// FieldName: 附加伤害
+	// FieldType: INT4
+	// Type:	  EDITNUMBER(1,10000)
+	int		mAddDamage;
+
+public:
+	CTplSkill(){};
+	~CTplSkill(){};
+	void setFromPB(PBTplSkill* pbData);
+	void createToPB(PBTplSkill* pbData);
+};
+// ********************************************************************** //
+// ENDMAKE
+// ********************************************************************** //
+
+// ********************************************************************** //
+// BEGINMAKE
+// virtual	= false						## 
+// name		= d掉落表					## 模版名称
+// path		= d掉落表					## 路径
+// parent	=							## 父亲模版
+// ********************************************************************** //
+#define MAX_DROP_ITEM		16	// 最大的掉落道具
+class CTplDropTable : public CTemplate
+{
+public:
+	class CDropItem
+	{
+	public:
+		// FieldName: 道具ID
+		// FieldType: INT4
+		// Type:	  TEMPPATH
+		int		mItemID;
+
+		// FieldName: 道具数目
+		// FieldType: INT4
+		// Type:	  EDITNUMBER(1,10000)
+		int		mItemNum;
+
+		// FieldName: 几率
+		// FieldType: INT4
+		// Type:	  EDITNUMBER(1,10000)
+		int		mProbability;
+
+		void setFromPB(PBTplDropItem* pbData);
+		void createToPB(PBTplDropItem* pbData);
+
+	};
+
+	// FieldName: 第%d个掉落
+	// FieldType: CLASS
+	// Type:	  CLASS
+	CDropItem	mDropItem[MAX_DROP_ITEM];
+
+public:
+	CTplDropTable()
+	{
+#ifndef TEMPEDIT
+		mTemplateType = emTemplateType_DropTable;
+#endif
+	};
+	~CTplDropTable(){};
+	void setFromPB(PBTplDropTable* pbData);
+	void createToPB(PBTplDropTable* pbData);
+};
+// ********************************************************************** //
+// ENDMAKE
+// ********************************************************************** //
+#ifdef TEMPEDIT
+#pragma pack(pop)
+#endif
 #endif

@@ -31,8 +31,6 @@ public:
 	int		removeItem(unsigned int nIndex, int nNum);
 	/// 拥有道具的数目
 	int		hasItem(int nItemID);
-	/// 得到道具
-	CItemObject* getItem(unsigned int nIndex);
 	/// 序列化
 	void createToPB(PBItemList* pbItemList);
 	/// 反序列化

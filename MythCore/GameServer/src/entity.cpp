@@ -1,6 +1,9 @@
 #include "entity.h"
 #include "mapmodule.hxx.pb.h"
 #include "objpool.h"
+#include "entityplayer.h"
+#include "itemmodule.h"
+#include "mapmodule.h"
 CEntity::PLAYER_ALLOC CEntity::mVisiblePlayerAlloc;
 void CEntity::addVisiblePlayer(CEntity* pEntity)
 {
@@ -66,6 +69,37 @@ CEntity* CEntity::createEntity(EmEntityType eType)
 	return NULL;
 }
 
+void CEntityCharacter::reduceHp(CEntityCharacter* pSrcEntity, int nNum)
+{
+	if (mCurHP <= 0)
+	{
+		return;
+	}
+
+	mCurHP -= nNum;
+	if (mCurHP <= 0)
+	{
+		onDie(pSrcEntity);
+	}
+}
+
+void CEntityCharacter::addHp(CEntityCharacter* pSrcEntity, int nNum)
+{
+	if (mCurHP <= 0)
+	{
+		return;
+	}
+
+	mCurHP += nNum;
+}
+
+void CEntityCharacter::onDie(CEntityCharacter* pKiller)
+{
+	// 删除死亡应该去掉的BUFF
+	// 设置死亡状态
+	// 死亡计时器处理
+
+}
 /// 序列化场景信息到PB·
 void CEntityNPC::serializeSceneInfoToPB(PBNpcSceneInfo* pbNpcInfo)
 {
@@ -83,5 +117,55 @@ void CEntityNPC::serializeSceneInfoToPB(PBNpcSceneInfo* pbNpcInfo)
 /// 刷新战斗属性
 void	CEntityOgre::refreshFightProperty()
 {
+
+}
+
+// 暂时没有考虑组队的问题，实现一个简单的
+void CEntityOgre::onDead(CEntityCharacter* pKiller)
+{
+	if (NULL == pKiller || !(pKiller->isPlayer()))
+	{
+		return;
+	}
+
+	CTplOgre* pTplOgre = reinterpret_cast<CTplOgre*>(CStaticData::searchTpl(getTempID()));
+	if (NULL == pTplOgre)
+	{
+		return;
+	}
+
+
+	// 杀怪经验
+	CEntityPlayer* pPlayer = reinterpret_cast<CEntityPlayer*>(pKiller);
+	deadDrop(pPlayer, pTplOgre);
+
+	
+	
+	// 怪物掉落
+
+	// 任务的杀怪计数
+	pPlayer->getTaskUnit().refreshTask(emComplete_KillOgre, getTempID(), 1);
+}
+
+
+/// 死亡掉落
+void CEntityOgre::deadDrop(CEntityPlayer* pPlayer, CTplOgre* pTplOgre)
+{
+	if (NULL == pPlayer || NULL == pTplOgre)
+	{
+		return;
+	}
+	pPlayer->getPropertyUnit().obtainExp(pTplOgre->mExp);
+
+	int nItemNum = 0;
+	for (int i = 0; i < MAX_OGRE_DROP; ++ i)
+	{
+		if (0 == pTplOgre->mDropTable[i])
+		{
+			break;
+		}
+		int nItemID = CItemModule::Inst()->getFromDropTable(pTplOgre->mDropTable[i], nItemNum);
+		CMapModule::Inst()->createItem(nItemID, nItemNum, this);
+	}
 
 }

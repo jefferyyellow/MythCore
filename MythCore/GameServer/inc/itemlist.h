@@ -152,6 +152,19 @@ public:
 
 	}
 
+	CItemObject* getItem(unsigned int nIndex)
+	{
+		if (nIndex >= (unsigned int)Capacity)
+		{
+			return NULL;
+		}
+		if (INVALID_OBJ_ID == mItemObjID[nIndex])
+		{
+			return NULL;
+		}
+
+		return reinterpret_cast<CItemObject*>(CObjPool::Inst()->getObj(mItemObjID[nIndex]));
+	}
 protected:
 	/// Obj IDÁÐ±í
 	int		mItemObjID[Capacity];

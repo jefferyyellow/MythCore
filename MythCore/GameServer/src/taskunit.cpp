@@ -550,7 +550,7 @@ void CTaskUnit::removeTaskItem(int nTaskID, int nItemIndex)
 }
 
 // 刷新任务条件
-void CTaskUnit::refreshTask(CEntityPlayer* pPlayer, EmCompleteCondition eCondition, int nParam0, int nParam1, int nParam2, int nParam3)
+void CTaskUnit::refreshTask(EmCompleteCondition eCondition, int nParam0, int nParam1, int nParam2, int nParam3)
 {
 	for (unsigned int i = 0; i < mTaskList.size(); ++i)
 	{

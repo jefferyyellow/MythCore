@@ -295,23 +295,26 @@ void CMap::onRemoveEntityFromMap(CEntity* pEntity)
 /// 创建NPC
 CEntityNPC* CMap::createNPC(int nNPCID, CMythPoint& rPos)
 {
-	CTplNPC* pTplNPC = (CTplNPC*)CStaticData::searchTpl(nNPCID);
-	if (NULL == pTplNPC)
+	CTemplate* pTemplate = (CTemplate*)CStaticData::searchTpl(nNPCID);
+	if (NULL == pTemplate)
 	{
 		return NULL;
 	}
 	EmEntityType eEntityType = emEntityType_None;
-	if (emTemplateType_FuncNPC == pTplNPC->mTemplateType)
+	if (emTemplateType_FuncNpc == pTemplate->mTemplateType)
 	{
 		eEntityType = emEntityType_FuncNPC;
 	}
-	else
+	else if (emEntityType_Ogre == pTemplate->mTemplateType)
 	{
 		eEntityType = emEntityType_Ogre;
 	}
+	else
+	{
+		return NULL;
+	}
 
-
-	CEntityNPC* pEntityNPC = (CEntityNPC*)CEntity::createEntity(eEntityType);
+	CEntityNPC* pEntityNPC = reinterpret_cast<CEntityNPC*>(CEntity::createEntity(eEntityType));
 	if (NULL == pEntityNPC)
 	{
 		return NULL;
@@ -322,6 +325,23 @@ CEntityNPC* CMap::createNPC(int nNPCID, CMythPoint& rPos)
 	onCreateEntityToMap(pEntityNPC);
 	return pEntityNPC;
 }
+
+/// 创建道具
+CEntityNPC* CMap::createItem(int nItemID, int nNum, CMythPoint& rPos)
+{
+	EmEntityType eEntityType = emEntityType_Item;
+	CEntityItem* pEntityItem = reinterpret_cast<CEntityItem*>(CEntity::createEntity(eEntityType));
+	if (NULL == pEntityItem)
+	{
+		return NULL;
+	}
+	pEntityItem->setTempID(nItemID);
+	pEntityItem->setPos(rPos);
+	pEntityItem->setItemNum(nNum);
+	addEntityToMapUnit(pEntityItem);
+	onCreateEntityToMap(pEntityItem);
+}
+
 
 /// 创建玩家
 CEntityPlayer* CMap::createPlayer(CEntityPlayer* pPlayer)

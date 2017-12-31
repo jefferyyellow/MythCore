@@ -37,7 +37,7 @@ void CSceneJob::doing(int uParam)
 		}
 		case emServerStateRun:
 		{
-			doLaunch();
+			doRun();
 			break;
 		}
 		case emServerStateExit:
@@ -59,7 +59,7 @@ void CSceneJob::doing(int uParam)
 void CSceneJob::doInit()
 {
 	launchServer();
-	printf("Begin Launch Server");
+	printf("Begin Launch Server\n");
 	mServerState = emServerStateLaunch;
 }
 
@@ -80,7 +80,7 @@ void CSceneJob::doLaunch()
 	}
 	if (checkLaunch())
 	{
-		printf("Server Launch Complete");
+		printf("Server Launch Complete\n");
 		launchComplete();
 		mServerState = emServerStateRun;
 	}
@@ -128,7 +128,7 @@ void CSceneJob::doExit()
 	}
 	if (0 == mPlayerList.size())
 	{
-		printf("All Player Kick Out");
+		printf("All Player Kick Out\n");
 	}
 }
 

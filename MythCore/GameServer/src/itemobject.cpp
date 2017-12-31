@@ -86,3 +86,17 @@ void CItemEquip::createToPB(PBItemObject* pItemObject)
 
 	pbItemEqup->set_level(mLevel);
 }
+
+int	CItemEquip::getProperty(int nPropertyType)
+{
+	int nPropertyValue = 0;
+	for (int i = 0; i < EQUIP_PROPERTY_NUM; ++ i)
+	{
+		if (nPropertyType == mPropertyType[i])
+		{
+			nPropertyValue = mPropertyValue[i];
+		}
+	}
+
+	return nPropertyValue;
+}
