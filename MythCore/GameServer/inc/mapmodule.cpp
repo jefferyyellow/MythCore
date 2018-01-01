@@ -96,6 +96,22 @@ int CMapModule::teleportEntity(CEntity* pEntity, unsigned short nMapID, CMythPoi
 	return SUCCESS;
 }
 
+/// 创建实体
+CEntity* CMapModule::createEntity(CEntityCreator* pCreator)
+{
+	if (NULL == pCreator)
+	{
+		return;
+	}
+
+	CMap* pMap = CMapManager::Inst()->getMap(pCreator->mLineID, pCreator->mMapID, pCreator->mMapIndex);
+	if (NULL == pMap)
+	{
+		return;
+	}
+	pMap->createEntity(pCreator);
+}
+
 /// 创建道具
 CEntityNPC* CMapModule::createItem(int nItemID, int nItemNum, CEntity* pEntity)
 {

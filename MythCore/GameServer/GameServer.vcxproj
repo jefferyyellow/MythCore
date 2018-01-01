@@ -149,6 +149,7 @@
     <ClInclude Include="inc\dbmessage.h" />
     <ClInclude Include="inc\dbmodule.h" />
     <ClInclude Include="inc\entity.h" />
+    <ClInclude Include="inc\entitycreator.h" />
     <ClInclude Include="inc\entityplayer.h" />
     <ClInclude Include="inc\entitytype.h" />
     <ClInclude Include="inc\equip.h" />

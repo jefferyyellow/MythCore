@@ -349,6 +349,17 @@ CEntityPlayer* CMap::createPlayer(CEntityPlayer* pPlayer)
 	return NULL;
 }
 
+/// 创建实体
+CEntity* CMap::createEntity(CEntityCreator* pCreator)
+{
+	if (NULL == pCreator)
+	{
+		return;
+	}
+
+
+}
+
 /// 通知其他玩家创建该玩家
 void CMap::createPlayer2PlayerList(CEntityPlayer* pPlayer, std::vector<CEntityPlayer*>& rPlayerList)
 {

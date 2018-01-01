@@ -431,5 +431,8 @@
     <ClInclude Include="inc\servercommon.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="inc\entitycreator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

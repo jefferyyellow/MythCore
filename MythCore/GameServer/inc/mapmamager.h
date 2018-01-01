@@ -101,7 +101,8 @@ public:
 	CEntityNPC*		createItem(int nItemID, int nNum, CMythPoint& rPos);
 	/// 创建玩家
 	CEntityPlayer*	createPlayer(CEntityPlayer* pPlayer);
-	/// 
+	/// 创建实体
+	CEntity*		createEntity(CEntityCreator* pCreator);
 
 	/// 通知其他玩家创建该玩家
 	void		createPlayer2PlayerList(CEntityPlayer* pPlayer, std::vector<CEntityPlayer*>& rPlayerList);
