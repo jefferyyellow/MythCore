@@ -15,7 +15,7 @@ bool CGameServer::init()
 	// 优先初始化这两个变量
 	mCurrTime = time(NULL);
 	mTickCount = GetTickCount64();
-	srand(mCurrTime);
+	srand((unsigned int)mCurrTime);
 
 	bool bResult = initLog();
 	if (!bResult)

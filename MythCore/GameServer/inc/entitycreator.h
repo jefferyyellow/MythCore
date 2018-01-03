@@ -1,6 +1,7 @@
 #ifndef __ENTITYCREATOR_H__
 #define __ENTITYCREATOR_H__
-
+#include "entitytype.h"
+#include "servercommon.h"
 /// 创建器基类
 class CEntityCreator
 {
@@ -16,8 +17,14 @@ public:
 	~CEntityCreator(){};
 
 public:
+	EmEntityType getType()const{return mType;}
+	void setType(EmEntityType val){	mType = val;}
+
+protected:
 	/// 实体类型
 	EmEntityType			mType;
+
+public:
 	/// 模板ID
 	int						mTempID;
 	/// 线ID
@@ -34,13 +41,13 @@ public:
 class CItemCreator : public CEntityCreator
 {
 public:
-	COgreCreator()
+	CItemCreator()
 	{
 		mType = emEntityType_Item;
 		mNum = 0;
 		memset(mOwnerID, 0, sizeof(mOwnerID));
 	}
-	~COgreCreator(){}
+	~CItemCreator(){}
 public:
 	/// 道具数目
 	int						mNum;
@@ -48,4 +55,23 @@ public:
 	int						mOwnerID[TEAM_MEM_NUM];
 };
 
+class CNpcCreator : public CEntityCreator
+{
+public:
+	CNpcCreator()
+	{
+		mType = emEntityType_FuncNPC;
+	}
+	~CNpcCreator(){}
+};
+
+class COgreCreator : public CEntityCreator
+{
+public:
+	COgreCreator()
+	{
+		mType = emEntityType_Item;
+	}
+	~COgreCreator(){}
+};
 #endif

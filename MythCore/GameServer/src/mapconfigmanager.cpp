@@ -3,6 +3,7 @@
 #include "locallogjob.h"
 #include "errcode.h"
 #include "mapmamager.h"
+#include "entitycreator.h"
 using namespace tinyxml2;
 bool CMapConfig::loadMapConfig(unsigned short nMapID)
 {
@@ -124,10 +125,31 @@ int CMapConfig::createMapFromConfig(CMap* pMap)
 	{
 		return -1;
 	}
+	CNpcCreator		tNpcCreator;
+	COgreCreator	tOgreCreator;
 	// ´´½¨NPC
 	for (unsigned int nIndex = 0; nIndex < mMapNPC.size(); ++ nIndex)
 	{
-		pMap->createNPC(mMapNPC[nIndex].mTempID, mMapNPC[nIndex].mPos);
+		CTemplate* pTemplate = (CTemplate*)CStaticData::searchTpl(mMapNPC[nIndex].mTempID);
+		if (NULL == pTemplate)
+		{
+			continue;
+		}
+		CEntityCreator* pCreator = NULL;
+		
+		if (emTemplateType_FuncNpc == pTemplate->mTemplateType)
+		{
+			pCreator = &tNpcCreator;
+		}
+		else if (emEntityType_Ogre == pTemplate->mTemplateType)
+		{
+			pCreator = &tOgreCreator;
+		}
+
+		pCreator->mTempID = mMapNPC[nIndex].mTempID;
+		pCreator->mPos = mMapNPC[nIndex].mPos;
+
+		pMap->createEntity(pCreator);
 	}
 
 	return SUCCESS;

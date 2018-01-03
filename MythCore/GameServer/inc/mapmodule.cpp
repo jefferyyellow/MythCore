@@ -9,6 +9,7 @@
 #include "mapmodule.hxx.pb.h"
 #include "mapconfigmanager.h"
 #include "errcode.h"
+#include "entitycreator.h"
 
 /// 启动服务器
 void CMapModule::onLaunchServer()
@@ -101,32 +102,15 @@ CEntity* CMapModule::createEntity(CEntityCreator* pCreator)
 {
 	if (NULL == pCreator)
 	{
-		return;
+		return NULL;
 	}
 
 	CMap* pMap = CMapManager::Inst()->getMap(pCreator->mLineID, pCreator->mMapID, pCreator->mMapIndex);
 	if (NULL == pMap)
 	{
-		return;
-	}
-	pMap->createEntity(pCreator);
-}
-
-/// 创建道具
-CEntityNPC* CMapModule::createItem(int nItemID, int nItemNum, CEntity* pEntity)
-{
-	if (NULL == pEntity)
-	{
 		return NULL;
 	}
-
-	CMap* pMap = CMapManager::Inst()->getMap(pEntity->getLineID(), pEntity->getMapID(), pEntity->getMapIndex());
-	if (NULL == pMap)
-	{
-		return NULL;
-	}
-
-	return pMap->createItem(nItemID, nItemNum, pEntity->getPos());
+	return pMap->createEntity(pCreator);
 }
 
 void CMapModule::broadCastVisiblePlayer(CEntity* pEntity, unsigned short nMessageID, Message* pMessage)

@@ -4,6 +4,7 @@
 #include "entityplayer.h"
 #include "itemmodule.h"
 #include "mapmodule.h"
+#include "entitycreator.h"
 CEntity::PLAYER_ALLOC CEntity::mVisiblePlayerAlloc;
 void CEntity::addVisiblePlayer(CEntity* pEntity)
 {
@@ -115,9 +116,15 @@ void CEntityNPC::serializeSceneInfoToPB(PBNpcSceneInfo* pbNpcInfo)
 
 
 /// 刷新战斗属性
-void	CEntityOgre::refreshFightProperty()
+void CEntityOgre::refreshFightProperty()
 {
 
+}
+
+/// 初始化
+void CEntityOgre::initEntity(CEntityCreator* pCreator)
+{
+	
 }
 
 // 暂时没有考虑组队的问题，实现一个简单的
@@ -165,7 +172,36 @@ void CEntityOgre::deadDrop(CEntityPlayer* pPlayer, CTplOgre* pTplOgre)
 			break;
 		}
 		int nItemID = CItemModule::Inst()->getFromDropTable(pTplOgre->mDropTable[i], nItemNum);
-		CMapModule::Inst()->createItem(nItemID, nItemNum, this);
+		CItemCreator tItemCreator;
+		tItemCreator.mLineID = getLineID();
+		tItemCreator.mMapID = getMapID();
+		tItemCreator.mMapIndex = getMapIndex();
+		tItemCreator.mNum = nItemNum;
+		tItemCreator.mPos = getPos();
+		tItemCreator.mTempID = nItemID;
+		CMapModule::Inst()->createEntity(&tItemCreator);
 	}
 
+}
+
+/// 初始化
+void CEntityFuncNPC::initEntity(CEntityCreator* pCreator)
+{
+
+}
+
+/// 初始化
+void CEntityItem::initEntity(CEntityCreator* pCreator)
+{
+	if (NULL == pCreator)
+	{
+		return;
+	}
+
+	if (emEntityType_Item == pCreator->getType())
+	{
+		return;
+	}
+	CItemCreator* pItemCreate = reinterpret_cast<CItemCreator*>(pCreator);
+	mItemNum = pItemCreate->mNum;
 }

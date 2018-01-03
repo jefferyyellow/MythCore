@@ -5,6 +5,7 @@
 #include "itemunit.h"
 #include "taskunit.h"
 #include "skillunit.h"
+#include "servercommon.h"
 class PBPlayerSceneInfo;
 
 class CBaseProperty
@@ -15,7 +16,7 @@ public:
 		mValue = 0;
 		mDirty = false;
 	}
-	~CBaseProperty()
+	virtual ~CBaseProperty()
 	{
 
 	}
@@ -55,6 +56,9 @@ public:
 	/// 刷新战斗属性
 	virtual void	refreshFightProperty();
 	void			refreshFightProperty(int nPropertyType);
+	/// 初始化
+	virtual	void	initEntity(CEntityCreator* pCreator){};
+
 public:
 	/// 序列化场景信息到PB·
 	void			serializeSceneInfoToPB(PBPlayerSceneInfo* pbSceneInfo);

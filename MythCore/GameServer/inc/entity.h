@@ -9,8 +9,8 @@
 #include "template.h"
 using namespace Myth;
 class PBNpcSceneInfo;
-#define PLAYER_NAME_LENGTH   32
 class CEntityPlayer;
+class CEntityCreator;
 class CEntity : public CObj
 {
 public:
@@ -18,7 +18,7 @@ public:
 	typedef CShareList<int> PLAYER_LIST;
 public:
 	CEntity(){}
-	~CEntity(){}
+	virtual ~CEntity(){}
 	
 public:
 	void			addVisiblePlayer(CEntity* pEntity);
@@ -29,8 +29,13 @@ public:
 
 public:
 	static CEntity* createEntity(EmEntityType eType);
+	/// 初始化
+	virtual	void	initEntity(CEntityCreator* pCreator) = 0;
 
 public:
+	int			getTempID() const { return mTempID; }
+	void		setTempID(int nValue) { mTempID = nValue; }
+
 	unsigned short	getMapID() const { return mMapID; }
 	void			setMapID(unsigned short nValue) { mMapID = nValue; }
 
@@ -56,6 +61,8 @@ public:
 
 	bool			isPlayer(){return mEntityType == emEntityType_Player;}
 protected:
+	/// 模板ID
+	int						mTempID;
 	/// 看见玩家
 	PLAYER_LIST				mVisiblePlayer;
 	/// 可见玩家分配器(避免每次去地图里搜索，尤其是玩家广播，这里相当于一个缓存）
@@ -76,15 +83,15 @@ class CEntityCharacter : public CEntity
 {
 public:
 	CEntityCharacter(){}
-	~CEntityCharacter(){}
+	virtual ~CEntityCharacter(){}
 
 public:
 	/// 刷新战斗属性
 	virtual void	refreshFightProperty(){}
+	/// 初始化
+	virtual	void	initEntity(CEntityCreator* pCreator) = 0;
 
 public:
-	int			getTempID() const { return mTempID; }
-	void		setTempID(int nValue) { mTempID = nValue; }
 	// 当前血值
 	int			getCurHP() const { return mCurHP; }
 	void		setCurHP(int nValue){ mCurHP = nValue; }
@@ -99,8 +106,6 @@ public:
 	/// 实体死亡处理
 	virtual void	onDie(CEntityCharacter* pKiller);
 protected:
-	/// 模板ID
-	int					mTempID;
 	/// 战斗属性
 	int					mFightProperty[emPropertyTypeMax];
 	/// 当前血值
@@ -114,8 +119,14 @@ class CEntityNPC : public CEntityCharacter
 {
 public:
 	CEntityNPC(){}
-	~CEntityNPC(){}
+	virtual ~CEntityNPC(){}
 	
+public:
+	/// 刷新战斗属性
+	virtual void	refreshFightProperty(){}
+	/// 初始化
+	virtual	void	initEntity(CEntityCreator* pCreator)=0;
+
 public:
 	/// 序列化场景信息到PB·
 	void			serializeSceneInfoToPB(PBNpcSceneInfo* pbNpcInfo);
@@ -127,11 +138,13 @@ class CEntityOgre : public CEntityNPC
 {
 public:
 	CEntityOgre(){}
-	~CEntityOgre(){}
+	virtual ~CEntityOgre(){}
 
 public:
 	/// 刷新战斗属性
 	virtual void	refreshFightProperty();
+	/// 初始化
+	virtual	void	initEntity(CEntityCreator* pCreator);
 	/// 实体死亡处理
 	virtual void	onDead(CEntityCharacter* pKiller);
 	/// 死亡掉落
@@ -144,6 +157,10 @@ class CEntityFuncNPC : public CEntityNPC
 public:
 	CEntityFuncNPC(){}
 	~CEntityFuncNPC(){}
+
+public:
+	/// 初始化
+	virtual	void	initEntity(CEntityCreator* pCreator);
 };
 
 /// 掉落的道具类
@@ -153,13 +170,15 @@ public:
 	CEntityItem()
 	{
 	}
-	~CEntityItem()
+	virtual ~CEntityItem()
 	{
 	}
 
 public:
 	short getItemNum()const{return mItemNum;}
 	void setItemNum(short val){mItemNum = val;}
+	/// 初始化
+	virtual	void	initEntity(CEntityCreator* pCreator);
 
 private:
 	/// 道具数目

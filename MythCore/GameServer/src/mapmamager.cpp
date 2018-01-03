@@ -8,6 +8,7 @@
 #include "scenejob.h"
 #include "mapconfigmanager.h"
 #include "template.h"
+#include "entitycreator.h"
 
 CMapUnit::ENTITY_ALLOC CMapUnit::mEntityAlloc;
 void CMapUnit::pushEntity(int nObjID)
@@ -291,58 +292,6 @@ void CMap::onRemoveEntityFromMap(CEntity* pEntity)
 	}
 }
 
-
-/// 创建NPC
-CEntityNPC* CMap::createNPC(int nNPCID, CMythPoint& rPos)
-{
-	CTemplate* pTemplate = (CTemplate*)CStaticData::searchTpl(nNPCID);
-	if (NULL == pTemplate)
-	{
-		return NULL;
-	}
-	EmEntityType eEntityType = emEntityType_None;
-	if (emTemplateType_FuncNpc == pTemplate->mTemplateType)
-	{
-		eEntityType = emEntityType_FuncNPC;
-	}
-	else if (emEntityType_Ogre == pTemplate->mTemplateType)
-	{
-		eEntityType = emEntityType_Ogre;
-	}
-	else
-	{
-		return NULL;
-	}
-
-	CEntityNPC* pEntityNPC = reinterpret_cast<CEntityNPC*>(CEntity::createEntity(eEntityType));
-	if (NULL == pEntityNPC)
-	{
-		return NULL;
-	}
-	pEntityNPC->setTempID(nNPCID);
-	pEntityNPC->setPos(rPos);
-	addEntityToMapUnit(pEntityNPC);
-	onCreateEntityToMap(pEntityNPC);
-	return pEntityNPC;
-}
-
-/// 创建道具
-CEntityNPC* CMap::createItem(int nItemID, int nNum, CMythPoint& rPos)
-{
-	EmEntityType eEntityType = emEntityType_Item;
-	CEntityItem* pEntityItem = reinterpret_cast<CEntityItem*>(CEntity::createEntity(eEntityType));
-	if (NULL == pEntityItem)
-	{
-		return NULL;
-	}
-	pEntityItem->setTempID(nItemID);
-	pEntityItem->setPos(rPos);
-	pEntityItem->setItemNum(nNum);
-	addEntityToMapUnit(pEntityItem);
-	onCreateEntityToMap(pEntityItem);
-}
-
-
 /// 创建玩家
 CEntityPlayer* CMap::createPlayer(CEntityPlayer* pPlayer)
 {
@@ -354,10 +303,22 @@ CEntity* CMap::createEntity(CEntityCreator* pCreator)
 {
 	if (NULL == pCreator)
 	{
-		return;
+		return NULL;
 	}
-
-
+	CEntity* pEntity = reinterpret_cast<CEntity*>(CEntity::createEntity(pCreator->getType()));
+	if (NULL == pEntity)
+	{
+		return NULL;
+	}
+	pEntity->setTempID(pCreator->mTempID);
+	pEntity->setLineID(pCreator->mLineID);
+	pEntity->setMapID(pCreator->mMapID);
+	pEntity->setMapIndex(pCreator->mMapIndex);
+	pEntity->setPos(pCreator->mPos);
+	pEntity->initEntity(pCreator);
+	addEntityToMapUnit(pEntity);
+	onCreateEntityToMap(pEntity);
+	return pEntity;
 }
 
 /// 通知其他玩家创建该玩家

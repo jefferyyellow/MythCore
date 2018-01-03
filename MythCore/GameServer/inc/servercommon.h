@@ -5,4 +5,5 @@
 #define MYTH_PERCENT_INT	10000
 #define MYTH_MILLIONTH		0.0001
 
-#define TEAM_MEM_NUM		4
+#define TEAM_MEM_NUM			4
+#define PLAYER_NAME_LENGTH		32

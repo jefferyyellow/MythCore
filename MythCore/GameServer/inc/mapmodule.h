@@ -9,6 +9,7 @@ class CEntityPlayer;
 class CEntityCharacter;
 class CMythPoint;
 class CEntityNPC;
+class CEntityCreator;
 using namespace Myth;
 class CMapModule : public CLogicModule, public CSingleton < CMapModule >
 {
@@ -45,8 +46,6 @@ public:
 	void		onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
 public:
 	int			teleportEntity(CEntity* pEntity, unsigned short nMapID, CMythPoint& rPos);
-	/// 创建道具
-	CEntityNPC*	createItem(int nItemID, int nItemNum, CEntity* pEntity);
 	/// 创建实体
 	CEntity*	createEntity(CEntityCreator* pCreator);
 public:

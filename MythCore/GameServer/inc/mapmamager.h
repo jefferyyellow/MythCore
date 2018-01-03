@@ -12,6 +12,7 @@ class CEntity;
 class CEntityCharacter;
 class CMythPoint;
 class CMythRect;
+class CEntityCreator;
 using namespace Myth;
 class CMapUnit
 {
@@ -95,10 +96,6 @@ public:
 	/// 在地图中移除实体触发
 	void		onRemoveEntityFromMap(CEntity* pEntity);
 
-	/// 创建NPC
-	CEntityNPC*		createNPC(int nNPCID, CMythPoint& rPos);
-	/// 创建道具
-	CEntityNPC*		createItem(int nItemID, int nNum, CMythPoint& rPos);
 	/// 创建玩家
 	CEntityPlayer*	createPlayer(CEntityPlayer* pPlayer);
 	/// 创建实体
