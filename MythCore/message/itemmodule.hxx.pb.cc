@@ -64,6 +64,12 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* CEquipChangeNotify_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   CEquipChangeNotify_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CPickItemRequest_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CPickItemRequest_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CPickItemResponse_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CPickItemResponse_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* ITEM_MODULE_MSG_ID_descriptor_ = NULL;
 
 }  // namespace
@@ -298,6 +304,34 @@ void protobuf_AssignDesc_itemmodule_2ehxx() {
       -1,
       sizeof(CEquipChangeNotify),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CEquipChangeNotify, _internal_metadata_));
+  CPickItemRequest_descriptor_ = file->message_type(15);
+  static const int CPickItemRequest_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPickItemRequest, entityid_),
+  };
+  CPickItemRequest_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      CPickItemRequest_descriptor_,
+      CPickItemRequest::internal_default_instance(),
+      CPickItemRequest_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(CPickItemRequest),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPickItemRequest, _internal_metadata_));
+  CPickItemResponse_descriptor_ = file->message_type(16);
+  static const int CPickItemResponse_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPickItemResponse, result_),
+  };
+  CPickItemResponse_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      CPickItemResponse_descriptor_,
+      CPickItemResponse::internal_default_instance(),
+      CPickItemResponse_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(CPickItemResponse),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPickItemResponse, _internal_metadata_));
   ITEM_MODULE_MSG_ID_descriptor_ = file->enum_type(0);
 }
 
@@ -342,6 +376,10 @@ void protobuf_RegisterTypes(const ::std::string&) {
       CUnEquipItemResponse_descriptor_, CUnEquipItemResponse::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       CEquipChangeNotify_descriptor_, CEquipChangeNotify::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      CPickItemRequest_descriptor_, CPickItemRequest::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      CPickItemResponse_descriptor_, CPickItemResponse::internal_default_instance());
 }
 
 }  // namespace
@@ -377,6 +415,10 @@ void protobuf_ShutdownFile_itemmodule_2ehxx() {
   delete CUnEquipItemResponse_reflection_;
   CEquipChangeNotify_default_instance_.Shutdown();
   delete CEquipChangeNotify_reflection_;
+  CPickItemRequest_default_instance_.Shutdown();
+  delete CPickItemRequest_reflection_;
+  CPickItemResponse_default_instance_.Shutdown();
+  delete CPickItemResponse_reflection_;
 }
 
 void protobuf_InitDefaults_itemmodule_2ehxx_impl() {
@@ -398,6 +440,8 @@ void protobuf_InitDefaults_itemmodule_2ehxx_impl() {
   CUnEquipItemRequest_default_instance_.DefaultConstruct();
   CUnEquipItemResponse_default_instance_.DefaultConstruct();
   CEquipChangeNotify_default_instance_.DefaultConstruct();
+  CPickItemRequest_default_instance_.DefaultConstruct();
+  CPickItemResponse_default_instance_.DefaultConstruct();
   CCurrencyUpdateNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
   CInsertItemNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
   CInsertItemObjNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
@@ -413,6 +457,8 @@ void protobuf_InitDefaults_itemmodule_2ehxx_impl() {
   CUnEquipItemRequest_default_instance_.get_mutable()->InitAsDefaultInstance();
   CUnEquipItemResponse_default_instance_.get_mutable()->InitAsDefaultInstance();
   CEquipChangeNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CPickItemRequest_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CPickItemResponse_default_instance_.get_mutable()->InitAsDefaultInstance();
 }
 
 GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_InitDefaults_itemmodule_2ehxx_once_);
@@ -446,20 +492,24 @@ void protobuf_AddDesc_itemmodule_2ehxx_impl() {
     " \001(\r\022\021\n\tEquipPart\030\002 \001(\r\022\021\n\tItemIndex\030\003 \001"
     "(\r\"N\n\022CEquipChangeNotify\022\020\n\010EntityID\030\001 \001"
     "(\r\022\021\n\tEquipPart\030\002 \001(\r\022\023\n\013EquipItemID\030\003 \001"
-    "(\r*\240\004\n\022ITEM_MODULE_MSG_ID\022\030\n\024ID_ITEM_MOD"
-    "ULE_ERROR\020\000\022\"\n\035ID_S2C_NOTIYF_CURRENCY_UP"
-    "DATE\020\200\020\022\036\n\031ID_S2C_NOTIYF_INSERT_ITEM\020\202\020\022"
-    "\"\n\035ID_S2C_NOTIYF_INSERT_ITEM_OBJ\020\203\020\022\036\n\031I"
-    "D_S2C_NOTIYF_REMOVE_ITEM\020\204\020\022\034\n\027ID_C2S_RE"
-    "QUEST_USE_ITEM\020\205\020\022\035\n\030ID_S2C_RESPONSE_USE"
-    "_ITEM\020\206\020\022\035\n\030ID_C2S_REQUEST_SELL_ITEM\020\207\020\022"
-    "\036\n\031ID_S2C_RESPONSE_SELL_ITEM\020\210\020\022!\n\034ID_C2"
-    "S_REQUEST_PURCHASE_ITEM\020\211\020\022\"\n\035ID_S2C_RES"
-    "PONSE_PURCHASE_ITEM\020\212\020\022\036\n\031ID_C2S_REQUEST"
-    "_EQUIP_ITEM\020\213\020\022\037\n\032ID_S2C_RESPONSE_EQUIP_"
-    "ITEM\020\214\020\022 \n\033ID_C2S_REQUEST_UNEQUIP_ITEM\020\215"
-    "\020\022!\n\034ID_S2C_RESPONSE_UNEQUIP_ITEM\020\216\020\022\037\n\032"
-    "ID_S2C_NOTIYF_EQUIP_CHANGE\020\217\020b\006proto3", 1397);
+    "(\r\"$\n\020CPickItemRequest\022\020\n\010EntityID\030\001 \001(\r"
+    "\"#\n\021CPickItemResponse\022\016\n\006Result\030\001 \001(\r*\337\004"
+    "\n\022ITEM_MODULE_MSG_ID\022\030\n\024ID_ITEM_MODULE_E"
+    "RROR\020\000\022\"\n\035ID_S2C_NOTIYF_CURRENCY_UPDATE\020"
+    "\200\020\022\036\n\031ID_S2C_NOTIYF_INSERT_ITEM\020\202\020\022\"\n\035ID"
+    "_S2C_NOTIYF_INSERT_ITEM_OBJ\020\203\020\022\036\n\031ID_S2C"
+    "_NOTIYF_REMOVE_ITEM\020\204\020\022\034\n\027ID_C2S_REQUEST"
+    "_USE_ITEM\020\205\020\022\035\n\030ID_S2C_RESPONSE_USE_ITEM"
+    "\020\206\020\022\035\n\030ID_C2S_REQUEST_SELL_ITEM\020\207\020\022\036\n\031ID"
+    "_S2C_RESPONSE_SELL_ITEM\020\210\020\022!\n\034ID_C2S_REQ"
+    "UEST_PURCHASE_ITEM\020\211\020\022\"\n\035ID_S2C_RESPONSE"
+    "_PURCHASE_ITEM\020\212\020\022\036\n\031ID_C2S_REQUEST_EQUI"
+    "P_ITEM\020\213\020\022\037\n\032ID_S2C_RESPONSE_EQUIP_ITEM\020"
+    "\214\020\022 \n\033ID_C2S_REQUEST_UNEQUIP_ITEM\020\215\020\022!\n\034"
+    "ID_S2C_RESPONSE_UNEQUIP_ITEM\020\216\020\022\037\n\032ID_S2"
+    "C_NOTIYF_EQUIP_CHANGE\020\217\020\022\035\n\030ID_C2S_REQUE"
+    "ST_PICK_ITEM\020\220\020\022\036\n\031ID_S2C_RESPONSE_PICK_"
+    "ITEM\020\221\020b\006proto3", 1535);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "itemmodule.hxx", &protobuf_RegisterTypes);
   ::protobuf_AddDesc_common_2ehxx();
@@ -499,6 +549,8 @@ bool ITEM_MODULE_MSG_ID_IsValid(int value) {
     case 2061:
     case 2062:
     case 2063:
+    case 2064:
+    case 2065:
       return true;
     default:
       return false;
@@ -5073,6 +5125,494 @@ void CEquipChangeNotify::set_equipitemid(::google::protobuf::uint32 value) {
 
 inline const CEquipChangeNotify* CEquipChangeNotify::internal_default_instance() {
   return &CEquipChangeNotify_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int CPickItemRequest::kEntityIDFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+CPickItemRequest::CPickItemRequest()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_itemmodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CPickItemRequest)
+}
+
+void CPickItemRequest::InitAsDefaultInstance() {
+}
+
+CPickItemRequest::CPickItemRequest(const CPickItemRequest& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:CPickItemRequest)
+}
+
+void CPickItemRequest::SharedCtor() {
+  entityid_ = 0u;
+  _cached_size_ = 0;
+}
+
+CPickItemRequest::~CPickItemRequest() {
+  // @@protoc_insertion_point(destructor:CPickItemRequest)
+  SharedDtor();
+}
+
+void CPickItemRequest::SharedDtor() {
+}
+
+void CPickItemRequest::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CPickItemRequest::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CPickItemRequest_descriptor_;
+}
+
+const CPickItemRequest& CPickItemRequest::default_instance() {
+  protobuf_InitDefaults_itemmodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<CPickItemRequest> CPickItemRequest_default_instance_;
+
+CPickItemRequest* CPickItemRequest::New(::google::protobuf::Arena* arena) const {
+  CPickItemRequest* n = new CPickItemRequest;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void CPickItemRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:CPickItemRequest)
+  entityid_ = 0u;
+}
+
+bool CPickItemRequest::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:CPickItemRequest)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 EntityID = 1;
+      case 1: {
+        if (tag == 8) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &entityid_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:CPickItemRequest)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:CPickItemRequest)
+  return false;
+#undef DO_
+}
+
+void CPickItemRequest::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:CPickItemRequest)
+  // optional uint32 EntityID = 1;
+  if (this->entityid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->entityid(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:CPickItemRequest)
+}
+
+::google::protobuf::uint8* CPickItemRequest::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:CPickItemRequest)
+  // optional uint32 EntityID = 1;
+  if (this->entityid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->entityid(), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:CPickItemRequest)
+  return target;
+}
+
+size_t CPickItemRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CPickItemRequest)
+  size_t total_size = 0;
+
+  // optional uint32 EntityID = 1;
+  if (this->entityid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->entityid());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CPickItemRequest::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CPickItemRequest)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const CPickItemRequest* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CPickItemRequest>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CPickItemRequest)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CPickItemRequest)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void CPickItemRequest::MergeFrom(const CPickItemRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CPickItemRequest)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void CPickItemRequest::UnsafeMergeFrom(const CPickItemRequest& from) {
+  GOOGLE_DCHECK(&from != this);
+  if (from.entityid() != 0) {
+    set_entityid(from.entityid());
+  }
+}
+
+void CPickItemRequest::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CPickItemRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CPickItemRequest::CopyFrom(const CPickItemRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CPickItemRequest)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool CPickItemRequest::IsInitialized() const {
+
+  return true;
+}
+
+void CPickItemRequest::Swap(CPickItemRequest* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void CPickItemRequest::InternalSwap(CPickItemRequest* other) {
+  std::swap(entityid_, other->entityid_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata CPickItemRequest::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CPickItemRequest_descriptor_;
+  metadata.reflection = CPickItemRequest_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// CPickItemRequest
+
+// optional uint32 EntityID = 1;
+void CPickItemRequest::clear_entityid() {
+  entityid_ = 0u;
+}
+::google::protobuf::uint32 CPickItemRequest::entityid() const {
+  // @@protoc_insertion_point(field_get:CPickItemRequest.EntityID)
+  return entityid_;
+}
+void CPickItemRequest::set_entityid(::google::protobuf::uint32 value) {
+  
+  entityid_ = value;
+  // @@protoc_insertion_point(field_set:CPickItemRequest.EntityID)
+}
+
+inline const CPickItemRequest* CPickItemRequest::internal_default_instance() {
+  return &CPickItemRequest_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int CPickItemResponse::kResultFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+CPickItemResponse::CPickItemResponse()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_itemmodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CPickItemResponse)
+}
+
+void CPickItemResponse::InitAsDefaultInstance() {
+}
+
+CPickItemResponse::CPickItemResponse(const CPickItemResponse& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:CPickItemResponse)
+}
+
+void CPickItemResponse::SharedCtor() {
+  result_ = 0u;
+  _cached_size_ = 0;
+}
+
+CPickItemResponse::~CPickItemResponse() {
+  // @@protoc_insertion_point(destructor:CPickItemResponse)
+  SharedDtor();
+}
+
+void CPickItemResponse::SharedDtor() {
+}
+
+void CPickItemResponse::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CPickItemResponse::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CPickItemResponse_descriptor_;
+}
+
+const CPickItemResponse& CPickItemResponse::default_instance() {
+  protobuf_InitDefaults_itemmodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<CPickItemResponse> CPickItemResponse_default_instance_;
+
+CPickItemResponse* CPickItemResponse::New(::google::protobuf::Arena* arena) const {
+  CPickItemResponse* n = new CPickItemResponse;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void CPickItemResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:CPickItemResponse)
+  result_ = 0u;
+}
+
+bool CPickItemResponse::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:CPickItemResponse)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 Result = 1;
+      case 1: {
+        if (tag == 8) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &result_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:CPickItemResponse)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:CPickItemResponse)
+  return false;
+#undef DO_
+}
+
+void CPickItemResponse::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:CPickItemResponse)
+  // optional uint32 Result = 1;
+  if (this->result() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->result(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:CPickItemResponse)
+}
+
+::google::protobuf::uint8* CPickItemResponse::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:CPickItemResponse)
+  // optional uint32 Result = 1;
+  if (this->result() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->result(), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:CPickItemResponse)
+  return target;
+}
+
+size_t CPickItemResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CPickItemResponse)
+  size_t total_size = 0;
+
+  // optional uint32 Result = 1;
+  if (this->result() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->result());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CPickItemResponse::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CPickItemResponse)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const CPickItemResponse* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CPickItemResponse>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CPickItemResponse)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CPickItemResponse)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void CPickItemResponse::MergeFrom(const CPickItemResponse& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CPickItemResponse)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void CPickItemResponse::UnsafeMergeFrom(const CPickItemResponse& from) {
+  GOOGLE_DCHECK(&from != this);
+  if (from.result() != 0) {
+    set_result(from.result());
+  }
+}
+
+void CPickItemResponse::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CPickItemResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CPickItemResponse::CopyFrom(const CPickItemResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CPickItemResponse)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool CPickItemResponse::IsInitialized() const {
+
+  return true;
+}
+
+void CPickItemResponse::Swap(CPickItemResponse* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void CPickItemResponse::InternalSwap(CPickItemResponse* other) {
+  std::swap(result_, other->result_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata CPickItemResponse::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CPickItemResponse_descriptor_;
+  metadata.reflection = CPickItemResponse_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// CPickItemResponse
+
+// optional uint32 Result = 1;
+void CPickItemResponse::clear_result() {
+  result_ = 0u;
+}
+::google::protobuf::uint32 CPickItemResponse::result() const {
+  // @@protoc_insertion_point(field_get:CPickItemResponse.Result)
+  return result_;
+}
+void CPickItemResponse::set_result(::google::protobuf::uint32 value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:CPickItemResponse.Result)
+}
+
+inline const CPickItemResponse* CPickItemResponse::internal_default_instance() {
+  return &CPickItemResponse_default_instance_.get();
 }
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 

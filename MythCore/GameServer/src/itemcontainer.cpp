@@ -78,10 +78,10 @@ bool CItemBox::checkSpace(int* pItemID, int* pNumber, int nSize)
 	}
 	if (nNeedSpace > nTotalSpace)
 	{
-		return true;
+		return false;
 	}
 
-	return false;
+	return true;
 }
 
 // 如果是一种道具，方便很多，空格子可以直接用，不用考虑先堆叠
@@ -91,7 +91,7 @@ bool CItemBox::checkSpace(int nItemID, int nNumber)
 	CTplItem* pTplItem = reinterpret_cast<CTplItem*>(CStaticData::searchTpl(nItemID));
 	if (NULL == pTplItem)
 	{
-		return true;
+		return false;
 	}
 
 	for (int i = 0; i < (int)mSize; ++ i)

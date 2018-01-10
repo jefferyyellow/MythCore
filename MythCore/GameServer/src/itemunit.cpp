@@ -354,7 +354,6 @@ void CItemUnit::onPurchaseItemRequest(Message* pMessage)
 {
 	MYTH_ASSERT(NULL == pMessage, return);
 	CPurchaseItemRequest* pPurchaseItemRequest = reinterpret_cast<CPurchaseItemRequest*>(pMessage);
-	MYTH_ASSERT(NULL == pPurchaseItemRequest, return);
 
 	int nIndex = pPurchaseItemRequest->index();
 	int nNum = pPurchaseItemRequest->num();
@@ -378,7 +377,6 @@ void CItemUnit::onEquipItemRequest(Message* pMessage)
 {
 	MYTH_ASSERT(NULL == pMessage, return);
 	CEquipItemRequest* pEquipItemRequest = reinterpret_cast<CEquipItemRequest*>(pMessage);
-	MYTH_ASSERT(NULL == pEquipItemRequest, return);
 
 	int nItemIndex = pEquipItemRequest->itemindex();
 	int nEquipPart = 0;
@@ -406,7 +404,6 @@ void CItemUnit::onUnEquipItemRequest(Message* pMessage)
 {
 	MYTH_ASSERT(NULL == pMessage, return);
 	CUnEquipItemRequest* pUnEquipItemRequest = reinterpret_cast<CUnEquipItemRequest*>(pMessage);
-	MYTH_ASSERT(NULL == pUnEquipItemRequest, return);
 	int nEquipPart = pUnEquipItemRequest->equippart();
 	int nItemIndex = pUnEquipItemRequest->itemindex();
 	int nResult = mEquip.unequip(mPlayer, nEquipPart, mBag, nItemIndex);
@@ -440,4 +437,55 @@ void CItemUnit::broadcastChangeNotify(int nEntityID, int nEquipPart, int nEquipI
 	tEquipChangeNotify.set_equipitemid(nEquipItemID);
 
 	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_NOTIYF_EQUIP_CHANGE, &tEquipChangeNotify);
+}
+
+// 拾取道具的请求
+void CItemUnit::onPickItemRequest(Message* pMessage)
+{
+	MYTH_ASSERT(NULL == pMessage, return);
+	CPickItemRequest* pPickItemRequest = reinterpret_cast<CPickItemRequest*>(pMessage);
+
+	int nEntityID = pPickItemRequest->entityid();
+	CEntity* pEntity = reinterpret_cast<CEntity*>(CObjPool::Inst()->getObj(nEntityID));
+	if (NULL == pEntity)
+	{
+		return;
+	}
+
+	if (!pEntity->isItem())
+	{
+		return;
+	}
+
+	CTemplate* pTemplate = reinterpret_cast<CTemplate*>(CStaticData::searchTpl(pEntity->getTempID()));
+	if (NULL == pTemplate)
+	{
+		return;
+	}
+
+	if (pTemplate->mTemplateType != emTemplateType_Item)
+	{
+		return;
+	}
+	CEntityItem* pEntityItem = reinterpret_cast<CEntityItem*>(pEntity);
+	int nItemID = pEntityItem->getTempID();
+	int nItemNum = pEntityItem->getItemNum();
+
+	bool bResult =  checkItemSpace(&nItemID, &nItemNum, 1);
+	if (!bResult)
+	{
+		sendPickItemResponse(ERR_BAGGAGE_IS_FULL);
+		return ;
+	}
+
+	insertItem(&nItemID, &nItemNum, 1);
+	sendPickItemResponse(SUCCESS);
+}
+
+// 拾取道具的回应
+void CItemUnit::sendPickItemResponse(int nResult)
+{
+	CPickItemResponse tPickItemResponse;
+	tPickItemResponse.set_result(nResult);
+	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_RESPONSE_PICK_ITEM, &tPickItemResponse);
 }

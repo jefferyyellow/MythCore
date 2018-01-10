@@ -12,6 +12,7 @@ enum ERR_COMMON
 	ERR_PARAMETER_INVALID				= 257,				// 参数非法
 	ERR_CURRENCY_NOT_ENOUGH				= 258,				// 币不足
 	ERR_TEMPLATE_INVALID				= 260,				// 模板非法
+	ERR_BAGGAGE_IS_FULL					= 261,				// 包裹已满
 };
 
 // 300 - 399

@@ -62,6 +62,11 @@ public:
 	void		sendUnEquipItemResponse(int nResult, int nEquipPart, int nItemIndex);
 	/// 广播装备改变通知
 	void		broadcastChangeNotify(int nEntityID, int nEquipPart, int nEquipItemID);
+
+	// 拾取道具的请求
+	void		onPickItemRequest(Message* pMessage);
+	// 拾取道具的回应
+	void		sendPickItemResponse(int nResult);
 public:
 	/// 常用的货币接口单独出来
 	/// 得到金币

@@ -43,6 +43,8 @@ class CEquipItemRequest;
 class CEquipItemResponse;
 class CInsertItemNotify;
 class CInsertItemObjNotify;
+class CPickItemRequest;
+class CPickItemResponse;
 class CPurchaseItemRequest;
 class CPurchaseItemResponse;
 class CRemoveItemNotify;
@@ -70,12 +72,14 @@ enum ITEM_MODULE_MSG_ID {
   ID_C2S_REQUEST_UNEQUIP_ITEM = 2061,
   ID_S2C_RESPONSE_UNEQUIP_ITEM = 2062,
   ID_S2C_NOTIYF_EQUIP_CHANGE = 2063,
+  ID_C2S_REQUEST_PICK_ITEM = 2064,
+  ID_S2C_RESPONSE_PICK_ITEM = 2065,
   ITEM_MODULE_MSG_ID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   ITEM_MODULE_MSG_ID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool ITEM_MODULE_MSG_ID_IsValid(int value);
 const ITEM_MODULE_MSG_ID ITEM_MODULE_MSG_ID_MIN = ID_ITEM_MODULE_ERROR;
-const ITEM_MODULE_MSG_ID ITEM_MODULE_MSG_ID_MAX = ID_S2C_NOTIYF_EQUIP_CHANGE;
+const ITEM_MODULE_MSG_ID ITEM_MODULE_MSG_ID_MAX = ID_S2C_RESPONSE_PICK_ITEM;
 const int ITEM_MODULE_MSG_ID_ARRAYSIZE = ITEM_MODULE_MSG_ID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* ITEM_MODULE_MSG_ID_descriptor();
@@ -1479,6 +1483,178 @@ class CEquipChangeNotify : public ::google::protobuf::Message /* @@protoc_insert
 };
 extern ::google::protobuf::internal::ExplicitlyConstructed<CEquipChangeNotify> CEquipChangeNotify_default_instance_;
 
+// -------------------------------------------------------------------
+
+class CPickItemRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CPickItemRequest) */ {
+ public:
+  CPickItemRequest();
+  virtual ~CPickItemRequest();
+
+  CPickItemRequest(const CPickItemRequest& from);
+
+  inline CPickItemRequest& operator=(const CPickItemRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CPickItemRequest& default_instance();
+
+  static const CPickItemRequest* internal_default_instance();
+
+  void Swap(CPickItemRequest* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CPickItemRequest* New() const { return New(NULL); }
+
+  CPickItemRequest* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CPickItemRequest& from);
+  void MergeFrom(const CPickItemRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CPickItemRequest* other);
+  void UnsafeMergeFrom(const CPickItemRequest& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 EntityID = 1;
+  void clear_entityid();
+  static const int kEntityIDFieldNumber = 1;
+  ::google::protobuf::uint32 entityid() const;
+  void set_entityid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:CPickItemRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 entityid_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_itemmodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_itemmodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_itemmodule_2ehxx();
+  friend void protobuf_ShutdownFile_itemmodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CPickItemRequest> CPickItemRequest_default_instance_;
+
+// -------------------------------------------------------------------
+
+class CPickItemResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CPickItemResponse) */ {
+ public:
+  CPickItemResponse();
+  virtual ~CPickItemResponse();
+
+  CPickItemResponse(const CPickItemResponse& from);
+
+  inline CPickItemResponse& operator=(const CPickItemResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CPickItemResponse& default_instance();
+
+  static const CPickItemResponse* internal_default_instance();
+
+  void Swap(CPickItemResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CPickItemResponse* New() const { return New(NULL); }
+
+  CPickItemResponse* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CPickItemResponse& from);
+  void MergeFrom(const CPickItemResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CPickItemResponse* other);
+  void UnsafeMergeFrom(const CPickItemResponse& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 Result = 1;
+  void clear_result();
+  static const int kResultFieldNumber = 1;
+  ::google::protobuf::uint32 result() const;
+  void set_result(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:CPickItemResponse)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 result_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_itemmodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_itemmodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_itemmodule_2ehxx();
+  friend void protobuf_ShutdownFile_itemmodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CPickItemResponse> CPickItemResponse_default_instance_;
+
 // ===================================================================
 
 
@@ -2023,7 +2199,53 @@ inline void CEquipChangeNotify::set_equipitemid(::google::protobuf::uint32 value
 inline const CEquipChangeNotify* CEquipChangeNotify::internal_default_instance() {
   return &CEquipChangeNotify_default_instance_.get();
 }
+// -------------------------------------------------------------------
+
+// CPickItemRequest
+
+// optional uint32 EntityID = 1;
+inline void CPickItemRequest::clear_entityid() {
+  entityid_ = 0u;
+}
+inline ::google::protobuf::uint32 CPickItemRequest::entityid() const {
+  // @@protoc_insertion_point(field_get:CPickItemRequest.EntityID)
+  return entityid_;
+}
+inline void CPickItemRequest::set_entityid(::google::protobuf::uint32 value) {
+  
+  entityid_ = value;
+  // @@protoc_insertion_point(field_set:CPickItemRequest.EntityID)
+}
+
+inline const CPickItemRequest* CPickItemRequest::internal_default_instance() {
+  return &CPickItemRequest_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
+// CPickItemResponse
+
+// optional uint32 Result = 1;
+inline void CPickItemResponse::clear_result() {
+  result_ = 0u;
+}
+inline ::google::protobuf::uint32 CPickItemResponse::result() const {
+  // @@protoc_insertion_point(field_get:CPickItemResponse.Result)
+  return result_;
+}
+inline void CPickItemResponse::set_result(::google::protobuf::uint32 value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:CPickItemResponse.Result)
+}
+
+inline const CPickItemResponse* CPickItemResponse::internal_default_instance() {
+  return &CPickItemResponse_default_instance_.get();
+}
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

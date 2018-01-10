@@ -59,7 +59,8 @@ public:
 	EmEntityType	getEntityType() const { return mEntityType; }
 	void			setEntityType(EmEntityType nValue) { mEntityType = nValue; }
 
-	bool			isPlayer(){return mEntityType == emEntityType_Player;}
+	bool			isPlayer(){return emEntityType_Player == mEntityType;}
+	bool			isItem(){return emEntityType_Item == mEntityType;}
 protected:
 	/// Ä£°åID
 	int						mTempID;

@@ -664,10 +664,10 @@ int CTaskUnit::checkTaskReward(int nTaskID)
 		++nItemCount;
 	}
 
-	int nResult = mPlayer.getItemUnit().checkItemSpace(nItemID, nItemNum, nItemCount);
-	if (SUCCESS != nResult)
+	bool bResult = mPlayer.getItemUnit().checkItemSpace(nItemID, nItemNum, nItemCount);
+	if (!bResult)
 	{
-		return nResult;
+		return ERR_BAGGAGE_IS_FULL;
 	}
 
 	return SUCCESS;

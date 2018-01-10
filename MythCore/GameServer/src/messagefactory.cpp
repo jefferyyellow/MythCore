@@ -5,6 +5,7 @@
 #include "itemmodule.hxx.pb.h"
 #include "mapmodule.hxx.pb.h"
 #include "taskmodule.hxx.pb.h"
+#include "chatmodule.hxx.pb.h"
 #define CASE_NEW_MSG(msg, msgid)						\
 		case msgid:										\
 		{												\
@@ -71,6 +72,10 @@ Message* CMessageFactory::createClientMessage(unsigned short nMessageID)
 		CASE_NEW_MSG(CAbortTaskResponse, ID_S2C_RESPONSE_ABORT_TASK)
 		CASE_NEW_MSG(CUpdateTaskProcessNotify, ID_S2C_NOTIFY_UPDATE_TASK_PROCESS)
 
+		// chat module
+		CASE_NEW_MSG(CChatRequest, ID_C2S_REQUEST_CHAT)
+		CASE_NEW_MSG(CChatResponse, ID_S2C_RESPONSE_CHAT)
+		CASE_NEW_MSG(CChatNotify, ID_S2C_NOTIFY_CHAT)
 		default:
 			break;
 	}
