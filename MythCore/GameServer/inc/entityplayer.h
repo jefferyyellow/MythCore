@@ -60,10 +60,51 @@ public:
 	virtual	void	initEntity(CEntityCreator* pCreator){};
 
 public:
-	/// 序列化场景信息到PB·
+	/// 序列化场景信息到PB
 	void			serializeSceneInfoToPB(PBPlayerSceneInfo* pbSceneInfo);
 
 public:
+	/// 设置属性
+	int				getPropertyValue(EmPropertyType eType)
+	{
+		if (eType <= 0 || eType >= emPropertyTypeMax)
+		{
+			return 0;
+		}
+
+		return mBaseProperty[eType].getValue();
+	}
+
+	void			setPropertyValue(EmPropertyType eType, int nValue)
+	{
+		if (eType <= 0 || eType >= emPropertyTypeMax)
+		{
+			return;
+		}
+
+		mBaseProperty[eType].setValue(nValue);
+	}
+
+	/// 设置属性脏标记
+	bool			getPropertyDirty(EmPropertyType eType)
+	{
+		if (eType <= 0 || eType >= emPropertyTypeMax)
+		{
+			return false;
+		}
+
+		return mBaseProperty[eType].getDirty();
+	}
+
+	void			setPropertyDirty(EmPropertyType eType, bool bDirty)
+	{
+		if (eType <= 0 || eType >= emPropertyTypeMax)
+		{
+			return;
+		}
+		mBaseProperty[eType].setDirty(bDirty);
+	}
+
 	/// 角色ID
 	unsigned int	getRoleID(){ return mRoleID; }
 	void			setRoleID(unsigned int nRoleID){ mRoleID = nRoleID; }

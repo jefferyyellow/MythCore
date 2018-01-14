@@ -201,6 +201,9 @@
     <ClCompile Include="..\message\skillmodule.hxx.pb.cc">
       <Filter>message</Filter>
     </ClCompile>
+    <ClCompile Include="..\message\chatmodule.hxx.pb.cc">
+      <Filter>message</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -433,6 +436,12 @@
     </ClInclude>
     <ClInclude Include="inc\entitycreator.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\chatmodule.hxx">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\chatmodule.hxx.pb.h">
+      <Filter>message</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

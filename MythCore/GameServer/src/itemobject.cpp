@@ -2,6 +2,7 @@
 #include "template.h"
 #include "objpool.h"
 #include "itemmodule.hxx.pb.h"
+#include "entityplayer.h"
 CItemObject* CItemFactory::createItem(int nItemID)
 {
 	CTplItem* pTplItem = (CTplItem*)CStaticData::searchTpl(nItemID);
@@ -92,6 +93,11 @@ int	CItemEquip::getProperty(int nPropertyType)
 	int nPropertyValue = 0;
 	for (int i = 0; i < EQUIP_PROPERTY_NUM; ++ i)
 	{
+		if (emPropertyType_None == mPropertyType[i])
+		{
+			break;
+		}
+
 		if (nPropertyType == mPropertyType[i])
 		{
 			nPropertyValue = mPropertyValue[i];
@@ -99,4 +105,16 @@ int	CItemEquip::getProperty(int nPropertyType)
 	}
 
 	return nPropertyValue;
+}
+
+void CItemEquip::setPropertyDirty(CEntityPlayer& rPlayer)
+{
+	for (int i = 0; i < EQUIP_PROPERTY_NUM; ++ i)
+	{
+		if (emPropertyType_None == mPropertyType[i])
+		{
+			break;
+		}
+		rPlayer.setPropertyDirty((EmPropertyType)mPropertyType[i], true);
+	}
 }

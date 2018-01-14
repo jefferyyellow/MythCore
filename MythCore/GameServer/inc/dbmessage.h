@@ -75,6 +75,8 @@ public:
 	{
 		if (nSize <= *mpLength)
 		{
+			mpValue += (*mpLength + 1);
+			++mpLength;
 			return;
 		}
 

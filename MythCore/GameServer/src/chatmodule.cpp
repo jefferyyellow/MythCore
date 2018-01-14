@@ -1,4 +1,8 @@
 #include "chatmodule.h"
+#include "chatmodule.hxx.pb.h"
+#include "locallogjob.h"
+#include "entityplayer.h"
+#include "scenejob.h"
 CChatModule::CChatModule()
 {
 	
@@ -10,59 +14,59 @@ CChatModule::~CChatModule()
 }
 
 /// 启动服务器
-void CItemModule::onLaunchServer()
+void CChatModule::onLaunchServer()
 {
 
 }
 
 /// 启动完成检查
-bool CItemModule::onCheckLaunch()
+bool CChatModule::onCheckLaunch()
 {
 	return true;
 }
 
 /// 服务器启动成功
-void CItemModule::onLaunchComplete()
+void CChatModule::onLaunchComplete()
 {
 
 }
 
 /// 退出服务器
-void CItemModule::onExitServer()
+void CChatModule::onExitServer()
 {
 
 }
 
 /// 新一天到来
-void CItemModule::onNewDayCome()
+void CChatModule::onNewDayCome()
 {
 
 }
 
 /// 新一周到来
-void CItemModule::onNewWeekCome()
+void CChatModule::onNewWeekCome()
 {
 
 }
 
 /// 建立实体
-void CItemModule::onCreatePlayer(CEntity* pEntity)
+void CChatModule::onCreatePlayer(CEntity* pEntity)
 {
 
 }
 
 /// 销毁实体
-void CItemModule::onDestroyPlayer(CEntity* pEntity)
+void CChatModule::onDestroyPlayer(CEntity* pEntity)
 {
 
 }
 
-void CItemModule::onTimer(unsigned int nTickOffset)
+void CChatModule::onTimer(unsigned int nTickOffset)
 {
 
 }
 
-void CItemModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)
+void CChatModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)
 {
 	if (NULL == pPlayer)
 	{
@@ -71,6 +75,41 @@ void CItemModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageI
 	switch(nMessageID)
 	{
 		case ID_C2S_REQUEST_CHAT:
+		{
+			break;
+		}
+	}
+}
+
+void CChatModule::onChatRequest(CEntityPlayer* pPlayer, Message* pMessage)
+{
+	MYTH_ASSERT(NULL == pPlayer || NULL == pMessage, return);
+	CChatRequest* pChatRequest = reinterpret_cast<CChatRequest*>(pMessage);
+
+	int nChannel = pChatRequest->channel();
+	if(pChatRequest->content().length() > MAX_CHAT_CONTENT_LENG)
+	{
+		return;
+	}
+
+	CChatNotify tChatNotify;
+	tChatNotify.set_playerid(pPlayer->getRoleID());
+	tChatNotify.set_playername(pPlayer->getName());
+	tChatNotify.set_channel(nChannel);
+	tChatNotify.set_content(pChatRequest->content());
+
+	switch(nChannel)
+	{
+		case emChatChannel_World:
+		{
+			CSceneJob::Inst()->send2AllPlayer(ID_S2C_NOTIFY_CHAT, pMessage);
+			break;
+		}
+		case emChatChannel_Team:
+		{
+			break;
+		}
+		case emChatChannel_Faction:
 		{
 			break;
 		}

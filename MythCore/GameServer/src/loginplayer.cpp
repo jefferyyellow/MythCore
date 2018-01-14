@@ -4,7 +4,7 @@
 #include "objpool.h"
 #include "entityplayer.h"
 #include "dbmodule.h"
-
+#include "errcode.h"
 void CLoginPlayer::init()
 {
 	mStateMachine.init(this, emLoginState_None);
@@ -60,9 +60,28 @@ int CLoginPlayer::processAccountVerify()
 		setCurStateTime(0);
 		return -1;
 	}
+	if (SUCCESS != mDBResponse->mResult)
+	{
+		setCurStateTime(0);
+		return -1;
+	}
 
 	// 准备回应消息
+	char acName[MAX_PLAYER_NAME_LEN + 1] = {0};
+	mDBResponse->getString(acName, sizeof(acName));
+	if (0 != strncmp(acName, mAccountName))
+	{
+		setCurStateTime(0);
+		return -1;
+	}
+
 	mAccountID = mDBResponse->getInt();
+	// 账号没有插入成功
+	if (0 == mAccountID)
+	{
+		setCurStateTime(0);
+		return -1;
+	}
 	mRoleID = mDBResponse->getInt();
 
 	CLoginResponse tLoginResponse;

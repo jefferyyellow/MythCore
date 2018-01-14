@@ -51,6 +51,15 @@
     <ClCompile Include="..\message\taskmodule.hxx.pb.cc">
       <Filter>message</Filter>
     </ClCompile>
+    <ClCompile Include="..\message\chatmodule.hxx.pb.cc">
+      <Filter>message</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\dbmodule.hxx.pb.cc">
+      <Filter>message</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\skillmodule.hxx.pb.cc">
+      <Filter>message</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gameclient.h">
@@ -106,6 +115,24 @@
     </ClInclude>
     <ClInclude Include="..\GameServer\inc\messagefactory.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\chatmodule.hxx">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\chatmodule.hxx.pb.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\dbmodule.hxx">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\dbmodule.hxx.pb.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\skillmodule.hxx">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\skillmodule.hxx.pb.h">
+      <Filter>message</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

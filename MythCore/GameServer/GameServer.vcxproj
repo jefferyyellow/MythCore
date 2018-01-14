@@ -72,6 +72,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\dep\tinyxml\tinyxml2.cpp" />
+    <ClCompile Include="..\message\chatmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\common.hxx.pb.cc" />
     <ClCompile Include="..\message\dbmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\itemmodule.hxx.pb.cc" />
@@ -124,6 +125,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\dep\tinyxml\tinyxml2.h" />
+    <ClInclude Include="..\message\chatmodule.hxx" />
+    <ClInclude Include="..\message\chatmodule.hxx.pb.h" />
     <ClInclude Include="..\message\common.hxx" />
     <ClInclude Include="..\message\common.hxx.pb.h" />
     <ClInclude Include="..\message\dbmodule.hxx" />

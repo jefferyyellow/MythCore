@@ -70,12 +70,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\GameServer\src\messagefactory.cpp" />
+    <ClCompile Include="..\message\chatmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\common.hxx.pb.cc" />
+    <ClCompile Include="..\message\dbmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\itemmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\loginmessage.hxx.pb.cc" />
     <ClCompile Include="..\message\mapmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\message.hxx.pb.cc" />
     <ClCompile Include="..\message\propertymodule.hxx.pb.cc" />
+    <ClCompile Include="..\message\skillmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\taskmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\template.hxx.pb.cc" />
     <ClCompile Include="gameclient.cpp" />
@@ -83,8 +86,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\GameServer\inc\messagefactory.h" />
+    <ClInclude Include="..\message\chatmodule.hxx" />
+    <ClInclude Include="..\message\chatmodule.hxx.pb.h" />
     <ClInclude Include="..\message\common.hxx" />
     <ClInclude Include="..\message\common.hxx.pb.h" />
+    <ClInclude Include="..\message\dbmodule.hxx" />
+    <ClInclude Include="..\message\dbmodule.hxx.pb.h" />
     <ClInclude Include="..\message\itemmodule.hxx" />
     <ClInclude Include="..\message\itemmodule.hxx.pb.h" />
     <ClInclude Include="..\message\loginmessage.hxx" />
@@ -95,6 +102,8 @@
     <ClInclude Include="..\message\message.hxx.pb.h" />
     <ClInclude Include="..\message\propertymodule.hxx" />
     <ClInclude Include="..\message\propertymodule.hxx.pb.h" />
+    <ClInclude Include="..\message\skillmodule.hxx" />
+    <ClInclude Include="..\message\skillmodule.hxx.pb.h" />
     <ClInclude Include="..\message\taskmodule.hxx" />
     <ClInclude Include="..\message\taskmodule.hxx.pb.h" />
     <ClInclude Include="..\message\template.hxx" />

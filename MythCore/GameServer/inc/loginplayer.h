@@ -79,7 +79,7 @@ private:
 	short							mChannelID;								// 渠道
 	short							mServerID;								// 服务器ID
 	unsigned int					mRoleID;								// 角色ID
-	char							mAccountName[MAX_PLAYER_NAME_LEN];		// 账号名
+	char							mAccountName[MAX_PLAYER_NAME_LEN + 1];		// 账号名
 	CExchangeHead					mExchangeHead;							// TCP消息交换头
 
 	CStateMachine<CLoginPlayer, emLoginStateMax>	mStateMachine;			// 状态机

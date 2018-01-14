@@ -388,6 +388,7 @@ void CItemUnit::onEquipItemRequest(Message* pMessage)
 	}
 	broadcastChangeNotify(mPlayer.getObjID(), nEquipPart, mEquip.getItemID(nEquipPart));
 	sendEquipItemResponse(SUCCESS, nItemIndex);
+	mPlayer.refreshBaseProperty();
 }
 
 void CItemUnit::sendEquipItemResponse(int nResult, int nItemIndex)
@@ -412,9 +413,9 @@ void CItemUnit::onUnEquipItemRequest(Message* pMessage)
 		sendUnEquipItemResponse(nResult, nEquipPart, nItemIndex);
 		return;
 	}
-	
 	sendUnEquipItemResponse(SUCCESS, nEquipPart, nItemIndex);
 	broadcastChangeNotify(mPlayer.getObjID(), nEquipPart, mEquip.getItemID(nEquipPart));
+	mPlayer.refreshBaseProperty();
 }
 
 /// 卸载装备回应

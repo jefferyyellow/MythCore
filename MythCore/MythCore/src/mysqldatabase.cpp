@@ -183,10 +183,7 @@ namespace Myth
 				}
 			}
 
-			if (0 != ret)
-			{
-				return -1;
-			}
+			return ret;
 		}
 		return 0;
 	}

@@ -9,14 +9,17 @@ BEGIN
 	SELECT account_id INTO AccountID FROM PlayerAccount where user_name=UserName and channel_id=ChannelID and server_id=ServerID;
 	IF FOUND_ROWS() = 0 THEN
 		INSERT INTO PlayerAccount(user_name,channel_id, server_id,account_id) VALUES(UserName, ChannelID, ServerID,AccountID);
-		SELECT LAST_INSERT_ID() INTO AccountID;
+		SELECT account_id INTO AccountID FROM PlayerAccount where user_name=UserName and channel_id=ChannelID and server_id=ServerID;
+		IF FOUND_ROWS() = 0 THEN
+			SET AccountID = 0;
+		END IF;
 	END IF;
 
 	SELECT role_id INTO RoleID from PlayerRole where account_id=AccountID and channel_id=ChannelID and server_id=ServerID;
 	IF FOUND_ROWS() = 0 THEN
-		SELECT AccountID, 0;
+		SELECT UserName, AccountID, 0;
 	ELSE
-		SELECT AccountID, RoleID;
+		SELECT UserName, AccountID, RoleID;
 	END IF;
 END
 ;;

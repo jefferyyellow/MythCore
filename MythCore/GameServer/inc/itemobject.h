@@ -4,6 +4,7 @@
 #include "itemtype.h"
 class CItemObject;
 class PBItemObject;
+class CEntityPlayer;
 class CItemFactory
 {
 public:
@@ -67,7 +68,10 @@ public:
 	virtual void createToPB(PBItemObject* pItemObject);
 
 public:
+	/// 得到属性类型
 	int	getProperty(int nPropertyType);
+	/// 设置属性脏标记
+	void setPropertyDirty(CEntityPlayer& rPlayer);
 
 public:
 	int		getLevel() const { return mLevel; }
@@ -77,7 +81,6 @@ private:
 	/// 等级
 	int			mLevel;
 	int			mPropertyType[EQUIP_PROPERTY_NUM];			// 属性类型,每种装备最多六种
-	int			mPropertyValue[EQUIP_PROPERTY_NUM];				// 属性值
-
+	int			mPropertyValue[EQUIP_PROPERTY_NUM];			// 属性值
 };
 #endif

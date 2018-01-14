@@ -2,7 +2,19 @@
 #define __CHATMODULE_H__
 #include "logicmodule.h"
 #include "singleton.h"
+#include "messagefactory.h"
+class CEntityPlayer;
 using namespace Myth;
+
+#define MAX_CHAT_CONTENT_LENG	96		// 32 * 3,utf8中文是3个字符
+enum EmChatChannel
+{
+	emChatChannel_None		= 0,		// 无
+	emChatChannel_World		= 1,		// 世界聊天
+	emChatChannel_Team		= 2,		// 组队聊天
+	emChatChannel_Faction	= 3,		// 工会聊天
+};
+
 class CChatModule : public CLogicModule, public CSingleton<CChatModule>
 {
 	friend class CSingleton<CChatModule>;
@@ -33,5 +45,7 @@ public:
 public:
 	void onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
 
+public:
+	void onChatRequest(CEntityPlayer* pPlayer, Message* pMessage);
 };
 #endif

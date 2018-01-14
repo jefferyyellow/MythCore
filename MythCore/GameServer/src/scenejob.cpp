@@ -493,6 +493,22 @@ void CSceneJob::send2Player(CEntityPlayer* pPlayer, unsigned short nMessageID, M
 	send2Player(pPlayer->GetExhangeHead(), nMessageID, pMessage);
 }
 
+/// 发生给所有的玩家消息
+void CSceneJob::send2AllPlayer(unsigned short nMessageID, Message* pMessage)
+{
+	CEntityPlayer* pPlayer = NULL;
+	PLAYER_LIST::iterator it = mPlayerList.begin();
+	for (; it != mPlayerList.end(); ++ it)
+	{
+		pPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
+		if (NULL == pPlayer)
+		{
+			continue;
+		}
+		send2Player(pPlayer->GetExhangeHead(), nMessageID, pMessage);
+	}
+}
+
 
 /// 断开玩家的连接
 void CSceneJob::disconnectPlayer(CExchangeHead& rExchangeHead)

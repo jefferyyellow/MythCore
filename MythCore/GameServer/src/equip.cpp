@@ -56,7 +56,10 @@ int CEquipList::equip(CEntityPlayer& rPlayer, CItemBox& rBox, int nBoxIndex, int
 		rBox.setItem(nBoxIndex, INVALID_OBJ_ID, 0);
 	}
 	setItem(nEquipPart, pItemObject->getObjID(), pItemObject->GetItemID());
-	
+	if (emItemType_Equip == pTplItem->mItemType)
+	{
+		reinterpret_cast<CItemEquip*>(pItemObject)->setPropertyDirty(rPlayer);
+	}
 	return SUCCESS;
 }
 
@@ -86,8 +89,19 @@ int CEquipList::unequip(CEntityPlayer& rPlayer, int nEquipPart, CItemBox& rBox, 
 		return ERR_EQUIP_SRC_ITEM_DATA_NULL;
 	}
 
+	CTplItem* pTplItem = reinterpret_cast<CTplItem*>(CStaticData::searchTpl(pItemObject->GetItemID()));
+	if (NULL == pTplItem)
+	{
+		return ERR_TEMPLATE_INVALID;
+	}
+
 	setItem(nEquipPart, INVALID_OBJ_ID, 0);
 	rBox.setItem(nBoxIndex, pItemObject->getObjID(), pItemObject->GetItemID());
+
+	if (emItemType_Equip == pTplItem->mItemType)
+	{
+		reinterpret_cast<CItemEquip*>(pItemObject)->setPropertyDirty(rPlayer);
+	}
 	return SUCCESS;
 }
 

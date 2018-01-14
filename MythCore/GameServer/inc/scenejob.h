@@ -78,6 +78,8 @@ public:
 	/// 发送前端消息
 	void		send2Player(CExchangeHead& rExchangeHead, unsigned short nMessageID, Message* pMessage);
 	void		send2Player(CEntityPlayer* pPlayer, unsigned short nMessageID, Message* pMessage);
+	/// 发生给所有的玩家消息
+	void		send2AllPlayer(unsigned short nMessageID, Message* pMessage);
 	/// 断开玩家的连接
 	void		disconnectPlayer(CExchangeHead& rExchangeHead);
 	void		disconnectPlayer(CEntityPlayer* pPlayer);
