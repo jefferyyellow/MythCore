@@ -142,23 +142,40 @@ void CTplItem::createToPB(PBItem* pbItem)
 	pbItem->set_itemtype(mItemType);
 	pbItem->set_pilelimit(mPileLimit);
 }
-
-void CTplEquip::setFromPB(PBEquip* pbData)
+void CTplEquip::setFromPB(PBTplEquip* pbData)
 {
 	CTplItem::setFromPB(pbData->mutable_super());
 	strncpy(mEquipModal, pbData->equipmodal().c_str(), sizeof(mEquipModal)-1);
 	mEquipPart = pbData->equippart();
 	mLevelRequire = pbData->levelrequire();
+	for (int i = 0; i < EQUIP_PROPERTY_NUM && i < pbData->property_size(); ++i)
+	{
+		mProperty[i].setFromPB(pbData->mutable_property(i));
+	}
 }
-
-void CTplEquip::createToPB(PBEquip* pbData)
+void CTplEquip::createToPB(PBTplEquip* pbData)
 {
 	CTplItem::createToPB(pbData->mutable_super());
 	pbData->set_equipmodal(mEquipModal);
 	pbData->set_equippart(mEquipPart);
 	pbData->set_levelrequire(mLevelRequire);
+	for (int i = 0; i < EQUIP_PROPERTY_NUM; ++i)
+	{
+		mProperty[i].createToPB(pbData->add_property());
+	}
 }
 
+
+void CTplEquip::CProperty::setFromPB(PBTplProperty* pbData)
+{
+	mType = pbData->type();
+	mValue = pbData->value();
+}
+void CTplEquip::CProperty::createToPB(PBTplProperty* pbData)
+{
+	pbData->set_type(mType);
+	pbData->set_value(mValue);
+}
 
 void CTplLevelExpConfig::setFromPB(PBTplLevelExpConfig* pbConfig)
 {

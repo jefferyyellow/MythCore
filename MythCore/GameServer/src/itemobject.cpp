@@ -5,7 +5,7 @@
 #include "entityplayer.h"
 CItemObject* CItemFactory::createItem(int nItemID)
 {
-	CTplItem* pTplItem = (CTplItem*)CStaticData::searchTpl(nItemID);
+	CTplItem* pTplItem = static_cast<CTplItem*>(CStaticData::searchTpl(nItemID));
 	if (NULL == pTplItem)
 	{
 		return NULL;
@@ -116,5 +116,25 @@ void CItemEquip::setPropertyDirty(CEntityPlayer& rPlayer)
 			break;
 		}
 		rPlayer.setPropertyDirty((EmPropertyType)mPropertyType[i], true);
+	}
+}
+
+// À¢–¬ Ù–‘
+void CItemEquip::refreshProperty()
+{
+	CTplEquip* pTplEquip = static_cast<CTplEquip*>(CStaticData::searchTpl(mItemID));
+	if (NULL == pTplEquip)
+	{
+		return;
+	}
+
+	for (int i = 0; i < EQUIP_PROPERTY_NUM; ++ i)
+	{
+		if (emPropertyType_None == pTplEquip->mProperty[i].mType)
+		{
+			break;
+		}
+		mPropertyType[i] = pTplEquip->mProperty[i].mType;
+		mPropertyValue[i] = pTplEquip->mProperty[i].mValue;
 	}
 }

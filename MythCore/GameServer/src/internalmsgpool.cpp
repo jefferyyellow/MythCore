@@ -9,7 +9,7 @@ CInternalMsg* CInternalMsgPool::allocMsg(int nMessageID)
 	{
 		case IM_REQUEST_LOCAL_LOG:
 		{
-			pMsg = reinterpret_cast<CInternalMsg*>(mLocalLogRequest.allocate());
+			pMsg = static_cast<CInternalMsg*>(mLocalLogRequest.allocate());
 			break;
 		}
 		default:

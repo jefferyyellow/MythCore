@@ -10,7 +10,7 @@
 void CTaskUnit::onAcceptTaskRequest(Message* pMessage)
 {
 	MYTH_ASSERT(NULL == pMessage, return);
-	CAcceptTaskRequest* pAcceptTaskRequest = reinterpret_cast<CAcceptTaskRequest*>(pMessage);
+	CAcceptTaskRequest* pAcceptTaskRequest = static_cast<CAcceptTaskRequest*>(pMessage);
 	MYTH_ASSERT(NULL == pAcceptTaskRequest, return);
 
 	int nTaskID = pAcceptTaskRequest->taskid();
@@ -23,7 +23,7 @@ void CTaskUnit::onAcceptTaskRequest(Message* pMessage)
 		return;
 	}
 
-	CEntity* pEntity = reinterpret_cast<CEntity*>(CObjPool::Inst()->getObj(nNpcEntityID));
+	CEntity* pEntity = static_cast<CEntity*>(CObjPool::Inst()->getObj(nNpcEntityID));
 	if (NULL == pEntity)
 	{
 		sendAcceptTaskResponse(ERROR_TASK_NPC_IS_VALID, nTaskID);
@@ -86,7 +86,7 @@ void CTaskUnit::sendAcceptTaskResponse(int nResult, int nTaskID)
 void CTaskUnit::onSubmitTaskRequest(Message* pMessage)
 {
 	MYTH_ASSERT(NULL == pMessage, return);
-	CSubmitTaskRequest* pSubmitTaskRequest = reinterpret_cast<CSubmitTaskRequest*>(pMessage);
+	CSubmitTaskRequest* pSubmitTaskRequest = static_cast<CSubmitTaskRequest*>(pMessage);
 	MYTH_ASSERT(NULL == pSubmitTaskRequest, return);
 
 	int nTaskID = pSubmitTaskRequest->taskid();
@@ -132,7 +132,7 @@ void CTaskUnit::sendSubmitTaskResponse(int nResult, int nTaskID)
 void CTaskUnit::onAbortTaskRequest(Message* pMessage)
 {
 	MYTH_ASSERT(NULL == pMessage, return);
-	CAbortTaskRequest* pAbortTaskRequest = reinterpret_cast<CAbortTaskRequest*>(pMessage);
+	CAbortTaskRequest* pAbortTaskRequest = static_cast<CAbortTaskRequest*>(pMessage);
 	MYTH_ASSERT(NULL == pAbortTaskRequest, return);
 
 	int nTaskID = pAbortTaskRequest->taskid();
@@ -462,7 +462,7 @@ int CTaskUnit::checkCommitCondition(CPlayerTask* pPlayerTask, int nItemIndex, CT
 			}
 			else
 			{
-				CItemObject* pItemObject =reinterpret_cast<CItemObject*>(mPlayer.getItemUnit().getBag().getItem(nItemIndex));
+				CItemObject* pItemObject = static_cast<CItemObject*>(mPlayer.getItemUnit().getBag().getItem(nItemIndex));
 				if (NULL == pItemObject)
 				{
 					return ERROR_TASK_ITEM_DATA_IS_NULL;

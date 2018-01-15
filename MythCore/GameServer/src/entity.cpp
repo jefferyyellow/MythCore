@@ -44,22 +44,22 @@ CEntity* CEntity::createEntity(EmEntityType eType)
 	{
 		case emEntityType_Player:
 		{
-			return (CEntity*)CObjPool::Inst()->allocObj(emObjType_Entity_Player);
+			return static_cast<CEntity*>(CObjPool::Inst()->allocObj(emObjType_Entity_Player));
 			break;
 		}
 		case emEntityType_Ogre:
 		{
-			return (CEntity*)CObjPool::Inst()->allocObj(emObjType_Entity_Ogre);
+			return static_cast<CEntity*>(CObjPool::Inst()->allocObj(emObjType_Entity_Ogre));
 			break;
 		}
 		case emEntityType_FuncNPC:
 		{
-			return (CEntity*)CObjPool::Inst()->allocObj(emObjType_Entity_FuncNPC);
+			return static_cast<CEntity*>(CObjPool::Inst()->allocObj(emObjType_Entity_FuncNPC));
 			break;
 		}
 		case emEntityType_Item:
 		{
-			return (CEntity*)CObjPool::Inst()->allocObj(emObjType_Entity_Item);
+			return static_cast<CEntity*>(CObjPool::Inst()->allocObj(emObjType_Entity_Item));
 			break;
 		}
 		default:
@@ -135,7 +135,7 @@ void CEntityOgre::onDead(CEntityCharacter* pKiller)
 		return;
 	}
 
-	CTplOgre* pTplOgre = reinterpret_cast<CTplOgre*>(CStaticData::searchTpl(getTempID()));
+	CTplOgre* pTplOgre = static_cast<CTplOgre*>(CStaticData::searchTpl(getTempID()));
 	if (NULL == pTplOgre)
 	{
 		return;
@@ -143,7 +143,7 @@ void CEntityOgre::onDead(CEntityCharacter* pKiller)
 
 
 	// É±¹Ö¾­Ñé
-	CEntityPlayer* pPlayer = reinterpret_cast<CEntityPlayer*>(pKiller);
+	CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(pKiller);
 	deadDrop(pPlayer, pTplOgre);
 
 	
@@ -202,6 +202,6 @@ void CEntityItem::initEntity(CEntityCreator* pCreator)
 	{
 		return;
 	}
-	CItemCreator* pItemCreate = reinterpret_cast<CItemCreator*>(pCreator);
+	CItemCreator* pItemCreate = static_cast<CItemCreator*>(pCreator);
 	mItemNum = pItemCreate->mNum;
 }

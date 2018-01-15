@@ -130,7 +130,7 @@ int CMapConfig::createMapFromConfig(CMap* pMap)
 	// ´´½¨NPC
 	for (unsigned int nIndex = 0; nIndex < mMapNPC.size(); ++ nIndex)
 	{
-		CTemplate* pTemplate = (CTemplate*)CStaticData::searchTpl(mMapNPC[nIndex].mTempID);
+		CTemplate* pTemplate = static_cast<CTemplate*>(CStaticData::searchTpl(mMapNPC[nIndex].mTempID));
 		if (NULL == pTemplate)
 		{
 			continue;

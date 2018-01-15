@@ -11,7 +11,7 @@ message PBTplTemplate
 
 message PBTplItemSet
 {
-	repeated PBEquip					equip					= 1;		// 装备
+	repeated PBTplEquip					equip					= 1;		// 装备
 }
 
 message PBTplConfigSet
@@ -41,12 +41,20 @@ message PBItem
 	uint32				ItemType		= 4;	// 道具类型
 	uint32				PileLimit		= 5;	// 堆叠上限
 }
-message PBEquip
+
+message PBTplProperty
+{
+	uint32				Type	= 1;
+	uint32				Value	= 2;
+}
+
+message PBTplEquip
 {
 	PBItem				Super			= 1;
 	string				EquipModal		= 2;
 	uint32				EquipPart		= 3;
 	uint32				LevelRequire	= 4;
+	repeated PBTplProperty Property		= 5;
 }
 
 message PBTplLevelExpConfig

@@ -445,7 +445,7 @@ void CSceneJob::processClientMessage()
 					return;
 				}
 
-				CEntityPlayer* pPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
+				CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
 				if (NULL == pPlayer)
 				{
 					return;
@@ -500,7 +500,7 @@ void CSceneJob::send2AllPlayer(unsigned short nMessageID, Message* pMessage)
 	PLAYER_LIST::iterator it = mPlayerList.begin();
 	for (; it != mPlayerList.end(); ++ it)
 	{
-		pPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
+		pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
 		if (NULL == pPlayer)
 		{
 			continue;
@@ -597,7 +597,7 @@ void CSceneJob::onSocketDisconnect(int nSocketIndex)
 	PLAYER_SOCKET_LIST::iterator it = mPlayerSocketList.find(nSocketIndex);
 	if (it != mPlayerSocketList.end())
 	{
-		CEntityPlayer* pPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
+		CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
 		if (NULL != pPlayer)
 		{
 			// 将玩家置为下线状态
@@ -619,7 +619,7 @@ CEntityPlayer* CSceneJob::getPlayerByRoleID(unsigned int nRoleID)
 	PLAYER_LIST::iterator it = mPlayerList.find(nRoleID);
 	if (it != mPlayerList.end())
 	{
-		return reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
+		return static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
 	}
 	return NULL;
 }
@@ -630,7 +630,7 @@ CEntityPlayer* CSceneJob::getPlayerBySocketIndex(short nSocketIndex)
 	PLAYER_SOCKET_LIST::iterator it = mPlayerSocketList.find(nSocketIndex);
 	if (it != mPlayerSocketList.end())
 	{
-		return reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
+		return static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
 	}
 
 	return NULL;

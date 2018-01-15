@@ -126,7 +126,7 @@ void CMapModule::broadCastVisiblePlayer(CEntity* pEntity, unsigned short nMessag
 	CEntity* pVisibleEntity = NULL;
 	for (; it != rPlayerList.end();)
 	{
-		pVisibleEntity = reinterpret_cast<CEntity*>(CObjPool::Inst()->getObj(*it));
+		pVisibleEntity = static_cast<CEntity*>(CObjPool::Inst()->getObj(*it));
 		if (NULL == pVisibleEntity)
 		{
 			// 注意这里用it++
@@ -140,7 +140,7 @@ void CMapModule::broadCastVisiblePlayer(CEntity* pEntity, unsigned short nMessag
 			continue;
 		}
 
-		CSceneJob::Inst()->send2Player(reinterpret_cast<CEntityPlayer*>(pVisibleEntity), nMessageID, pMessage);
+		CSceneJob::Inst()->send2Player(static_cast<CEntityPlayer*>(pVisibleEntity), nMessageID, pMessage);
 		 ++ it;
 	}
 }

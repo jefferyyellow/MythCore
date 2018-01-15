@@ -103,7 +103,7 @@ int	CItemModule::getFromDropTable(int nDropTableID, int& rDropItemNum)
 	{
 		return 0;
 	}
-	CTplDropTable* pTplDropTable = reinterpret_cast<CTplDropTable*>(tpTempalte);
+	CTplDropTable* pTplDropTable = static_cast<CTplDropTable*>(tpTempalte);
 
 	int nRandom = RAND(MYTH_PERCENT_INT);
 	// µ√µΩµÙ¬‰ID

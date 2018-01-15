@@ -136,7 +136,7 @@ public:
 				continue;
 			}
 
-			CItemObject* pItemObject = reinterpret_cast<CItemObject*>(CObjPool::Inst()->getObj(mItemObjID[i]));
+			CItemObject* pItemObject = static_cast<CItemObject*>(CObjPool::Inst()->getObj(mItemObjID[i]));
 			if (NULL == pItemObject)
 			{
 				continue;
@@ -163,7 +163,7 @@ public:
 			return NULL;
 		}
 
-		return reinterpret_cast<CItemObject*>(CObjPool::Inst()->getObj(mItemObjID[nIndex]));
+		return static_cast<CItemObject*>(CObjPool::Inst()->getObj(mItemObjID[nIndex]));
 	}
 protected:
 	/// Obj IDÁÐ±í

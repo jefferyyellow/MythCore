@@ -29,18 +29,18 @@ void CMapRegionSearch::searchMapUnity(CMapUnit* pMapUnit)
 	CMapUnit::ENTITY_LIST::iterator it = rEntityList.begin();
 	for (; it != rEntityList.end(); ++it)
 	{
-		CEntity* pEntity = (CEntity*)CObjPool::Inst()->getObj(*it);
+		CEntity* pEntity = static_cast<CEntity*>(CObjPool::Inst()->getObj(*it));
 		if (NULL == pEntity)
 		{
 			continue;
 		}
 		if (emEntityType_Player == pEntity->getEntityType())
 		{
-			mPlayerList.push_back(reinterpret_cast<CEntityPlayer*>(pEntity));
+			mPlayerList.push_back(static_cast<CEntityPlayer*>(pEntity));
 		}
 		else
 		{
-			mNPCList.push_back(reinterpret_cast<CEntityNPC*>(pEntity));
+			mNPCList.push_back(static_cast<CEntityNPC*>(pEntity));
 		}
 	}
 }

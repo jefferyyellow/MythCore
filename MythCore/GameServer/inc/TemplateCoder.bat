@@ -1,1 +1,1 @@
-TemplateCoder.exe CTplSkill
+TemplateCoder.exe CTplEquip

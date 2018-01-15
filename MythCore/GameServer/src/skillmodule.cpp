@@ -87,7 +87,7 @@ void CSkillModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessage
 void CSkillModule::onUseSkillRequest(CEntityPlayer* pPlayer, Message* pMessage)
 {
 	MYTH_ASSERT(NULL == pMessage || NULL == pPlayer, return);
-	CUseSkillRequest* pUseSkillRequest = reinterpret_cast<CUseSkillRequest*>(pMessage);
+	CUseSkillRequest* pUseSkillRequest = static_cast<CUseSkillRequest*>(pMessage);
 	MYTH_ASSERT(NULL == pUseSkillRequest, return);
 
 	int nSkillIndex = pUseSkillRequest->skillindex();
@@ -101,7 +101,7 @@ void CSkillModule::onUseSkillRequest(CEntityPlayer* pPlayer, Message* pMessage)
 	int nTargetCount = 0;
 	for (int i = 0; i < pUseSkillRequest->target_size(); ++ i)
 	{
-		CEntityCharacter* pTarget = reinterpret_cast<CEntityCharacter*>(CObjPool::Inst()->getObj(pUseSkillRequest->target(i)));
+		CEntityCharacter* pTarget = static_cast<CEntityCharacter*>(CObjPool::Inst()->getObj(pUseSkillRequest->target(i)));
 		if (NULL == pTarget)
 		{
 			continue;
@@ -114,7 +114,7 @@ void CSkillModule::onUseSkillRequest(CEntityPlayer* pPlayer, Message* pMessage)
 	}
 
 	
-	CTplSkill* pTplSkill = reinterpret_cast<CTplSkill*>(CStaticData::searchTpl(pPlayerSkill->getSkillId()));
+	CTplSkill* pTplSkill = static_cast<CTplSkill*>(CStaticData::searchTpl(pPlayerSkill->getSkillId()));
 	if (NULL == pTplSkill)
 	{
 		return;

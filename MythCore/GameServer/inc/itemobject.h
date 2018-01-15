@@ -5,6 +5,7 @@
 class CItemObject;
 class PBItemObject;
 class CEntityPlayer;
+#include "template.h"
 class CItemFactory
 {
 public:
@@ -30,7 +31,7 @@ public:
 
 	virtual void setFromPB(PBItemObject* pItemObject) = 0;
 	virtual void createToPB(PBItemObject* pItemObject) = 0;
-private:
+protected:
 	/// 道具ID
 	int			mItemID;
 	/// 道具数量
@@ -72,7 +73,8 @@ public:
 	int	getProperty(int nPropertyType);
 	/// 设置属性脏标记
 	void setPropertyDirty(CEntityPlayer& rPlayer);
-
+	// 刷新属性
+	void refreshProperty();
 public:
 	int		getLevel() const { return mLevel; }
 	void	setLevel(int nValue) { mLevel = nValue; }

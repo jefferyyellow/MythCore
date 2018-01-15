@@ -84,7 +84,7 @@ void CChatModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageI
 void CChatModule::onChatRequest(CEntityPlayer* pPlayer, Message* pMessage)
 {
 	MYTH_ASSERT(NULL == pPlayer || NULL == pMessage, return);
-	CChatRequest* pChatRequest = reinterpret_cast<CChatRequest*>(pMessage);
+	CChatRequest* pChatRequest = static_cast<CChatRequest*>(pMessage);
 
 	int nChannel = pChatRequest->channel();
 	if(pChatRequest->content().length() > MAX_CHAT_CONTENT_LENG)

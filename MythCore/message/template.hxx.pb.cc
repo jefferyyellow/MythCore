@@ -37,9 +37,12 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* PBItem_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   PBItem_reflection_ = NULL;
-const ::google::protobuf::Descriptor* PBEquip_descriptor_ = NULL;
+const ::google::protobuf::Descriptor* PBTplProperty_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  PBEquip_reflection_ = NULL;
+  PBTplProperty_reflection_ = NULL;
+const ::google::protobuf::Descriptor* PBTplEquip_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  PBTplEquip_reflection_ = NULL;
 const ::google::protobuf::Descriptor* PBTplLevelExpConfig_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   PBTplLevelExpConfig_reflection_ = NULL;
@@ -169,24 +172,40 @@ void protobuf_AssignDesc_template_2ehxx() {
       -1,
       sizeof(PBItem),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBItem, _internal_metadata_));
-  PBEquip_descriptor_ = file->message_type(6);
-  static const int PBEquip_offsets_[4] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBEquip, super_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBEquip, equipmodal_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBEquip, equippart_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBEquip, levelrequire_),
+  PBTplProperty_descriptor_ = file->message_type(6);
+  static const int PBTplProperty_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplProperty, type_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplProperty, value_),
   };
-  PBEquip_reflection_ =
+  PBTplProperty_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      PBEquip_descriptor_,
-      PBEquip::internal_default_instance(),
-      PBEquip_offsets_,
+      PBTplProperty_descriptor_,
+      PBTplProperty::internal_default_instance(),
+      PBTplProperty_offsets_,
       -1,
       -1,
       -1,
-      sizeof(PBEquip),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBEquip, _internal_metadata_));
-  PBTplLevelExpConfig_descriptor_ = file->message_type(7);
+      sizeof(PBTplProperty),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplProperty, _internal_metadata_));
+  PBTplEquip_descriptor_ = file->message_type(7);
+  static const int PBTplEquip_offsets_[5] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplEquip, super_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplEquip, equipmodal_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplEquip, equippart_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplEquip, levelrequire_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplEquip, property_),
+  };
+  PBTplEquip_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      PBTplEquip_descriptor_,
+      PBTplEquip::internal_default_instance(),
+      PBTplEquip_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(PBTplEquip),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplEquip, _internal_metadata_));
+  PBTplLevelExpConfig_descriptor_ = file->message_type(8);
   static const int PBTplLevelExpConfig_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplLevelExpConfig, tempid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplLevelExpConfig, levelupexp_),
@@ -201,7 +220,7 @@ void protobuf_AssignDesc_template_2ehxx() {
       -1,
       sizeof(PBTplLevelExpConfig),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplLevelExpConfig, _internal_metadata_));
-  PBTplVIPConfig_descriptor_ = file->message_type(8);
+  PBTplVIPConfig_descriptor_ = file->message_type(9);
   static const int PBTplVIPConfig_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplVIPConfig, tempid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplVIPConfig, vipexp_),
@@ -216,7 +235,7 @@ void protobuf_AssignDesc_template_2ehxx() {
       -1,
       sizeof(PBTplVIPConfig),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplVIPConfig, _internal_metadata_));
-  PBTplNPC_descriptor_ = file->message_type(9);
+  PBTplNPC_descriptor_ = file->message_type(10);
   static const int PBTplNPC_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplNPC, tempid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplNPC, name_),
@@ -231,7 +250,7 @@ void protobuf_AssignDesc_template_2ehxx() {
       -1,
       sizeof(PBTplNPC),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplNPC, _internal_metadata_));
-  PBTplFuncNPC_descriptor_ = file->message_type(10);
+  PBTplFuncNPC_descriptor_ = file->message_type(11);
   static const int PBTplFuncNPC_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplFuncNPC, baseinfo_),
   };
@@ -245,7 +264,7 @@ void protobuf_AssignDesc_template_2ehxx() {
       -1,
       sizeof(PBTplFuncNPC),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplFuncNPC, _internal_metadata_));
-  PBTplOgre_descriptor_ = file->message_type(11);
+  PBTplOgre_descriptor_ = file->message_type(12);
   static const int PBTplOgre_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplOgre, super_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplOgre, exp_),
@@ -261,7 +280,7 @@ void protobuf_AssignDesc_template_2ehxx() {
       -1,
       sizeof(PBTplOgre),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplOgre, _internal_metadata_));
-  PBTplSkill_descriptor_ = file->message_type(12);
+  PBTplSkill_descriptor_ = file->message_type(13);
   static const int PBTplSkill_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplSkill, tempid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplSkill, name_),
@@ -279,7 +298,7 @@ void protobuf_AssignDesc_template_2ehxx() {
       -1,
       sizeof(PBTplSkill),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplSkill, _internal_metadata_));
-  PBTplDropItem_descriptor_ = file->message_type(13);
+  PBTplDropItem_descriptor_ = file->message_type(14);
   static const int PBTplDropItem_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplDropItem, itemid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplDropItem, itemnum_),
@@ -295,7 +314,7 @@ void protobuf_AssignDesc_template_2ehxx() {
       -1,
       sizeof(PBTplDropItem),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplDropItem, _internal_metadata_));
-  PBTplDropTable_descriptor_ = file->message_type(14);
+  PBTplDropTable_descriptor_ = file->message_type(15);
   static const int PBTplDropTable_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplDropTable, tempid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplDropTable, dropitem_),
@@ -336,7 +355,9 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       PBItem_descriptor_, PBItem::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      PBEquip_descriptor_, PBEquip::internal_default_instance());
+      PBTplProperty_descriptor_, PBTplProperty::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      PBTplEquip_descriptor_, PBTplEquip::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       PBTplLevelExpConfig_descriptor_, PBTplLevelExpConfig::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
@@ -370,8 +391,10 @@ void protobuf_ShutdownFile_template_2ehxx() {
   delete PBTplNPCSet_reflection_;
   PBItem_default_instance_.Shutdown();
   delete PBItem_reflection_;
-  PBEquip_default_instance_.Shutdown();
-  delete PBEquip_reflection_;
+  PBTplProperty_default_instance_.Shutdown();
+  delete PBTplProperty_reflection_;
+  PBTplEquip_default_instance_.Shutdown();
+  delete PBTplEquip_reflection_;
   PBTplLevelExpConfig_default_instance_.Shutdown();
   delete PBTplLevelExpConfig_reflection_;
   PBTplVIPConfig_default_instance_.Shutdown();
@@ -400,8 +423,9 @@ void protobuf_InitDefaults_template_2ehxx_impl() {
   PBTplNPCSet_default_instance_.DefaultConstruct();
   ::google::protobuf::internal::GetEmptyString();
   PBItem_default_instance_.DefaultConstruct();
+  PBTplProperty_default_instance_.DefaultConstruct();
   ::google::protobuf::internal::GetEmptyString();
-  PBEquip_default_instance_.DefaultConstruct();
+  PBTplEquip_default_instance_.DefaultConstruct();
   PBTplLevelExpConfig_default_instance_.DefaultConstruct();
   PBTplVIPConfig_default_instance_.DefaultConstruct();
   ::google::protobuf::internal::GetEmptyString();
@@ -418,7 +442,8 @@ void protobuf_InitDefaults_template_2ehxx_impl() {
   PBTplSkillSet_default_instance_.get_mutable()->InitAsDefaultInstance();
   PBTplNPCSet_default_instance_.get_mutable()->InitAsDefaultInstance();
   PBItem_default_instance_.get_mutable()->InitAsDefaultInstance();
-  PBEquip_default_instance_.get_mutable()->InitAsDefaultInstance();
+  PBTplProperty_default_instance_.get_mutable()->InitAsDefaultInstance();
+  PBTplEquip_default_instance_.get_mutable()->InitAsDefaultInstance();
   PBTplLevelExpConfig_default_instance_.get_mutable()->InitAsDefaultInstance();
   PBTplVIPConfig_default_instance_.get_mutable()->InitAsDefaultInstance();
   PBTplNPC_default_instance_.get_mutable()->InitAsDefaultInstance();
@@ -443,32 +468,34 @@ void protobuf_AddDesc_template_2ehxx_impl() {
     "Set\030\001 \001(\0132\r.PBTplItemSet\022\"\n\tConfigSet\030\002 "
     "\001(\0132\017.PBTplConfigSet\022 \n\010SkillSet\030\003 \001(\0132\016"
     ".PBTplSkillSet\022\034\n\006NPCSet\030\004 \001(\0132\014.PBTplNP"
-    "CSet\"\'\n\014PBTplItemSet\022\027\n\005equip\030\001 \003(\0132\010.PB"
-    "Equip\"\206\001\n\016PBTplConfigSet\022,\n\016LevelExpConf"
-    "ig\030\001 \003(\0132\024.PBTplLevelExpConfig\022\"\n\tVIPCon"
-    "fig\030\002 \003(\0132\017.PBTplVIPConfig\022\"\n\tDroptable\030"
-    "\003 \003(\0132\017.PBTplDropTable\"+\n\rPBTplSkillSet\022"
-    "\032\n\005Skill\030\001 \003(\0132\013.PBTplSkill\"G\n\013PBTplNPCS"
-    "et\022\036\n\007FuncNpc\030\001 \003(\0132\r.PBTplFuncNPC\022\030\n\004Og"
-    "re\030\002 \003(\0132\n.PBTplOgre\"]\n\006PBItem\022\016\n\006TempID"
-    "\030\001 \001(\r\022\014\n\004Name\030\002 \001(\t\022\020\n\010Describe\030\003 \001(\t\022\020"
-    "\n\010ItemType\030\004 \001(\r\022\021\n\tPileLimit\030\005 \001(\r\"^\n\007P"
-    "BEquip\022\026\n\005Super\030\001 \001(\0132\007.PBItem\022\022\n\nEquipM"
-    "odal\030\002 \001(\t\022\021\n\tEquipPart\030\003 \001(\r\022\024\n\014LevelRe"
-    "quire\030\004 \001(\r\"9\n\023PBTplLevelExpConfig\022\016\n\006Te"
-    "mpID\030\001 \001(\r\022\022\n\nLevelUpExp\030\002 \003(\r\"0\n\016PBTplV"
-    "IPConfig\022\016\n\006TempID\030\001 \001(\r\022\016\n\006VIPExp\030\002 \003(\r"
-    "\"(\n\010PBTplNPC\022\016\n\006TempID\030\001 \001(\r\022\014\n\004Name\030\002 \001"
-    "(\t\"+\n\014PBTplFuncNPC\022\033\n\010BaseInfo\030\001 \001(\0132\t.P"
-    "BTplNPC\"E\n\tPBTplOgre\022\030\n\005Super\030\001 \001(\0132\t.PB"
-    "TplNPC\022\013\n\003Exp\030\002 \001(\r\022\021\n\tDropTable\030\003 \003(\r\"c"
-    "\n\nPBTplSkill\022\016\n\006TempID\030\001 \001(\r\022\014\n\004Name\030\002 \001"
-    "(\t\022\023\n\013Description\030\003 \001(\t\022\017\n\007SkillCD\030\004 \001(\r"
-    "\022\021\n\tAddDamage\030\005 \001(\r\"E\n\rPBTplDropItem\022\016\n\006"
-    "ItemID\030\001 \001(\r\022\017\n\007ItemNum\030\002 \001(\r\022\023\n\013Probabi"
-    "lity\030\003 \001(\r\"B\n\016PBTplDropTable\022\016\n\006TempID\030\001"
-    " \001(\r\022 \n\010DropItem\030\002 \003(\0132\016.PBTplDropItemb\006"
-    "proto3", 1166);
+    "CSet\"*\n\014PBTplItemSet\022\032\n\005equip\030\001 \003(\0132\013.PB"
+    "TplEquip\"\206\001\n\016PBTplConfigSet\022,\n\016LevelExpC"
+    "onfig\030\001 \003(\0132\024.PBTplLevelExpConfig\022\"\n\tVIP"
+    "Config\030\002 \003(\0132\017.PBTplVIPConfig\022\"\n\tDroptab"
+    "le\030\003 \003(\0132\017.PBTplDropTable\"+\n\rPBTplSkillS"
+    "et\022\032\n\005Skill\030\001 \003(\0132\013.PBTplSkill\"G\n\013PBTplN"
+    "PCSet\022\036\n\007FuncNpc\030\001 \003(\0132\r.PBTplFuncNPC\022\030\n"
+    "\004Ogre\030\002 \003(\0132\n.PBTplOgre\"]\n\006PBItem\022\016\n\006Tem"
+    "pID\030\001 \001(\r\022\014\n\004Name\030\002 \001(\t\022\020\n\010Describe\030\003 \001("
+    "\t\022\020\n\010ItemType\030\004 \001(\r\022\021\n\tPileLimit\030\005 \001(\r\","
+    "\n\rPBTplProperty\022\014\n\004Type\030\001 \001(\r\022\r\n\005Value\030\002"
+    " \001(\r\"\203\001\n\nPBTplEquip\022\026\n\005Super\030\001 \001(\0132\007.PBI"
+    "tem\022\022\n\nEquipModal\030\002 \001(\t\022\021\n\tEquipPart\030\003 \001"
+    "(\r\022\024\n\014LevelRequire\030\004 \001(\r\022 \n\010Property\030\005 \003"
+    "(\0132\016.PBTplProperty\"9\n\023PBTplLevelExpConfi"
+    "g\022\016\n\006TempID\030\001 \001(\r\022\022\n\nLevelUpExp\030\002 \003(\r\"0\n"
+    "\016PBTplVIPConfig\022\016\n\006TempID\030\001 \001(\r\022\016\n\006VIPEx"
+    "p\030\002 \003(\r\"(\n\010PBTplNPC\022\016\n\006TempID\030\001 \001(\r\022\014\n\004N"
+    "ame\030\002 \001(\t\"+\n\014PBTplFuncNPC\022\033\n\010BaseInfo\030\001 "
+    "\001(\0132\t.PBTplNPC\"E\n\tPBTplOgre\022\030\n\005Super\030\001 \001"
+    "(\0132\t.PBTplNPC\022\013\n\003Exp\030\002 \001(\r\022\021\n\tDropTable\030"
+    "\003 \003(\r\"c\n\nPBTplSkill\022\016\n\006TempID\030\001 \001(\r\022\014\n\004N"
+    "ame\030\002 \001(\t\022\023\n\013Description\030\003 \001(\t\022\017\n\007SkillC"
+    "D\030\004 \001(\r\022\021\n\tAddDamage\030\005 \001(\r\"E\n\rPBTplDropI"
+    "tem\022\016\n\006ItemID\030\001 \001(\r\022\017\n\007ItemNum\030\002 \001(\r\022\023\n\013"
+    "Probability\030\003 \001(\r\"B\n\016PBTplDropTable\022\016\n\006T"
+    "empID\030\001 \001(\r\022 \n\010DropItem\030\002 \003(\0132\016.PBTplDro"
+    "pItemb\006proto3", 1253);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "template.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_template_2ehxx);
@@ -1097,7 +1124,7 @@ bool PBTplItemSet::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .PBEquip equip = 1;
+      // repeated .PBTplEquip equip = 1;
       case 1: {
         if (tag == 10) {
           DO_(input->IncrementRecursionDepth());
@@ -1137,7 +1164,7 @@ failure:
 void PBTplItemSet::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:PBTplItemSet)
-  // repeated .PBEquip equip = 1;
+  // repeated .PBTplEquip equip = 1;
   for (unsigned int i = 0, n = this->equip_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       1, this->equip(i), output);
@@ -1150,7 +1177,7 @@ void PBTplItemSet::SerializeWithCachedSizes(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:PBTplItemSet)
-  // repeated .PBEquip equip = 1;
+  // repeated .PBTplEquip equip = 1;
   for (unsigned int i = 0, n = this->equip_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
@@ -1165,7 +1192,7 @@ size_t PBTplItemSet::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:PBTplItemSet)
   size_t total_size = 0;
 
-  // repeated .PBEquip equip = 1;
+  // repeated .PBTplEquip equip = 1;
   {
     unsigned int count = this->equip_size();
     total_size += 1UL * count;
@@ -1252,31 +1279,31 @@ void PBTplItemSet::InternalSwap(PBTplItemSet* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // PBTplItemSet
 
-// repeated .PBEquip equip = 1;
+// repeated .PBTplEquip equip = 1;
 int PBTplItemSet::equip_size() const {
   return equip_.size();
 }
 void PBTplItemSet::clear_equip() {
   equip_.Clear();
 }
-const ::PBEquip& PBTplItemSet::equip(int index) const {
+const ::PBTplEquip& PBTplItemSet::equip(int index) const {
   // @@protoc_insertion_point(field_get:PBTplItemSet.equip)
   return equip_.Get(index);
 }
-::PBEquip* PBTplItemSet::mutable_equip(int index) {
+::PBTplEquip* PBTplItemSet::mutable_equip(int index) {
   // @@protoc_insertion_point(field_mutable:PBTplItemSet.equip)
   return equip_.Mutable(index);
 }
-::PBEquip* PBTplItemSet::add_equip() {
+::PBTplEquip* PBTplItemSet::add_equip() {
   // @@protoc_insertion_point(field_add:PBTplItemSet.equip)
   return equip_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::PBEquip >*
+::google::protobuf::RepeatedPtrField< ::PBTplEquip >*
 PBTplItemSet::mutable_equip() {
   // @@protoc_insertion_point(field_mutable_list:PBTplItemSet.equip)
   return &equip_;
 }
-const ::google::protobuf::RepeatedPtrField< ::PBEquip >&
+const ::google::protobuf::RepeatedPtrField< ::PBTplEquip >&
 PBTplItemSet::equip() const {
   // @@protoc_insertion_point(field_list:PBTplItemSet.equip)
   return equip_;
@@ -2873,33 +2900,350 @@ inline const PBItem* PBItem::internal_default_instance() {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int PBEquip::kSuperFieldNumber;
-const int PBEquip::kEquipModalFieldNumber;
-const int PBEquip::kEquipPartFieldNumber;
-const int PBEquip::kLevelRequireFieldNumber;
+const int PBTplProperty::kTypeFieldNumber;
+const int PBTplProperty::kValueFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-PBEquip::PBEquip()
+PBTplProperty::PBTplProperty()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   if (this != internal_default_instance()) protobuf_InitDefaults_template_2ehxx();
   SharedCtor();
-  // @@protoc_insertion_point(constructor:PBEquip)
+  // @@protoc_insertion_point(constructor:PBTplProperty)
 }
 
-void PBEquip::InitAsDefaultInstance() {
-  super_ = const_cast< ::PBItem*>(
-      ::PBItem::internal_default_instance());
+void PBTplProperty::InitAsDefaultInstance() {
 }
 
-PBEquip::PBEquip(const PBEquip& from)
+PBTplProperty::PBTplProperty(const PBTplProperty& from)
   : ::google::protobuf::Message(),
     _internal_metadata_(NULL) {
   SharedCtor();
   UnsafeMergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:PBEquip)
+  // @@protoc_insertion_point(copy_constructor:PBTplProperty)
 }
 
-void PBEquip::SharedCtor() {
+void PBTplProperty::SharedCtor() {
+  ::memset(&type_, 0, reinterpret_cast<char*>(&value_) -
+    reinterpret_cast<char*>(&type_) + sizeof(value_));
+  _cached_size_ = 0;
+}
+
+PBTplProperty::~PBTplProperty() {
+  // @@protoc_insertion_point(destructor:PBTplProperty)
+  SharedDtor();
+}
+
+void PBTplProperty::SharedDtor() {
+}
+
+void PBTplProperty::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* PBTplProperty::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return PBTplProperty_descriptor_;
+}
+
+const PBTplProperty& PBTplProperty::default_instance() {
+  protobuf_InitDefaults_template_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<PBTplProperty> PBTplProperty_default_instance_;
+
+PBTplProperty* PBTplProperty::New(::google::protobuf::Arena* arena) const {
+  PBTplProperty* n = new PBTplProperty;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void PBTplProperty::Clear() {
+// @@protoc_insertion_point(message_clear_start:PBTplProperty)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(PBTplProperty, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<PBTplProperty*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&(first), 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(type_, value_);
+
+#undef ZR_HELPER_
+#undef ZR_
+
+}
+
+bool PBTplProperty::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:PBTplProperty)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 Type = 1;
+      case 1: {
+        if (tag == 8) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &type_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_Value;
+        break;
+      }
+
+      // optional uint32 Value = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_Value:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &value_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:PBTplProperty)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:PBTplProperty)
+  return false;
+#undef DO_
+}
+
+void PBTplProperty::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:PBTplProperty)
+  // optional uint32 Type = 1;
+  if (this->type() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->type(), output);
+  }
+
+  // optional uint32 Value = 2;
+  if (this->value() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->value(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:PBTplProperty)
+}
+
+::google::protobuf::uint8* PBTplProperty::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:PBTplProperty)
+  // optional uint32 Type = 1;
+  if (this->type() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->type(), target);
+  }
+
+  // optional uint32 Value = 2;
+  if (this->value() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->value(), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:PBTplProperty)
+  return target;
+}
+
+size_t PBTplProperty::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:PBTplProperty)
+  size_t total_size = 0;
+
+  // optional uint32 Type = 1;
+  if (this->type() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->type());
+  }
+
+  // optional uint32 Value = 2;
+  if (this->value() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->value());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void PBTplProperty::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:PBTplProperty)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const PBTplProperty* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const PBTplProperty>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:PBTplProperty)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:PBTplProperty)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void PBTplProperty::MergeFrom(const PBTplProperty& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:PBTplProperty)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void PBTplProperty::UnsafeMergeFrom(const PBTplProperty& from) {
+  GOOGLE_DCHECK(&from != this);
+  if (from.type() != 0) {
+    set_type(from.type());
+  }
+  if (from.value() != 0) {
+    set_value(from.value());
+  }
+}
+
+void PBTplProperty::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:PBTplProperty)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void PBTplProperty::CopyFrom(const PBTplProperty& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:PBTplProperty)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool PBTplProperty::IsInitialized() const {
+
+  return true;
+}
+
+void PBTplProperty::Swap(PBTplProperty* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void PBTplProperty::InternalSwap(PBTplProperty* other) {
+  std::swap(type_, other->type_);
+  std::swap(value_, other->value_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata PBTplProperty::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = PBTplProperty_descriptor_;
+  metadata.reflection = PBTplProperty_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// PBTplProperty
+
+// optional uint32 Type = 1;
+void PBTplProperty::clear_type() {
+  type_ = 0u;
+}
+::google::protobuf::uint32 PBTplProperty::type() const {
+  // @@protoc_insertion_point(field_get:PBTplProperty.Type)
+  return type_;
+}
+void PBTplProperty::set_type(::google::protobuf::uint32 value) {
+  
+  type_ = value;
+  // @@protoc_insertion_point(field_set:PBTplProperty.Type)
+}
+
+// optional uint32 Value = 2;
+void PBTplProperty::clear_value() {
+  value_ = 0u;
+}
+::google::protobuf::uint32 PBTplProperty::value() const {
+  // @@protoc_insertion_point(field_get:PBTplProperty.Value)
+  return value_;
+}
+void PBTplProperty::set_value(::google::protobuf::uint32 value) {
+  
+  value_ = value;
+  // @@protoc_insertion_point(field_set:PBTplProperty.Value)
+}
+
+inline const PBTplProperty* PBTplProperty::internal_default_instance() {
+  return &PBTplProperty_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int PBTplEquip::kSuperFieldNumber;
+const int PBTplEquip::kEquipModalFieldNumber;
+const int PBTplEquip::kEquipPartFieldNumber;
+const int PBTplEquip::kLevelRequireFieldNumber;
+const int PBTplEquip::kPropertyFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+PBTplEquip::PBTplEquip()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_template_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:PBTplEquip)
+}
+
+void PBTplEquip::InitAsDefaultInstance() {
+  super_ = const_cast< ::PBItem*>(
+      ::PBItem::internal_default_instance());
+}
+
+PBTplEquip::PBTplEquip(const PBTplEquip& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:PBTplEquip)
+}
+
+void PBTplEquip::SharedCtor() {
   equipmodal_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   super_ = NULL;
   ::memset(&equippart_, 0, reinterpret_cast<char*>(&levelrequire_) -
@@ -2907,54 +3251,54 @@ void PBEquip::SharedCtor() {
   _cached_size_ = 0;
 }
 
-PBEquip::~PBEquip() {
-  // @@protoc_insertion_point(destructor:PBEquip)
+PBTplEquip::~PBTplEquip() {
+  // @@protoc_insertion_point(destructor:PBTplEquip)
   SharedDtor();
 }
 
-void PBEquip::SharedDtor() {
+void PBTplEquip::SharedDtor() {
   equipmodal_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (this != &PBEquip_default_instance_.get()) {
+  if (this != &PBTplEquip_default_instance_.get()) {
     delete super_;
   }
 }
 
-void PBEquip::SetCachedSize(int size) const {
+void PBTplEquip::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* PBEquip::descriptor() {
+const ::google::protobuf::Descriptor* PBTplEquip::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return PBEquip_descriptor_;
+  return PBTplEquip_descriptor_;
 }
 
-const PBEquip& PBEquip::default_instance() {
+const PBTplEquip& PBTplEquip::default_instance() {
   protobuf_InitDefaults_template_2ehxx();
   return *internal_default_instance();
 }
 
-::google::protobuf::internal::ExplicitlyConstructed<PBEquip> PBEquip_default_instance_;
+::google::protobuf::internal::ExplicitlyConstructed<PBTplEquip> PBTplEquip_default_instance_;
 
-PBEquip* PBEquip::New(::google::protobuf::Arena* arena) const {
-  PBEquip* n = new PBEquip;
+PBTplEquip* PBTplEquip::New(::google::protobuf::Arena* arena) const {
+  PBTplEquip* n = new PBTplEquip;
   if (arena != NULL) {
     arena->Own(n);
   }
   return n;
 }
 
-void PBEquip::Clear() {
-// @@protoc_insertion_point(message_clear_start:PBEquip)
+void PBTplEquip::Clear() {
+// @@protoc_insertion_point(message_clear_start:PBTplEquip)
 #if defined(__clang__)
 #define ZR_HELPER_(f) \
   _Pragma("clang diagnostic push") \
   _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
-  __builtin_offsetof(PBEquip, f) \
+  __builtin_offsetof(PBTplEquip, f) \
   _Pragma("clang diagnostic pop")
 #else
 #define ZR_HELPER_(f) reinterpret_cast<char*>(\
-  &reinterpret_cast<PBEquip*>(16)->f)
+  &reinterpret_cast<PBTplEquip*>(16)->f)
 #endif
 
 #define ZR_(first, last) do {\
@@ -2970,13 +3314,14 @@ void PBEquip::Clear() {
 #undef ZR_HELPER_
 #undef ZR_
 
+  property_.Clear();
 }
 
-bool PBEquip::MergePartialFromCodedStream(
+bool PBTplEquip::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:PBEquip)
+  // @@protoc_insertion_point(parse_start:PBTplEquip)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -3003,7 +3348,7 @@ bool PBEquip::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             this->equipmodal().data(), this->equipmodal().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "PBEquip.EquipModal"));
+            "PBTplEquip.EquipModal"));
         } else {
           goto handle_unusual;
         }
@@ -3037,6 +3382,23 @@ bool PBEquip::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(42)) goto parse_Property;
+        break;
+      }
+
+      // repeated .PBTplProperty Property = 5;
+      case 5: {
+        if (tag == 42) {
+         parse_Property:
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_Property:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+                input, add_property()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(42)) goto parse_loop_Property;
+        input->UnsafeDecrementRecursionDepth();
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -3054,17 +3416,17 @@ bool PBEquip::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:PBEquip)
+  // @@protoc_insertion_point(parse_success:PBTplEquip)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:PBEquip)
+  // @@protoc_insertion_point(parse_failure:PBTplEquip)
   return false;
 #undef DO_
 }
 
-void PBEquip::SerializeWithCachedSizes(
+void PBTplEquip::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:PBEquip)
+  // @@protoc_insertion_point(serialize_start:PBTplEquip)
   // optional .PBItem Super = 1;
   if (this->has_super()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
@@ -3076,7 +3438,7 @@ void PBEquip::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->equipmodal().data(), this->equipmodal().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "PBEquip.EquipModal");
+      "PBTplEquip.EquipModal");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       2, this->equipmodal(), output);
   }
@@ -3091,13 +3453,19 @@ void PBEquip::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->levelrequire(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:PBEquip)
+  // repeated .PBTplProperty Property = 5;
+  for (unsigned int i = 0, n = this->property_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      5, this->property(i), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:PBTplEquip)
 }
 
-::google::protobuf::uint8* PBEquip::InternalSerializeWithCachedSizesToArray(
+::google::protobuf::uint8* PBTplEquip::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:PBEquip)
+  // @@protoc_insertion_point(serialize_to_array_start:PBTplEquip)
   // optional .PBItem Super = 1;
   if (this->has_super()) {
     target = ::google::protobuf::internal::WireFormatLite::
@@ -3110,7 +3478,7 @@ void PBEquip::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->equipmodal().data(), this->equipmodal().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "PBEquip.EquipModal");
+      "PBTplEquip.EquipModal");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         2, this->equipmodal(), target);
@@ -3126,12 +3494,19 @@ void PBEquip::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->levelrequire(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:PBEquip)
+  // repeated .PBTplProperty Property = 5;
+  for (unsigned int i = 0, n = this->property_size(); i < n; i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageNoVirtualToArray(
+        5, this->property(i), false, target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:PBTplEquip)
   return target;
 }
 
-size_t PBEquip::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:PBEquip)
+size_t PBTplEquip::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:PBTplEquip)
   size_t total_size = 0;
 
   // optional .PBItem Super = 1;
@@ -3162,6 +3537,17 @@ size_t PBEquip::ByteSizeLong() const {
         this->levelrequire());
   }
 
+  // repeated .PBTplProperty Property = 5;
+  {
+    unsigned int count = this->property_size();
+    total_size += 1UL * count;
+    for (unsigned int i = 0; i < count; i++) {
+      total_size +=
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->property(i));
+    }
+  }
+
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = cached_size;
@@ -3169,23 +3555,23 @@ size_t PBEquip::ByteSizeLong() const {
   return total_size;
 }
 
-void PBEquip::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:PBEquip)
+void PBTplEquip::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:PBTplEquip)
   if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const PBEquip* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const PBEquip>(
+  const PBTplEquip* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const PBTplEquip>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:PBEquip)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:PBTplEquip)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:PBEquip)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:PBTplEquip)
     UnsafeMergeFrom(*source);
   }
 }
 
-void PBEquip::MergeFrom(const PBEquip& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:PBEquip)
+void PBTplEquip::MergeFrom(const PBTplEquip& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:PBTplEquip)
   if (GOOGLE_PREDICT_TRUE(&from != this)) {
     UnsafeMergeFrom(from);
   } else {
@@ -3193,8 +3579,9 @@ void PBEquip::MergeFrom(const PBEquip& from) {
   }
 }
 
-void PBEquip::UnsafeMergeFrom(const PBEquip& from) {
+void PBTplEquip::UnsafeMergeFrom(const PBTplEquip& from) {
   GOOGLE_DCHECK(&from != this);
+  property_.MergeFrom(from.property_);
   if (from.has_super()) {
     mutable_super()->::PBItem::MergeFrom(from.super());
   }
@@ -3210,78 +3597,79 @@ void PBEquip::UnsafeMergeFrom(const PBEquip& from) {
   }
 }
 
-void PBEquip::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:PBEquip)
+void PBTplEquip::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:PBTplEquip)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void PBEquip::CopyFrom(const PBEquip& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:PBEquip)
+void PBTplEquip::CopyFrom(const PBTplEquip& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:PBTplEquip)
   if (&from == this) return;
   Clear();
   UnsafeMergeFrom(from);
 }
 
-bool PBEquip::IsInitialized() const {
+bool PBTplEquip::IsInitialized() const {
 
   return true;
 }
 
-void PBEquip::Swap(PBEquip* other) {
+void PBTplEquip::Swap(PBTplEquip* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void PBEquip::InternalSwap(PBEquip* other) {
+void PBTplEquip::InternalSwap(PBTplEquip* other) {
   std::swap(super_, other->super_);
   equipmodal_.Swap(&other->equipmodal_);
   std::swap(equippart_, other->equippart_);
   std::swap(levelrequire_, other->levelrequire_);
+  property_.UnsafeArenaSwap(&other->property_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
 
-::google::protobuf::Metadata PBEquip::GetMetadata() const {
+::google::protobuf::Metadata PBTplEquip::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = PBEquip_descriptor_;
-  metadata.reflection = PBEquip_reflection_;
+  metadata.descriptor = PBTplEquip_descriptor_;
+  metadata.reflection = PBTplEquip_reflection_;
   return metadata;
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
-// PBEquip
+// PBTplEquip
 
 // optional .PBItem Super = 1;
-bool PBEquip::has_super() const {
+bool PBTplEquip::has_super() const {
   return this != internal_default_instance() && super_ != NULL;
 }
-void PBEquip::clear_super() {
+void PBTplEquip::clear_super() {
   if (GetArenaNoVirtual() == NULL && super_ != NULL) delete super_;
   super_ = NULL;
 }
-const ::PBItem& PBEquip::super() const {
-  // @@protoc_insertion_point(field_get:PBEquip.Super)
+const ::PBItem& PBTplEquip::super() const {
+  // @@protoc_insertion_point(field_get:PBTplEquip.Super)
   return super_ != NULL ? *super_
                          : *::PBItem::internal_default_instance();
 }
-::PBItem* PBEquip::mutable_super() {
+::PBItem* PBTplEquip::mutable_super() {
   
   if (super_ == NULL) {
     super_ = new ::PBItem;
   }
-  // @@protoc_insertion_point(field_mutable:PBEquip.Super)
+  // @@protoc_insertion_point(field_mutable:PBTplEquip.Super)
   return super_;
 }
-::PBItem* PBEquip::release_super() {
-  // @@protoc_insertion_point(field_release:PBEquip.Super)
+::PBItem* PBTplEquip::release_super() {
+  // @@protoc_insertion_point(field_release:PBTplEquip.Super)
   
   ::PBItem* temp = super_;
   super_ = NULL;
   return temp;
 }
-void PBEquip::set_allocated_super(::PBItem* super) {
+void PBTplEquip::set_allocated_super(::PBItem* super) {
   delete super_;
   super_ = super;
   if (super) {
@@ -3289,83 +3677,113 @@ void PBEquip::set_allocated_super(::PBItem* super) {
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:PBEquip.Super)
+  // @@protoc_insertion_point(field_set_allocated:PBTplEquip.Super)
 }
 
 // optional string EquipModal = 2;
-void PBEquip::clear_equipmodal() {
+void PBTplEquip::clear_equipmodal() {
   equipmodal_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-const ::std::string& PBEquip::equipmodal() const {
-  // @@protoc_insertion_point(field_get:PBEquip.EquipModal)
+const ::std::string& PBTplEquip::equipmodal() const {
+  // @@protoc_insertion_point(field_get:PBTplEquip.EquipModal)
   return equipmodal_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-void PBEquip::set_equipmodal(const ::std::string& value) {
+void PBTplEquip::set_equipmodal(const ::std::string& value) {
   
   equipmodal_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:PBEquip.EquipModal)
+  // @@protoc_insertion_point(field_set:PBTplEquip.EquipModal)
 }
-void PBEquip::set_equipmodal(const char* value) {
+void PBTplEquip::set_equipmodal(const char* value) {
   
   equipmodal_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:PBEquip.EquipModal)
+  // @@protoc_insertion_point(field_set_char:PBTplEquip.EquipModal)
 }
-void PBEquip::set_equipmodal(const char* value, size_t size) {
+void PBTplEquip::set_equipmodal(const char* value, size_t size) {
   
   equipmodal_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:PBEquip.EquipModal)
+  // @@protoc_insertion_point(field_set_pointer:PBTplEquip.EquipModal)
 }
-::std::string* PBEquip::mutable_equipmodal() {
+::std::string* PBTplEquip::mutable_equipmodal() {
   
-  // @@protoc_insertion_point(field_mutable:PBEquip.EquipModal)
+  // @@protoc_insertion_point(field_mutable:PBTplEquip.EquipModal)
   return equipmodal_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-::std::string* PBEquip::release_equipmodal() {
-  // @@protoc_insertion_point(field_release:PBEquip.EquipModal)
+::std::string* PBTplEquip::release_equipmodal() {
+  // @@protoc_insertion_point(field_release:PBTplEquip.EquipModal)
   
   return equipmodal_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-void PBEquip::set_allocated_equipmodal(::std::string* equipmodal) {
+void PBTplEquip::set_allocated_equipmodal(::std::string* equipmodal) {
   if (equipmodal != NULL) {
     
   } else {
     
   }
   equipmodal_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), equipmodal);
-  // @@protoc_insertion_point(field_set_allocated:PBEquip.EquipModal)
+  // @@protoc_insertion_point(field_set_allocated:PBTplEquip.EquipModal)
 }
 
 // optional uint32 EquipPart = 3;
-void PBEquip::clear_equippart() {
+void PBTplEquip::clear_equippart() {
   equippart_ = 0u;
 }
-::google::protobuf::uint32 PBEquip::equippart() const {
-  // @@protoc_insertion_point(field_get:PBEquip.EquipPart)
+::google::protobuf::uint32 PBTplEquip::equippart() const {
+  // @@protoc_insertion_point(field_get:PBTplEquip.EquipPart)
   return equippart_;
 }
-void PBEquip::set_equippart(::google::protobuf::uint32 value) {
+void PBTplEquip::set_equippart(::google::protobuf::uint32 value) {
   
   equippart_ = value;
-  // @@protoc_insertion_point(field_set:PBEquip.EquipPart)
+  // @@protoc_insertion_point(field_set:PBTplEquip.EquipPart)
 }
 
 // optional uint32 LevelRequire = 4;
-void PBEquip::clear_levelrequire() {
+void PBTplEquip::clear_levelrequire() {
   levelrequire_ = 0u;
 }
-::google::protobuf::uint32 PBEquip::levelrequire() const {
-  // @@protoc_insertion_point(field_get:PBEquip.LevelRequire)
+::google::protobuf::uint32 PBTplEquip::levelrequire() const {
+  // @@protoc_insertion_point(field_get:PBTplEquip.LevelRequire)
   return levelrequire_;
 }
-void PBEquip::set_levelrequire(::google::protobuf::uint32 value) {
+void PBTplEquip::set_levelrequire(::google::protobuf::uint32 value) {
   
   levelrequire_ = value;
-  // @@protoc_insertion_point(field_set:PBEquip.LevelRequire)
+  // @@protoc_insertion_point(field_set:PBTplEquip.LevelRequire)
 }
 
-inline const PBEquip* PBEquip::internal_default_instance() {
-  return &PBEquip_default_instance_.get();
+// repeated .PBTplProperty Property = 5;
+int PBTplEquip::property_size() const {
+  return property_.size();
+}
+void PBTplEquip::clear_property() {
+  property_.Clear();
+}
+const ::PBTplProperty& PBTplEquip::property(int index) const {
+  // @@protoc_insertion_point(field_get:PBTplEquip.Property)
+  return property_.Get(index);
+}
+::PBTplProperty* PBTplEquip::mutable_property(int index) {
+  // @@protoc_insertion_point(field_mutable:PBTplEquip.Property)
+  return property_.Mutable(index);
+}
+::PBTplProperty* PBTplEquip::add_property() {
+  // @@protoc_insertion_point(field_add:PBTplEquip.Property)
+  return property_.Add();
+}
+::google::protobuf::RepeatedPtrField< ::PBTplProperty >*
+PBTplEquip::mutable_property() {
+  // @@protoc_insertion_point(field_mutable_list:PBTplEquip.Property)
+  return &property_;
+}
+const ::google::protobuf::RepeatedPtrField< ::PBTplProperty >&
+PBTplEquip::property() const {
+  // @@protoc_insertion_point(field_list:PBTplEquip.Property)
+  return property_;
+}
+
+inline const PBTplEquip* PBTplEquip::internal_default_instance() {
+  return &PBTplEquip_default_instance_.get();
 }
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 

@@ -78,7 +78,7 @@ void CLoginModule::onTimer(unsigned int nTickOffset)
 		for (; it != mLoginList.end(); )
 		{
 			int nObjID = it->second;
-			CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::Inst()->getObj(nObjID));
+			CLoginPlayer* pLoginPlayer = static_cast<CLoginPlayer*>(CObjPool::Inst()->getObj(nObjID));
 			LOGIN_LIST::iterator itOld = it;
 			if (NULL == pLoginPlayer)
 			{
@@ -112,7 +112,7 @@ void CLoginModule::onClientMessage(CExchangeHead& rExchangeHead, unsigned int nM
 	LOGIN_LIST::iterator it = mLoginList.find(rExchangeHead.mSocketIndex);
 	if (it == mLoginList.end())
 	{
-		pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::Inst()->allocObj(emObjType_LoginPlayer));
+		pLoginPlayer = static_cast<CLoginPlayer*>(CObjPool::Inst()->allocObj(emObjType_LoginPlayer));
 		// ∑÷≈‰ ß∞‹
 		if (NULL == pLoginPlayer)
 		{
@@ -130,7 +130,7 @@ void CLoginModule::onClientMessage(CExchangeHead& rExchangeHead, unsigned int nM
 	}
 	else
 	{
-		pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::Inst()->getObj(it->second));
+		pLoginPlayer = static_cast<CLoginPlayer*>(CObjPool::Inst()->getObj(it->second));
 	}
 	if (NULL == pLoginPlayer)
 	{
@@ -159,7 +159,7 @@ void CLoginModule::OnDBMessage(CDBResponse* pMsg)
 		return;
 	}
 	int nLoginPlayerObjID  = pMsg->mParam1;
-	CLoginPlayer* pLoginPlayer = reinterpret_cast<CLoginPlayer*>(CObjPool::Inst()->getObj(nLoginPlayerObjID));
+	CLoginPlayer* pLoginPlayer = static_cast<CLoginPlayer*>(CObjPool::Inst()->getObj(nLoginPlayerObjID));
 	if (NULL == pLoginPlayer)
 	{
 		return;
@@ -182,7 +182,7 @@ void CLoginModule::processWaitEnterGame(CLoginPlayer* pLoginPlayer, Message* pMe
 	{
 		return;
 	}
-	CEnterSceneRequest* pEnterSceneRequest = reinterpret_cast<CEnterSceneRequest*>(pMessage);
+	CEnterSceneRequest* pEnterSceneRequest = static_cast<CEnterSceneRequest*>(pMessage);
 	if (NULL == pEnterSceneRequest)
 	{
 		return;
@@ -223,7 +223,7 @@ void CLoginModule::processWaitEnterGame(CLoginPlayer* pLoginPlayer, Message* pMe
 	else
 	{
 		printf("new player login: %d", pEnterSceneRequest->roleid());
-		CEntityPlayer* pNewPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->allocObj(emObjType_Entity_Player));
+		CEntityPlayer* pNewPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->allocObj(emObjType_Entity_Player));
 		if (NULL == pNewPlayer)
 		{
 			return;

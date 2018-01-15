@@ -32,7 +32,7 @@ int CLoginPlayer::processStateNone()
 		return -1;
 	}
 
-	CLoginRequest* pLoginRequest = reinterpret_cast<CLoginRequest*>(mClientMessage);
+	CLoginRequest* pLoginRequest = static_cast<CLoginRequest*>(mClientMessage);
 	if (NULL == pLoginRequest)
 	{
 		// 将当前的状态时间置零
@@ -109,7 +109,7 @@ int CLoginPlayer::processWaitCreateRole()
 		setCurStateTime(0);
 		return -1;
 	}
-	CCreateRoleRequest* pCreateRoleRequest = reinterpret_cast<CCreateRoleRequest*>(mClientMessage);
+	CCreateRoleRequest* pCreateRoleRequest = static_cast<CCreateRoleRequest*>(mClientMessage);
 	if (NULL == pCreateRoleRequest)
 	{
 		// 将当前的状态时间置零

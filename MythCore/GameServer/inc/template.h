@@ -18,7 +18,8 @@ class PBTplVIPConfig;
 class PBTplNPC;
 class PBTplFuncNPC;
 class PBTplOgre;
-class PBEquip;
+class PBTplEquip;
+class PBTplProperty;
 class PBTplDropItem;
 class PBTplDropTable;
 class PBTplSkill;
@@ -179,8 +180,28 @@ public:
 // path		=							## 路径
 // parent	=							## 父亲模版
 // ********************************************************************** //
+#define EQUIP_PROPERTY_NUM	6					// 装备最大的属性数目
 class CTplEquip : public CTplItem
 {
+public:
+	class CProperty
+	{
+	public:
+		// FieldName: 类型
+		// FieldType: INT4
+		// Type:	  COMBOENUM(EmPropertyType)
+		int		mType;
+
+		// FieldName: 值
+		// FieldType: INT4
+		// Type:	  EDITNUMBER(0,1000)
+		int		mValue;
+
+	public:
+		void setFromPB(PBTplProperty* pbData);
+		void createToPB(PBTplProperty* pbData);
+	};
+
 public:
 	// FieldName: 装备模型名称
 	// FieldType: STRING32
@@ -197,11 +218,16 @@ public:
 	// Type:	  EDITNUMBER(0,1000)
 	int		mLevelRequire;
 
+	// FieldName: 第%d项属性
+	// FieldType: INT4
+	// Type:	  EDITNUMBER(0,1000)
+	CProperty	mProperty[EQUIP_PROPERTY_NUM];
+
 public:
 	CTplEquip(){};
 	~CTplEquip(){};
-	void setFromPB(PBEquip* pbData);
-	void createToPB(PBEquip* pbData);
+	void setFromPB(PBTplEquip* pbData);
+	void createToPB(PBTplEquip* pbData);
 
 };
 // ********************************************************************** //

@@ -11,7 +11,7 @@ int CEquipList::equip(CEntityPlayer& rPlayer, CItemBox& rBox, int nBoxIndex, int
 		return ERR_EQUIP_SRC_ITEM_DATA_NULL;
 	}
 
-	CTplItem* pTplItem = reinterpret_cast<CTplItem*>(CStaticData::searchTpl(pItemObject->GetItemID()));
+	CTplItem* pTplItem = static_cast<CTplItem*>(CStaticData::searchTpl(pItemObject->GetItemID()));
 	if (NULL == pTplItem)
 	{
 		return ERR_TEMPLATE_INVALID;
@@ -23,7 +23,7 @@ int CEquipList::equip(CEntityPlayer& rPlayer, CItemBox& rBox, int nBoxIndex, int
 	{
 		case emItemType_Equip:
 		{
-			CTplEquip* pTplEquip = reinterpret_cast<CTplEquip*>(pTplItem);
+			CTplEquip* pTplEquip = static_cast<CTplEquip*>(pTplItem);
 			if (pTplEquip->mEquipPart < 0 && pTplEquip->mEquipPart >= MAX_EQUIP_LIST)
 			{
 				return ERR_EQUIP_PART_IS_INVALID;
@@ -35,9 +35,10 @@ int CEquipList::equip(CEntityPlayer& rPlayer, CItemBox& rBox, int nBoxIndex, int
 			}
 
 			int nDetObjID = getItemObjID(nEquipPart);
-			pDstItemObject = reinterpret_cast<CItemObject*>(CObjPool::Inst()->getObj(nDetObjID));
+			pDstItemObject = static_cast<CItemObject*>(CObjPool::Inst()->getObj(nDetObjID));
 			nEquipPart = pTplEquip->mEquipPart;
 			rEquipPart = nEquipPart;
+			
 			break;
 		}
 		default:
@@ -58,7 +59,9 @@ int CEquipList::equip(CEntityPlayer& rPlayer, CItemBox& rBox, int nBoxIndex, int
 	setItem(nEquipPart, pItemObject->getObjID(), pItemObject->GetItemID());
 	if (emItemType_Equip == pTplItem->mItemType)
 	{
-		reinterpret_cast<CItemEquip*>(pItemObject)->setPropertyDirty(rPlayer);
+		CItemEquip* pItemEquip = static_cast<CItemEquip*>(pItemObject);
+		pItemEquip->refreshProperty();
+		pItemEquip->setPropertyDirty(rPlayer);
 	}
 	return SUCCESS;
 }
@@ -83,13 +86,13 @@ int CEquipList::unequip(CEntityPlayer& rPlayer, int nEquipPart, CItemBox& rBox, 
 	}
 
 	// µÀ¾ßÎª¿Õ
-	CItemObject* pItemObject = reinterpret_cast<CItemObject*>(CObjPool::Inst()->getObj(nDetObjID));
+	CItemObject* pItemObject = static_cast<CItemObject*>(CObjPool::Inst()->getObj(nDetObjID));
 	if (NULL == pItemObject)
 	{
 		return ERR_EQUIP_SRC_ITEM_DATA_NULL;
 	}
 
-	CTplItem* pTplItem = reinterpret_cast<CTplItem*>(CStaticData::searchTpl(pItemObject->GetItemID()));
+	CTplItem* pTplItem = static_cast<CTplItem*>(CStaticData::searchTpl(pItemObject->GetItemID()));
 	if (NULL == pTplItem)
 	{
 		return ERR_TEMPLATE_INVALID;
@@ -100,7 +103,7 @@ int CEquipList::unequip(CEntityPlayer& rPlayer, int nEquipPart, CItemBox& rBox, 
 
 	if (emItemType_Equip == pTplItem->mItemType)
 	{
-		reinterpret_cast<CItemEquip*>(pItemObject)->setPropertyDirty(rPlayer);
+		static_cast<CItemEquip*>(pItemObject)->setPropertyDirty(rPlayer);
 	}
 	return SUCCESS;
 }
@@ -110,7 +113,7 @@ int CEquipList::getProperty(int nPropertyType)
 	int nPropertyValue = 0;
 	for (int i = 0; i < MAX_EQUIP_LIST; ++ i)
 	{
-		CItemEquip* pEquip = reinterpret_cast<CItemEquip*>(getItem(i));
+		CItemEquip* pEquip = static_cast<CItemEquip*>(getItem(i));
 		if (NULL == pEquip)
 		{
 			continue;
@@ -119,4 +122,19 @@ int CEquipList::getProperty(int nPropertyType)
 	}
 
 	return nPropertyValue;
+}
+
+void CEquipList::refreshProperty()
+{
+	int nPropertyValue = 0;
+	for (int i = 0; i < MAX_EQUIP_LIST; ++i)
+	{
+		CItemEquip* pEquip = static_cast<CItemEquip*>(getItem(i));
+		if (NULL == pEquip)
+		{
+			continue;
+		}
+		pEquip->refreshProperty();
+	}
+
 }

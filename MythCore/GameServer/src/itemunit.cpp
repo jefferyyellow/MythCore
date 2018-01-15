@@ -128,7 +128,7 @@ int CItemUnit::insertItem(int nItemID, int nItemNum)
 	int nOutItemNum[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutSize = 0;
 	
-	CTplItem* pTplITem = (CTplItem*)CStaticData::searchTpl(nItemID);
+	CTplItem* pTplITem = static_cast<CTplItem*>(CStaticData::searchTpl(nItemID));
 	if (NULL == pTplITem)
 	{
 		return ERR_TEMPLATE_INVALID;
@@ -251,7 +251,7 @@ void CItemUnit::sendInsertItemObjNotify(int nIndex)
 void CItemUnit::onUseItemRequest(Message* pMessage)
 {
 	MYTH_ASSERT(NULL == pMessage, return);
-	CUseItemRequest* pUseItemRequest = reinterpret_cast<CUseItemRequest*>(pMessage);
+	CUseItemRequest* pUseItemRequest = static_cast<CUseItemRequest*>(pMessage);
 	MYTH_ASSERT(NULL == pUseItemRequest, return);
 	
 	int nItemIndex = pUseItemRequest->index();
@@ -269,7 +269,7 @@ void CItemUnit::onUseItemRequest(Message* pMessage)
 		return;
 	}
 
-	CTplItem* pTplITem = (CTplItem*)CStaticData::searchTpl(pItemObject->GetItemID());
+	CTplItem* pTplITem = static_cast<CTplItem*>(CStaticData::searchTpl(pItemObject->GetItemID()));
 	if (NULL == pTplITem)
 	{
 		sendUseItemResponse(ERR_TEMPLATE_INVALID);
@@ -309,7 +309,7 @@ void CItemUnit::sendUseItemResponse(int nResult)
 void CItemUnit::onSellItemRequest(Message* pMessage)
 {
 	MYTH_ASSERT(NULL == pMessage, return);
-	CSellItemRequest* pSellItemRequest = reinterpret_cast<CSellItemRequest*>(pMessage);
+	CSellItemRequest* pSellItemRequest = static_cast<CSellItemRequest*>(pMessage);
 	MYTH_ASSERT(NULL == pSellItemRequest, return);
 
 	int nItemIndex = pSellItemRequest->index();
@@ -322,7 +322,7 @@ void CItemUnit::onSellItemRequest(Message* pMessage)
 		return;
 	}
 
-	CTplItem* pTplITem = (CTplItem*)CStaticData::searchTpl(pItemObject->GetItemID());
+	CTplItem* pTplITem = static_cast<CTplItem*>(CStaticData::searchTpl(pItemObject->GetItemID()));
 	if (NULL == pTplITem)
 	{
 		sendSellItemResponse(ERR_TEMPLATE_INVALID);
@@ -353,7 +353,7 @@ void CItemUnit::sendSellItemResponse(int nResult)
 void CItemUnit::onPurchaseItemRequest(Message* pMessage)
 {
 	MYTH_ASSERT(NULL == pMessage, return);
-	CPurchaseItemRequest* pPurchaseItemRequest = reinterpret_cast<CPurchaseItemRequest*>(pMessage);
+	CPurchaseItemRequest* pPurchaseItemRequest = static_cast<CPurchaseItemRequest*>(pMessage);
 
 	int nIndex = pPurchaseItemRequest->index();
 	int nNum = pPurchaseItemRequest->num();
@@ -376,7 +376,7 @@ void CItemUnit::sendPurchaseItemResponse(int nResult)
 void CItemUnit::onEquipItemRequest(Message* pMessage)
 {
 	MYTH_ASSERT(NULL == pMessage, return);
-	CEquipItemRequest* pEquipItemRequest = reinterpret_cast<CEquipItemRequest*>(pMessage);
+	CEquipItemRequest* pEquipItemRequest = static_cast<CEquipItemRequest*>(pMessage);
 
 	int nItemIndex = pEquipItemRequest->itemindex();
 	int nEquipPart = 0;
@@ -404,7 +404,7 @@ void CItemUnit::sendEquipItemResponse(int nResult, int nItemIndex)
 void CItemUnit::onUnEquipItemRequest(Message* pMessage)
 {
 	MYTH_ASSERT(NULL == pMessage, return);
-	CUnEquipItemRequest* pUnEquipItemRequest = reinterpret_cast<CUnEquipItemRequest*>(pMessage);
+	CUnEquipItemRequest* pUnEquipItemRequest = static_cast<CUnEquipItemRequest*>(pMessage);
 	int nEquipPart = pUnEquipItemRequest->equippart();
 	int nItemIndex = pUnEquipItemRequest->itemindex();
 	int nResult = mEquip.unequip(mPlayer, nEquipPart, mBag, nItemIndex);
@@ -444,10 +444,10 @@ void CItemUnit::broadcastChangeNotify(int nEntityID, int nEquipPart, int nEquipI
 void CItemUnit::onPickItemRequest(Message* pMessage)
 {
 	MYTH_ASSERT(NULL == pMessage, return);
-	CPickItemRequest* pPickItemRequest = reinterpret_cast<CPickItemRequest*>(pMessage);
+	CPickItemRequest* pPickItemRequest = static_cast<CPickItemRequest*>(pMessage);
 
 	int nEntityID = pPickItemRequest->entityid();
-	CEntity* pEntity = reinterpret_cast<CEntity*>(CObjPool::Inst()->getObj(nEntityID));
+	CEntity* pEntity = static_cast<CEntity*>(CObjPool::Inst()->getObj(nEntityID));
 	if (NULL == pEntity)
 	{
 		return;
@@ -458,7 +458,7 @@ void CItemUnit::onPickItemRequest(Message* pMessage)
 		return;
 	}
 
-	CTemplate* pTemplate = reinterpret_cast<CTemplate*>(CStaticData::searchTpl(pEntity->getTempID()));
+	CTemplate* pTemplate = static_cast<CTemplate*>(CStaticData::searchTpl(pEntity->getTempID()));
 	if (NULL == pTemplate)
 	{
 		return;
@@ -468,7 +468,7 @@ void CItemUnit::onPickItemRequest(Message* pMessage)
 	{
 		return;
 	}
-	CEntityItem* pEntityItem = reinterpret_cast<CEntityItem*>(pEntity);
+	CEntityItem* pEntityItem = static_cast<CEntityItem*>(pEntity);
 	int nItemID = pEntityItem->getTempID();
 	int nItemNum = pEntityItem->getItemNum();
 

@@ -13,7 +13,7 @@ void LogLocalLog(EmLogType eLogType, char* pFile, int nLine, char* pFunction, co
 	vsnprintf(tBuffer + nSize, sizeof(tBuffer) - nSize - 1, pFormat, valist);
 	va_end(valist);
 	
-	CIMLocalLogRequest* pLocalLogRequest = reinterpret_cast<CIMLocalLogRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_LOCAL_LOG));
+	CIMLocalLogRequest* pLocalLogRequest = static_cast<CIMLocalLogRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_LOCAL_LOG));
 	if (NULL != pLocalLogRequest)
 	{
 		pLocalLogRequest->mLogType = eLogType;
@@ -31,7 +31,7 @@ void LogLocalDebugLog(const char* pLogName, char* pFile, int nLine, char* pFunct
 	vsnprintf(tBuffer + nSize, sizeof(tBuffer) - nSize - 1, pFormat, valist);
 	va_end(valist);
 
-	CIMLocalLogRequest* pLocalLogRequest = reinterpret_cast<CIMLocalLogRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_LOCAL_LOG));
+	CIMLocalLogRequest* pLocalLogRequest = static_cast<CIMLocalLogRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_LOCAL_LOG));
 	if (NULL != pLocalLogRequest)
 	{
 		pLocalLogRequest->mLogType = emLogType_Debug;
@@ -55,7 +55,7 @@ void CLocalLogJob::doing(int uParam)
 		
 		if (pIMMsg->getMsgID() == IM_REQUEST_LOCAL_LOG)
 		{
-			OnIMLocalLogRequest(reinterpret_cast<CIMLocalLogRequest*>(pIMMsg));
+			OnIMLocalLogRequest(static_cast<CIMLocalLogRequest*>(pIMMsg));
 		}
 		else
 		{

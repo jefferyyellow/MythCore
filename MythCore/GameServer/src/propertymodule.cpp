@@ -73,7 +73,7 @@ void CPropertyModule::onTimer(unsigned int nTickOffset)
 		CSceneJob::PLAYER_LIST::iterator tPlayerIt = rPlayerList.begin();
 		for (; tPlayerIt != rPlayerList.end(); ++tPlayerIt)
 		{
-			CEntityPlayer* pPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(tPlayerIt->second));
+			CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(tPlayerIt->second));
 			if (NULL == pPlayer)
 			{
 				LOG_ERROR("player charid  %d don't exist", tPlayerIt->first);
@@ -124,7 +124,7 @@ void CPropertyModule::onGMCommandRequest(CEntityPlayer* pPlayer, Message* pMessa
 {
 	MYTH_ASSERT(NULL == pPlayer || NULL == pMessage, return);
 
-	CGMCommandRequest* pGMCommandRequest = reinterpret_cast<CGMCommandRequest*>(pMessage);
+	CGMCommandRequest* pGMCommandRequest = static_cast<CGMCommandRequest*>(pMessage);
 	if (NULL == pGMCommandRequest)
 	{
 		return;
@@ -155,7 +155,7 @@ void CPropertyModule::kickAllPlayer()
 	CSceneJob::PLAYER_LIST& rPlayerList = CSceneJob::Inst()->getPlayerList();
 	for (CSceneJob::PLAYER_LIST::iterator it = rPlayerList.begin(); it != rPlayerList.end(); ++ it)
 	{
-		CEntityPlayer* pPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
+		CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
 		if (NULL == pPlayer)
 		{
 			continue;
@@ -180,7 +180,7 @@ void CPropertyModule::kickAllPlayer()
 /// 加载玩家信息
 void CPropertyModule::onLoadPlayerInfo(CDBResponse& rResponse)
 {
-	CEntityPlayer* pPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(rResponse.mParam1));
+	CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(rResponse.mParam1));
 	if (NULL == pPlayer)
 	{
 		return;
@@ -204,7 +204,7 @@ void CPropertyModule::onLoadPlayerInfo(CDBResponse& rResponse)
 /// 加载玩家基础属性
 void CPropertyModule::onLoadPlayerBaseProperty(CDBResponse& rResponse)
 {
-	CEntityPlayer* pPlayer = reinterpret_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(rResponse.mParam1));
+	CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(rResponse.mParam1));
 	if (NULL == pPlayer)
 	{
 		return;
@@ -219,6 +219,8 @@ void CPropertyModule::onLoadPlayerBaseProperty(CDBResponse& rResponse)
 	tEquip.ParseFromArray(rResponse.getValue(), rResponse.getLength());
 	rResponse.next();
 	pPlayer->getItemUnit().getEquipList().setFromPB(&tEquip);
+	// 刷新所以装备的属性
+	pPlayer->getItemUnit().getEquipList().refreshProperty();
 
 	PBTaskList tTaskList;
 	tTaskList.ParseFromArray(rResponse.getValue(), rResponse.getLength());

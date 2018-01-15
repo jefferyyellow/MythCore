@@ -22,5 +22,4 @@ enum EmCurrencyType
 #define MAX_CURRENCY_NUM     2000000000			// 最大的货币数量（20亿）
 #define MAX_EQUIP_LIST		 6					// 最大的装备列表
 
-#define EQUIP_PROPERTY_NUM	6					// 装备最大的属性数目
 #endif
