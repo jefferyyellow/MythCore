@@ -37,7 +37,7 @@ namespace Myth
 	}
 
 
-	CTcpSocket* CEpollModel::createListenSocket(char* pIP, uint32 uPort, int nListNum)
+	CTcpSocket* CEpollModel::createListenSocket(char* pIP, int uPort, int nListNum)
 	{
 		SOCKET nNewFd = socket(AF_INET, SOCK_STREAM, 0);
 		if(INVALID_SOCKET == nNewFd)
@@ -128,9 +128,9 @@ namespace Myth
 		{
 			for (int i = nFd - 1; i >= 0 ; -- i)
 			{
-				if(INVALID_SOCKET != mpAllSocket[i]->getSocketFd())
+				if(INVALID_SOCKET != mpAllSocket[i].getSocketFd())
 				{
-					mMaxSocketFd = mpAllSocket[i]->getSocketFd();
+					mMaxSocketFd = mpAllSocket[i].getSocketFd();
 				}
 			}
 		}

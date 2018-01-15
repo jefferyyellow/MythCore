@@ -276,7 +276,7 @@ namespace Myth
 	}
 #else
 
-	int	CTcpSocket::sendData(char* pBuff, int nBuffSize)
+	int	CTcpSocket::sendData(byte* pBuff, int nBuffSize)
 	{
 		int nSendBytes = 0;
 		int nLeftLen = nBuffSize;

@@ -101,7 +101,7 @@ namespace Myth
 		return (byte*)shmat(nShmID, NULL, 0);
 	}
 
-	int CShareMemory::destroyShareMemory(int nKey, char* pShmPoint)
+	int CShareMemory::destroyShareMemory(int nKey, byte* pShmPoint)
 	{
 		key_t tKey = (key_t)nKey;
 		if (tKey < 0)

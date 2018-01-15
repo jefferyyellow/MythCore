@@ -1,12 +1,14 @@
 #ifndef __COMMONTYPE_H__
 #define __COMMONTYPE_H__
-#include <string.h>
+#include <string>
 #include <stddef.h>
-
+#include <string.h>
 #ifdef MYTH_OS_WINDOWS
 #include <windows.h>
 #include <time.h>
 #include <tchar.h>
+#else
+#include <stdarg.h>
 #endif
 
 #ifdef MYTH_OS_WINDOWS

@@ -136,7 +136,7 @@ using namespace Myth;
 //		printf("File is not directory!\n");
 //	}
 //
-//	uint32 nFileSize = CFileUtility::GetFileSize(tFilePath);
+//	int nFileSize = CFileUtility::GetFileSize(tFilePath);
 //	printf("File size: %d\n", nFileSize);
 //
 //	bool bCreateFile = CFileUtility::CreateEmptyFile("passwd");

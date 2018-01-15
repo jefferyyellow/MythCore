@@ -57,8 +57,8 @@ namespace Myth
 		CTcpSocket* getAllSocket() const { return mpAllSocket; }
 		epoll_event* getWaitEvents() const {return mpWaitEvents;}
 
-		uint16 SocketCapacity() const { return mSocketCapacity; }
-		void SocketCapacity(uint16 uValue) { mSocketCapacity = uValue; }
+		short SocketCapacity() const { return mSocketCapacity; }
+		void SocketCapacity(short uValue) { mSocketCapacity = uValue; }
 
 		CTcpSocket*	getSocket(int nFd);
 
@@ -68,22 +68,22 @@ namespace Myth
 			return epoll_wait(mEpollFd, mpWaitEvents, mSocketCapacity, mWaitTimeOut);
 		}
 		int			initEpollSocket();
-		CTcpSocket* createListenSocket(char* pIP, uint32 uPort, int nListNum);
+		CTcpSocket* createListenSocket(char* pIP, int uPort, int nListNum);
 		int			addSocket(int nfd);
 		int			delSocket(int nfd);
 		CTcpSocket* acceptConnection(CTcpSocket& rListSocket);
 		//int			processWrite(int nSocketFd, char* pBuffer, int nBuffSize);
 
-		uint16			getMaxSocketFd(){return mMaxSocketFd;}
+		short			getMaxSocketFd(){return mMaxSocketFd;}
 		void			setMaxSocketFd(int nMaxSocketFd){mMaxSocketFd = nMaxSocketFd;}
 	private:
 		int                 mEpollFd;
 		struct epoll_event  *mpWaitEvents;
 		struct epoll_event  mCtrlEvent;
 		CTcpSocket*			mpAllSocket;
-		uint16				mSocketCapacity;
+		short				mSocketCapacity;
 		int					mWaitTimeOut;
-		uint16				mMaxSocketFd;
+		short				mMaxSocketFd;
 	};
 }
 

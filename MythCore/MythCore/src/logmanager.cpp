@@ -20,9 +20,13 @@ namespace Myth
 	/// log error message
 	void CLogManager::LogErrorMessageFormat(const char* pFormat, ...)
 	{
+		va_list valist;
+		va_start(valist, pFormat);
+
 		char tBuffer[MAX_LOG_BUFFER_NUM] = { 0 };
-		FormatLogMessage(tBuffer, sizeof(tBuffer) - 1, "ERROR", pFormat, &pFormat);
+		FormatLogMessage(tBuffer, sizeof(tBuffer) - 1, "ERROR", pFormat, valist);
 		mErrorLog.DisplayLog(tBuffer);
+		va_end(valist);
 	}
 
 	void CLogManager::LogErrorMessage(const char* pLogContent)
@@ -36,9 +40,14 @@ namespace Myth
 	/// log info message
 	void CLogManager::LogInfoMessageFormat(const char* pFormat, ...)
 	{
+		va_list valist;
+		va_start(valist, pFormat);
+
 		char tBuffer[MAX_LOG_BUFFER_NUM] = { 0 };
-		FormatLogMessage(tBuffer, sizeof(tBuffer) - 1, "INFO", pFormat, &pFormat);
+		FormatLogMessage(tBuffer, sizeof(tBuffer) - 1, "INFO", pFormat, valist);
 		mInfoLog.DisplayLog(tBuffer);
+
+		va_end(valist);
 	}
 
 	void CLogManager::LogInfoMessage(const char* pLogContent)
@@ -51,9 +60,14 @@ namespace Myth
 	/// log warnning message
 	void CLogManager::LogWarnMessageFormat(const char* pFormat, ...)
 	{
+		va_list valist;
+		va_start(valist, pFormat);
+
 		char tBuffer[MAX_LOG_BUFFER_NUM] = { 0 };
-		FormatLogMessage(tBuffer, sizeof(tBuffer) - 1, "WARN", pFormat, &pFormat);
+		FormatLogMessage(tBuffer, sizeof(tBuffer) - 1, "WARN", pFormat, valist);
 		mWarnLog.DisplayLog(tBuffer);
+
+		va_end(valist);
 	}
 
 	void CLogManager::LogWarnMessage(const char* pLogContent)
@@ -89,13 +103,18 @@ namespace Myth
 	/// log debug message
 	void CLogManager::LogDebugMessageFormat(const char* pLogName, const char* pFormat, ...)
 	{
+		va_list valist;
+		va_start(valist, pFormat);
+
 		char tBuffer[MAX_LOG_BUFFER_NUM] = { 0 };
-		FormatLogMessage(tBuffer, sizeof(tBuffer) - 1, "DEBUG", pFormat, &pFormat);
+		FormatLogMessage(tBuffer, sizeof(tBuffer) - 1, "DEBUG", pFormat, valist);
 		CLog* pErrorLog = GetDebugLog(pLogName);
 		if (NULL != pErrorLog)
 		{
 			pErrorLog->DisplayLog(tBuffer);
 		}
+
+		va_end(valist);
 	}
 
 	void CLogManager::LogDebugMessage(const char* pLogName, const char* pLogContent)
@@ -124,21 +143,15 @@ namespace Myth
 	}
 
 	/// format log int data buffer
-	void CLogManager::FormatLogMessage(char* pDataBuffer, int nBuffSize, const char* pLogTypeName, const char* pFormat, const char** pArg)
+	void CLogManager::FormatLogMessage(char* pDataBuffer, int nBuffSize, const char* pLogTypeName, const char* pFormat, va_list vaList)
 	{
-
-		va_list valist;
-		va_start(valist, pFormat);
-
 		char tBuffer[MAX_LOG_BUFFER_NUM] = { 0 };
-		vsnprintf(tBuffer, sizeof(tBuffer) - 1, pFormat, const_cast<char*>(*pArg));
+		vsnprintf(tBuffer, sizeof(tBuffer) - 1, pFormat, vaList);
 
 		char tDateBuffer[STRING_LENGTH_32] = { 0 };
 		FormatDateString(tDateBuffer, sizeof(tDateBuffer));
 
 		snprintf(pDataBuffer, nBuffSize - 1, "%s %s: %s\n", tDateBuffer, pLogTypeName, tBuffer);
-
-		va_end(valist);
 	}
 
 	void CLogManager::FormatLogMessage(char* pDataBuffer, int nBuffSize, const char* pLogTypeName, const char* pLogContent)

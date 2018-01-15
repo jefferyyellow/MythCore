@@ -69,7 +69,7 @@ int CLoginPlayer::processAccountVerify()
 	// 准备回应消息
 	char acName[MAX_PLAYER_NAME_LEN + 1] = {0};
 	mDBResponse->getString(acName, sizeof(acName));
-	if (0 != strncmp(acName, mAccountName))
+	if (0 != strncmp(acName, mAccountName, MAX_PLAYER_NAME_LEN))
 	{
 		setCurStateTime(0);
 		return -1;

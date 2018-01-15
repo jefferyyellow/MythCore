@@ -66,7 +66,7 @@ namespace Myth
 	public:
 		void		FormatDateString(char* pDateBuffer, int nBuffSize);
 
-		void 		FormatLogMessage(char* pDataBuffer, int nBuffSize, const char* pLogTypeName, const char* pFormat, const char** pArg);
+		void 		FormatLogMessage(char* pDataBuffer, int nBuffSize, const char* pLogTypeName, const char* pFormat, va_list vaList);
 		void 		FormatLogMessage(char* pDataBuffer, int nBuffSize, const char* pLogTypeName, const char* pLogContent);
 
 	private:

@@ -46,12 +46,12 @@ namespace Myth
 
 	char*		GetBuff(){ return mpBuff; }
 
-	uint32		GetBuffSize(){return mBuffSize;}
+	int			GetBuffSize(){return mBuffSize;}
 	void		SetBuffSize(int nBuffSize){mBuffSize = nBuffSize;}
 
 	private:
 	char*		mpBuff;
-	uint32		mBuffSize;
+	int			mBuffSize;
 	};*/
 
 	class CTcpSocket
