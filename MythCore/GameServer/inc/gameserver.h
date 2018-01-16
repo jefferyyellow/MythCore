@@ -39,6 +39,8 @@ public:
 	/// ÍË³ö
 	void		exit();
 public:
+	uint64		getTickTime();
+
 	inline time_t	GetCurrTime(){return mCurrTime;}
 	uint64 getTickCount()const{	return mTickCount;}
 

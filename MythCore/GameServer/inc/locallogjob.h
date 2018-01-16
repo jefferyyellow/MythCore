@@ -36,7 +36,7 @@ enum EmLogType
 // 下面这个名字是随便起的，目的是和别的变量名不会重复，原来是这样
 // #define LOG_FILE(pFile)	( ( strrchr( pFile, '\\' ) == NULL ) ? pFile :  strrchr( pFile, '\\' ) + 1 )
 // 为了避免多次调用strchar，所以改成先用一个全局变量承载
-extern char* gXXXXXXX;
+extern const char* gXXXXXXX;
 #ifdef MYTH_OS_WINDOWS
 #define LOG_FILE(pFile)	( ( (gXXXXXXX = strrchr( pFile, '\\' )) == NULL ) ? pFile : gXXXXXXX + 1)
 #else
@@ -44,7 +44,7 @@ extern char* gXXXXXXX;
 #endif // MYTH_OS_WINDOWS
 
 
-extern void		LogLocalLog(EmLogType eLogType, char* pFile, int nLine, char* pFunction, const char* pFormat, ...);
+extern void		LogLocalLog(EmLogType eLogType, const char* pFile, int nLine, const char* pFunction, const char* pFormat, ...);
 extern void		LogLocalDebugLog(const char* pLogName, const char* pFormat, ...);
 
 using namespace Myth;

@@ -83,7 +83,6 @@
     <ClCompile Include="..\message\skillmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\taskmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\template.hxx.pb.cc" />
-    <ClCompile Include="inc\mapmodule.cpp" />
     <ClCompile Include="src\chatmodule.cpp" />
     <ClCompile Include="src\dbjob.cpp" />
     <ClCompile Include="src\dbmodule.cpp" />
@@ -106,6 +105,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\mapmamager.cpp" />
     <ClCompile Include="src\mapconfigmanager.cpp" />
+    <ClCompile Include="src\mapmodule.cpp" />
     <ClCompile Include="src\mapregionsearch.cpp" />
     <ClCompile Include="src\messagefactory.cpp" />
     <ClCompile Include="src\objmanager.cpp" />

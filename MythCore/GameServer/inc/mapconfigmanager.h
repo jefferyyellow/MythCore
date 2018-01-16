@@ -4,6 +4,7 @@
 #include "maptype.h"
 #include "geometrytype.h"
 #include <vector>
+#include "commontype.h"
 using namespace Myth;
 
 class CMap;

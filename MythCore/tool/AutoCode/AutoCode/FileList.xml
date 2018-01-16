@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <Data>
-  <File HeadFile="../variable.h" SrcFile="../variable.cpp"/>
-  <File HeadFile="../parsexml.h" SrcFile="../parsexml.cpp"/>
+  <File HeadFile="../scenejob.h" SrcFile="../scenejob.cpp"/>
 </Data>

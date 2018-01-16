@@ -8,29 +8,29 @@ template<typename T>
 class CShareList
 {
 public:
-	template<typename T>
+	template<typename Node>
 	class CShareListNode
 	{
 	public:
-		CShareListNode<T>*	mpPrev;
-		CShareListNode<T>*	mpNext;
-		T					mData;
+		CShareListNode<Node>*	mpPrev;
+		CShareListNode<Node>*	mpNext;
+		Node					mData;
 	};
 
-	template<typename T>
+	template<typename Node>
 	struct CShareListIterator
 	{
-		typedef CShareListIterator<T>			Self;
+		typedef CShareListIterator<Node>			Self;
 
-		typedef T								value_type;
-		typedef T*								pointer;
-		typedef T&								reference;
+		typedef Node								value_type;
+		typedef Node*								pointer;
+		typedef Node&								reference;
 
 		CShareListIterator()
 			: mNode(NULL) { }
 
 		explicit
-			CShareListIterator(CShareListNode<T>* x)
+			CShareListIterator(CShareListNode<Node>* x)
 			: mNode(x) { }
 
 		// Must downcast from List_node_base to _List_node to get to mData.
@@ -89,24 +89,24 @@ public:
 		}
 
 		// The only member points to the %list element.
-		CShareListNode<T>* mNode;
+		CShareListNode<Node>* mNode;
 	};
 
-	template<typename T>
+	template<typename Node>
 	struct CShareListConstIterator
 	{
-		typedef CShareListConstIterator<T>			Self;
-		typedef CShareListIterator<T>				iterator;
+		typedef CShareListConstIterator<Node>			Self;
+		typedef CShareListIterator<Node>				iterator;
 
-		typedef T									value_type;
-		typedef const T*							pointer;
-		typedef const T&							reference;
+		typedef Node									value_type;
+		typedef const Node*							pointer;
+		typedef const Node&							reference;
 
 		CShareListConstIterator()
 			: mNode(NULL) { }
 
 		explicit
-			CShareListConstIterator(const CShareListNode<T>* x)
+			CShareListConstIterator(const CShareListNode<Node>* x)
 			: mNode(x) { }
 
 		CShareListConstIterator(const iterator& x)
@@ -169,7 +169,7 @@ public:
 		}
 
 		// The only member points to the %list element.
-		const CShareListNode<T>* mNode;
+		const CShareListNode<Node>* mNode;
 	};
 
 

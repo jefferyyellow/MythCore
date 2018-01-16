@@ -141,7 +141,7 @@ int CMapConfig::createMapFromConfig(CMap* pMap)
 		{
 			pCreator = &tNpcCreator;
 		}
-		else if (emEntityType_Ogre == pTemplate->mTemplateType)
+		else if (emTemplateType_Ogre == pTemplate->mTemplateType)
 		{
 			pCreator = &tOgreCreator;
 		}

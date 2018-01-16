@@ -8,7 +8,7 @@ INCLUDE_DIRECTORIES(include ../dep/mysql/include)
 SET(CMAKE_CXX_FLAGS "-g -pipe -Werror -finput-charset='gbk' -fexec-charset='gbk' -fwide-exec-charset='unicode'")
 #指定库目录
 LINK_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../dep/mysql/lib)
-#SET(EXECUTABLE_OUTPUT_PATH ../../)
+SET(LIBRARY_OUTPUT_PATH ../../Debug)
 #连接mysql库
 LINK_LIBRARIES(mysqlclient)
 #src目录下的CMakeLists加入

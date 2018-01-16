@@ -2,6 +2,7 @@
 #define __ITEMLIST_H__
 #include "objpool.h"
 #include "itemobject.h"
+#include "common.hxx.pb.h"
 class PBItemObject;
 class PBItemList;
 template<int Capacity>

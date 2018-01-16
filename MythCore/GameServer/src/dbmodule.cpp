@@ -58,7 +58,7 @@ void CDBModule::onTimer(unsigned int nTickOffset)
 }
 
 /// —π»ÎDB»ŒŒÒ
-void CDBModule::pushDBTask(int nPlayerID, int nSessionType, int nParam1, int nParam2, char* pSql, ...)
+void CDBModule::pushDBTask(int nPlayerID, int nSessionType, int nParam1, int nParam2, const char* pSql, ...)
 {
 	va_list tArgs;
 	va_start(tArgs, pSql);

@@ -3,6 +3,7 @@
 #include <string>
 #include <stddef.h>
 #include <string.h>
+#include <stdlib.h>
 #ifdef MYTH_OS_WINDOWS
 #include <windows.h>
 #include <time.h>

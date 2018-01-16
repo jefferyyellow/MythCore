@@ -3,8 +3,8 @@
 #include "logmanager.h"
 #include "internalmsgpool.h"
 #include "internalmsg.h"
-char* gXXXXXXX = NULL;
-void LogLocalLog(EmLogType eLogType, char* pFile, int nLine, char* pFunction, const char* pFormat, ...)
+const char* gXXXXXXX = NULL;
+void LogLocalLog(EmLogType eLogType, const char* pFile, int nLine, const char* pFunction, const char* pFormat, ...)
 {
 	va_list valist;
 	va_start(valist, pFormat);
@@ -22,7 +22,7 @@ void LogLocalLog(EmLogType eLogType, char* pFile, int nLine, char* pFunction, co
 	}
 }
 
-void LogLocalDebugLog(const char* pLogName, char* pFile, int nLine, char* pFunction, const char* pFormat, ...)
+void LogLocalDebugLog(const char* pLogName, const char* pFile, int nLine, const char* pFunction, const char* pFormat, ...)
 {
 	va_list valist;
 	va_start(valist, pFormat);

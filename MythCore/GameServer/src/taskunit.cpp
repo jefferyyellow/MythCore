@@ -437,7 +437,7 @@ int CTaskUnit::checkCommitCondition(CPlayerTask* pPlayerTask, int nItemIndex, CT
 {
 	if (NULL == pPlayerTask)
 	{
-		return ERROR_INVALID_PARAMETER;
+		return ERR_PARAMETER_INVALID;
 	}
 
 	switch (rCondition.mType)
@@ -647,7 +647,7 @@ int CTaskUnit::checkTaskReward(int nTaskID)
 	CTaskConfig* pTaskConfig =CTaskModule::Inst()->getTaskConfig(nTaskID);
 	if (NULL == pTaskConfig)
 	{
-		return ERROR_INVALID_PARAMETER;
+		return ERR_PARAMETER_INVALID;
 	}
 
 	int nItemID[MAX_TASK_PRIZE_NUM] = { 0 };

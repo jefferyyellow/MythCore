@@ -3,6 +3,7 @@
 #include "singleton.h"
 #include <vector>
 #include "tasktype.h"
+#include "commontype.h"
 using namespace std;
 using namespace Myth;
 // 接受条件

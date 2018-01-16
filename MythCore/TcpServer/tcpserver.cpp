@@ -310,7 +310,7 @@ void CTcpServer::checkKeepLiveTimeOut(time_t tTimeNow)
 #ifdef MYTH_OS_WINDOWS
 			CTcpSocket* pSocket = mSelectModel->getSocket(i);
 #else
-			CTcpSocket* pSocket = mEpollModel->getSocket(nTcpIndex);
+			CTcpSocket* pSocket = mEpollModel->getSocket(i);
 #endif
 			if (NULL == pSocket)
 			{
@@ -439,7 +439,7 @@ void CTcpServer::receiveMessage()
 		// 不可读，直接滚蛋
 		if (0 == (EPOLLIN & pEvent->events))
 		{
-			clearSocketInfo(nTcpIndex, &pAllSocket[nFd]);
+			clearSocketInfo(nFd, &pAllSocket[nFd]);
 			sendSocketErrToGameServer(i, emTcpError_ReadData);
 			continue;
 		}
@@ -455,12 +455,12 @@ void CTcpServer::receiveMessage()
 			}
 			if (NULL != pNewSocket->getRecvBuff())
 			{
-				char* pNewSocketBuff = new char[MAX_SOCKET_BUFF_SIZE];
+				byte* pNewSocketBuff = new byte[MAX_SOCKET_BUFF_SIZE];
 				if (NULL == pNewSocketBuff)
 				{
 
 				}
-				pNewSocket->setRecvBuff((char*)pNewSocketBuff);
+				pNewSocket->setRecvBuff(pNewSocketBuff);
 			}
 			pNewSocket->setMaxRecvBuffSize(MAX_SOCKET_BUFF_SIZE);
 			pNewSocket->setRecvBuffSize(0);
@@ -719,7 +719,7 @@ void CTcpServer::clearSocketInfo(int nTcpIndex, CTcpSocket* pSocket)
 }
 
 // 加载TCP服务器配置
-void CTcpServer::loadTcpServerConfig(char* pConfigPath)
+void CTcpServer::loadTcpServerConfig(const char* pConfigPath)
 {
 	if (NULL == pConfigPath)
 	{

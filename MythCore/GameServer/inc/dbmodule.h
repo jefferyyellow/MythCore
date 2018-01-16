@@ -32,7 +32,7 @@ public:
 
 public:
 	/// —π»ÎDB»ŒŒÒ
-	void			pushDBTask(int nPlayerID, int nSessionType, int nParam1, int nParam2, char* pSql, ...);
+	void			pushDBTask(int nPlayerID, int nSessionType, int nParam1, int nParam2, const char* pSql, ...);
 	void			pushDBTask(int nPlayerID, int nSessionType, int nParam1, int nParam2, Message* pMessage);
 	CDBResponse*	getDBResponse(){return &mDBResponse;}
 	void			onDBSession();

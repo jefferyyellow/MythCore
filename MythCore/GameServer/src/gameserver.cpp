@@ -14,7 +14,7 @@ bool CGameServer::init()
 {
 	// 优先初始化这两个变量
 	mCurrTime = time(NULL);
-	mTickCount = GetTickCount64();
+	mTickCount = getTickTime();
 	srand((unsigned int)mCurrTime);
 
 	bool bResult = initLog();
@@ -156,7 +156,7 @@ void CGameServer::run()
 	while (true)
 	{
 		mCurrTime = time(NULL);
-		mTickCount = GetTickCount64();
+		mTickCount = getTickTime();
 		//printf("*dddd*");
 		mThreadPool.run();
 #ifdef MYTH_OS_WINDOWS
@@ -221,6 +221,22 @@ void CGameServer::clearLog()
 void CGameServer::exit()
 {
 
+}
+
+uint64 CGameServer::getTickTime()
+{
+#ifdef MYTH_OS_WINDOWS
+	return GetTickCount64();
+#else
+	timespec tv;
+	// This is not affected by system time changes.
+	if (clock_gettime(CLOCK_MONOTONIC, &tv) != 0)
+	{
+		printf("clock_gettime return error!");
+		::exit(-1);
+	}
+	return ((sint64)tv.tv_sec) * 1000 + (((sint64)tv.tv_nsec/*+500*/) / 1000000);
+#endif
 }
 
 void CGameServer::pushTask(EmTaskType eTaskType, CInternalMsg* pMsg)

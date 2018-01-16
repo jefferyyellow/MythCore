@@ -83,8 +83,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="include\bytestream.cpp" />
     <ClCompile Include="include\thread.h" />
+    <ClCompile Include="src\bytestream.cpp" />
     <ClCompile Include="src\epollmodel.cpp" />
     <ClCompile Include="src\fileutility.cpp" />
     <ClCompile Include="src\i18n.cpp" />

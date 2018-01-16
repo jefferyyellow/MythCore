@@ -145,7 +145,7 @@ public:
 	/// 清除socket info
 	void		clearSocketInfo(int nTcpIndex, CTcpSocket* pSocket);
 	/// 加载TCP服务器配置
-	void		loadTcpServerConfig(char* pConfigPath);
+	void		loadTcpServerConfig(const char* pConfigPath);
 	/// 写统计信息
 	void		writeTcpStatisticsData();
 	/// 清除日志

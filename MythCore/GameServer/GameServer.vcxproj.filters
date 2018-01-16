@@ -126,9 +126,6 @@
     <ClCompile Include="src\strutility.cpp">
       <Filter>头文件</Filter>
     </ClCompile>
-    <ClCompile Include="inc\mapmodule.cpp">
-      <Filter>logicmodule\map</Filter>
-    </ClCompile>
     <ClCompile Include="src\mapconfigmanager.cpp">
       <Filter>logicmodule\map</Filter>
     </ClCompile>
@@ -203,6 +200,9 @@
     </ClCompile>
     <ClCompile Include="..\message\chatmodule.hxx.pb.cc">
       <Filter>message</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mapmodule.cpp">
+      <Filter>logicmodule\map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
