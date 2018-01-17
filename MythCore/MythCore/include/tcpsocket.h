@@ -102,6 +102,8 @@ namespace Myth
 		bool	checkReuseAddr();
 		int		setReuseAddr(bool bReuse);
 
+		int		getSocketErrNo();
+
 		bool	checkKeepAlive();
 		int		setKeepAlive(bool bKeepAlive);
 
@@ -113,6 +115,7 @@ namespace Myth
 
 		int		sendData(byte* pBuff, int nBuffSize);
 		int		recvData(byte* pBuff, int nBuffSize);
+
 	public:
 		SOCKET	getSocketFd(){ return mSocketFd; }
 		void	setSocketFd(SOCKET uFd){ mSocketFd = uFd; }

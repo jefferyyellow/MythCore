@@ -182,6 +182,18 @@ namespace Myth
 		return nReuse == 1;
 	}
 
+	int CTcpSocket::getSocketErrNo()
+	{
+		int       nErrNo = 0;
+#ifdef MYTH_OS_WINDOWS
+		int nLen = sizeof(nErrNo);
+#else
+		socklen_t nLen = sizeof(nErrNo);
+#endif
+		getsockopt(mSocketFd, SOL_SOCKET, SO_ERROR, (char*)&nErrNo, &nLen);
+		return nErrNo;
+	}
+
 	int CTcpSocket::setReuseAddr(bool bReuse)
 	{
 		int opt = (bReuse ? 1 : 0);

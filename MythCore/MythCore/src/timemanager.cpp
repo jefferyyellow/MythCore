@@ -35,7 +35,7 @@ namespace Myth
 	sint64 CClockTime::getInterval()
 	{
 	#ifdef MYTH_OS_WINDOWS
-		return (mEndTime - mStartTime) * 1000000 / CTimeManager::GetQueryPerformanceFrequency();
+		return (mEndTime - mStartTime) * 1000000 / CTimeManager::Inst()->GetQueryPerformanceFrequency();
 	#else
 		return (mEndTime - mStartTime)	;
 	#endif
@@ -58,16 +58,16 @@ namespace Myth
 	}
 
 
-	#ifdef MYTH_OS_WINDOWS
-	sint64 CTimeManager::mQueryPerformanceFrequency = 0;
-	#endif
-
 	int	CTimeManager::Init()
 	{
 	#ifdef MYTH_OS_WINDOWS
 		LARGE_INTEGER lFrequency;
 		QueryPerformanceFrequency(&lFrequency);
 		mQueryPerformanceFrequency = lFrequency.QuadPart;
+		if (0 == mQueryPerformanceFrequency)
+		{
+			mQueryPerformanceFrequency = 1;
+		}
 	#endif
 		return 0;
 	}

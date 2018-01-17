@@ -1,6 +1,13 @@
 #include "tcpserver.h"
 #include "tinyxml2.h"
 #include "timemanager.h"
+#include <errno.h>
+
+#	define LOG_INFO(fmt, ... )				CLogManager::Inst()->LogInfoMessageFormat(fmt, ##__VA_ARGS__ )
+#	define LOG_WARN(fmt, ... )				CLogManager::Inst()->LogWarnMessageFormat(fmt, ##__VA_ARGS__ )
+#	define LOG_ERROR(fmt, ... )				CLogManager::Inst()->LogErrorMessageFormat(fmt, ##__VA_ARGS__ )
+#	define LOG_DEBUG(logname, fmt, ... )	CLogManager::Inst()->LogDebugMessageFormat(logname, fmt, ##__VA_ARGS__ )
+
 using namespace tinyxml2;
 
 CTcpServer::CTcpServer()
@@ -347,15 +354,20 @@ void CTcpServer::receiveMessage()
 				if (NULL == pNewSocket)
 				{
 					// 出错
+					continue;
 				}
 				if (NULL == pNewSocket->getRecvBuff())
 				{
 					byte* pNewSocketBuff = new byte[MAX_SOCKET_BUFF_SIZE];
 					if (NULL == pNewSocketBuff)
 					{
-
+						clearSocketInfo(nSocketIndex, pNewSocket);
+						continue;
 					}
-					pNewSocket->setRecvBuff(pNewSocketBuff);
+					else
+					{
+						pNewSocket->setRecvBuff(pNewSocketBuff);
+					}
 				}
 
 				pNewSocket->setMaxRecvBuffSize(MAX_SOCKET_BUFF_SIZE);
@@ -417,24 +429,23 @@ void CTcpServer::receiveMessage()
 	for (int i = 0; i < nNumFd; i++, pEvent++)
 	{
 		nFd = pEvent->data.fd;
-		if (0 > nFd)
+		if (nFd < 0 || nFd >= nSocketCapacity)
 		{
-			// 出错
+			LOG_ERROR("epoll wait event error, Fd: %d", nFd);
 			continue;
 		}
-
+		CTcpSocket& rTcpSocket = pAllSocket[nFd];
 		// error
 		if (0 != (EPOLLERR & pEvent->events))
 		{
 			// 出错
+			int nSocketError = rTcpSocket.getSocketErrNo();
+			LOG_ERROR("epoll wait event error, Fd: %d, Events: %d, ErrNo: %d Error: %s", nFd, pEvent->events, nSocketError, strerror(nSocketError));
+			clearSocketInfo(rTcpSocket.getSocketFd(), &rTcpSocket);
+			sendSocketErrToGameServer(rTcpSocket.getSocketFd(), emTcpError_SendData);
 			continue;
 		}
 
-		if (nFd >= nSocketCapacity)
-		{
-			continue;
-		}
-		CTcpSocket& rTcpSocket = pAllSocket[nFd];
 
 		// 不可读，直接滚蛋
 		if (0 == (EPOLLIN & pEvent->events))
@@ -452,15 +463,20 @@ void CTcpServer::receiveMessage()
 			if (NULL == pNewSocket)
 			{
 				// 出错
+				continue;
 			}
-			if (NULL != pNewSocket->getRecvBuff())
+			if (NULL == pNewSocket->getRecvBuff())
 			{
 				byte* pNewSocketBuff = new byte[MAX_SOCKET_BUFF_SIZE];
 				if (NULL == pNewSocketBuff)
 				{
-
+					clearSocketInfo(pNewSocket->getSocketFd(), pNewSocket);
+					continue;
 				}
-				pNewSocket->setRecvBuff(pNewSocketBuff);
+				else
+				{
+					pNewSocket->setRecvBuff(pNewSocketBuff);
+				}
 			}
 			pNewSocket->setMaxRecvBuffSize(MAX_SOCKET_BUFF_SIZE);
 			pNewSocket->setRecvBuffSize(0);
@@ -486,12 +502,8 @@ void CTcpServer::receiveMessage()
 			if (nResult <= 0)
 			{
 				// 客户端已经退出
-				CTcpSocket* pSocket = mEpollModel->getSocket(rTcpSocket.getSocketFd());
-				if (NULL != pSocket)
-				{
-					clearSocketInfo(rTcpSocket.getSocketFd(), pSocket);
-					sendSocketErrToGameServer(rTcpSocket.getSocketFd(), emTcpError_SendData);
-				}
+				clearSocketInfo(rTcpSocket.getSocketFd(), &rTcpSocket);
+				sendSocketErrToGameServer(rTcpSocket.getSocketFd(), emTcpError_SendData);
 				break;
 			}
 			else

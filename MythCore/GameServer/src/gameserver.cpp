@@ -9,21 +9,27 @@
 #include "timemanager.h"
 #include "template.h"
 
+CGameServer::CGameServer()
+{
+
+}
+
 /// 初始化
 bool CGameServer::init()
 {
 	// 优先初始化这两个变量
-	mCurrTime = time(NULL);
-	mTickCount = getTickTime();
-	srand((unsigned int)mCurrTime);
-
-	bool bResult = initLog();
+	bool bResult = initLogicModule();
 	if (!bResult)
 	{
 		return false;
 	}
 
-	bResult = initLogicModule();
+	CTimeManager::Inst()->setCurrTime(time(NULL));
+	CTimeManager::Inst()->setTickCount(getTickTime());
+	mLastTimerTick = CTimeManager::Inst()->getTickCount();
+	srand((unsigned int)CTimeManager::Inst()->getCurrTime());
+
+	bResult = initLog();
 	if (!bResult)
 	{
 		return false;
@@ -155,8 +161,15 @@ void CGameServer::run()
 	//MYTH_ASSERT_INFO(1,;,"I love you macro!");
 	while (true)
 	{
-		mCurrTime = time(NULL);
-		mTickCount = getTickTime();
+		CTimeManager::Inst()->setCurrTime(time(NULL));
+		uint64 tTickTime = getTickTime();
+		CTimeManager::Inst()->setTickCount(tTickTime);
+		// 一秒更新一次
+		if (tTickTime - mLastTimerTick >= 1000)
+		{
+			CTimeManager::Inst()->setTmNow(CTimeManager::Inst()->getCurrTime());
+		}
+
 		//printf("*dddd*");
 		mThreadPool.run();
 #ifdef MYTH_OS_WINDOWS

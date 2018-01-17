@@ -14,7 +14,7 @@ class CGameServer : public CSingleton<CGameServer>
 {
 	friend class CSingleton<CGameServer>;
 private:
-	CGameServer(){}
+	CGameServer();
 	~CGameServer(){}
 
 public:
@@ -41,9 +41,6 @@ public:
 public:
 	uint64		getTickTime();
 
-	inline time_t	GetCurrTime(){return mCurrTime;}
-	uint64 getTickCount()const{	return mTickCount;}
-
 public:
 	void		pushTask(EmTaskType eTaskType, CInternalMsg* pMsg);
 	void		pushDBTask(int nUid, byte* pData, int nDataLength);
@@ -55,8 +52,8 @@ private:
 	CLocalLogJob			mLocalLogJob;
 	CSceneJob				mSceneJob;
 
-	time_t					mCurrTime;
-	uint64					mTickCount;
 	Myth::CThreadPool		mThreadPool;
+	/// 上一次刷新计时器的时间
+	uint64					mLastTimerTick;
 };
 #endif

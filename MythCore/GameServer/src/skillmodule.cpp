@@ -120,7 +120,7 @@ void CSkillModule::onUseSkillRequest(CEntityPlayer* pPlayer, Message* pMessage)
 		return;
 	}
 
-	time_t tTimeNow = CGameServer::Inst()->GetCurrTime();
+	time_t tTimeNow = CTimeManager::Inst()->getCurrTime();
 
 	// CD»¹Ã»µ½
 	if(tTimeNow - pPlayerSkill->getSkillCD() < pTplSkill->mSkillCD)

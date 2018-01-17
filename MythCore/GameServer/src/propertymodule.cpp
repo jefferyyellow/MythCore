@@ -67,7 +67,7 @@ void CPropertyModule::onTimer(unsigned int nTickOffset)
 {
 	if (mSavePlayerTimer.elapse(nTickOffset))
 	{
-		time_t tTimeNow = CGameServer::Inst()->GetCurrTime();
+		time_t tTimeNow = CTimeManager::Inst()->getCurrTime();
 		int nSavePlayerCount = 0;
 		CSceneJob::PLAYER_LIST rPlayerList = CSceneJob::Inst()->getPlayerList();
 		CSceneJob::PLAYER_LIST::iterator tPlayerIt = rPlayerList.begin();

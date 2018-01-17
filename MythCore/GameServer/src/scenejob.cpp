@@ -102,11 +102,11 @@ void CSceneJob::doRun()
 
 		CInternalMsgPool::Inst()->freeMsg(pIMMsg);
 	}
-	int nElapseTime = (int)(CGameServer::Inst()->getTickCount() - mLastTimerTick);
+	int nElapseTime = (int)(CTimeManager::Inst()->getTickCount() - mLastTimerTick);
 	if (nElapseTime > 100)
 	{
 		timer(nElapseTime);
-		mLastTimerTick = CGameServer::Inst()->getTickCount();
+		mLastTimerTick = CTimeManager::Inst()->getTickCount();
 	}
 }
 
@@ -228,14 +228,7 @@ void CSceneJob::timer(unsigned int nTickOffset)
 
 void CSceneJob::checkNewDayCome()
 {
-	time_t tTime = CGameServer::Inst()->GetCurrTime();
-	struct tm tmNow;
-	// 注意不能直接用localtime,这个函数不是线程安全了
-#ifdef MYTH_OS_WINDOWS
-	localtime_s(&tmNow, &tTime);	
-#else
-	localtime_r(&tTime, &tmNow);  
-#endif // MYTH_OS_WINDOWS
+	struct tm& tmNow = CTimeManager::Inst()->getTmNow();
 
 	if (0 == tmNow.tm_hour && 0 == tmNow.tm_min)
 	{
@@ -266,7 +259,7 @@ void CSceneJob::onTask(CInternalMsg* pMsg)
 bool CSceneJob::init(int nDBBuffSize)
 {
 	// 初始化时间变量
-	mLastTimerTick = CGameServer::Inst()->getTickCount();
+	mLastTimerTick = CTimeManager::Inst()->getTickCount();
 	mServerState = emServerStateInit;
 	bool bResult = initShareMemory();
 	if (!bResult)

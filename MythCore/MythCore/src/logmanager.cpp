@@ -1,4 +1,5 @@
 #include "logmanager.h"
+#include "timemanager.h"
 #include "log.h"
 #include <stdio.h>
 #ifdef MYTH_OS_UNIX
@@ -131,15 +132,10 @@ namespace Myth
 	/// format date into data buffer
 	void CLogManager::FormatDateString(char* pDateBuffer, int nBuffSize)
 	{
-		time_t date;
-		time(&date);
-		tm* tms = localtime(&date);
-		if (NULL != tms)
-		{
-			snprintf(pDateBuffer, nBuffSize - 1, "[%04d-%02d-%02d %02d:%02d:%02d]", tms->tm_year + 1900,
-				tms->tm_mon + 1, tms->tm_mday, tms->tm_hour, tms->tm_min, tms->tm_sec);
-			pDateBuffer[nBuffSize - 1] = '\0';
-		}
+		tm& tTimeNow = CTimeManager::Inst()->getTmNow();
+		snprintf(pDateBuffer, nBuffSize - 1, "[%04d-%02d-%02d %02d:%02d:%02d]", tTimeNow.tm_year + 1900,
+			tTimeNow.tm_mon + 1, tTimeNow.tm_mday, tTimeNow.tm_hour, tTimeNow.tm_min, tTimeNow.tm_sec);
+		pDateBuffer[nBuffSize - 1] = '\0';
 	}
 
 	/// format log int data buffer

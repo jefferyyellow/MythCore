@@ -126,7 +126,7 @@ namespace Myth
 
 	public:
 	#ifdef MYTH_OS_WINDOWS
-		static sint64	GetQueryPerformanceFrequency(){return mQueryPerformanceFrequency;}
+		sint64	GetQueryPerformanceFrequency(){return mQueryPerformanceFrequency;}
 	#endif
 	public:
 		/// get the time in milliseconds.
@@ -139,11 +139,30 @@ namespace Myth
 		 *	forth to unix time (aka epoch)
 		 */
 		static uint64 GetWindowsToUnixBaseTimeOffset();
+
+		inline time_t	getCurrTime(){ return mCurrTime; }
+		void			setCurrTime(time_t tTime){mCurrTime = tTime;}
+
+		uint64			getTickCount()const{ return mTickCount; }
+		void			setTickCount(uint64 tTickCount){mTickCount = tTickCount;}
+
+		tm&				getTmNow(){return mTmNow;}
+		void			setTmNow(time_t tTimeNow)
+		{
+#ifdef MYTH_OS_WINDOWS
+			localtime_s(&mTmNow, &tTimeNow);
+#else
+			localtime_r(&tTimeNow, &mTmNow);
+#endif // MYTH_OS_WINDOWS
+		}
 	private:
 		/// cache the time from time(),no need call function time() when we want get the second from 19700101 00:00:00
 	#ifdef MYTH_OS_WINDOWS
-		static	sint64 mQueryPerformanceFrequency;
+		sint64 mQueryPerformanceFrequency;
 	#endif
+		time_t					mCurrTime;
+		uint64					mTickCount;
+		struct tm				mTmNow;
 	};
 
 }
