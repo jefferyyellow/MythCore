@@ -25,19 +25,20 @@ namespace Myth
 					if (NULL != pJob)
 					{
 						pThead->mpJob = pJob;
-						printf("popJob %d\n", pThead->getSerialNum());
+						//printf("popJob %d\n", pThead->getSerialNum());
 					}
 				}
 				continue;
 			}
 			pThead->mpJob->doing(pThead->getSerialNum());
+			pThead->mpThreadPool->setJobFree(pThead->mpJob);
 			if (NULL != pThead->mpThreadPool)
 			{
 				IJob* pJob = pThead->mpThreadPool->popJob();
 				pThead->mpJob = pJob;
 				if (NULL != pJob)
 				{
-					printf("popJob %d\n", pThead->getSerialNum());
+					//printf("popJob %d\n", pThead->getSerialNum());
 				}
 
 			}

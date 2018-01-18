@@ -102,11 +102,17 @@ void CSceneJob::doRun()
 
 		CInternalMsgPool::Inst()->freeMsg(pIMMsg);
 	}
-	int nElapseTime = (int)(CTimeManager::Inst()->getTickCount() - mLastTimerTick);
+	int nElapseTime = (int)(getTickCount() - mLastTimerTick);
 	if (nElapseTime > 100)
 	{
 		timer(nElapseTime);
-		mLastTimerTick = CTimeManager::Inst()->getTickCount();
+		mLastTimerTick = getTickCount();
+	}
+	uint64 tTimeNow = CTimeManager::Inst()->getCurrTime();
+	if (tTimeNow != mLastTime)
+	{
+		setTmNow(tTimeNow);
+		mLastTime = tTimeNow;
 	}
 }
 
@@ -228,7 +234,7 @@ void CSceneJob::timer(unsigned int nTickOffset)
 
 void CSceneJob::checkNewDayCome()
 {
-	struct tm& tmNow = CTimeManager::Inst()->getTmNow();
+	struct tm& tmNow = getTmNow();
 
 	if (0 == tmNow.tm_hour && 0 == tmNow.tm_min)
 	{
@@ -259,7 +265,8 @@ void CSceneJob::onTask(CInternalMsg* pMsg)
 bool CSceneJob::init(int nDBBuffSize)
 {
 	// 初始化时间变量
-	mLastTimerTick = CTimeManager::Inst()->getTickCount();
+	mLastTimerTick = getTickCount();
+	mLastTime = CTimeManager::Inst()->getCurrTime();
 	mServerState = emServerStateInit;
 	bool bResult = initShareMemory();
 	if (!bResult)

@@ -115,6 +115,18 @@ public:
 	EmServerState getServerState() const { return mServerState; }
 	void setServerState(EmServerState nValue) { mServerState = nValue; }
 
+	tm&				getTmNow(){ return mTmNow; }
+	void			setTmNow(time_t tTimeNow)
+	{
+#ifdef MYTH_OS_WINDOWS
+		localtime_s(&mTmNow, &tTimeNow);
+#else
+		localtime_r(&tTimeNow, &mTmNow);
+#endif // MYTH_OS_WINDOWS
+	}
+
+	uint64			getTickCount()const{ return mTickCount; }
+	void			setTickCount(uint64 tTickCount){ mTickCount = tTickCount; }
 private:
 	CShareMemory*			mShareMemory;
 	CSocketStream*			mTcp2ServerMemory;
@@ -131,9 +143,15 @@ private:
 	LOGIC_MODULE_LIST		mLogicModuleList;
 	/// 上一次刷新计时器的时间
 	uint64					mLastTimerTick;
+	/// 上次刷新的时间
+	uint64					mLastTime;
 	/// 服务器状态
 	EmServerState			mServerState;
 	/// 新的一天检查计时器
 	CAutoResetTimer			mNewDayTimer;
+	/// 当前的时间
+	struct tm				mTmNow;
+	/// 
+	uint64					mTickCount;
 };
 #endif

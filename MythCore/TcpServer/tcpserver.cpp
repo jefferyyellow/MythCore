@@ -23,7 +23,13 @@ CTcpServer::~CTcpServer()
 /// 初始化
 bool CTcpServer::init()
 {
-	mCurrTime = time(NULL);
+	CTimeManager* pTimeManager = CTimeManager::CreateInst();
+	if (NULL == pTimeManager)
+	{
+		return false;
+	}
+	pTimeManager->setCurrTime(time(NULL));
+	mLastTime = pTimeManager->getCurrTime();
 
 	bool bResult = initLog();
 	if (!bResult)
@@ -32,12 +38,6 @@ bool CTcpServer::init()
 	}
 
 	loadTcpServerConfig("config/tcpserverconfig.xml");
-
-	CTimeManager* pTimeManager = CTimeManager::CreateInst();
-	if (NULL == pTimeManager)
-	{
-		return false;
-	}
 
 	bResult = initShareMemory();
 	if (!bResult)
@@ -102,6 +102,8 @@ bool CTcpServer::initLog()
 	CRollFileDisplayer* pStatisticsFileDisplayer = new CRollFileDisplayer(const_cast<char*>("../log/tcpstat.log"), 1024000, 10);
 	// 为默认的debug日志加文件displayer
 	mStatisticsLog->AddDisplayer(pStatisticsFileDisplayer);
+
+	CLogManager::Inst()->setTmNow(CTimeManager::Inst()->getCurrTime());
 	return true;
 }
 
@@ -176,7 +178,7 @@ bool CTcpServer::initSocket()
 		return false;
 	}
 
-	time_t tNowTime = GetCurrTime();
+	time_t tNowTime = CTimeManager::Inst()->getCurrTime();
 	for (int i = 0; i < MAX_LISTEN_PORT_NUM; ++ i)
 	{
 		if (mTcpConfig.mListenPort[i] == 0)
@@ -259,8 +261,13 @@ void CTcpServer::run()
 {
 	while (true)
 	{
-		mCurrTime = time(NULL);
-
+		CTimeManager::Inst()->setCurrTime(time(NULL));
+		uint64 tTimeNow = CTimeManager::Inst()->getCurrTime();
+		if (tTimeNow != mLastTime)
+		{
+			CLogManager::Inst()->setTmNow(tTimeNow);
+			mLastTime = tTimeNow;
+		}
 #ifdef MYTH_OS_WINDOWS
 		mSelectModel->selectAllFd();
 		Sleep(1);
@@ -281,7 +288,7 @@ void CTcpServer::run()
 /// 检查是否超时
 void CTcpServer::checkTimeOut()
 {
-	time_t tTimeNow = GetCurrTime();
+	time_t tTimeNow = CTimeManager::Inst()->getCurrTime();
 	if (tTimeNow - mLastStatisticsTime > mTcpConfig.mWriteStatisticsTime)
 	{
 		writeTcpStatisticsData();
@@ -374,7 +381,7 @@ void CTcpServer::receiveMessage()
 				pNewSocket->setRecvBuffSize(0);
 				mSelectModel->addNewSocket(pNewSocket, nSocketIndex);
 
-				time_t tNowTime = GetCurrTime();
+				time_t tNowTime = CTimeManager::Inst()->getCurrTime();
 				if (nSocketIndex>= 0 && nSocketIndex < MAX_SOCKET_NUM)
 				{
 					mSocketInfo[nSocketIndex].mCreateTime = tNowTime;
@@ -534,7 +541,7 @@ void CTcpServer::onReceiveMessage(CTcpSocket* pSocket, int nIndex)
 	byte* pBuffer = pSocket->getRecvBuff();
 
 	int nTotalSize = 0;
-	time_t tNowTime = GetCurrTime();
+	time_t tNowTime = CTimeManager::Inst()->getCurrTime();
 	while (true)
 	{
 		if (nBuffSize < 4)

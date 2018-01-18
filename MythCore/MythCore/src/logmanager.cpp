@@ -132,9 +132,8 @@ namespace Myth
 	/// format date into data buffer
 	void CLogManager::FormatDateString(char* pDateBuffer, int nBuffSize)
 	{
-		tm& tTimeNow = CTimeManager::Inst()->getTmNow();
-		snprintf(pDateBuffer, nBuffSize - 1, "[%04d-%02d-%02d %02d:%02d:%02d]", tTimeNow.tm_year + 1900,
-			tTimeNow.tm_mon + 1, tTimeNow.tm_mday, tTimeNow.tm_hour, tTimeNow.tm_min, tTimeNow.tm_sec);
+		snprintf(pDateBuffer, nBuffSize - 1, "[%04d-%02d-%02d %02d:%02d:%02d]", mTmNow.tm_year + 1900,
+			mTmNow.tm_mon + 1, mTmNow.tm_mday, mTmNow.tm_hour, mTmNow.tm_min, mTmNow.tm_sec);
 		pDateBuffer[nBuffSize - 1] = '\0';
 	}
 

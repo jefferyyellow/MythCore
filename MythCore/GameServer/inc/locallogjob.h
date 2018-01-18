@@ -52,13 +52,17 @@ class CIMLocalLogRequest;
 class CLocalLogJob : public CJob<100, 10>
 {
 public:
-	CLocalLogJob(){}
+	CLocalLogJob()
+	{
+	}
 	~CLocalLogJob(){}
-
+	bool init();
 public:
 	virtual void doing(int uParam);
 
 private:
 	void	OnIMLocalLogRequest(CIMLocalLogRequest* pLogRequest);
+	/// 上次刷新的时间
+	uint64	mLastTime;
 };
 #endif

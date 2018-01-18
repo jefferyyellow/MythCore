@@ -115,6 +115,7 @@
     <ClCompile Include="src\propertyunit.cpp" />
     <ClCompile Include="src\rankmodule.cpp" />
     <ClCompile Include="src\scenejob.cpp" />
+    <ClCompile Include="src\serverutility.cpp" />
     <ClCompile Include="src\skillmodule.cpp" />
     <ClCompile Include="src\skillunit.cpp" />
     <ClCompile Include="src\strutility.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="inc\rankmodule.h" />
     <ClInclude Include="inc\scenejob.h" />
     <ClInclude Include="inc\servercommon.h" />
+    <ClInclude Include="inc\serverutility.h" />
     <ClInclude Include="inc\sharelist.h" />
     <ClInclude Include="inc\skillmodule.h" />
     <ClInclude Include="inc\skilltype.h" />

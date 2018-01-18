@@ -38,8 +38,6 @@ public:
 	void		clearLog();
 	/// 退出
 	void		exit();
-public:
-	uint64		getTickTime();
 
 public:
 	void		pushTask(EmTaskType eTaskType, CInternalMsg* pMsg);
@@ -53,7 +51,5 @@ private:
 	CSceneJob				mSceneJob;
 
 	Myth::CThreadPool		mThreadPool;
-	/// 上一次刷新计时器的时间
-	uint64					mLastTimerTick;
 };
 #endif

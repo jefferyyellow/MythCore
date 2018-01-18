@@ -25,8 +25,6 @@ bool CGameServer::init()
 	}
 
 	CTimeManager::Inst()->setCurrTime(time(NULL));
-	CTimeManager::Inst()->setTickCount(getTickTime());
-	mLastTimerTick = CTimeManager::Inst()->getTickCount();
 	srand((unsigned int)CTimeManager::Inst()->getCurrTime());
 
 	bResult = initLog();
@@ -145,6 +143,7 @@ bool CGameServer::initThread()
 		return false;
 	}
 	mDBJob.setBuffer(MAX_DB_JOB_BUFFER_SIZE);
+	mLocalLogJob.init();
 
 	printf("initThread\n");
 	mThreadPool.pushBackJob(&mSceneJob);
@@ -162,13 +161,6 @@ void CGameServer::run()
 	while (true)
 	{
 		CTimeManager::Inst()->setCurrTime(time(NULL));
-		uint64 tTickTime = getTickTime();
-		CTimeManager::Inst()->setTickCount(tTickTime);
-		// 一秒更新一次
-		if (tTickTime - mLastTimerTick >= 1000)
-		{
-			CTimeManager::Inst()->setTmNow(CTimeManager::Inst()->getCurrTime());
-		}
 
 		//printf("*dddd*");
 		mThreadPool.run();
@@ -234,22 +226,6 @@ void CGameServer::clearLog()
 void CGameServer::exit()
 {
 
-}
-
-uint64 CGameServer::getTickTime()
-{
-#ifdef MYTH_OS_WINDOWS
-	return GetTickCount64();
-#else
-	timespec tv;
-	// This is not affected by system time changes.
-	if (clock_gettime(CLOCK_MONOTONIC, &tv) != 0)
-	{
-		printf("clock_gettime return error!");
-		::exit(-1);
-	}
-	return ((sint64)tv.tv_sec) * 1000 + (((sint64)tv.tv_nsec/*+500*/) / 1000000);
-#endif
 }
 
 void CGameServer::pushTask(EmTaskType eTaskType, CInternalMsg* pMsg)

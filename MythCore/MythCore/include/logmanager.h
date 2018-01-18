@@ -69,6 +69,17 @@ namespace Myth
 		void 		FormatLogMessage(char* pDataBuffer, int nBuffSize, const char* pLogTypeName, const char* pFormat, va_list vaList);
 		void 		FormatLogMessage(char* pDataBuffer, int nBuffSize, const char* pLogTypeName, const char* pLogContent);
 
+	public:
+		tm&				getTmNow(){ return mTmNow; }
+		void			setTmNow(time_t tTimeNow)
+		{
+#ifdef MYTH_OS_WINDOWS
+			localtime_s(&mTmNow, &tTimeNow);
+#else
+			localtime_r(&tTimeNow, &mTmNow);
+#endif // MYTH_OS_WINDOWS
+		}
+
 	private:
 		/// error log
 		CLog		mErrorLog;
@@ -78,6 +89,8 @@ namespace Myth
 		CLog		mWarnLog;
 		/// debug log
 		DebugLogMap	mDebugLog;
+		/// 当前的时间
+		struct tm				mTmNow;
 	};
 }
 

@@ -41,9 +41,15 @@ void LogLocalDebugLog(const char* pLogName, const char* pFile, int nLine, const 
 	}
 }
 
+bool CLocalLogJob::init()
+{
+	mLastTime = CTimeManager::Inst()->getCurrTime();
+	return true;
+}
 
 void CLocalLogJob::doing(int uParam)
 {
+	int nCount = 0;
 	while (true)
 	{
 		CInternalMsg* pIMMsg = mTaskManager.popTask();
@@ -57,12 +63,20 @@ void CLocalLogJob::doing(int uParam)
 		{
 			OnIMLocalLogRequest(static_cast<CIMLocalLogRequest*>(pIMMsg));
 		}
-		else
-		{
-			// ³ö´íÁË
-		}
 
 		CInternalMsgPool::Inst()->freeMsg(pIMMsg);
+		++ nCount;
+		if (nCount > 1000)
+		{
+			break;
+		}
+	}
+
+	uint64 tTimeNow = CTimeManager::Inst()->getCurrTime();
+	if (tTimeNow != mLastTime)
+	{
+		CLogManager::Inst()->setTmNow(tTimeNow);
+		mLastTime = tTimeNow;
 	}
 }
 
