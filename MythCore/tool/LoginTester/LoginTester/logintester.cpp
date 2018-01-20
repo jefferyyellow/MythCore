@@ -22,8 +22,6 @@ bool CLoginTester::init()
 {
 	CSelectModel::initSocketSystem();
 
-	//int nResult = mTcpSocket.connectServer("127.0.0.1", 6688);
-	//int nResult = mTcpSocket.connectServer("192.168.10.13", 6688);
 	if (!initLog())
 	{
 		return false;
@@ -80,14 +78,15 @@ bool CLoginTester::initLog()
 /// 运行
 void CLoginTester::run()
 {
+	newPlayer("hjh", 1, 1);
 	while (true)
 	{
 		mSelectModel.selectAllFd();
 		processServerMessage();
 		Sleep(30);
 
-		int nTickCount = getTickCount();
-		onTime(nTickCount - mLastTickCount);
+		uint64 nTickCount = getTickCount();
+		onTime((int)(nTickCount - mLastTickCount));
 		mLastTickCount = nTickCount;
 	}
 }
@@ -161,13 +160,7 @@ void CLoginTester::onServerMessage(CTcpSocket* pTcpSocket, CPlayer* pPlayer)
 		pMessage->ParseFromArray(pTemp, nLength - sizeof(unsigned short) * 2);
 		pTcpSocket->resetRecvBuffPoint(nLength);
 
-		switch (nMessageID)
-		{
-
-			default:
-				break;
-		}
-
+		pPlayer->onServerMessage(nMessageID, pMessage);
 	}
 }
 
@@ -215,8 +208,14 @@ Message* CLoginTester::createMessage(unsigned short nMessageID)
 }
 
 /// 发送消息给服务器
-void CLoginTester::sendMessage(unsigned short uMessageID, Message* pMessage)
+void CLoginTester::sendMessage(int nTcpIndex, unsigned short uMessageID, Message* pMessage)
 {
+	CTcpSocket* pTcpSocket = mSelectModel.getSocket(nTcpIndex);
+	if (NULL == pTcpSocket)
+	{
+		return;
+	}
+
 	printf("sendMessage ID: %d\n", uMessageID);
 	// 一个 unsigned short是消息ID，另一个是消息长度
 	unsigned short nMessageLen = pMessage->ByteSize() + sizeof(unsigned short) * 2;
@@ -227,7 +226,7 @@ void CLoginTester::sendMessage(unsigned short uMessageID, Message* pMessage)
 	pTemp += sizeof(uMessageID);
 
 	pMessage->SerializeToArray(pTemp, sizeof(mBuffer) - (sizeof(unsigned short) * 2));
-	//mTcpSocket.sendData(mBuffer, nMessageLen);
+	pTcpSocket->sendData(mBuffer, nMessageLen);
 }
 
 void CLoginTester::newPlayer(const char* pAccountName, int nChannelID, int nServerID)
@@ -244,11 +243,18 @@ void CLoginTester::newPlayer(const char* pAccountName, int nChannelID, int nServ
 		printf("new receive buff failure!\n");
 		return;
 	}
-	pNewPlayer->getTcpSocket().createSocket();
-	pNewPlayer->getTcpSocket().setRecvBuff(pReceiveBuff);
-	pNewPlayer->getTcpSocket().setRecvBuffSize(0);
-	pNewPlayer->getTcpSocket().setMaxRecvBuffSize(MAX_PLAYER_SOCKET_BUFF);
-	if (0 != pNewPlayer->getTcpSocket().connectServer(mServerIP, mServerPort))
+	int nSocketIndex = -1;
+	CTcpSocket* pNewSocket = mSelectModel.getFreeSocket(nSocketIndex);
+	if (NULL == pNewSocket)
+	{
+		printf("assign socket failure!\n");
+		return;
+	}
+	pNewSocket->createSocket();
+	pNewSocket->setRecvBuff(pReceiveBuff);
+	pNewSocket->setRecvBuffSize(0);
+	pNewSocket->setMaxRecvBuffSize(MAX_PLAYER_SOCKET_BUFF);
+	if (0 != pNewSocket->connectServer(mServerIP, mServerPort))
 	{
 		printf("connect server failure!\n");
 		return;
@@ -258,13 +264,7 @@ void CLoginTester::newPlayer(const char* pAccountName, int nChannelID, int nServ
 	pNewPlayer->setChannelID(nChannelID);
 	pNewPlayer->setServerID(nServerID);
 
-	int nSocketIndex = -1;
-	CTcpSocket* pNewSocket = mSelectModel.getFreeSocket(nSocketIndex);
-	if (NULL == pNewSocket)
-	{
-		printf("connect server failure!\n");
-		return;
-	}
+
 	mSelectModel.addNewSocket(pNewSocket, nSocketIndex);
 	std::pair<PLAYER_SOCKET_LIST::iterator, bool> tResult = mPlayerSocketList.insert(std::pair<int,CPlayer*>(nSocketIndex, pNewPlayer));
 	if (!tResult.second)
@@ -272,7 +272,8 @@ void CLoginTester::newPlayer(const char* pAccountName, int nChannelID, int nServ
 		printf("add to player socket list failure!\n");
 		return;
 	}
-
+	pNewPlayer->setTcpIndex(nSocketIndex);
+	pNewPlayer->loginServer();
 }
 
 uint64 CLoginTester::getTickCount()
@@ -293,14 +294,14 @@ uint64 CLoginTester::getTickCount()
 
 void CLoginTester::onTime(int nElapseTime)
 {
-	if (mResetTimer.elapse(nElapseTime))
-	{
-		for (int i = 0; i < 3; ++ i)
-		{
-			char szAccountName[MAX_NAME_LENGTH] = {0};
-			snprintf(szAccountName, sizeof(szAccountName) - 1, "hjh%d", mAccountNameCount);
-			newPlayer(szAccountName, 1, 1);
-			++ mAccountNameCount;
-		}
-	}
+	//if (mResetTimer.elapse(nElapseTime))
+	//{
+	//	for (int i = 0; i < 3; ++ i)
+	//	{
+	//		char szAccountName[MAX_NAME_LENGTH] = {0};
+	//		snprintf(szAccountName, sizeof(szAccountName) - 1, "hjh%d", mAccountNameCount);
+	//		newPlayer(szAccountName, 1, 1);
+	//		++ mAccountNameCount;
+	//	}
+	//}
 }

@@ -253,6 +253,7 @@ void CPropertyModule::savePlayer(CEntityPlayer* pPlayer)
 	{
 		return;
 	}
+	pPlayer->setSaveStatus(0);
 	savePlayerInfo(pPlayer);
 	savePlayerBaseProperty(pPlayer);
 }

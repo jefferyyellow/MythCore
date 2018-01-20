@@ -17,8 +17,8 @@ bool CGameClient::init()
 	CMessageFactory::CreateInst();
 	CSelectModel::initSocketSystem();
 	mTcpSocket.createSocket();
-	//int nResult = mTcpSocket.connectServer("127.0.0.1", 6688);
-	int nResult = mTcpSocket.connectServer("192.168.10.13", 6688);
+	int nResult = mTcpSocket.connectServer("127.0.0.1", 6688);
+	//int nResult = mTcpSocket.connectServer("192.168.10.13", 6688);
 	if (!initLog())
 	{
 		return false;
@@ -26,7 +26,7 @@ bool CGameClient::init()
 	mTcpSocket.setRecvBuff(mTcpRecData);
 	mTcpSocket.setRecvBuffSize(0);
 	mTcpSocket.setMaxRecvBuffSize(sizeof(mTcpRecData));
-	mSelectModel.addNewSocket(&mTcpSocket, 0);\
+	mSelectModel.addNewSocket(&mTcpSocket, 0);
 	return true;
 }
 

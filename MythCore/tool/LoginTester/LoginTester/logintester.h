@@ -6,18 +6,22 @@
 #include "timemanager.h"
 #include "google/protobuf/message.h"
 #include "log.h"
+#include "singleton.h"
 #include <map>
 #define MAX_SOCKET_NUM				4096				// 最大的socket数目
 #define MAX_SOCKET_BUFF_SIZE		40960				// Socket缓冲区大小
 using namespace Myth;
 typedef ::google::protobuf::Message Message;
 class CPlayer;
-class CLoginTester
+class CLoginTester :  public CSingleton <CLoginTester>
 {
+public:
+	friend class CSingleton <CLoginTester> ;
+
 public:
 	// key: socket fd, value: CPlayer*
 	typedef std::map<int, CPlayer*> PLAYER_SOCKET_LIST;
-public:
+private:
 	CLoginTester();
 	~CLoginTester();
 
@@ -31,7 +35,7 @@ public:
 	/// 处理服务器消息
 	void		processServerMessage();
 	/// 发送消息给服务器
-	void		sendMessage(unsigned short uMessageID, Message* pMessage);
+	void		sendMessage(int nTcpIndex, unsigned short uMessageID, Message* pMessage);
 
 	/// 当收到服务器消息
 	void		onServerMessage(CTcpSocket* pTcpSocket, CPlayer* pPlayer);
@@ -61,7 +65,7 @@ public:
 	byte					mBuffer[MAX_SOCKET_BUFF_SIZE];
 	CTcpSocket				mTcpSocket[MAX_SOCKET_NUM];
 	PLAYER_SOCKET_LIST		mPlayerSocketList;
-	int						mLastTickCount;
+	uint64					mLastTickCount;
 	CAutoResetTimer			mResetTimer;
 	int						mAccountNameCount;
 };

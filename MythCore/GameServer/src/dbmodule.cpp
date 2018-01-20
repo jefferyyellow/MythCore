@@ -124,7 +124,7 @@ void CDBModule::onDBSession()
 			CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(mDBResponse.mParam1));
 			if (NULL != pPlayer)
 			{
-				pPlayer->setSaveStatus(emSaveStatus_Info);
+				pPlayer->setSaveStatusBit(emSaveStatus_Info);
 				CPropertyModule::Inst()->onSavePlayerComplete(pPlayer);
 				printf("SavePlayerInfo complete\n");
 			}
@@ -140,7 +140,7 @@ void CDBModule::onDBSession()
 			CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(mDBResponse.mParam1));
 			if (NULL != pPlayer)
 			{
-				pPlayer->setSaveStatus(emSaveStatus_BaseProperty);
+				pPlayer->setSaveStatusBit(emSaveStatus_BaseProperty);
 				CPropertyModule::Inst()->onSavePlayerComplete(pPlayer);
 				printf("SavePlayerBaseProperty complete\n");
 			}

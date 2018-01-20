@@ -2,6 +2,9 @@
 #define __PLAYER_H__
 #include "tcpsocket.h"
 using namespace Myth;
+#include "google/protobuf/message.h"
+typedef ::google::protobuf::Message Message;
+
 #define MAX_PLAYER_SOCKET_BUFF 4096
 #define MAX_NAME_LENGTH 32
 class CPlayer
@@ -14,13 +17,19 @@ public:
 		mServerID = 0;
 		mRoleID = 0;
 		mAccountName[0] = '\0';
+		mTcpIndex = -1;
 	}
 	~CPlayer()
 	{
 	}
 
-	CTcpSocket&	getTcpSocket(){return mTcpSocket;}
+public:
+	void			onServerMessage(short nMessageID, Message* pMessage);
+	void			loginServer();
+	void			onMessageLoginResponse(Message* pMessage);
+	void			onCreateRoleResponse(Message* pMessage);
 
+public:
 	unsigned int	getAccountID(){return mAccountID;}
 	void			setAccountID(unsigned int nAccountID){mAccountID = nAccountID;}
 
@@ -40,12 +49,15 @@ public:
 		mAccountName[sizeof(mAccountName) - 1] = '\0';
 	}
 
+	int				getTcpIndex() const { return mTcpIndex; }
+	void			setTcpIndex(int nValue) { mTcpIndex = nValue; }
+
 private:
-	CTcpSocket				mTcpSocket;
 	unsigned int			mAccountID;
 	int						mChannelID;
 	int						mServerID;
 	unsigned int			mRoleID;
 	char					mAccountName[MAX_NAME_LENGTH];
+	int						mTcpIndex;
 };
 #endif

@@ -1,13 +1,12 @@
 #include "logintester.h"
 int main()
 {
-	CLoginTester tLoginTester;
-	if (!tLoginTester.init())
+	CLoginTester::CreateInst();
+	if (!CLoginTester::Inst()->init())
 	{
 		return -1;
 	}
-	tLoginTester.setServerIP("127.0.0.1");
-	tLoginTester.setServerPort(6688);
-	tLoginTester.run();;
-
+	CLoginTester::Inst()->setServerIP("127.0.0.1");
+	CLoginTester::Inst()->setServerPort(6688);
+	CLoginTester::Inst()->run();
 }
