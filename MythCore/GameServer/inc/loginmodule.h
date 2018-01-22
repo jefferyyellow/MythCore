@@ -39,7 +39,7 @@ public:
 	/// 销毁实体
 	virtual void onDestroyPlayer(CEntity* pEntity);
 	/// 时间函数
-	virtual		void onTimer(unsigned int nTickOffset);
+	virtual	void onTimer(unsigned int nTickOffset);
 
 public:
 	/// 处理客户端消息
@@ -50,8 +50,32 @@ public:
 	void		processWaitEnterGame(CLoginPlayer* pLoginPlayer, Message* pMessage);
 	///  一个Socket断开
 	void		onSocketDisconnect(int nSocketIndex);
+	/// 加载数据库里分配角色ID的字段
+	void		loadAllocateRoleId();
+	/// 加载数据库里分配角色ID的处理
+	void		onLoadAllocateRoleId(CDBResponse& rResponse);
+
+	unsigned int getAllocateRoleId(int nIndex)
+	{
+		if (nIndex < 0 || nIndex >= MAX_SERVER_ID)
+		{
+			return 0;
+		}
+
+		return mAllocateRoleId[nIndex];
+	}
+
+	void		setAllocateRoleId(int nIndex, int nRoleID)
+	{
+		if (nIndex < 0 || nIndex >= MAX_SERVER_ID)
+		{
+			return;
+		}
+		mAllocateRoleId[nIndex] = nRoleID;
+	}
 private:
-	LOGIN_LIST			mLoginList;				// 登录列表
-	CAutoResetTimer		mLoginCheckTime;		// 登录校验时间
+	LOGIN_LIST			mLoginList;						// 登录列表
+	CAutoResetTimer		mLoginCheckTime;				// 登录校验时间
+	unsigned int		mAllocateRoleId[MAX_SERVER_ID];	// 角色ID分配器
 };
 #endif

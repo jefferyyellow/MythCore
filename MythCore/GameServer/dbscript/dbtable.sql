@@ -15,8 +15,8 @@ CREATE TABLE `PlayerRole` (
 	`channel_id`			smallint(11) UNSIGNED		NOT NULL,
 	`server_id`				smallint(11) UNSIGNED		NOT NULL,
 	`account_id`			int(11) UNSIGNED			NOT NULL,
-	`level`			smallint(11) UNSIGNED		NOT NULL DEFAULT '0',
-	`exp`				bigint UNSIGNED				NOT NULL DEFAULT '0',
+	`level`					smallint(11) UNSIGNED		NOT NULL DEFAULT '0',
+	`exp`					bigint UNSIGNED				NOT NULL DEFAULT '0',
 	`vip_level`				tinyint(11)					NOT NULL DEFAULT '0',
 	`vip_exp`				int(11) UNSIGNED			NOT NULL DEFAULT '0',
 	`money`					int(11) UNSIGNED			NOT NULL DEFAULT '0',
@@ -34,3 +34,10 @@ CREATE TABLE `PlayerBaseProperty` (
 	`task`					blob						DEFAULT NULL,
 	PRIMARY KEY(`role_id`)
 )ENGINE=INNODB;
+
+DROP TABLE IF EXISTS `AllocateRoleId`;
+CREATE TABLE `AllocateRoleId` (
+  `server_id`				smallint(11) UNSIGNED		NOT NULL,
+  `max_role_id`				int(11) UNSIGNED			NOT NULL,
+  PRIMARY KEY  (`server_id`)
+) ENGINE=INNODB;

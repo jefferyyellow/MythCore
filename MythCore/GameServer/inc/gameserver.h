@@ -43,6 +43,8 @@ public:
 	void		pushTask(EmTaskType eTaskType, CInternalMsg* pMsg);
 	void		pushDBTask(int nUid, byte* pData, int nDataLength);
 
+	short getServerID() const { return mServerID; }
+	void setServerID(short nValue) { mServerID = nValue; }
 private:
 	CLog*					mDefaultLog;
 
@@ -50,6 +52,9 @@ private:
 	CLocalLogJob			mLocalLogJob;
 	CSceneJob				mSceneJob;
 
+	// 线程池
 	Myth::CThreadPool		mThreadPool;
+	// 服务器对应的服务器ID，服务器的唯一ID
+	short					mServerID;
 };
 #endif

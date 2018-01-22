@@ -270,7 +270,6 @@ void CPropertyModule::savePlayerInfo(CEntityPlayer* pPlayer)
 		pPlayer->getPropertyUnit().getLevel(), pPlayer->getPropertyUnit().getRoleExp(),
 		pPlayer->getPropertyUnit().getVIPLevel(), pPlayer->getPropertyUnit().GetVIPExp(),
 		pPlayer->getItemUnit().getMoney(), pPlayer->getItemUnit().getDiamond());
-
 }
 
 void CPropertyModule::savePlayerBaseProperty(CEntityPlayer* pPlayer)
@@ -284,7 +283,6 @@ void CPropertyModule::savePlayerBaseProperty(CEntityPlayer* pPlayer)
 	pPlayer->getItemUnit().getEquipList().createToPB(tSavePlayer.mutable_equip());
 	pPlayer->getTaskUnit().createToPB(tSavePlayer.mutable_task());
 	
-
 	CDBModule::Inst()->pushDBTask(pPlayer->getRoleID(), emSessionType_SavePlayerBaseProperty, pPlayer->getObjID(), 0, &tSavePlayer);
 }
 /// Íæ¼Ò´æÅÌÍê³É

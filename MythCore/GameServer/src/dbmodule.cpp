@@ -146,6 +146,11 @@ void CDBModule::onDBSession()
 			}
 			break;
 		}
+		case emSessionType_LoadAllocateRoleId:
+		{
+			CLoginModule::Inst()->onLoadAllocateRoleId(mDBResponse);
+			break;
+		}
 	}
 }
 

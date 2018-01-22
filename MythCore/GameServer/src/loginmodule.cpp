@@ -196,6 +196,12 @@ void CLoginModule::processWaitEnterGame(CLoginPlayer* pLoginPlayer, Message* pMe
 		return;
 	}
 
+	if (0 == pEnterSceneRequest->roleid())
+	{
+		LOG_ERROR("enter scene role id invalid: %d", pEnterSceneRequest->roleid());
+		return;
+	}
+
 	CEntityPlayer* pPlayer = CSceneJob::Inst()->getPlayerByRoleID(pEnterSceneRequest->roleid());
 	if (NULL != pPlayer)
 	{
@@ -222,7 +228,7 @@ void CLoginModule::processWaitEnterGame(CLoginPlayer* pLoginPlayer, Message* pMe
 	}
 	else
 	{
-		printf("new player login: %d", pEnterSceneRequest->roleid());
+		printf("new player login: %d\n", pEnterSceneRequest->roleid());
 		CEntityPlayer* pNewPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->allocObj(emObjType_Entity_Player));
 		if (NULL == pNewPlayer)
 		{
@@ -256,8 +262,43 @@ void CLoginModule::onSocketDisconnect(int nSocketIndex)
 	LOGIN_LIST::iterator it = mLoginList.find(nSocketIndex);
 	if (it != mLoginList.end())
 	{
-		mLoginList.erase(nSocketIndex);
 		// 完成使命，释放掉
 		CObjPool::Inst()->free(it->second);
+		mLoginList.erase(nSocketIndex);
+	}
+}
+
+/// 加载数据库里分配角色ID的字段
+void CLoginModule::loadAllocateRoleId()
+{
+	CDBModule::Inst()->pushDBTask(0, emSessionType_LoadAllocateRoleId, 0, 0,"select * from AllocateRoleId order by server_id asc limit %d", BAT_LOAD_ROLE_ID_NUM);
+}
+
+/// 加载数据库里分配角色ID的处理
+void CLoginModule::onLoadAllocateRoleId(CDBResponse& rResponse)
+{
+	int nRow = rResponse.mRowNum;
+	int nMaxServerId = 0;
+	for (int i = 0; i < nRow; ++ i)
+	{
+		int nServerID = rResponse.getInt();
+		unsigned int nRoleID = rResponse.getInt();
+		setAllocateRoleId(nServerID, nRoleID);
+		nMaxServerId = nServerID;
+	}
+
+	// 还没加载完成
+	if (nRow >= BAT_LOAD_ROLE_ID_NUM)
+	{
+		CDBModule::Inst()->pushDBTask(0, emSessionType_LoadAllocateRoleId, 0, 0, "select * from AllocateRoleId where server_id > %d order by server_id asc limit %d", nMaxServerId, BAT_LOAD_ROLE_ID_NUM);
+	}
+	// 已经加载完了
+	else
+	{
+		int nMaxRoleID = getAllocateRoleId(CGameServer::Inst()->getServerID());
+		if (0 == nMaxRoleID)
+		{
+
+		}
 	}
 }

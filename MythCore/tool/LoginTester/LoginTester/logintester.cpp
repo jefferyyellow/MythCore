@@ -4,7 +4,7 @@
 #include "loginmessage.hxx.pb.h"
 #include "player.h"
 CLoginTester::CLoginTester()
-	:mSelectModel(mTcpSocket, MAX_SOCKET_NUM), mResetTimer(1000)
+	:mSelectModel(mTcpSocket, MAX_SOCKET_NUM), mResetTimer(3000)
 {
 	mDefaultLog = NULL;
 	mServerIP[0] = '\0';
@@ -78,7 +78,6 @@ bool CLoginTester::initLog()
 /// ÔËÐÐ
 void CLoginTester::run()
 {
-	newPlayer("hjh", 1, 1);
 	while (true)
 	{
 		mSelectModel.selectAllFd();
@@ -294,14 +293,14 @@ uint64 CLoginTester::getTickCount()
 
 void CLoginTester::onTime(int nElapseTime)
 {
-	//if (mResetTimer.elapse(nElapseTime))
-	//{
-	//	for (int i = 0; i < 3; ++ i)
-	//	{
-	//		char szAccountName[MAX_NAME_LENGTH] = {0};
-	//		snprintf(szAccountName, sizeof(szAccountName) - 1, "hjh%d", mAccountNameCount);
-	//		newPlayer(szAccountName, 1, 1);
-	//		++ mAccountNameCount;
-	//	}
-	//}
+	if (mResetTimer.elapse(nElapseTime))
+	{
+		for (int i = 0; i < 1; ++ i)
+		{
+			char szAccountName[MAX_NAME_LENGTH] = {0};
+			snprintf(szAccountName, sizeof(szAccountName) - 1, "hjh%d", mAccountNameCount);
+			newPlayer(szAccountName, 1, 1);
+			++ mAccountNameCount;
+		}
+	}
 }

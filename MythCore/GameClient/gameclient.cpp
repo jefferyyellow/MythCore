@@ -93,7 +93,7 @@ void CGameClient::LoginServer()
 	//{
 		CLoginRequest tLoginRequest;
 		//snprintf(acName, sizeof(acName), "hjh%d", i);
-		tLoginRequest.set_name("hjh");
+		tLoginRequest.set_name("hjh0");
 		tLoginRequest.set_channelid(1);
 		tLoginRequest.set_serverid(1);
 		sendMessage(ID_C2S_REQUEST_LOGIN, &tLoginRequest);

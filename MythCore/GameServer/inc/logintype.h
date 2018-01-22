@@ -40,4 +40,7 @@ enum EmPlayerLoadStatus
 	emLoadStatus_BaseProperty	= 0x0002,	// 已经加载成功基础属性部分
 	emLoadStatusAll				= 0x0003,	// 所有的都已经加载完成
 };
+
+#define	MAX_SERVER_ID			10000			// 最大的服务器ID
+#define BAT_LOAD_ROLE_ID_NUM	2000			// 批量加载分配角色ID数量
 #endif
