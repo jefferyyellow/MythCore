@@ -126,8 +126,16 @@ int CLoginPlayer::processWaitCreateRole()
 		return -1;
 	}
 
+	int nRoleID = CLoginModule::Inst()->allocateRoleID(mServerID);
+	if (nRoleID <= 0)
+	{
+		setCurStateTime(0);
+		LOG_ERROR("allocate role id invalid, role id: %d", nRoleID);
+		return -1;
+	}
+
 	CDBModule::Inst()->pushDBTask(0, emSessionType_CreateRole, getObjID(), 0, "call CreateRole(%d, '%s', %d, %d, %d)",
-	1, pCreateRoleRequest->rolename().c_str(), mAccountID, mChannelID, mServerID);
+	nRoleID, pCreateRoleRequest->rolename().c_str(), mAccountID, mChannelID, mServerID);
 
 	return emLoginState_CreateRoleing;
 }

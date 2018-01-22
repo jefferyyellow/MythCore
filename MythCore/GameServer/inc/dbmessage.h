@@ -114,6 +114,7 @@ enum EmSessionType
 	emSessionType_SavePlayerInfo		= 5,			// 保存玩家属性
 	emSessionType_SavePlayerBaseProperty= 6,			// 保存玩家基础属性
 	emSessionType_LoadAllocateRoleId	= 7,			// 加载分配角色ID
+	emSessionType_UpdateAllocateRoleId	= 8,			// 更新分配角色ID
 };
 
 

@@ -11,7 +11,7 @@
 
 CGameServer::CGameServer()
 {
-
+	mServerID = 1;
 }
 
 /// ≥ı ºªØ

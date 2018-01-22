@@ -23,7 +23,7 @@ CLoginModule::~CLoginModule()
 /// 启动服务器
 void CLoginModule::onLaunchServer()
 {
-
+	loadAllocateRoleId();
 }
 
 /// 启动完成检查
@@ -298,7 +298,34 @@ void CLoginModule::onLoadAllocateRoleId(CDBResponse& rResponse)
 		int nMaxRoleID = getAllocateRoleId(CGameServer::Inst()->getServerID());
 		if (0 == nMaxRoleID)
 		{
-
+			int nBeginRoleID = getBeginRoleID(CGameServer::Inst()->getServerID());
+			if (nBeginRoleID == 0)
+			{
+				LOG_ERROR("default", "begin role id is zero, server id: %d", CGameServer::Inst()->getServerID());
+			}
+			else
+			{
+				setAllocateRoleId(CGameServer::Inst()->getServerID(), nBeginRoleID);
+				CDBModule::Inst()->pushDBTask(0, emSessionType_UpdateAllocateRoleId, 0, 0, 
+				"insert into AllocateRoleId (server_id,max_role_id) values(%d, %d)", CGameServer::Inst()->getServerID(), nBeginRoleID);
+			}
 		}
 	}
+}
+
+unsigned int CLoginModule::allocateRoleID(int nServerId)
+{
+	int nMaxRoleId = getAllocateRoleId(nServerId);
+	if(0 == nMaxRoleId)
+	{
+		return 0;
+	}
+
+	if (nMaxRoleId >= MAX_SERVER_ID * nServerId)
+	{
+		return 0;
+	}
+
+	setAllocateRoleId(nServerId, nMaxRoleId + 1);
+	return nMaxRoleId;
 }

@@ -42,5 +42,6 @@ enum EmPlayerLoadStatus
 };
 
 #define	MAX_SERVER_ID			10000			// 最大的服务器ID
+#define MAX_ROLE_PER_SERVER		200000			// 每个服务器最多20万角色
 #define BAT_LOAD_ROLE_ID_NUM	2000			// 批量加载分配角色ID数量
 #endif

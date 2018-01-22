@@ -55,6 +55,18 @@ public:
 	/// 加载数据库里分配角色ID的处理
 	void		onLoadAllocateRoleId(CDBResponse& rResponse);
 
+	unsigned int getBeginRoleID(int nServerId)
+	{
+		if (nServerId <= 0 || nServerId > MAX_ROLE_PER_SERVER)
+		{
+			return 0;
+		}
+		return (nServerId - 1) * MAX_SERVER_ID + 1;
+	}
+
+	unsigned int allocateRoleID(int nServerId);
+
+public:
 	unsigned int getAllocateRoleId(int nIndex)
 	{
 		if (nIndex < 0 || nIndex >= MAX_SERVER_ID)
