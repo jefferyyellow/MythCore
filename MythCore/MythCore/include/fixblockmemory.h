@@ -52,6 +52,7 @@ namespace Myth
 			}
 			
 			nMemIndex = nIndex;
+			-- mFreeCount;
 			return mBlockMemory[nIndex];
 		}
 
@@ -71,6 +72,7 @@ namespace Myth
 				return;
 			}
 			mFreeIndex[mFreeCount] = nMemIndex;
+			++ mFreeCount;
 		}
 
 		void		allocIncrement(int nSize)
@@ -86,10 +88,12 @@ namespace Myth
 			}
 
 			int nCount = mAllocCount + nSize;
+			int nDescrease = nCount - 1;
 			for (int i = mAllocCount; i < nCount; ++ i)
 			{
 				mBlockMemory[i] = new T();
-				mFreeIndex[mFreeCount] = i;
+				mFreeIndex[mFreeCount] = nDescrease;
+				-- nDescrease;
 				++ mFreeCount;
 			}
 			mAllocCount = nCount;

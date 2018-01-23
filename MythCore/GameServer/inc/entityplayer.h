@@ -47,6 +47,8 @@ public:
 		mRoleID = 0;
 		mLastOffTime = 0;
 		mOnTime = 0;
+		mPlayerStauts = 0;
+		mLoadStatus = 0;
 	}
 	~CEntityPlayer(){}
 

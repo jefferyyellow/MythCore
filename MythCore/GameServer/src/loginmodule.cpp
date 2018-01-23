@@ -11,7 +11,7 @@
 CLoginModule::CLoginModule()
 :mLoginCheckTime(1000)
 {
-
+	mCheckResult = false;
 }
 
 
@@ -29,7 +29,7 @@ void CLoginModule::onLaunchServer()
 /// 启动完成检查
 bool CLoginModule::onCheckLaunch()
 {
-	return true;
+	return mCheckResult;
 }
 
 /// 服务器启动成功
@@ -137,6 +137,8 @@ void CLoginModule::onClientMessage(CExchangeHead& rExchangeHead, unsigned int nM
 		return;
 	}
 
+	printf("pLoginPlayer: %d", pLoginPlayer->getObjID());
+
 	if (nMessageID == ID_C2S_REQUEST_ENTER_SCENE)
 	{
 		processWaitEnterGame(pLoginPlayer, pMessage);
@@ -164,6 +166,8 @@ void CLoginModule::OnDBMessage(CDBResponse* pMsg)
 	{
 		return;
 	}
+
+	printf("OnDBMessage: %d, %s\n", nLoginPlayerObjID, pLoginPlayer->getAccountName());
 	pLoginPlayer->setDBMessage(pMsg);
 	pLoginPlayer->setDBSessionType((EmSessionType)pMsg->mSessionType);
 	pLoginPlayer->checkState();
@@ -246,7 +250,7 @@ void CLoginModule::processWaitEnterGame(CLoginPlayer* pLoginPlayer, Message* pMe
 			CObjPool::Inst()->free(pNewPlayer->getObjID());
 			return;
 		}
-
+		printf("******processWaitEnterGame: %d\n", pNewPlayer->getObjID());
 		CDBModule::Inst()->pushDBTask(pLoginPlayer->getRoleID(), emSessionType_LoadPlayerInfo, pNewPlayer->getObjID(), 0, "call LoadPlayerInfo(%d)", pLoginPlayer->getRoleID());
 		CDBModule::Inst()->pushDBTask(pLoginPlayer->getRoleID(), emSessionType_LoadPlayerBaseProperty, pNewPlayer->getObjID(), 0, "call LoadPlayerBaseProperty(%d)", pLoginPlayer->getRoleID());
 
@@ -311,6 +315,7 @@ void CLoginModule::onLoadAllocateRoleId(CDBResponse& rResponse)
 			}
 		}
 	}
+	mCheckResult = true;
 }
 
 unsigned int CLoginModule::allocateRoleID(int nServerId)
@@ -327,5 +332,7 @@ unsigned int CLoginModule::allocateRoleID(int nServerId)
 	}
 
 	setAllocateRoleId(nServerId, nMaxRoleId + 1);
+	CDBModule::Inst()->pushDBTask(0, emSessionType_UpdateAllocateRoleId, 0, 0,
+		"update AllocateRoleId set max_role_id=%d where server_id=%d", nMaxRoleId + 1, nServerId);
 	return nMaxRoleId;
 }

@@ -37,7 +37,7 @@ namespace Myth
 			mSelectTime.tv_usec = 0;
 			mpAllSocket = NULL;
 			mSocketCapacity = 0;
-			mMaxSocketIndex = 0;
+			mMaxSocketIndex = -1;
 		}
 	public:
 		static			int initSocketSystem();

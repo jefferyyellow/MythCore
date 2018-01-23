@@ -4,7 +4,7 @@
 #include "loginmessage.hxx.pb.h"
 #include "player.h"
 CLoginTester::CLoginTester()
-	:mSelectModel(mTcpSocket, MAX_SOCKET_NUM), mResetTimer(3000)
+	:mSelectModel(mTcpSocket, MAX_SOCKET_NUM), mResetTimer(300)
 {
 	mDefaultLog = NULL;
 	mServerIP[0] = '\0';
@@ -295,7 +295,8 @@ void CLoginTester::onTime(int nElapseTime)
 {
 	if (mResetTimer.elapse(nElapseTime))
 	{
-		for (int i = 0; i < 1; ++ i)
+		//mResetTimer.setLeftTime(100000000);
+		for (int i = 0; i < 3; ++ i)
 		{
 			char szAccountName[MAX_NAME_LENGTH] = {0};
 			snprintf(szAccountName, sizeof(szAccountName) - 1, "hjh%d", mAccountNameCount);

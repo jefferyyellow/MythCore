@@ -5,6 +5,7 @@
 #include "entityplayer.h"
 #include "dbmodule.h"
 #include "errcode.h"
+#include "locallogjob.h"
 void CLoginPlayer::init()
 {
 	mStateMachine.init(this, emLoginState_None);
@@ -39,7 +40,6 @@ int CLoginPlayer::processStateNone()
 		setCurStateTime(0);
 		return -1;
 	}
-	printf("\nCLoginPlayer::processStateNone\n");
 
 	setAccountName(pLoginRequest->name().c_str());
 	setChannelID(pLoginRequest->channelid());
@@ -58,11 +58,13 @@ int CLoginPlayer::processAccountVerify()
 	{
 		// 将当前的状态时间置零
 		setCurStateTime(0);
+		LOG_ERROR("processAccountVerify, Account Name: %s, DB Session Type: %d", mAccountName, mDBSessionType);
 		return -1;
 	}
 	if (SUCCESS != mDBResponse->mResult)
 	{
 		setCurStateTime(0);
+		LOG_ERROR("processAccountVerify, Account Name: %s, DB Result: %d", mAccountName, mDBResponse->mResult);
 		return -1;
 	}
 
@@ -71,6 +73,7 @@ int CLoginPlayer::processAccountVerify()
 	mDBResponse->getString(acName, sizeof(acName));
 	if (0 != strncmp(acName, mAccountName, MAX_PLAYER_NAME_LEN))
 	{
+		LOG_ERROR("processAccountVerify, Account Name: %s, Another Name: %s", mAccountName, acName);
 		setCurStateTime(0);
 		return -1;
 	}
@@ -148,7 +151,12 @@ int CLoginPlayer::processCreateRoleing()
 		setCurStateTime(0);
 		return -1;
 	}
-
+	
+	if (SUCCESS != mDBResponse->mResult)
+	{
+		LOG_ERROR("mysql create role error: %d", mDBResponse->mResult);
+		return -1;
+	}
 	mRoleID = mDBResponse->getInt();
 
 	CCreateRoleResponse tCreateRoleResponse;

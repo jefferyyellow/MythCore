@@ -89,5 +89,6 @@ private:
 	LOGIN_LIST			mLoginList;						// 登录列表
 	CAutoResetTimer		mLoginCheckTime;				// 登录校验时间
 	unsigned int		mAllocateRoleId[MAX_SERVER_ID];	// 角色ID分配器
+	bool				mCheckResult;
 };
 #endif

@@ -115,6 +115,11 @@ void CDBJob::checkDBStream()
 		{
 			nResult = mDataBase.query((char*)mDBRequest.mSqlBuffer, (byte*)mDBResponse.mSqlBuffer, nResultLength,
 				nRowNum, nColNum);
+			if (nResult != SUCCESS)
+			{
+				LOG_ERROR("mysql query error, errno: %d, %s, %s", mysql_errno(mDataBase.GetMysql()), mysql_error(mDataBase.GetMysql()),
+					(char*)mDBRequest.mSqlBuffer);
+			}
 		}
 
 		mDBResponse.mPlayerID = mDBRequest.mPlayerID;
