@@ -5,6 +5,8 @@
 #include <string.h>
 #include <stdlib.h>
 #ifdef MYTH_OS_WINDOWS
+/// 将windows select 模型fd_set最大值改成1024
+#define FD_SETSIZE  1024
 #include <windows.h>
 #include <time.h>
 #include <tchar.h>
