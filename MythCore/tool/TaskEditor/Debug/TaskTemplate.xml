@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Task>
+  <TextNode Name="任务Id" Type="INT4" EditType="EDITNUMBER(0,8092)"/>
+  <TextNode Name="任务类型" Type="INT4" EditType="COMBOSINGLE(无=0,成长任务=1,天书任务=2)"/>
+  <TextNode Name="接任务Npc" Type="INT4" EditType="EDITNUMBER(0,65536)"/>
+  <TextNode Name="任务名字" Type="STRING256" EditType="EDITSTRING"/>
+  <TextNode Name="任务可接描述" Type="STRING256" EditType="EDITSTRING"/>
+  <TextNode Name="任务已接描述" Type="STRING256" EditType="EDITSTRING"/>
+  <TextNode Name="交任务Npc" Type="INT4" EditType="EDITNUMBER(0,65536)"/>
+  <TextNode Name="接任务地图" Type="INT4" EditType="EDITNUMBER(0,65536)"/>
+  <TextNode Name="交任务地图" Type="INT4" EditType="EDITNUMBER(0,65536)"/>
+  <TextNode Name="是否可放弃" Type="INT4" EditType="COMBOSINGLE(否=0,成长任务=1)"/>
+  <Node Name="接受条件" Type="ARRAY" EditType="ARRAY">
+    <TypeNode Name="等级" Type="1" EditType="NONE">
+      <ParamNode Name="接受等级" Type="INT4" EditType="EDITNUMBER(0,150)"/>
+      <ParamNode Name="显示等级" Type="INT4" EditType="EDITNUMBER(0,150)"/>
+    </TypeNode>
+    <TypeNode Name="门派" Type="2" EditType="NONE">
+      <ParamNode Name="接受等级" Type="INT4" EditType="EDITNUMBER(0,150)"/>
+      <ParamNode Name="名字" Type="INT4" EditType="COMBOSINGLE(武当=1,少林=2)"/>
+    </TypeNode>
+    <TypeNode Name="前置任务" Type="3" EditType="NONE">
+      <ParamNode Name="Id" Type="INT4" EditType="EDITNUMBER(0,8092)"/>
+      <ParamNode Name="状态" Type="INT4" EditType="COMBOSINGLE(完成=0,接受=1)"/>
+    </TypeNode>
+  </Node>
+  <Node Name="完成条件" Type="ARRAY" EditType="ARRAY">
+    <TypeNode Name="等级" Type="1" EditType="NONE">
+      <ParamNode Name="接受等级" Type="INT4" EditType="EDITNUMBER(0,150)"/>
+      <ParamNode Name="显示等级" Type="INT4" EditType="EDITNUMBER(0,150)"/>
+    </TypeNode>
+    <TypeNode Name="主角战力" Type="1" EditType="NONE">
+      <ParamNode Name="值" Type="INT4" EditType="EDITNUMBER(0,1000000000)"/>
+    </TypeNode>
+      <TypeNode Name="所有战力" Type="1" EditType="NONE">
+      <ParamNode Name="值" Type="INT4" EditType="EDITNUMBER(0,1000000000)"/>
+    </TypeNode>
+  </Node>
+  <Node Name="任务奖励" Type="ARRAY" EditType="ARRAY">
+    <TypeNode Name="声望" Type="1" EditType="NONE">
+      <ParamNode Name="值" Type="INT4" EditType="EDITNUMBER(0,10000)"/>
+    </TypeNode>
+    <TypeNode Name="金钱" Type="1" EditType="NONE">
+      <ParamNode Name="值" Type="INT4" EditType="EDITNUMBER(0,10000)"/>
+    </TypeNode>
+  </Node>
+  <Node Name="接任务对话" Type="ARRAY" EditType="ARRAY">
+    <TypeNode Name="NPC对话" Type="1" EditType="NONE">
+      <ParamNode Name="内容" Type="STRING256" EditType="EDITSTRING"/>
+    </TypeNode>
+    <TypeNode Name="玩家对话" Type="2" EditType="NONE">
+      <ParamNode Name="内容" Type="STRING256" EditType="EDITSTRING"/>
+    </TypeNode>
+    <TypeNode Name="男玩家对话" Type="3" EditType="NONE">
+      <ParamNode Name="内容" Type="STRING256" EditType="EDITSTRING"/>
+    </TypeNode>
+        <TypeNode Name="女玩家对话" Type="3" EditType="NONE">
+      <ParamNode Name="内容" Type="STRING256" EditType="EDITSTRING"/>
+    </TypeNode>
+  </Node>
+</Task>
