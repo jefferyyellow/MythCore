@@ -35,3 +35,114 @@ string ws2s(const wstring& ws)
 	setlocale(LC_ALL, curLocale.c_str());
 	return result;
 }
+
+char* UnicodeToAnsi(wchar_t* pSrc, char* pDst, int nMaxSize)
+{
+	// check params
+	if (NULL == pSrc || NULL == pDst || nMaxSize <= 0)
+	{
+		return NULL;
+	}
+
+	if (0 == WideCharToMultiByte(CP_ACP, 0, pSrc, -1, pDst, nMaxSize - 1, NULL, 0))
+	{
+		return NULL;
+	}
+	pDst[nMaxSize - 1] = 0;
+	return pDst;
+
+}
+
+char* UnicodeToUtf8(wchar_t* pSrc, char* pDst, int nMaxSize)
+{
+	// check params
+	if (NULL == pSrc || NULL == pDst || nMaxSize <= 0)
+	{
+		return NULL;
+	}
+
+	if (0 == WideCharToMultiByte(CP_UTF8, 0, pSrc, -1, pDst, nMaxSize - 1, NULL, 0))
+	{
+		return NULL;
+	}
+	pDst[nMaxSize - 1] = 0;
+	return pDst;
+
+}
+
+wchar_t* Utf8ToUnicode(const char* pSrc, wchar_t* pDst, int nMaxSize)
+{
+	// check params
+	if (NULL == pSrc || NULL == pDst || nMaxSize <= 0)
+	{
+		return NULL;
+	}
+	if (0 == MultiByteToWideChar(CP_UTF8, 0, pSrc, -1, pDst, nMaxSize - 1))
+	{
+		return NULL;
+	}
+	pDst[nMaxSize - 1] = 0;
+	return pDst;
+}
+
+char* Utf8ToAnsi(char* pSrc, char* pDst, int nMaxSize)
+{
+	// check params
+	if (NULL == pSrc || NULL == pDst || nMaxSize <= 0)
+	{
+		return NULL;
+	}
+
+	wchar_t tBuffer[STRING_LENGTH_1024] = { 0 };
+	if (0 == MultiByteToWideChar(CP_UTF8, 0, pSrc, -1, tBuffer, STRING_LENGTH_1024 - 1))
+	{
+		return NULL;
+	}
+	tBuffer[STRING_LENGTH_1024 - 1] = 0;
+
+	if (0 == WideCharToMultiByte(CP_ACP, 0, tBuffer, -1, pDst, nMaxSize - 1, NULL, 0))
+	{
+		return NULL;
+	}
+
+	pDst[nMaxSize - 1] = 0;
+	return pDst;
+}
+
+wchar_t* AnsiToUnicode(char*pSrc, wchar_t* pDst, int nMaxSize)
+{
+	if (NULL == pSrc || NULL == pDst || nMaxSize <= 0)
+	{
+		return NULL;
+	}
+	if (0 == MultiByteToWideChar(CP_ACP, 0, pSrc, -1, pDst, nMaxSize - 1))
+	{
+		return NULL;
+	}
+	pDst[nMaxSize - 1] = 0;
+	return pDst;
+
+}
+
+char* AnsiToUtf8(char* pSrc, char* pDst, int nMaxSize)
+{
+	if (NULL == pSrc || NULL == pDst || nMaxSize <= 0)
+	{
+		return NULL;
+	}
+	wchar_t tBuffer[STRING_LENGTH_1024] = { 0 };
+	if (0 == MultiByteToWideChar(CP_ACP, 0, pSrc, -1, tBuffer, STRING_LENGTH_1024 - 1))
+	{
+		return NULL;
+	}
+	tBuffer[STRING_LENGTH_1024 - 1] = 0;
+
+	if (0 == WideCharToMultiByte(CP_UTF8, 0, tBuffer, -1, pDst, nMaxSize - 1, NULL, 0))
+	{
+		return NULL;
+	}
+
+	pDst[nMaxSize - 1] = 0;
+	return pDst;
+
+}

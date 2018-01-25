@@ -143,7 +143,7 @@ void CTaskEditorView::OnInitialUpdate()
 		return;
 	}
 
-	int nNum = (pMainFrame->mTaskTemplate.mNodeList.size() + 1) / 2;
+	int nNum = (pMainFrame->mTaskTemplate.mNodeList.size() + 2) / 3;
 
 	// TODO:  在此添加专用代码和/或调用基类
 	int captionHeight = ::GetSystemMetrics(SM_CYCAPTION);
@@ -151,24 +151,26 @@ void CTaskEditorView::OnInitialUpdate()
 	int cyframe = GetSystemMetrics(SM_CYFRAME);
 	
 	CRect rectGridWnd;
-	GetWindowRect(&rectGridWnd);
-	ScreenToClient(&rectGridWnd);
+	pMainFrame->GetClientRect(rectGridWnd);
+	
+	//rectGridWnd.right;
+	//ScreenToClient(&rectGridWnd);
 
 	//rectGridWnd.OffsetRect(cxframe, cyframe - captionHeight);
-	m_pGrid = new CGridCtrl(nNum, 4);
+	m_pGrid = new CGridCtrl(nNum, 6);
 	m_pGrid->Create(rectGridWnd, this, ID_DATA_GRID);
-	int nWidth = (rectGridWnd.Width() - 200 - 6) / 2;
+	int nWidth = (rectGridWnd.Width() - 300 - 6) / 3;
 	m_pGrid->SetColumnWidth(0, 100);
 	m_pGrid->SetColumnWidth(1, nWidth);
 	m_pGrid->SetColumnWidth(2, 100);
 	m_pGrid->SetColumnWidth(3, nWidth);
-	//m_pGrid->SetFixedRowCount(1);
-	//m_pGrid->SetFixedColumnCount(1);
+	m_pGrid->SetColumnWidth(4, 100);
+	m_pGrid->SetColumnWidth(5, nWidth);
 
 	int nCount = 0;
-	for (int i = 0; i < m_pGrid->GetRowCount(); i++)
+	for (int i = 0; i < m_pGrid->GetRowCount(); ++ i)
 	{
-		for (int j = 0; j < m_pGrid->GetColumnCount(); j++)
+		for (int j = 0; j < m_pGrid->GetColumnCount(); j += 2)
 		{
 			GV_ITEM Item;
 			Item.mask = GVIF_TEXT;
@@ -177,6 +179,8 @@ void CTaskEditorView::OnInitialUpdate()
 			wstring strName = pMainFrame->mTaskTemplate.mNodeList[nCount].mName;
 			Item.strText.Format(strName.c_str(), 2);
 			m_pGrid->SetItem(&Item);
+			m_pGrid->SetItemState(i, j, m_pGrid->GetItemState(i, j) | GVIS_READONLY);
+
 			++ nCount;
 			if (nCount >= pMainFrame->mTaskTemplate.mNodeList.size())
 			{
@@ -189,10 +193,7 @@ void CTaskEditorView::OnInitialUpdate()
 			break;
 		}
 	}
-	m_pGrid->SetCellType(1, 0, RUNTIME_CLASS(CGridCellButton));
-	m_pGrid->SetItemState(1, 1, m_pGrid->GetItemState(1, 1) | GVIS_READONLY);
-	m_pGrid->SetItemState(1, 0, m_pGrid->GetItemState(1, 0) | GVIS_READONLY);
-
+	//m_pGrid->SetCellType(1, 0, RUNTIME_CLASS(CGridCellButton));
 	m_pGrid->Invalidate();
 	m_pGrid->ShowWindow(SW_SHOW);
 }

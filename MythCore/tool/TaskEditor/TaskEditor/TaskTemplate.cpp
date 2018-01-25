@@ -24,12 +24,13 @@ void CTaskTemplate::loadTaskTemplate(const char* pTemplateFile)
 	}
 
 	XMLElement* pTextNodeElem = pRoot->FirstChildElement("TextNode");
+	wchar_t acBuffer[4096] = {0};
 	for (; NULL != pTextNodeElem; pTextNodeElem = pTextNodeElem->NextSiblingElement("TextNode"))
 	{
 		 CTaskTempNode tNode;
-		 tNode.mName = s2ws(pTextNodeElem->Attribute("Name"));
-		 tNode.mType = s2ws(pTextNodeElem->Attribute("Type"));
-		 tNode.mEditType = s2ws(pTextNodeElem->Attribute("EditType"));
+
+		 Utf8ToUnicode(pTextNodeElem->Attribute("Name"), acBuffer, sizeof(acBuffer)/2 - 1);
+		 tNode.mName = acBuffer;
 		 mNodeList.push_back(tNode);
 	}
 }
