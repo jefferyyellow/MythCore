@@ -13,6 +13,8 @@
 #include "TaskEditorView.h"
 #include "GridCellButton.h"
 #include "MainFrm.h"
+#include "GridCellCombo.h"
+#include "commondefine.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -167,32 +169,62 @@ void CTaskEditorView::OnInitialUpdate()
 	m_pGrid->SetColumnWidth(4, 100);
 	m_pGrid->SetColumnWidth(5, nWidth);
 
+	char acBuffer[4096] = { 0 };
+
+	TASK_NODE_LIST& rNodeList = pMainFrame->mTaskTemplate.mNodeList;
 	int nCount = 0;
 	for (int i = 0; i < m_pGrid->GetRowCount(); ++ i)
 	{
-		for (int j = 0; j < m_pGrid->GetColumnCount(); j += 2)
+		for (int j = 0; j < m_pGrid->GetColumnCount();)
 		{
 			GV_ITEM Item;
 			Item.mask = GVIF_TEXT;
 			Item.row = i;
 			Item.col = j;
-			wstring strName = pMainFrame->mTaskTemplate.mNodeList[nCount].mName;
+			wstring strName = rNodeList[nCount].mName;
 			Item.strText.Format(strName.c_str(), 2);
 			m_pGrid->SetItem(&Item);
 			m_pGrid->SetItemState(i, j, m_pGrid->GetItemState(i, j) | GVIS_READONLY);
 
+			++ j;
+			OPTION_LIST& rOptionList = rNodeList[nCount].mOptionList;
+			if (rOptionList.size())
+			{
+				if (!m_pGrid->SetCellType(i, j, RUNTIME_CLASS(CGridCellCombo)))
+				{
+					continue;
+				}
+				
+				m_pGrid->SetItemText(i, j, rOptionList[0].mDes.c_str());
+				CStringArray tStringOption;
+				for (int nOptionNum = 0; nOptionNum < rOptionList.size(); ++ nOptionNum)
+				{
+					tStringOption.Add(rOptionList[nOptionNum].mDes.c_str());
+				}
+
+				CGridCellCombo *pCell = (CGridCellCombo*)m_pGrid->GetCell(i, j);
+				pCell->SetOptions(tStringOption);
+				pCell->SetStyle(CBS_DROPDOWN); //CBS_DROPDOWN, CBS_DROPDOWNLIST, CBS_SIMPLE
+			}
+
+			++ j;
+
 			++ nCount;
-			if (nCount >= pMainFrame->mTaskTemplate.mNodeList.size())
+			if (nCount >= rNodeList.size())
 			{
 				break;
 			}
 		}
 
-		if (nCount >= pMainFrame->mTaskTemplate.mNodeList.size())
+		if (nCount >= rNodeList.size())
 		{
 			break;
 		}
 	}
+
+
+
+
 	//m_pGrid->SetCellType(1, 0, RUNTIME_CLASS(CGridCellButton));
 	m_pGrid->Invalidate();
 	m_pGrid->ShowWindow(SW_SHOW);

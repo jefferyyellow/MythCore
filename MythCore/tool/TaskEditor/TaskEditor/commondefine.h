@@ -5,7 +5,7 @@ using namespace std;
 extern wstring s2ws(const string& s);
 extern string ws2s(const wstring& ws);
 
-extern	char*		UnicodeToAnsi(wchar_t* pSrc, char* pDst, int nMaxSize);
+extern	char*		UnicodeToAnsi(const wchar_t* pSrc, char* pDst, int nMaxSize);
 extern	char*		UnicodeToUtf8(wchar_t* pSrc, char* pDst, int nMaxSize);
 
 extern	wchar_t*	Utf8ToUnicode(const char* pSrc, wchar_t* pDst, int nMaxSize);

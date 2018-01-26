@@ -36,7 +36,7 @@ string ws2s(const wstring& ws)
 	return result;
 }
 
-char* UnicodeToAnsi(wchar_t* pSrc, char* pDst, int nMaxSize)
+char* UnicodeToAnsi(const wchar_t* pSrc, char* pDst, int nMaxSize)
 {
 	// check params
 	if (NULL == pSrc || NULL == pDst || nMaxSize <= 0)

@@ -31,6 +31,21 @@ void CTaskTemplate::loadTaskTemplate(const char* pTemplateFile)
 
 		 Utf8ToUnicode(pTextNodeElem->Attribute("Name"), acBuffer, sizeof(acBuffer)/2 - 1);
 		 tNode.mName = acBuffer;
+
+		 XMLElement* pOptionElem = pTextNodeElem->FirstChildElement("Option");
+		 for (; NULL != pOptionElem; pOptionElem = pOptionElem->NextSiblingElement("Option"))
+		 {
+			 CTaskOption tOption;
+			 Utf8ToUnicode(pOptionElem->Attribute("Name"), acBuffer, sizeof(acBuffer) / 2 - 1);
+			 tOption.mDes = acBuffer;
+			 tOption.mValue = pOptionElem->IntAttribute("Value");
+			 tNode.mOptionList.push_back(tOption);
+		 }
+
 		 mNodeList.push_back(tNode);
 	}
+
+	XMLElement* pCondNodeElem = pRoot->FirstChildElement("CondNode");
+
+
 }

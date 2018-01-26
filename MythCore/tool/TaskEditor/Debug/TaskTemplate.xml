@@ -16,33 +16,21 @@
     <Option Name="否" Value="0"/>
     <Option Name="是" Value="1"/>
   </TextNode>
-  <Node Name="接受条件">
-    <TypeNode Name="等级" Type="1">
-      <ParamNode Name="接受等级"/>
-      <ParamNode Name="显示等级"/>
-    </TypeNode>
-    <TypeNode Name="门派" Type="2" EditType="NONE">
-      <ParamNode Name="接受等级" Type="INT4" EditType="EDITNUMBER(0,150)"/>
-      <ParamNode Name="名字" Type="INT4" EditType="COMBOSINGLE(武当=1,少林=2)"/>
-    </TypeNode>
-  </Node>
-  <Node Name="完成条件" Type="ARRAY" EditType="ARRAY">
-    <TypeNode Name="等级" Type="1" EditType="NONE">
-      <ParamNode Name="接受等级" Type="INT4" EditType="EDITNUMBER(0,150)"/>
-      <ParamNode Name="显示等级" Type="INT4" EditType="EDITNUMBER(0,150)"/>
-    </TypeNode>
-    <TypeNode Name="主角战力" Type="1" EditType="NONE">
-      <ParamNode Name="值" Type="INT4" EditType="EDITNUMBER(0,1000000000)"/>
-    </TypeNode>
-  </Node>
-  <Node Name="任务奖励" Type="ARRAY" EditType="ARRAY">
-    <TypeNode Name="声望" Type="1" EditType="NONE">
-      <ParamNode Name="值" Type="INT4" EditType="EDITNUMBER(0,10000)"/>
-    </TypeNode>
-    <TypeNode Name="金钱" Type="1" EditType="NONE">
-      <ParamNode Name="值" Type="INT4" EditType="EDITNUMBER(0,10000)"/>
-    </TypeNode>
-  </Node>
+  <CondNode Name="接受条件">
+    <Option Name="门派" Value="1">
+      <TextNode Name="接受等级"/>
+      <TextNode Name="名字">
+        <Option Name="武当" Value="0"/>
+        <Option Name="少林" Value="1"/>
+      </TextNode>
+    </Option>
+  </CondNode>
+  <CondNode Name="完成条件">
+    <Option Name="等级" Value="1">
+      <TextNode Name="接受等级"/>
+      <TextNode Name="显示等级"/>
+    </Option>
+  </CondNode>
   <Node Name="接任务对话" Type="ARRAY" EditType="ARRAY">
     <TypeNode Name="NPC对话" Type="1" EditType="NONE">
       <ParamNode Name="内容" Type="STRING256" EditType="EDITSTRING"/>
