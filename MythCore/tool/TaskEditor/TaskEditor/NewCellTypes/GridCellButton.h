@@ -11,7 +11,9 @@ public:
 public:
 	virtual BOOL Draw(CDC* pDC, int nRow, int nCol, CRect rect, BOOL bEraseBkgnd = TRUE);
 protected:
+	virtual void OnClickDown(CPoint PointCellRelative);
 	virtual void OnClick(CPoint PointCellRelative);
+
 protected:
 	CRect m_rect;
 	BOOL m_bPushing;

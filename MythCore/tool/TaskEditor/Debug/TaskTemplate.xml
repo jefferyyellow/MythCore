@@ -24,6 +24,9 @@
         <Option Name="少林" Value="1"/>
       </TextNode>
     </Option>
+    <Option Name="前置任务" Value="2">
+      <TextNode Name="前置任务ID"/>
+    </Option>
   </CondNode>
   <CondNode Name="完成条件">
     <Option Name="等级" Value="1">
@@ -31,18 +34,18 @@
       <TextNode Name="显示等级"/>
     </Option>
   </CondNode>
-  <Node Name="接任务对话" Type="ARRAY" EditType="ARRAY">
-    <TypeNode Name="NPC对话" Type="1" EditType="NONE">
-      <ParamNode Name="内容" Type="STRING256" EditType="EDITSTRING"/>
-    </TypeNode>
-    <TypeNode Name="玩家对话" Type="2" EditType="NONE">
-      <ParamNode Name="内容" Type="STRING256" EditType="EDITSTRING"/>
-    </TypeNode>
-    <TypeNode Name="男玩家对话" Type="3" EditType="NONE">
-      <ParamNode Name="内容" Type="STRING256" EditType="EDITSTRING"/>
-    </TypeNode>
-        <TypeNode Name="女玩家对话" Type="3" EditType="NONE">
-      <ParamNode Name="内容" Type="STRING256" EditType="EDITSTRING"/>
-    </TypeNode>
-  </Node>
+  <DiagNode Name="接任务对话">
+    <Option Name="NPC对话" Value="1">
+      <TextNode Name="内容"/>
+    </Option>
+    <Option Name="玩家对话" Value="2">
+      <TextNode Name="内容"/>
+    </Option>
+    <Option Name="男玩家对话" Value="3">
+      <TextNode Name="内容"/>
+    </Option>
+    <Option Name="女玩家对话" Value="4">
+      <TextNode Name="内容"/>
+    </Option>
+  </DiagNode>
 </Task>

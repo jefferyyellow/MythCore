@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "TaskTemplate.h"
-#include "tinyxml2.h"
 #include "commondefine.h"
-using namespace tinyxml2;
 void CTaskTemplate::loadTaskTemplate(const char* pTemplateFile)
 {
 	if (NULL == pTemplateFile)
@@ -24,28 +22,58 @@ void CTaskTemplate::loadTaskTemplate(const char* pTemplateFile)
 	}
 
 	XMLElement* pTextNodeElem = pRoot->FirstChildElement("TextNode");
-	wchar_t acBuffer[4096] = {0};
 	for (; NULL != pTextNodeElem; pTextNodeElem = pTextNodeElem->NextSiblingElement("TextNode"))
 	{
-		 CTaskTempNode tNode;
-
-		 Utf8ToUnicode(pTextNodeElem->Attribute("Name"), acBuffer, sizeof(acBuffer)/2 - 1);
-		 tNode.mName = acBuffer;
-
-		 XMLElement* pOptionElem = pTextNodeElem->FirstChildElement("Option");
-		 for (; NULL != pOptionElem; pOptionElem = pOptionElem->NextSiblingElement("Option"))
-		 {
-			 CTaskOption tOption;
-			 Utf8ToUnicode(pOptionElem->Attribute("Name"), acBuffer, sizeof(acBuffer) / 2 - 1);
-			 tOption.mDes = acBuffer;
-			 tOption.mValue = pOptionElem->IntAttribute("Value");
-			 tNode.mOptionList.push_back(tOption);
-		 }
-
-		 mNodeList.push_back(tNode);
+		CTaskMainNode* pMainNode = new CTaskMainNode;
+		 loadTextNode(pMainNode, pTextNodeElem);
+		 mTextNodeList.push_back(pMainNode);
 	}
 
 	XMLElement* pCondNodeElem = pRoot->FirstChildElement("CondNode");
+	for (; NULL != pCondNodeElem; pCondNodeElem = pCondNodeElem->NextSiblingElement("CondNode"))
+	{
+		CTaskMainNode* pMainNode = new CTaskMainNode;
+		loadTextNode(pMainNode, pCondNodeElem);
+		mCondNodeList.push_back(pMainNode);
+	}
+
+	XMLElement* pDiagNodeElem = pRoot->FirstChildElement("DiagNode");
+	for (; NULL != pDiagNodeElem; pDiagNodeElem = pDiagNodeElem->NextSiblingElement("DiagNode"))
+	{
+		CTaskMainNode* pMainNode = new CTaskMainNode;
+		loadTextNode(pMainNode, pDiagNodeElem);
+		mDiagNodeList.push_back(pMainNode);
+	}
+}
 
 
+void CTaskTemplate::loadTextNode(CTaskMainNode* pMainNode, XMLElement* pTextNodeElem)
+{
+	wchar_t acBuffer[4096] = { 0 };
+	Utf8ToUnicode(pTextNodeElem->Attribute("Name"), acBuffer, sizeof(acBuffer) / 2 - 1);
+	pMainNode->mName = acBuffer;
+
+	XMLElement* pOptionElem = pTextNodeElem->FirstChildElement("Option");
+	for (; NULL != pOptionElem; pOptionElem = pOptionElem->NextSiblingElement("Option"))
+	{
+		CTaskOption* pOptionNode = new CTaskOption;
+		loadOptionNode(pOptionNode, pOptionElem);
+		pMainNode->mOptionList.push_back(pOptionNode);
+	}
+}
+
+void CTaskTemplate::loadOptionNode(CTaskOption* pOptionNode, XMLElement* pOptionNodeElem)
+{
+	wchar_t acBuffer[4096] = { 0 };
+	Utf8ToUnicode(pOptionNodeElem->Attribute("Name"), acBuffer, sizeof(acBuffer) / 2 - 1);
+	pOptionNode->mDes = acBuffer;
+	pOptionNode->mValue = pOptionNodeElem->IntAttribute("Value");
+
+	XMLElement* pTextNodeElem = pOptionNodeElem->FirstChildElement("TextNode");
+	for (; NULL != pTextNodeElem; pTextNodeElem = pTextNodeElem->NextSiblingElement("TextNode"))
+	{
+		CTaskMainNode* pMainNode = new CTaskMainNode;
+		loadTextNode(pMainNode, pTextNodeElem);
+		pOptionNode->mNodeList.push_back(pMainNode);
+	}
 }

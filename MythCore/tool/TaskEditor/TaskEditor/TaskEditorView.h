@@ -4,7 +4,9 @@
 
 #pragma once
 #include "GridCtrl.h"
+#include "TaskTemplate.h"
 class CTaskEditorDoc;
+class CTaskMainNode;
 class CTaskEditorView : public CView
 {
 protected: // 仅从序列化创建
@@ -45,9 +47,23 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	virtual void OnInitialUpdate();
+	void InitialMainNode();
+	void InitialCondNode();
+	void InitialDiagNode();
 
-	CGridCtrl* m_pGrid;
+	CGridCtrl*	m_pGrid;
+	CGridCtrl*	m_pCondGrid;
+	int			mCondSelectRow;
+
+	CGridCtrl*	m_pDiagGrid;
 	virtual BOOL DestroyWindow();
+
+	void OnCondGridClickDown(NMHDR* pNMHDR, LRESULT* pResult);
+	void OnCondEndEdit(NMHDR* pNMHDR, LRESULT* pResult);
+	void AddCondRow(int nRowNum, CTaskMainNode* pMainNode);
+	void SetCondParam(int nRowNum, TASK_NODE_LIST& rNodeList);
+
+	void OnDiagGridClickDown(NMHDR* pNMHDR, LRESULT* pResult);
 };
 
 #ifndef _DEBUG  // TaskEditorView.cpp 中的调试版本
