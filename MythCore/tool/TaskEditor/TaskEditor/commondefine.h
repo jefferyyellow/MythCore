@@ -1,6 +1,10 @@
 #pragma once
 #include <xstring>
 using namespace std;
+#include "tinyxml2.h"
+using namespace tinyxml2;
+
+
 #define STRING_LENGTH_1024 1024
 extern wstring s2ws(const string& s);
 extern string ws2s(const wstring& ws);

@@ -53,6 +53,9 @@ void CTaskTemplate::loadTextNode(CTaskMainNode* pMainNode, XMLElement* pTextNode
 	Utf8ToUnicode(pTextNodeElem->Attribute("Name"), acBuffer, sizeof(acBuffer) / 2 - 1);
 	pMainNode->mName = acBuffer;
 
+	Utf8ToUnicode(pTextNodeElem->Attribute("DesName"), acBuffer, sizeof(acBuffer) / 2 - 1);
+	pMainNode->mDesName = acBuffer;
+
 	XMLElement* pOptionElem = pTextNodeElem->FirstChildElement("Option");
 	for (; NULL != pOptionElem; pOptionElem = pOptionElem->NextSiblingElement("Option"))
 	{
@@ -67,7 +70,6 @@ void CTaskTemplate::loadOptionNode(CTaskOption* pOptionNode, XMLElement* pOption
 	wchar_t acBuffer[4096] = { 0 };
 	Utf8ToUnicode(pOptionNodeElem->Attribute("Name"), acBuffer, sizeof(acBuffer) / 2 - 1);
 	pOptionNode->mDes = acBuffer;
-	pOptionNode->mValue = pOptionNodeElem->IntAttribute("Value");
 
 	XMLElement* pTextNodeElem = pOptionNodeElem->FirstChildElement("TextNode");
 	for (; NULL != pTextNodeElem; pTextNodeElem = pTextNodeElem->NextSiblingElement("TextNode"))

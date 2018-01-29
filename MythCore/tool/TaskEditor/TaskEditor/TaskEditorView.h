@@ -7,6 +7,20 @@
 #include "TaskTemplate.h"
 class CTaskEditorDoc;
 class CTaskMainNode;
+enum EmGridDataType
+{
+	emDataType_None				= 0,		// 无
+	emDataType_MainNode			= 1,		// 主节点
+	emDataType_CondMainNode		= 2,		// 条件主节点
+	emDataType_CondDataNode			= 3,		// 条件节点
+};
+class CGridData
+{
+public:
+	EmGridDataType	mDataType;
+	void*			mData;
+};
+
 class CTaskEditorView : public CView
 {
 protected: // 仅从序列化创建
@@ -51,11 +65,11 @@ public:
 	void InitialCondNode();
 	void InitialDiagNode();
 
-	CGridCtrl*	m_pGrid;
-	CGridCtrl*	m_pCondGrid;
+	CGridCtrl*	mMainGrid;
+	CGridCtrl*	mCondGrid;
 	int			mCondSelectRow;
 
-	CGridCtrl*	m_pDiagGrid;
+	CGridCtrl*	mDiagGrid;
 	virtual BOOL DestroyWindow();
 
 	void OnCondGridClickDown(NMHDR* pNMHDR, LRESULT* pResult);
@@ -63,7 +77,8 @@ public:
 	void AddCondRow(int nRowNum, CTaskMainNode* pMainNode);
 	void SetCondParam(int nRowNum, TASK_NODE_LIST& rNodeList);
 
-	void OnDiagGridClickDown(NMHDR* pNMHDR, LRESULT* pResult);
+	void OnDiagGridClickDown(NMHDR* pNMHDR, LRESULT* pResult);	
+	void SaveToXml();
 };
 
 #ifndef _DEBUG  // TaskEditorView.cpp 中的调试版本

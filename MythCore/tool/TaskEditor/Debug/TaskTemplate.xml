@@ -1,34 +1,34 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Task>
-  <TextNode Name="任务Id"/>
-  <TextNode Name="任务类型">
-    <Option Name="天书任务" Value="1"/>
-    <Option Name="成长任务" Value="2"/>
+  <TextNode Name="任务Id" DesName="TaskId"/>
+  <TextNode Name="任务类型" DesName="TaskType">
+    <Option Name="1,天书任务"/>
+    <Option Name="2,成长任务"/>
   </TextNode>
-  <TextNode Name="接任务Npc"/>
-  <TextNode Name="任务名字"/>
-  <TextNode Name="任务可接描述"/>
-  <TextNode Name="任务已接描述"/>
-  <TextNode Name="交任务Npc"/>
-  <TextNode Name="接任务地图"/>
-  <TextNode Name="交任务地图"/>
-  <TextNode Name="是否可放弃">
-    <Option Name="否" Value="0"/>
-    <Option Name="是" Value="1"/>
+  <TextNode Name="接任务Npc" DesName="AcceptNpc"/>
+  <TextNode Name="任务名字" DesName="TaskName"/>
+  <TextNode Name="任务可接描述" DesName="Desc"/>
+  <TextNode Name="任务已接描述" DesName="AcceptdDesc"/>
+  <TextNode Name="交任务Npc" DesName="SubmitNpc"/>
+  <TextNode Name="接任务地图" DesName="AccpetMap"/>
+  <TextNode Name="交任务地图" DesName="SubmitMap"/>
+  <TextNode Name="是否可放弃" DesName="CanAbandon">
+    <Option Name="0,否"/>
+    <Option Name="1,是"/>
   </TextNode>
-  <CondNode Name="接受条件">
-    <Option Name="门派" Value="1">
+  <CondNode Name="接受条件" DesName="AccpetCond">
+    <Option Name="1,门派">
       <TextNode Name="接受等级"/>
       <TextNode Name="名字">
-        <Option Name="武当" Value="0"/>
-        <Option Name="少林" Value="1"/>
+        <Option Name="0,武当" Value="0"/>
+        <Option Name="1,少林" Value="1"/>
       </TextNode>
     </Option>
     <Option Name="前置任务" Value="2">
       <TextNode Name="前置任务ID"/>
     </Option>
   </CondNode>
-  <CondNode Name="完成条件">
+  <CondNode Name="完成条件" DesName="CompleteCond">
     <Option Name="等级" Value="1">
       <TextNode Name="接受等级"/>
       <TextNode Name="显示等级"/>

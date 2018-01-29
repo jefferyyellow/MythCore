@@ -21,7 +21,7 @@ public:
 // 重写
 public:
 	virtual BOOL OnNewDocument();
-	virtual void Serialize(CArchive& ar);
+	//virtual void Serialize(CArchive& ar);
 #ifdef SHARED_HANDLERS
 	virtual void InitializeSearchContent();
 	virtual void OnDrawThumbnail(CDC& dc, LPRECT lprcBounds);
@@ -45,4 +45,13 @@ protected:
 	// 用于为搜索处理程序设置搜索内容的 Helper 函数
 	void SetSearchContent(const CString& value);
 #endif // SHARED_HANDLERS
+public:
+	virtual BOOL OnSaveDocument(LPCTSTR lpszPathName);
+	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
+
+public:
+	void	OpenDocument();
+
+private:
+	CString	mOpenFilePath;
 };

@@ -1,20 +1,14 @@
 #pragma once
 // 任务模板类
 // 所以的任务从这里衍生
+#include "commondefine.h"
 #include <vector>
 using namespace std;
-#include "tinyxml2.h"
-using namespace tinyxml2;
 
 class CTaskOption;
 class CTaskMainNode;
 typedef vector<CTaskOption*> OPTION_LIST;
 typedef vector<CTaskMainNode*> TASK_NODE_LIST;
-
-enum TmNodeType
-{
-	emNodeType_Main
-};
 
 class CTaskOption
 {
@@ -22,7 +16,6 @@ public:
 
 public:
 	wstring			mDes;
-	int				mValue;
 	TASK_NODE_LIST	mNodeList;
 };
 
@@ -32,6 +25,7 @@ public:
 
 public:
 	wstring			mName;
+	wstring			mDesName;
 	OPTION_LIST		mOptionList;
 };
 
