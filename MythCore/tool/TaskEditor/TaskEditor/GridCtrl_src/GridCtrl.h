@@ -175,7 +175,8 @@ typedef BOOL (CALLBACK* GRIDCALLBACK)(GV_DISPINFO *, LPARAM);
 #define GVN_SELCHANGED          LVN_ITEMCHANGED
 #define GVN_GETDISPINFO         LVN_GETDISPINFO 
 #define GVN_ODCACHEHINT         LVN_ODCACHEHINT 
-
+#define GVN_LABELEDIT			WM_CHAR
+#define GVN_COMBOSELCHANGE		CBN_SELCHANGE
 class CGridCtrl;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -776,6 +777,8 @@ protected:
     afx_msg LRESULT OnGetFont(WPARAM hFont, LPARAM lParam);
     afx_msg LRESULT OnImeChar(WPARAM wCharCode, LPARAM lParam);
     afx_msg void OnEndInPlaceEdit(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnInPlaceEdit(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnComboSelChange(NMHDR* pNMHDR, LRESULT* pResult);
     DECLARE_MESSAGE_MAP()
 
     enum eMouseModes { MOUSE_NOTHING, MOUSE_SELECT_ALL, MOUSE_SELECT_COL, MOUSE_SELECT_ROW,

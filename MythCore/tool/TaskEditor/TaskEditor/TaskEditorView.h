@@ -7,12 +7,12 @@
 #include "TaskTemplate.h"
 class CTaskEditorDoc;
 class CTaskMainNode;
+class CGridCellCombo;
 enum EmGridDataType
 {
 	emDataType_None				= 0,		// 无
 	emDataType_MainNode			= 1,		// 主节点
-	emDataType_CondMainNode		= 2,		// 条件主节点
-	emDataType_CondDataNode			= 3,		// 条件节点
+	emDataType_DataNode			= 2,		// 条件节点
 };
 class CGridData
 {
@@ -68,14 +68,17 @@ public:
 	CGridCtrl*	mMainGrid;
 	CGridCtrl*	mCondGrid;
 	int			mCondSelectRow;
+	int			mDiagSelectRow;
 
 	CGridCtrl*	mDiagGrid;
 	virtual BOOL DestroyWindow();
 
 	void OnCondGridClickDown(NMHDR* pNMHDR, LRESULT* pResult);
-	void OnCondEndEdit(NMHDR* pNMHDR, LRESULT* pResult);
-	void AddCondRow(int nRowNum, CTaskMainNode* pMainNode);
-	void SetCondParam(int nRowNum, TASK_NODE_LIST& rNodeList);
+	void OnComboSelChange(NMHDR* pNMHDR, LRESULT* pResult);
+	void OnStartEdit(NMHDR* pNMHDR, LRESULT* pResult);
+	void AddCondRow(CGridCtrl* pGridCtrl, int nRowNum, CTaskMainNode* pMainNode, wstring& strCondType, CStringArray& strParaValue, int nParamNum);
+	void SetCondParam(CGridCtrl* pGridCtrl, int nRowNum, TASK_NODE_LIST& rNodeList, CStringArray& strParaValue, int nParamNum);
+	CGridCellCombo* AddComboBox(CGridCtrl* pGridCtrl, OPTION_LIST& rOptionList, int nRowNum, int nColumnNum, wstring& strDefaultValue, int& rOptionIndex);
 
 	void OnDiagGridClickDown(NMHDR* pNMHDR, LRESULT* pResult);	
 	void SaveToXml();

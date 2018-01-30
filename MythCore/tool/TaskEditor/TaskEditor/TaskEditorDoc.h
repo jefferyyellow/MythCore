@@ -5,7 +5,8 @@
 
 #pragma once
 
-
+#include "commondefine.h"
+class CGridCtrl;
 class CTaskEditorDoc : public CDocument
 {
 protected: // 仅从序列化创建
@@ -51,6 +52,16 @@ public:
 
 public:
 	void	OpenDocument();
+	XMLElement* SaveMainNode(CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum,
+		tinyxml2::XMLDocument& tDocument, XMLElement* pParentElem, bool bAttribute);
+	void	SaveDataNode(CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum,
+		tinyxml2::XMLDocument& tDocument, XMLElement* pParentElem, int nParamNum);
+
+	XMLElement*	LoadMainNode(CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum,
+		tinyxml2::XMLDocument& tDocument, XMLElement* pParentElem, bool bAttribute);
+
+	int		LoadDataNode(CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum,
+		tinyxml2::XMLDocument& tDocument, XMLElement* pParentElem, int nParamNum);
 
 private:
 	CString	mOpenFilePath;

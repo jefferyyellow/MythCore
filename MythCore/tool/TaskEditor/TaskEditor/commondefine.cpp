@@ -109,7 +109,7 @@ char* Utf8ToAnsi(char* pSrc, char* pDst, int nMaxSize)
 	return pDst;
 }
 
-wchar_t* AnsiToUnicode(char*pSrc, wchar_t* pDst, int nMaxSize)
+wchar_t* AnsiToUnicode(const char*pSrc, wchar_t* pDst, int nMaxSize)
 {
 	if (NULL == pSrc || NULL == pDst || nMaxSize <= 0)
 	{

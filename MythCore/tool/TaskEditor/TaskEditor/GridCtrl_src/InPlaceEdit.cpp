@@ -183,6 +183,27 @@ void CInPlaceEdit::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
     CRect ParentRect;
     GetParent()->GetClientRect( &ParentRect );
     
+
+	GetWindowText(str);
+
+	// Send Notification to parent
+	GV_DISPINFO dispinfo;
+
+	dispinfo.hdr.hwndFrom = GetSafeHwnd();
+	dispinfo.hdr.idFrom = GetDlgCtrlID();
+	dispinfo.hdr.code = GVN_LABELEDIT;
+
+	dispinfo.item.mask = LVIF_TEXT | LVIF_PARAM;
+	dispinfo.item.row = m_nRow;
+	dispinfo.item.col = m_nColumn;
+	dispinfo.item.strText = str;
+	dispinfo.item.lParam = (LPARAM)m_nLastChar;
+
+	CWnd* pOwner = GetOwner();
+	if (pOwner)
+		pOwner->SendMessage(WM_NOTIFY, GetDlgCtrlID(), (LPARAM)&dispinfo);
+
+
     // Check whether control needs to be resized
     // and whether there is space to grow
     if (size.cx > m_Rect.Width())

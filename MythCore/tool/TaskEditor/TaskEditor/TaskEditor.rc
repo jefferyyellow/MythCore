@@ -548,7 +548,7 @@ END
 STRINGTABLE
 BEGIN
     ID_VIEW_STATUS_BAR      "显示或隐藏状态栏\n切换状态栏"
-    ID_DATA_GRID            "数据表单的ID"
+    ID_MAIN_DATA_GRID            "数据表单的ID"
 END
 
 STRINGTABLE

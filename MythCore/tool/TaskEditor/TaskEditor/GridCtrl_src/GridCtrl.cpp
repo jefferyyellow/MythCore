@@ -605,6 +605,8 @@ BEGIN_MESSAGE_MAP(CGridCtrl, CWnd)
     ON_MESSAGE(WM_GETFONT, OnGetFont)
     ON_MESSAGE(WM_IME_CHAR, OnImeChar)
     ON_NOTIFY(GVN_ENDLABELEDIT, IDC_INPLACE_CONTROL, OnEndInPlaceEdit)
+	ON_NOTIFY(GVN_LABELEDIT, IDC_INPLACE_CONTROL, OnInPlaceEdit)
+	ON_NOTIFY(GVN_COMBOSELCHANGE, IDC_INPLACE_CONTROL, OnComboSelChange)
 END_MESSAGE_MAP()
 
 
@@ -1352,6 +1354,55 @@ void CGridCtrl::OnEndInPlaceEdit(NMHDR* pNMHDR, LRESULT* pResult)
     }
 
     *pResult = 0;
+}
+
+void CGridCtrl::OnInPlaceEdit(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	GV_DISPINFO *pgvDispInfo = (GV_DISPINFO *)pNMHDR;
+	GV_ITEM     *pgvItem = &pgvDispInfo->item;
+
+	// In case OnEndInPlaceEdit called as window is being destroyed
+	if (!IsWindow(GetSafeHwnd()))
+		return;
+
+	int nRow = pgvItem->row;
+	int nCol = pgvItem->col;
+	CString str = pgvItem->strText;
+	CString strCurrentText = GetItemText(nRow, nCol);
+	if (strCurrentText != str)
+	{
+		SetItemText(nRow, nCol, str);
+		//if (ValidateEdit(nRow, nCol, str))
+		//{
+		//	SetModified(TRUE, nRow, nCol);
+		//	RedrawCell(nRow, nCol);
+		//}
+		//else
+		//{
+		//	SetItemText(nRow, nCol, strCurrentText);
+		//}
+	}
+}
+
+void CGridCtrl::OnComboSelChange(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	GV_DISPINFO *pgvDispInfo = (GV_DISPINFO *)pNMHDR;
+	GV_ITEM     *pgvItem = &pgvDispInfo->item;
+
+	// In case OnEndInPlaceEdit called as window is being destroyed
+	if (!IsWindow(GetSafeHwnd()))
+		return;
+
+	int nRow = pgvItem->row;
+	int nCol = pgvItem->col;
+	CString str = pgvItem->strText;
+	CString strCurrentText = GetItemText(nRow, nCol);
+	if (strCurrentText != str)
+	{
+		SetItemText(nRow, nCol, str);
+	}
+
+	SendMessageToParent(nRow, nCol, GVN_COMBOSELCHANGE);
 }
 
 // Handle horz scrollbar notifications

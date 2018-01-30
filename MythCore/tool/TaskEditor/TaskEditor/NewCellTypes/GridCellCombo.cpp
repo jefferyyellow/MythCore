@@ -309,6 +309,7 @@ BEGIN_MESSAGE_MAP(CInPlaceList, CComboBox)
 	ON_CONTROL_REFLECT(CBN_DROPDOWN, OnDropdown)
 	ON_WM_GETDLGCODE()
 	ON_WM_CTLCOLOR_REFLECT()
+	ON_CONTROL_REFLECT(CBN_SELCHANGE, OnSelChange) 
 	//}}AFX_MSG_MAP
 	//ON_CONTROL_REFLECT(CBN_SELENDOK, OnSelendOK)
 END_MESSAGE_MAP()
@@ -325,6 +326,31 @@ UINT CInPlaceList::OnGetDlgCode()
 void CInPlaceList::OnDropdown() 
 {
     SetDroppedWidth(GetCorrectDropWidth());
+}
+
+void CInPlaceList::OnSelChange()
+{
+	CString str;
+	if (::IsWindow(m_hWnd))
+		GetWindowText(str);
+
+	// Send Notification to parent
+	GV_DISPINFO dispinfo;
+
+	dispinfo.hdr.hwndFrom = GetSafeHwnd();
+	dispinfo.hdr.idFrom = GetDlgCtrlID();
+	dispinfo.hdr.code = GVN_COMBOSELCHANGE;
+
+	dispinfo.item.mask = LVIF_TEXT | LVIF_PARAM;
+	dispinfo.item.row = m_nRow;
+	dispinfo.item.col = m_nCol;
+	dispinfo.item.strText = str;
+	dispinfo.item.lParam = (LPARAM)m_nLastChar;
+
+	CWnd* pOwner = GetOwner();
+	if (IsWindow(pOwner->GetSafeHwnd()))
+		pOwner->SendMessage(WM_NOTIFY, GetDlgCtrlID(), (LPARAM)&dispinfo);
+
 }
 
 void CInPlaceList::OnKillFocus(CWnd* pNewWnd) 

@@ -24,7 +24,7 @@
         <Option Name="1,少林" Value="1"/>
       </TextNode>
     </Option>
-    <Option Name="前置任务" Value="2">
+    <Option Name="2,前置任务" Value="2">
       <TextNode Name="前置任务ID"/>
     </Option>
   </CondNode>
@@ -35,16 +35,16 @@
     </Option>
   </CondNode>
   <DiagNode Name="接任务对话">
-    <Option Name="NPC对话" Value="1">
+    <Option Name="1,NPC对话">
       <TextNode Name="内容"/>
     </Option>
-    <Option Name="玩家对话" Value="2">
+    <Option Name="2,玩家对话">
       <TextNode Name="内容"/>
     </Option>
-    <Option Name="男玩家对话" Value="3">
+    <Option Name="3,男玩家对话">
       <TextNode Name="内容"/>
     </Option>
-    <Option Name="女玩家对话" Value="4">
+    <Option Name="4,女玩家对话">
       <TextNode Name="内容"/>
     </Option>
   </DiagNode>

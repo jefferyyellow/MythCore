@@ -84,7 +84,7 @@
 #define IDS_FIND_TAB                    302
 #define IDS_EXPLORER                    305
 #define IDS_EDIT_MENU                   306
-#define ID_DATA_GRID                    307
+#define ID_MAIN_DATA_GRID               307
 #define ID_COND_DATA_GRID               308
 #define ID_DIAG_DATA_GRID				309
 
