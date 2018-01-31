@@ -1,6 +1,31 @@
 #include "stdafx.h"
 #include "TaskTemplate.h"
 #include "commondefine.h"
+
+void CTaskTemplate::ClearOptionList(OPTION_LIST& rList)
+{
+	for (int i = 0; i < rList.size(); ++i)
+	{
+		ClearMainNodeList(rList[i]->mNodeList);
+		delete rList[i];
+	}
+}
+
+void CTaskTemplate::ClearMainNodeList(TASK_NODE_LIST& rList)
+{
+	for (int  i = 0; i < rList.size(); ++ i)
+	{
+		ClearOptionList(rList[i]->mOptionList);
+		delete rList[i];
+	}
+}
+
+CTaskTemplate::~CTaskTemplate()
+{
+	ClearMainNodeList(mTextNodeList);
+	ClearMainNodeList(mCondNodeList);
+	ClearMainNodeList(mDiagNodeList);
+}
 void CTaskTemplate::loadTaskTemplate(const char* pTemplateFile)
 {
 	if (NULL == pTemplateFile)

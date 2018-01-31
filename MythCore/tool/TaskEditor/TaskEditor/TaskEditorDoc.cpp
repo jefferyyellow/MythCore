@@ -164,7 +164,6 @@ BOOL CTaskEditorDoc::OnSaveDocument(LPCTSTR lpszPathName)
 		}
 	}
 
-
 	CGridCtrl* pCondGrid = pView->mCondGrid;
 	XMLElement* pCondElem = NULL;
 	for (int i = 0; i < pCondGrid->GetRowCount(); ++ i)
@@ -194,7 +193,6 @@ BOOL CTaskEditorDoc::OnSaveDocument(LPCTSTR lpszPathName)
 			SaveDataNode(pDiagGrid, i, 0, tDocument, pCondElem, MAX_DIAG_PARAM_NUM - 1);
 		}
 	}
-
 
 	UnicodeToAnsi(lpszPathName, acBuffer, sizeof(acBuffer));
 	tDocument.SaveFile(acBuffer);

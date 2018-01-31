@@ -87,6 +87,7 @@ public:
 // Attributes
 public:
     virtual void SetText(LPCTSTR /* szText */)              = 0 ;
+	virtual void SetHintText(LPCTSTR /* szText */)			= 0;
     virtual void SetImage(int /* nImage */)                 = 0 ;
     virtual void SetData(LPARAM /* lParam */)               = 0 ;
     virtual void SetState(DWORD nState)                     { m_nState = nState; }
@@ -99,6 +100,7 @@ public:
     virtual void SetCoords( int /* nRow */, int /* nCol */) = 0 ;
 
     virtual LPCTSTR    GetText()       const                = 0 ;
+	virtual LPCTSTR    GetHintText()   const				= 0 ;
     virtual LPCTSTR    GetTipText()    const                { return GetText(); } // may override TitleTip return
     virtual int        GetImage()      const                = 0 ;
     virtual LPARAM     GetData()       const                = 0 ;

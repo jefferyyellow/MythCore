@@ -32,12 +32,18 @@ public:
 class CTaskTemplate
 {
 public:
-	
+	CTaskTemplate()
+	{
+
+	}
+	~CTaskTemplate();
 
 public:
 	void	loadTaskTemplate(const char* pTemplateFile);
 	void	loadTextNode(CTaskMainNode* pMainNode, XMLElement* pTextNodeElem);
 	void	loadOptionNode(CTaskOption* pOptionNode, XMLElement* pOptionNodeElem);
+	void	ClearOptionList(OPTION_LIST& rList);
+	void	ClearMainNodeList(TASK_NODE_LIST& rList);
 
 public:
 	TASK_NODE_LIST	mTextNodeList;

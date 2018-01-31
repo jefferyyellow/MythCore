@@ -35,6 +35,7 @@ BEGIN_MESSAGE_MAP(CTaskEditorView, CView)
 	ON_NOTIFY(NM_CLICK, ID_DIAG_DATA_GRID, OnDiagGridClickDown)
 	ON_NOTIFY(GVN_COMBOSELCHANGE, ID_COND_DATA_GRID, OnComboSelChange)
 	ON_NOTIFY(GVN_BEGINLABELEDIT, ID_COND_DATA_GRID, OnStartEdit)
+	ON_WM_SIZE()
 END_MESSAGE_MAP()
 
 // CTaskEditorView 构造/析构
@@ -63,11 +64,18 @@ CTaskEditorView::~CTaskEditorView()
 		mCondGrid = NULL;
 	}
 	
-	if (NULL == mDiagGrid)
+	if (NULL != mDiagGrid)
 	{
 		delete mDiagGrid;
 		mDiagGrid = NULL;
 	}
+
+	GRID_DATA_LIST::iterator it = mGridDataList.begin();
+	for (; it != mGridDataList.end(); ++it)
+	{
+		delete *it;
+	}
+	mGridDataList.clear();
 }
 
 BOOL CTaskEditorView::PreCreateWindow(CREATESTRUCT& cs)
@@ -178,23 +186,13 @@ void CTaskEditorView::InitialMainNode()
 	{
 		return;
 	}
-	int nNum = (pMainFrame->mTaskTemplate.mTextNodeList.size() + 2) / 2;
-
-	//CRect rectGridWnd;
-	//pMainFrame->GetClientRect(rectGridWnd);
+	int nNum = (pMainFrame->mTaskTemplate.mTextNodeList.size() + 1) / 2;
 
 	CRect rectGridWnd;
 	GetClientRect(rectGridWnd);
 
 	mMainGrid = new CGridCtrl(nNum, 4);
-	int nHeight = mMainGrid->GetRowHeight(0) * (nNum) + 10;
-	rectGridWnd.bottom = rectGridWnd.top + nHeight;
 	mMainGrid->Create(rectGridWnd, this, ID_MAIN_DATA_GRID);
-	int nWidth = (rectGridWnd.Width() - 200 - 10) / 2;
-	mMainGrid->SetColumnWidth(0, 100);
-	mMainGrid->SetColumnWidth(1, nWidth);
-	mMainGrid->SetColumnWidth(2, 100);
-	mMainGrid->SetColumnWidth(3, nWidth);
 
 	char acBuffer[4096] = { 0 };
 
@@ -207,7 +205,7 @@ void CTaskEditorView::InitialMainNode()
 			mMainGrid->SetItemText(i,j, rNodeList[nCount]->mName.c_str());
 			mMainGrid->SetItemState(i, j, mMainGrid->GetItemState(i, j) | GVIS_READONLY);
 			CGridCellBase* pCellBase = mMainGrid->GetCell(i, j);
-			CGridData* pNewData = new CGridData;
+			CGridData* pNewData = NewGridData();
 			if (NULL != pCellBase && NULL != pNewData)
 			{
 				pNewData->mDataType = emDataType_MainNode;
@@ -262,53 +260,9 @@ void CTaskEditorView::InitialCondNode()
 	{
 		return;
 	}
+
 	TASK_NODE_LIST& rNodeList = pMainFrame->mTaskTemplate.mCondNodeList;
-	int nNum = rNodeList.size();
-
-	CRect rectGridWnd;
-	pMainFrame->GetClientRect(rectGridWnd);
-	rectGridWnd.top += mMainGrid->GetRowHeight(0) * (mMainGrid->GetRowCount()) + 10;
-	rectGridWnd.right = rectGridWnd.Width() / 2 - 4;
-	int nWidth = rectGridWnd.Width() / 5 - 1;
-	mCondGrid = new CGridCtrl(nNum, 5);
-	mCondGrid->Create(rectGridWnd, this, ID_COND_DATA_GRID);
-	for (int i = 0; i < 5; ++ i)
-	{
-		mCondGrid->SetColumnWidth(i, nWidth);
-	}
-
-	for (int i = 0; i < nNum; ++ i)
-	{
-		mCondGrid->SetItemText(i, 0, rNodeList[i]->mName.c_str());
-		CGridData* pGridData = new CGridData;
-		if (NULL == pGridData)
-		{
-			break;
-		}
-
-		pGridData->mDataType = emDataType_MainNode;
-		pGridData->mData = rNodeList[i];
-		for (int j = 0; j < MAX_COND_PARAM_NUM + 1; ++ j)
-		{
-			mCondGrid->SetItemState(i, j, mMainGrid->GetItemState(i, 0) | GVIS_READONLY);
-			CGridCellBase* pCellBase = mCondGrid->GetCell(i, j);
-			if (NULL != pCellBase)
-			{
-				pCellBase->SetData((LPARAM)pGridData);
-			}
-		}
-
-		mCondGrid->SetItemText(i, 1, _T("增加"));
-		mCondGrid->SetCellType(i, 1, RUNTIME_CLASS(CGridCellButton));
-
-
-		mCondGrid->SetItemText(i, 2, _T("删除"));
-		mCondGrid->SetCellType(i, 2, RUNTIME_CLASS(CGridCellButton));
-
-	}
-
-	mCondGrid->Invalidate();
-	mCondGrid->ShowWindow(SW_SHOW);
+	InitCondDiagNode(mCondGrid, ID_COND_DATA_GRID, rNodeList, MAX_COND_PARAM_NUM + 1);
 }
 
 void CTaskEditorView::InitialDiagNode()
@@ -319,53 +273,74 @@ void CTaskEditorView::InitialDiagNode()
 		return;
 	}
 	TASK_NODE_LIST& rNodeList = pMainFrame->mTaskTemplate.mDiagNodeList;
+	InitCondDiagNode(mDiagGrid, ID_DIAG_DATA_GRID, rNodeList, MAX_DIAG_PARAM_NUM + 1);
+}
+
+void CTaskEditorView::InitCondDiagNode(CGridCtrl*& pGridCtrl, int nGridCtrlID, TASK_NODE_LIST& rNodeList, int nColumnNum)
+{
 	int nNum = rNodeList.size();
 
 	CRect rectDiagWnd;
-	pMainFrame->GetClientRect(rectDiagWnd);
-	//rectDiagWnd.top += m_pGrid->GetRowHeight(0) * m_pGrid->GetRowCount();
-	rectDiagWnd.top += mMainGrid->GetRowHeight(0) * (mMainGrid->GetRowCount()) + 10;
+	GetClientRect(rectDiagWnd);
 
-	CRect rectCond;
-	mCondGrid->GetClientRect(rectCond);
-	rectDiagWnd.left += rectCond.Width() + 10;
-
-	mDiagGrid = new CGridCtrl(nNum, 3);
-	mDiagGrid->Create(rectDiagWnd, this, ID_DIAG_DATA_GRID);
-	mDiagGrid->SetColumnWidth(0, 100);
-	mDiagGrid->SetColumnWidth(1, rectDiagWnd.Width() - 200 - 10);
-	mDiagGrid->SetColumnWidth(2, 100);
-
+	pGridCtrl = new CGridCtrl(nNum, nColumnNum);
+	pGridCtrl->Create(rectDiagWnd, this, nGridCtrlID);
 	for (int i = 0; i < nNum; ++i)
 	{
-		CGridData* pGridData = new CGridData;
+		CGridData* pGridData = NewGridData();
 		if (NULL == pGridData)
 		{
 			break;
 		}
 		pGridData->mDataType = emDataType_MainNode;
 		pGridData->mData = rNodeList[i];
-		for (int j = 0; j < 3; ++j)
+		for (int j = 0; j < nColumnNum; ++j)
 		{
-			mDiagGrid->SetItemState(i, j, mMainGrid->GetItemState(i, 0) | GVIS_READONLY);
-			CGridCellBase* pCellBase = mDiagGrid->GetCell(i, j);
+			pGridCtrl->SetItemState(i, j, pGridCtrl->GetItemState(i, 0) | GVIS_READONLY);
+			CGridCellBase* pCellBase = pGridCtrl->GetCell(i, j);
 			if (NULL != pCellBase)
 			{
 				pCellBase->SetData((LPARAM)pGridData);
 			}
 		}
-		mDiagGrid->SetItemText(i, 0, rNodeList[i]->mName.c_str());
+		pGridCtrl->SetItemText(i, 0, rNodeList[i]->mName.c_str());
 
-		mDiagGrid->SetItemText(i, 1, _T("增加"));
-		mDiagGrid->SetCellType(i, 1, RUNTIME_CLASS(CGridCellButton));
+		pGridCtrl->SetItemText(i, 1, _T("增加"));
+		pGridCtrl->SetCellType(i, 1, RUNTIME_CLASS(CGridCellButton));
 
 
-		mDiagGrid->SetItemText(i, 2, _T("删除"));
-		mDiagGrid->SetCellType(i, 2, RUNTIME_CLASS(CGridCellButton));
+		pGridCtrl->SetItemText(i, 2, _T("删除"));
+		pGridCtrl->SetCellType(i, 2, RUNTIME_CLASS(CGridCellButton));
 	}
 
-	mDiagGrid->Invalidate();
-	mDiagGrid->ShowWindow(SW_SHOW);
+	pGridCtrl->Invalidate();
+	pGridCtrl->ShowWindow(SW_SHOW);
+}
+
+CGridData* CTaskEditorView::NewGridData()
+{
+	CGridData* pNewData = new CGridData;
+	mGridDataList.push_back(pNewData);
+	return pNewData;
+}
+
+void CTaskEditorView::DeleteGridData(CGridData* pGridData)
+{
+	if (NULL == pGridData)
+	{
+		return;
+	}
+
+	GRID_DATA_LIST::iterator it = mGridDataList.begin();
+	for (; it != mGridDataList.end(); ++ it)
+	{
+		if (*it == pGridData)
+		{
+			delete *it;
+			mGridDataList.erase(it);
+			break;
+		}
+	}
 }
 
 BOOL CTaskEditorView::DestroyWindow()
@@ -386,60 +361,7 @@ void CTaskEditorView::OnCondGridClickDown(NMHDR* pNMHDR, LRESULT* pResult)
 	int nOldSelect = mCondSelectRow;
 	mCondSelectRow = nRow;
 
-	CGridCellBase* pGrideCellBase = mCondGrid->GetCell(nRow, nColumn);
-	if (NULL == pGrideCellBase)
-	{
-		return;
-	}
-
-	// 点击的不是按钮
-	if (!pGrideCellBase->IsKindOf(RUNTIME_CLASS(CGridCellButton)))
-	{
-		return;
-	}
-
-
-	if (wstring(pGrideCellBase->GetText()) == _T("增加"))
-	{
-		if (nRow == mCondGrid->GetRowCount() - 1)
-		{
-			mCondGrid->SetRowCount(mCondGrid->GetRowCount() + 1);
-		}
-		else
-		{
-			mCondGrid->InsertRow(_T(""), nRow + 1);
-		}
-
-		CGridData* pGridData = (CGridData*)pGrideCellBase->GetData();
-		if (NULL != pGridData)
-		{
-			CStringArray strArray;
-			wstring string;
-			AddCondRow(mCondGrid, nRow + 1, (CTaskMainNode*)pGridData->mData, string, strArray, MAX_COND_PARAM_NUM);
-		}
-	}
-	else if (wstring(pGrideCellBase->GetText()) == _T("删除"))
-	{
-		CGridCellBase* pOldSelectCellBase = mCondGrid->GetCell(nOldSelect, 0);
-		if (NULL == pOldSelectCellBase)
-		{
-			return;
-		}
-		CGridData* pGridData = (CGridData*)pOldSelectCellBase->GetData();
-		if (NULL == pGridData)
-		{
-			return;
-		}
-
-		if (emDataType_MainNode == pGridData->mDataType)
-		{
-			return;
-		}
-
-		mCondGrid->DeleteRow(nOldSelect);
-	}
-
-	mCondGrid->Invalidate();
+	CondDiagGridButtonDown(mCondGrid, nRow, nColumn, nOldSelect);
 }
 
 void CTaskEditorView::OnComboSelChange(NMHDR* pNMHDR, LRESULT* pResult)
@@ -478,19 +400,6 @@ void CTaskEditorView::OnComboSelChange(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CTaskEditorView::OnStartEdit(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	//NM_GRIDVIEW* pItem = (NM_GRIDVIEW*)pNMHDR;
-	//int nRow = pItem->iRow;
-	//int nColumn = pItem->iColumn;
-	//CGridCellBase* pGrideCellBase = mCondGrid->GetCell(nRow, nColumn);
-	//if (NULL == pGrideCellBase)
-	//{
-	//	return;
-	//}
-	//if (pGrideCellBase->IsKindOf(RUNTIME_CLASS(CGridCellCombo)))
-	//{
-	//	return;
-	//}
-	//
 }
 
 void CTaskEditorView::AddCondRow(CGridCtrl* pGridCtrl, int nRowNum, CTaskMainNode* pMainNode, wstring& strCondType, CStringArray& strParaValue, int nParamNum)
@@ -501,7 +410,7 @@ void CTaskEditorView::AddCondRow(CGridCtrl* pGridCtrl, int nRowNum, CTaskMainNod
 	}
 
 	OPTION_LIST& rOptionList = pMainNode->mOptionList;
-	CGridData* pGridData = new CGridData;
+	CGridData* pGridData = NewGridData();
 	if (NULL == pGridData)
 	{
 		return;
@@ -610,7 +519,12 @@ void CTaskEditorView::OnDiagGridClickDown(NMHDR* pNMHDR, LRESULT* pResult)
 	int nOldSelect = mDiagSelectRow;
 	mDiagSelectRow = nRow;
 
-	CGridCellBase* pGrideCellBase = mDiagGrid->GetCell(nRow, nColumn);
+	CondDiagGridButtonDown(mDiagGrid, nRow, nColumn, nOldSelect);
+}
+
+void CTaskEditorView::CondDiagGridButtonDown(CGridCtrl* pGridCtrl, int nRow, int nColumn, int nOldSelect)
+{
+	CGridCellBase* pGrideCellBase = pGridCtrl->GetCell(nRow, nColumn);
 	if (NULL == pGrideCellBase)
 	{
 		return;
@@ -625,13 +539,13 @@ void CTaskEditorView::OnDiagGridClickDown(NMHDR* pNMHDR, LRESULT* pResult)
 
 	if (wstring(pGrideCellBase->GetText()) == _T("增加"))
 	{
-		if (nRow == mDiagGrid->GetRowCount() - 1)
+		if (nRow == pGridCtrl->GetRowCount() - 1)
 		{
-			mDiagGrid->SetRowCount(mDiagGrid->GetRowCount() + 1);
+			pGridCtrl->SetRowCount(pGridCtrl->GetRowCount() + 1);
 		}
 		else
 		{
-			mDiagGrid->InsertRow(_T(""), nRow + 1);
+			pGridCtrl->InsertRow(_T(""), nRow + 1);
 		}
 
 		CGridData* pGridData = (CGridData*)pGrideCellBase->GetData();
@@ -639,12 +553,12 @@ void CTaskEditorView::OnDiagGridClickDown(NMHDR* pNMHDR, LRESULT* pResult)
 		{
 			CStringArray strArray;
 			wstring string;
-			AddCondRow(mDiagGrid, nRow + 1, (CTaskMainNode*)pGridData->mData, string, strArray, MAX_DIAG_PARAM_NUM);
+			AddCondRow(pGridCtrl, nRow + 1, (CTaskMainNode*)pGridData->mData, string, strArray, MAX_DIAG_PARAM_NUM);
 		}
 	}
 	else if (wstring(pGrideCellBase->GetText()) == _T("删除"))
 	{
-		CGridCellBase* pOldSelectCellBase = mDiagGrid->GetCell(nOldSelect, 0);
+		CGridCellBase* pOldSelectCellBase = pGridCtrl->GetCell(nOldSelect, 0);
 		if (NULL == pOldSelectCellBase)
 		{
 			return;
@@ -659,9 +573,53 @@ void CTaskEditorView::OnDiagGridClickDown(NMHDR* pNMHDR, LRESULT* pResult)
 		{
 			return;
 		}
-
-		mDiagGrid->DeleteRow(nOldSelect);
+		DeleteGridData(pGridData);
+		pGridCtrl->DeleteRow(nOldSelect);
 	}
 
-	mDiagGrid->Invalidate();
+	pGridCtrl->Invalidate();
+}
+
+void CTaskEditorView::OnSize(UINT nType, int cx, int cy)
+{
+	CView::OnSize(nType, cx, cy);
+
+	// TODO:  在此处添加消息处理程序代码
+	TRACE("ONSize\n");
+	CRect rectView;
+	GetClientRect(rectView);
+	if (rectView.left != rectView.right && rectView.Width() > 410)
+	{
+		// 处理主Grid控件的位置重新计算
+		CRect tMainRect = rectView;
+		tMainRect.bottom = tMainRect.top + mMainGrid->GetRowHeight(0) * (mMainGrid->GetRowCount())+6;
+		int nWidth = (tMainRect.Width() - 200 - 6) / 2;
+		mMainGrid->SetColumnWidth(0, 100);
+		mMainGrid->SetColumnWidth(1, nWidth);
+		mMainGrid->SetColumnWidth(2, 100);
+		mMainGrid->SetColumnWidth(3, nWidth);
+		mMainGrid->MoveWindow(tMainRect);
+
+
+		// 处理条件Grid控件的位置重新计算
+		CRect tCondRect = rectView;
+		tCondRect.top = tMainRect.bottom;
+		//tCondRect.bottom += mCondGrid->GetRowHeight(0) * (mCondGrid->GetRowCount()) + 6;
+		tCondRect.right = tCondRect.Width() / 2;
+		nWidth = (tCondRect.Width() - 6)/ (MAX_COND_PARAM_NUM + 1);
+		for (int i = 0; i < MAX_COND_PARAM_NUM + 1; ++i)
+		{
+			mCondGrid->SetColumnWidth(i, nWidth);
+		}
+		mCondGrid->MoveWindow(tCondRect);
+
+		// 处理对话Grid控件的位置重新计算
+		CRect tDiagRect = rectView;
+		tDiagRect.top += tMainRect.bottom;
+		tDiagRect.left = tCondRect.right;
+		mDiagGrid->SetColumnWidth(0, 100);
+		mDiagGrid->SetColumnWidth(1, tDiagRect.Width() - 200 - 6);
+		mDiagGrid->SetColumnWidth(2, 100);
+		mDiagGrid->MoveWindow(tDiagRect);
+	}
 }

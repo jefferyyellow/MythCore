@@ -23,6 +23,8 @@ public:
 
 class CTaskEditorView : public CView
 {
+public:
+	typedef vector<CGridData*> GRID_DATA_LIST;
 protected: // 仅从序列化创建
 	CTaskEditorView();
 	DECLARE_DYNCREATE(CTaskEditorView)
@@ -64,24 +66,31 @@ public:
 	void InitialMainNode();
 	void InitialCondNode();
 	void InitialDiagNode();
+	void InitCondDiagNode(CGridCtrl*& pGridCtrl, int nGridCtrlID, TASK_NODE_LIST& rNodeList, int nColumnNum);
+	CGridData* NewGridData();
+	void DeleteGridData(CGridData* pGridData);
+
 
 	CGridCtrl*	mMainGrid;
 	CGridCtrl*	mCondGrid;
+	CGridCtrl*	mDiagGrid;
 	int			mCondSelectRow;
 	int			mDiagSelectRow;
+	GRID_DATA_LIST mGridDataList;
 
-	CGridCtrl*	mDiagGrid;
 	virtual BOOL DestroyWindow();
 
 	void OnCondGridClickDown(NMHDR* pNMHDR, LRESULT* pResult);
+	void OnDiagGridClickDown(NMHDR* pNMHDR, LRESULT* pResult);
+	void CondDiagGridButtonDown(CGridCtrl* pGridCtrl, int nRow, int nColumn, int nOldSelect);
 	void OnComboSelChange(NMHDR* pNMHDR, LRESULT* pResult);
 	void OnStartEdit(NMHDR* pNMHDR, LRESULT* pResult);
 	void AddCondRow(CGridCtrl* pGridCtrl, int nRowNum, CTaskMainNode* pMainNode, wstring& strCondType, CStringArray& strParaValue, int nParamNum);
 	void SetCondParam(CGridCtrl* pGridCtrl, int nRowNum, TASK_NODE_LIST& rNodeList, CStringArray& strParaValue, int nParamNum);
 	CGridCellCombo* AddComboBox(CGridCtrl* pGridCtrl, OPTION_LIST& rOptionList, int nRowNum, int nColumnNum, wstring& strDefaultValue, int& rOptionIndex);
 
-	void OnDiagGridClickDown(NMHDR* pNMHDR, LRESULT* pResult);	
 	void SaveToXml();
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 };
 
 #ifndef _DEBUG  // TaskEditorView.cpp 中的调试版本

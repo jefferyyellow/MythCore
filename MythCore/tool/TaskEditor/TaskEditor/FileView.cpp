@@ -35,6 +35,7 @@ BEGIN_MESSAGE_MAP(CFileView, CDockablePane)
 	ON_COMMAND(ID_EDIT_CLEAR, OnEditClear)
 	ON_WM_PAINT()
 	ON_WM_SETFOCUS()
+	ON_NOTIFY(NM_DBLCLK, 4, &OnDblClkFileView)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -90,37 +91,34 @@ void CFileView::OnSize(UINT nType, int cx, int cy)
 
 void CFileView::FillFileView()
 {
-	HTREEITEM hRoot = m_wndFileView.InsertItem(_T("FakeApp 文件"), 0, 0);
+	HTREEITEM hRoot = m_wndFileView.InsertItem(_T("任务文件"), 0, 0);
 	m_wndFileView.SetItemState(hRoot, TVIS_BOLD, TVIS_BOLD);
 
-	HTREEITEM hSrc = m_wndFileView.InsertItem(_T("FakeApp 源文件"), 0, 0, hRoot);
+	WIN32_FIND_DATA ffd;	
+	HANDLE hFind = INVALID_HANDLE_VALUE;
+	DWORD dwError = 0;	
 
-	m_wndFileView.InsertItem(_T("FakeApp.cpp"), 1, 1, hSrc);
-	m_wndFileView.InsertItem(_T("FakeApp.rc"), 1, 1, hSrc);
-	m_wndFileView.InsertItem(_T("FakeAppDoc.cpp"), 1, 1, hSrc);
-	m_wndFileView.InsertItem(_T("FakeAppView.cpp"), 1, 1, hSrc);
-	m_wndFileView.InsertItem(_T("MainFrm.cpp"), 1, 1, hSrc);
-	m_wndFileView.InsertItem(_T("StdAfx.cpp"), 1, 1, hSrc);
+	hFind = FindFirstFile(_T("Tasks\\Task_*"), &ffd);
+	if (INVALID_HANDLE_VALUE == hFind)
+	{
+		return ;
+	}
 
-	HTREEITEM hInc = m_wndFileView.InsertItem(_T("FakeApp 头文件"), 0, 0, hRoot);
+	do
+	{
+		if (!(ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+		{
+			m_wndFileView.InsertItem(ffd.cFileName, 1, 1, hRoot);
+		}
+	} while (FindNextFile(hFind, &ffd) != 0);
 
-	m_wndFileView.InsertItem(_T("FakeApp.h"), 2, 2, hInc);
-	m_wndFileView.InsertItem(_T("FakeAppDoc.h"), 2, 2, hInc);
-	m_wndFileView.InsertItem(_T("FakeAppView.h"), 2, 2, hInc);
-	m_wndFileView.InsertItem(_T("Resource.h"), 2, 2, hInc);
-	m_wndFileView.InsertItem(_T("MainFrm.h"), 2, 2, hInc);
-	m_wndFileView.InsertItem(_T("StdAfx.h"), 2, 2, hInc);
-
-	HTREEITEM hRes = m_wndFileView.InsertItem(_T("FakeApp 资源文件"), 0, 0, hRoot);
-
-	m_wndFileView.InsertItem(_T("FakeApp.ico"), 2, 2, hRes);
-	m_wndFileView.InsertItem(_T("FakeApp.rc2"), 2, 2, hRes);
-	m_wndFileView.InsertItem(_T("FakeAppDoc.ico"), 2, 2, hRes);
-	m_wndFileView.InsertItem(_T("FakeToolbar.bmp"), 2, 2, hRes);
-
+	dwError = GetLastError();
+	if (dwError != ERROR_NO_MORE_FILES)
+	{
+		return;
+	}
+	FindClose(hFind);
 	m_wndFileView.Expand(hRoot, TVE_EXPAND);
-	m_wndFileView.Expand(hSrc, TVE_EXPAND);
-	m_wndFileView.Expand(hInc, TVE_EXPAND);
 }
 
 void CFileView::OnContextMenu(CWnd* pWnd, CPoint point)
@@ -177,6 +175,10 @@ void CFileView::OnProperties()
 void CFileView::OnFileOpen()
 {
 	// TODO:  在此处添加命令处理程序代码
+	OpenSelectFile();
+	//pEditorView = (CTemplateEditorView*)((CMainFrame*)AfxGetMainWnd())->MDIGetActive()->GetActiveView();
+	//pMainFrame->MDIGetActive()->GetActiveDocument()->SetTitle(s2ws(pTemplateFieldData->m_strTemplateName).c_str());
+
 }
 
 void CFileView::OnFileOpenWith()
@@ -253,4 +255,20 @@ void CFileView::OnChangeVisualStyle()
 	m_wndFileView.SetImageList(&m_FileViewImages, TVSIL_NORMAL);
 }
 
+void CFileView::OnDblClkFileView(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	OpenSelectFile();
+}
 
+void CFileView::OpenSelectFile()
+{
+	HTREEITEM pItem = m_wndFileView.GetSelectedItem();
+	if (pItem == NULL)
+	{
+		return;
+	}
+	CString strTaskFileName = m_wndFileView.GetItemText(pItem);
+	CString strFilePath = CString("Tasks\\") + strTaskFileName;
+
+	AfxGetApp()->OpenDocumentFile(strFilePath);
+}

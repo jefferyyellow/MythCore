@@ -398,7 +398,15 @@ BOOL CGridCellBase::Draw(CDC* pDC, int nRow, int nCol, CRect rect,  BOOL bEraseB
     rect.right++;    
     rect.bottom++;
 
-    DrawText(pDC->m_hDC, GetText(), -1, rect, GetFormat() | DT_NOPREFIX);
+	LPCTSTR strText = GetText();
+	if (strText[0] == _T('\0'))
+	{
+		DrawText(pDC->m_hDC, GetHintText(), -1, rect, GetFormat() | DT_NOPREFIX);
+	}
+	else
+	{
+		DrawText(pDC->m_hDC, strText, -1, rect, GetFormat() | DT_NOPREFIX);
+	}
 
     pDC->RestoreDC(nSavedDC);
 

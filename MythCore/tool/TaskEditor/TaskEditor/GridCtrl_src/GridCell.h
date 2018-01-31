@@ -50,7 +50,8 @@ public:
 public:
     void operator=(const CGridCell& cell);
 
-    virtual void  SetText(LPCTSTR szText)        { m_strText = szText;  }                       
+    virtual void  SetText(LPCTSTR szText)        { m_strText = szText;  }
+	virtual	void  SetHintText(LPCTSTR szText)	 { m_strHintText = szText;}
     virtual void  SetImage(int nImage)           { m_nImage = nImage;   }                        
     virtual void  SetData(LPARAM lParam)         { m_lParam = lParam;   }      
     virtual void  SetGrid(CGridCtrl* pGrid)      { m_pGrid = pGrid;     }                          
@@ -65,6 +66,7 @@ public:
                                                             // column for base implementation
 
     virtual LPCTSTR     GetText() const             { return (m_strText.IsEmpty())? _T("") : LPCTSTR(m_strText); }
+	virtual LPCTSTR     GetHintText() const         { return (m_strHintText.IsEmpty())? _T("") : LPCTSTR(m_strHintText); }
     virtual int         GetImage() const            { return m_nImage;  }
     virtual LPARAM      GetData() const             { return m_lParam;  }
     virtual CGridCtrl*  GetGrid() const             { return m_pGrid;   }
@@ -101,6 +103,7 @@ protected:
 
     CGridCtrl* m_pGrid;        // Parent grid control
     CWnd*      m_pEditWnd;
+	CString    m_strHintText;      // Cell text (or binary data if you wish...)
 };
 
 // This class is for storing grid default values. It's a little heavy weight, so
