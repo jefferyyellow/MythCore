@@ -326,6 +326,26 @@ UINT CInPlaceList::OnGetDlgCode()
 void CInPlaceList::OnDropdown() 
 {
     SetDroppedWidth(GetCorrectDropWidth());
+	CString str;
+	if (::IsWindow(m_hWnd))
+		GetWindowText(str);
+
+	// Send Notification to parent
+	GV_DISPINFO dispinfo;
+
+	dispinfo.hdr.hwndFrom = GetSafeHwnd();
+	dispinfo.hdr.idFrom = GetDlgCtrlID();
+	dispinfo.hdr.code = GVN_COMBODROPDOWN;
+
+	dispinfo.item.mask = LVIF_TEXT | LVIF_PARAM;
+	dispinfo.item.row = m_nRow;
+	dispinfo.item.col = m_nCol;
+	dispinfo.item.strText = str;
+	dispinfo.item.lParam = (LPARAM)m_nLastChar;
+
+	CWnd* pOwner = GetOwner();
+	if (IsWindow(pOwner->GetSafeHwnd()))
+		pOwner->SendMessage(WM_NOTIFY, GetDlgCtrlID(), (LPARAM)&dispinfo);
 }
 
 void CInPlaceList::OnSelChange()

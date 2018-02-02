@@ -135,6 +135,10 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//m_wndProperties.EnableDocking(CBRS_ALIGN_ANY);
 	//DockPane(&m_wndProperties);
 
+	m_wndOptionView.EnableDocking(CBRS_ALIGN_ANY);
+	DockPane(&m_wndOptionView);
+	m_wndOptionView.AttachToTabWnd(&m_wndFileView, DM_SHOW, FALSE, &pTabbedBar);
+
 	// 基于持久值设置视觉管理器和样式
 	OnApplicationLook(theApp.m_nAppLook);
 
@@ -189,6 +193,8 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// 将改进任务栏的可用性，因为显示的文档名带有缩略图。
 	ModifyStyle(0, FWS_PREFIXTITLE);
 	mTaskTemplate.loadTaskTemplate("TaskTemplate.xml");
+	mTaskTemplate.LoadTempName("TempName.xml");
+	m_wndOptionView.FillTempOptionView();
 	return 0;
 }
 
@@ -246,6 +252,16 @@ BOOL CMainFrame::CreateDockingWindows()
 	//	return FALSE; // 未能创建
 	//}
 
+
+	CString strTempSelectWnd;
+	bNameValid = strTempSelectWnd.LoadString(IDS_OUTPUT_WND);
+	ASSERT(bNameValid);
+	if (!m_wndOptionView.Create(strTempSelectWnd, this, CRect(0, 0, 200, 200), TRUE, ID_VIEW_OUTPUTWND, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_BOTTOM | CBRS_FLOAT_MULTI))
+	{
+		TRACE0("未能创建输出窗口\n");
+		return FALSE; // 未能创建
+	}
+	
 	SetDockingWindowIcons(theApp.m_bHiColorIcons);
 	return TRUE;
 }
@@ -263,6 +279,9 @@ void CMainFrame::SetDockingWindowIcons(BOOL bHiColorIcons)
 
 	//HICON hPropertiesBarIcon = (HICON) ::LoadImage(::AfxGetResourceHandle(), MAKEINTRESOURCE(bHiColorIcons ? IDI_PROPERTIES_WND_HC : IDI_PROPERTIES_WND), IMAGE_ICON, ::GetSystemMetrics(SM_CXSMICON), ::GetSystemMetrics(SM_CYSMICON), 0);
 	//m_wndProperties.SetIcon(hPropertiesBarIcon, FALSE);
+
+	HICON hPropertiesBarIcon = (HICON) ::LoadImage(::AfxGetResourceHandle(), MAKEINTRESOURCE(bHiColorIcons ? IDI_PROPERTIES_WND_HC : IDI_PROPERTIES_WND), IMAGE_ICON, ::GetSystemMetrics(SM_CXSMICON), ::GetSystemMetrics(SM_CYSMICON), 0);
+	m_wndOptionView.SetIcon(hPropertiesBarIcon, FALSE);
 
 	UpdateMDITabbedBarsIcons();
 }
@@ -417,7 +436,7 @@ BOOL CMainFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle, CWnd* pParent
 			pUserToolbar->EnableCustomizeButton(TRUE, ID_VIEW_CUSTOMIZE, strCustomize);
 		}
 	}
-
+	m_wndOptionView.ShowPane(FALSE, FALSE, FALSE);
 	return TRUE;
 }
 
@@ -426,4 +445,17 @@ void CMainFrame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 {
 	CMDIFrameWndEx::OnSettingChange(uFlags, lpszSection);
 	//m_wndOutput.UpdateFonts();
+}
+
+void CMainFrame::AddFileItem(CString strFileName)
+{
+	m_wndFileView.AddFileItem(strFileName);
+}
+
+void CMainFrame::ShowOptionView(CString strConfigName, CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum)
+{
+	m_wndOptionView.ShowPane(TRUE, FALSE, TRUE);
+	m_wndOptionView.SetGridCtrl(pGridCtrl);
+	m_wndOptionView.SetRowNum(nRowNum);
+	m_wndOptionView.SetColumnNum(nColumnNum);
 }

@@ -46,7 +46,7 @@ BOOL CTaskEditorDoc::OnNewDocument()
 
 	// TODO:  在此添加重新初始化代码
 	// (SDI 文档将重用该文档)
-
+	SetTitle(_T("Task_.xml"));
 	return TRUE;
 }
 
@@ -141,9 +141,41 @@ void CTaskEditorDoc::Dump(CDumpContext& dc) const
 
 BOOL CTaskEditorDoc::OnSaveDocument(LPCTSTR lpszPathName)
 {
-	// TODO:  在此添加专用代码和/或调用基类
+	CString strNewFilePaht = lpszPathName;
+	// 新的文件
+	if (_T("") == m_strPathName && lpszPathName[0] != _T('\0'))
+	{
+		int nPos = strNewFilePaht.ReverseFind(_T('\\'));
+		if (nPos > 0)
+		{
+			strNewFilePaht = strNewFilePaht.Right(strNewFilePaht.GetLength() - nPos - 1);
+			if (strNewFilePaht.Left(wcslen(_T("Task_"))) != CString(_T("Task_")))
+			{
+				AfxMessageBox(_T("保存失败！注意命名规则，任务文件必须以Task_开头,比如Task_1.xml"), MB_ICONEXCLAMATION );
+				return FALSE;
+			}
+		}
+	}
 	char acBuffer[4096] = { 0 };
 	tinyxml2::XMLDocument tDocument;
+
+	SaveToXml(tDocument);
+	UnicodeToAnsi(lpszPathName, acBuffer, sizeof(acBuffer));
+	tDocument.SaveFile(acBuffer);
+	SetModifiedFlag(FALSE);
+
+	CMainFrame* pMainFrame = (CMainFrame*)AfxGetMainWnd();
+	if (NULL != pMainFrame && _T("") == m_strPathName)
+	{
+		pMainFrame->AddFileItem(strNewFilePaht);
+	}
+	return TRUE;
+}
+
+void CTaskEditorDoc::SaveToXml(tinyxml2::XMLDocument& tDocument)
+{
+	// TODO:  在此添加专用代码和/或调用基类
+	char acBuffer[4096] = { 0 };
 
 	XMLDeclaration* pDeclaration = tDocument.NewDeclaration("xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"");
 	tDocument.LinkEndChild(pDeclaration);
@@ -166,7 +198,7 @@ BOOL CTaskEditorDoc::OnSaveDocument(LPCTSTR lpszPathName)
 
 	CGridCtrl* pCondGrid = pView->mCondGrid;
 	XMLElement* pCondElem = NULL;
-	for (int i = 0; i < pCondGrid->GetRowCount(); ++ i)
+	for (int i = 0; i < pCondGrid->GetRowCount(); ++i)
 	{
 		XMLElement* pTmpElem = SaveMainNode(pCondGrid, i, 0, tDocument, pRootElem, false);
 		if (NULL != pTmpElem)
@@ -194,10 +226,6 @@ BOOL CTaskEditorDoc::OnSaveDocument(LPCTSTR lpszPathName)
 		}
 	}
 
-	UnicodeToAnsi(lpszPathName, acBuffer, sizeof(acBuffer));
-	tDocument.SaveFile(acBuffer);
-	SetModifiedFlag(FALSE);
-	return TRUE;
 }
 
 XMLElement* CTaskEditorDoc::SaveMainNode(CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum, 
@@ -315,7 +343,6 @@ BOOL CTaskEditorDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		return FALSE;
 
 
-	mOpenFilePath = lpszPathName;
 	// TODO:  在此添加您专用的创建代码
 	char acBuffer[4096] = { 0 };
 
@@ -330,7 +357,7 @@ BOOL CTaskEditorDoc::OnOpenDocument(LPCTSTR lpszPathName)
 
 void CTaskEditorDoc::OpenDocument()
 {
-	if (mOpenFilePath == _T(""))
+	if (m_strPathName == _T(""))
 	{
 		return;
 	}
@@ -338,12 +365,17 @@ void CTaskEditorDoc::OpenDocument()
 	tinyxml2::XMLDocument tDocument;
 	char acBuffer[4096] = { 0 };
 	wchar_t wBuffer[4096] = {0};
-	UnicodeToAnsi(mOpenFilePath, acBuffer, sizeof(acBuffer));
+	UnicodeToAnsi(m_strPathName, acBuffer, sizeof(acBuffer));
 	if (tinyxml2::XML_SUCCESS != tDocument.LoadFile(acBuffer))
 	{
 		return;
 	}
 
+	LoadFromXml(tDocument);
+}
+
+void CTaskEditorDoc::LoadFromXml(tinyxml2::XMLDocument& tDocument)
+{
 	XMLElement* pRootElem = tDocument.RootElement();
 	if (NULL == pRootElem)
 	{
@@ -376,7 +408,7 @@ void CTaskEditorDoc::OpenDocument()
 			i += nLineCount;
 		}
 	}
-	
+
 	CGridCtrl* pDiagGrid = pView->mDiagGrid;
 	for (int i = 0; i < pDiagGrid->GetRowCount(); ++i)
 	{
@@ -516,4 +548,47 @@ int CTaskEditorDoc::LoadDataNode(CGridCtrl* pGridCtrl, int nRowNum, int nColumnN
 	}
 
 	return nLineCount;
+}
+
+void CTaskEditorDoc::PasteNew(LPCTSTR pStrName)
+{
+	POSITION pos = theApp.GetFirstDocTemplatePosition();
+	CTaskEditorDoc* pFindDoc = NULL;
+	while (pos != NULL)
+	{
+		CDocTemplate *p = theApp.GetNextDocTemplate(pos);
+		POSITION posdoc = p->GetFirstDocPosition();
+		while (posdoc != NULL)
+		{
+			CDocument* pDoc = p->GetNextDoc(posdoc);
+			if (pDoc != NULL && pDoc->GetTitle() == pStrName)
+			{
+				pFindDoc = (CTaskEditorDoc*)pDoc;
+				break;
+			}
+		}
+		if (NULL != pFindDoc)
+		{
+			break;
+		}
+	}
+
+	if (pFindDoc != NULL)
+	{
+		tinyxml2::XMLDocument tDocument;
+		pFindDoc->SaveToXml(tDocument);
+		LoadFromXml(tDocument);
+	}
+	else
+	{
+		tinyxml2::XMLDocument tDocument;
+		CString strFilePath = CString("Tasks\\") + pStrName;
+		char acBuffer[4096] = { 0 };
+
+		UnicodeToAnsi(strFilePath, acBuffer, sizeof(acBuffer));
+		if (tinyxml2::XML_SUCCESS == tDocument.LoadFile(acBuffer))
+		{
+			LoadFromXml(tDocument);	
+		}
+	}
 }

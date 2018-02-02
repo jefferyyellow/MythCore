@@ -607,6 +607,7 @@ BEGIN_MESSAGE_MAP(CGridCtrl, CWnd)
     ON_NOTIFY(GVN_ENDLABELEDIT, IDC_INPLACE_CONTROL, OnEndInPlaceEdit)
 	ON_NOTIFY(GVN_LABELEDIT, IDC_INPLACE_CONTROL, OnInPlaceEdit)
 	ON_NOTIFY(GVN_COMBOSELCHANGE, IDC_INPLACE_CONTROL, OnComboSelChange)
+	ON_NOTIFY(GVN_COMBODROPDOWN, IDC_INPLACE_CONTROL, OnComboDropDown)
 END_MESSAGE_MAP()
 
 
@@ -1403,6 +1404,21 @@ void CGridCtrl::OnComboSelChange(NMHDR* pNMHDR, LRESULT* pResult)
 	}
 
 	SendMessageToParent(nRow, nCol, GVN_COMBOSELCHANGE);
+}
+
+void CGridCtrl::OnComboDropDown(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	GV_DISPINFO *pgvDispInfo = (GV_DISPINFO *)pNMHDR;
+	GV_ITEM     *pgvItem = &pgvDispInfo->item;
+
+	// In case OnEndInPlaceEdit called as window is being destroyed
+	if (!IsWindow(GetSafeHwnd()))
+		return;
+
+	int nRow = pgvItem->row;
+	int nCol = pgvItem->col;
+
+	SendMessageToParent(nRow, nCol, GVN_COMBODROPDOWN);
 }
 
 // Handle horz scrollbar notifications
@@ -4657,6 +4673,21 @@ BOOL CGridCtrl::SetItemText(int nRow, int nCol, LPCTSTR str)
 
     SetModified(TRUE, nRow, nCol);
     return TRUE;
+}
+
+BOOL CGridCtrl::SetItemHintText(int nRow, int nCol, LPCTSTR str)
+{
+	if (GetVirtualMode())
+		return FALSE;
+
+	CGridCellBase* pCell = GetCell(nRow, nCol);
+	if (!pCell)
+		return FALSE;
+
+	pCell->SetHintText(str);
+
+	SetModified(TRUE, nRow, nCol);
+	return TRUE;
 }
 
 #if !defined(_WIN32_WCE) || (_WIN32_WCE >= 210)

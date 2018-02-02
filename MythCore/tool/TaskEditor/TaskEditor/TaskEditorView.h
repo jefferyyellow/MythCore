@@ -13,6 +13,7 @@ enum EmGridDataType
 	emDataType_None				= 0,		// 无
 	emDataType_MainNode			= 1,		// 主节点
 	emDataType_DataNode			= 2,		// 条件节点
+	emDataType_ParamNode		= 3,		// 参数节点
 };
 class CGridData
 {
@@ -82,12 +83,13 @@ public:
 
 	void OnCondGridClickDown(NMHDR* pNMHDR, LRESULT* pResult);
 	void OnDiagGridClickDown(NMHDR* pNMHDR, LRESULT* pResult);
-	void CondDiagGridButtonDown(CGridCtrl* pGridCtrl, int nRow, int nColumn, int nOldSelect);
+	void CondDiagGridButtonDown(CGridCtrl* pGridCtrl, int nRow, int nColumn, int nOldSelect, int nParamNum);
 	void OnComboSelChange(NMHDR* pNMHDR, LRESULT* pResult);
+	void OnComboDropDown(NMHDR* pNMHDR, LRESULT* pResult);
 	void OnStartEdit(NMHDR* pNMHDR, LRESULT* pResult);
 	void AddCondRow(CGridCtrl* pGridCtrl, int nRowNum, CTaskMainNode* pMainNode, wstring& strCondType, CStringArray& strParaValue, int nParamNum);
 	void SetCondParam(CGridCtrl* pGridCtrl, int nRowNum, TASK_NODE_LIST& rNodeList, CStringArray& strParaValue, int nParamNum);
-	CGridCellCombo* AddComboBox(CGridCtrl* pGridCtrl, OPTION_LIST& rOptionList, int nRowNum, int nColumnNum, wstring& strDefaultValue, int& rOptionIndex);
+	CGridCellCombo* AddComboBox(CGridCtrl* pGridCtrl, CTaskMainNode* pMainNode, int nRowNum, int nColumnNum, wstring& strDefaultValue, int& rOptionIndex, int nStyle);
 
 	void SaveToXml();
 	afx_msg void OnSize(UINT nType, int cx, int cy);

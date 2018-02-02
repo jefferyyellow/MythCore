@@ -117,6 +117,12 @@
     <ClInclude Include="commondefine.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="NewCellTypes\GridPopCell.h">
+      <Filter>GridCtrlCell</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionView.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TaskEditor.cpp">
@@ -195,6 +201,12 @@
       <Filter>GridCtrlCell</Filter>
     </ClCompile>
     <ClCompile Include="commondefine.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="NewCellTypes\GridPopCell.cpp">
+      <Filter>GridCtrlCell</Filter>
+    </ClCompile>
+    <ClCompile Include="OptionView.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

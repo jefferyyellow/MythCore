@@ -304,15 +304,16 @@ BEGIN
     POPUP "资源管理器"
     BEGIN
         MENUITEM "打开(&O)",                      ID_OPEN
-        MENUITEM "打开方式(&W)....",                ID_OPEN_WITH
-        MENUITEM SEPARATOR
-        MENUITEM "编译(&C)",                      ID_DUMMY_COMPILE
-        MENUITEM SEPARATOR
-        MENUITEM "剪切(&T)\tCtrl+X",              ID_EDIT_CUT
+        //MENUITEM "打开方式(&W)....",                ID_OPEN_WITH
+        //MENUITEM SEPARATOR
+        //MENUITEM "编译(&C)",                      ID_DUMMY_COMPILE
+        //MENUITEM SEPARATOR
+        //MENUITEM "剪切(&T)\tCtrl+X",              ID_EDIT_CUT
         MENUITEM "复制(&C)\tCtrl+C",              ID_EDIT_COPY
+		MENUITEM "粘贴(&P)\tCtrl+V",              ID_EDIT_PASTE
         MENUITEM "移除(&R)",                      ID_EDIT_CLEAR
-        MENUITEM SEPARATOR
-        MENUITEM "属性(&P)...",                   ID_PROPERTIES
+        //MENUITEM SEPARATOR
+        //MENUITEM "属性(&P)...",                   ID_PROPERTIES
     END
 END
 

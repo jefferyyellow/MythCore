@@ -4,7 +4,7 @@
 #include "FileView.h"
 #include "Resource.h"
 #include "TaskEditor.h"
-
+#include "TaskEditorDoc.h"
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -13,6 +13,59 @@ static char THIS_FILE[]=__FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 // CFileView
+int CALLBACK TreeCompareProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
+{
+	CViewTree*       pViewTree = (CViewTree*)lParamSort;
+	CString         strItem1 = pViewTree->GetItemText((HTREEITEM)lParam1);
+	CString         strItem2 = pViewTree->GetItemText((HTREEITEM)lParam2);
+
+	int nPos1 = strItem1.Find(_T('_'));
+	int nPos2 = strItem2.Find(_T('_'));
+
+	if (nPos1 < 0)
+	{
+		return -1;
+	}
+
+	if (nPos2 < 0)
+	{
+		return 1;
+	}
+
+	strItem1 = strItem1.Right(strItem1.GetLength() - nPos1 -1);
+	strItem2 = strItem2.Right(strItem2.GetLength() - nPos2 -1);
+
+	nPos1 = strItem1.Find(_T('.'));
+	nPos2 = strItem2.Find(_T('.'));
+	
+	if (nPos1 < 0)
+	{
+		return -1;
+	}
+
+	if (nPos2 < 0)
+	{
+		return 1;
+	}
+
+	strItem1 = strItem1.Left(nPos1);
+	strItem2 = strItem2.Left(nPos2);
+
+	int nItem1 = _ttoi(strItem1);
+	int nItem2 = _ttoi(strItem2);
+	if (nItem1 > nItem2)
+	{
+		return 1;
+	}
+	else if (nItem1 < nItem2)
+	{
+		return -1;
+	}
+	else
+	{
+		return 0;
+	}
+}
 
 CFileView::CFileView()
 {
@@ -26,12 +79,9 @@ BEGIN_MESSAGE_MAP(CFileView, CDockablePane)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_CONTEXTMENU()
-	ON_COMMAND(ID_PROPERTIES, OnProperties)
 	ON_COMMAND(ID_OPEN, OnFileOpen)
-	ON_COMMAND(ID_OPEN_WITH, OnFileOpenWith)
-	ON_COMMAND(ID_DUMMY_COMPILE, OnDummyCompile)
-	ON_COMMAND(ID_EDIT_CUT, OnEditCut)
 	ON_COMMAND(ID_EDIT_COPY, OnEditCopy)
+	ON_COMMAND(ID_EDIT_PASTE, OnEditPaste)
 	ON_COMMAND(ID_EDIT_CLEAR, OnEditClear)
 	ON_WM_PAINT()
 	ON_WM_SETFOCUS()
@@ -108,7 +158,8 @@ void CFileView::FillFileView()
 	{
 		if (!(ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
 		{
-			m_wndFileView.InsertItem(ffd.cFileName, 1, 1, hRoot);
+			HTREEITEM hItem = m_wndFileView.InsertItem(ffd.cFileName, 1, 1, hRoot);
+			m_wndFileView.SetItemData(hItem, (DWORD)hItem);
 		}
 	} while (FindNextFile(hFind, &ffd) != 0);
 
@@ -119,6 +170,24 @@ void CFileView::FillFileView()
 	}
 	FindClose(hFind);
 	m_wndFileView.Expand(hRoot, TVE_EXPAND);
+	FileViewSort(hRoot);
+}
+
+void CFileView::AddFileItem(CString strFileName)
+{
+	HTREEITEM hRoot = m_wndFileView.GetRootItem();
+	HTREEITEM hItem  = m_wndFileView.InsertItem(strFileName, 1, 1, hRoot);
+	m_wndFileView.SetItemData(hItem, (DWORD)hItem);
+	FileViewSort(hRoot);
+}
+
+void CFileView::FileViewSort(HTREEITEM hParentItem)
+{
+	TVSORTCB tSortCB;
+	tSortCB.hParent = hParentItem;
+	tSortCB.lpfnCompare = TreeCompareProc;
+	tSortCB.lParam = (LPARAM)&m_wndFileView;
+	m_wndFileView.SortChildrenCB(&tSortCB);
 }
 
 void CFileView::OnContextMenu(CWnd* pWnd, CPoint point)
@@ -166,44 +235,46 @@ void CFileView::AdjustLayout()
 	m_wndFileView.SetWindowPos(NULL, rectClient.left + 1, rectClient.top + cyTlb + 1, rectClient.Width() - 2, rectClient.Height() - cyTlb - 2, SWP_NOACTIVATE | SWP_NOZORDER);
 }
 
-void CFileView::OnProperties()
-{
-	AfxMessageBox(_T("属性...."));
-
-}
-
 void CFileView::OnFileOpen()
 {
 	// TODO:  在此处添加命令处理程序代码
 	OpenSelectFile();
-	//pEditorView = (CTemplateEditorView*)((CMainFrame*)AfxGetMainWnd())->MDIGetActive()->GetActiveView();
-	//pMainFrame->MDIGetActive()->GetActiveDocument()->SetTitle(s2ws(pTemplateFieldData->m_strTemplateName).c_str());
-
-}
-
-void CFileView::OnFileOpenWith()
-{
-	// TODO:  在此处添加命令处理程序代码
-}
-
-void CFileView::OnDummyCompile()
-{
-	// TODO:  在此处添加命令处理程序代码
-}
-
-void CFileView::OnEditCut()
-{
-	// TODO:  在此处添加命令处理程序代码
 }
 
 void CFileView::OnEditCopy()
 {
 	// TODO:  在此处添加命令处理程序代码
+	HTREEITEM hTreeItem = m_wndFileView.GetSelectedItem();
+	if (NULL == hTreeItem)
+	{
+		return;
+	}
+	mCopyItemString = m_wndFileView.GetItemText(hTreeItem);
+}
+
+void CFileView::OnEditPaste()
+{
+	CWinApp* pApp = AfxGetApp();
+	POSITION curTemplatePos = pApp->GetFirstDocTemplatePosition();
+	if (curTemplatePos != NULL)
+	{
+		CDocTemplate* curTemplate = pApp->GetNextDocTemplate(curTemplatePos);
+		CTaskEditorDoc* pDoc = (CTaskEditorDoc*)curTemplate->OpenDocumentFile(NULL);
+		if (NULL != pDoc)
+		{
+			pDoc->PasteNew(mCopyItemString);
+		}
+	}
 }
 
 void CFileView::OnEditClear()
 {
 	// TODO:  在此处添加命令处理程序代码
+	int nResult = AfxMessageBox(_T("为了避免误删，目前不支持删除"), MB_OKCANCEL);
+	//if (nResult == IDOK)
+	//{
+	//	
+	//}
 }
 
 void CFileView::OnPaint()

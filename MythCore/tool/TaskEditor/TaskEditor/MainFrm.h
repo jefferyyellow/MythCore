@@ -8,6 +8,7 @@
 #include "OutputWnd.h"
 #include "PropertiesWnd.h"
 #include "TaskTemplate.h"
+#include "OptionView.h"
 class CMainFrame : public CMDIFrameWndEx
 {
 	DECLARE_DYNAMIC(CMainFrame)
@@ -32,6 +33,8 @@ public:
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
 #endif
+	void	AddFileItem(CString strFileName);
+	void	ShowOptionView(CString strConfigName, CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum);
 
 protected:  // 控件条嵌入成员
 	CMFCMenuBar       m_wndMenuBar;
@@ -39,6 +42,7 @@ protected:  // 控件条嵌入成员
 	CMFCStatusBar     m_wndStatusBar;
 	CMFCToolBarImages m_UserImages;
 	CFileView         m_wndFileView;
+	COptionView		  m_wndOptionView;
 	//CClassView        m_wndClassView;
 	//COutputWnd        m_wndOutput;
 	//CPropertiesWnd    m_wndProperties;

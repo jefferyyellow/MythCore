@@ -177,6 +177,7 @@ typedef BOOL (CALLBACK* GRIDCALLBACK)(GV_DISPINFO *, LPARAM);
 #define GVN_ODCACHEHINT         LVN_ODCACHEHINT 
 #define GVN_LABELEDIT			WM_CHAR
 #define GVN_COMBOSELCHANGE		CBN_SELCHANGE
+#define GVN_COMBODROPDOWN		CBN_DROPDOWN
 class CGridCtrl;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -369,6 +370,7 @@ public:
     BOOL   SetItem(const GV_ITEM* pItem);
     BOOL   GetItem(GV_ITEM* pItem);
     BOOL   SetItemText(int nRow, int nCol, LPCTSTR str);
+	BOOL   SetItemHintText(int nRow, int nCol, LPCTSTR str);
     // The following was virtual. If you want to override, use 
     //  CGridCellBase-derived class's GetText() to accomplish same thing
     CString GetItemText(int nRow, int nCol) const;
@@ -779,6 +781,7 @@ protected:
     afx_msg void OnEndInPlaceEdit(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnInPlaceEdit(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnComboSelChange(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnComboDropDown(NMHDR* pNMHDR, LRESULT* pResult);
     DECLARE_MESSAGE_MAP()
 
     enum eMouseModes { MOUSE_NOTHING, MOUSE_SELECT_ALL, MOUSE_SELECT_COL, MOUSE_SELECT_ROW,

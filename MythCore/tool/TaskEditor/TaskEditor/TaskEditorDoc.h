@@ -52,6 +52,8 @@ public:
 
 public:
 	void	OpenDocument();
+	void	LoadFromXml(tinyxml2::XMLDocument& tDocument);
+	void	SaveToXml(tinyxml2::XMLDocument& tDocument);
 	XMLElement* SaveMainNode(CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum,
 		tinyxml2::XMLDocument& tDocument, XMLElement* pParentElem, bool bAttribute);
 	void	SaveDataNode(CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum,
@@ -62,7 +64,7 @@ public:
 
 	int		LoadDataNode(CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum,
 		tinyxml2::XMLDocument& tDocument, XMLElement* pParentElem, int nParamNum);
-
+	
+	void	PasteNew(LPCTSTR pStrName);
 private:
-	CString	mOpenFilePath;
 };

@@ -121,6 +121,7 @@
     <ClInclude Include="NewCellTypes\GridCellCombo.h" />
     <ClInclude Include="NewCellTypes\GridCellDateTime.h" />
     <ClInclude Include="NewCellTypes\GridCellNumeric.h" />
+    <ClInclude Include="NewCellTypes\GridPopCell.h" />
     <ClInclude Include="NewCellTypes\GridURLCell.h" />
     <ClInclude Include="OutputWnd.h" />
     <ClInclude Include="PropertiesWnd.h" />
@@ -131,6 +132,7 @@
     <ClInclude Include="TaskEditorDoc.h" />
     <ClInclude Include="TaskEditorView.h" />
     <ClInclude Include="TaskTemplate.h" />
+    <ClInclude Include="OptionView.h" />
     <ClInclude Include="ViewTree.h" />
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +155,7 @@
     <ClCompile Include="NewCellTypes\GridCellCombo.cpp" />
     <ClCompile Include="NewCellTypes\GridCellDateTime.cpp" />
     <ClCompile Include="NewCellTypes\GridCellNumeric.cpp" />
+    <ClCompile Include="NewCellTypes\GridPopCell.cpp" />
     <ClCompile Include="NewCellTypes\GridURLCell.cpp" />
     <ClCompile Include="OutputWnd.cpp" />
     <ClCompile Include="PropertiesWnd.cpp" />
@@ -164,6 +167,7 @@
     <ClCompile Include="TaskEditorDoc.cpp" />
     <ClCompile Include="TaskEditorView.cpp" />
     <ClCompile Include="TaskTemplate.cpp" />
+    <ClCompile Include="OptionView.cpp" />
     <ClCompile Include="ViewTree.cpp" />
   </ItemGroup>
   <ItemGroup>

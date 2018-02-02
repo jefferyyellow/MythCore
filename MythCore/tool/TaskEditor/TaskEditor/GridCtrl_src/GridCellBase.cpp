@@ -401,6 +401,7 @@ BOOL CGridCellBase::Draw(CDC* pDC, int nRow, int nCol, CRect rect,  BOOL bEraseB
 	LPCTSTR strText = GetText();
 	if (strText[0] == _T('\0'))
 	{
+		SetTextColor(pDC->m_hDC, RGB(255, 0, 0));
 		DrawText(pDC->m_hDC, GetHintText(), -1, rect, GetFormat() | DT_NOPREFIX);
 	}
 	else
