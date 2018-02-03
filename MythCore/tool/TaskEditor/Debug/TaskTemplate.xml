@@ -1,49 +1,170 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Task>
+  <!--任务主描述部分-->
   <TextNode Name="任务Id" DesName="TaskId"/>
   <TextNode Name="任务类型" DesName="TaskType">
-    <Option Name="1,天书任务"/>
-    <Option Name="2,成长任务"/>
+    <Option Name="1,成长任务"/>
+    <Option Name="2,天书任务"/>
+    <Option Name="3,悬赏任务"/>
+    <Option Name="4,江湖任务"/>
+    <Option Name="5,伙伴任务"/>
+    <Option Name="6,传闻任务"/>
   </TextNode>
-  <TextNode Name="接任务Npc" DesName="AcceptNpc"/>
   <TextNode Name="任务名字" DesName="TaskName"/>
+  <TextNode Name="接任务地图" DesName="AcceptMap"/>
+  <TextNode Name="接任务Npc" DesName="AcceptNpc" ConfigName="Template">
+    <Option Name="请去模板选择"/>
+  </TextNode>
+  <TextNode Name="交任务地图" DesName="SubmitMap"/>
+  <TextNode Name="交任务Npc" DesName="SubmitNpc" ConfigName="Template">
+    <Option Name="请去模板选择"/>
+  </TextNode>
   <TextNode Name="任务可接描述" DesName="Desc"/>
   <TextNode Name="任务已接描述" DesName="AcceptdDesc"/>
-  <TextNode Name="交任务Npc" DesName="SubmitNpc"/>
-  <TextNode Name="接任务地图" DesName="AccpetMap"/>
-  <TextNode Name="交任务地图" DesName="SubmitMap"/>
   <TextNode Name="是否可放弃" DesName="CanAbandon">
     <Option Name="0,否"/>
     <Option Name="1,是"/>
   </TextNode>
+  <TextNode Name="副本索引" DesName="InstanceIndex"/>
+  <TextNode Name="接任务触发剧情" DesName="AcceptStoryId"/>
+  <TextNode Name="交任务触发剧情" DesName="SubmitStoryId"/>
+  <TextNode Name="交任务触发剧情" DesName="CompleteStoryId"/>
+  <TextNode Name="是否自动寻路" DesName="AutoPath">
+    <Option Name="0,否"/>
+    <Option Name="1,是"/>
+  </TextNode>
+  <TextNode Name="天书ID" DesName="BookId"/>
+  <TextNode Name="伙伴ID" DesName="ParnterId"/>
+  <TextNode Name="推荐等级" DesName="RecommendLevel"/>
+  
+  <!--条件部分-->
+  <!--接受条件-->
   <CondNode Name="接受条件" DesName="AccpetCond">
-    <Option Name="1,门派">
-      <TextNode Name="接受等级"/>
-      <TextNode Name="名字">
-        <Option Name="0,武当"/>
-        <Option Name="1,少林"/>
-      </TextNode>
+    <Option Name="1,前置任务">
+      <TextNode Name="前置任务Id"/>
+      <TextNode Name="前置任务状态"/>
     </Option>
-    <Option Name="2,前置任务">
-      <TextNode Name="前置任务ID"/>
-    </Option>
-    <Option Name="3,等级">
-      <TextNode Name="等级"/>
-    </Option>
-  </CondNode>
-  <CondNode Name="完成条件" DesName="CompleteCond">
-    <Option Name="1,等级" Value="1">
+    <Option Name="2,等级">
       <TextNode Name="接受等级"/>
       <TextNode Name="显示等级"/>
     </Option>
-    <Option Name="2,收集道具" Value="1">
+    <Option Name="3,门派">
+      <TextNode Name="门派ID">
+        <Option Name="0,无门派"/>
+        <Option Name="1,少林"/>
+        <Option Name="2,峨嵋"/>
+        <Option Name="3,武当"/>
+      </TextNode>
+    </Option>
+    <Option Name="4,Npc友好度">
+      <TextNode Name="Npc友好度"/>
+    </Option>
+    <Option Name="5,声望">
+      <TextNode Name="接受声望"/>
+      <TextNode Name="显示声望"/>
+    </Option>
+    <Option Name="6,上阵伙伴">
+      <TextNode Name="伙伴Id"/>
+    </Option>
+    <Option Name="7,上阵伙伴数量">
+      <TextNode Name="伙伴数量"/>
+    </Option>
+  </CondNode>
+
+  <!--完成条件-->
+  <CondNode Name="完成条件" DesName="CompleteCond">
+    <Option Name="1,杀怪">
+      <TextNode Name="怪物Id" ConfigName="Template">
+        <Option Name="请去模板选择"/>
+      </TextNode>
+      <TextNode Name="怪物数目"/>
+      <TextNode Name="地图Id"/>
+    </Option>
+    <Option Name="2,收集道具">
       <TextNode Name="道具ID" ConfigName="Template">
         <Option Name="请去模板选择"/>
       </TextNode>
       <TextNode Name="道具数目"/>
     </Option>
+    <Option Name="3,等级">
+      <TextNode Name="玩家等级"/>
+    </Option>
+    <Option Name="4,通关副本">
+      <TextNode Name="章节索引"/>
+      <TextNode Name="副本类型"/>
+    </Option>
+    <Option Name="5,招募伙伴">
+      <TextNode Name="伙伴Id" ConfigName="Template">
+        <Option Name="请去模板选择"/>
+      </TextNode>
+    </Option>
+    <Option Name="6,采集">
+      <TextNode Name="道具ID" ConfigName="Template">
+        <Option Name="请去模板选择"/>
+      </TextNode>
+      <TextNode Name="道具数目"/>
+    </Option>
+    <Option Name="7,挑战NPC">
+      <TextNode Name="Npc Id" ConfigName="Template">
+        <Option Name="请去模板选择"/>
+      </TextNode>
+    </Option>
+    <Option Name="8,主角战力">
+      <TextNode Name="战力"/>
+    </Option>
+    <Option Name="9,全队战力">
+      <TextNode Name="战力"/>
+    </Option>
+    <Option Name="10,装备强化">
+      <TextNode Name="装备部位"/>
+      <TextNode Name="强化等级"/>
+    </Option>
+    <Option Name="11,拜访对话">
+    </Option>
+    <Option Name="12,战斗">
+      <TextNode Name="战斗ID"/>
+    </Option>
   </CondNode>
-  <DiagNode Name="接任务对话">
+  <!--任务奖励-->
+  <CondNode Name="任务奖励" DesName="TaskAward">
+    <Option Name="1,金币">
+      <TextNode Name="金币数目"/>
+    </Option>
+    <Option Name="2,元宝">
+      <TextNode Name="元宝数目"/>
+    </Option>
+    <Option Name="3,声望">
+      <TextNode Name="声望数目"/>
+    </Option>
+    <Option Name="4,天赋">
+      <TextNode Name="天赋数目"/>
+    </Option>
+    <Option Name="5,经验">
+      <TextNode Name="经验数目"/>
+    </Option>
+    <Option Name="6,伙伴">
+      <TextNode Name="伙伴Id"/>
+    </Option>
+    <Option Name="7,友好度">
+      <TextNode Name="伙伴Id"/>
+      <TextNode Name="伙伴友好度"/>
+    </Option>
+    <Option Name="8,道具">
+      <TextNode Name="道具ID" ConfigName="Template">
+        <Option Name="请去模板选择"/>
+      </TextNode>
+      <TextNode Name="道具数目"/>
+    </Option>
+    <Option Name="9,功能">
+      <TextNode Name="功能Id"/>
+    </Option>
+    <Option Name="10,大地图">
+      <TextNode Name="大地图元素Id"/>
+    </Option>
+  </CondNode>
+  
+  <!--对话部分-->
+  <DiagNode Name="接任务对话" DesName="AccpetDiag">
     <Option Name="1,NPC对话">
       <TextNode Name="内容"/>
     </Option>
@@ -57,4 +178,33 @@
       <TextNode Name="内容"/>
     </Option>
   </DiagNode>
+  <DiagNode Name="任务中对话" DesName="ProcessDiag">
+    <Option Name="1,NPC对话">
+      <TextNode Name="内容"/>
+    </Option>
+    <Option Name="2,玩家对话">
+      <TextNode Name="内容"/>
+    </Option>
+    <Option Name="3,男玩家对话">
+      <TextNode Name="内容"/>
+    </Option>
+    <Option Name="4,女玩家对话">
+      <TextNode Name="内容"/>
+    </Option>
+  </DiagNode>
+  <DiagNode Name="完成任务对话" DesName="CompleteDiag">
+    <Option Name="1,NPC对话">
+      <TextNode Name="内容"/>
+    </Option>
+    <Option Name="2,玩家对话">
+      <TextNode Name="内容"/>
+    </Option>
+    <Option Name="3,男玩家对话">
+      <TextNode Name="内容"/>
+    </Option>
+    <Option Name="4,女玩家对话">
+      <TextNode Name="内容"/>
+    </Option>
+  </DiagNode>
+ 
 </Task>

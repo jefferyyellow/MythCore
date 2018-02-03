@@ -256,7 +256,7 @@ XMLElement* CTaskEditorDoc::SaveMainNode(CGridCtrl* pGridCtrl, int nRowNum, int 
 	}
 
 
-	UnicodeToAnsi(pMainNode->mDesName.c_str(), acBuffer, sizeof(acBuffer));
+	UnicodeToUtf8(pMainNode->mDesName.c_str(), acBuffer, sizeof(acBuffer));
 	XMLElement* pMainElem = tDocument.NewElement(acBuffer);
 
 
@@ -268,7 +268,7 @@ XMLElement* CTaskEditorDoc::SaveMainNode(CGridCtrl* pGridCtrl, int nRowNum, int 
 			strValue = strValue.Left(strValue.Find(_T(",")));
 		}
 
-		UnicodeToAnsi(strValue.GetBuffer(), acBuffer, sizeof(acBuffer));
+		UnicodeToUtf8(strValue.GetBuffer(), acBuffer, sizeof(acBuffer));
 		pMainElem->SetAttribute("Value", acBuffer);
 	}
 
@@ -308,7 +308,7 @@ void CTaskEditorDoc::SaveDataNode(CGridCtrl* pGridCtrl, int nRowNum, int nColumn
 	strValue = strValue.Left(strValue.Find(_T(",")));
 
 	XMLElement* pMainElem = tDocument.NewElement("Cond");
-	UnicodeToAnsi(strValue.GetBuffer(), acBuffer, sizeof(acBuffer));
+	UnicodeToUtf8(strValue.GetBuffer(), acBuffer, sizeof(acBuffer));
 	pMainElem->SetAttribute("Type", acBuffer);
 
 	for (int j = 0; j < nParamNum; ++j)
@@ -331,7 +331,7 @@ void CTaskEditorDoc::SaveDataNode(CGridCtrl* pGridCtrl, int nRowNum, int nColumn
 
 		char acAttributeName[MAX_PATH] = { 0 };
 		_snprintf_s(acAttributeName, sizeof(acAttributeName), "Para%d", j);
-		UnicodeToAnsi(strParam.GetBuffer(), acBuffer, sizeof(acBuffer));
+		UnicodeToUtf8(strParam.GetBuffer(), acBuffer, sizeof(acBuffer));
 		pMainElem->SetAttribute(acAttributeName, acBuffer);
 	}
 	pParentElem->LinkEndChild(pMainElem);
@@ -457,7 +457,7 @@ tinyxml2::XMLDocument& tDocument, XMLElement* pParentElem, bool bAttribute)
 
 	if (bAttribute)
 	{
-		AnsiToUnicode(pMainElem->Attribute("Value"), wBuffer, sizeof(wBuffer) / 2 - 1);
+		Utf8ToUnicode(pMainElem->Attribute("Value"), wBuffer, sizeof(wBuffer) / 2 - 1);
 		if (pMainNode->mOptionList.size() > 0)
 		{
 			for (int nOptionNum = 0; nOptionNum < pMainNode->mOptionList.size(); ++nOptionNum)
@@ -515,7 +515,7 @@ int CTaskEditorDoc::LoadDataNode(CGridCtrl* pGridCtrl, int nRowNum, int nColumnN
 	XMLElement* pCondElem = pParentElem->FirstChildElement("Cond");
 	for (; NULL != pCondElem; pCondElem = pCondElem->NextSiblingElement("Cond"))
 	{
-		AnsiToUnicode(pCondElem->Attribute("Type"), wBuffer, sizeof(wBuffer) / 2 - 1);
+		Utf8ToUnicode(pCondElem->Attribute("Type"), wBuffer, sizeof(wBuffer) / 2 - 1);
 		wstring strCondType(wBuffer);
 		if (pMainNode->mOptionList.size() > 0)
 		{
@@ -539,7 +539,7 @@ int CTaskEditorDoc::LoadDataNode(CGridCtrl* pGridCtrl, int nRowNum, int nColumnN
 				{
 					break;
 				}
-				AnsiToUnicode(pAttributeValue, wBuffer, sizeof(wBuffer) / 2 - 1);
+				Utf8ToUnicode(pAttributeValue, wBuffer, sizeof(wBuffer) / 2 - 1);
 				tOptionValue.Add(wBuffer);
 			}
 			pView->AddCondRow(pGridCtrl, nNewLineNum, pMainNode, strCondType, tOptionValue, MAX_DIAG_PARAM_NUM);

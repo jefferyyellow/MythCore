@@ -53,7 +53,7 @@ char* UnicodeToAnsi(const wchar_t* pSrc, char* pDst, int nMaxSize)
 
 }
 
-char* UnicodeToUtf8(wchar_t* pSrc, char* pDst, int nMaxSize)
+char* UnicodeToUtf8(const wchar_t* pSrc, char* pDst, int nMaxSize)
 {
 	// check params
 	if (NULL == pSrc || NULL == pDst || nMaxSize <= 0)
@@ -85,7 +85,7 @@ wchar_t* Utf8ToUnicode(const char* pSrc, wchar_t* pDst, int nMaxSize)
 	return pDst;
 }
 
-char* Utf8ToAnsi(char* pSrc, char* pDst, int nMaxSize)
+char* Utf8ToAnsi(const char* pSrc, char* pDst, int nMaxSize)
 {
 	// check params
 	if (NULL == pSrc || NULL == pDst || nMaxSize <= 0)
@@ -124,7 +124,7 @@ wchar_t* AnsiToUnicode(const char*pSrc, wchar_t* pDst, int nMaxSize)
 
 }
 
-char* AnsiToUtf8(char* pSrc, char* pDst, int nMaxSize)
+char* AnsiToUtf8(const char* pSrc, char* pDst, int nMaxSize)
 {
 	if (NULL == pSrc || NULL == pDst || nMaxSize <= 0)
 	{

@@ -67,7 +67,7 @@ public:
 	void	ClearMainNodeList(TASK_NODE_LIST& rList);
 	void	ClearOptionNameList(OPTION_NAME_LIST rList);
 
-	void	LoadTempName(const char* pTempNameFile);
+	void	LoadItemNameFile(const char* pTempNameFile);
 	void	LoadItemName(COptionNameItem* pParentTempName, XMLElement* pParentNodeElem, OPTION_NAME_HASH& rHashList);
 	wstring FindOptionName(wstring strConfigName, int nID);
 public:

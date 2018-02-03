@@ -122,7 +122,7 @@ void CTaskTemplate::loadOptionNode(CTaskOption* pOptionNode, XMLElement* pOption
 	}
 }
 
-void CTaskTemplate::LoadTempName(const char* pTempNameFile)
+void CTaskTemplate::LoadItemNameFile(const char* pTempNameFile)
 {
 	if (NULL == pTempNameFile)
 	{
@@ -163,7 +163,7 @@ void CTaskTemplate::LoadItemName(COptionNameItem* pParentTempName, XMLElement* p
 	}
 
 	wchar_t acBuffer[4096] = { 0 };
-	AnsiToUnicode(pParentNodeElem->Attribute("Name"), acBuffer, sizeof(acBuffer) / 2 - 1);
+	Utf8ToUnicode(pParentNodeElem->Attribute("Name"), acBuffer, sizeof(acBuffer) / 2 - 1);
 	pParentTempName->mName = acBuffer;
 	CString strName = acBuffer;
 	int nPos = strName.Find(',');

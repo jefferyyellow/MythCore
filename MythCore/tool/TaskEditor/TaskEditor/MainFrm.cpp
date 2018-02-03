@@ -193,7 +193,8 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// 将改进任务栏的可用性，因为显示的文档名带有缩略图。
 	ModifyStyle(0, FWS_PREFIXTITLE);
 	mTaskTemplate.loadTaskTemplate("TaskTemplate.xml");
-	mTaskTemplate.LoadTempName("TempName.xml");
+	mTaskTemplate.LoadItemNameFile("TempName.xml");
+	mTaskTemplate.LoadItemNameFile("MapName.xml");
 	m_wndOptionView.FillTempOptionView();
 	return 0;
 }
@@ -458,4 +459,9 @@ void CMainFrame::ShowOptionView(CString strConfigName, CGridCtrl* pGridCtrl, int
 	m_wndOptionView.SetGridCtrl(pGridCtrl);
 	m_wndOptionView.SetRowNum(nRowNum);
 	m_wndOptionView.SetColumnNum(nColumnNum);
+}
+
+void CMainFrame::GeneralTaskFile()
+{
+	// 寻找前置任务
 }
