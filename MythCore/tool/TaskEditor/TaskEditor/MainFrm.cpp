@@ -27,6 +27,9 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_COMMAND_RANGE(ID_VIEW_APPLOOK_WIN_2000, ID_VIEW_APPLOOK_WINDOWS_7, &CMainFrame::OnApplicationLook)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_VIEW_APPLOOK_WIN_2000, ID_VIEW_APPLOOK_WINDOWS_7, &CMainFrame::OnUpdateApplicationLook)
 	ON_WM_SETTINGCHANGE()
+	ON_WM_HOTKEY()
+	ON_COMMAND(ID_TASK_CONFIG, &CMainFrame::OnTaskConfig)
+	ON_COMMAND(ID_INTERNATION, &CMainFrame::OnTaskInternation)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -47,6 +50,8 @@ CMainFrame::CMainFrame()
 
 CMainFrame::~CMainFrame()
 {
+	//UnregisterHotKey(this->GetSafeHwnd(), 1001);
+	//UnregisterHotKey(this->GetSafeHwnd(), 1002);
 }
 
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -195,6 +200,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	mTaskTemplate.loadTaskTemplate("TaskTemplate.xml");
 	mTaskTemplate.LoadItemNameFile("TempName.xml");
 	mTaskTemplate.LoadItemNameFile("MapName.xml");
+	mTaskEditorConfig.LoadTaskEditorConfig("TaskEditorConfig.xml");
 	m_wndOptionView.FillTempOptionView();
 	return 0;
 }
@@ -438,6 +444,9 @@ BOOL CMainFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle, CWnd* pParent
 		}
 	}
 	m_wndOptionView.ShowPane(FALSE, FALSE, FALSE);
+	m_wndFileView.FillFileView();
+	//RegisterHotKey(m_hWnd, 1001, MOD_CONTROL, 's');
+	//RegisterHotKey(m_hWnd, 1002, MOD_CONTROL, 'S');
 	return TRUE;
 }
 
@@ -448,20 +457,295 @@ void CMainFrame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 	//m_wndOutput.UpdateFonts();
 }
 
-void CMainFrame::AddFileItem(CString strFileName)
+void CMainFrame::OnTaskConfig()
 {
-	m_wndFileView.AddFileItem(strFileName);
+	mLangDocument.Clear();
+	XMLDeclaration* pDeclaration = mLangDocument.NewDeclaration("xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"");
+	mLangDocument.LinkEndChild(pDeclaration);
+
+	XMLElement* pLangRootElem = mLangDocument.NewElement("LangList");
+	mLangDocument.LinkEndChild(pLangRootElem);
+
+
+
+	WIN32_FIND_DATA ffd;
+	HANDLE hFind = INVALID_HANDLE_VALUE;
+	DWORD dwError = 0;
+
+	vector<CString> vecLevelString;
+	map<int, CString> hashNpcTaskId;
+
+
+	int nMaxPhase = (mTaskEditorConfig.mMaxLevel + mTaskEditorConfig.mLevelPhase - 1) / mTaskEditorConfig.mLevelPhase;
+	for (int i = 0; i < nMaxPhase; ++ i)
+	{
+		vecLevelString.push_back(_T(""));
+	}
+
+
+	hFind = FindFirstFile(_T("Tasks\\*"), &ffd);
+	if (INVALID_HANDLE_VALUE == hFind)
+	{
+		return;
+	}
+
+	do
+	{
+		if (!(ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+		{
+			CString strFilePath = CString("Tasks\\") + ffd.cFileName;
+			CString strFileName = ffd.cFileName;
+			strFileName = strFileName.Left(strFileName.Find('.'));
+			if (ffd.cFileName[0] < _T('0') || ffd.cFileName[0] > _T('9'))
+			{
+				continue;
+			}
+			tinyxml2::XMLDocument tDocument;
+			char acBuffer[4096] = { 0 };
+			UnicodeToAnsi(strFilePath, acBuffer, sizeof(acBuffer));
+			if (tinyxml2::XML_SUCCESS != tDocument.LoadFile(acBuffer))
+			{
+				continue;
+			}
+
+			int nNpcId = 0;
+			int nLevel = GetTaskLevelAndNpcId(tDocument, nNpcId);
+			int nPhase = (nLevel - 1) / mTaskEditorConfig.mLevelPhase;
+			if (nPhase >= nMaxPhase)
+			{
+				AfxMessageBox(_T("任务等级已经超过最大等级!"), MB_ICONEXCLAMATION);
+				break;
+			}
+
+			if (vecLevelString[nPhase] != _T(""))
+			{
+				vecLevelString[nPhase].Append(_T(","));
+			}
+
+			vecLevelString[nPhase].Append(strFileName);
+
+			if (nNpcId > 0)
+			{
+
+				if (hashNpcTaskId[nNpcId] != _T(""))
+				{
+					hashNpcTaskId[nNpcId].Append(_T(","));
+				}
+				
+				hashNpcTaskId[nNpcId].Append(strFileName);
+			}
+
+			ProcessTaskLanguage(tDocument, pLangRootElem);
+			CString strTargetFileName = CString(_T("Targets\\")) + ffd.cFileName;
+			UnicodeToAnsi(strTargetFileName, acBuffer, sizeof(acBuffer));
+			tDocument.SaveFile(acBuffer);
+		}
+	} while (FindNextFile(hFind, &ffd) != 0);
+
+	dwError = GetLastError();
+	if (dwError != ERROR_NO_MORE_FILES)
+	{
+		return;
+	}
+	FindClose(hFind);
+
+	SaveTaskLevelConfig("Targets\\LevelTaskList.xml", vecLevelString);
+	SaveNpcTaskConfig("Targets\\NpcTaskList.xml", hashNpcTaskId);
+	mLangDocument.SaveFile("Targets\\TaskLang.xml");
+	AfxMessageBox(_T("生成任务配置完成!"));
+}
+
+int CMainFrame::GetTaskLevelAndNpcId(tinyxml2::XMLDocument& tDocument, int& rNpcId)
+{
+	XMLElement* pRootElem = tDocument.RootElement();
+	if (NULL == pRootElem)
+	{
+		return -1;
+	}
+
+	XMLElement* pNpcIdElem = pRootElem->FirstChildElement("AcceptNpc");
+	if (NULL != pNpcIdElem)
+	{
+		rNpcId = pNpcIdElem->IntAttribute("Value");
+	}
+
+	XMLElement* pAccpetCondElem = pRootElem->FirstChildElement("AccpetCond");
+	if (NULL == pAccpetCondElem)
+	{
+		return -1;
+	}
+
+	int nLevel = 0;
+	wchar_t wBuffer[4096] = { 0 };
+	char acBuffer[4096] = { 0 };
+
+	XMLElement* pCondElem = pAccpetCondElem->FirstChildElement("Cond");
+	for (; NULL != pCondElem; pCondElem = pCondElem->NextSiblingElement("Cond"))
+	{
+		Utf8ToUnicode(pCondElem->Attribute("Type"), wBuffer, sizeof(wBuffer) / 2 - 1);
+		int nCondType = _ttoi(wBuffer);
+		if (nCondType == mTaskEditorConfig.mLevelCond)
+		{
+			UnicodeToAnsi(mTaskEditorConfig.mLevelParam.c_str(), acBuffer, sizeof(acBuffer));
+			nLevel = pCondElem->IntAttribute(acBuffer);
+			break;
+		}
+	}
+
+	return nLevel;
+}
+
+void CMainFrame::ProcessTaskLanguage(tinyxml2::XMLDocument& tDocument, XMLElement* pLangRootElem)
+{
+	XMLElement* pRootElem = tDocument.RootElement();
+	if (NULL == pRootElem)
+	{
+		return;
+	}
+
+	const char* pTaskId = NULL;
+	XMLElement* pTaskIdElem = pRootElem->FirstChildElement("TaskId");
+	if (NULL != pTaskIdElem)
+	{
+		pTaskId = pTaskIdElem->Attribute("Value");
+	}
+	if (NULL == pTaskId)
+	{
+		return;
+	}
+	char acBuffer[4096] = { 0 };
+
+	int nLangCount = 0;
+	for (int i = 0; i < mTaskTemplate.mMainLangList.size(); ++ i)
+	{
+		XMLElement* pMainElem = pRootElem->FirstChildElement(mTaskTemplate.mMainLangList[i].c_str());
+		if (NULL != pMainElem)
+		{
+
+			const char* pLangValue = pMainElem->Attribute("Value");
+			if (NULL != pLangValue)
+			{
+				_snprintf_s(acBuffer, sizeof(acBuffer), "tkl_%s_%d", pTaskId, nLangCount);
+				pMainElem->SetAttribute("Value", acBuffer);
+
+				XMLElement* pLangElem = mLangDocument.NewElement("Lang");
+				pLangElem->SetAttribute("Id", acBuffer);
+				pLangElem->SetAttribute("Value", pLangValue);
+				pLangRootElem->LinkEndChild(pLangElem);
+				++ nLangCount;
+			}
+		}
+	}
+
+	for (int i = 0; i < mTaskTemplate.mDiagLangList.size(); ++i)
+	{
+		XMLElement* pDiagElem = pRootElem->FirstChildElement(mTaskTemplate.mDiagLangList[i].c_str());
+		if (NULL != pDiagElem)
+		{
+			XMLElement* pCondElem = pDiagElem->FirstChildElement("Cond");
+			for (; NULL != pCondElem; pCondElem = pCondElem->NextSiblingElement("Cond"))
+			{
+				const char* pLangValue = pCondElem->Attribute("Para0");
+				if (NULL != pLangValue)
+				{
+					_snprintf_s(acBuffer, sizeof(acBuffer), "tkl_%s_%d", pTaskId, nLangCount);
+					pCondElem->SetAttribute("Para0", acBuffer);
+
+					XMLElement* pLangElem = mLangDocument.NewElement("Lang");
+					pLangElem->SetAttribute("Id", acBuffer);
+					pLangElem->SetAttribute("Value", pLangValue);
+					pLangRootElem->LinkEndChild(pLangElem);
+					++nLangCount;
+				}
+
+			}
+		}
+	}
+}
+
+void CMainFrame::SaveTaskLevelConfig(const char* pXmlFilePath, vector<CString>& rVecString)
+{
+	if (NULL == pXmlFilePath)
+	{
+		return;
+	}
+	tinyxml2::XMLDocument tDocument;
+	XMLDeclaration* pDeclaration = tDocument.NewDeclaration("xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"");
+	tDocument.LinkEndChild(pDeclaration);
+
+	XMLElement* pRootElem = tDocument.NewElement("TaskList");
+	tDocument.LinkEndChild(pRootElem);
+
+	pRootElem->SetAttribute("level", mTaskEditorConfig.mLevelPhase);
+	char acBuffer[4096] = { 0 };
+	for (int i = 0; i < rVecString.size(); ++ i)
+	{
+		if (_T("") == rVecString[i])
+		{
+			break;
+		}
+		XMLElement* pTaskElem = tDocument.NewElement("Task");
+
+		UnicodeToAnsi(rVecString[i].GetBuffer(), acBuffer, sizeof(acBuffer));
+		pTaskElem->SetAttribute("id", acBuffer);
+		pRootElem->LinkEndChild(pTaskElem);
+	}
+
+	tDocument.SaveFile(pXmlFilePath);
+}
+
+void CMainFrame::SaveNpcTaskConfig(const char* pXmlFilePath, map<int, CString>& rNpcTask)
+{
+	if (NULL == pXmlFilePath)
+	{
+		return;
+	}
+
+	tinyxml2::XMLDocument tDocument;
+	XMLDeclaration* pDeclaration = tDocument.NewDeclaration("xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"");
+	tDocument.LinkEndChild(pDeclaration);
+
+	XMLElement* pRootElem = tDocument.NewElement("TaskList");
+	tDocument.LinkEndChild(pRootElem);
+
+	char acBuffer[4096] = { 0 };
+	map<int, CString>::iterator it = rNpcTask.begin();
+	for (; it != rNpcTask.end(); ++ it)
+	{
+		XMLElement* pTaskElem = tDocument.NewElement("Task");
+		pTaskElem->SetAttribute("npcID", it->first);
+
+		UnicodeToAnsi(it->second, acBuffer, sizeof(acBuffer));
+		pTaskElem->SetAttribute("taskID", acBuffer);
+		pRootElem->LinkEndChild(pTaskElem);
+	}
+
+	tDocument.SaveFile(pXmlFilePath);
+}
+
+void CMainFrame::OnTaskInternation()
+{
+
+}
+
+void CMainFrame::AddFileItem(tinyxml2::XMLDocument& tDocument, CString strFileName)
+{
+	m_wndFileView.AddFileItem(tDocument, strFileName);
 }
 
 void CMainFrame::ShowOptionView(CString strConfigName, CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum)
 {
-	m_wndOptionView.ShowPane(TRUE, FALSE, TRUE);
-	m_wndOptionView.SetGridCtrl(pGridCtrl);
-	m_wndOptionView.SetRowNum(nRowNum);
-	m_wndOptionView.SetColumnNum(nColumnNum);
+	m_wndOptionView.ShowOptionView(strConfigName, pGridCtrl, nRowNum, nColumnNum);
 }
 
-void CMainFrame::GeneralTaskFile()
+void CMainFrame::UpdateFileViewItem(CString& strTaskID, CString& strTaskType, CString& strTaskName)
 {
-	// 寻找前置任务
+	m_wndFileView.UpdateTreeItem(strTaskID, strTaskType, strTaskName);
+}
+
+void CMainFrame::OnHotKey(UINT nHotKeyId, UINT nKey1, UINT nKey2)
+{
+	// TODO:  在此添加消息处理程序代码和/或调用默认值
+
+	CMDIFrameWndEx::OnHotKey(nHotKeyId, nKey1, nKey2);
 }

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Map Name="Map">
+  <Map Name="1,原色村">
+    <Map Name="3002,火焰溶洞"/>
+  </Map>
+  <Map Name="2,蘑菇小镇">
+    <Map Name="3003,远古树海"/>
+    <Map Name="3004,污秽天堂"/>
+    <Map Name="3005,帝王庭院"/>
+    <Map Name="3006,沉溺世界"/>
+    <Map Name="3007,陈兵室"/>
+    <Map Name="3008,兵蚁地界"/>
+  </Map>
+  <Map Name="3,天空之城">
+    <Map Name="3013,神雪峰"/>
+    <Map Name="3014,白色世界"/>
+    <Map Name="3015,雪之巅"/>
+    <Map Name="3016,传说之天"/>
+  </Map>
+</Map>

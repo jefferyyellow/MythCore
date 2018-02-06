@@ -46,7 +46,7 @@ BOOL CTaskEditorDoc::OnNewDocument()
 
 	// TODO:  在此添加重新初始化代码
 	// (SDI 文档将重用该文档)
-	SetTitle(_T("Task_.xml"));
+	SetTitle(_T("*.xml"));
 	return TRUE;
 }
 
@@ -141,21 +141,61 @@ void CTaskEditorDoc::Dump(CDumpContext& dc) const
 
 BOOL CTaskEditorDoc::OnSaveDocument(LPCTSTR lpszPathName)
 {
+	CMainFrame* pMainFrame = (CMainFrame*)AfxGetMainWnd();
+	if (NULL == pMainFrame)
+	{
+		return FALSE;
+	}
+	POSITION pos = GetFirstViewPosition();
+	CTaskEditorView* pView = (CTaskEditorView*)GetNextView(pos);
+	if (NULL == pView)
+	{
+		return FALSE;
+	}
+
+
 	CString strNewFilePaht = lpszPathName;
+	if (lpszPathName[0] == _T('\0'))
+	{
+		AfxMessageBox(_T("保存失败！注意命名规则，任务文件必须以数字为文件名,比如1.xml"), MB_ICONEXCLAMATION);
+	}
+
+	CString strFileName = lpszPathName;
+	strFileName = strFileName.Right(strFileName.GetLength() - strFileName.ReverseFind('\\') - 1);
+	strFileName = strFileName.Left(strFileName.Find('.'));
+
 	// 新的文件
 	if (_T("") == m_strPathName && lpszPathName[0] != _T('\0'))
 	{
-		int nPos = strNewFilePaht.ReverseFind(_T('\\'));
-		if (nPos > 0)
+
+		if (strFileName != pView->GetMainGridText(_T("TaskId")))
 		{
-			strNewFilePaht = strNewFilePaht.Right(strNewFilePaht.GetLength() - nPos - 1);
-			if (strNewFilePaht.Left(wcslen(_T("Task_"))) != CString(_T("Task_")))
+			AfxMessageBox(_T("保存失败！任务ID和文件名不匹配!"), MB_ICONEXCLAMATION);
+			return FALSE;
+		}
+
+		CString str = pView->GetMainGridText(_T("TaskType"));
+		if (pView->GetMainGridText(_T("TaskType")) == _T(""))
+		{
+			AfxMessageBox(_T("保存失败！任务类型为空!"), MB_ICONEXCLAMATION);
+			return FALSE;
+		}
+
+		if (pView->GetMainGridText(_T("TaskName")) == _T(""))
+		{
+			AfxMessageBox(_T("保存失败！任务名字为空!"), MB_ICONEXCLAMATION);
+			return FALSE;
+		}
+		for (int i = 0; i < strFileName.GetLength(); ++ i)
+		{
+			if (strFileName[i] < _T('0') || strFileName[i] > _T('9'))
 			{
-				AfxMessageBox(_T("保存失败！注意命名规则，任务文件必须以Task_开头,比如Task_1.xml"), MB_ICONEXCLAMATION );
+				AfxMessageBox(_T("保存失败！注意命名规则，任务文件必须以数字为文件名,比如1.xml"), MB_ICONEXCLAMATION);
 				return FALSE;
 			}
 		}
 	}
+
 	char acBuffer[4096] = { 0 };
 	tinyxml2::XMLDocument tDocument;
 
@@ -164,11 +204,20 @@ BOOL CTaskEditorDoc::OnSaveDocument(LPCTSTR lpszPathName)
 	tDocument.SaveFile(acBuffer);
 	SetModifiedFlag(FALSE);
 
-	CMainFrame* pMainFrame = (CMainFrame*)AfxGetMainWnd();
-	if (NULL != pMainFrame && _T("") == m_strPathName)
+	if (_T("") == m_strPathName)
 	{
-		pMainFrame->AddFileItem(strNewFilePaht);
+		pMainFrame->AddFileItem(tDocument, strFileName);
+
+		CGridCtrl* pManGrid = pView->mMainGrid;
+		pManGrid->SetItemState(0, 1, pManGrid->GetItemState(0, 1) | GVIS_READONLY);
 	}
+
+	CString strTaskID = pView->GetMainGridText(_T("TaskId"));
+	CString strTaskType = pView->GetMainGridText(_T("TaskType"));
+	strTaskType = strTaskType.Right(strTaskType.GetLength() - strTaskType.Find(',') - 1);
+	CString strTaskName = pView->GetMainGridText(_T("TaskName"));
+
+	pMainFrame->UpdateFileViewItem(strTaskID, strTaskType, strTaskName);
 	return TRUE;
 }
 
@@ -188,6 +237,8 @@ void CTaskEditorDoc::SaveToXml(tinyxml2::XMLDocument& tDocument)
 	//CTaskEditorView* pView = GetView (CTaskEditorView*)((CMainFrame*)AfxGetMainWnd())->MDIGetActive()->GetActiveView();
 	// TODO:  在此添加存储代码
 	CGridCtrl* pManGrid = pView->mMainGrid;
+
+
 	for (int i = 0; i < pManGrid->GetRowCount(); ++i)
 	{
 		for (int j = 0; j < pManGrid->GetColumnCount(); j += 2)
@@ -213,7 +264,7 @@ void CTaskEditorDoc::SaveToXml(tinyxml2::XMLDocument& tDocument)
 
 	CGridCtrl* pDiagGrid = pView->mDiagGrid;;
 	pCondElem = NULL;
-	for (int i = 0; i < pCondGrid->GetRowCount(); ++i)
+	for (int i = 0; i < pDiagGrid->GetRowCount(); ++i)
 	{
 		XMLElement* pTmpElem = SaveMainNode(pDiagGrid, i, 0, tDocument, pRootElem, false);
 		if (NULL != pTmpElem)
@@ -364,7 +415,6 @@ void CTaskEditorDoc::OpenDocument()
 
 	tinyxml2::XMLDocument tDocument;
 	char acBuffer[4096] = { 0 };
-	wchar_t wBuffer[4096] = {0};
 	UnicodeToAnsi(m_strPathName, acBuffer, sizeof(acBuffer));
 	if (tinyxml2::XML_SUCCESS != tDocument.LoadFile(acBuffer))
 	{
@@ -396,6 +446,8 @@ void CTaskEditorDoc::LoadFromXml(tinyxml2::XMLDocument& tDocument)
 			LoadMainNode(pManGrid, i, j, tDocument, pRootElem, true);
 		}
 	}
+	// 将ID列置成不能编辑的
+	pManGrid->SetItemState(0, 1, pManGrid->GetItemState(0, 1) | GVIS_READONLY);
 
 	CGridCtrl* pCondGrid = pView->mCondGrid;
 	for (int i = 0; i < pCondGrid->GetRowCount(); ++i)

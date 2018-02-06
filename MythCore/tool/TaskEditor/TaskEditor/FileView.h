@@ -2,6 +2,7 @@
 #pragma once
 
 #include "ViewTree.h"
+#include "commondefine.h"
 
 class CFileViewToolBar : public CMFCToolBar
 {
@@ -21,17 +22,21 @@ public:
 
 	void AdjustLayout();
 	void OnChangeVisualStyle();
-	void AddFileItem(CString strFileName);
+public:
+	void AddFileItem(tinyxml2::XMLDocument& tDocument, CString strFileName);
+	void AddFileItem(CString strType, CString strName, CString strFileName);
 	void FileViewSort(HTREEITEM hParentItem);
+	void FillFileView();
+	HTREEITEM GetRootChildItem(CString strItemName);
+	void ExtendAllItem(HTREEITEM hItem);
+	void UpdateTreeItem(CString& strTaskID, CString& strTaskType, CString& strTaskName);
+	HTREEITEM FindTreeItem(HTREEITEM hTreeItem, CString& strItemName);
 // 特性
 protected:
 
 	CViewTree m_wndFileView;
 	CImageList m_FileViewImages;
 	CFileViewToolBar m_wndToolBar;
-
-protected:
-	void FillFileView();
 
 // 实现
 public:
@@ -51,6 +56,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 private:
 	void OpenSelectFile();
+	void GetTaskTypeAndName(tinyxml2::XMLDocument& rDocument, CString& rStrType, CString& rStrName);
 	CString		mCopyItemString;
 };
 

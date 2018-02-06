@@ -121,7 +121,6 @@
     <ClInclude Include="NewCellTypes\GridCellCombo.h" />
     <ClInclude Include="NewCellTypes\GridCellDateTime.h" />
     <ClInclude Include="NewCellTypes\GridCellNumeric.h" />
-    <ClInclude Include="NewCellTypes\GridPopCell.h" />
     <ClInclude Include="NewCellTypes\GridURLCell.h" />
     <ClInclude Include="OutputWnd.h" />
     <ClInclude Include="PropertiesWnd.h" />
@@ -155,7 +154,6 @@
     <ClCompile Include="NewCellTypes\GridCellCombo.cpp" />
     <ClCompile Include="NewCellTypes\GridCellDateTime.cpp" />
     <ClCompile Include="NewCellTypes\GridCellNumeric.cpp" />
-    <ClCompile Include="NewCellTypes\GridPopCell.cpp" />
     <ClCompile Include="NewCellTypes\GridURLCell.cpp" />
     <ClCompile Include="OutputWnd.cpp" />
     <ClCompile Include="PropertiesWnd.cpp" />

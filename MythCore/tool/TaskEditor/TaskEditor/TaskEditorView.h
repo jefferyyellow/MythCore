@@ -85,14 +85,19 @@ public:
 	void OnDiagGridClickDown(NMHDR* pNMHDR, LRESULT* pResult);
 	void CondDiagGridButtonDown(CGridCtrl* pGridCtrl, int nRow, int nColumn, int nOldSelect, int nParamNum);
 	void OnComboSelChange(NMHDR* pNMHDR, LRESULT* pResult);
-	void OnComboDropDown(NMHDR* pNMHDR, LRESULT* pResult);
-	void OnStartEdit(NMHDR* pNMHDR, LRESULT* pResult);
+	void OnCondComboDropDown(NMHDR* pNMHDR, LRESULT* pResult);
+	void OnCondStartEdit(NMHDR* pNMHDR, LRESULT* pResult);
+	void OnMainStartEdit(NMHDR* pNMHDR, LRESULT* pResult);
+	void OnMainEndEdit(NMHDR* pNMHDR, LRESULT* pResult);
+	void MainCondStartEdit(CGridCtrl* pGridCtrl, int nRow, int nColumn);
 	void AddCondRow(CGridCtrl* pGridCtrl, int nRowNum, CTaskMainNode* pMainNode, wstring& strCondType, CStringArray& strParaValue, int nParamNum);
 	void SetCondParam(CGridCtrl* pGridCtrl, int nRowNum, TASK_NODE_LIST& rNodeList, CStringArray& strParaValue, int nParamNum);
 	CGridCellCombo* AddComboBox(CGridCtrl* pGridCtrl, CTaskMainNode* pMainNode, int nRowNum, int nColumnNum, wstring& strDefaultValue, int& rOptionIndex, int nStyle);
+	CString GetMainGridText(CString strName);
 
 	void SaveToXml();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 };
 
 #ifndef _DEBUG  // TaskEditorView.cpp 中的调试版本

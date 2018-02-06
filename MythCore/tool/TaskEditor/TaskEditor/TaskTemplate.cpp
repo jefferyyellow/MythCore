@@ -60,7 +60,7 @@ void CTaskTemplate::loadTaskTemplate(const char* pTemplateFile)
 	for (; NULL != pTextNodeElem; pTextNodeElem = pTextNodeElem->NextSiblingElement("TextNode"))
 	{
 		CTaskMainNode* pMainNode = new CTaskMainNode;
-		 loadTextNode(pMainNode, pTextNodeElem);
+		 loadTextNode(pMainNode, pTextNodeElem, &mMainLangList);
 		 mTextNodeList.push_back(pMainNode);
 	}
 
@@ -68,7 +68,7 @@ void CTaskTemplate::loadTaskTemplate(const char* pTemplateFile)
 	for (; NULL != pCondNodeElem; pCondNodeElem = pCondNodeElem->NextSiblingElement("CondNode"))
 	{
 		CTaskMainNode* pMainNode = new CTaskMainNode;
-		loadTextNode(pMainNode, pCondNodeElem);
+		loadTextNode(pMainNode, pCondNodeElem, NULL);
 		mCondNodeList.push_back(pMainNode);
 	}
 
@@ -76,13 +76,13 @@ void CTaskTemplate::loadTaskTemplate(const char* pTemplateFile)
 	for (; NULL != pDiagNodeElem; pDiagNodeElem = pDiagNodeElem->NextSiblingElement("DiagNode"))
 	{
 		CTaskMainNode* pMainNode = new CTaskMainNode;
-		loadTextNode(pMainNode, pDiagNodeElem);
+		loadTextNode(pMainNode, pDiagNodeElem, &mDiagLangList);
 		mDiagNodeList.push_back(pMainNode);
 	}
 }
 
 
-void CTaskTemplate::loadTextNode(CTaskMainNode* pMainNode, XMLElement* pTextNodeElem)
+void CTaskTemplate::loadTextNode(CTaskMainNode* pMainNode, XMLElement* pTextNodeElem, INTERNATION_LIST* pInternationList)
 {
 	wchar_t acBuffer[4096] = { 0 };
 	Utf8ToUnicode(pTextNodeElem->Attribute("Name"), acBuffer, sizeof(acBuffer) / 2 - 1);
@@ -96,6 +96,12 @@ void CTaskTemplate::loadTextNode(CTaskMainNode* pMainNode, XMLElement* pTextNode
 	{
 		Utf8ToUnicode(pConfigName, acBuffer, sizeof(acBuffer) / 2 - 1);
 		pMainNode->mConfigName = acBuffer;
+	}
+
+	bool bInternation = pTextNodeElem->BoolAttribute("Internation");
+	if (NULL != pInternationList && bInternation)
+	{
+		pInternationList->push_back(pTextNodeElem->Attribute("DesName"));
 	}
 
 	XMLElement* pOptionElem = pTextNodeElem->FirstChildElement("Option");
@@ -117,7 +123,7 @@ void CTaskTemplate::loadOptionNode(CTaskOption* pOptionNode, XMLElement* pOption
 	for (; NULL != pTextNodeElem; pTextNodeElem = pTextNodeElem->NextSiblingElement("TextNode"))
 	{
 		CTaskMainNode* pMainNode = new CTaskMainNode;
-		loadTextNode(pMainNode, pTextNodeElem);
+		loadTextNode(pMainNode, pTextNodeElem, NULL);
 		pOptionNode->mNodeList.push_back(pMainNode);
 	}
 }
@@ -205,4 +211,65 @@ wstring CTaskTemplate::FindOptionName(wstring strConfigName, int nID)
 	}
 
 	return _T("");
+}
+
+CTaskMainNode* CTaskTemplate::GetTaskMainNode(wstring strName)
+{
+	for (int i = 0; i < mTextNodeList.size(); ++ i)
+	{
+		if (mTextNodeList[i]->mDesName == strName)
+		{
+			return mTextNodeList[i];
+		}
+	}
+
+	for (int i = 0; i < mCondNodeList.size(); ++ i)
+	{
+		if (mCondNodeList[i]->mDesName == strName)
+		{
+			return mCondNodeList[i];
+		}
+	}
+
+	for (int i = 0; i < mDiagNodeList.size(); ++ i)
+	{
+		if (mDiagNodeList[i]->mDesName == strName)
+		{
+			return mDiagNodeList[i];
+		}
+	}
+
+	return NULL;
+}
+
+void CTaskEditorConfig::LoadTaskEditorConfig(const char* pConfigFile)
+{
+	if (NULL == pConfigFile)
+	{
+		return;
+	}
+	tinyxml2::XMLDocument tDocument;
+	if (XML_SUCCESS != tDocument.LoadFile(pConfigFile))
+	{
+		// 出错，无法加载xml文件
+		return;
+	}
+
+	XMLElement* pRoot = tDocument.RootElement();
+	if (NULL == pRoot)
+	{
+		// 出错，连Root节点都没有
+		return;
+	}
+	wchar_t acBuffer[4096] = { 0 };
+
+	XMLElement* pTaskLevelCondElem = pRoot->FirstChildElement("TaskLevelCond");
+	if (NULL != pTaskLevelCondElem)
+	{
+		mLevelCond = pTaskLevelCondElem->IntAttribute("Value");
+		Utf8ToUnicode(pTaskLevelCondElem->Attribute("LevelParam"), acBuffer, sizeof(acBuffer) / 2 - 1);
+		mLevelParam = acBuffer;
+		mLevelPhase = pTaskLevelCondElem->IntAttribute("LevelPhase");
+		mMaxLevel = pTaskLevelCondElem->IntAttribute("MaxLevel");
+	}
 }

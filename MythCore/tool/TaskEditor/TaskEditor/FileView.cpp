@@ -19,8 +19,8 @@ int CALLBACK TreeCompareProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 	CString         strItem1 = pViewTree->GetItemText((HTREEITEM)lParam1);
 	CString         strItem2 = pViewTree->GetItemText((HTREEITEM)lParam2);
 
-	int nPos1 = strItem1.Find(_T('_'));
-	int nPos2 = strItem2.Find(_T('_'));
+	int nPos1 = strItem1.Find(_T('('));
+	int nPos2 = strItem2.Find(_T('('));
 
 	if (nPos1 < 0)
 	{
@@ -32,12 +32,12 @@ int CALLBACK TreeCompareProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 		return 1;
 	}
 
-	strItem1 = strItem1.Right(strItem1.GetLength() - nPos1 -1);
-	strItem2 = strItem2.Right(strItem2.GetLength() - nPos2 -1);
+	strItem1 = strItem1.Right(strItem1.GetLength() - nPos1 - 1);
+	strItem2 = strItem2.Right(strItem2.GetLength() - nPos2 - 1);
 
-	nPos1 = strItem1.Find(_T('.'));
-	nPos2 = strItem2.Find(_T('.'));
-	
+	nPos1 = strItem1.Find(_T(')'));
+	nPos2 = strItem2.Find(_T(')'));
+
 	if (nPos1 < 0)
 	{
 		return -1;
@@ -127,7 +127,6 @@ int CFileView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndToolBar.SetRouteCommandsViaFrame(FALSE);
 
 	// 填入一些静态树视图数据(此处只需填入虚拟代码，而不是复杂的数据)
-	FillFileView();
 	AdjustLayout();
 
 	return 0;
@@ -148,7 +147,7 @@ void CFileView::FillFileView()
 	HANDLE hFind = INVALID_HANDLE_VALUE;
 	DWORD dwError = 0;	
 
-	hFind = FindFirstFile(_T("Tasks\\Task_*"), &ffd);
+	hFind = FindFirstFile(_T("Tasks\\*"), &ffd);
 	if (INVALID_HANDLE_VALUE == hFind)
 	{
 		return ;
@@ -158,8 +157,34 @@ void CFileView::FillFileView()
 	{
 		if (!(ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
 		{
-			HTREEITEM hItem = m_wndFileView.InsertItem(ffd.cFileName, 1, 1, hRoot);
+			CString strFilePath = CString("Tasks\\") + ffd.cFileName;
+			CString strFileName = ffd.cFileName;
+			strFileName = strFileName.Left(strFileName.Find('.'));
+			CString strName;
+			CString strType;
+			if (ffd.cFileName[0] < _T('0') || ffd.cFileName[0] > _T('9'))
+			{
+				continue;
+			}
+			tinyxml2::XMLDocument tDocument;
+			char acBuffer[4096] = { 0 };
+			UnicodeToAnsi(strFilePath, acBuffer, sizeof(acBuffer));
+			if (tinyxml2::XML_SUCCESS != tDocument.LoadFile(acBuffer))
+			{
+				continue;
+			}
+			GetTaskTypeAndName(tDocument, strType, strName);
+			HTREEITEM tTypeItem = GetRootChildItem(strType);
+			if (NULL == tTypeItem)
+			{
+				tTypeItem = m_wndFileView.InsertItem(strType, 1, 1, hRoot, TVI_SORT);
+				m_wndFileView.SetItemData(tTypeItem, (DWORD)tTypeItem);
+			}
+
+			strName = strName + _T("(") + strFileName + _T(")");
+			HTREEITEM hItem = m_wndFileView.InsertItem(strName, 1, 1, tTypeItem, TVI_SORT);
 			m_wndFileView.SetItemData(hItem, (DWORD)hItem);
+
 		}
 	} while (FindNextFile(hFind, &ffd) != 0);
 
@@ -169,25 +194,121 @@ void CFileView::FillFileView()
 		return;
 	}
 	FindClose(hFind);
+	//ExtendAllItem(hRoot);
 	m_wndFileView.Expand(hRoot, TVE_EXPAND);
 	FileViewSort(hRoot);
 }
 
-void CFileView::AddFileItem(CString strFileName)
+void CFileView::ExtendAllItem(HTREEITEM hItem)
+{
+	m_wndFileView.Expand(hItem, TVE_EXPAND);
+	HTREEITEM hChildItem = m_wndFileView.GetChildItem(hItem);
+	for (; NULL != hChildItem; hChildItem = m_wndFileView.GetNextSiblingItem(hChildItem))
+	{
+		ExtendAllItem(hChildItem);
+	}
+}
+
+void CFileView::UpdateTreeItem(CString& strTaskID, CString& strTaskType, CString& strTaskName)
 {
 	HTREEITEM hRoot = m_wndFileView.GetRootItem();
-	HTREEITEM hItem  = m_wndFileView.InsertItem(strFileName, 1, 1, hRoot);
+	HTREEITEM tTaskItem = FindTreeItem(hRoot, strTaskID);
+	HTREEITEM tParentItem = m_wndFileView.GetParentItem(tTaskItem);
+	m_wndFileView.DeleteItem(tTaskItem);
+	if (!m_wndFileView.ItemHasChildren(tParentItem))
+	{
+		m_wndFileView.DeleteItem(tParentItem);
+	}
+
+	AddFileItem(strTaskType, strTaskName, strTaskID);
+}
+
+HTREEITEM CFileView::FindTreeItem(HTREEITEM hTreeItem, CString& strItemName)
+{
+	HTREEITEM hChildItem = m_wndFileView.GetChildItem(hTreeItem);
+	for (; NULL != hChildItem; hChildItem = m_wndFileView.GetNextSiblingItem(hChildItem))
+	{
+		CString         strItemText = m_wndFileView.GetItemText(hChildItem);
+		strItemText = strItemText.Right(strItemText.GetLength() - strItemText.Find(_T('(')) - 1);
+		strItemText = strItemText.Left(strItemText.Find(_T(')')));
+
+		if (strItemText == strItemName)
+		{
+			return hChildItem;
+		}
+
+		HTREEITEM tFindItem = FindTreeItem(hChildItem, strItemName);
+		if (NULL != tFindItem)
+		{
+			return tFindItem;
+		}
+	}
+
+	return NULL;
+}
+
+HTREEITEM CFileView::GetRootChildItem(CString strItemName)
+{
+	HTREEITEM hRoot = m_wndFileView.GetRootItem();
+	HTREEITEM hTypeItem = m_wndFileView.GetChildItem(hRoot);
+	for (; NULL != hTypeItem; hTypeItem = m_wndFileView.GetNextSiblingItem(hTypeItem))
+	{
+		CString strText = m_wndFileView.GetItemText(hTypeItem);
+		if (strText == strItemName)
+		{
+			return hTypeItem;
+		}
+	}
+	return NULL;
+}
+
+void CFileView::AddFileItem(tinyxml2::XMLDocument& tDocument, CString strFileName)
+{
+	CString strName;
+	CString strType;
+	GetTaskTypeAndName(tDocument, strType, strName);
+
+	AddFileItem(strType, strName, strFileName);
+}
+
+void CFileView::AddFileItem(CString strType, CString strName, CString strFileName)
+{
+	HTREEITEM hRoot = m_wndFileView.GetRootItem();
+	HTREEITEM tTypeItem = GetRootChildItem(strType);
+	if (NULL == tTypeItem)
+	{
+		tTypeItem = m_wndFileView.InsertItem(strType, 1, 1, hRoot, TVI_SORT);
+		m_wndFileView.SetItemData(tTypeItem, (DWORD)tTypeItem);
+	}
+
+	strName = strName + _T("(") + strFileName + _T(")");
+	HTREEITEM hItem = m_wndFileView.InsertItem(strName, 1, 1, tTypeItem, TVI_SORT);
 	m_wndFileView.SetItemData(hItem, (DWORD)hItem);
+
+	m_wndFileView.Expand(tTypeItem, TVE_EXPAND);
 	FileViewSort(hRoot);
 }
 
 void CFileView::FileViewSort(HTREEITEM hParentItem)
 {
-	TVSORTCB tSortCB;
-	tSortCB.hParent = hParentItem;
-	tSortCB.lpfnCompare = TreeCompareProc;
-	tSortCB.lParam = (LPARAM)&m_wndFileView;
-	m_wndFileView.SortChildrenCB(&tSortCB);
+	HTREEITEM hChildItem = m_wndFileView.GetChildItem(hParentItem);
+	if (NULL == hChildItem)
+	{
+		return;
+	}
+	if (!m_wndFileView.ItemHasChildren(hChildItem))
+	{
+		TVSORTCB tSortCB;
+		tSortCB.hParent = hParentItem;
+		tSortCB.lpfnCompare = TreeCompareProc;
+		tSortCB.lParam = (LPARAM)&m_wndFileView;
+		m_wndFileView.SortChildrenCB(&tSortCB);
+	}
+
+	for (; NULL != hChildItem; hChildItem = m_wndFileView.GetNextSiblingItem(hChildItem))
+	{
+		FileViewSort(hChildItem);
+	}
 }
 
 void CFileView::OnContextMenu(CWnd* pWnd, CPoint point)
@@ -338,8 +459,69 @@ void CFileView::OpenSelectFile()
 	{
 		return;
 	}
+	if (m_wndFileView.ItemHasChildren(pItem))
+	{
+		return;
+	}
 	CString strTaskFileName = m_wndFileView.GetItemText(pItem);
-	CString strFilePath = CString("Tasks\\") + strTaskFileName;
+	strTaskFileName = strTaskFileName.Right(strTaskFileName.GetLength() - strTaskFileName.Find('(') - 1);
+	strTaskFileName = strTaskFileName.Left(strTaskFileName.Find(')'));
+	CString strFilePath = CString("Tasks\\") + strTaskFileName + _T(".xml");
 
 	AfxGetApp()->OpenDocumentFile(strFilePath);
+}
+
+void CFileView::GetTaskTypeAndName(tinyxml2::XMLDocument& rDocument, CString& rStrType, CString& rStrName)
+{
+	CMainFrame* pMainFrame = (CMainFrame*)AfxGetMainWnd();
+	if (NULL == pMainFrame)
+	{
+		return;
+	}
+
+
+	XMLElement* pRootElem = rDocument.RootElement();
+	if (NULL == pRootElem)
+	{
+		return;
+	}
+
+	XMLElement* pTaskNameElem = pRootElem->FirstChildElement("TaskName");
+	if (NULL == pTaskNameElem)
+	{
+		return;
+	}
+
+	XMLElement* pTaskTypeElem = pRootElem->FirstChildElement("TaskType");
+	if (NULL == pTaskTypeElem)
+	{
+		return;
+	}
+
+	wchar_t wBuffer[4096] = { 0 };
+	Utf8ToUnicode(pTaskNameElem->Attribute("Value"), wBuffer, sizeof(wBuffer) / 2 - 1);
+	rStrName = wBuffer;
+
+	CTaskMainNode* pMainNode = pMainFrame->mTaskTemplate.GetTaskMainNode(_T("TaskType"));
+	if (NULL == pMainNode)
+	{
+		return;
+	}
+	Utf8ToUnicode(pTaskTypeElem->Attribute("Value"), wBuffer, sizeof(wBuffer) / 2 - 1);
+
+
+
+	OPTION_LIST& rOptionList = pMainNode->mOptionList;
+	for (int nOptionNum = 0; nOptionNum < rOptionList.size(); ++nOptionNum)
+	{
+		int tOffset = rOptionList[nOptionNum]->mDes.find(',');
+		wstring strValue = rOptionList[nOptionNum]->mDes.substr(0, tOffset);
+		if (strValue == wBuffer)
+		{
+			++ tOffset;
+			rStrType = rOptionList[nOptionNum]->mDes.substr(tOffset, rOptionList[nOptionNum]->mDes.length() - tOffset).c_str();
+			break;
+		}
+	}
+
 }

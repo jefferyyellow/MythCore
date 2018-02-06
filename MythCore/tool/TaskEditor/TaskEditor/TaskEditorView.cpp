@@ -34,10 +34,12 @@ BEGIN_MESSAGE_MAP(CTaskEditorView, CView)
 	ON_NOTIFY(NM_CLICK, ID_COND_DATA_GRID, OnCondGridClickDown)
 	ON_NOTIFY(NM_CLICK, ID_DIAG_DATA_GRID, OnDiagGridClickDown)
 	ON_NOTIFY(GVN_COMBOSELCHANGE, ID_COND_DATA_GRID, OnComboSelChange)
-	ON_NOTIFY(GVN_BEGINLABELEDIT, ID_COND_DATA_GRID, OnStartEdit)
-	ON_NOTIFY(GVN_COMBODROPDOWN, ID_COND_DATA_GRID, OnComboDropDown)
-
+	ON_NOTIFY(GVN_BEGINLABELEDIT, ID_COND_DATA_GRID, OnCondStartEdit)
+	ON_NOTIFY(GVN_BEGINLABELEDIT, ID_MAIN_DATA_GRID, OnMainStartEdit)
+	ON_NOTIFY(GVN_COMBODROPDOWN, ID_COND_DATA_GRID, OnCondComboDropDown)
+	ON_NOTIFY(GVN_ENDLABELEDIT, ID_MAIN_DATA_GRID, OnMainEndEdit)
 	ON_WM_SIZE()
+	ON_WM_KEYDOWN()
 END_MESSAGE_MAP()
 
 // CTaskEditorView 构造/析构
@@ -224,7 +226,7 @@ void CTaskEditorView::InitialMainNode()
 					continue;
 				}
 
-				mMainGrid->SetItemText(i, j, rOptionList[0]->mDes.c_str());
+				mMainGrid->SetItemHintText(i, j, rOptionList[0]->mDes.c_str());
 				CStringArray tStringOption;
 				for (int nOptionNum = 0; nOptionNum < rOptionList.size(); ++nOptionNum)
 				{
@@ -233,9 +235,14 @@ void CTaskEditorView::InitialMainNode()
 
 				CGridCellCombo *pCell = (CGridCellCombo*)mMainGrid->GetCell(i, j);
 				pCell->SetOptions(tStringOption);
-				pCell->SetStyle(CBS_DROPDOWNLIST); //CBS_DROPDOWN, CBS_DROPDOWNLIST, CBS_SIMPLE
+				pCell->SetStyle(CBS_DROPDOWN); //CBS_DROPDOWN, CBS_DROPDOWNLIST, CBS_SIMPLE
 			}
 
+			pCellBase = mMainGrid->GetCell(i, j);
+			if (NULL != pCellBase)
+			{
+				pCellBase->SetData((LPARAM)pNewData);
+			}
 			++j;
 
 			++nCount;
@@ -376,7 +383,7 @@ void CTaskEditorView::OnComboSelChange(NMHDR* pNMHDR, LRESULT* pResult)
 	{
 		return;
 	}
-
+	OutputDebugString(pGrideCellBase->GetText());
 	if (pGrideCellBase->IsKindOf(RUNTIME_CLASS(CGridCellCombo)))
 	{
 		CGridData* pGridData = (CGridData*)pGrideCellBase->GetData();
@@ -403,7 +410,7 @@ void CTaskEditorView::OnComboSelChange(NMHDR* pNMHDR, LRESULT* pResult)
 
 }
 
-void CTaskEditorView::OnComboDropDown(NMHDR* pNMHDR, LRESULT* pResult)
+void CTaskEditorView::OnCondComboDropDown(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	//NM_GRIDVIEW* pItem = (NM_GRIDVIEW*)pNMHDR;
 	//int nRow = pItem->iRow;
@@ -430,12 +437,25 @@ void CTaskEditorView::OnComboDropDown(NMHDR* pNMHDR, LRESULT* pResult)
 	//}
 }
 
-void CTaskEditorView::OnStartEdit(NMHDR* pNMHDR, LRESULT* pResult)
+void CTaskEditorView::OnCondStartEdit(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_GRIDVIEW* pItem = (NM_GRIDVIEW*)pNMHDR;
 	int nRow = pItem->iRow;
 	int nColumn = pItem->iColumn;
-	CGridCellBase* pGrideCellBase = mCondGrid->GetCell(nRow, nColumn);
+	MainCondStartEdit(mCondGrid, nRow, nColumn);
+}
+
+void CTaskEditorView::OnMainStartEdit(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	NM_GRIDVIEW* pItem = (NM_GRIDVIEW*)pNMHDR;
+	int nRow = pItem->iRow;
+	int nColumn = pItem->iColumn;
+	MainCondStartEdit(mMainGrid, nRow, nColumn);
+}
+
+void CTaskEditorView::MainCondStartEdit(CGridCtrl* pGridCtrl, int nRow, int nColumn)
+{
+	CGridCellBase* pGrideCellBase = pGridCtrl->GetCell(nRow, nColumn);
 	if (NULL == pGrideCellBase)
 	{
 		return;
@@ -458,8 +478,38 @@ void CTaskEditorView::OnStartEdit(NMHDR* pNMHDR, LRESULT* pResult)
 		CMainFrame* pMainFrame = (CMainFrame*)AfxGetMainWnd();
 		if (NULL != pMainFrame)
 		{
-			pMainFrame->ShowOptionView(pMainNode->mConfigName.c_str(), mCondGrid, nRow, nColumn);
+			pMainFrame->ShowOptionView(pMainNode->mConfigName.c_str(), pGridCtrl, nRow, nColumn);
 		}
+	}
+}
+
+void CTaskEditorView::OnMainEndEdit(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	NM_GRIDVIEW* pItem = (NM_GRIDVIEW*)pNMHDR;
+	int nRow = pItem->iRow;
+	int nColumn = pItem->iColumn;
+	CGridCellBase* pGrideCellBase = mMainGrid->GetCell(nRow, nColumn);
+	if (NULL == pGrideCellBase)
+	{
+		return;
+	}
+
+	CGridData* pGridData = (CGridData*)pGrideCellBase->GetData();
+	if (NULL == pGridData)
+	{
+		return;
+	}
+
+
+	CTaskMainNode* pMainNode = (CTaskMainNode*)pGridData->mData;
+	if (NULL == pMainNode)
+	{
+		return;
+	}
+	if (pMainNode->mDesName == _T("TaskId"))
+	{
+		CString strTitile = CString(pGrideCellBase->GetText()) + _T(".xml");
+		GetDocument()->SetTitle(strTitile);
 	}
 }
 
@@ -564,7 +614,7 @@ void CTaskEditorView::SetCondParam(CGridCtrl* pGridCtrl, int nRowNum, TASK_NODE_
 		pGridCtrl->SetCellType(nRowNum, i + 1, RUNTIME_CLASS(CGridCell));
 		pGridCtrl->SetItemText(nRowNum, i + 1, _T(""));
 		pGridCtrl->SetItemState(nRowNum, i + 1, pGridCtrl->GetItemState(nRowNum, i + 1) & ~GVIS_READONLY);
-		CGridCellBase* pGrideCellBase = mCondGrid->GetCell(nRowNum, i + 1);
+		CGridCellBase* pGrideCellBase = pGridCtrl->GetCell(nRowNum, i + 1);
 		if (NULL == pGrideCellBase)
 		{
 			continue;
@@ -754,4 +804,49 @@ void CTaskEditorView::OnSize(UINT nType, int cx, int cy)
 		mDiagGrid->SetColumnWidth(2, 100);
 		mDiagGrid->MoveWindow(tDiagRect);
 	}
+}
+
+CString CTaskEditorView::GetMainGridText(CString strName)
+{
+	for (int i = 0; i < mMainGrid->GetRowCount(); ++ i)
+	{
+		for (int j = 1; j < mMainGrid->GetColumnCount(); j += 2)
+		{
+			CGridCellBase* pGrideCellBase = mMainGrid->GetCell(i, j);
+			if (NULL == pGrideCellBase)
+			{
+				continue;
+			}
+
+			CGridData* pGridData = (CGridData*)pGrideCellBase->GetData();
+			if (NULL == pGridData)
+			{
+				continue;
+			}
+
+
+			CTaskMainNode* pMainNode = (CTaskMainNode*)pGridData->mData;
+			if (NULL == pMainNode)
+			{
+				continue;
+			}
+
+			if (pMainNode->mDesName == strName.GetBuffer())
+			{
+				return pGrideCellBase->GetText();
+			}
+		}
+	}
+
+	return _T("");
+}
+
+void CTaskEditorView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	// TODO:  在此添加消息处理程序代码和/或调用默认值
+	if (IsCTRLpressed() && (nChar == 's' || nChar == 'S'))
+	{
+		GetDocument()->DoFileSave();
+	}
+	CView::OnKeyDown(nChar, nRepCnt, nFlags);
 }

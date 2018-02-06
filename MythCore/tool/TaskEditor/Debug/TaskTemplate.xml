@@ -10,7 +10,7 @@
     <Option Name="5,伙伴任务"/>
     <Option Name="6,传闻任务"/>
   </TextNode>
-  <TextNode Name="任务名字" DesName="TaskName"/>
+  <TextNode Name="任务名字" DesName="TaskName" Internation="1"/>
   <TextNode Name="接任务地图" DesName="AcceptMap"/>
   <TextNode Name="接任务Npc" DesName="AcceptNpc" ConfigName="Template">
     <Option Name="请去模板选择"/>
@@ -19,8 +19,8 @@
   <TextNode Name="交任务Npc" DesName="SubmitNpc" ConfigName="Template">
     <Option Name="请去模板选择"/>
   </TextNode>
-  <TextNode Name="任务可接描述" DesName="Desc"/>
-  <TextNode Name="任务已接描述" DesName="AcceptdDesc"/>
+  <TextNode Name="任务可接描述" DesName="Desc" Internation="1"/>
+  <TextNode Name="任务已接描述" DesName="AcceptdDesc" Internation="1"/>
   <TextNode Name="是否可放弃" DesName="CanAbandon">
     <Option Name="0,否"/>
     <Option Name="1,是"/>
@@ -74,7 +74,7 @@
   <!--完成条件-->
   <CondNode Name="完成条件" DesName="CompleteCond">
     <Option Name="1,杀怪">
-      <TextNode Name="怪物Id" ConfigName="Template">
+      <TextNode Name="怪物Id" ConfigName="Map" >
         <Option Name="请去模板选择"/>
       </TextNode>
       <TextNode Name="怪物数目"/>
@@ -164,7 +164,7 @@
   </CondNode>
   
   <!--对话部分-->
-  <DiagNode Name="接任务对话" DesName="AccpetDiag">
+  <DiagNode Name="接任务对话" DesName="AccpetDiag" Internation="1">
     <Option Name="1,NPC对话">
       <TextNode Name="内容"/>
     </Option>
@@ -178,7 +178,7 @@
       <TextNode Name="内容"/>
     </Option>
   </DiagNode>
-  <DiagNode Name="任务中对话" DesName="ProcessDiag">
+  <DiagNode Name="任务中对话" DesName="ProcessDiag" Internation="1">
     <Option Name="1,NPC对话">
       <TextNode Name="内容"/>
     </Option>
@@ -192,7 +192,7 @@
       <TextNode Name="内容"/>
     </Option>
   </DiagNode>
-  <DiagNode Name="完成任务对话" DesName="CompleteDiag">
+  <DiagNode Name="完成任务对话" DesName="CompleteDiag" Internation="1">
     <Option Name="1,NPC对话">
       <TextNode Name="内容"/>
     </Option>

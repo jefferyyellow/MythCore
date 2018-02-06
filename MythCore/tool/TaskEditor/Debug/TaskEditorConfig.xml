@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TaskConfig>
+  <!-- 参看TaskTemplate.xml的<CondNode Name="接受条件" DesName="AccpetCond">
+       任务等级条件的值<Option Name="2,等级">
+       接受等级是第0个参数，显示等级是第1个参数
+  -->
+  <TaskLevelCond Value="2" LevelParam="Para1" LevelPhase="10" MaxLevel="100"/>
+</TaskConfig>

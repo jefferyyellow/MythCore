@@ -101,7 +101,8 @@ void CComboEdit::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	if ((nChar == VK_PRIOR || nChar == VK_NEXT ||
 		 nChar == VK_DOWN  || nChar == VK_UP   ||
-		 nChar == VK_RIGHT || nChar == VK_LEFT) &&
+		 nChar == VK_RIGHT || nChar == VK_LEFT ||
+		 nChar == 's' || nChar == 'S') &&
 		(GetKeyState(VK_CONTROL) < 0 && GetDlgCtrlID() == IDC_COMBOEDIT))
     {
         CWnd* pOwner = GetOwner();
@@ -351,9 +352,10 @@ void CInPlaceList::OnDropdown()
 void CInPlaceList::OnSelChange()
 {
 	CString str;
-	if (::IsWindow(m_hWnd))
-		GetWindowText(str);
+	//if (::IsWindow(m_hWnd))
+	//	GetWindowText(str);
 
+	GetLBText(GetCurSel(),str);
 	// Send Notification to parent
 	GV_DISPINFO dispinfo;
 
@@ -398,6 +400,11 @@ void CInPlaceList::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		m_nLastChar = nChar;
 		GetParent()->SetFocus();
 		return;
+	}
+	if ( nChar == 's' || nChar == 'S')
+	{
+		 GetParent()->SendMessage(WM_KEYDOWN, nChar, nRepCnt+ (((DWORD)nFlags)<<16));
+		 return;
 	}
 
 	CComboBox::OnKeyDown(nChar, nRepCnt, nFlags);

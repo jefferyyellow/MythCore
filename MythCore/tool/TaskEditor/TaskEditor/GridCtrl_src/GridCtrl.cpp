@@ -940,6 +940,12 @@ void CGridCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
         case 'V':
             OnEditPaste();
             break;
+		case 's':
+		case 'S':
+		{
+			GetParent()->SendMessage(WM_KEYDOWN, nChar, nRepCnt+ (((DWORD)nFlags)<<16));
+			return;
+		}
 #endif
         }
     }
@@ -1375,8 +1381,8 @@ void CGridCtrl::OnInPlaceEdit(NMHDR* pNMHDR, LRESULT* pResult)
 		SetItemText(nRow, nCol, str);
 		//if (ValidateEdit(nRow, nCol, str))
 		//{
-		//	SetModified(TRUE, nRow, nCol);
-		//	RedrawCell(nRow, nCol);
+			//SetModified(TRUE, nRow, nCol);
+			//RedrawCell(nRow, nCol);
 		//}
 		//else
 		//{
@@ -7586,21 +7592,10 @@ void CGridCtrl::EndEditing()
 // virtual
 void CGridCtrl::OnEndEditCell(int nRow, int nCol, CString str)
 {
-    CString strCurrentText = GetItemText(nRow, nCol);
-    if (strCurrentText != str)
-    {
-        SetItemText(nRow, nCol, str);
-        if (ValidateEdit(nRow, nCol, str) && 
-            SendMessageToParent(nRow, nCol, GVN_ENDLABELEDIT) >= 0)
-        {
-            SetModified(TRUE, nRow, nCol);
-            RedrawCell(nRow, nCol);
-        }
-        else
-        {
-            SetItemText(nRow, nCol, strCurrentText);
-        }
-    }
+    SetItemText(nRow, nCol, str);
+	SendMessageToParent(nRow, nCol, GVN_ENDLABELEDIT);
+	SetModified(TRUE, nRow, nCol);
+	RedrawCell(nRow, nCol);
 
     CGridCellBase* pCell = GetCell(nRow, nCol);
     if (pCell)

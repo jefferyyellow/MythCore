@@ -1,5 +1,6 @@
 #pragma once
 #include <xstring>
+#include <map>
 using namespace std;
 #include "tinyxml2.h"
 using namespace tinyxml2;
