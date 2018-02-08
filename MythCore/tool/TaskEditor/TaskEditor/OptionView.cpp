@@ -4,6 +4,7 @@
 #include "OptionView.h"
 #include "Resource.h"
 #include "TaskEditor.h"
+#include "TaskEditorView.h"
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -187,19 +188,23 @@ void COptionView::OnDblClkFileView(NMHDR *pNMHDR, LRESULT *pResult)
 	{
 		return;
 	}
-	CString strTaskFileName = m_wndOptionView.GetItemText(pItem);
-	if (NULL == mGridCtrl)
+
+	CView* pView = ((CFrameWnd*)(AfxGetApp()->m_pMainWnd))->GetActiveFrame()->GetActiveView();
+	if (NULL != pView)
 	{
-		return;
-	}
-	CGridCellBase* pGrideCellBase = mGridCtrl->GetCell(mRowNum, mColumnNum);
-	if (NULL == pGrideCellBase)
-	{
-		return;
+		CTaskEditorView* pTaskEditorView = (CTaskEditorView*)pView;
+		if (pTaskEditorView->m_hWnd == mHwnd &&
+			(mGridCtrl == pTaskEditorView->mMainGrid ||
+			mGridCtrl == pTaskEditorView->mCondGrid ||
+			mGridCtrl == pTaskEditorView->mDiagGrid))
+		{
+			CString strTaskFileName = m_wndOptionView.GetItemText(pItem);
+			mGridCtrl->SetItemText(mRowNum, mColumnNum, strTaskFileName);
+			mGridCtrl->Invalidate();
+		}
 	}
 
-	pGrideCellBase->SetText(strTaskFileName);
-	mGridCtrl->Invalidate();
+	
 	ShowPane(FALSE, FALSE, FALSE);
 }
 
@@ -255,7 +260,7 @@ HTREEITEM COptionView::GetRootChildItem(CString strItemName)
 	return NULL;
 }
 
-void COptionView::ShowOptionView(CString& strConfigName, CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum)
+void COptionView::ShowOptionView(HWND hWnd, CString& strConfigName, CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum)
 {
 	HTREEITEM hRoot = m_wndOptionView.GetRootItem();
 	HTREEITEM hChildItem = m_wndOptionView.GetChildItem(hRoot);
@@ -265,6 +270,7 @@ void COptionView::ShowOptionView(CString& strConfigName, CGridCtrl* pGridCtrl, i
 	}
 
 	ShowPane(TRUE, FALSE, TRUE);
+	SetHwnd(hWnd);
 	SetGridCtrl(pGridCtrl);
 	SetRowNum(nRowNum);
 	SetColumnNum(nColumnNum);

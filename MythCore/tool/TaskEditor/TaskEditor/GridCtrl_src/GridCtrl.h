@@ -178,6 +178,7 @@ typedef BOOL (CALLBACK* GRIDCALLBACK)(GV_DISPINFO *, LPARAM);
 #define GVN_LABELEDIT			WM_CHAR
 #define GVN_COMBOSELCHANGE		CBN_SELCHANGE
 #define GVN_COMBODROPDOWN		CBN_DROPDOWN
+#define GVN_TEXT_CHANGE			0x0101			
 class CGridCtrl;
 
 /////////////////////////////////////////////////////////////////////////////

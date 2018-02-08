@@ -24,7 +24,7 @@ public:
 	void FillTempOptionView();
 	void AddTempOptionItem(HTREEITEM hTreeItem, COptionNameItem* pTempName);
 	HTREEITEM GetRootChildItem(CString strItemName);
-	void ShowOptionView(CString& strConfigName, CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum);
+	void ShowOptionView(HWND hWnd, CString& strConfigName, CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum);
 // Ьиад
 protected:
 
@@ -46,6 +46,9 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 public:
+	HWND GetHwnd() const { return mHwnd; }
+	void SetHwnd(HWND nValue) { mHwnd = nValue; }
+
 	CGridCtrl* GetGridCtrl() const { return mGridCtrl; }
 	void SetGridCtrl(CGridCtrl* nValue) { mGridCtrl = nValue; }
 
@@ -56,6 +59,7 @@ public:
 	void SetColumnNum(int nValue) { mColumnNum = nValue; }
 
 private:
+	HWND		mHwnd;
 	CGridCtrl*	mGridCtrl;
 	int			mRowNum;
 	int			mColumnNum;

@@ -35,7 +35,7 @@ public:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 	void	AddFileItem(tinyxml2::XMLDocument& tDocument, CString strFileName);
-	void	ShowOptionView(CString strConfigName, CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum);
+	void	ShowOptionView(HWND hWnd, CString strConfigName, CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum);
 	void	UpdateFileViewItem(CString& strTaskID, CString& strTaskType, CString& strTaskName);
 	int		GetTaskLevelAndNpcId(tinyxml2::XMLDocument& tDocument, int& rNpcId);
 	void	ProcessTaskLanguage(tinyxml2::XMLDocument& tDocument, XMLElement* pLangRootElem);
@@ -72,6 +72,8 @@ protected:
 public:
 	afx_msg void OnHotKey(UINT nHotKeyId, UINT nKey1, UINT nKey2);
 	tinyxml2::XMLDocument mLangDocument;
+	HACCEL m_hAccel;
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };
 
 

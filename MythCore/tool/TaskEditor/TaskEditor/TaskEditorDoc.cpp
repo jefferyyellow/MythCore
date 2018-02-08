@@ -158,6 +158,7 @@ BOOL CTaskEditorDoc::OnSaveDocument(LPCTSTR lpszPathName)
 	if (lpszPathName[0] == _T('\0'))
 	{
 		AfxMessageBox(_T("保存失败！注意命名规则，任务文件必须以数字为文件名,比如1.xml"), MB_ICONEXCLAMATION);
+		return FALSE;
 	}
 
 	CString strFileName = lpszPathName;
@@ -475,6 +476,7 @@ void CTaskEditorDoc::LoadFromXml(tinyxml2::XMLDocument& tDocument)
 	pManGrid->Invalidate();
 	pCondGrid->Invalidate();
 	pDiagGrid->Invalidate();
+	SetModifiedFlag(FALSE);
 }
 
 XMLElement*	CTaskEditorDoc::LoadMainNode(CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum,
@@ -512,14 +514,26 @@ tinyxml2::XMLDocument& tDocument, XMLElement* pParentElem, bool bAttribute)
 		Utf8ToUnicode(pMainElem->Attribute("Value"), wBuffer, sizeof(wBuffer) / 2 - 1);
 		if (pMainNode->mOptionList.size() > 0)
 		{
-			for (int nOptionNum = 0; nOptionNum < pMainNode->mOptionList.size(); ++nOptionNum)
+			if (_T("") != pMainNode->mConfigName)
 			{
-				int tOffset = pMainNode->mOptionList[nOptionNum]->mDes.find(',');
-				wstring strValue = pMainNode->mOptionList[nOptionNum]->mDes.substr(0, tOffset);
-				if (strValue == wBuffer)
+				CMainFrame* pMainFrame = (CMainFrame*)AfxGetMainWnd();
+				if (NULL != pMainFrame)
 				{
-					pGridCtrl->SetItemText(nRowNum, nColumnNum + 1, pMainNode->mOptionList[nOptionNum]->mDes.c_str());
-					break;
+					int nNum = _wtoi(wBuffer);
+					pGridCtrl->SetItemText(nRowNum, nColumnNum + 1, pMainFrame->mTaskTemplate.FindOptionName(pMainNode->mConfigName, nNum).c_str());
+				}
+			}
+			else
+			{
+				for (int nOptionNum = 0; nOptionNum < pMainNode->mOptionList.size(); ++nOptionNum)
+				{
+					int tOffset = pMainNode->mOptionList[nOptionNum]->mDes.find(',');
+					wstring strValue = pMainNode->mOptionList[nOptionNum]->mDes.substr(0, tOffset);
+					if (strValue == wBuffer)
+					{
+						pGridCtrl->SetItemText(nRowNum, nColumnNum + 1, pMainNode->mOptionList[nOptionNum]->mDes.c_str());
+						break;
+					}
 				}
 			}
 		}

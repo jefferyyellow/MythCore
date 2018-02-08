@@ -102,6 +102,8 @@ protected:
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnChar(UINT nChar, UINT nRepCnt, UINT nFlags);
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -168,6 +170,8 @@ private:
  	UINT     m_nLastChar; 
 	BOOL	 m_bExitOnArrows; 
     COLORREF m_crForeClr, m_crBackClr;
+public:
+	afx_msg void OnChar(UINT nChar, UINT nRepCnt, UINT nFlags);
 };
 
 /////////////////////////////////////////////////////////////////////////////

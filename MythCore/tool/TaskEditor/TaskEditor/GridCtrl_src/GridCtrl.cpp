@@ -1381,7 +1381,7 @@ void CGridCtrl::OnInPlaceEdit(NMHDR* pNMHDR, LRESULT* pResult)
 		SetItemText(nRow, nCol, str);
 		//if (ValidateEdit(nRow, nCol, str))
 		//{
-			//SetModified(TRUE, nRow, nCol);
+			SetModified(TRUE, nRow, nCol);
 			//RedrawCell(nRow, nCol);
 		//}
 		//else
@@ -4678,6 +4678,7 @@ BOOL CGridCtrl::SetItemText(int nRow, int nCol, LPCTSTR str)
     pCell->SetText(str);
 
     SetModified(TRUE, nRow, nCol);
+	SendMessageToParent(nRow, nCol, GVN_TEXT_CHANGE);
     return TRUE;
 }
 
@@ -7592,10 +7593,14 @@ void CGridCtrl::EndEditing()
 // virtual
 void CGridCtrl::OnEndEditCell(int nRow, int nCol, CString str)
 {
-    SetItemText(nRow, nCol, str);
+	CString strCurrentText = GetItemText(nRow, nCol);
+	if (strCurrentText != str)
+	{
+		SetItemText(nRow, nCol, str);
+		SetModified(TRUE, nRow, nCol);
+		RedrawCell(nRow, nCol);
+	}
 	SendMessageToParent(nRow, nCol, GVN_ENDLABELEDIT);
-	SetModified(TRUE, nRow, nCol);
-	RedrawCell(nRow, nCol);
 
     CGridCellBase* pCell = GetCell(nRow, nCol);
     if (pCell)

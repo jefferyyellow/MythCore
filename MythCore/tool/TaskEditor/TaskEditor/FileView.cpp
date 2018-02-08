@@ -371,6 +371,8 @@ void CFileView::OnEditCopy()
 		return;
 	}
 	mCopyItemString = m_wndFileView.GetItemText(hTreeItem);
+	mCopyItemString = mCopyItemString.Right(mCopyItemString.GetLength() - mCopyItemString.Find(_T('(')) - 1);
+	mCopyItemString = mCopyItemString.Left(mCopyItemString.Find(_T(')')));
 }
 
 void CFileView::OnEditPaste()
@@ -508,8 +510,6 @@ void CFileView::GetTaskTypeAndName(tinyxml2::XMLDocument& rDocument, CString& rS
 		return;
 	}
 	Utf8ToUnicode(pTaskTypeElem->Attribute("Value"), wBuffer, sizeof(wBuffer) / 2 - 1);
-
-
 
 	OPTION_LIST& rOptionList = pMainNode->mOptionList;
 	for (int nOptionNum = 0; nOptionNum < rOptionList.size(); ++nOptionNum)

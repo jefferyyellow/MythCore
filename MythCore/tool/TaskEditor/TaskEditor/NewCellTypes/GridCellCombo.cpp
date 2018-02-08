@@ -83,6 +83,7 @@ BEGIN_MESSAGE_MAP(CComboEdit, CEdit)
 	ON_WM_KEYDOWN()
 	ON_WM_KEYUP()
 	//}}AFX_MSG_MAP
+	ON_WM_CHAR()
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -313,6 +314,7 @@ BEGIN_MESSAGE_MAP(CInPlaceList, CComboBox)
 	ON_CONTROL_REFLECT(CBN_SELCHANGE, OnSelChange) 
 	//}}AFX_MSG_MAP
 	//ON_CONTROL_REFLECT(CBN_SELENDOK, OnSelendOK)
+	ON_WM_CHAR()
 END_MESSAGE_MAP()
 
 
@@ -537,4 +539,43 @@ void CGridCellCombo::SetOptions(const CStringArray& ar)
     m_Strings.RemoveAll();
     for (int i = 0; i < ar.GetSize(); i++)
         m_Strings.Add(ar[i]);
+}
+
+void CComboEdit::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	// TODO:  在此添加消息处理程序代码和/或调用默认值
+
+	CEdit::OnChar(nChar, nRepCnt, nFlags);
+	CWnd* pOwner = GetOwner();
+	if (pOwner)
+		pOwner->SendMessage(WM_CHAR, nChar, nRepCnt + (((DWORD)nFlags) << 16));
+
+}
+
+
+void CInPlaceList::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	// TODO:  在此添加消息处理程序代码和/或调用默认值
+	CString str;
+	m_edit.GetWindowText(str);
+
+	// Send Notification to parent
+	GV_DISPINFO dispinfo;
+
+	dispinfo.hdr.hwndFrom = GetSafeHwnd();
+	dispinfo.hdr.idFrom = GetDlgCtrlID();
+	dispinfo.hdr.code = GVN_LABELEDIT;
+
+	dispinfo.item.mask = LVIF_TEXT | LVIF_PARAM;
+	dispinfo.item.row = m_nRow;
+	dispinfo.item.col = m_nCol;
+	dispinfo.item.strText = str;
+	dispinfo.item.lParam = (LPARAM)m_nLastChar;
+
+	CWnd* pOwner = GetOwner();
+	if (pOwner)
+		pOwner->SendMessage(WM_NOTIFY, GetDlgCtrlID(), (LPARAM)&dispinfo);
+
+
+	//CComboBox::OnChar(nChar, nRepCnt, nFlags);
 }

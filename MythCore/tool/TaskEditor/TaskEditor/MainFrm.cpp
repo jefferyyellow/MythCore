@@ -174,9 +174,9 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	lstBasicCommands.AddTail(ID_FILE_SAVE);
 	lstBasicCommands.AddTail(ID_FILE_PRINT);
 	lstBasicCommands.AddTail(ID_APP_EXIT);
-	lstBasicCommands.AddTail(ID_EDIT_CUT);
-	lstBasicCommands.AddTail(ID_EDIT_PASTE);
-	lstBasicCommands.AddTail(ID_EDIT_UNDO);
+	//lstBasicCommands.AddTail(ID_EDIT_CUT);
+	//lstBasicCommands.AddTail(ID_EDIT_PASTE);
+	//lstBasicCommands.AddTail(ID_EDIT_UNDO);
 	lstBasicCommands.AddTail(ID_APP_ABOUT);
 	lstBasicCommands.AddTail(ID_VIEW_STATUS_BAR);
 	lstBasicCommands.AddTail(ID_VIEW_TOOLBAR);
@@ -202,6 +202,8 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	mTaskTemplate.LoadItemNameFile("MapName.xml");
 	mTaskEditorConfig.LoadTaskEditorConfig("TaskEditorConfig.xml");
 	m_wndOptionView.FillTempOptionView();
+	m_hAccel = LoadAccelerators(AfxGetInstanceHandle (), MAKEINTRESOURCE(IDR_CUSTOMSIZE));;   
+	int nError = GetLastError();
 	return 0;
 }
 
@@ -733,9 +735,9 @@ void CMainFrame::AddFileItem(tinyxml2::XMLDocument& tDocument, CString strFileNa
 	m_wndFileView.AddFileItem(tDocument, strFileName);
 }
 
-void CMainFrame::ShowOptionView(CString strConfigName, CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum)
+void CMainFrame::ShowOptionView(HWND hWnd, CString strConfigName, CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum)
 {
-	m_wndOptionView.ShowOptionView(strConfigName, pGridCtrl, nRowNum, nColumnNum);
+	m_wndOptionView.ShowOptionView(hWnd, strConfigName, pGridCtrl, nRowNum, nColumnNum);
 }
 
 void CMainFrame::UpdateFileViewItem(CString& strTaskID, CString& strTaskType, CString& strTaskName)
@@ -748,4 +750,12 @@ void CMainFrame::OnHotKey(UINT nHotKeyId, UINT nKey1, UINT nKey2)
 	// TODO:  在此添加消息处理程序代码和/或调用默认值
 
 	CMDIFrameWndEx::OnHotKey(nHotKeyId, nKey1, nKey2);
+}
+
+
+BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
+{
+	// TODO:  在此添加专用代码和/或调用基类
+	TranslateAccelerator (m_hWnd, m_hAccel, pMsg);  
+	return CMDIFrameWndEx::PreTranslateMessage(pMsg);
 }

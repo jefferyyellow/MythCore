@@ -38,6 +38,7 @@ BEGIN_MESSAGE_MAP(CTaskEditorView, CView)
 	ON_NOTIFY(GVN_BEGINLABELEDIT, ID_MAIN_DATA_GRID, OnMainStartEdit)
 	ON_NOTIFY(GVN_COMBODROPDOWN, ID_COND_DATA_GRID, OnCondComboDropDown)
 	ON_NOTIFY(GVN_ENDLABELEDIT, ID_MAIN_DATA_GRID, OnMainEndEdit)
+	ON_NOTIFY(GVN_TEXT_CHANGE, ID_MAIN_DATA_GRID, OnMainChange)
 	ON_WM_SIZE()
 	ON_WM_KEYDOWN()
 END_MESSAGE_MAP()
@@ -197,7 +198,7 @@ void CTaskEditorView::InitialMainNode()
 
 	mMainGrid = new CGridCtrl(nNum, 4);
 	mMainGrid->Create(rectGridWnd, this, ID_MAIN_DATA_GRID);
-
+	mMainGrid->ModifyStyle(0, WS_TABSTOP);
 	char acBuffer[4096] = { 0 };
 
 	TASK_NODE_LIST& rNodeList = pMainFrame->mTaskTemplate.mTextNodeList;
@@ -294,6 +295,7 @@ void CTaskEditorView::InitCondDiagNode(CGridCtrl*& pGridCtrl, int nGridCtrlID, T
 
 	pGridCtrl = new CGridCtrl(nNum, nColumnNum);
 	pGridCtrl->Create(rectDiagWnd, this, nGridCtrlID);
+	pGridCtrl->ModifyStyle(0, WS_TABSTOP);
 	for (int i = 0; i < nNum; ++i)
 	{
 		CGridData* pGridData = NewGridData();
@@ -370,7 +372,7 @@ void CTaskEditorView::OnCondGridClickDown(NMHDR* pNMHDR, LRESULT* pResult)
 	int nOldSelect = mCondSelectRow;
 	mCondSelectRow = nRow;
 
-	CondDiagGridButtonDown(mCondGrid, nRow, nColumn, nOldSelect, MAX_COND_PARAM_NUM);
+	CondDiagGridButtonDown(mCondGrid, nRow, nColumn, nOldSelect, MAX_COND_PARAM_NUM, true);
 }
 
 void CTaskEditorView::OnComboSelChange(NMHDR* pNMHDR, LRESULT* pResult)
@@ -478,7 +480,7 @@ void CTaskEditorView::MainCondStartEdit(CGridCtrl* pGridCtrl, int nRow, int nCol
 		CMainFrame* pMainFrame = (CMainFrame*)AfxGetMainWnd();
 		if (NULL != pMainFrame)
 		{
-			pMainFrame->ShowOptionView(pMainNode->mConfigName.c_str(), pGridCtrl, nRow, nColumn);
+			pMainFrame->ShowOptionView(m_hWnd, pMainNode->mConfigName.c_str(), pGridCtrl, nRow, nColumn);
 		}
 	}
 }
@@ -511,6 +513,12 @@ void CTaskEditorView::OnMainEndEdit(NMHDR* pNMHDR, LRESULT* pResult)
 		CString strTitile = CString(pGrideCellBase->GetText()) + _T(".xml");
 		GetDocument()->SetTitle(strTitile);
 	}
+	
+}
+
+void CTaskEditorView::OnMainChange(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	GetDocument()->SetModifiedFlag(TRUE);
 }
 
 void CTaskEditorView::AddCondRow(CGridCtrl* pGridCtrl, int nRowNum, CTaskMainNode* pMainNode, wstring& strCondType, CStringArray& strParaValue, int nParamNum)
@@ -593,7 +601,7 @@ CGridCellCombo* CTaskEditorView::AddComboBox(CGridCtrl* pGridCtrl, CTaskMainNode
 		CGridCellCombo *pCell = (CGridCellCombo*)pGridCtrl->GetCell(nRowNum, nColumnNum);
 		if (bFindOptionIndex)
 		{
-			pCell->SetText(strCellText.c_str());
+			pGridCtrl->SetItemText(nRowNum, nColumnNum, strCellText.c_str());
 		}
 		else
 		{
@@ -686,10 +694,10 @@ void CTaskEditorView::OnDiagGridClickDown(NMHDR* pNMHDR, LRESULT* pResult)
 	int nOldSelect = mDiagSelectRow;
 	mDiagSelectRow = nRow;
 
-	CondDiagGridButtonDown(mDiagGrid, nRow, nColumn, nOldSelect, MAX_DIAG_PARAM_NUM);
+	CondDiagGridButtonDown(mDiagGrid, nRow, nColumn, nOldSelect, MAX_DIAG_PARAM_NUM, false);
 }
 
-void CTaskEditorView::CondDiagGridButtonDown(CGridCtrl* pGridCtrl, int nRow, int nColumn, int nOldSelect, int nParamNum)
+void CTaskEditorView::CondDiagGridButtonDown(CGridCtrl* pGridCtrl, int nRow, int nColumn, int nOldSelect, int nParamNum, bool Inverted)
 {
 	CGridCellBase* pGrideCellBase = pGridCtrl->GetCell(nRow, nColumn);
 	if (NULL == pGrideCellBase)
@@ -706,21 +714,67 @@ void CTaskEditorView::CondDiagGridButtonDown(CGridCtrl* pGridCtrl, int nRow, int
 
 	if (wstring(pGrideCellBase->GetText()) == _T("Ôö¼Ó"))
 	{
-		if (nRow == pGridCtrl->GetRowCount() - 1)
+		if (Inverted)
 		{
-			pGridCtrl->SetRowCount(pGridCtrl->GetRowCount() + 1);
+			if (nRow == pGridCtrl->GetRowCount() - 1)
+			{
+				pGridCtrl->SetRowCount(pGridCtrl->GetRowCount() + 1);
+			}
+			else
+			{
+				pGridCtrl->InsertRow(_T(""), nRow + 1);
+			}
+
+			CGridData* pGridData = (CGridData*)pGrideCellBase->GetData();
+			if (NULL != pGridData)
+			{
+				CStringArray strArray;
+				wstring string;
+				AddCondRow(pGridCtrl, nRow + 1, (CTaskMainNode*)pGridData->mData, string, strArray, nParamNum);
+			}
 		}
 		else
 		{
-			pGridCtrl->InsertRow(_T(""), nRow + 1);
-		}
+			int i = nRow + 1;
+			for (; i < pGridCtrl->GetRowCount(); ++ i)
+			{
+				CGridCellBase* pTempCellBase = pGridCtrl->GetCell(i, nColumn);
+				if (NULL == pTempCellBase)
+				{
+					break;
+				}
+				CGridData* pGridData = (CGridData*)pTempCellBase->GetData();
+				if (NULL == pGridData)
+				{
+					break;
+				}
 
-		CGridData* pGridData = (CGridData*)pGrideCellBase->GetData();
-		if (NULL != pGridData)
-		{
-			CStringArray strArray;
-			wstring string;
-			AddCondRow(pGridCtrl, nRow + 1, (CTaskMainNode*)pGridData->mData, string, strArray, nParamNum);
+				if (emDataType_MainNode == pGridData->mDataType)
+				{
+					nRow = i - 1;
+					break;
+				}
+			}
+			if (i >= pGridCtrl->GetRowCount())
+			{
+				nRow = pGridCtrl->GetRowCount() - 1;
+			}
+
+			if (nRow == pGridCtrl->GetRowCount() - 1)
+			{
+				pGridCtrl->SetRowCount(pGridCtrl->GetRowCount() + 1);
+			}
+			else
+			{
+				pGridCtrl->InsertRow(_T(""), nRow + 1);
+			}
+			CGridData* pGridData = (CGridData*)pGrideCellBase->GetData();
+			if (NULL != pGridData)
+			{
+				CStringArray strArray;
+				wstring string;
+				AddCondRow(pGridCtrl, nRow + 1, (CTaskMainNode*)pGridData->mData, string, strArray, nParamNum);
+			}
 		}
 	}
 	else if (wstring(pGrideCellBase->GetText()) == _T("É¾³ý"))
@@ -847,6 +901,7 @@ void CTaskEditorView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	if (IsCTRLpressed() && (nChar == 's' || nChar == 'S'))
 	{
 		GetDocument()->DoFileSave();
+		return;
 	}
 	CView::OnKeyDown(nChar, nRepCnt, nFlags);
 }

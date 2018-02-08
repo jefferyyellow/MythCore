@@ -83,12 +83,13 @@ public:
 
 	void OnCondGridClickDown(NMHDR* pNMHDR, LRESULT* pResult);
 	void OnDiagGridClickDown(NMHDR* pNMHDR, LRESULT* pResult);
-	void CondDiagGridButtonDown(CGridCtrl* pGridCtrl, int nRow, int nColumn, int nOldSelect, int nParamNum);
+	void CondDiagGridButtonDown(CGridCtrl* pGridCtrl, int nRow, int nColumn, int nOldSelect, int nParamNum, bool Inverted);
 	void OnComboSelChange(NMHDR* pNMHDR, LRESULT* pResult);
 	void OnCondComboDropDown(NMHDR* pNMHDR, LRESULT* pResult);
 	void OnCondStartEdit(NMHDR* pNMHDR, LRESULT* pResult);
 	void OnMainStartEdit(NMHDR* pNMHDR, LRESULT* pResult);
 	void OnMainEndEdit(NMHDR* pNMHDR, LRESULT* pResult);
+	void OnMainChange(NMHDR* pNMHDR, LRESULT* pResult);
 	void MainCondStartEdit(CGridCtrl* pGridCtrl, int nRow, int nColumn);
 	void AddCondRow(CGridCtrl* pGridCtrl, int nRowNum, CTaskMainNode* pMainNode, wstring& strCondType, CStringArray& strParaValue, int nParamNum);
 	void SetCondParam(CGridCtrl* pGridCtrl, int nRowNum, TASK_NODE_LIST& rNodeList, CStringArray& strParaValue, int nParamNum);

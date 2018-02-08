@@ -74,7 +74,7 @@
   <!--完成条件-->
   <CondNode Name="完成条件" DesName="CompleteCond">
     <Option Name="1,杀怪">
-      <TextNode Name="怪物Id" ConfigName="Map" >
+      <TextNode Name="怪物Id" ConfigName="Template" >
         <Option Name="请去模板选择"/>
       </TextNode>
       <TextNode Name="怪物数目"/>
