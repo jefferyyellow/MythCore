@@ -29,7 +29,6 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_WM_SETTINGCHANGE()
 	ON_WM_HOTKEY()
 	ON_COMMAND(ID_TASK_CONFIG, &CMainFrame::OnTaskConfig)
-	ON_COMMAND(ID_INTERNATION, &CMainFrame::OnTaskInternation)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -50,8 +49,6 @@ CMainFrame::CMainFrame()
 
 CMainFrame::~CMainFrame()
 {
-	//UnregisterHotKey(this->GetSafeHwnd(), 1001);
-	//UnregisterHotKey(this->GetSafeHwnd(), 1002);
 }
 
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -197,13 +194,14 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// 将文档名和应用程序名称在窗口标题栏上的顺序进行交换。这
 	// 将改进任务栏的可用性，因为显示的文档名带有缩略图。
 	ModifyStyle(0, FWS_PREFIXTITLE);
-	mTaskTemplate.loadTaskTemplate("TaskTemplate.xml");
+	// 加载各种配置文件
+	mTaskTemplate.LoadTaskTemplate("TaskTemplate.xml");
 	mTaskTemplate.LoadItemNameFile("TempName.xml");
 	mTaskTemplate.LoadItemNameFile("MapName.xml");
 	mTaskEditorConfig.LoadTaskEditorConfig("TaskEditorConfig.xml");
 	m_wndOptionView.FillTempOptionView();
+	// 加载自定义的快捷键
 	m_hAccel = LoadAccelerators(AfxGetInstanceHandle (), MAKEINTRESOURCE(IDR_CUSTOMSIZE));;   
-	int nError = GetLastError();
 	return 0;
 }
 
@@ -445,10 +443,10 @@ BOOL CMainFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle, CWnd* pParent
 			pUserToolbar->EnableCustomizeButton(TRUE, ID_VIEW_CUSTOMIZE, strCustomize);
 		}
 	}
+	// 隐藏选项面板
 	m_wndOptionView.ShowPane(FALSE, FALSE, FALSE);
+	// 刷新任务文件树
 	m_wndFileView.FillFileView();
-	//RegisterHotKey(m_hWnd, 1001, MOD_CONTROL, 's');
-	//RegisterHotKey(m_hWnd, 1002, MOD_CONTROL, 'S');
 	return TRUE;
 }
 
@@ -459,6 +457,7 @@ void CMainFrame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 	//m_wndOutput.UpdateFonts();
 }
 
+// 生成任务最终配置文件
 void CMainFrame::OnTaskConfig()
 {
 	mLangDocument.Clear();
@@ -557,6 +556,7 @@ void CMainFrame::OnTaskConfig()
 	AfxMessageBox(_T("生成任务配置完成!"));
 }
 
+// 从配置文件里得到任务等级和Npc Id
 int CMainFrame::GetTaskLevelAndNpcId(tinyxml2::XMLDocument& tDocument, int& rNpcId)
 {
 	XMLElement* pRootElem = tDocument.RootElement();
@@ -597,6 +597,7 @@ int CMainFrame::GetTaskLevelAndNpcId(tinyxml2::XMLDocument& tDocument, int& rNpc
 	return nLevel;
 }
 
+/// 处理任务配置的语言生成
 void CMainFrame::ProcessTaskLanguage(tinyxml2::XMLDocument& tDocument, XMLElement* pLangRootElem)
 {
 	XMLElement* pRootElem = tDocument.RootElement();
@@ -618,7 +619,8 @@ void CMainFrame::ProcessTaskLanguage(tinyxml2::XMLDocument& tDocument, XMLElemen
 	char acBuffer[4096] = { 0 };
 
 	int nLangCount = 0;
-	for (int i = 0; i < mTaskTemplate.mMainLangList.size(); ++ i)
+	// 主节点需要处理的语言项
+	for (unsigned int i = 0; i < mTaskTemplate.mMainLangList.size(); ++ i)
 	{
 		XMLElement* pMainElem = pRootElem->FirstChildElement(mTaskTemplate.mMainLangList[i].c_str());
 		if (NULL != pMainElem)
@@ -639,7 +641,8 @@ void CMainFrame::ProcessTaskLanguage(tinyxml2::XMLDocument& tDocument, XMLElemen
 		}
 	}
 
-	for (int i = 0; i < mTaskTemplate.mDiagLangList.size(); ++i)
+	// 对话节点需要处理的语言项
+	for (unsigned int i = 0; i < mTaskTemplate.mDiagLangList.size(); ++i)
 	{
 		XMLElement* pDiagElem = pRootElem->FirstChildElement(mTaskTemplate.mDiagLangList[i].c_str());
 		if (NULL != pDiagElem)
@@ -665,6 +668,7 @@ void CMainFrame::ProcessTaskLanguage(tinyxml2::XMLDocument& tDocument, XMLElemen
 	}
 }
 
+/// 保存任务等级配置
 void CMainFrame::SaveTaskLevelConfig(const char* pXmlFilePath, vector<CString>& rVecString)
 {
 	if (NULL == pXmlFilePath)
@@ -680,7 +684,7 @@ void CMainFrame::SaveTaskLevelConfig(const char* pXmlFilePath, vector<CString>& 
 
 	pRootElem->SetAttribute("level", mTaskEditorConfig.mLevelPhase);
 	char acBuffer[4096] = { 0 };
-	for (int i = 0; i < rVecString.size(); ++ i)
+	for (unsigned int i = 0; i < rVecString.size(); ++ i)
 	{
 		if (_T("") == rVecString[i])
 		{
@@ -696,6 +700,7 @@ void CMainFrame::SaveTaskLevelConfig(const char* pXmlFilePath, vector<CString>& 
 	tDocument.SaveFile(pXmlFilePath);
 }
 
+// 保存NPC任务配置
 void CMainFrame::SaveNpcTaskConfig(const char* pXmlFilePath, map<int, CString>& rNpcTask)
 {
 	if (NULL == pXmlFilePath)
@@ -725,37 +730,28 @@ void CMainFrame::SaveNpcTaskConfig(const char* pXmlFilePath, map<int, CString>& 
 	tDocument.SaveFile(pXmlFilePath);
 }
 
-void CMainFrame::OnTaskInternation()
-{
-
-}
-
+/// 文件树上增加文件节点
 void CMainFrame::AddFileItem(tinyxml2::XMLDocument& tDocument, CString strFileName)
 {
 	m_wndFileView.AddFileItem(tDocument, strFileName);
 }
 
+/// 显示选项面板
 void CMainFrame::ShowOptionView(HWND hWnd, CString strConfigName, CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum)
 {
 	m_wndOptionView.ShowOptionView(hWnd, strConfigName, pGridCtrl, nRowNum, nColumnNum);
 }
 
+/// 更新文件树节点
 void CMainFrame::UpdateFileViewItem(CString& strTaskID, CString& strTaskType, CString& strTaskName)
 {
 	m_wndFileView.UpdateTreeItem(strTaskID, strTaskType, strTaskName);
 }
 
-void CMainFrame::OnHotKey(UINT nHotKeyId, UINT nKey1, UINT nKey2)
-{
-	// TODO:  在此添加消息处理程序代码和/或调用默认值
-
-	CMDIFrameWndEx::OnHotKey(nHotKeyId, nKey1, nKey2);
-}
-
-
 BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 {
 	// TODO:  在此添加专用代码和/或调用基类
+	// 快捷键处理
 	TranslateAccelerator (m_hWnd, m_hAccel, pMsg);  
 	return CMDIFrameWndEx::PreTranslateMessage(pMsg);
 }

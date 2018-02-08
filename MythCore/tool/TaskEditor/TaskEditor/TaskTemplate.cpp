@@ -2,27 +2,30 @@
 #include "TaskTemplate.h"
 #include "commondefine.h"
 
+/// 清除选择节点的内存
 void CTaskTemplate::ClearOptionList(OPTION_LIST& rList)
 {
-	for (int i = 0; i < rList.size(); ++i)
+	for (unsigned int i = 0; i < rList.size(); ++i)
 	{
 		ClearMainNodeList(rList[i]->mNodeList);
 		delete rList[i];
 	}
 }
 
+/// 清除主节点
 void CTaskTemplate::ClearMainNodeList(TASK_NODE_LIST& rList)
 {
-	for (int  i = 0; i < rList.size(); ++ i)
+	for (unsigned int  i = 0; i < rList.size(); ++ i)
 	{
 		ClearOptionList(rList[i]->mOptionList);
 		delete rList[i];
 	}
 }
 
+/// 清除选项名的列表
 void CTaskTemplate::ClearOptionNameList(OPTION_NAME_LIST rList)
 {
-	for (int i = 0; i < rList.size(); ++i)
+	for (unsigned int i = 0; i < rList.size(); ++i)
 	{
 		ClearOptionNameList(rList[i]->mChildList);
 		delete rList[i];
@@ -31,12 +34,14 @@ void CTaskTemplate::ClearOptionNameList(OPTION_NAME_LIST rList)
 
 CTaskTemplate::~CTaskTemplate()
 {
-	ClearMainNodeList(mTextNodeList);
+	ClearMainNodeList(mMainNodeList);
 	ClearMainNodeList(mCondNodeList);
 	ClearMainNodeList(mDiagNodeList);
 	ClearOptionNameList(mOptionNameList);
 }
-void CTaskTemplate::loadTaskTemplate(const char* pTemplateFile)
+
+/// 加载任务模板文件
+void CTaskTemplate::LoadTaskTemplate(const char* pTemplateFile)
 {
 	if (NULL == pTemplateFile)
 	{
@@ -56,41 +61,47 @@ void CTaskTemplate::loadTaskTemplate(const char* pTemplateFile)
 		return;
 	}
 
+	// 主节点
 	XMLElement* pTextNodeElem = pRoot->FirstChildElement("TextNode");
 	for (; NULL != pTextNodeElem; pTextNodeElem = pTextNodeElem->NextSiblingElement("TextNode"))
 	{
 		CTaskMainNode* pMainNode = new CTaskMainNode;
-		 loadTextNode(pMainNode, pTextNodeElem, &mMainLangList);
-		 mTextNodeList.push_back(pMainNode);
+		 LoadMainNode(pMainNode, pTextNodeElem, &mMainLangList);
+		 mMainNodeList.push_back(pMainNode);
 	}
 
+	// 条件节点
 	XMLElement* pCondNodeElem = pRoot->FirstChildElement("CondNode");
 	for (; NULL != pCondNodeElem; pCondNodeElem = pCondNodeElem->NextSiblingElement("CondNode"))
 	{
 		CTaskMainNode* pMainNode = new CTaskMainNode;
-		loadTextNode(pMainNode, pCondNodeElem, NULL);
+		LoadMainNode(pMainNode, pCondNodeElem, NULL);
 		mCondNodeList.push_back(pMainNode);
 	}
 
+	// 对话节点
 	XMLElement* pDiagNodeElem = pRoot->FirstChildElement("DiagNode");
 	for (; NULL != pDiagNodeElem; pDiagNodeElem = pDiagNodeElem->NextSiblingElement("DiagNode"))
 	{
 		CTaskMainNode* pMainNode = new CTaskMainNode;
-		loadTextNode(pMainNode, pDiagNodeElem, &mDiagLangList);
+		LoadMainNode(pMainNode, pDiagNodeElem, &mDiagLangList);
 		mDiagNodeList.push_back(pMainNode);
 	}
 }
 
-
-void CTaskTemplate::loadTextNode(CTaskMainNode* pMainNode, XMLElement* pTextNodeElem, INTERNATION_LIST* pInternationList)
+/// 加载主节点
+void CTaskTemplate::LoadMainNode(CTaskMainNode* pMainNode, XMLElement* pTextNodeElem, INTERNATION_LIST* pInternationList)
 {
 	wchar_t acBuffer[4096] = { 0 };
+	// 编辑显示的名字
 	Utf8ToUnicode(pTextNodeElem->Attribute("Name"), acBuffer, sizeof(acBuffer) / 2 - 1);
 	pMainNode->mName = acBuffer;
 
+	// 写入配置文件的名字
 	Utf8ToUnicode(pTextNodeElem->Attribute("DesName"), acBuffer, sizeof(acBuffer) / 2 - 1);
 	pMainNode->mDesName = acBuffer;
 
+	// 外置的配置文件
 	const char* pConfigName = pTextNodeElem->Attribute("ConfigName");
 	if (NULL != pConfigName)
 	{
@@ -98,22 +109,25 @@ void CTaskTemplate::loadTextNode(CTaskMainNode* pMainNode, XMLElement* pTextNode
 		pMainNode->mConfigName = acBuffer;
 	}
 
+	// 国际化语言
 	bool bInternation = pTextNodeElem->BoolAttribute("Internation");
 	if (NULL != pInternationList && bInternation)
 	{
 		pInternationList->push_back(pTextNodeElem->Attribute("DesName"));
 	}
 
+	// 选项列表
 	XMLElement* pOptionElem = pTextNodeElem->FirstChildElement("Option");
 	for (; NULL != pOptionElem; pOptionElem = pOptionElem->NextSiblingElement("Option"))
 	{
 		CTaskOption* pOptionNode = new CTaskOption;
-		loadOptionNode(pOptionNode, pOptionElem);
+		LoadOptionNode(pOptionNode, pOptionElem);
 		pMainNode->mOptionList.push_back(pOptionNode);
 	}
 }
 
-void CTaskTemplate::loadOptionNode(CTaskOption* pOptionNode, XMLElement* pOptionNodeElem)
+/// 加载选择节点
+void CTaskTemplate::LoadOptionNode(CTaskOption* pOptionNode, XMLElement* pOptionNodeElem)
 {
 	wchar_t acBuffer[4096] = { 0 };
 	Utf8ToUnicode(pOptionNodeElem->Attribute("Name"), acBuffer, sizeof(acBuffer) / 2 - 1);
@@ -123,11 +137,12 @@ void CTaskTemplate::loadOptionNode(CTaskOption* pOptionNode, XMLElement* pOption
 	for (; NULL != pTextNodeElem; pTextNodeElem = pTextNodeElem->NextSiblingElement("TextNode"))
 	{
 		CTaskMainNode* pMainNode = new CTaskMainNode;
-		loadTextNode(pMainNode, pTextNodeElem, NULL);
+		LoadMainNode(pMainNode, pTextNodeElem, NULL);
 		pOptionNode->mNodeList.push_back(pMainNode);
 	}
 }
 
+/// 加载选项节点名字文件（包括模板的树节点名字文件，地图节点名字文件）
 void CTaskTemplate::LoadItemNameFile(const char* pTempNameFile)
 {
 	if (NULL == pTempNameFile)
@@ -192,9 +207,10 @@ void CTaskTemplate::LoadItemName(COptionNameItem* pParentTempName, XMLElement* p
 	}
 }
 
+/// 通过ID得到选项的名字
 wstring CTaskTemplate::FindOptionName(wstring strConfigName, int nID)
 {
-	for (int i = 0; i < mOptionNameHashList.size(); ++ i)
+	for (unsigned int i = 0; i < mOptionNameHashList.size(); ++ i)
 	{
 		if (strConfigName == mOptionNameHashList[i].mName)
 		{
@@ -213,17 +229,20 @@ wstring CTaskTemplate::FindOptionName(wstring strConfigName, int nID)
 	return _T("");
 }
 
+/// 通过名字得到任务的主节点
 CTaskMainNode* CTaskTemplate::GetTaskMainNode(wstring strName)
 {
-	for (int i = 0; i < mTextNodeList.size(); ++ i)
+	// 遍历主节点
+	for (unsigned int i = 0; i < mMainNodeList.size(); ++ i)
 	{
-		if (mTextNodeList[i]->mDesName == strName)
+		if (mMainNodeList[i]->mDesName == strName)
 		{
-			return mTextNodeList[i];
+			return mMainNodeList[i];
 		}
 	}
 
-	for (int i = 0; i < mCondNodeList.size(); ++ i)
+	// 遍历条件节点
+	for (unsigned int i = 0; i < mCondNodeList.size(); ++ i)
 	{
 		if (mCondNodeList[i]->mDesName == strName)
 		{
@@ -231,7 +250,8 @@ CTaskMainNode* CTaskTemplate::GetTaskMainNode(wstring strName)
 		}
 	}
 
-	for (int i = 0; i < mDiagNodeList.size(); ++ i)
+	// 遍历对话节点
+	for (unsigned int i = 0; i < mDiagNodeList.size(); ++ i)
 	{
 		if (mDiagNodeList[i]->mDesName == strName)
 		{
@@ -242,6 +262,7 @@ CTaskMainNode* CTaskTemplate::GetTaskMainNode(wstring strName)
 	return NULL;
 }
 
+/// 加载任务编辑器配置文件
 void CTaskEditorConfig::LoadTaskEditorConfig(const char* pConfigFile)
 {
 	if (NULL == pConfigFile)
@@ -266,10 +287,14 @@ void CTaskEditorConfig::LoadTaskEditorConfig(const char* pConfigFile)
 	XMLElement* pTaskLevelCondElem = pRoot->FirstChildElement("TaskLevelCond");
 	if (NULL != pTaskLevelCondElem)
 	{
+		// 等级
 		mLevelCond = pTaskLevelCondElem->IntAttribute("Value");
+		// 等级节点的属性名
 		Utf8ToUnicode(pTaskLevelCondElem->Attribute("LevelParam"), acBuffer, sizeof(acBuffer) / 2 - 1);
 		mLevelParam = acBuffer;
+		// 多少一个等级阶段
 		mLevelPhase = pTaskLevelCondElem->IntAttribute("LevelPhase");
+		// 最大等级
 		mMaxLevel = pTaskLevelCondElem->IntAttribute("MaxLevel");
 	}
 }

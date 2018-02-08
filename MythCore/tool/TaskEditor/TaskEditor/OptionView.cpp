@@ -177,6 +177,7 @@ void COptionView::OnChangeVisualStyle()
 	m_wndOptionView.SetImageList(&m_TempViewImages, TVSIL_NORMAL);
 }
 
+/// 双击树节点，将对应的节点应用到选择的Cell上
 void COptionView::OnDblClkFileView(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	HTREEITEM pItem = m_wndOptionView.GetSelectedItem();
@@ -208,6 +209,7 @@ void COptionView::OnDblClkFileView(NMHDR *pNMHDR, LRESULT *pResult)
 	ShowPane(FALSE, FALSE, FALSE);
 }
 
+// 填充选项界面的树节点
 void COptionView::FillTempOptionView()
 {
 	CMainFrame* pMainFrame = (CMainFrame*)AfxGetMainWnd();
@@ -227,24 +229,26 @@ void COptionView::FillTempOptionView()
 	m_wndOptionView.SetItemState(hRoot, TVIS_BOLD, TVIS_BOLD);
 
 
-	for (int i = 0; i < rNameList.size(); ++ i)
+	for (unsigned int i = 0; i < rNameList.size(); ++ i)
 	{
 		HTREEITEM hItem = m_wndOptionView.InsertItem(rNameList[i]->mName.c_str(), 1, 1, hRoot);
-		AddTempOptionItem(hItem, rNameList[i]);
+		AddOptionItem(hItem, rNameList[i]);
 	}
 
 	m_wndOptionView.Expand(hRoot, TVE_EXPAND);
 }
 
-void COptionView::AddTempOptionItem(HTREEITEM hTreeItem, COptionNameItem* pTempNameItem)
+/// 增加选项节点
+void COptionView::AddOptionItem(HTREEITEM hTreeItem, COptionNameItem* pTempNameItem)
 {
-	for (int i = 0; i < pTempNameItem->mChildList.size(); ++ i)
+	for (unsigned int i = 0; i < pTempNameItem->mChildList.size(); ++ i)
 	{
 		HTREEITEM hItem = m_wndOptionView.InsertItem(pTempNameItem->mChildList[i]->mName.c_str(), 1, 1, hTreeItem);
-		AddTempOptionItem(hItem, pTempNameItem->mChildList[i]);
+		AddOptionItem(hItem, pTempNameItem->mChildList[i]);
 	}
 }
 
+/// 通过名字得到根节点的子节点
 HTREEITEM COptionView::GetRootChildItem(CString strItemName)
 {
 	HTREEITEM hRoot = m_wndOptionView.GetRootItem();
@@ -260,6 +264,7 @@ HTREEITEM COptionView::GetRootChildItem(CString strItemName)
 	return NULL;
 }
 
+/// 显示选项界面
 void COptionView::ShowOptionView(HWND hWnd, CString& strConfigName, CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum)
 {
 	HTREEITEM hRoot = m_wndOptionView.GetRootItem();
@@ -275,6 +280,7 @@ void COptionView::ShowOptionView(HWND hWnd, CString& strConfigName, CGridCtrl* p
 	SetRowNum(nRowNum);
 	SetColumnNum(nColumnNum);
 
+	// 展开对应配置的根节点
 	HTREEITEM hTreeItem = GetRootChildItem(strConfigName);
 	if (NULL != hTreeItem)
 	{

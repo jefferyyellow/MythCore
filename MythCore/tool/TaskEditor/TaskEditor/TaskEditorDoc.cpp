@@ -165,7 +165,7 @@ BOOL CTaskEditorDoc::OnSaveDocument(LPCTSTR lpszPathName)
 	strFileName = strFileName.Right(strFileName.GetLength() - strFileName.ReverseFind('\\') - 1);
 	strFileName = strFileName.Left(strFileName.Find('.'));
 
-	// 新的文件
+	// 新的文件名的检查
 	if (_T("") == m_strPathName && lpszPathName[0] != _T('\0'))
 	{
 
@@ -199,10 +199,11 @@ BOOL CTaskEditorDoc::OnSaveDocument(LPCTSTR lpszPathName)
 
 	char acBuffer[4096] = { 0 };
 	tinyxml2::XMLDocument tDocument;
-
+	// 保持到XML文件
 	SaveToXml(tDocument);
 	UnicodeToAnsi(lpszPathName, acBuffer, sizeof(acBuffer));
 	tDocument.SaveFile(acBuffer);
+	// 将修改标志设置为FALSE
 	SetModifiedFlag(FALSE);
 
 	if (_T("") == m_strPathName)
@@ -217,11 +218,12 @@ BOOL CTaskEditorDoc::OnSaveDocument(LPCTSTR lpszPathName)
 	CString strTaskType = pView->GetMainGridText(_T("TaskType"));
 	strTaskType = strTaskType.Right(strTaskType.GetLength() - strTaskType.Find(',') - 1);
 	CString strTaskName = pView->GetMainGridText(_T("TaskName"));
-
+	/// 更新文件树视图的节点
 	pMainFrame->UpdateFileViewItem(strTaskID, strTaskType, strTaskName);
 	return TRUE;
 }
 
+/// 将任务保存到xml文件中去
 void CTaskEditorDoc::SaveToXml(tinyxml2::XMLDocument& tDocument)
 {
 	// TODO:  在此添加专用代码和/或调用基类
@@ -235,11 +237,9 @@ void CTaskEditorDoc::SaveToXml(tinyxml2::XMLDocument& tDocument)
 
 	POSITION pos = GetFirstViewPosition();
 	CTaskEditorView* pView = (CTaskEditorView*)GetNextView(pos);
-	//CTaskEditorView* pView = GetView (CTaskEditorView*)((CMainFrame*)AfxGetMainWnd())->MDIGetActive()->GetActiveView();
-	// TODO:  在此添加存储代码
+
+	// 主节点
 	CGridCtrl* pManGrid = pView->mMainGrid;
-
-
 	for (int i = 0; i < pManGrid->GetRowCount(); ++i)
 	{
 		for (int j = 0; j < pManGrid->GetColumnCount(); j += 2)
@@ -248,6 +248,7 @@ void CTaskEditorDoc::SaveToXml(tinyxml2::XMLDocument& tDocument)
 		}
 	}
 
+	// 条件节点
 	CGridCtrl* pCondGrid = pView->mCondGrid;
 	XMLElement* pCondElem = NULL;
 	for (int i = 0; i < pCondGrid->GetRowCount(); ++i)
@@ -263,6 +264,7 @@ void CTaskEditorDoc::SaveToXml(tinyxml2::XMLDocument& tDocument)
 		}
 	}
 
+	// 对话节点
 	CGridCtrl* pDiagGrid = pView->mDiagGrid;;
 	pCondElem = NULL;
 	for (int i = 0; i < pDiagGrid->GetRowCount(); ++i)
@@ -280,6 +282,7 @@ void CTaskEditorDoc::SaveToXml(tinyxml2::XMLDocument& tDocument)
 
 }
 
+// 保持主节点
 XMLElement* CTaskEditorDoc::SaveMainNode(CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum, 
 	tinyxml2::XMLDocument& tDocument, XMLElement* pParentElem, bool bAttribute)
 {
@@ -328,6 +331,7 @@ XMLElement* CTaskEditorDoc::SaveMainNode(CGridCtrl* pGridCtrl, int nRowNum, int 
 	return pMainElem;
 }
 
+/// 保存数据节点
 void CTaskEditorDoc::SaveDataNode(CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum,
 	tinyxml2::XMLDocument& tDocument, XMLElement* pParentElem, int nParamNum)
 {
@@ -407,6 +411,7 @@ BOOL CTaskEditorDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	return TRUE;
 }
 
+/// 从XML中加载任务配置
 void CTaskEditorDoc::OpenDocument()
 {
 	if (m_strPathName == _T(""))
@@ -422,10 +427,11 @@ void CTaskEditorDoc::OpenDocument()
 		return;
 	}
 
-	LoadFromXml(tDocument);
+	LoadFromXml(tDocument, false);
 }
 
-void CTaskEditorDoc::LoadFromXml(tinyxml2::XMLDocument& tDocument)
+/// 从XML中加载任务配置
+void CTaskEditorDoc::LoadFromXml(tinyxml2::XMLDocument& tDocument, bool bCopy)
 {
 	XMLElement* pRootElem = tDocument.RootElement();
 	if (NULL == pRootElem)
@@ -439,6 +445,7 @@ void CTaskEditorDoc::LoadFromXml(tinyxml2::XMLDocument& tDocument)
 	{
 		return;
 	}
+	// 主节点
 	CGridCtrl* pManGrid = pView->mMainGrid;
 	for (int i = 0; i < pManGrid->GetRowCount(); ++i)
 	{
@@ -447,9 +454,13 @@ void CTaskEditorDoc::LoadFromXml(tinyxml2::XMLDocument& tDocument)
 			LoadMainNode(pManGrid, i, j, tDocument, pRootElem, true);
 		}
 	}
-	// 将ID列置成不能编辑的
-	pManGrid->SetItemState(0, 1, pManGrid->GetItemState(0, 1) | GVIS_READONLY);
-
+	if (!bCopy)
+	{
+		// 特殊处理，将ID列置成不能编辑的
+		pManGrid->SetItemState(0, 1, pManGrid->GetItemState(0, 1) | GVIS_READONLY);
+	}
+	
+	// 条件节点
 	CGridCtrl* pCondGrid = pView->mCondGrid;
 	for (int i = 0; i < pCondGrid->GetRowCount(); ++i)
 	{
@@ -462,6 +473,7 @@ void CTaskEditorDoc::LoadFromXml(tinyxml2::XMLDocument& tDocument)
 		}
 	}
 
+	// 对话节点
 	CGridCtrl* pDiagGrid = pView->mDiagGrid;
 	for (int i = 0; i < pDiagGrid->GetRowCount(); ++i)
 	{
@@ -479,6 +491,7 @@ void CTaskEditorDoc::LoadFromXml(tinyxml2::XMLDocument& tDocument)
 	SetModifiedFlag(FALSE);
 }
 
+/// 加载主节点
 XMLElement*	CTaskEditorDoc::LoadMainNode(CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum,
 tinyxml2::XMLDocument& tDocument, XMLElement* pParentElem, bool bAttribute)
 {
@@ -514,6 +527,7 @@ tinyxml2::XMLDocument& tDocument, XMLElement* pParentElem, bool bAttribute)
 		Utf8ToUnicode(pMainElem->Attribute("Value"), wBuffer, sizeof(wBuffer) / 2 - 1);
 		if (pMainNode->mOptionList.size() > 0)
 		{
+			// 是否有外置的配置文件
 			if (_T("") != pMainNode->mConfigName)
 			{
 				CMainFrame* pMainFrame = (CMainFrame*)AfxGetMainWnd();
@@ -525,7 +539,8 @@ tinyxml2::XMLDocument& tDocument, XMLElement* pParentElem, bool bAttribute)
 			}
 			else
 			{
-				for (int nOptionNum = 0; nOptionNum < pMainNode->mOptionList.size(); ++nOptionNum)
+				// 从本身的选项列表里取
+				for (unsigned int nOptionNum = 0; nOptionNum < pMainNode->mOptionList.size(); ++nOptionNum)
 				{
 					int tOffset = pMainNode->mOptionList[nOptionNum]->mDes.find(',');
 					wstring strValue = pMainNode->mOptionList[nOptionNum]->mDes.substr(0, tOffset);
@@ -546,6 +561,7 @@ tinyxml2::XMLDocument& tDocument, XMLElement* pParentElem, bool bAttribute)
 	return pMainElem;
 }
 
+/// 加载数据节点
 int CTaskEditorDoc::LoadDataNode(CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum,
 	tinyxml2::XMLDocument& tDocument, XMLElement* pParentElem, int nParamNum)
 {
@@ -616,6 +632,7 @@ int CTaskEditorDoc::LoadDataNode(CGridCtrl* pGridCtrl, int nRowNum, int nColumnN
 	return nLineCount;
 }
 
+/// 拷贝老的粘贴到一个新的界面上
 void CTaskEditorDoc::PasteNew(LPCTSTR pStrName)
 {
 	POSITION pos = theApp.GetFirstDocTemplatePosition();
@@ -638,23 +655,24 @@ void CTaskEditorDoc::PasteNew(LPCTSTR pStrName)
 			break;
 		}
 	}
-
+	// 文档已经打开，可能有没保存的，不能直接从文件里加载，而是将界面上的先序列化到一个xml里面，
+	// 在从xml反序列化到界面上
 	if (pFindDoc != NULL)
 	{
 		tinyxml2::XMLDocument tDocument;
 		pFindDoc->SaveToXml(tDocument);
-		LoadFromXml(tDocument);
+		LoadFromXml(tDocument, true);
 	}
 	else
 	{
 		tinyxml2::XMLDocument tDocument;
-		CString strFilePath = CString("Tasks\\") + pStrName;
+		CString strFilePath = CString("Tasks\\") + pStrName + CString(_T(".xml"));
 		char acBuffer[4096] = { 0 };
 
 		UnicodeToAnsi(strFilePath, acBuffer, sizeof(acBuffer));
 		if (tinyxml2::XML_SUCCESS == tDocument.LoadFile(acBuffer))
 		{
-			LoadFromXml(tDocument);	
+			LoadFromXml(tDocument, true);	
 		}
 	}
 }

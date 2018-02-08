@@ -9,9 +9,8 @@ using namespace tinyxml2;
 #define STRING_LENGTH_1024 1024
 #define MAX_COND_PARAM_NUM 4			// 最大的条件参数
 #define MAX_DIAG_PARAM_NUM 2			// 最大的对话参数
-extern wstring s2ws(const string& s);
-extern string ws2s(const wstring& ws);
 
+// 编码转换函数
 extern	char*		UnicodeToAnsi(const wchar_t* pSrc, char* pDst, int nMaxSize);
 extern	char*		UnicodeToUtf8(const wchar_t* pSrc, char* pDst, int nMaxSize);
 

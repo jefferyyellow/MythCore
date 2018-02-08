@@ -54,16 +54,7 @@
     <ClInclude Include="FileView.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ClassView.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="ViewTree.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="OutputWnd.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="PropertiesWnd.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\dep\tinyxml\tinyxml2.h">
@@ -143,16 +134,7 @@
     <ClCompile Include="FileView.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ClassView.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="ViewTree.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="OutputWnd.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="PropertiesWnd.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\dep\tinyxml\tinyxml2.cpp">

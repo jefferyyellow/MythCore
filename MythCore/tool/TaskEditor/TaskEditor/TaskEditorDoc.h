@@ -51,20 +51,25 @@ public:
 	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
 
 public:
+	/// 打开任务文档
 	void	OpenDocument();
-	void	LoadFromXml(tinyxml2::XMLDocument& tDocument);
+	/// 从XML中加载任务配置
+	void	LoadFromXml(tinyxml2::XMLDocument& tDocument, bool bCopy);
+	/// 将任务保存到xml文件中去
 	void	SaveToXml(tinyxml2::XMLDocument& tDocument);
+	/// 保持主节点
 	XMLElement* SaveMainNode(CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum,
 		tinyxml2::XMLDocument& tDocument, XMLElement* pParentElem, bool bAttribute);
+	/// 保存数据节点
 	void	SaveDataNode(CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum,
 		tinyxml2::XMLDocument& tDocument, XMLElement* pParentElem, int nParamNum);
-
+	/// 加载主节点
 	XMLElement*	LoadMainNode(CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum,
 		tinyxml2::XMLDocument& tDocument, XMLElement* pParentElem, bool bAttribute);
-
+	/// 加载数据节点
 	int		LoadDataNode(CGridCtrl* pGridCtrl, int nRowNum, int nColumnNum,
 		tinyxml2::XMLDocument& tDocument, XMLElement* pParentElem, int nParamNum);
-	
+	/// 拷贝老的粘贴到一个新的界面上
 	void	PasteNew(LPCTSTR pStrName);
 private:
 };

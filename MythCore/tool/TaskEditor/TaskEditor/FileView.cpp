@@ -13,6 +13,7 @@ static char THIS_FILE[]=__FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 // CFileView
+// 树节点排序函数（叶子节点），按照任务ID排序
 int CALLBACK TreeCompareProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 {
 	CViewTree*       pViewTree = (CViewTree*)lParamSort;
@@ -48,9 +49,11 @@ int CALLBACK TreeCompareProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 		return 1;
 	}
 
+	// 取出任务ID
 	strItem1 = strItem1.Left(nPos1);
 	strItem2 = strItem2.Left(nPos2);
 
+	// 将任务ID转换成整数比较
 	int nItem1 = _ttoi(strItem1);
 	int nItem2 = _ttoi(strItem2);
 	if (nItem1 > nItem2)
@@ -138,6 +141,7 @@ void CFileView::OnSize(UINT nType, int cx, int cy)
 	AdjustLayout();
 }
 
+/// 填充文件树节点
 void CFileView::FillFileView()
 {
 	HTREEITEM hRoot = m_wndFileView.InsertItem(_T("任务文件"), 0, 0);
@@ -147,6 +151,7 @@ void CFileView::FillFileView()
 	HANDLE hFind = INVALID_HANDLE_VALUE;
 	DWORD dwError = 0;	
 
+	// 注意FindFirstFile需要用到*的通配符
 	hFind = FindFirstFile(_T("Tasks\\*"), &ffd);
 	if (INVALID_HANDLE_VALUE == hFind)
 	{
@@ -155,13 +160,16 @@ void CFileView::FillFileView()
 
 	do
 	{
+		// 只处理非文件夹文件
 		if (!(ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
 		{
 			CString strFilePath = CString("Tasks\\") + ffd.cFileName;
 			CString strFileName = ffd.cFileName;
+			// 取出文件名，和任务ID一样
 			strFileName = strFileName.Left(strFileName.Find('.'));
 			CString strName;
 			CString strType;
+			// 对不是以数字开头的文件，直接过滤掉
 			if (ffd.cFileName[0] < _T('0') || ffd.cFileName[0] > _T('9'))
 			{
 				continue;
@@ -173,7 +181,9 @@ void CFileView::FillFileView()
 			{
 				continue;
 			}
+			// 得到任务的类型和名字，加上上面的ID，可以构成任务树节点的各个元素了
 			GetTaskTypeAndName(tDocument, strType, strName);
+			// 通过类型名字得到对应的类型节点，没有的话就新建一个
 			HTREEITEM tTypeItem = GetRootChildItem(strType);
 			if (NULL == tTypeItem)
 			{
@@ -182,7 +192,9 @@ void CFileView::FillFileView()
 			}
 
 			strName = strName + _T("(") + strFileName + _T(")");
+			
 			HTREEITEM hItem = m_wndFileView.InsertItem(strName, 1, 1, tTypeItem, TVI_SORT);
+			// 设置树节点的数据，用于节点排序，排序函数的参数就是设置的节点的Data
 			m_wndFileView.SetItemData(hItem, (DWORD)hItem);
 
 		}
@@ -191,14 +203,18 @@ void CFileView::FillFileView()
 	dwError = GetLastError();
 	if (dwError != ERROR_NO_MORE_FILES)
 	{
+		FindClose(hFind);
 		return;
 	}
 	FindClose(hFind);
 	//ExtendAllItem(hRoot);
+	// 展开根节点
 	m_wndFileView.Expand(hRoot, TVE_EXPAND);
+	// 对叶子节点排序
 	FileViewSort(hRoot);
 }
 
+/// 展开所有的节点
 void CFileView::ExtendAllItem(HTREEITEM hItem)
 {
 	m_wndFileView.Expand(hItem, TVE_EXPAND);
@@ -209,20 +225,40 @@ void CFileView::ExtendAllItem(HTREEITEM hItem)
 	}
 }
 
+/// 更新任务ID对应的任务类型和任务名字
 void CFileView::UpdateTreeItem(CString& strTaskID, CString& strTaskType, CString& strTaskName)
 {
 	HTREEITEM hRoot = m_wndFileView.GetRootItem();
 	HTREEITEM tTaskItem = FindTreeItem(hRoot, strTaskID);
 	HTREEITEM tParentItem = m_wndFileView.GetParentItem(tTaskItem);
-	m_wndFileView.DeleteItem(tTaskItem);
-	if (!m_wndFileView.ItemHasChildren(tParentItem))
+
+	CString strOldTaskName = m_wndFileView.GetItemText(tTaskItem);
+	strOldTaskName = strOldTaskName.Left(strOldTaskName.Find('('));
+	CString strOldTypeName = m_wndFileView.GetItemText(tParentItem);
+	// 没有变化，直接返回
+	if (strOldTaskName == strTaskName && strOldTypeName == strTaskType)
 	{
-		m_wndFileView.DeleteItem(tParentItem);
+		return;
 	}
 
-	AddFileItem(strTaskType, strTaskName, strTaskID);
+	// 类型不相等才需要将类型删除
+	if (strOldTypeName != strTaskType)
+	{
+		m_wndFileView.DeleteItem(tTaskItem);
+		if (!m_wndFileView.ItemHasChildren(tParentItem))
+		{
+			m_wndFileView.DeleteItem(tParentItem);
+		}
+		AddFileItem(strTaskType, strTaskName, strTaskID);
+	}
+	else
+	{
+		CString strName = strTaskName + _T("(") + strTaskID + _T(")");
+		m_wndFileView.SetItemText(tTaskItem, strName);
+	}
 }
 
+/// 通过名字找树节点的子节点
 HTREEITEM CFileView::FindTreeItem(HTREEITEM hTreeItem, CString& strItemName)
 {
 	HTREEITEM hChildItem = m_wndFileView.GetChildItem(hTreeItem);
@@ -247,6 +283,7 @@ HTREEITEM CFileView::FindTreeItem(HTREEITEM hTreeItem, CString& strItemName)
 	return NULL;
 }
 
+/// 通过名字搜索根节点的子节点
 HTREEITEM CFileView::GetRootChildItem(CString strItemName)
 {
 	HTREEITEM hRoot = m_wndFileView.GetRootItem();
@@ -262,6 +299,7 @@ HTREEITEM CFileView::GetRootChildItem(CString strItemName)
 	return NULL;
 }
 
+/// 增加文件节点
 void CFileView::AddFileItem(tinyxml2::XMLDocument& tDocument, CString strFileName)
 {
 	CString strName;
@@ -288,7 +326,7 @@ void CFileView::AddFileItem(CString strType, CString strName, CString strFileNam
 	m_wndFileView.Expand(tTypeItem, TVE_EXPAND);
 	FileViewSort(hRoot);
 }
-
+/// 文件节点树叶子节点排序
 void CFileView::FileViewSort(HTREEITEM hParentItem)
 {
 	HTREEITEM hChildItem = m_wndFileView.GetChildItem(hParentItem);
@@ -296,6 +334,7 @@ void CFileView::FileViewSort(HTREEITEM hParentItem)
 	{
 		return;
 	}
+	// 对叶子节点排序
 	if (!m_wndFileView.ItemHasChildren(hChildItem))
 	{
 		TVSORTCB tSortCB;
@@ -356,12 +395,14 @@ void CFileView::AdjustLayout()
 	m_wndFileView.SetWindowPos(NULL, rectClient.left + 1, rectClient.top + cyTlb + 1, rectClient.Width() - 2, rectClient.Height() - cyTlb - 2, SWP_NOACTIVATE | SWP_NOZORDER);
 }
 
+/// 打开选择的文件
 void CFileView::OnFileOpen()
 {
 	// TODO:  在此处添加命令处理程序代码
 	OpenSelectFile();
 }
 
+/// 拷贝选择节点的文本
 void CFileView::OnEditCopy()
 {
 	// TODO:  在此处添加命令处理程序代码
@@ -375,6 +416,7 @@ void CFileView::OnEditCopy()
 	mCopyItemString = mCopyItemString.Left(mCopyItemString.Find(_T(')')));
 }
 
+/// 粘贴选择的文件
 void CFileView::OnEditPaste()
 {
 	CWinApp* pApp = AfxGetApp();
@@ -454,6 +496,7 @@ void CFileView::OnDblClkFileView(NMHDR *pNMHDR, LRESULT *pResult)
 	OpenSelectFile();
 }
 
+/// 打开选中的文件
 void CFileView::OpenSelectFile()
 {
 	HTREEITEM pItem = m_wndFileView.GetSelectedItem();
@@ -473,6 +516,7 @@ void CFileView::OpenSelectFile()
 	AfxGetApp()->OpenDocumentFile(strFilePath);
 }
 
+/// 从xml里面得到文件的类型和名字
 void CFileView::GetTaskTypeAndName(tinyxml2::XMLDocument& rDocument, CString& rStrType, CString& rStrName)
 {
 	CMainFrame* pMainFrame = (CMainFrame*)AfxGetMainWnd();
@@ -512,7 +556,7 @@ void CFileView::GetTaskTypeAndName(tinyxml2::XMLDocument& rDocument, CString& rS
 	Utf8ToUnicode(pTaskTypeElem->Attribute("Value"), wBuffer, sizeof(wBuffer) / 2 - 1);
 
 	OPTION_LIST& rOptionList = pMainNode->mOptionList;
-	for (int nOptionNum = 0; nOptionNum < rOptionList.size(); ++nOptionNum)
+	for (unsigned int nOptionNum = 0; nOptionNum < rOptionList.size(); ++nOptionNum)
 	{
 		int tOffset = rOptionList[nOptionNum]->mDes.find(',');
 		wstring strValue = rOptionList[nOptionNum]->mDes.substr(0, tOffset);

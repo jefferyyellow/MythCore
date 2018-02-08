@@ -64,9 +64,13 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	virtual void OnInitialUpdate();
+	/// 初始化主节点
 	void InitialMainNode();
+	/// 初始化条件节点
 	void InitialCondNode();
+	/// 初始化对话节点
 	void InitialDiagNode();
+	/// 初始化条件节点
 	void InitCondDiagNode(CGridCtrl*& pGridCtrl, int nGridCtrlID, TASK_NODE_LIST& rNodeList, int nColumnNum);
 	CGridData* NewGridData();
 	void DeleteGridData(CGridData* pGridData);
@@ -83,6 +87,7 @@ public:
 
 	void OnCondGridClickDown(NMHDR* pNMHDR, LRESULT* pResult);
 	void OnDiagGridClickDown(NMHDR* pNMHDR, LRESULT* pResult);
+	/// 条件和对话的Grid控件的增加/删除按钮按下，增加一行或者删除一行
 	void CondDiagGridButtonDown(CGridCtrl* pGridCtrl, int nRow, int nColumn, int nOldSelect, int nParamNum, bool Inverted);
 	void OnComboSelChange(NMHDR* pNMHDR, LRESULT* pResult);
 	void OnCondComboDropDown(NMHDR* pNMHDR, LRESULT* pResult);
@@ -91,9 +96,13 @@ public:
 	void OnMainEndEdit(NMHDR* pNMHDR, LRESULT* pResult);
 	void OnMainChange(NMHDR* pNMHDR, LRESULT* pResult);
 	void MainCondStartEdit(CGridCtrl* pGridCtrl, int nRow, int nColumn);
+	// 增加一行
 	void AddCondRow(CGridCtrl* pGridCtrl, int nRowNum, CTaskMainNode* pMainNode, wstring& strCondType, CStringArray& strParaValue, int nParamNum);
+	/// 设置对应的参数
 	void SetCondParam(CGridCtrl* pGridCtrl, int nRowNum, TASK_NODE_LIST& rNodeList, CStringArray& strParaValue, int nParamNum);
+	/// 增加一个下拉框的控件
 	CGridCellCombo* AddComboBox(CGridCtrl* pGridCtrl, CTaskMainNode* pMainNode, int nRowNum, int nColumnNum, wstring& strDefaultValue, int& rOptionIndex, int nStyle);
+	/// 通过主节点的名字，得到主节点对应的单元里的文本
 	CString GetMainGridText(CString strName);
 
 	void SaveToXml();

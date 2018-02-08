@@ -39,6 +39,8 @@ BEGIN_MESSAGE_MAP(CTaskEditorView, CView)
 	ON_NOTIFY(GVN_COMBODROPDOWN, ID_COND_DATA_GRID, OnCondComboDropDown)
 	ON_NOTIFY(GVN_ENDLABELEDIT, ID_MAIN_DATA_GRID, OnMainEndEdit)
 	ON_NOTIFY(GVN_TEXT_CHANGE, ID_MAIN_DATA_GRID, OnMainChange)
+	ON_NOTIFY(GVN_TEXT_CHANGE, ID_COND_DATA_GRID, OnMainChange)
+	ON_NOTIFY(GVN_TEXT_CHANGE, ID_DIAG_DATA_GRID, OnMainChange)
 	ON_WM_SIZE()
 	ON_WM_KEYDOWN()
 END_MESSAGE_MAP()
@@ -184,6 +186,7 @@ void CTaskEditorView::OnInitialUpdate()
 	GetDocument()->OpenDocument();
 }
 
+/// 初始化主节点
 void CTaskEditorView::InitialMainNode()
 {
 	CMainFrame* pMainFrame = (CMainFrame*)AfxGetMainWnd();
@@ -191,7 +194,7 @@ void CTaskEditorView::InitialMainNode()
 	{
 		return;
 	}
-	int nNum = (pMainFrame->mTaskTemplate.mTextNodeList.size() + 1) / 2;
+	int nNum = (pMainFrame->mTaskTemplate.mMainNodeList.size() + 1) / 2;
 
 	CRect rectGridWnd;
 	GetClientRect(rectGridWnd);
@@ -201,8 +204,8 @@ void CTaskEditorView::InitialMainNode()
 	mMainGrid->ModifyStyle(0, WS_TABSTOP);
 	char acBuffer[4096] = { 0 };
 
-	TASK_NODE_LIST& rNodeList = pMainFrame->mTaskTemplate.mTextNodeList;
-	int nCount = 0;
+	TASK_NODE_LIST& rNodeList = pMainFrame->mTaskTemplate.mMainNodeList;
+	unsigned int nCount = 0;
 	for (int i = 0; i < mMainGrid->GetRowCount(); ++i)
 	{
 		for (int j = 0; j < mMainGrid->GetColumnCount();)
@@ -229,7 +232,7 @@ void CTaskEditorView::InitialMainNode()
 
 				mMainGrid->SetItemHintText(i, j, rOptionList[0]->mDes.c_str());
 				CStringArray tStringOption;
-				for (int nOptionNum = 0; nOptionNum < rOptionList.size(); ++nOptionNum)
+				for (unsigned int nOptionNum = 0; nOptionNum < rOptionList.size(); ++nOptionNum)
 				{
 					tStringOption.Add(rOptionList[nOptionNum]->mDes.c_str());
 				}
@@ -263,6 +266,7 @@ void CTaskEditorView::InitialMainNode()
 	mMainGrid->ShowWindow(SW_SHOW);
 }
 
+/// 初始化条件节点
 void CTaskEditorView::InitialCondNode()
 {
 	CMainFrame* pMainFrame = (CMainFrame*)AfxGetMainWnd();
@@ -275,6 +279,7 @@ void CTaskEditorView::InitialCondNode()
 	InitCondDiagNode(mCondGrid, ID_COND_DATA_GRID, rNodeList, MAX_COND_PARAM_NUM + 1);
 }
 
+/// 初始化对话节点
 void CTaskEditorView::InitialDiagNode()
 {
 	CMainFrame* pMainFrame = (CMainFrame*)AfxGetMainWnd();
@@ -286,6 +291,7 @@ void CTaskEditorView::InitialDiagNode()
 	InitCondDiagNode(mDiagGrid, ID_DIAG_DATA_GRID, rNodeList, MAX_DIAG_PARAM_NUM + 1);
 }
 
+/// 初始化条件节点
 void CTaskEditorView::InitCondDiagNode(CGridCtrl*& pGridCtrl, int nGridCtrlID, TASK_NODE_LIST& rNodeList, int nColumnNum)
 {
 	int nNum = rNodeList.size();
@@ -398,7 +404,7 @@ void CTaskEditorView::OnComboSelChange(NMHDR* pNMHDR, LRESULT* pResult)
 			return;
 		}
 		CTaskMainNode* pMainNode = (CTaskMainNode*)pGridData->mData;
-		for (int i = 0; i < pMainNode->mOptionList.size(); ++i)
+		for (unsigned int i = 0; i < pMainNode->mOptionList.size(); ++i)
 		{
 			if (wstring(pGrideCellBase->GetText()) == pMainNode->mOptionList[i]->mDes)
 			{
@@ -414,29 +420,7 @@ void CTaskEditorView::OnComboSelChange(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CTaskEditorView::OnCondComboDropDown(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	//NM_GRIDVIEW* pItem = (NM_GRIDVIEW*)pNMHDR;
-	//int nRow = pItem->iRow;
-	//int nColumn = pItem->iColumn;
-	//CGridCellBase* pGrideCellBase = mCondGrid->GetCell(nRow, nColumn);
-	//if (NULL == pGrideCellBase)
-	//{
-	//	return;
-	//}
 
-	//CGridData* pGridData = (CGridData*)pGrideCellBase->GetData();
-	//if (NULL == pGridData)
-	//{
-	//	return;
-	//}
-	//CTaskMainNode* pMainNode = (CTaskMainNode*)pGridData->mData;
-	//if (pMainNode->mConfigName != _T(""))
-	//{
-	//	CMainFrame* pMainFrame = (CMainFrame*)AfxGetMainWnd();
-	//	if (NULL != pMainFrame)
-	//	{
-	//		pMainFrame->ShowOptionView(pMainNode->mConfigName.c_str(), mCondGrid, nRow, nColumn);
-	//	}
-	//}
 }
 
 void CTaskEditorView::OnCondStartEdit(NMHDR* pNMHDR, LRESULT* pResult)
@@ -521,6 +505,7 @@ void CTaskEditorView::OnMainChange(NMHDR* pNMHDR, LRESULT* pResult)
 	GetDocument()->SetModifiedFlag(TRUE);
 }
 
+// 增加一行
 void CTaskEditorView::AddCondRow(CGridCtrl* pGridCtrl, int nRowNum, CTaskMainNode* pMainNode, wstring& strCondType, CStringArray& strParaValue, int nParamNum)
 {
 	if (NULL == pMainNode)
@@ -547,6 +532,7 @@ void CTaskEditorView::AddCondRow(CGridCtrl* pGridCtrl, int nRowNum, CTaskMainNod
 	SetCondParam(pGridCtrl, nRowNum, rOptionList[nOptionIndex]->mNodeList, strParaValue, nParamNum);
 }
 
+/// 增加一个下拉框的控件
 CGridCellCombo* CTaskEditorView::AddComboBox(CGridCtrl* pGridCtrl, CTaskMainNode* pMainNode, int nRowNum, int nColumnNum, wstring& strDefaultValue, int& rOptionIndex, int nStyle)
 {
 	rOptionIndex = 0;
@@ -572,7 +558,7 @@ CGridCellCombo* CTaskEditorView::AddComboBox(CGridCtrl* pGridCtrl, CTaskMainNode
 			}
 			else
 			{
-				for (int nOptionNum = 0; nOptionNum < rOptionList.size(); ++nOptionNum)
+				for (unsigned int nOptionNum = 0; nOptionNum < rOptionList.size(); ++nOptionNum)
 				{
 					int tOffset = rOptionList[nOptionNum]->mDes.find(',');
 					wstring strValue = rOptionList[nOptionNum]->mDes.substr(0, tOffset);
@@ -593,7 +579,7 @@ CGridCellCombo* CTaskEditorView::AddComboBox(CGridCtrl* pGridCtrl, CTaskMainNode
 			return NULL;
 		}
 		CStringArray tStringOption;
-		for (int nOptionNum = 0; nOptionNum < rOptionList.size(); ++nOptionNum)
+		for (unsigned int nOptionNum = 0; nOptionNum < rOptionList.size(); ++nOptionNum)
 		{
 			tStringOption.Add(rOptionList[nOptionNum]->mDes.c_str());
 		}
@@ -615,6 +601,7 @@ CGridCellCombo* CTaskEditorView::AddComboBox(CGridCtrl* pGridCtrl, CTaskMainNode
 	return NULL;
 }
 
+/// 设置对应的参数
 void CTaskEditorView::SetCondParam(CGridCtrl* pGridCtrl, int nRowNum, TASK_NODE_LIST& rNodeList, CStringArray& strParaValue, int nParamNum)
 {
 	for (int i = 0; i < nParamNum; ++i)
@@ -641,7 +628,7 @@ void CTaskEditorView::SetCondParam(CGridCtrl* pGridCtrl, int nRowNum, TASK_NODE_
 		pGrideCellBase->SetData((LPARAM)pGridData);
 
 		wstring strValue;
-		if (i < rNodeList.size())
+		if ((unsigned int)i < rNodeList.size())
 		{
 			if (i < strParaValue.GetSize())
 			{
@@ -697,6 +684,7 @@ void CTaskEditorView::OnDiagGridClickDown(NMHDR* pNMHDR, LRESULT* pResult)
 	CondDiagGridButtonDown(mDiagGrid, nRow, nColumn, nOldSelect, MAX_DIAG_PARAM_NUM, false);
 }
 
+/// 条件和对话的Grid控件的增加/删除按钮按下，增加一行或者删除一行
 void CTaskEditorView::CondDiagGridButtonDown(CGridCtrl* pGridCtrl, int nRow, int nColumn, int nOldSelect, int nParamNum, bool Inverted)
 {
 	CGridCellBase* pGrideCellBase = pGridCtrl->GetCell(nRow, nColumn);
@@ -860,6 +848,7 @@ void CTaskEditorView::OnSize(UINT nType, int cx, int cy)
 	}
 }
 
+/// 通过主节点的名字，得到主节点对应的单元里的文本
 CString CTaskEditorView::GetMainGridText(CString strName)
 {
 	for (int i = 0; i < mMainGrid->GetRowCount(); ++ i)
@@ -898,6 +887,7 @@ CString CTaskEditorView::GetMainGridText(CString strName)
 void CTaskEditorView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	// TODO:  在此添加消息处理程序代码和/或调用默认值
+	// CGridCellCombo的可编辑状态下，不能用快捷键触发，特殊处理
 	if (IsCTRLpressed() && (nChar == 's' || nChar == 'S'))
 	{
 		GetDocument()->DoFileSave();
