@@ -89,7 +89,7 @@ void CLoginModule::onTimer(unsigned int nTickOffset)
 			// ³¬Ê±
 			if (pLoginPlayer->elapse(1))
 			{
-				printf("\n***************\n");
+				printf("\n*****33333****%s******\n", pLoginPlayer->getAccountName());
 				++ it;
 				mLoginList.erase(itOld);
 				CObjPool::Inst()->free(nObjID);

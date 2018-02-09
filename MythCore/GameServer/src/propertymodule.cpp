@@ -240,7 +240,8 @@ void CPropertyModule::onLoadComplete(CEntityPlayer* pPlayer)
 		return;
 	}
 	pPlayer->setPlayerStauts(emPlayerStatus_Gameing);
-	printf("*****************加载完成： %d**************\n", pPlayer->getRoleID());
+	printf("%s%d%s\n", "*****************Load Complete:", pPlayer->getRoleID(), "*****************");
+	//printf("*****************Load Complete: %d**************\n", pPlayer->getRoleID());
 	// 将玩家放入地图
 	// 通知各个模块有玩家创建
 	// 往客户端推送数据

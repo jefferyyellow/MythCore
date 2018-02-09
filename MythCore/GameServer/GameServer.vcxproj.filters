@@ -49,6 +49,12 @@
     <Filter Include="logicmodule\rank">
       <UniqueIdentifier>{5be5c953-bbc5-4e25-b055-5b17e08d8f90}</UniqueIdentifier>
     </Filter>
+    <Filter Include="logicmodule\serveractivity">
+      <UniqueIdentifier>{a564fa3b-dc1f-47ef-aef5-0f41c47f967c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logicmodule\dailyactivity">
+      <UniqueIdentifier>{80239438-02dc-4c0b-9c5f-395689205f1c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\message\loginmessage.hxx.pb.cc">
@@ -206,6 +212,15 @@
     </ClCompile>
     <ClCompile Include="src\serverutility.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\serveractmodule.cpp">
+      <Filter>logicmodule\serveractivity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dailyactmodule.cpp">
+      <Filter>logicmodule\dailyactivity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dailyactivity.cpp">
+      <Filter>logicmodule\dailyactivity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -448,6 +463,21 @@
     </ClInclude>
     <ClInclude Include="inc\serverutility.h">
       <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\serveractmodule.h">
+      <Filter>logicmodule\serveractivity</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\dailyactmodule.h">
+      <Filter>logicmodule\dailyactivity</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\dailyactivity.h">
+      <Filter>logicmodule\dailyactivity</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\serveract.h">
+      <Filter>logicmodule\serveractivity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\serveract.h">
+      <Filter>logicmodule\serveractivity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -76,6 +76,7 @@ void CChatModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageI
 	{
 		case ID_C2S_REQUEST_CHAT:
 		{
+			onChatRequest(pPlayer, pMessage);
 			break;
 		}
 	}
