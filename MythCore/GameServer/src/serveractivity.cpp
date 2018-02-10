@@ -3,10 +3,8 @@
 /// 加载配置文件
 int CPhaseActivity::loadActivity(XMLElement* pActivityElem)
 {
-	mCondDataList.clear();
-	mActivityPrizeList.clear();
-
-
+	mCondList.clear();
+	mPrizeList.clear();
 }
 
 /// 得到配置文件的名字
