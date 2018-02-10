@@ -45,6 +45,8 @@ public:
 	void processVariableType(char* pSrc, char* pDst, int nLength);
 	/// 是否是函数部分
 	bool checkFunc(const char* pLine, int nLineLength);
+	/// 是否的枚举部分
+	bool checkEnum(const char* pLine, int nLineLength);
 	/// 是否是注释部分
 	bool checkComment(const char* pLine, int nLineLength);
 	/// 删除前导空格

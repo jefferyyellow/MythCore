@@ -47,12 +47,21 @@ bool CParseHeader::writeGetSetMethod(FILE* pFile, const char* pLine, int nLineLe
 
 
 		bool bBuiltIn = false;
-		const char* pDefaultValue = getDefaultValue(rVariableList[i]->getType());
-		// 内置类型且不是数组
-		if (NULL != pDefaultValue)
+		const char* pDefaultValue = rVariableList[i]->getDefaultValue();
+		if (pDefaultValue[0] != '\0')
 		{
 			bBuiltIn = true;
 		}
+		else
+		{
+			const char* pDefaultValue = getDefaultValue(rVariableList[i]->getType());
+			// 内置类型且不是数组
+			if (NULL != pDefaultValue)
+			{
+				bBuiltIn = true;
+			}
+		}
+
 
 		switch (rVariableList[i]->getArrayDimension())
 		{

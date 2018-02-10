@@ -1,6 +1,6 @@
 #ifndef __SHARELIST_H__
 #define __SHARELIST_H__
-#include "commontype.h"
+#include "servercommon.h"
 #include "blockmemory.h"
 
 // 没有内存分配的list,共享着内存的list

@@ -1,9 +1,8 @@
 #ifndef __TASKCONFIG_H__
 #define __TASKCONFIG_H__
 #include "singleton.h"
-#include <vector>
 #include "tasktype.h"
-#include "commontype.h"
+#include "servercommon.h"
 using namespace std;
 using namespace Myth;
 // 接受条件

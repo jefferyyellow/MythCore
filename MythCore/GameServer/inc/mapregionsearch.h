@@ -1,7 +1,7 @@
 #ifndef __MAPREGIONSEARCH_H__
 #define __MAPREGIONSEARCH_H__
 #include "geometrytype.h"
-#include <vector>
+#include "servercommon.h"
 using namespace std;
 class CEntityNPC;
 class CEntityPlayer;

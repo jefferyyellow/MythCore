@@ -195,7 +195,9 @@
     <ClInclude Include="inc\propertyunit.h" />
     <ClInclude Include="inc\rankmodule.h" />
     <ClInclude Include="inc\scenejob.h" />
-    <ClInclude Include="inc\serveract.h" />
+    <ClInclude Include="inc\serveractivity.h" />
+    <ClInclude Include="inc\serveractivitytype.h" />
+    <ClInclude Include="inc\serveractivityunit.h" />
     <ClInclude Include="inc\serveractmodule.h" />
     <ClInclude Include="inc\servercommon.h" />
     <ClInclude Include="inc\serverutility.h" />
@@ -212,7 +214,8 @@
     <ClInclude Include="inc\taskunit.h" />
     <ClInclude Include="inc\template.h" />
     <ClInclude Include="inc\propertymodule.h" />
-    <ClInclude Include="src\serveract.h" />
+    <ClInclude Include="src\serveractivity.cpp" />
+    <ClInclude Include="src\serveractivityunit.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

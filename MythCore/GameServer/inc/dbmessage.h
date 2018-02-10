@@ -1,6 +1,6 @@
 #ifndef __DBMESSAGE_H__
 #define __DBMESSAGE_H__
-#include "commontype.h"
+#include "servercommon.h"
 class	CDBRequestHeader
 {
 public:

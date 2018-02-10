@@ -2,7 +2,7 @@
 #define __OBJPOOL_H__
 #include "singleton.h"
 #include "obj.h"
-#include "commontype.h"
+#include "servercommon.h"
 using namespace Myth;
 class CObjPoolImp;
 class CObjPool : public CSingleton<CObjPool>

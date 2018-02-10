@@ -3,8 +3,7 @@
 #include "singleton.h"
 #include "maptype.h"
 #include "geometrytype.h"
-#include <vector>
-#include "commontype.h"
+#include "servercommon.h"
 using namespace Myth;
 
 class CMap;

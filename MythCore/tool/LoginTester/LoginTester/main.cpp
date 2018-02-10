@@ -6,7 +6,8 @@ int main()
 	{
 		return -1;
 	}
-	CLoginTester::Inst()->setServerIP("127.0.0.1");
+	CLoginTester::Inst()->setServerIP("192.168.10.13");
+	//CLoginTester::Inst()->setServerIP("127.0.0.1");
 	CLoginTester::Inst()->setServerPort(6688);
 	CLoginTester::Inst()->run();
 }

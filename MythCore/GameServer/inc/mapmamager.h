@@ -6,7 +6,6 @@
 #include "maptype.h"
 #include "entityplayer.h"
 #include <map>
-#include <vector>
 
 class CEntity;
 class CEntityCharacter;

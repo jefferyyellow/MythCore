@@ -4,7 +4,7 @@
 #ifndef TEMPEDIT
 #include "locallogjob.h"
 #else
-#include "commontype.h"
+#include "servercommon.h"
 #include "logmanager.h"
 using namespace Myth;
 #endif

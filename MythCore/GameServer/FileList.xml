@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <Data>
-  <File HeadFile="inc/serveract.h" SrcFile="src/serveract.cpp"/>
+  <File HeadFile="inc/serveractivity.h" SrcFile="src/serveractivity.cpp"/>
+  <File HeadFile="inc/serveractivityunit.h" SrcFile="src/serveractivityunit.cpp"/>
 </Data>

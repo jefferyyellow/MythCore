@@ -5,6 +5,7 @@
 #include "itemunit.h"
 #include "taskunit.h"
 #include "skillunit.h"
+#include "serveractivityunit.h"
 #include "servercommon.h"
 class PBPlayerSceneInfo;
 
@@ -41,7 +42,8 @@ public:
 		:mPropertyUnit(*this), 
 		mItemUnit(*this), 
 		mTaskUnit(*this),
-		mSkillUnit(*this)
+		mSkillUnit(*this),
+		mServerActUnit(*this)
 	{
 		mName[0] = '\0';
 		mRoleID = 0;
@@ -158,6 +160,8 @@ public:
 	CTaskUnit&		getTaskUnit(){ return mTaskUnit; }
 	/// 技能单元
 	CSkillUnit&		getSkillUnit(){return mSkillUnit;}
+	/// 开服活动单元
+	CServerActivityUnit getServerActUnit(){return mServerActUnit;}
 
 private:
 	/// socket连接信息
@@ -170,6 +174,8 @@ private:
 	CTaskUnit		mTaskUnit;
 	/// 技能单元
 	CSkillUnit		mSkillUnit;
+	/// 开服活动单元
+	CServerActivityUnit	mServerActUnit;
 
 	/// 角色名字
 	char			mName[PLAYER_NAME_LENGTH];

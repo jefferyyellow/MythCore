@@ -1,6 +1,6 @@
 #ifndef __OBJMANAGER_H__
 #define __OBJMANAGER_H__
-#include "commontype.h"
+#include "servercommon.h"
 #include "fixblockmemory.h"
 using namespace Myth;
 

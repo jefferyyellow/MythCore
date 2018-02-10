@@ -1,6 +1,6 @@
 #ifndef __OBJPOOLIMP_H__
 #define __OBJPOOLIMP_H__
-#include "commontype.h"
+#include "servercommon.h"
 #include "obj.h"
 #include "objmanager.h"
 #include "entityplayer.h"

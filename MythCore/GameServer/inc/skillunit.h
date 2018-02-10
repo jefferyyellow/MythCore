@@ -1,6 +1,6 @@
 #ifndef __SKILLUNIT_H__
 #define __SKILLUNIT_H__
-#include "commontype.h"
+#include "servercommon.h"
 #include "skilltype.h"
 #include "array.h"
 #include "playersubunit.h"

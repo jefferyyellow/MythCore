@@ -1,6 +1,6 @@
 #ifndef __LOGINTYPE_H__
 #define __LOGINTYPE_H__
-#include "commontype.h"
+#include "servercommon.h"
 enum EmTcpError
 {
 	emTcpError_None				= 0,	// δ֪

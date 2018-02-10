@@ -1,6 +1,6 @@
 #ifndef __GAMESERVERCONFIG_H__
 #define __GAMESERVERCONFIG_H__
-#include "commontype.h"
+#include "servercommon.h"
 #include "singleton.h"
 using namespace Myth;
 

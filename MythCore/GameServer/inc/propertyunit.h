@@ -1,7 +1,7 @@
 #ifndef __PROPERTYUNIT_H__
 #define __PROPERTYUNIT_H__
 #include "playersubunit.h"
-#include "commontype.h"
+#include "servercommon.h"
 class CEntityPlayer;
 class CPropertyUnit : public CPlayerSubUnit
 {

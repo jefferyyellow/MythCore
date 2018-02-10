@@ -812,7 +812,7 @@ void CTaskEditorView::OnSize(UINT nType, int cx, int cy)
 	TRACE("ONSize\n");
 	CRect rectView;
 	GetClientRect(rectView);
-	if (rectView.left != rectView.right && rectView.Width() > 410)
+	if (rectView.left != rectView.right && rectView.Width() > 410 && NULL != mMainGrid)
 	{
 		// 处理主Grid控件的位置重新计算
 		CRect tMainRect = rectView;

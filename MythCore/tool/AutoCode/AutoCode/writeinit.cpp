@@ -35,6 +35,13 @@ void CParseHeader::writeHeaderLine(FILE* pFile, const char* pLine, int nLineLeng
 		return;
 	}
 
+	nCurLineIndex = mCurLineIndex;
+	if (checkEnum(pLine, nLineLength))
+	{
+		writeContent(pFile, nCurLineIndex, mCurLineIndex);
+		return;
+	}
+
 	getFirstWord(pLine, nStart, nLineLength, acWord);
 
 
@@ -314,10 +321,14 @@ void CParseHeader::writeVariableInit(FILE* pFile, int nSpaceNum)
 	CPlusClass::VARIABLE_VECTOR& rVariableList = mCurClass->getVariableList();
 	for (int i = 0; i < (int)rVariableList.size(); ++i)
 	{
-		const char* pDefaultValue = getDefaultValue(rVariableList[i]->getType());
-		if (NULL == pDefaultValue)
+		const char* pDefaultValue = rVariableList[i]->getDefaultValue();
+		if (pDefaultValue[0] == '\0')
 		{
-			continue;
+			pDefaultValue = getDefaultValue(rVariableList[i]->getType());
+			if (NULL == pDefaultValue)
+			{
+				continue;
+			}
 		}
 
 		if (1 == rVariableList[i]->getArrayDimension() && 0 == strcmp(rVariableList[i]->getType(), "char"))

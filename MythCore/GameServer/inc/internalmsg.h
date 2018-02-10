@@ -1,6 +1,6 @@
 #ifndef __INTERNALMSG_H__
 #define __INTERNALMSG_H__
-#include "commontype.h"
+#include "servercommon.h"
 #include "logmanager.h"
 #include "logintype.h"
 // IM表示内部消息（internal message的简写)

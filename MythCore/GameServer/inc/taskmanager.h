@@ -1,6 +1,6 @@
 #ifndef __TASKMANAGER_H__
 #define __TASKMANAGER_H__
-#include "commontype.h"
+#include "servercommon.h"
 #include "simplelock.h"
 #include <list>
 enum EmTaskType

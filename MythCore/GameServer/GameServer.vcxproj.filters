@@ -473,10 +473,19 @@
     <ClInclude Include="inc\dailyactivity.h">
       <Filter>logicmodule\dailyactivity</Filter>
     </ClInclude>
-    <ClInclude Include="inc\serveract.h">
+    <ClInclude Include="inc\serveractivity.h">
       <Filter>logicmodule\serveractivity</Filter>
     </ClInclude>
-    <ClInclude Include="src\serveract.h">
+    <ClInclude Include="src\serveractivity.cpp">
+      <Filter>logicmodule\serveractivity</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\serveractivitytype.h">
+      <Filter>logicmodule\serveractivity</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\serveractivityunit.h">
+      <Filter>logicmodule\serveractivity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\serveractivityunit.cpp">
       <Filter>logicmodule\serveractivity</Filter>
     </ClInclude>
   </ItemGroup>

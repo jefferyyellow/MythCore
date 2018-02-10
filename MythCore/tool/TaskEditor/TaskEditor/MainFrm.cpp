@@ -752,6 +752,9 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 {
 	// TODO:  在此添加专用代码和/或调用基类
 	// 快捷键处理
-	TranslateAccelerator (m_hWnd, m_hAccel, pMsg);  
+	if (TranslateAccelerator(m_hWnd, m_hAccel, pMsg))
+	{
+		return TRUE;
+	}
 	return CMDIFrameWndEx::PreTranslateMessage(pMsg);
 }

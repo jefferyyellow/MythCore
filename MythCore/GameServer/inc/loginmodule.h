@@ -2,7 +2,7 @@
 #define __LOGINMODULE_H__
 #include "singleton.h"
 #include "messagefactory.h"
-#include "commontype.h"
+#include "servercommon.h"
 #include "logintype.h"
 #include "logicmodule.h"
 #include "timemanager.h"

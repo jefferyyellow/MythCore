@@ -119,6 +119,11 @@ void CParseHeader::parseLine(const char* pLine, int nLineLength)
 		return;
 	}
 
+	if (checkEnum(pLine, nLineLength))
+	{
+		return;
+	}
+
 
 	char acWord[MAX_PATH] = { 0 };
 	int nStart = 0;
@@ -536,6 +541,30 @@ bool CParseHeader::checkFunc(const char* pLine, int nLineLength)
 		}
 	}
 
+	return false;
+}
+
+/// 是否的枚举部分
+bool CParseHeader::checkEnum(const char* pLine, int nLineLength)
+{
+	if (NULL == pLine)
+	{
+		return false;
+	}
+
+	// 函数以（）为标志
+	if (strstr(pLine, "enum") != NULL)
+	{
+		int nCurLine = mCurLineIndex;
+		for (; nCurLine < (int)mFileContent.size(); ++nCurLine)
+		{
+			if (strchr(mFileContent[nCurLine], '}') != NULL)
+			{
+				mCurLineIndex = nCurLine;
+				return true;
+			}
+		}
+	}
 	return false;
 }
 
