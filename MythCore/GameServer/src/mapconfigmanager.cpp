@@ -1,10 +1,8 @@
 #include "mapconfigmanager.h"
-#include "tinyxml2.h"
 #include "locallogjob.h"
 #include "errcode.h"
 #include "mapmamager.h"
 #include "entitycreator.h"
-using namespace tinyxml2;
 bool CMapConfig::loadMapConfig(unsigned short nMapID)
 {
 	char szFilePath[STRING_LENGTH_256] = {0};

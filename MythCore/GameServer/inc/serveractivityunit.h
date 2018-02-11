@@ -16,6 +16,8 @@ public:
 	int		mUniqueID;			// 唯一ID
 	int		mData;				// 数据
 };
+
+/// 活动单元
 class CServerActivityUnit : public CPlayerSubUnit
 {
 public:
@@ -42,6 +44,7 @@ public:
 	void					setPhaseCompleteData(int nUniqueID, int nData);
 
 private:
+
 	CPhaseActivityData	mPhaseData[PHASE_ACTIVITY_NUM];
 	CPhaseActivityData	mCompleteData[PHASE_ACTIVITY_NUM];
 	int					mPhaseActivityNum;

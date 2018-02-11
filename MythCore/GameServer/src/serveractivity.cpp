@@ -26,7 +26,7 @@ void CPhaseActivity::end()
 }
 
 /// 刷新玩家数据
-void CPhaseActivity::refreshPlayerData(CEntityPlayer* pPlayer)
+void CPhaseActivity::refreshPlayerData(CEntityPlayer* pPlayer, int nParam)
 {
 	if (NULL == pPlayer)
 	{

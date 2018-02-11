@@ -3,8 +3,13 @@
 #include "logicmodule.h"
 #include "singleton.h"
 #include "messagefactory.h"
+#include "serveractivitytype.h"
+
 using namespace Myth;
+
 class CEntityPlayer;
+class CServerActivity;
+
 /// 开服活动模块
 class CServerActModule : public CLogicModule, public CSingleton <CServerActModule>
 {
@@ -35,5 +40,14 @@ public:
 
 public:
 	void onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
+	time_t				timeToMorning(time_t tTime);
+
+public:
+	void				loadServerActivityConfig(const char* pConfigFile);
+	CServerActivity*	createServerActivity(EmServerActType emServerActType);
+
+private:
+	/// 服务器开服时间
+	time_t				mServerStartTime;
 };
 #endif

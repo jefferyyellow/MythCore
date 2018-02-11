@@ -1,13 +1,10 @@
 #ifndef __SERVERACTIVITY_H__
 #define __SERVERACTIVITY_H__
 #include "servercommon.h"
+#include "serveractivitytype.h"
+
 class CEntityPlayer;
-enum EmServerActState
-{
-	emServerActState_End		= 0,		// 结束状态
-	emServerActState_Start		= 1,		// 开始状态
-	emServerActState_Prize		= 2,		// 奖励状态
-};
+
 
 class CServerActPrize
 {
@@ -15,6 +12,7 @@ public:
 	int		mItemID[ACTIVITY_PRIZE_NUM];
 	int		mItemNum[ACTIVITY_PRIZE_NUM];
 };
+
 class CServerActivity
 {
 public:
@@ -67,7 +65,7 @@ public:
 	/// 活动结束
 	virtual void end();
 	/// 刷新玩家数据
-	virtual void refreshPlayerData(CEntityPlayer* pPlayer);
+	virtual void refreshPlayerData(CEntityPlayer* pPlayer, int nParam);
 	/// 清空玩家数据
 	virtual  void clearPlayerData(CEntityPlayer* pPlayer);
 
@@ -112,7 +110,7 @@ public:
 	/// 活动结束
 	virtual void end();
 	/// 刷新玩家数据
-	virtual void refreshPlayerData(CEntityPlayer* pPlayer);
+	virtual void refreshPlayerData(CEntityPlayer* pPlayer, int nParam);
 	/// 清空玩家数据
 	virtual  void clearPlayerData(CEntityPlayer* pPlayer);
 

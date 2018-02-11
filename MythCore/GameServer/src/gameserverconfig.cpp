@@ -1,7 +1,5 @@
 #include "gameserverconfig.h"
-#include "tinyxml2.h"
 #include "locallogjob.h"
-using namespace tinyxml2;
 bool CGameServerConfig::loadGameServerConfigFromXml(const char* pFilePath)
 {
 	if (NULL == pFilePath)
