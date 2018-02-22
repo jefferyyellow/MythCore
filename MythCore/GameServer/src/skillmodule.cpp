@@ -51,13 +51,13 @@ void CSkillModule::onNewWeekCome()
 }
 
 /// 建立实体
-void CSkillModule::onCreatePlayer(CEntity* pEntity)
+void CSkillModule::onCreatePlayer(CEntityPlayer* pPlayer)
 {
 
 }
 
 /// 销毁实体
-void CSkillModule::onDestroyPlayer(CEntity* pEntity)
+void CSkillModule::onDestroyPlayer(CEntityPlayer* pPlayer)
 {
 
 }

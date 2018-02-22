@@ -222,6 +222,15 @@
     <ClCompile Include="src\dailyactivity.cpp">
       <Filter>logicmodule\dailyactivity</Filter>
     </ClCompile>
+    <ClCompile Include="src\serveractivity.cpp">
+      <Filter>logicmodule\serveractivity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\serveractivityunit.cpp">
+      <Filter>logicmodule\serveractivity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\serveractmodule.hxx.pb.cc">
+      <Filter>message</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -476,17 +485,17 @@
     <ClInclude Include="inc\serveractivity.h">
       <Filter>logicmodule\serveractivity</Filter>
     </ClInclude>
-    <ClInclude Include="src\serveractivity.cpp">
-      <Filter>logicmodule\serveractivity</Filter>
-    </ClInclude>
     <ClInclude Include="inc\serveractivitytype.h">
       <Filter>logicmodule\serveractivity</Filter>
     </ClInclude>
     <ClInclude Include="inc\serveractivityunit.h">
       <Filter>logicmodule\serveractivity</Filter>
     </ClInclude>
-    <ClInclude Include="src\serveractivityunit.cpp">
-      <Filter>logicmodule\serveractivity</Filter>
+    <ClInclude Include="..\message\serveractmodule.hxx">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\serveractmodule.hxx.pb.h">
+      <Filter>message</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -112,6 +112,11 @@ public:
 	/// 角色ID
 	unsigned int	getRoleID(){ return mRoleID; }
 	void			setRoleID(unsigned int nRoleID){ mRoleID = nRoleID; }
+
+	/// 上次下线的时间
+	time_t getLastOffTime() const { return mLastOffTime; }
+	void setLastOffTime(time_t val) { mLastOffTime = val; }
+
 	/// 角色名字
 	char*			getName(){ return mName; }
 	void			setName(char* pName)

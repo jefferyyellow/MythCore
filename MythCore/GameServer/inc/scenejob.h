@@ -15,7 +15,6 @@ using namespace Myth;
 
 #define PIPE_SIZE					((int)0x1000000)	/*内存管道的大小*/
 #define MAX_SOCKET_BUFF_SIZE		4096				// Socket缓冲区大小
-#define CHECK_NEW_DAY_INTERVAL		30000				// 30秒检查一次新的一天
 enum EmServerState
 {
 	emServerStateInit		= 0,	// 初始状态
@@ -73,6 +72,7 @@ public:
 
 public:
 	void		checkNewDayCome();
+	void		onNewDayCome();
 
 public:
 	/// 发送前端消息
@@ -125,8 +125,9 @@ public:
 #endif // MYTH_OS_WINDOWS
 	}
 
-	uint64			getTickCount()const{ return mTickCount; }
-	void			setTickCount(uint64 tTickCount){ mTickCount = tTickCount; }
+	time_t getMorningTime() const { return mMorningTime; }
+	void getMorningTime(time_t val) { mMorningTime = val; }
+
 private:
 	CShareMemory*			mShareMemory;
 	CSocketStream*			mTcp2ServerMemory;
@@ -147,11 +148,9 @@ private:
 	uint64					mLastTime;
 	/// 服务器状态
 	EmServerState			mServerState;
-	/// 新的一天检查计时器
-	CAutoResetTimer			mNewDayTimer;
 	/// 当前的时间
 	struct tm				mTmNow;
-	/// 
-	uint64					mTickCount;
+	/// 指定时间的那天早上（00：00：00）
+	time_t					mMorningTime;
 };
 #endif

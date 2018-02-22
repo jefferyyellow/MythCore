@@ -6,4 +6,6 @@
   <DefaultValue Type="bool" Value="false"/>
   <DefaultValue Type="byte" Value="0"/>
   <DefaultValue Type="short" Value="0"/>
+  <DefaultValue Type="time_t" Value="0"/>
+  <DefaultValue Type="sint64" Value="0"/>
 </Data>

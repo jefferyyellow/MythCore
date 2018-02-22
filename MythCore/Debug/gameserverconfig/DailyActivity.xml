@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<DailyActivity>
+		<Activity Type="1" LevelMin="14" LevelMax="29">
+      <Date />
+      <WeekDay />
+      <MonthDay />
+      <Notice Time=""/>
+			<Time StartTime="1200" EndTime="1215"/>
+			<Time StartTime="1600" EndTime="1615"/>
+		</Activity>
+</DailyActivity>

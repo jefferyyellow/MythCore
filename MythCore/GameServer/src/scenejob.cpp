@@ -13,9 +13,10 @@
 #include "mapmodule.h"
 #include "mapconfigmanager.h"
 #include "mapmamager.h"
+#include "serveractmodule.h"
+#include "serverutility.h"
 
 CSceneJob::CSceneJob()
-	:mNewDayTimer(CHECK_NEW_DAY_INTERVAL)
 {
 
 }
@@ -102,17 +103,23 @@ void CSceneJob::doRun()
 
 		CInternalMsgPool::Inst()->freeMsg(pIMMsg);
 	}
-	int nElapseTime = (int)(getTickCount() - mLastTimerTick);
+	time_t tTimeNow = CTimeManager::Inst()->getCurrTime();
+	int nElapseTime = (int)(tTimeNow - mLastTimerTick);
 	if (nElapseTime > 100)
 	{
 		timer(nElapseTime);
-		mLastTimerTick = getTickCount();
+		mLastTimerTick = tTimeNow;
 	}
-	uint64 tTimeNow = CTimeManager::Inst()->getCurrTime();
 	if (tTimeNow != mLastTime)
 	{
+		int nDay = mTmNow.tm_yday;
 		setTmNow(tTimeNow);
 		mLastTime = tTimeNow;
+		if (nDay != mTmNow.tm_yday)
+		{
+			mMorningTime = timeToMorning(tTimeNow);
+			checkNewDayCome();
+		}
 	}
 }
 
@@ -225,27 +232,33 @@ void CSceneJob::timer(unsigned int nTickOffset)
 	{
 		(*it)->onTimer(nTickOffset);
 	}
-
-	if (mNewDayTimer.elapse(nTickOffset))
-	{
-		checkNewDayCome();
-	}
 }
 
 void CSceneJob::checkNewDayCome()
 {
 	struct tm& tmNow = getTmNow();
-
-	if (0 == tmNow.tm_hour && 0 == tmNow.tm_min)
+	newDayCome();
+	onNewDayCome();
+	// 0表示星期天，1表示星期一
+	if (1 == tmNow.tm_wday)
 	{
-		newDayCome();
-		// 0表示星期天，1表示星期一
-		if (1 == tmNow.tm_wday)
+		newWeekCome();
+	}
+}
+
+void CSceneJob::onNewDayCome()
+{
+	CEntityPlayer* pPlayer = NULL;
+	PLAYER_LIST::iterator it = mPlayerList.begin();
+	for (; it != mPlayerList.end(); ++it)
+	{
+		pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
+		if (NULL == pPlayer)
 		{
-			newWeekCome();
+			continue;
 		}
-		// 300秒以后在检查，然后恢复30秒检查一次
-		mNewDayTimer.setLeftTime(CHECK_NEW_DAY_INTERVAL * 10);
+		CPropertyModule::Inst()->dailyRefresh(pPlayer);
+		CServerActModule::Inst()->dailyRefresh(pPlayer);
 	}
 }
 
@@ -265,8 +278,10 @@ void CSceneJob::onTask(CInternalMsg* pMsg)
 bool CSceneJob::init(int nDBBuffSize)
 {
 	// 初始化时间变量
-	mLastTimerTick = getTickCount();
-	mLastTime = CTimeManager::Inst()->getCurrTime();
+	mLastTimerTick = CTimeManager::Inst()->getCurrTime();
+	mLastTime = mLastTimerTick;
+	mMorningTime = timeToMorning(mLastTimerTick);
+
 	mServerState = emServerStateInit;
 	bool bResult = initShareMemory();
 	if (!bResult)
@@ -285,7 +300,7 @@ bool CSceneJob::init(int nDBBuffSize)
 	mLogicModuleList.push_back(CPropertyModule::CreateInst());
 	mLogicModuleList.push_back(CMapModule::CreateInst());
 	mLogicModuleList.push_back(CDBModule::CreateInst());
-
+	mLogicModuleList.push_back(CServerActModule::CreateInst());
 	return true;
 }
 

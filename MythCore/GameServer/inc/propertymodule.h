@@ -32,9 +32,9 @@ public:
 	/// 新一周到来
 	virtual void onNewWeekCome();
 	/// 建立实体
-	virtual void onCreatePlayer(CEntity* pEntity);
+	virtual void onCreatePlayer(CEntityPlayer* pPlayer);
 	/// 销毁实体
-	virtual void onDestroyPlayer(CEntity* pEntity);
+	virtual void onDestroyPlayer(CEntityPlayer* pPlayer);
 	/// 时间函数
 	virtual		void onTimer(unsigned int nTickOffset);
 
@@ -58,6 +58,8 @@ public:
 	void			onSavePlayerComplete(CEntityPlayer* pPlayer);
 	/// 玩家离开游戏
 	void			onPlayerLeaveGame(CEntityPlayer* pPlayer);
+	/// 每日刷新
+	void			dailyRefresh(CEntityPlayer* pPlayer);
 
 public:
 	CGMCommandManager&		getGMCmdManager(){return mGMCmdManager;}

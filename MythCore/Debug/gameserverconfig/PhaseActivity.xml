@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServerActivity>
+  <Activity Type="1" SubType="1" ID="1">
+    <Cond Num="100">
+      <Prize ItemID ="6251" ItemNum="100"/>
+      <Prize ItemID ="6252" ItemNum="200"/>
+    </Cond>
+    <Cond Num="200">
+      <Prize ItemID ="6251" ItemNum="1000"/>
+      <Prize ItemID ="6252" ItemNum="2000"/>
+    </Cond>
+    <Cond Num="400">
+      <Prize ItemID ="6251" ItemNum="10000"/>
+      <Prize ItemID ="6252" ItemNum="20000"/>
+    </Cond>
+  </Activity>
+  <Activity Type="1" SubType="1" ID="2">
+    <Cond Num="100">
+      <Prize ItemID ="6251" ItemNum="100"/>
+      <Prize ItemID ="6252" ItemNum="200"/>
+    </Cond>
+    <Cond Num="200">
+      <Prize ItemID ="6251" ItemNum="1000"/>
+      <Prize ItemID ="6252" ItemNum="2000"/>
+    </Cond>
+    <Cond Num="400">
+      <Prize ItemID ="6251" ItemNum="10000"/>
+      <Prize ItemID ="6252" ItemNum="20000"/>
+    </Cond>
+  </Activity>
+</ServerActivity>

@@ -80,6 +80,7 @@
     <ClCompile Include="..\message\mapmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\message.hxx.pb.cc" />
     <ClCompile Include="..\message\propertymodule.hxx.pb.cc" />
+    <ClCompile Include="..\message\serveractmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\skillmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\taskmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\template.hxx.pb.cc" />
@@ -117,6 +118,8 @@
     <ClCompile Include="src\propertyunit.cpp" />
     <ClCompile Include="src\rankmodule.cpp" />
     <ClCompile Include="src\scenejob.cpp" />
+    <ClCompile Include="src\serveractivity.cpp" />
+    <ClCompile Include="src\serveractivityunit.cpp" />
     <ClCompile Include="src\serveractmodule.cpp" />
     <ClCompile Include="src\serverutility.cpp" />
     <ClCompile Include="src\skillmodule.cpp" />
@@ -145,6 +148,8 @@
     <ClInclude Include="..\message\message.hxx.pb.h" />
     <ClInclude Include="..\message\propertymodule.hxx" />
     <ClInclude Include="..\message\propertymodule.hxx.pb.h" />
+    <ClInclude Include="..\message\serveractmodule.hxx" />
+    <ClInclude Include="..\message\serveractmodule.hxx.pb.h" />
     <ClInclude Include="..\message\skillmodule.hxx" />
     <ClInclude Include="..\message\skillmodule.hxx.pb.h" />
     <ClInclude Include="..\message\taskmodule.hxx" />
@@ -214,8 +219,6 @@
     <ClInclude Include="inc\taskunit.h" />
     <ClInclude Include="inc\template.h" />
     <ClInclude Include="inc\propertymodule.h" />
-    <ClInclude Include="src\serveractivity.cpp" />
-    <ClInclude Include="src\serveractivityunit.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

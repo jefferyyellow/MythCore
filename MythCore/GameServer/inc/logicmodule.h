@@ -1,7 +1,7 @@
 #ifndef __LOGICMODULE_H__
 #define __LOGICMODULE_H__
 /// 逻辑模块
-class CEntity;
+class CEntityPlayer;
 class CLogicModule
 {
 public:
@@ -24,9 +24,9 @@ public:
 	/// 新一周到来
 	virtual void onNewWeekCome() = 0;
 	/// 建立实体
-	virtual void onCreatePlayer(CEntity* pEntity) = 0;
+	virtual void onCreatePlayer(CEntityPlayer* pPlayer) = 0;
 	/// 销毁实体
-	virtual void onDestroyPlayer(CEntity* pEntity) = 0;
+	virtual void onDestroyPlayer(CEntityPlayer* pPlayer) = 0;
 	/// 时间函数
 	virtual	void onTimer(unsigned int nTickOffset) = 0;
 };

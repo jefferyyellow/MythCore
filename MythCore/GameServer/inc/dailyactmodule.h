@@ -3,6 +3,8 @@
 #include "logicmodule.h"
 #include "singleton.h"
 #include "messagefactory.h"
+#include "dailyactivity.h"
+
 using namespace Myth;
 class CEntityPlayer;
 // 日常活动模块
@@ -27,14 +29,17 @@ public:
 	/// 新一周到来
 	virtual void onNewWeekCome();
 	/// 建立实体
-	virtual void onCreatePlayer(CEntity* pEntity);
+	virtual void onCreatePlayer(CEntityPlayer* pPlayer);
 	/// 销毁实体
-	virtual void onDestroyPlayer(CEntity* pEntity);
+	virtual void onDestroyPlayer(CEntityPlayer* pPlayer);
 	/// 时间函数
 	virtual	void onTimer(unsigned int nTickOffset);
 
 public:
 	void onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
-
+	/// 加载活动配置
+	void loadActivityConfig(const char* pConfigFile);
+private:
+	CDailyActivity		mActivity[emDailyActIDMax];
 };
 #endif

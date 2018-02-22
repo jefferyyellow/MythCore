@@ -51,13 +51,13 @@ void CPropertyModule::onNewWeekCome()
 }
 
 /// 建立实体
-void CPropertyModule::onCreatePlayer(CEntity* pEntity)
+void CPropertyModule::onCreatePlayer(CEntityPlayer* pPlayer)
 {
-
+	dailyRefresh(pPlayer);
 }
 
 /// 销毁实体
-void CPropertyModule::onDestroyPlayer(CEntity* pEntity)
+void CPropertyModule::onDestroyPlayer(CEntityPlayer* pPlayer)
 {
 
 }
@@ -189,9 +189,9 @@ void CPropertyModule::onLoadPlayerInfo(CDBResponse& rResponse)
 	
 	rResponse.getString(pPlayer->getName(), PLAYER_NAME_LENGTH - 1);
 	pPlayer->getPropertyUnit().setLevel((byte)rResponse.getShort());
-	pPlayer->getPropertyUnit().setRoleExp(rResponse.getInt64());
+	pPlayer->getPropertyUnit().setExp(rResponse.getInt64());
 	pPlayer->getPropertyUnit().setVIPLevel(rResponse.getByte());
-	pPlayer->getPropertyUnit().SetVIPExp(rResponse.getInt());
+	pPlayer->getPropertyUnit().setVIPExp(rResponse.getInt());
 
 
 	pPlayer->getItemUnit().setMoney(rResponse.getInt());
@@ -240,6 +240,8 @@ void CPropertyModule::onLoadComplete(CEntityPlayer* pPlayer)
 		return;
 	}
 	pPlayer->setPlayerStauts(emPlayerStatus_Gameing);
+	CSceneJob::Inst()->createPlayer(pPlayer);
+
 	printf("%s%d%s\n", "*****************Load Complete:", pPlayer->getRoleID(), "*****************");
 	//printf("*****************Load Complete: %d**************\n", pPlayer->getRoleID());
 	// 将玩家放入地图
@@ -269,8 +271,8 @@ void CPropertyModule::savePlayerInfo(CEntityPlayer* pPlayer)
 
 	CDBModule::Inst()->pushDBTask(pPlayer->getRoleID(), emSessionType_SavePlayerInfo, pPlayer->getObjID(), 0,
 		"call UpdatePlayerInfo(%d, %d,%lld,%d,%d,%d,%d)", pPlayer->getRoleID(),
-		pPlayer->getPropertyUnit().getLevel(), pPlayer->getPropertyUnit().getRoleExp(),
-		pPlayer->getPropertyUnit().getVIPLevel(), pPlayer->getPropertyUnit().GetVIPExp(),
+		pPlayer->getPropertyUnit().getLevel(), pPlayer->getPropertyUnit().getExp(),
+		pPlayer->getPropertyUnit().getVIPLevel(), pPlayer->getPropertyUnit().getVIPExp(),
 		pPlayer->getItemUnit().getMoney(), pPlayer->getItemUnit().getDiamond());
 }
 
@@ -312,4 +314,20 @@ void CPropertyModule::onPlayerLeaveGame(CEntityPlayer* pPlayer)
 
 	CSceneJob::Inst()->onPlayerLeaveGame(pPlayer);
 	CObjPool::Inst()->free(pPlayer->getObjID());
+}
+
+/// 每日刷新
+void CPropertyModule::dailyRefresh(CEntityPlayer* pPlayer)
+{
+	if (NULL == pPlayer)
+	{
+		return;
+	}
+
+	/// 如果上次下线的时间在今天早上以后了，那就是同一天的多次登录了
+	if (pPlayer->getLastOffTime() >= CSceneJob::Inst()->getMorningTime())
+	{
+		return;
+	}
+
 }

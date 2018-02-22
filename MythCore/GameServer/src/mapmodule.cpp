@@ -49,13 +49,13 @@ void CMapModule::onNewWeekCome()
 }
 
 /// 建立实体
-void CMapModule::onCreatePlayer(CEntity* pEntity)
+void CMapModule::onCreatePlayer(CEntityPlayer* pPlayer)
 {
 
 }
 
 /// 销毁实体
-void CMapModule::onDestroyPlayer(CEntity* pEntity)
+void CMapModule::onDestroyPlayer(CEntityPlayer* pPlayer)
 {
 
 }
