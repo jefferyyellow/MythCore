@@ -231,6 +231,9 @@
     <ClCompile Include="..\message\serveractmodule.hxx.pb.cc">
       <Filter>message</Filter>
     </ClCompile>
+    <ClCompile Include="..\message\dailyactmodule.hxx.pb.cc">
+      <Filter>message</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -495,6 +498,15 @@
       <Filter>message</Filter>
     </ClInclude>
     <ClInclude Include="..\message\serveractmodule.hxx.pb.h">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\dailyactivitytype.h">
+      <Filter>logicmodule\dailyactivity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\dailyactmodule.hxx">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\dailyactmodule.hxx.pb.h">
       <Filter>message</Filter>
     </ClInclude>
   </ItemGroup>

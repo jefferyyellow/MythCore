@@ -4,4 +4,5 @@
   <File HeadFile="inc/serveractivityunit.h" SrcFile="src/serveractivityunit.cpp"/>
   <File HeadFile="inc/serveractmodule.h" SrcFile="src/serveractmodule.cpp"/>
   <File HeadFile="inc/propertyunit.h" SrcFile="src/propertyunit.cpp"/>
+  <File HeadFile="inc/dailyactmodule.h" SrcFile="src/dailyactmodule.cpp"/>
 </Data>

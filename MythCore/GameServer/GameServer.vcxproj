@@ -74,6 +74,7 @@
     <ClCompile Include="..\dep\tinyxml\tinyxml2.cpp" />
     <ClCompile Include="..\message\chatmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\common.hxx.pb.cc" />
+    <ClCompile Include="..\message\dailyactmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\dbmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\itemmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\loginmessage.hxx.pb.cc" />
@@ -136,6 +137,8 @@
     <ClInclude Include="..\message\chatmodule.hxx.pb.h" />
     <ClInclude Include="..\message\common.hxx" />
     <ClInclude Include="..\message\common.hxx.pb.h" />
+    <ClInclude Include="..\message\dailyactmodule.hxx" />
+    <ClInclude Include="..\message\dailyactmodule.hxx.pb.h" />
     <ClInclude Include="..\message\dbmodule.hxx" />
     <ClInclude Include="..\message\dbmodule.hxx.pb.h" />
     <ClInclude Include="..\message\itemmodule.hxx" />
@@ -158,6 +161,7 @@
     <ClInclude Include="..\message\template.hxx.pb.h" />
     <ClInclude Include="inc\chatmodule.h" />
     <ClInclude Include="inc\dailyactivity.h" />
+    <ClInclude Include="inc\dailyactivitytype.h" />
     <ClInclude Include="inc\dailyactmodule.h" />
     <ClInclude Include="inc\dbjob.h" />
     <ClInclude Include="inc\dbmessage.h" />

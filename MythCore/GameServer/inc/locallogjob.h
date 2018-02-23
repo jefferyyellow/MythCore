@@ -47,7 +47,6 @@ extern const char* gXXXXXXX;
 extern void		LogLocalLog(EmLogType eLogType, const char* pFile, int nLine, const char* pFunction, const char* pFormat, ...);
 extern void		LogLocalDebugLog(const char* pLogName, const char* pFormat, ...);
 
-using namespace Myth;
 class CIMLocalLogRequest;
 class CLocalLogJob : public CJob<100, 10>
 {

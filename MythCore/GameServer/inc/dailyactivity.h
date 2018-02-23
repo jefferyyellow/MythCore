@@ -2,16 +2,20 @@
 #define __DAILYACTIVITY_H__
 #define MAX_ACTIVITY_TIMES		4
 #include "servercommon.h"
-enum EmDailyActID
+#include "dailyactivitytype.h"
+class CActivityTime
 {
-	emDailyActID_None			= 0,
-	emDailyActID_XXX			= 1,
-	emDailyActIDMax
+public:
+	int					mID;			// 活动ID
+	int					mTime;			// 时间
+	int					mTimeIndex;		// 时间索引
+	EmDailyActStatus	mStatus;		// 活动状态
 };
 
 class CDailyActivity
 {
 public:
+	/// 配置部分
 	/// ID
 	short				mID;
 	/// 最小等级
@@ -19,9 +23,19 @@ public:
 	/// 最大等级
 	byte				mMaxLevel;
 	/// 开始时间
-	time_t				mStartTime[MAX_ACTIVITY_TIMES];
+	int					mStartTime[MAX_ACTIVITY_TIMES];
 	/// 结束时间 
-	time_t				mEndTime[MAX_ACTIVITY_TIMES];
+	int					mEndTime[MAX_ACTIVITY_TIMES];
+	/// 通知时间
+	int					mNoticeTime[MAX_ACTIVITY_TIMES];
+
+public:
+	EmDailyActStatus GetStatus() const { return mStatus; }
+	void SetStatus(EmDailyActStatus nValue) { mStatus = nValue; }
+
+private:
+	/// 数据部分
+	EmDailyActStatus	mStatus;
 };
 
 #endif

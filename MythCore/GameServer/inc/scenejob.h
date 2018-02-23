@@ -143,9 +143,9 @@ private:
 	CSimpleLock				mDBStreamLock;
 	LOGIC_MODULE_LIST		mLogicModuleList;
 	/// 上一次刷新计时器的时间
-	uint64					mLastTimerTick;
+	time_t					mLastTimerTick;
 	/// 上次刷新的时间
-	uint64					mLastTime;
+	time_t					mLastTime;
 	/// 服务器状态
 	EmServerState			mServerState;
 	/// 当前的时间

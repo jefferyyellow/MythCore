@@ -15,6 +15,9 @@
 #include "mapmamager.h"
 #include "serveractmodule.h"
 #include "serverutility.h"
+#include "dailyactmodule.h"
+#include "chatmodule.h"
+#include "skillmodule.h"
 
 CSceneJob::CSceneJob()
 {
@@ -301,6 +304,9 @@ bool CSceneJob::init(int nDBBuffSize)
 	mLogicModuleList.push_back(CMapModule::CreateInst());
 	mLogicModuleList.push_back(CDBModule::CreateInst());
 	mLogicModuleList.push_back(CServerActModule::CreateInst());
+	mLogicModuleList.push_back(CDailyActModule::CreateInst());
+	mLogicModuleList.push_back(CChatModule::CreateInst());
+	mLogicModuleList.push_back(CDailyActModule::CreateInst());
 	return true;
 }
 
@@ -569,6 +575,26 @@ void CSceneJob::dispatchClientMessage(CEntityPlayer* pPlayer, unsigned short nMe
 		case MESSAGE_MODULE_TASK:
 		{
 			CTaskModule::Inst()->onClientMessage(pPlayer, nMessageID, pMessage);
+			break;
+		}
+		case MESSAGE_MODULE_SKILL:
+		{
+			CSkillModule::Inst()->onClientMessage(pPlayer, nMessageID, pMessage);
+			break;
+		}
+		case MESSAGE_MODULE_CHAT:
+		{
+			CChatModule::Inst()->onClientMessage(pPlayer, nMessageID, pMessage);
+			break;
+		}
+		case MESSAGE_MODULE_SERVER_ACT:
+		{
+			CServerActModule::Inst()->onClientMessage(pPlayer, nMessageID, pMessage);
+			break;
+		}
+		case MESSAGE_MODULE_DAILY_ACT:
+		{
+			CDailyActModule::Inst()->onClientMessage(pPlayer, nMessageID, pMessage);
 			break;
 		}
 		default:

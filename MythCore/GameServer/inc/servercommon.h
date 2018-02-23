@@ -6,9 +6,6 @@ using namespace std;
 #include "tinyxml2.h"
 using namespace tinyxml2;
 
-#include "locallogjob.h"
-using namespace Myth;
-
 #define RAND(x) (int)( ( x )*(rand( )/(float)( RAND_MAX + 1.0 ) ))
 
 #define MYTH_PERCENT_FLOAT	10000.0f

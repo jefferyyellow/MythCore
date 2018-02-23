@@ -8,4 +8,5 @@
   <DefaultValue Type="short" Value="0"/>
   <DefaultValue Type="time_t" Value="0"/>
   <DefaultValue Type="sint64" Value="0"/>
+  <DefaultValue Type="unsigned int" Value="0"/>
 </Data>
