@@ -68,7 +68,7 @@ DROP PROCEDURE IF EXISTS `LoadPlayerInfo`;
 DELIMITER ;;
 CREATE PROCEDURE `LoadPlayerInfo`(RoleID int unsigned)
 BEGIN
-	select role_name, level, exp, vip_level, vip_exp, money, diamond from PlayerRole WHERE role_id=RoleID;
+	select role_name, level, exp, vip_level, vip_exp, money, diamond, last_off_time from PlayerRole WHERE role_id=RoleID;
 END
 ;;
 DELIMITER ;

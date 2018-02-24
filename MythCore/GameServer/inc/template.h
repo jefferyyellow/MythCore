@@ -117,6 +117,32 @@ public:
 };
 
 
+// ********************************************************************** //
+// BEGINMAKE
+// virtual	= true						## 代表不生成到数据库中
+// name		= 新玩家信息				## 模版名称
+// path		=							## 路径
+// parent	=							## 父亲模版
+// ********************************************************************** //
+class CTplNewPlayerConfig : public CTemplate
+{
+public:
+	// FieldName: 初始金钱
+	// FieldType: INT4
+	// Type:	  EDITNUMBER(1,10000000)
+	int		mMoney;
+
+	// FieldName: 初始元宝
+	// FieldType: INT4
+	// Type:	  EDITNUMBER(1,10000000)
+	int		mDiamond;
+
+
+};
+// ********************************************************************** //
+// ENDMAKE
+// ********************************************************************** //
+
 enum EmItemType
 {
 	emItemType_None		= 0,		// 无类型

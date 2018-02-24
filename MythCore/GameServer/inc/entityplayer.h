@@ -168,6 +168,9 @@ public:
 	/// 开服活动单元
 	CServerActivityUnit getServerActUnit(){return mServerActUnit;}
 
+	time_t getOnTime() const { return mOnTime; }
+	void setOnTime(time_t nValue) { mOnTime = nValue; }
+
 private:
 	/// socket连接信息
 	CExchangeHead	mExhangeHead;

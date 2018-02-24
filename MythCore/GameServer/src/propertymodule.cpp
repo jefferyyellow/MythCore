@@ -196,6 +196,8 @@ void CPropertyModule::onLoadPlayerInfo(CDBResponse& rResponse)
 
 	pPlayer->getItemUnit().setMoney(rResponse.getInt());
 	pPlayer->getItemUnit().setDiamond(rResponse.getInt());
+	
+	pPlayer->setLastOffTime(rResponse.getInt());
 
 	pPlayer->setLoadStatusBit(emLoadStatus_Info);
 	onLoadComplete(pPlayer);
@@ -240,12 +242,18 @@ void CPropertyModule::onLoadComplete(CEntityPlayer* pPlayer)
 		return;
 	}
 	pPlayer->setPlayerStauts(emPlayerStatus_Gameing);
+	pPlayer->setOnTime(CTimeManager::Inst()->getCurrTime());
+
+	if (0 == pPlayer->getLastOffTime())
+	{
+		setNewPlayerValue(pPlayer);
+	}
+
 	CSceneJob::Inst()->createPlayer(pPlayer);
 
 	printf("%s%d%s\n", "*****************Load Complete:", pPlayer->getRoleID(), "*****************");
 	//printf("*****************Load Complete: %d**************\n", pPlayer->getRoleID());
 	// 将玩家放入地图
-	// 通知各个模块有玩家创建
 	// 往客户端推送数据
 }
 
@@ -329,5 +337,16 @@ void CPropertyModule::dailyRefresh(CEntityPlayer* pPlayer)
 	{
 		return;
 	}
+
+}
+
+/// 新玩家处理
+void CPropertyModule::setNewPlayerValue(CEntityPlayer* pPlayer)
+{
+	if (NULL == pPlayer)
+	{
+		return;
+	}
+	
 
 }

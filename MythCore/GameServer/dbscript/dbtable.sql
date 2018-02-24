@@ -21,7 +21,7 @@ CREATE TABLE `PlayerRole` (
 	`vip_exp`				int(11) UNSIGNED			NOT NULL DEFAULT '0',
 	`money`					int(11) UNSIGNED			NOT NULL DEFAULT '0',
 	`diamond`				int(11) UNSIGNED			NOT NULL DEFAULT '0',
-	`LastOffTime`			timestamp					NOT NULL DEFAULT  0,
+	`last_off_time`			int(11) UNSIGNED			NOT NULL DEFAULT  0,
 	PRIMARY KEY(`role_id`),
 	KEY `IDX_ROLE_BY_ACCOUT_ID` (`account_id`)
 )ENGINE=INNODB;

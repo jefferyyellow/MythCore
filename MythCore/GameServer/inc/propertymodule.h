@@ -60,7 +60,8 @@ public:
 	void			onPlayerLeaveGame(CEntityPlayer* pPlayer);
 	/// 每日刷新
 	void			dailyRefresh(CEntityPlayer* pPlayer);
-
+	/// 新玩家处理
+	void			setNewPlayerValue(CEntityPlayer* pPlayer);
 public:
 	CGMCommandManager&		getGMCmdManager(){return mGMCmdManager;}
 
