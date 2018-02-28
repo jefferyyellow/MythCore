@@ -23,6 +23,7 @@ class PBTplProperty;
 class PBTplDropItem;
 class PBTplDropTable;
 class PBTplSkill;
+class PBTplNewPlayerConfig;
 #define TEMPLATE_SET_FROM_PB(ClassName, PBParent, PBName) \
 	{ \
 			for (int i = 0; i < (int)PBParent->PBName##_size(); ++ i) \
@@ -124,20 +125,41 @@ public:
 // path		=							## 路径
 // parent	=							## 父亲模版
 // ********************************************************************** //
+#define MAX_NEW_PLAYER_ITEM		8
 class CTplNewPlayerConfig : public CTemplate
 {
 public:
-	// FieldName: 初始金钱
+	// FieldName: 第%d个道具ID
+	// FieldType: INT4
+	// Type:	  TEMPPATH
+	int		mItemID[MAX_NEW_PLAYER_ITEM];
+
+	// FieldName: 第%d个道具数量
 	// FieldType: INT4
 	// Type:	  EDITNUMBER(1,10000000)
-	int		mMoney;
+	int		mItemNum[MAX_NEW_PLAYER_ITEM];
 
-	// FieldName: 初始元宝
+	// FieldName: 初始等级
 	// FieldType: INT4
 	// Type:	  EDITNUMBER(1,10000000)
-	int		mDiamond;
+	int		mLevel;
 
+	// FieldName: 初始Vip等级
+	// FieldType: INT4
+	// Type:	  EDITNUMBER(1,10000000)
+	int		mVipLevel;
 
+public:
+	static CTplNewPlayerConfig* spConfig;
+
+public:
+	CTplNewPlayerConfig()
+	{
+		spConfig = this;
+	};
+	~CTplNewPlayerConfig(){};
+	void setFromPB(PBTplNewPlayerConfig* pbData);
+	void createToPB(PBTplNewPlayerConfig* pbData);
 };
 // ********************************************************************** //
 // ENDMAKE
@@ -280,7 +302,10 @@ public:
 	static CTplLevelExpConfig* spConfig;
 
 public:
-	CTplLevelExpConfig(){}
+	CTplLevelExpConfig()
+	{
+		spConfig = this;
+	}
 	~CTplLevelExpConfig(){}
 
 	void	setFromPB(PBTplLevelExpConfig* pbConfig);
@@ -311,7 +336,10 @@ public:
 	static CTplVIPConfig* spConfig;
 
 public:
-	CTplVIPConfig(){}
+	CTplVIPConfig()
+	{
+		spConfig = this;
+	}
 	~CTplVIPConfig(){}
 
 	void	setFromPB(PBTplVIPConfig* pbConfig);

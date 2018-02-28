@@ -915,32 +915,29 @@ private:
 //	int t;
 //};
 //
+#include <hash_map>
+using namespace std;
 void testHashMap()
 {
-	//Myth::CHashMap<int, int, 50000, 50000, 0> firsthash;
-	//for (int i = 0; i <= 50000; ++i)
+	//typedef hash_map<int, int>  HASH_MAP;
+	//HASH_MAP tMap;
+	//for (int i = 0; i <= 2000; ++i)
 	//{
-	//	firsthash.Insert(i, i);
+	//	tMap[i] = i;
 	//}
-	//int j = 0;
+	//HASH_MAP::iterator it;
 
 	CTimeManager* pTime = CTimeManager::CreateInst();
 	CPerformance* pPerformance = CPerformance::CreateInst();
 	PERFOR_TIMER_BEFORE(testHashMap);
-	//for (int i = 0; i <= 30000; ++i)
+
+	//for (int j = 0; j < 100; ++ j)
 	//{
-	//	firsthash.Find(i, j);
+	//	for (int i = 0; i <= 2000; ++i)
+	//	{
+	//		it = tMap.find(i);
+	//	}
 	//}
-	double fCombatPower = 0;
-	fCombatPower = 2000000000;
-
-	for (int j = 0; j < 20000; j++)
-	{
-		fCombatPower = 200000000;
-		// 先计算正常的传统意义的属性战力
-		fCombatPower = fCombatPower * 3;
-	}
-
 
 
 	PERFOR_TIMER_AFTER(testHashMap);

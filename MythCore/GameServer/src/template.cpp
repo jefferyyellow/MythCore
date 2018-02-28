@@ -16,6 +16,7 @@ int	CStaticData::mVersion														= 0;
 
 CTplLevelExpConfig* CTplLevelExpConfig::spConfig								= NULL;
 CTplVIPConfig* CTplVIPConfig::spConfig											= NULL;
+CTplNewPlayerConfig* CTplNewPlayerConfig::spConfig								= NULL;
 
 CTemplate* CStaticData::searchTpl(unsigned int nTempID)
 {
@@ -114,8 +115,37 @@ void CStaticData::createFromPB(PBTplTemplate* pTplTemplate)
 	TEMPLATE_SET_FROM_PB(CTplSkill, pbTplSkillSet, skill);
 	TEMPLATE_SET_FROM_PB(CTplSkill, pbTplSkillSet, skill);
 	TEMPLATE_SET_FROM_PB(CTplDropTable, pbTplConfigSet, droptable);
+	TEMPLATE_SET_FROM_PB(CTplNewPlayerConfig, pbTplConfigSet, newplayerconfig);
 }
 
+void CTplNewPlayerConfig::setFromPB(PBTplNewPlayerConfig* pbData)
+{
+	mTempID = pbData->tempid();
+	for (int i = 0; i < MAX_NEW_PLAYER_ITEM && i < pbData->itemid_size(); ++i)
+	{
+		mItemID[i] = pbData->itemid(i);
+	}
+	for (int i = 0; i < MAX_NEW_PLAYER_ITEM && i < pbData->itemnum_size(); ++i)
+	{
+		mItemNum[i] = pbData->itemnum(i);
+	}
+	mLevel = pbData->level();
+	mVipLevel = pbData->viplevel();
+}
+void CTplNewPlayerConfig::createToPB(PBTplNewPlayerConfig* pbData)
+{
+	pbData->set_tempid(mTempID);
+	for (int i = 0; i < MAX_NEW_PLAYER_ITEM; ++i)
+	{
+		pbData->add_itemid(mItemID[i]);
+	}
+	for (int i = 0; i < MAX_NEW_PLAYER_ITEM; ++i)
+	{
+		pbData->add_itemnum(mItemNum[i]);
+	}
+	pbData->set_level(mLevel);
+	pbData->set_viplevel(mVipLevel);
+}
 
 void CTplItem::setFromPB(PBItem* pbItem)
 {

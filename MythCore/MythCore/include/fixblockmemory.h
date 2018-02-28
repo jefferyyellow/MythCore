@@ -20,6 +20,7 @@ namespace Myth
 			memset(mBlockMemory, 0, sizeof(mBlockMemory));
 			mAllocCount = 0;
 			mFreeCount= 0;
+			allocIncrement(BaseCount);
 		}
 		~CFixBlockMemory()
 		{

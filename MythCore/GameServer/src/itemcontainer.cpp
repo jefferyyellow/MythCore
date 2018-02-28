@@ -5,6 +5,8 @@
 #include "locallogjob.h"
 #include "errcode.h"
 #include "common.hxx.pb.h"
+/// 检查背包是否能放下这一堆道具
+/// 返回true表示可以放下，返回false表示不能放下
 bool CItemBox::checkSpace(int* pItemID, int* pNumber, int nSize)
 {
 	if (nSize > MAX_INSERT_TYPE_NUM)
@@ -40,20 +42,20 @@ bool CItemBox::checkSpace(int* pItemID, int* pNumber, int nSize)
 		if (INVALID_OBJ_ID == mItemObjID[i])
 		{
 			nTotalSpace += 1;
+			continue;
 		}
-		else
+
+		// 已经有道具的格子是否能放下这一堆东西里的任意一种还有的可以堆叠的道具
+		// 如果可以，减少堆叠数量
+		for (int j = 0; j < nSize; ++j)
 		{
-			// 已经有道具的格子是否能放下这一堆东西里的任意一种还有的可以堆叠的道具
-			// 如果可以，减少堆叠数量
-			for (int j = 0; j < nSize; ++j)
+			if (mItemID[i] == pItemID[j] && nPileLimit[j] > 1 && nNum[j] > 0)
 			{
-				if (mItemID[i] == pItemID[j] && nPileLimit[i] > 1 && nNum[j] > 0)
+				CItemObject* pItemObject = static_cast<CItemObject*>(CObjPool::Inst()->getObj(mItemObjID[i]));
+				if (NULL != pItemObject)
 				{
-					CItemObject* pItemObject = static_cast<CItemObject*>(CObjPool::Inst()->getObj(mItemObjID[i]));
-					if (NULL != pItemObject)
-					{
-						nNum[i] -= nPileLimit[j] - pItemObject->GetItemNum();
-					}
+					nNum[j] -= nPileLimit[j] - pItemObject->GetItemNum();
+					break;
 				}
 			}
 		}
@@ -76,6 +78,8 @@ bool CItemBox::checkSpace(int* pItemID, int* pNumber, int nSize)
 			}
 		}
 	}
+
+	// 需要的空格子数比现在有的空格子数还多，放不下
 	if (nNeedSpace > nTotalSpace)
 	{
 		return false;
@@ -86,6 +90,7 @@ bool CItemBox::checkSpace(int* pItemID, int* pNumber, int nSize)
 
 // 如果是一种道具，方便很多，空格子可以直接用，不用考虑先堆叠
 // 可以先使用空格子
+/// 返回true表示可以放下，返回false表示不能放下
 bool CItemBox::checkSpace(int nItemID, int nNumber)
 {
 	CTplItem* pTplItem = static_cast<CTplItem*>(CStaticData::searchTpl(nItemID));
@@ -139,7 +144,7 @@ int CItemBox::insertItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNum
 
 	int nPileLimit = tpItem->mPileLimit;
 	
-	int tEmpty[MAX_CONTAINER_ITEM_NUM] = { -1 };
+	int tEmpty[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int tEmptyNum = 0;
 
 	int nInsertedNum = 0;
@@ -159,29 +164,29 @@ int CItemBox::insertItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNum
 		else if (mItemID[i] == nItemID && nPileLimit > 1) // 在非空格子上插入
 		{
 			CItemObject* pItemObject = static_cast<CItemObject*>(CObjPool::Inst()->getObj(mItemObjID[i]));
-			if (NULL != pItemObject)
+			if (NULL == pItemObject)
 			{
-				nLeftPileNum = nPileLimit - pItemObject->GetItemNum();
-				if (nLeftPileNum <= 0)
-				{
-					// 道具的堆叠数目出错了
-					LOG_ERROR("item pile num valid");
-					continue;
-				}
-				nInsertedNum = nItemNum > nLeftPileNum ? nLeftPileNum : nItemNum;
-				pItemObject->SetItemNum(pItemObject->GetItemNum() + nInsertedNum);
-				nItemNum -= nInsertedNum;
+				continue;
+			}
+			nLeftPileNum = nPileLimit - pItemObject->GetItemNum();
+			// 已经是满的了
+			if (nLeftPileNum <= 0)
+			{
+				continue;
+			}
+			nInsertedNum = nItemNum > nLeftPileNum ? nLeftPileNum : nItemNum;
+			pItemObject->SetItemNum(pItemObject->GetItemNum() + nInsertedNum);
+			nItemNum -= nInsertedNum;
 
-				// 记录插入在那个格子里
-				pOutIndex[rOutLen] = i;
-				// 对应的这个格子里插入了多少个数目的道具
-				pOutNumber[rOutLen] = pItemObject->GetItemNum();
-				++rOutLen;
-				// 已经全部插入了，重置ID与数量的关系
-				if (nItemNum <= 0)
-				{
-					return SUCCESS;
-				}
+			// 记录插入在那个格子里
+			pOutIndex[rOutLen] = i;
+			// 对应的这个格子里插入了多少个数目的道具
+			pOutNumber[rOutLen] = pItemObject->GetItemNum();
+			++rOutLen;
+			// 已经全部插入了，重置ID与数量的关系
+			if (nItemNum <= 0)
+			{
+				return SUCCESS;
 			}
 		}
 	}
@@ -213,6 +218,7 @@ int CItemBox::insertItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNum
 		{
 			// 将剩余下的放在该处
 			pItemObject->SetItemNum(nItemNum);
+			nItemNum = 0;
 			break;
 		}
 

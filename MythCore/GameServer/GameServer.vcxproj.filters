@@ -234,6 +234,9 @@
     <ClCompile Include="..\message\dailyactmodule.hxx.pb.cc">
       <Filter>message</Filter>
     </ClCompile>
+    <ClCompile Include="..\message\rankmodule.hxx.pb.cc">
+      <Filter>message</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -509,5 +512,25 @@
     <ClInclude Include="..\message\dailyactmodule.hxx.pb.h">
       <Filter>message</Filter>
     </ClInclude>
+    <ClInclude Include="inc\sortedvector.h">
+      <Filter>logicmodule\rank</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\rank.h">
+      <Filter>logicmodule\rank</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\ranktype.h">
+      <Filter>logicmodule\rank</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\rankmodule.hxx">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\rankmodule.hxx.pb.h">
+      <Filter>message</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="inc\rank.inl">
+      <Filter>logicmodule\rank</Filter>
+    </None>
   </ItemGroup>
 </Project>

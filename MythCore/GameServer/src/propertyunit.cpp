@@ -41,20 +41,21 @@ void CPropertyUnit::obtainExp(int nExp)
 /// 获得VIP经验
 void CPropertyUnit::obtainVIPExp(int nVIPExp)
 {
-	if (mVIPLevel >= MAX_VIP_LEVEL)
+	if (mVipLevel >= MAX_VIP_LEVEL)
 	{
 		return;
 	}
 
-	mVIPExp += nVIPExp;
-	while (mVIPExp >= CTplVIPConfig::spConfig->mVIPExp[mVIPLevel] && mVIPLevel <= MAX_VIP_LEVEL)
+	mVipExp += nVIPExp;
+	while (mVipExp >= CTplVIPConfig::spConfig->mVIPExp[mVipLevel] && mVipLevel <= MAX_VIP_LEVEL)
 	{
-		mVIPExp -= CTplVIPConfig::spConfig->mVIPExp[mVIPLevel];
-		++mVIPLevel;
+		mVipExp -= CTplVIPConfig::spConfig->mVIPExp[mVipLevel];
+		++mVipLevel;
+		if (mVipLevel == MAX_VIP_LEVEL)
+		{
+			mVipExp = 0;
+		}
 	}
 
-	if (mVIPLevel == MAX_VIP_LEVEL)
-	{
-		mVIPExp = 0;
-	}
+
 }

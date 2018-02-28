@@ -45,6 +45,7 @@ class PBTplItemSet;
 class PBTplLevelExpConfig;
 class PBTplNPC;
 class PBTplNPCSet;
+class PBTplNewPlayerConfig;
 class PBTplOgre;
 class PBTplProperty;
 class PBTplSkill;
@@ -364,6 +365,18 @@ class PBTplConfigSet : public ::google::protobuf::Message /* @@protoc_insertion_
   const ::google::protobuf::RepeatedPtrField< ::PBTplDropTable >&
       droptable() const;
 
+  // repeated .PBTplNewPlayerConfig NewPlayerConfig = 4;
+  int newplayerconfig_size() const;
+  void clear_newplayerconfig();
+  static const int kNewPlayerConfigFieldNumber = 4;
+  const ::PBTplNewPlayerConfig& newplayerconfig(int index) const;
+  ::PBTplNewPlayerConfig* mutable_newplayerconfig(int index);
+  ::PBTplNewPlayerConfig* add_newplayerconfig();
+  ::google::protobuf::RepeatedPtrField< ::PBTplNewPlayerConfig >*
+      mutable_newplayerconfig();
+  const ::google::protobuf::RepeatedPtrField< ::PBTplNewPlayerConfig >&
+      newplayerconfig() const;
+
   // @@protoc_insertion_point(class_scope:PBTplConfigSet)
  private:
 
@@ -371,6 +384,7 @@ class PBTplConfigSet : public ::google::protobuf::Message /* @@protoc_insertion_
   ::google::protobuf::RepeatedPtrField< ::PBTplLevelExpConfig > levelexpconfig_;
   ::google::protobuf::RepeatedPtrField< ::PBTplVIPConfig > vipconfig_;
   ::google::protobuf::RepeatedPtrField< ::PBTplDropTable > droptable_;
+  ::google::protobuf::RepeatedPtrField< ::PBTplNewPlayerConfig > newplayerconfig_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_template_2ehxx_impl();
   friend void  protobuf_AddDesc_template_2ehxx_impl();
@@ -577,6 +591,134 @@ class PBTplNPCSet : public ::google::protobuf::Message /* @@protoc_insertion_poi
   void InitAsDefaultInstance();
 };
 extern ::google::protobuf::internal::ExplicitlyConstructed<PBTplNPCSet> PBTplNPCSet_default_instance_;
+
+// -------------------------------------------------------------------
+
+class PBTplNewPlayerConfig : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PBTplNewPlayerConfig) */ {
+ public:
+  PBTplNewPlayerConfig();
+  virtual ~PBTplNewPlayerConfig();
+
+  PBTplNewPlayerConfig(const PBTplNewPlayerConfig& from);
+
+  inline PBTplNewPlayerConfig& operator=(const PBTplNewPlayerConfig& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBTplNewPlayerConfig& default_instance();
+
+  static const PBTplNewPlayerConfig* internal_default_instance();
+
+  void Swap(PBTplNewPlayerConfig* other);
+
+  // implements Message ----------------------------------------------
+
+  inline PBTplNewPlayerConfig* New() const { return New(NULL); }
+
+  PBTplNewPlayerConfig* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PBTplNewPlayerConfig& from);
+  void MergeFrom(const PBTplNewPlayerConfig& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(PBTplNewPlayerConfig* other);
+  void UnsafeMergeFrom(const PBTplNewPlayerConfig& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 TempID = 1;
+  void clear_tempid();
+  static const int kTempIDFieldNumber = 1;
+  ::google::protobuf::uint32 tempid() const;
+  void set_tempid(::google::protobuf::uint32 value);
+
+  // repeated uint32 ItemID = 2;
+  int itemid_size() const;
+  void clear_itemid();
+  static const int kItemIDFieldNumber = 2;
+  ::google::protobuf::uint32 itemid(int index) const;
+  void set_itemid(int index, ::google::protobuf::uint32 value);
+  void add_itemid(::google::protobuf::uint32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+      itemid() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+      mutable_itemid();
+
+  // repeated uint32 ItemNum = 3;
+  int itemnum_size() const;
+  void clear_itemnum();
+  static const int kItemNumFieldNumber = 3;
+  ::google::protobuf::uint32 itemnum(int index) const;
+  void set_itemnum(int index, ::google::protobuf::uint32 value);
+  void add_itemnum(::google::protobuf::uint32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+      itemnum() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+      mutable_itemnum();
+
+  // optional uint32 Level = 4;
+  void clear_level();
+  static const int kLevelFieldNumber = 4;
+  ::google::protobuf::uint32 level() const;
+  void set_level(::google::protobuf::uint32 value);
+
+  // optional uint32 VipLevel = 5;
+  void clear_viplevel();
+  static const int kVipLevelFieldNumber = 5;
+  ::google::protobuf::uint32 viplevel() const;
+  void set_viplevel(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:PBTplNewPlayerConfig)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > itemid_;
+  mutable int _itemid_cached_byte_size_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > itemnum_;
+  mutable int _itemnum_cached_byte_size_;
+  ::google::protobuf::uint32 tempid_;
+  ::google::protobuf::uint32 level_;
+  ::google::protobuf::uint32 viplevel_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_template_2ehxx_impl();
+  friend void  protobuf_AddDesc_template_2ehxx_impl();
+  friend void protobuf_AssignDesc_template_2ehxx();
+  friend void protobuf_ShutdownFile_template_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<PBTplNewPlayerConfig> PBTplNewPlayerConfig_default_instance_;
 
 // -------------------------------------------------------------------
 
@@ -2041,6 +2183,36 @@ PBTplConfigSet::droptable() const {
   return droptable_;
 }
 
+// repeated .PBTplNewPlayerConfig NewPlayerConfig = 4;
+inline int PBTplConfigSet::newplayerconfig_size() const {
+  return newplayerconfig_.size();
+}
+inline void PBTplConfigSet::clear_newplayerconfig() {
+  newplayerconfig_.Clear();
+}
+inline const ::PBTplNewPlayerConfig& PBTplConfigSet::newplayerconfig(int index) const {
+  // @@protoc_insertion_point(field_get:PBTplConfigSet.NewPlayerConfig)
+  return newplayerconfig_.Get(index);
+}
+inline ::PBTplNewPlayerConfig* PBTplConfigSet::mutable_newplayerconfig(int index) {
+  // @@protoc_insertion_point(field_mutable:PBTplConfigSet.NewPlayerConfig)
+  return newplayerconfig_.Mutable(index);
+}
+inline ::PBTplNewPlayerConfig* PBTplConfigSet::add_newplayerconfig() {
+  // @@protoc_insertion_point(field_add:PBTplConfigSet.NewPlayerConfig)
+  return newplayerconfig_.Add();
+}
+inline ::google::protobuf::RepeatedPtrField< ::PBTplNewPlayerConfig >*
+PBTplConfigSet::mutable_newplayerconfig() {
+  // @@protoc_insertion_point(field_mutable_list:PBTplConfigSet.NewPlayerConfig)
+  return &newplayerconfig_;
+}
+inline const ::google::protobuf::RepeatedPtrField< ::PBTplNewPlayerConfig >&
+PBTplConfigSet::newplayerconfig() const {
+  // @@protoc_insertion_point(field_list:PBTplConfigSet.NewPlayerConfig)
+  return newplayerconfig_;
+}
+
 inline const PBTplConfigSet* PBTplConfigSet::internal_default_instance() {
   return &PBTplConfigSet_default_instance_.get();
 }
@@ -2147,6 +2319,115 @@ PBTplNPCSet::ogre() const {
 
 inline const PBTplNPCSet* PBTplNPCSet::internal_default_instance() {
   return &PBTplNPCSet_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
+// PBTplNewPlayerConfig
+
+// optional uint32 TempID = 1;
+inline void PBTplNewPlayerConfig::clear_tempid() {
+  tempid_ = 0u;
+}
+inline ::google::protobuf::uint32 PBTplNewPlayerConfig::tempid() const {
+  // @@protoc_insertion_point(field_get:PBTplNewPlayerConfig.TempID)
+  return tempid_;
+}
+inline void PBTplNewPlayerConfig::set_tempid(::google::protobuf::uint32 value) {
+  
+  tempid_ = value;
+  // @@protoc_insertion_point(field_set:PBTplNewPlayerConfig.TempID)
+}
+
+// repeated uint32 ItemID = 2;
+inline int PBTplNewPlayerConfig::itemid_size() const {
+  return itemid_.size();
+}
+inline void PBTplNewPlayerConfig::clear_itemid() {
+  itemid_.Clear();
+}
+inline ::google::protobuf::uint32 PBTplNewPlayerConfig::itemid(int index) const {
+  // @@protoc_insertion_point(field_get:PBTplNewPlayerConfig.ItemID)
+  return itemid_.Get(index);
+}
+inline void PBTplNewPlayerConfig::set_itemid(int index, ::google::protobuf::uint32 value) {
+  itemid_.Set(index, value);
+  // @@protoc_insertion_point(field_set:PBTplNewPlayerConfig.ItemID)
+}
+inline void PBTplNewPlayerConfig::add_itemid(::google::protobuf::uint32 value) {
+  itemid_.Add(value);
+  // @@protoc_insertion_point(field_add:PBTplNewPlayerConfig.ItemID)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+PBTplNewPlayerConfig::itemid() const {
+  // @@protoc_insertion_point(field_list:PBTplNewPlayerConfig.ItemID)
+  return itemid_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+PBTplNewPlayerConfig::mutable_itemid() {
+  // @@protoc_insertion_point(field_mutable_list:PBTplNewPlayerConfig.ItemID)
+  return &itemid_;
+}
+
+// repeated uint32 ItemNum = 3;
+inline int PBTplNewPlayerConfig::itemnum_size() const {
+  return itemnum_.size();
+}
+inline void PBTplNewPlayerConfig::clear_itemnum() {
+  itemnum_.Clear();
+}
+inline ::google::protobuf::uint32 PBTplNewPlayerConfig::itemnum(int index) const {
+  // @@protoc_insertion_point(field_get:PBTplNewPlayerConfig.ItemNum)
+  return itemnum_.Get(index);
+}
+inline void PBTplNewPlayerConfig::set_itemnum(int index, ::google::protobuf::uint32 value) {
+  itemnum_.Set(index, value);
+  // @@protoc_insertion_point(field_set:PBTplNewPlayerConfig.ItemNum)
+}
+inline void PBTplNewPlayerConfig::add_itemnum(::google::protobuf::uint32 value) {
+  itemnum_.Add(value);
+  // @@protoc_insertion_point(field_add:PBTplNewPlayerConfig.ItemNum)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+PBTplNewPlayerConfig::itemnum() const {
+  // @@protoc_insertion_point(field_list:PBTplNewPlayerConfig.ItemNum)
+  return itemnum_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+PBTplNewPlayerConfig::mutable_itemnum() {
+  // @@protoc_insertion_point(field_mutable_list:PBTplNewPlayerConfig.ItemNum)
+  return &itemnum_;
+}
+
+// optional uint32 Level = 4;
+inline void PBTplNewPlayerConfig::clear_level() {
+  level_ = 0u;
+}
+inline ::google::protobuf::uint32 PBTplNewPlayerConfig::level() const {
+  // @@protoc_insertion_point(field_get:PBTplNewPlayerConfig.Level)
+  return level_;
+}
+inline void PBTplNewPlayerConfig::set_level(::google::protobuf::uint32 value) {
+  
+  level_ = value;
+  // @@protoc_insertion_point(field_set:PBTplNewPlayerConfig.Level)
+}
+
+// optional uint32 VipLevel = 5;
+inline void PBTplNewPlayerConfig::clear_viplevel() {
+  viplevel_ = 0u;
+}
+inline ::google::protobuf::uint32 PBTplNewPlayerConfig::viplevel() const {
+  // @@protoc_insertion_point(field_get:PBTplNewPlayerConfig.VipLevel)
+  return viplevel_;
+}
+inline void PBTplNewPlayerConfig::set_viplevel(::google::protobuf::uint32 value) {
+  
+  viplevel_ = value;
+  // @@protoc_insertion_point(field_set:PBTplNewPlayerConfig.VipLevel)
+}
+
+inline const PBTplNewPlayerConfig* PBTplNewPlayerConfig::internal_default_instance() {
+  return &PBTplNewPlayerConfig_default_instance_.get();
 }
 // -------------------------------------------------------------------
 
@@ -3009,6 +3290,8 @@ inline const PBTplDropTable* PBTplDropTable::internal_default_instance() {
   return &PBTplDropTable_default_instance_.get();
 }
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

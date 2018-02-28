@@ -18,6 +18,7 @@
 #include "dailyactmodule.h"
 #include "chatmodule.h"
 #include "skillmodule.h"
+#include "rankmodule.h"
 
 CSceneJob::CSceneJob()
 {
@@ -307,6 +308,9 @@ bool CSceneJob::init(int nDBBuffSize)
 	mLogicModuleList.push_back(CDailyActModule::CreateInst());
 	mLogicModuleList.push_back(CChatModule::CreateInst());
 	mLogicModuleList.push_back(CDailyActModule::CreateInst());
+	mLogicModuleList.push_back(CRankModule::CreateInst());
+
+	CRankModule::Inst()->updateRoleRank(emRankType_Level, NULL, 100);
 	return true;
 }
 

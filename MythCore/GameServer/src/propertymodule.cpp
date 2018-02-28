@@ -190,8 +190,8 @@ void CPropertyModule::onLoadPlayerInfo(CDBResponse& rResponse)
 	rResponse.getString(pPlayer->getName(), PLAYER_NAME_LENGTH - 1);
 	pPlayer->getPropertyUnit().setLevel((byte)rResponse.getShort());
 	pPlayer->getPropertyUnit().setExp(rResponse.getInt64());
-	pPlayer->getPropertyUnit().setVIPLevel(rResponse.getByte());
-	pPlayer->getPropertyUnit().setVIPExp(rResponse.getInt());
+	pPlayer->getPropertyUnit().setVipLevel(rResponse.getByte());
+	pPlayer->getPropertyUnit().setVipExp(rResponse.getInt());
 
 
 	pPlayer->getItemUnit().setMoney(rResponse.getInt());
@@ -244,6 +244,7 @@ void CPropertyModule::onLoadComplete(CEntityPlayer* pPlayer)
 	pPlayer->setPlayerStauts(emPlayerStatus_Gameing);
 	pPlayer->setOnTime(CTimeManager::Inst()->getCurrTime());
 
+	// 新玩家
 	if (0 == pPlayer->getLastOffTime())
 	{
 		setNewPlayerValue(pPlayer);
@@ -252,11 +253,53 @@ void CPropertyModule::onLoadComplete(CEntityPlayer* pPlayer)
 	CSceneJob::Inst()->createPlayer(pPlayer);
 
 	printf("%s%d%s\n", "*****************Load Complete:", pPlayer->getRoleID(), "*****************");
-	//printf("*****************Load Complete: %d**************\n", pPlayer->getRoleID());
 	// 将玩家放入地图
 	// 往客户端推送数据
 }
 
+/// 发送玩家基本信息通知
+void CPropertyModule::sendPlayerBaseInfoNotify(CEntityPlayer* pPlayer)
+{
+	CPlayerBaseInfoNotify tNotify;
+
+	tNotify.set_roleid(pPlayer->getRoleID());
+	tNotify.set_entityid(pPlayer->getObjID());
+	tNotify.set_lineid(pPlayer->getLineID());
+	tNotify.set_mapid(pPlayer->getMapID());
+	tNotify.set_mapindex(pPlayer->getMapIndex());
+	tNotify.set_posx(pPlayer->getPosX());
+	tNotify.set_posy(pPlayer->getPosY());
+	tNotify.set_level(pPlayer->getLevel());
+	tNotify.set_exp(pPlayer->getPropertyUnit().getExp());
+	tNotify.set_viplevel(pPlayer->getPropertyUnit().getVipLevel());
+	tNotify.set_vipexp(pPlayer->getPropertyUnit().getVipExp());
+
+	CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIFY_PLAYER_BASE_INFO, &tNotify);
+}
+
+/// 发送玩家道具信息通知
+void CPropertyModule::sendPlayerItemInfoNotify(CEntityPlayer* pPlayer)
+{
+	CPlayerItemInfoNotify tNotify;
+	pPlayer->getItemUnit().getBag().createToPB(tNotify.mutable_bag());
+
+	CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIFY_PLAYER_ITEM_INFO, &tNotify);
+}
+
+/// 发送玩家任务信息通知
+void CPropertyModule::sendPlayerTaskInfoNotify(CEntityPlayer* pPlayer)
+{
+	CPlayerTaskInfoNotify tNotify;
+	pPlayer->getTaskUnit().createToPB(tNotify.mutable_tasklist());
+
+	CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIFY_PLAYER_TASK_INFO, &tNotify);
+}
+
+/// 玩家技能信息通知
+void CPropertyModule::sendPlayerSkillInfoNotify(CEntityPlayer* pPlayer)
+{
+
+}
 
 /// 玩家存盘
 void CPropertyModule::savePlayer(CEntityPlayer* pPlayer)
@@ -280,7 +323,7 @@ void CPropertyModule::savePlayerInfo(CEntityPlayer* pPlayer)
 	CDBModule::Inst()->pushDBTask(pPlayer->getRoleID(), emSessionType_SavePlayerInfo, pPlayer->getObjID(), 0,
 		"call UpdatePlayerInfo(%d, %d,%lld,%d,%d,%d,%d)", pPlayer->getRoleID(),
 		pPlayer->getPropertyUnit().getLevel(), pPlayer->getPropertyUnit().getExp(),
-		pPlayer->getPropertyUnit().getVIPLevel(), pPlayer->getPropertyUnit().getVIPExp(),
+		pPlayer->getPropertyUnit().getVipLevel(), pPlayer->getPropertyUnit().getVipExp(),
 		pPlayer->getItemUnit().getMoney(), pPlayer->getItemUnit().getDiamond());
 }
 
@@ -348,5 +391,9 @@ void CPropertyModule::setNewPlayerValue(CEntityPlayer* pPlayer)
 		return;
 	}
 	
+	CTplNewPlayerConfig* pTplConfig = CTplNewPlayerConfig::spConfig;
 
+	pPlayer->getItemUnit().insertItem(pTplConfig->mItemID, pTplConfig->mItemNum, MAX_NEW_PLAYER_ITEM);
+	pPlayer->getPropertyUnit().setLevel(pTplConfig->mLevel);
+	pPlayer->getPropertyUnit().setVipLevel(pTplConfig->mVipLevel);
 }

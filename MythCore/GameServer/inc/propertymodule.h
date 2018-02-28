@@ -62,16 +62,26 @@ public:
 	void			dailyRefresh(CEntityPlayer* pPlayer);
 	/// 新玩家处理
 	void			setNewPlayerValue(CEntityPlayer* pPlayer);
-public:
-	CGMCommandManager&		getGMCmdManager(){return mGMCmdManager;}
-
+	
 private:
 	/// GM命令请求
 	void		onGMCommandRequest(CEntityPlayer* pPlayer, Message* pMessage);
 	/// 玩家离开游戏的请求
 	void		onLeaveGameRequest(CEntityPlayer* pPlayer, Message* pMessage);
+	/// 发送玩家基本信息通知
+	void		sendPlayerBaseInfoNotify(CEntityPlayer* pPlayer);
+	/// 发送玩家道具信息通知
+	void		sendPlayerItemInfoNotify(CEntityPlayer* pPlayer);
+	/// 发送玩家任务信息通知
+	void		sendPlayerTaskInfoNotify(CEntityPlayer* pPlayer);
+	/// 玩家技能信息通知
+	void		sendPlayerSkillInfoNotify(CEntityPlayer* pPlayer);
+
+public:
+	CGMCommandManager&		getGMCmdManager(){ return mGMCmdManager; }
 	/// 踢出所以玩家
 	void		kickAllPlayer();
+
 private:
 	CGMCommandManager		mGMCmdManager;
 	CAutoResetTimer			mSavePlayerTimer;

@@ -40,6 +40,18 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* CLeaveGameResponse_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   CLeaveGameResponse_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CPlayerBaseInfoNotify_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CPlayerBaseInfoNotify_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CPlayerItemInfoNotify_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CPlayerItemInfoNotify_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CPlayerTaskInfoNotify_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CPlayerTaskInfoNotify_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CPlayerSkillInfoNotify_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CPlayerSkillInfoNotify_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* PROPERTY_MODULE_MSG_ID_descriptor_ = NULL;
 
 }  // namespace
@@ -148,6 +160,71 @@ void protobuf_AssignDesc_propertymodule_2ehxx() {
       -1,
       sizeof(CLeaveGameResponse),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CLeaveGameResponse, _internal_metadata_));
+  CPlayerBaseInfoNotify_descriptor_ = file->message_type(7);
+  static const int CPlayerBaseInfoNotify_offsets_[11] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPlayerBaseInfoNotify, roleid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPlayerBaseInfoNotify, entityid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPlayerBaseInfoNotify, lineid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPlayerBaseInfoNotify, mapid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPlayerBaseInfoNotify, mapindex_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPlayerBaseInfoNotify, posx_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPlayerBaseInfoNotify, posy_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPlayerBaseInfoNotify, level_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPlayerBaseInfoNotify, exp_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPlayerBaseInfoNotify, viplevel_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPlayerBaseInfoNotify, vipexp_),
+  };
+  CPlayerBaseInfoNotify_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      CPlayerBaseInfoNotify_descriptor_,
+      CPlayerBaseInfoNotify::internal_default_instance(),
+      CPlayerBaseInfoNotify_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(CPlayerBaseInfoNotify),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPlayerBaseInfoNotify, _internal_metadata_));
+  CPlayerItemInfoNotify_descriptor_ = file->message_type(8);
+  static const int CPlayerItemInfoNotify_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPlayerItemInfoNotify, bag_),
+  };
+  CPlayerItemInfoNotify_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      CPlayerItemInfoNotify_descriptor_,
+      CPlayerItemInfoNotify::internal_default_instance(),
+      CPlayerItemInfoNotify_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(CPlayerItemInfoNotify),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPlayerItemInfoNotify, _internal_metadata_));
+  CPlayerTaskInfoNotify_descriptor_ = file->message_type(9);
+  static const int CPlayerTaskInfoNotify_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPlayerTaskInfoNotify, tasklist_),
+  };
+  CPlayerTaskInfoNotify_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      CPlayerTaskInfoNotify_descriptor_,
+      CPlayerTaskInfoNotify::internal_default_instance(),
+      CPlayerTaskInfoNotify_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(CPlayerTaskInfoNotify),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPlayerTaskInfoNotify, _internal_metadata_));
+  CPlayerSkillInfoNotify_descriptor_ = file->message_type(10);
+  static const int CPlayerSkillInfoNotify_offsets_[1] = {
+  };
+  CPlayerSkillInfoNotify_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      CPlayerSkillInfoNotify_descriptor_,
+      CPlayerSkillInfoNotify::internal_default_instance(),
+      CPlayerSkillInfoNotify_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(CPlayerSkillInfoNotify),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPlayerSkillInfoNotify, _internal_metadata_));
   PROPERTY_MODULE_MSG_ID_descriptor_ = file->enum_type(0);
 }
 
@@ -176,6 +253,14 @@ void protobuf_RegisterTypes(const ::std::string&) {
       CLeaveGameRequest_descriptor_, CLeaveGameRequest::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       CLeaveGameResponse_descriptor_, CLeaveGameResponse::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      CPlayerBaseInfoNotify_descriptor_, CPlayerBaseInfoNotify::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      CPlayerItemInfoNotify_descriptor_, CPlayerItemInfoNotify::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      CPlayerTaskInfoNotify_descriptor_, CPlayerTaskInfoNotify::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      CPlayerSkillInfoNotify_descriptor_, CPlayerSkillInfoNotify::internal_default_instance());
 }
 
 }  // namespace
@@ -195,11 +280,20 @@ void protobuf_ShutdownFile_propertymodule_2ehxx() {
   delete CLeaveGameRequest_reflection_;
   CLeaveGameResponse_default_instance_.Shutdown();
   delete CLeaveGameResponse_reflection_;
+  CPlayerBaseInfoNotify_default_instance_.Shutdown();
+  delete CPlayerBaseInfoNotify_reflection_;
+  CPlayerItemInfoNotify_default_instance_.Shutdown();
+  delete CPlayerItemInfoNotify_reflection_;
+  CPlayerTaskInfoNotify_default_instance_.Shutdown();
+  delete CPlayerTaskInfoNotify_reflection_;
+  CPlayerSkillInfoNotify_default_instance_.Shutdown();
+  delete CPlayerSkillInfoNotify_reflection_;
 }
 
 void protobuf_InitDefaults_propertymodule_2ehxx_impl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
+  ::protobuf_InitDefaults_common_2ehxx();
   CLevelUpNotify_default_instance_.DefaultConstruct();
   ::google::protobuf::internal::GetEmptyString();
   CGMCommandRequest_default_instance_.DefaultConstruct();
@@ -208,6 +302,10 @@ void protobuf_InitDefaults_propertymodule_2ehxx_impl() {
   CObtainVIPExpNotify_default_instance_.DefaultConstruct();
   CLeaveGameRequest_default_instance_.DefaultConstruct();
   CLeaveGameResponse_default_instance_.DefaultConstruct();
+  CPlayerBaseInfoNotify_default_instance_.DefaultConstruct();
+  CPlayerItemInfoNotify_default_instance_.DefaultConstruct();
+  CPlayerTaskInfoNotify_default_instance_.DefaultConstruct();
+  CPlayerSkillInfoNotify_default_instance_.DefaultConstruct();
   CLevelUpNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
   CGMCommandRequest_default_instance_.get_mutable()->InitAsDefaultInstance();
   CGMCommandResponse_default_instance_.get_mutable()->InitAsDefaultInstance();
@@ -215,6 +313,10 @@ void protobuf_InitDefaults_propertymodule_2ehxx_impl() {
   CObtainVIPExpNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
   CLeaveGameRequest_default_instance_.get_mutable()->InitAsDefaultInstance();
   CLeaveGameResponse_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CPlayerBaseInfoNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CPlayerItemInfoNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CPlayerTaskInfoNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CPlayerSkillInfoNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
 }
 
 GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_InitDefaults_propertymodule_2ehxx_once_);
@@ -227,22 +329,35 @@ void protobuf_AddDesc_propertymodule_2ehxx_impl() {
 
   protobuf_InitDefaults_propertymodule_2ehxx();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\022propertymodule.hxx\"\037\n\016CLevelUpNotify\022\r"
-    "\n\005Level\030\001 \001(\r\"*\n\021CGMCommandRequest\022\025\n\rCo"
-    "mmandString\030\001 \001(\t\"$\n\022CGMCommandResponse\022"
-    "\016\n\006Result\030\001 \001(\r\"\037\n\020CObtainExpNotify\022\013\n\003E"
-    "xp\030\001 \001(\r\"\025\n\023CObtainVIPExpNotify\"\023\n\021CLeav"
-    "eGameRequest\"$\n\022CLeaveGameResponse\022\016\n\006Re"
-    "sult\030\001 \001(\r*\227\002\n\026PROPERTY_MODULE_MSG_ID\022\034\n"
-    "\030ID_PROPERTY_MODULE_ERROR\020\000\022\033\n\026ID_S2C_NO"
-    "TIYF_LEVEL_UP\020\200\010\022\036\n\031ID_C2S_REQUEST_GM_CO"
-    "MMAND\020\201\010\022\037\n\032ID_S2C_RESPONSE_GM_COMMAND\020\202"
-    "\010\022\035\n\030ID_S2C_NOTIFY_OBTAIN_EXP\020\203\010\022!\n\034ID_S"
-    "2C_NOTIFY_OBTAIN_VIP_EXP\020\204\010\022\036\n\031ID_C2S_RE"
-    "QUEST_LEAVE_GAME\020\205\010\022\037\n\032ID_S2C_RESPONSE_L"
-    "EAVE_GAME\020\206\010b\006proto3", 540);
+    "\n\022propertymodule.hxx\032\ncommon.hxx\"\037\n\016CLev"
+    "elUpNotify\022\r\n\005Level\030\001 \001(\r\"*\n\021CGMCommandR"
+    "equest\022\025\n\rCommandString\030\001 \001(\t\"$\n\022CGMComm"
+    "andResponse\022\016\n\006Result\030\001 \001(\r\"\037\n\020CObtainEx"
+    "pNotify\022\013\n\003Exp\030\001 \001(\r\"\025\n\023CObtainVIPExpNot"
+    "ify\"\023\n\021CLeaveGameRequest\"$\n\022CLeaveGameRe"
+    "sponse\022\016\n\006Result\030\001 \001(\r\"\304\001\n\025CPlayerBaseIn"
+    "foNotify\022\016\n\006RoleID\030\001 \001(\r\022\020\n\010EntityID\030\002 \001"
+    "(\r\022\016\n\006LineID\030\003 \001(\r\022\r\n\005MapID\030\004 \001(\r\022\020\n\010Map"
+    "Index\030\005 \001(\r\022\014\n\004PosX\030\006 \001(\r\022\014\n\004PosY\030\007 \001(\r\022"
+    "\r\n\005Level\030\010 \001(\r\022\013\n\003Exp\030\t \001(\004\022\020\n\010VipLevel\030"
+    "\n \001(\r\022\016\n\006VipExp\030\013 \001(\r\"1\n\025CPlayerItemInfo"
+    "Notify\022\030\n\003Bag\030\001 \001(\0132\013.PBItemList\"6\n\025CPla"
+    "yerTaskInfoNotify\022\035\n\010TaskList\030\001 \001(\0132\013.PB"
+    "TaskList\"\030\n\026CPlayerSkillInfoNotify*\254\003\n\026P"
+    "ROPERTY_MODULE_MSG_ID\022\034\n\030ID_PROPERTY_MOD"
+    "ULE_ERROR\020\000\022\033\n\026ID_S2C_NOTIYF_LEVEL_UP\020\200\010"
+    "\022\036\n\031ID_C2S_REQUEST_GM_COMMAND\020\201\010\022\037\n\032ID_S"
+    "2C_RESPONSE_GM_COMMAND\020\202\010\022\035\n\030ID_S2C_NOTI"
+    "FY_OBTAIN_EXP\020\203\010\022!\n\034ID_S2C_NOTIFY_OBTAIN"
+    "_VIP_EXP\020\204\010\022\036\n\031ID_C2S_REQUEST_LEAVE_GAME"
+    "\020\205\010\022\037\n\032ID_S2C_RESPONSE_LEAVE_GAME\020\206\010\022#\n\036"
+    "ID_S2C_NOTIFY_PLAYER_BASE_INFO\020\207\010\022#\n\036ID_"
+    "S2C_NOTIFY_PLAYER_ITEM_INFO\020\210\010\022#\n\036ID_S2C"
+    "_NOTIFY_PLAYER_TASK_INFO\020\211\010\022$\n\037ID_S2C_NO"
+    "TIFY_PLAYER_SKILL_INFO\020\212\010b\006proto3", 1033);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "propertymodule.hxx", &protobuf_RegisterTypes);
+  ::protobuf_AddDesc_common_2ehxx();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_propertymodule_2ehxx);
 }
 
@@ -271,6 +386,10 @@ bool PROPERTY_MODULE_MSG_ID_IsValid(int value) {
     case 1028:
     case 1029:
     case 1030:
+    case 1031:
+    case 1032:
+    case 1033:
+    case 1034:
       return true;
     default:
       return false;
@@ -1924,6 +2043,1521 @@ void CLeaveGameResponse::set_result(::google::protobuf::uint32 value) {
 
 inline const CLeaveGameResponse* CLeaveGameResponse::internal_default_instance() {
   return &CLeaveGameResponse_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int CPlayerBaseInfoNotify::kRoleIDFieldNumber;
+const int CPlayerBaseInfoNotify::kEntityIDFieldNumber;
+const int CPlayerBaseInfoNotify::kLineIDFieldNumber;
+const int CPlayerBaseInfoNotify::kMapIDFieldNumber;
+const int CPlayerBaseInfoNotify::kMapIndexFieldNumber;
+const int CPlayerBaseInfoNotify::kPosXFieldNumber;
+const int CPlayerBaseInfoNotify::kPosYFieldNumber;
+const int CPlayerBaseInfoNotify::kLevelFieldNumber;
+const int CPlayerBaseInfoNotify::kExpFieldNumber;
+const int CPlayerBaseInfoNotify::kVipLevelFieldNumber;
+const int CPlayerBaseInfoNotify::kVipExpFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+CPlayerBaseInfoNotify::CPlayerBaseInfoNotify()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_propertymodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CPlayerBaseInfoNotify)
+}
+
+void CPlayerBaseInfoNotify::InitAsDefaultInstance() {
+}
+
+CPlayerBaseInfoNotify::CPlayerBaseInfoNotify(const CPlayerBaseInfoNotify& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:CPlayerBaseInfoNotify)
+}
+
+void CPlayerBaseInfoNotify::SharedCtor() {
+  ::memset(&roleid_, 0, reinterpret_cast<char*>(&vipexp_) -
+    reinterpret_cast<char*>(&roleid_) + sizeof(vipexp_));
+  _cached_size_ = 0;
+}
+
+CPlayerBaseInfoNotify::~CPlayerBaseInfoNotify() {
+  // @@protoc_insertion_point(destructor:CPlayerBaseInfoNotify)
+  SharedDtor();
+}
+
+void CPlayerBaseInfoNotify::SharedDtor() {
+}
+
+void CPlayerBaseInfoNotify::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CPlayerBaseInfoNotify::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CPlayerBaseInfoNotify_descriptor_;
+}
+
+const CPlayerBaseInfoNotify& CPlayerBaseInfoNotify::default_instance() {
+  protobuf_InitDefaults_propertymodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<CPlayerBaseInfoNotify> CPlayerBaseInfoNotify_default_instance_;
+
+CPlayerBaseInfoNotify* CPlayerBaseInfoNotify::New(::google::protobuf::Arena* arena) const {
+  CPlayerBaseInfoNotify* n = new CPlayerBaseInfoNotify;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void CPlayerBaseInfoNotify::Clear() {
+// @@protoc_insertion_point(message_clear_start:CPlayerBaseInfoNotify)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(CPlayerBaseInfoNotify, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<CPlayerBaseInfoNotify*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&(first), 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(roleid_, level_);
+  ZR_(exp_, vipexp_);
+
+#undef ZR_HELPER_
+#undef ZR_
+
+}
+
+bool CPlayerBaseInfoNotify::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:CPlayerBaseInfoNotify)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 RoleID = 1;
+      case 1: {
+        if (tag == 8) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &roleid_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_EntityID;
+        break;
+      }
+
+      // optional uint32 EntityID = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_EntityID:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &entityid_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_LineID;
+        break;
+      }
+
+      // optional uint32 LineID = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_LineID:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &lineid_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(32)) goto parse_MapID;
+        break;
+      }
+
+      // optional uint32 MapID = 4;
+      case 4: {
+        if (tag == 32) {
+         parse_MapID:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &mapid_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(40)) goto parse_MapIndex;
+        break;
+      }
+
+      // optional uint32 MapIndex = 5;
+      case 5: {
+        if (tag == 40) {
+         parse_MapIndex:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &mapindex_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(48)) goto parse_PosX;
+        break;
+      }
+
+      // optional uint32 PosX = 6;
+      case 6: {
+        if (tag == 48) {
+         parse_PosX:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &posx_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(56)) goto parse_PosY;
+        break;
+      }
+
+      // optional uint32 PosY = 7;
+      case 7: {
+        if (tag == 56) {
+         parse_PosY:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &posy_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(64)) goto parse_Level;
+        break;
+      }
+
+      // optional uint32 Level = 8;
+      case 8: {
+        if (tag == 64) {
+         parse_Level:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &level_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(72)) goto parse_Exp;
+        break;
+      }
+
+      // optional uint64 Exp = 9;
+      case 9: {
+        if (tag == 72) {
+         parse_Exp:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &exp_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(80)) goto parse_VipLevel;
+        break;
+      }
+
+      // optional uint32 VipLevel = 10;
+      case 10: {
+        if (tag == 80) {
+         parse_VipLevel:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &viplevel_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(88)) goto parse_VipExp;
+        break;
+      }
+
+      // optional uint32 VipExp = 11;
+      case 11: {
+        if (tag == 88) {
+         parse_VipExp:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &vipexp_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:CPlayerBaseInfoNotify)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:CPlayerBaseInfoNotify)
+  return false;
+#undef DO_
+}
+
+void CPlayerBaseInfoNotify::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:CPlayerBaseInfoNotify)
+  // optional uint32 RoleID = 1;
+  if (this->roleid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->roleid(), output);
+  }
+
+  // optional uint32 EntityID = 2;
+  if (this->entityid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->entityid(), output);
+  }
+
+  // optional uint32 LineID = 3;
+  if (this->lineid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->lineid(), output);
+  }
+
+  // optional uint32 MapID = 4;
+  if (this->mapid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->mapid(), output);
+  }
+
+  // optional uint32 MapIndex = 5;
+  if (this->mapindex() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->mapindex(), output);
+  }
+
+  // optional uint32 PosX = 6;
+  if (this->posx() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->posx(), output);
+  }
+
+  // optional uint32 PosY = 7;
+  if (this->posy() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->posy(), output);
+  }
+
+  // optional uint32 Level = 8;
+  if (this->level() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(8, this->level(), output);
+  }
+
+  // optional uint64 Exp = 9;
+  if (this->exp() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(9, this->exp(), output);
+  }
+
+  // optional uint32 VipLevel = 10;
+  if (this->viplevel() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(10, this->viplevel(), output);
+  }
+
+  // optional uint32 VipExp = 11;
+  if (this->vipexp() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(11, this->vipexp(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:CPlayerBaseInfoNotify)
+}
+
+::google::protobuf::uint8* CPlayerBaseInfoNotify::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:CPlayerBaseInfoNotify)
+  // optional uint32 RoleID = 1;
+  if (this->roleid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->roleid(), target);
+  }
+
+  // optional uint32 EntityID = 2;
+  if (this->entityid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->entityid(), target);
+  }
+
+  // optional uint32 LineID = 3;
+  if (this->lineid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->lineid(), target);
+  }
+
+  // optional uint32 MapID = 4;
+  if (this->mapid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->mapid(), target);
+  }
+
+  // optional uint32 MapIndex = 5;
+  if (this->mapindex() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->mapindex(), target);
+  }
+
+  // optional uint32 PosX = 6;
+  if (this->posx() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(6, this->posx(), target);
+  }
+
+  // optional uint32 PosY = 7;
+  if (this->posy() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(7, this->posy(), target);
+  }
+
+  // optional uint32 Level = 8;
+  if (this->level() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(8, this->level(), target);
+  }
+
+  // optional uint64 Exp = 9;
+  if (this->exp() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(9, this->exp(), target);
+  }
+
+  // optional uint32 VipLevel = 10;
+  if (this->viplevel() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(10, this->viplevel(), target);
+  }
+
+  // optional uint32 VipExp = 11;
+  if (this->vipexp() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(11, this->vipexp(), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:CPlayerBaseInfoNotify)
+  return target;
+}
+
+size_t CPlayerBaseInfoNotify::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CPlayerBaseInfoNotify)
+  size_t total_size = 0;
+
+  // optional uint32 RoleID = 1;
+  if (this->roleid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->roleid());
+  }
+
+  // optional uint32 EntityID = 2;
+  if (this->entityid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->entityid());
+  }
+
+  // optional uint32 LineID = 3;
+  if (this->lineid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->lineid());
+  }
+
+  // optional uint32 MapID = 4;
+  if (this->mapid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->mapid());
+  }
+
+  // optional uint32 MapIndex = 5;
+  if (this->mapindex() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->mapindex());
+  }
+
+  // optional uint32 PosX = 6;
+  if (this->posx() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->posx());
+  }
+
+  // optional uint32 PosY = 7;
+  if (this->posy() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->posy());
+  }
+
+  // optional uint32 Level = 8;
+  if (this->level() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->level());
+  }
+
+  // optional uint64 Exp = 9;
+  if (this->exp() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->exp());
+  }
+
+  // optional uint32 VipLevel = 10;
+  if (this->viplevel() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->viplevel());
+  }
+
+  // optional uint32 VipExp = 11;
+  if (this->vipexp() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->vipexp());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CPlayerBaseInfoNotify::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CPlayerBaseInfoNotify)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const CPlayerBaseInfoNotify* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CPlayerBaseInfoNotify>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CPlayerBaseInfoNotify)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CPlayerBaseInfoNotify)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void CPlayerBaseInfoNotify::MergeFrom(const CPlayerBaseInfoNotify& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CPlayerBaseInfoNotify)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void CPlayerBaseInfoNotify::UnsafeMergeFrom(const CPlayerBaseInfoNotify& from) {
+  GOOGLE_DCHECK(&from != this);
+  if (from.roleid() != 0) {
+    set_roleid(from.roleid());
+  }
+  if (from.entityid() != 0) {
+    set_entityid(from.entityid());
+  }
+  if (from.lineid() != 0) {
+    set_lineid(from.lineid());
+  }
+  if (from.mapid() != 0) {
+    set_mapid(from.mapid());
+  }
+  if (from.mapindex() != 0) {
+    set_mapindex(from.mapindex());
+  }
+  if (from.posx() != 0) {
+    set_posx(from.posx());
+  }
+  if (from.posy() != 0) {
+    set_posy(from.posy());
+  }
+  if (from.level() != 0) {
+    set_level(from.level());
+  }
+  if (from.exp() != 0) {
+    set_exp(from.exp());
+  }
+  if (from.viplevel() != 0) {
+    set_viplevel(from.viplevel());
+  }
+  if (from.vipexp() != 0) {
+    set_vipexp(from.vipexp());
+  }
+}
+
+void CPlayerBaseInfoNotify::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CPlayerBaseInfoNotify)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CPlayerBaseInfoNotify::CopyFrom(const CPlayerBaseInfoNotify& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CPlayerBaseInfoNotify)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool CPlayerBaseInfoNotify::IsInitialized() const {
+
+  return true;
+}
+
+void CPlayerBaseInfoNotify::Swap(CPlayerBaseInfoNotify* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void CPlayerBaseInfoNotify::InternalSwap(CPlayerBaseInfoNotify* other) {
+  std::swap(roleid_, other->roleid_);
+  std::swap(entityid_, other->entityid_);
+  std::swap(lineid_, other->lineid_);
+  std::swap(mapid_, other->mapid_);
+  std::swap(mapindex_, other->mapindex_);
+  std::swap(posx_, other->posx_);
+  std::swap(posy_, other->posy_);
+  std::swap(level_, other->level_);
+  std::swap(exp_, other->exp_);
+  std::swap(viplevel_, other->viplevel_);
+  std::swap(vipexp_, other->vipexp_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata CPlayerBaseInfoNotify::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CPlayerBaseInfoNotify_descriptor_;
+  metadata.reflection = CPlayerBaseInfoNotify_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// CPlayerBaseInfoNotify
+
+// optional uint32 RoleID = 1;
+void CPlayerBaseInfoNotify::clear_roleid() {
+  roleid_ = 0u;
+}
+::google::protobuf::uint32 CPlayerBaseInfoNotify::roleid() const {
+  // @@protoc_insertion_point(field_get:CPlayerBaseInfoNotify.RoleID)
+  return roleid_;
+}
+void CPlayerBaseInfoNotify::set_roleid(::google::protobuf::uint32 value) {
+  
+  roleid_ = value;
+  // @@protoc_insertion_point(field_set:CPlayerBaseInfoNotify.RoleID)
+}
+
+// optional uint32 EntityID = 2;
+void CPlayerBaseInfoNotify::clear_entityid() {
+  entityid_ = 0u;
+}
+::google::protobuf::uint32 CPlayerBaseInfoNotify::entityid() const {
+  // @@protoc_insertion_point(field_get:CPlayerBaseInfoNotify.EntityID)
+  return entityid_;
+}
+void CPlayerBaseInfoNotify::set_entityid(::google::protobuf::uint32 value) {
+  
+  entityid_ = value;
+  // @@protoc_insertion_point(field_set:CPlayerBaseInfoNotify.EntityID)
+}
+
+// optional uint32 LineID = 3;
+void CPlayerBaseInfoNotify::clear_lineid() {
+  lineid_ = 0u;
+}
+::google::protobuf::uint32 CPlayerBaseInfoNotify::lineid() const {
+  // @@protoc_insertion_point(field_get:CPlayerBaseInfoNotify.LineID)
+  return lineid_;
+}
+void CPlayerBaseInfoNotify::set_lineid(::google::protobuf::uint32 value) {
+  
+  lineid_ = value;
+  // @@protoc_insertion_point(field_set:CPlayerBaseInfoNotify.LineID)
+}
+
+// optional uint32 MapID = 4;
+void CPlayerBaseInfoNotify::clear_mapid() {
+  mapid_ = 0u;
+}
+::google::protobuf::uint32 CPlayerBaseInfoNotify::mapid() const {
+  // @@protoc_insertion_point(field_get:CPlayerBaseInfoNotify.MapID)
+  return mapid_;
+}
+void CPlayerBaseInfoNotify::set_mapid(::google::protobuf::uint32 value) {
+  
+  mapid_ = value;
+  // @@protoc_insertion_point(field_set:CPlayerBaseInfoNotify.MapID)
+}
+
+// optional uint32 MapIndex = 5;
+void CPlayerBaseInfoNotify::clear_mapindex() {
+  mapindex_ = 0u;
+}
+::google::protobuf::uint32 CPlayerBaseInfoNotify::mapindex() const {
+  // @@protoc_insertion_point(field_get:CPlayerBaseInfoNotify.MapIndex)
+  return mapindex_;
+}
+void CPlayerBaseInfoNotify::set_mapindex(::google::protobuf::uint32 value) {
+  
+  mapindex_ = value;
+  // @@protoc_insertion_point(field_set:CPlayerBaseInfoNotify.MapIndex)
+}
+
+// optional uint32 PosX = 6;
+void CPlayerBaseInfoNotify::clear_posx() {
+  posx_ = 0u;
+}
+::google::protobuf::uint32 CPlayerBaseInfoNotify::posx() const {
+  // @@protoc_insertion_point(field_get:CPlayerBaseInfoNotify.PosX)
+  return posx_;
+}
+void CPlayerBaseInfoNotify::set_posx(::google::protobuf::uint32 value) {
+  
+  posx_ = value;
+  // @@protoc_insertion_point(field_set:CPlayerBaseInfoNotify.PosX)
+}
+
+// optional uint32 PosY = 7;
+void CPlayerBaseInfoNotify::clear_posy() {
+  posy_ = 0u;
+}
+::google::protobuf::uint32 CPlayerBaseInfoNotify::posy() const {
+  // @@protoc_insertion_point(field_get:CPlayerBaseInfoNotify.PosY)
+  return posy_;
+}
+void CPlayerBaseInfoNotify::set_posy(::google::protobuf::uint32 value) {
+  
+  posy_ = value;
+  // @@protoc_insertion_point(field_set:CPlayerBaseInfoNotify.PosY)
+}
+
+// optional uint32 Level = 8;
+void CPlayerBaseInfoNotify::clear_level() {
+  level_ = 0u;
+}
+::google::protobuf::uint32 CPlayerBaseInfoNotify::level() const {
+  // @@protoc_insertion_point(field_get:CPlayerBaseInfoNotify.Level)
+  return level_;
+}
+void CPlayerBaseInfoNotify::set_level(::google::protobuf::uint32 value) {
+  
+  level_ = value;
+  // @@protoc_insertion_point(field_set:CPlayerBaseInfoNotify.Level)
+}
+
+// optional uint64 Exp = 9;
+void CPlayerBaseInfoNotify::clear_exp() {
+  exp_ = GOOGLE_ULONGLONG(0);
+}
+::google::protobuf::uint64 CPlayerBaseInfoNotify::exp() const {
+  // @@protoc_insertion_point(field_get:CPlayerBaseInfoNotify.Exp)
+  return exp_;
+}
+void CPlayerBaseInfoNotify::set_exp(::google::protobuf::uint64 value) {
+  
+  exp_ = value;
+  // @@protoc_insertion_point(field_set:CPlayerBaseInfoNotify.Exp)
+}
+
+// optional uint32 VipLevel = 10;
+void CPlayerBaseInfoNotify::clear_viplevel() {
+  viplevel_ = 0u;
+}
+::google::protobuf::uint32 CPlayerBaseInfoNotify::viplevel() const {
+  // @@protoc_insertion_point(field_get:CPlayerBaseInfoNotify.VipLevel)
+  return viplevel_;
+}
+void CPlayerBaseInfoNotify::set_viplevel(::google::protobuf::uint32 value) {
+  
+  viplevel_ = value;
+  // @@protoc_insertion_point(field_set:CPlayerBaseInfoNotify.VipLevel)
+}
+
+// optional uint32 VipExp = 11;
+void CPlayerBaseInfoNotify::clear_vipexp() {
+  vipexp_ = 0u;
+}
+::google::protobuf::uint32 CPlayerBaseInfoNotify::vipexp() const {
+  // @@protoc_insertion_point(field_get:CPlayerBaseInfoNotify.VipExp)
+  return vipexp_;
+}
+void CPlayerBaseInfoNotify::set_vipexp(::google::protobuf::uint32 value) {
+  
+  vipexp_ = value;
+  // @@protoc_insertion_point(field_set:CPlayerBaseInfoNotify.VipExp)
+}
+
+inline const CPlayerBaseInfoNotify* CPlayerBaseInfoNotify::internal_default_instance() {
+  return &CPlayerBaseInfoNotify_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int CPlayerItemInfoNotify::kBagFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+CPlayerItemInfoNotify::CPlayerItemInfoNotify()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_propertymodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CPlayerItemInfoNotify)
+}
+
+void CPlayerItemInfoNotify::InitAsDefaultInstance() {
+  bag_ = const_cast< ::PBItemList*>(
+      ::PBItemList::internal_default_instance());
+}
+
+CPlayerItemInfoNotify::CPlayerItemInfoNotify(const CPlayerItemInfoNotify& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:CPlayerItemInfoNotify)
+}
+
+void CPlayerItemInfoNotify::SharedCtor() {
+  bag_ = NULL;
+  _cached_size_ = 0;
+}
+
+CPlayerItemInfoNotify::~CPlayerItemInfoNotify() {
+  // @@protoc_insertion_point(destructor:CPlayerItemInfoNotify)
+  SharedDtor();
+}
+
+void CPlayerItemInfoNotify::SharedDtor() {
+  if (this != &CPlayerItemInfoNotify_default_instance_.get()) {
+    delete bag_;
+  }
+}
+
+void CPlayerItemInfoNotify::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CPlayerItemInfoNotify::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CPlayerItemInfoNotify_descriptor_;
+}
+
+const CPlayerItemInfoNotify& CPlayerItemInfoNotify::default_instance() {
+  protobuf_InitDefaults_propertymodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<CPlayerItemInfoNotify> CPlayerItemInfoNotify_default_instance_;
+
+CPlayerItemInfoNotify* CPlayerItemInfoNotify::New(::google::protobuf::Arena* arena) const {
+  CPlayerItemInfoNotify* n = new CPlayerItemInfoNotify;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void CPlayerItemInfoNotify::Clear() {
+// @@protoc_insertion_point(message_clear_start:CPlayerItemInfoNotify)
+  if (GetArenaNoVirtual() == NULL && bag_ != NULL) delete bag_;
+  bag_ = NULL;
+}
+
+bool CPlayerItemInfoNotify::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:CPlayerItemInfoNotify)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional .PBItemList Bag = 1;
+      case 1: {
+        if (tag == 10) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_bag()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:CPlayerItemInfoNotify)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:CPlayerItemInfoNotify)
+  return false;
+#undef DO_
+}
+
+void CPlayerItemInfoNotify::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:CPlayerItemInfoNotify)
+  // optional .PBItemList Bag = 1;
+  if (this->has_bag()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, *this->bag_, output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:CPlayerItemInfoNotify)
+}
+
+::google::protobuf::uint8* CPlayerItemInfoNotify::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:CPlayerItemInfoNotify)
+  // optional .PBItemList Bag = 1;
+  if (this->has_bag()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageNoVirtualToArray(
+        1, *this->bag_, false, target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:CPlayerItemInfoNotify)
+  return target;
+}
+
+size_t CPlayerItemInfoNotify::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CPlayerItemInfoNotify)
+  size_t total_size = 0;
+
+  // optional .PBItemList Bag = 1;
+  if (this->has_bag()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->bag_);
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CPlayerItemInfoNotify::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CPlayerItemInfoNotify)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const CPlayerItemInfoNotify* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CPlayerItemInfoNotify>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CPlayerItemInfoNotify)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CPlayerItemInfoNotify)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void CPlayerItemInfoNotify::MergeFrom(const CPlayerItemInfoNotify& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CPlayerItemInfoNotify)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void CPlayerItemInfoNotify::UnsafeMergeFrom(const CPlayerItemInfoNotify& from) {
+  GOOGLE_DCHECK(&from != this);
+  if (from.has_bag()) {
+    mutable_bag()->::PBItemList::MergeFrom(from.bag());
+  }
+}
+
+void CPlayerItemInfoNotify::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CPlayerItemInfoNotify)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CPlayerItemInfoNotify::CopyFrom(const CPlayerItemInfoNotify& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CPlayerItemInfoNotify)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool CPlayerItemInfoNotify::IsInitialized() const {
+
+  return true;
+}
+
+void CPlayerItemInfoNotify::Swap(CPlayerItemInfoNotify* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void CPlayerItemInfoNotify::InternalSwap(CPlayerItemInfoNotify* other) {
+  std::swap(bag_, other->bag_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata CPlayerItemInfoNotify::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CPlayerItemInfoNotify_descriptor_;
+  metadata.reflection = CPlayerItemInfoNotify_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// CPlayerItemInfoNotify
+
+// optional .PBItemList Bag = 1;
+bool CPlayerItemInfoNotify::has_bag() const {
+  return this != internal_default_instance() && bag_ != NULL;
+}
+void CPlayerItemInfoNotify::clear_bag() {
+  if (GetArenaNoVirtual() == NULL && bag_ != NULL) delete bag_;
+  bag_ = NULL;
+}
+const ::PBItemList& CPlayerItemInfoNotify::bag() const {
+  // @@protoc_insertion_point(field_get:CPlayerItemInfoNotify.Bag)
+  return bag_ != NULL ? *bag_
+                         : *::PBItemList::internal_default_instance();
+}
+::PBItemList* CPlayerItemInfoNotify::mutable_bag() {
+  
+  if (bag_ == NULL) {
+    bag_ = new ::PBItemList;
+  }
+  // @@protoc_insertion_point(field_mutable:CPlayerItemInfoNotify.Bag)
+  return bag_;
+}
+::PBItemList* CPlayerItemInfoNotify::release_bag() {
+  // @@protoc_insertion_point(field_release:CPlayerItemInfoNotify.Bag)
+  
+  ::PBItemList* temp = bag_;
+  bag_ = NULL;
+  return temp;
+}
+void CPlayerItemInfoNotify::set_allocated_bag(::PBItemList* bag) {
+  delete bag_;
+  bag_ = bag;
+  if (bag) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:CPlayerItemInfoNotify.Bag)
+}
+
+inline const CPlayerItemInfoNotify* CPlayerItemInfoNotify::internal_default_instance() {
+  return &CPlayerItemInfoNotify_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int CPlayerTaskInfoNotify::kTaskListFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+CPlayerTaskInfoNotify::CPlayerTaskInfoNotify()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_propertymodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CPlayerTaskInfoNotify)
+}
+
+void CPlayerTaskInfoNotify::InitAsDefaultInstance() {
+  tasklist_ = const_cast< ::PBTaskList*>(
+      ::PBTaskList::internal_default_instance());
+}
+
+CPlayerTaskInfoNotify::CPlayerTaskInfoNotify(const CPlayerTaskInfoNotify& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:CPlayerTaskInfoNotify)
+}
+
+void CPlayerTaskInfoNotify::SharedCtor() {
+  tasklist_ = NULL;
+  _cached_size_ = 0;
+}
+
+CPlayerTaskInfoNotify::~CPlayerTaskInfoNotify() {
+  // @@protoc_insertion_point(destructor:CPlayerTaskInfoNotify)
+  SharedDtor();
+}
+
+void CPlayerTaskInfoNotify::SharedDtor() {
+  if (this != &CPlayerTaskInfoNotify_default_instance_.get()) {
+    delete tasklist_;
+  }
+}
+
+void CPlayerTaskInfoNotify::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CPlayerTaskInfoNotify::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CPlayerTaskInfoNotify_descriptor_;
+}
+
+const CPlayerTaskInfoNotify& CPlayerTaskInfoNotify::default_instance() {
+  protobuf_InitDefaults_propertymodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<CPlayerTaskInfoNotify> CPlayerTaskInfoNotify_default_instance_;
+
+CPlayerTaskInfoNotify* CPlayerTaskInfoNotify::New(::google::protobuf::Arena* arena) const {
+  CPlayerTaskInfoNotify* n = new CPlayerTaskInfoNotify;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void CPlayerTaskInfoNotify::Clear() {
+// @@protoc_insertion_point(message_clear_start:CPlayerTaskInfoNotify)
+  if (GetArenaNoVirtual() == NULL && tasklist_ != NULL) delete tasklist_;
+  tasklist_ = NULL;
+}
+
+bool CPlayerTaskInfoNotify::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:CPlayerTaskInfoNotify)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional .PBTaskList TaskList = 1;
+      case 1: {
+        if (tag == 10) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_tasklist()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:CPlayerTaskInfoNotify)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:CPlayerTaskInfoNotify)
+  return false;
+#undef DO_
+}
+
+void CPlayerTaskInfoNotify::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:CPlayerTaskInfoNotify)
+  // optional .PBTaskList TaskList = 1;
+  if (this->has_tasklist()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, *this->tasklist_, output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:CPlayerTaskInfoNotify)
+}
+
+::google::protobuf::uint8* CPlayerTaskInfoNotify::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:CPlayerTaskInfoNotify)
+  // optional .PBTaskList TaskList = 1;
+  if (this->has_tasklist()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageNoVirtualToArray(
+        1, *this->tasklist_, false, target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:CPlayerTaskInfoNotify)
+  return target;
+}
+
+size_t CPlayerTaskInfoNotify::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CPlayerTaskInfoNotify)
+  size_t total_size = 0;
+
+  // optional .PBTaskList TaskList = 1;
+  if (this->has_tasklist()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->tasklist_);
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CPlayerTaskInfoNotify::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CPlayerTaskInfoNotify)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const CPlayerTaskInfoNotify* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CPlayerTaskInfoNotify>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CPlayerTaskInfoNotify)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CPlayerTaskInfoNotify)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void CPlayerTaskInfoNotify::MergeFrom(const CPlayerTaskInfoNotify& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CPlayerTaskInfoNotify)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void CPlayerTaskInfoNotify::UnsafeMergeFrom(const CPlayerTaskInfoNotify& from) {
+  GOOGLE_DCHECK(&from != this);
+  if (from.has_tasklist()) {
+    mutable_tasklist()->::PBTaskList::MergeFrom(from.tasklist());
+  }
+}
+
+void CPlayerTaskInfoNotify::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CPlayerTaskInfoNotify)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CPlayerTaskInfoNotify::CopyFrom(const CPlayerTaskInfoNotify& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CPlayerTaskInfoNotify)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool CPlayerTaskInfoNotify::IsInitialized() const {
+
+  return true;
+}
+
+void CPlayerTaskInfoNotify::Swap(CPlayerTaskInfoNotify* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void CPlayerTaskInfoNotify::InternalSwap(CPlayerTaskInfoNotify* other) {
+  std::swap(tasklist_, other->tasklist_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata CPlayerTaskInfoNotify::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CPlayerTaskInfoNotify_descriptor_;
+  metadata.reflection = CPlayerTaskInfoNotify_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// CPlayerTaskInfoNotify
+
+// optional .PBTaskList TaskList = 1;
+bool CPlayerTaskInfoNotify::has_tasklist() const {
+  return this != internal_default_instance() && tasklist_ != NULL;
+}
+void CPlayerTaskInfoNotify::clear_tasklist() {
+  if (GetArenaNoVirtual() == NULL && tasklist_ != NULL) delete tasklist_;
+  tasklist_ = NULL;
+}
+const ::PBTaskList& CPlayerTaskInfoNotify::tasklist() const {
+  // @@protoc_insertion_point(field_get:CPlayerTaskInfoNotify.TaskList)
+  return tasklist_ != NULL ? *tasklist_
+                         : *::PBTaskList::internal_default_instance();
+}
+::PBTaskList* CPlayerTaskInfoNotify::mutable_tasklist() {
+  
+  if (tasklist_ == NULL) {
+    tasklist_ = new ::PBTaskList;
+  }
+  // @@protoc_insertion_point(field_mutable:CPlayerTaskInfoNotify.TaskList)
+  return tasklist_;
+}
+::PBTaskList* CPlayerTaskInfoNotify::release_tasklist() {
+  // @@protoc_insertion_point(field_release:CPlayerTaskInfoNotify.TaskList)
+  
+  ::PBTaskList* temp = tasklist_;
+  tasklist_ = NULL;
+  return temp;
+}
+void CPlayerTaskInfoNotify::set_allocated_tasklist(::PBTaskList* tasklist) {
+  delete tasklist_;
+  tasklist_ = tasklist;
+  if (tasklist) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:CPlayerTaskInfoNotify.TaskList)
+}
+
+inline const CPlayerTaskInfoNotify* CPlayerTaskInfoNotify::internal_default_instance() {
+  return &CPlayerTaskInfoNotify_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+CPlayerSkillInfoNotify::CPlayerSkillInfoNotify()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_propertymodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CPlayerSkillInfoNotify)
+}
+
+void CPlayerSkillInfoNotify::InitAsDefaultInstance() {
+}
+
+CPlayerSkillInfoNotify::CPlayerSkillInfoNotify(const CPlayerSkillInfoNotify& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:CPlayerSkillInfoNotify)
+}
+
+void CPlayerSkillInfoNotify::SharedCtor() {
+  _cached_size_ = 0;
+}
+
+CPlayerSkillInfoNotify::~CPlayerSkillInfoNotify() {
+  // @@protoc_insertion_point(destructor:CPlayerSkillInfoNotify)
+  SharedDtor();
+}
+
+void CPlayerSkillInfoNotify::SharedDtor() {
+}
+
+void CPlayerSkillInfoNotify::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CPlayerSkillInfoNotify::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CPlayerSkillInfoNotify_descriptor_;
+}
+
+const CPlayerSkillInfoNotify& CPlayerSkillInfoNotify::default_instance() {
+  protobuf_InitDefaults_propertymodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<CPlayerSkillInfoNotify> CPlayerSkillInfoNotify_default_instance_;
+
+CPlayerSkillInfoNotify* CPlayerSkillInfoNotify::New(::google::protobuf::Arena* arena) const {
+  CPlayerSkillInfoNotify* n = new CPlayerSkillInfoNotify;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void CPlayerSkillInfoNotify::Clear() {
+// @@protoc_insertion_point(message_clear_start:CPlayerSkillInfoNotify)
+}
+
+bool CPlayerSkillInfoNotify::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:CPlayerSkillInfoNotify)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+  handle_unusual:
+    if (tag == 0 ||
+        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+      goto success;
+    }
+    DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+  }
+success:
+  // @@protoc_insertion_point(parse_success:CPlayerSkillInfoNotify)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:CPlayerSkillInfoNotify)
+  return false;
+#undef DO_
+}
+
+void CPlayerSkillInfoNotify::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:CPlayerSkillInfoNotify)
+  // @@protoc_insertion_point(serialize_end:CPlayerSkillInfoNotify)
+}
+
+::google::protobuf::uint8* CPlayerSkillInfoNotify::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:CPlayerSkillInfoNotify)
+  // @@protoc_insertion_point(serialize_to_array_end:CPlayerSkillInfoNotify)
+  return target;
+}
+
+size_t CPlayerSkillInfoNotify::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CPlayerSkillInfoNotify)
+  size_t total_size = 0;
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CPlayerSkillInfoNotify::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CPlayerSkillInfoNotify)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const CPlayerSkillInfoNotify* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CPlayerSkillInfoNotify>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CPlayerSkillInfoNotify)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CPlayerSkillInfoNotify)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void CPlayerSkillInfoNotify::MergeFrom(const CPlayerSkillInfoNotify& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CPlayerSkillInfoNotify)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void CPlayerSkillInfoNotify::UnsafeMergeFrom(const CPlayerSkillInfoNotify& from) {
+  GOOGLE_DCHECK(&from != this);
+}
+
+void CPlayerSkillInfoNotify::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CPlayerSkillInfoNotify)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CPlayerSkillInfoNotify::CopyFrom(const CPlayerSkillInfoNotify& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CPlayerSkillInfoNotify)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool CPlayerSkillInfoNotify::IsInitialized() const {
+
+  return true;
+}
+
+void CPlayerSkillInfoNotify::Swap(CPlayerSkillInfoNotify* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void CPlayerSkillInfoNotify::InternalSwap(CPlayerSkillInfoNotify* other) {
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata CPlayerSkillInfoNotify::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CPlayerSkillInfoNotify_descriptor_;
+  metadata.reflection = CPlayerSkillInfoNotify_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// CPlayerSkillInfoNotify
+
+inline const CPlayerSkillInfoNotify* CPlayerSkillInfoNotify::internal_default_instance() {
+  return &CPlayerSkillInfoNotify_default_instance_.get();
 }
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 

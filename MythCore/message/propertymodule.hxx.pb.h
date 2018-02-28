@@ -28,6 +28,7 @@
 #include <google/protobuf/extension_set.h>
 #include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
+#include "common.hxx.pb.h"
 // @@protoc_insertion_point(includes)
 
 // Internal implementation detail -- do not call these.
@@ -43,6 +44,10 @@ class CLeaveGameResponse;
 class CLevelUpNotify;
 class CObtainExpNotify;
 class CObtainVIPExpNotify;
+class CPlayerBaseInfoNotify;
+class CPlayerItemInfoNotify;
+class CPlayerSkillInfoNotify;
+class CPlayerTaskInfoNotify;
 
 enum PROPERTY_MODULE_MSG_ID {
   ID_PROPERTY_MODULE_ERROR = 0,
@@ -53,12 +58,16 @@ enum PROPERTY_MODULE_MSG_ID {
   ID_S2C_NOTIFY_OBTAIN_VIP_EXP = 1028,
   ID_C2S_REQUEST_LEAVE_GAME = 1029,
   ID_S2C_RESPONSE_LEAVE_GAME = 1030,
+  ID_S2C_NOTIFY_PLAYER_BASE_INFO = 1031,
+  ID_S2C_NOTIFY_PLAYER_ITEM_INFO = 1032,
+  ID_S2C_NOTIFY_PLAYER_TASK_INFO = 1033,
+  ID_S2C_NOTIFY_PLAYER_SKILL_INFO = 1034,
   PROPERTY_MODULE_MSG_ID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   PROPERTY_MODULE_MSG_ID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool PROPERTY_MODULE_MSG_ID_IsValid(int value);
 const PROPERTY_MODULE_MSG_ID PROPERTY_MODULE_MSG_ID_MIN = ID_PROPERTY_MODULE_ERROR;
-const PROPERTY_MODULE_MSG_ID PROPERTY_MODULE_MSG_ID_MAX = ID_S2C_RESPONSE_LEAVE_GAME;
+const PROPERTY_MODULE_MSG_ID PROPERTY_MODULE_MSG_ID_MAX = ID_S2C_NOTIFY_PLAYER_SKILL_INFO;
 const int PROPERTY_MODULE_MSG_ID_ARRAYSIZE = PROPERTY_MODULE_MSG_ID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* PROPERTY_MODULE_MSG_ID_descriptor();
@@ -664,6 +673,419 @@ class CLeaveGameResponse : public ::google::protobuf::Message /* @@protoc_insert
 };
 extern ::google::protobuf::internal::ExplicitlyConstructed<CLeaveGameResponse> CLeaveGameResponse_default_instance_;
 
+// -------------------------------------------------------------------
+
+class CPlayerBaseInfoNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CPlayerBaseInfoNotify) */ {
+ public:
+  CPlayerBaseInfoNotify();
+  virtual ~CPlayerBaseInfoNotify();
+
+  CPlayerBaseInfoNotify(const CPlayerBaseInfoNotify& from);
+
+  inline CPlayerBaseInfoNotify& operator=(const CPlayerBaseInfoNotify& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CPlayerBaseInfoNotify& default_instance();
+
+  static const CPlayerBaseInfoNotify* internal_default_instance();
+
+  void Swap(CPlayerBaseInfoNotify* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CPlayerBaseInfoNotify* New() const { return New(NULL); }
+
+  CPlayerBaseInfoNotify* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CPlayerBaseInfoNotify& from);
+  void MergeFrom(const CPlayerBaseInfoNotify& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CPlayerBaseInfoNotify* other);
+  void UnsafeMergeFrom(const CPlayerBaseInfoNotify& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 RoleID = 1;
+  void clear_roleid();
+  static const int kRoleIDFieldNumber = 1;
+  ::google::protobuf::uint32 roleid() const;
+  void set_roleid(::google::protobuf::uint32 value);
+
+  // optional uint32 EntityID = 2;
+  void clear_entityid();
+  static const int kEntityIDFieldNumber = 2;
+  ::google::protobuf::uint32 entityid() const;
+  void set_entityid(::google::protobuf::uint32 value);
+
+  // optional uint32 LineID = 3;
+  void clear_lineid();
+  static const int kLineIDFieldNumber = 3;
+  ::google::protobuf::uint32 lineid() const;
+  void set_lineid(::google::protobuf::uint32 value);
+
+  // optional uint32 MapID = 4;
+  void clear_mapid();
+  static const int kMapIDFieldNumber = 4;
+  ::google::protobuf::uint32 mapid() const;
+  void set_mapid(::google::protobuf::uint32 value);
+
+  // optional uint32 MapIndex = 5;
+  void clear_mapindex();
+  static const int kMapIndexFieldNumber = 5;
+  ::google::protobuf::uint32 mapindex() const;
+  void set_mapindex(::google::protobuf::uint32 value);
+
+  // optional uint32 PosX = 6;
+  void clear_posx();
+  static const int kPosXFieldNumber = 6;
+  ::google::protobuf::uint32 posx() const;
+  void set_posx(::google::protobuf::uint32 value);
+
+  // optional uint32 PosY = 7;
+  void clear_posy();
+  static const int kPosYFieldNumber = 7;
+  ::google::protobuf::uint32 posy() const;
+  void set_posy(::google::protobuf::uint32 value);
+
+  // optional uint32 Level = 8;
+  void clear_level();
+  static const int kLevelFieldNumber = 8;
+  ::google::protobuf::uint32 level() const;
+  void set_level(::google::protobuf::uint32 value);
+
+  // optional uint64 Exp = 9;
+  void clear_exp();
+  static const int kExpFieldNumber = 9;
+  ::google::protobuf::uint64 exp() const;
+  void set_exp(::google::protobuf::uint64 value);
+
+  // optional uint32 VipLevel = 10;
+  void clear_viplevel();
+  static const int kVipLevelFieldNumber = 10;
+  ::google::protobuf::uint32 viplevel() const;
+  void set_viplevel(::google::protobuf::uint32 value);
+
+  // optional uint32 VipExp = 11;
+  void clear_vipexp();
+  static const int kVipExpFieldNumber = 11;
+  ::google::protobuf::uint32 vipexp() const;
+  void set_vipexp(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:CPlayerBaseInfoNotify)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 roleid_;
+  ::google::protobuf::uint32 entityid_;
+  ::google::protobuf::uint32 lineid_;
+  ::google::protobuf::uint32 mapid_;
+  ::google::protobuf::uint32 mapindex_;
+  ::google::protobuf::uint32 posx_;
+  ::google::protobuf::uint32 posy_;
+  ::google::protobuf::uint32 level_;
+  ::google::protobuf::uint64 exp_;
+  ::google::protobuf::uint32 viplevel_;
+  ::google::protobuf::uint32 vipexp_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_propertymodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_propertymodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_propertymodule_2ehxx();
+  friend void protobuf_ShutdownFile_propertymodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CPlayerBaseInfoNotify> CPlayerBaseInfoNotify_default_instance_;
+
+// -------------------------------------------------------------------
+
+class CPlayerItemInfoNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CPlayerItemInfoNotify) */ {
+ public:
+  CPlayerItemInfoNotify();
+  virtual ~CPlayerItemInfoNotify();
+
+  CPlayerItemInfoNotify(const CPlayerItemInfoNotify& from);
+
+  inline CPlayerItemInfoNotify& operator=(const CPlayerItemInfoNotify& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CPlayerItemInfoNotify& default_instance();
+
+  static const CPlayerItemInfoNotify* internal_default_instance();
+
+  void Swap(CPlayerItemInfoNotify* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CPlayerItemInfoNotify* New() const { return New(NULL); }
+
+  CPlayerItemInfoNotify* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CPlayerItemInfoNotify& from);
+  void MergeFrom(const CPlayerItemInfoNotify& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CPlayerItemInfoNotify* other);
+  void UnsafeMergeFrom(const CPlayerItemInfoNotify& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .PBItemList Bag = 1;
+  bool has_bag() const;
+  void clear_bag();
+  static const int kBagFieldNumber = 1;
+  const ::PBItemList& bag() const;
+  ::PBItemList* mutable_bag();
+  ::PBItemList* release_bag();
+  void set_allocated_bag(::PBItemList* bag);
+
+  // @@protoc_insertion_point(class_scope:CPlayerItemInfoNotify)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PBItemList* bag_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_propertymodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_propertymodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_propertymodule_2ehxx();
+  friend void protobuf_ShutdownFile_propertymodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CPlayerItemInfoNotify> CPlayerItemInfoNotify_default_instance_;
+
+// -------------------------------------------------------------------
+
+class CPlayerTaskInfoNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CPlayerTaskInfoNotify) */ {
+ public:
+  CPlayerTaskInfoNotify();
+  virtual ~CPlayerTaskInfoNotify();
+
+  CPlayerTaskInfoNotify(const CPlayerTaskInfoNotify& from);
+
+  inline CPlayerTaskInfoNotify& operator=(const CPlayerTaskInfoNotify& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CPlayerTaskInfoNotify& default_instance();
+
+  static const CPlayerTaskInfoNotify* internal_default_instance();
+
+  void Swap(CPlayerTaskInfoNotify* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CPlayerTaskInfoNotify* New() const { return New(NULL); }
+
+  CPlayerTaskInfoNotify* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CPlayerTaskInfoNotify& from);
+  void MergeFrom(const CPlayerTaskInfoNotify& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CPlayerTaskInfoNotify* other);
+  void UnsafeMergeFrom(const CPlayerTaskInfoNotify& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .PBTaskList TaskList = 1;
+  bool has_tasklist() const;
+  void clear_tasklist();
+  static const int kTaskListFieldNumber = 1;
+  const ::PBTaskList& tasklist() const;
+  ::PBTaskList* mutable_tasklist();
+  ::PBTaskList* release_tasklist();
+  void set_allocated_tasklist(::PBTaskList* tasklist);
+
+  // @@protoc_insertion_point(class_scope:CPlayerTaskInfoNotify)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PBTaskList* tasklist_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_propertymodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_propertymodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_propertymodule_2ehxx();
+  friend void protobuf_ShutdownFile_propertymodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CPlayerTaskInfoNotify> CPlayerTaskInfoNotify_default_instance_;
+
+// -------------------------------------------------------------------
+
+class CPlayerSkillInfoNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CPlayerSkillInfoNotify) */ {
+ public:
+  CPlayerSkillInfoNotify();
+  virtual ~CPlayerSkillInfoNotify();
+
+  CPlayerSkillInfoNotify(const CPlayerSkillInfoNotify& from);
+
+  inline CPlayerSkillInfoNotify& operator=(const CPlayerSkillInfoNotify& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CPlayerSkillInfoNotify& default_instance();
+
+  static const CPlayerSkillInfoNotify* internal_default_instance();
+
+  void Swap(CPlayerSkillInfoNotify* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CPlayerSkillInfoNotify* New() const { return New(NULL); }
+
+  CPlayerSkillInfoNotify* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CPlayerSkillInfoNotify& from);
+  void MergeFrom(const CPlayerSkillInfoNotify& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CPlayerSkillInfoNotify* other);
+  void UnsafeMergeFrom(const CPlayerSkillInfoNotify& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:CPlayerSkillInfoNotify)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_propertymodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_propertymodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_propertymodule_2ehxx();
+  friend void protobuf_ShutdownFile_propertymodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CPlayerSkillInfoNotify> CPlayerSkillInfoNotify_default_instance_;
+
 // ===================================================================
 
 
@@ -817,7 +1239,275 @@ inline void CLeaveGameResponse::set_result(::google::protobuf::uint32 value) {
 inline const CLeaveGameResponse* CLeaveGameResponse::internal_default_instance() {
   return &CLeaveGameResponse_default_instance_.get();
 }
+// -------------------------------------------------------------------
+
+// CPlayerBaseInfoNotify
+
+// optional uint32 RoleID = 1;
+inline void CPlayerBaseInfoNotify::clear_roleid() {
+  roleid_ = 0u;
+}
+inline ::google::protobuf::uint32 CPlayerBaseInfoNotify::roleid() const {
+  // @@protoc_insertion_point(field_get:CPlayerBaseInfoNotify.RoleID)
+  return roleid_;
+}
+inline void CPlayerBaseInfoNotify::set_roleid(::google::protobuf::uint32 value) {
+  
+  roleid_ = value;
+  // @@protoc_insertion_point(field_set:CPlayerBaseInfoNotify.RoleID)
+}
+
+// optional uint32 EntityID = 2;
+inline void CPlayerBaseInfoNotify::clear_entityid() {
+  entityid_ = 0u;
+}
+inline ::google::protobuf::uint32 CPlayerBaseInfoNotify::entityid() const {
+  // @@protoc_insertion_point(field_get:CPlayerBaseInfoNotify.EntityID)
+  return entityid_;
+}
+inline void CPlayerBaseInfoNotify::set_entityid(::google::protobuf::uint32 value) {
+  
+  entityid_ = value;
+  // @@protoc_insertion_point(field_set:CPlayerBaseInfoNotify.EntityID)
+}
+
+// optional uint32 LineID = 3;
+inline void CPlayerBaseInfoNotify::clear_lineid() {
+  lineid_ = 0u;
+}
+inline ::google::protobuf::uint32 CPlayerBaseInfoNotify::lineid() const {
+  // @@protoc_insertion_point(field_get:CPlayerBaseInfoNotify.LineID)
+  return lineid_;
+}
+inline void CPlayerBaseInfoNotify::set_lineid(::google::protobuf::uint32 value) {
+  
+  lineid_ = value;
+  // @@protoc_insertion_point(field_set:CPlayerBaseInfoNotify.LineID)
+}
+
+// optional uint32 MapID = 4;
+inline void CPlayerBaseInfoNotify::clear_mapid() {
+  mapid_ = 0u;
+}
+inline ::google::protobuf::uint32 CPlayerBaseInfoNotify::mapid() const {
+  // @@protoc_insertion_point(field_get:CPlayerBaseInfoNotify.MapID)
+  return mapid_;
+}
+inline void CPlayerBaseInfoNotify::set_mapid(::google::protobuf::uint32 value) {
+  
+  mapid_ = value;
+  // @@protoc_insertion_point(field_set:CPlayerBaseInfoNotify.MapID)
+}
+
+// optional uint32 MapIndex = 5;
+inline void CPlayerBaseInfoNotify::clear_mapindex() {
+  mapindex_ = 0u;
+}
+inline ::google::protobuf::uint32 CPlayerBaseInfoNotify::mapindex() const {
+  // @@protoc_insertion_point(field_get:CPlayerBaseInfoNotify.MapIndex)
+  return mapindex_;
+}
+inline void CPlayerBaseInfoNotify::set_mapindex(::google::protobuf::uint32 value) {
+  
+  mapindex_ = value;
+  // @@protoc_insertion_point(field_set:CPlayerBaseInfoNotify.MapIndex)
+}
+
+// optional uint32 PosX = 6;
+inline void CPlayerBaseInfoNotify::clear_posx() {
+  posx_ = 0u;
+}
+inline ::google::protobuf::uint32 CPlayerBaseInfoNotify::posx() const {
+  // @@protoc_insertion_point(field_get:CPlayerBaseInfoNotify.PosX)
+  return posx_;
+}
+inline void CPlayerBaseInfoNotify::set_posx(::google::protobuf::uint32 value) {
+  
+  posx_ = value;
+  // @@protoc_insertion_point(field_set:CPlayerBaseInfoNotify.PosX)
+}
+
+// optional uint32 PosY = 7;
+inline void CPlayerBaseInfoNotify::clear_posy() {
+  posy_ = 0u;
+}
+inline ::google::protobuf::uint32 CPlayerBaseInfoNotify::posy() const {
+  // @@protoc_insertion_point(field_get:CPlayerBaseInfoNotify.PosY)
+  return posy_;
+}
+inline void CPlayerBaseInfoNotify::set_posy(::google::protobuf::uint32 value) {
+  
+  posy_ = value;
+  // @@protoc_insertion_point(field_set:CPlayerBaseInfoNotify.PosY)
+}
+
+// optional uint32 Level = 8;
+inline void CPlayerBaseInfoNotify::clear_level() {
+  level_ = 0u;
+}
+inline ::google::protobuf::uint32 CPlayerBaseInfoNotify::level() const {
+  // @@protoc_insertion_point(field_get:CPlayerBaseInfoNotify.Level)
+  return level_;
+}
+inline void CPlayerBaseInfoNotify::set_level(::google::protobuf::uint32 value) {
+  
+  level_ = value;
+  // @@protoc_insertion_point(field_set:CPlayerBaseInfoNotify.Level)
+}
+
+// optional uint64 Exp = 9;
+inline void CPlayerBaseInfoNotify::clear_exp() {
+  exp_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 CPlayerBaseInfoNotify::exp() const {
+  // @@protoc_insertion_point(field_get:CPlayerBaseInfoNotify.Exp)
+  return exp_;
+}
+inline void CPlayerBaseInfoNotify::set_exp(::google::protobuf::uint64 value) {
+  
+  exp_ = value;
+  // @@protoc_insertion_point(field_set:CPlayerBaseInfoNotify.Exp)
+}
+
+// optional uint32 VipLevel = 10;
+inline void CPlayerBaseInfoNotify::clear_viplevel() {
+  viplevel_ = 0u;
+}
+inline ::google::protobuf::uint32 CPlayerBaseInfoNotify::viplevel() const {
+  // @@protoc_insertion_point(field_get:CPlayerBaseInfoNotify.VipLevel)
+  return viplevel_;
+}
+inline void CPlayerBaseInfoNotify::set_viplevel(::google::protobuf::uint32 value) {
+  
+  viplevel_ = value;
+  // @@protoc_insertion_point(field_set:CPlayerBaseInfoNotify.VipLevel)
+}
+
+// optional uint32 VipExp = 11;
+inline void CPlayerBaseInfoNotify::clear_vipexp() {
+  vipexp_ = 0u;
+}
+inline ::google::protobuf::uint32 CPlayerBaseInfoNotify::vipexp() const {
+  // @@protoc_insertion_point(field_get:CPlayerBaseInfoNotify.VipExp)
+  return vipexp_;
+}
+inline void CPlayerBaseInfoNotify::set_vipexp(::google::protobuf::uint32 value) {
+  
+  vipexp_ = value;
+  // @@protoc_insertion_point(field_set:CPlayerBaseInfoNotify.VipExp)
+}
+
+inline const CPlayerBaseInfoNotify* CPlayerBaseInfoNotify::internal_default_instance() {
+  return &CPlayerBaseInfoNotify_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
+// CPlayerItemInfoNotify
+
+// optional .PBItemList Bag = 1;
+inline bool CPlayerItemInfoNotify::has_bag() const {
+  return this != internal_default_instance() && bag_ != NULL;
+}
+inline void CPlayerItemInfoNotify::clear_bag() {
+  if (GetArenaNoVirtual() == NULL && bag_ != NULL) delete bag_;
+  bag_ = NULL;
+}
+inline const ::PBItemList& CPlayerItemInfoNotify::bag() const {
+  // @@protoc_insertion_point(field_get:CPlayerItemInfoNotify.Bag)
+  return bag_ != NULL ? *bag_
+                         : *::PBItemList::internal_default_instance();
+}
+inline ::PBItemList* CPlayerItemInfoNotify::mutable_bag() {
+  
+  if (bag_ == NULL) {
+    bag_ = new ::PBItemList;
+  }
+  // @@protoc_insertion_point(field_mutable:CPlayerItemInfoNotify.Bag)
+  return bag_;
+}
+inline ::PBItemList* CPlayerItemInfoNotify::release_bag() {
+  // @@protoc_insertion_point(field_release:CPlayerItemInfoNotify.Bag)
+  
+  ::PBItemList* temp = bag_;
+  bag_ = NULL;
+  return temp;
+}
+inline void CPlayerItemInfoNotify::set_allocated_bag(::PBItemList* bag) {
+  delete bag_;
+  bag_ = bag;
+  if (bag) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:CPlayerItemInfoNotify.Bag)
+}
+
+inline const CPlayerItemInfoNotify* CPlayerItemInfoNotify::internal_default_instance() {
+  return &CPlayerItemInfoNotify_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
+// CPlayerTaskInfoNotify
+
+// optional .PBTaskList TaskList = 1;
+inline bool CPlayerTaskInfoNotify::has_tasklist() const {
+  return this != internal_default_instance() && tasklist_ != NULL;
+}
+inline void CPlayerTaskInfoNotify::clear_tasklist() {
+  if (GetArenaNoVirtual() == NULL && tasklist_ != NULL) delete tasklist_;
+  tasklist_ = NULL;
+}
+inline const ::PBTaskList& CPlayerTaskInfoNotify::tasklist() const {
+  // @@protoc_insertion_point(field_get:CPlayerTaskInfoNotify.TaskList)
+  return tasklist_ != NULL ? *tasklist_
+                         : *::PBTaskList::internal_default_instance();
+}
+inline ::PBTaskList* CPlayerTaskInfoNotify::mutable_tasklist() {
+  
+  if (tasklist_ == NULL) {
+    tasklist_ = new ::PBTaskList;
+  }
+  // @@protoc_insertion_point(field_mutable:CPlayerTaskInfoNotify.TaskList)
+  return tasklist_;
+}
+inline ::PBTaskList* CPlayerTaskInfoNotify::release_tasklist() {
+  // @@protoc_insertion_point(field_release:CPlayerTaskInfoNotify.TaskList)
+  
+  ::PBTaskList* temp = tasklist_;
+  tasklist_ = NULL;
+  return temp;
+}
+inline void CPlayerTaskInfoNotify::set_allocated_tasklist(::PBTaskList* tasklist) {
+  delete tasklist_;
+  tasklist_ = tasklist;
+  if (tasklist) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:CPlayerTaskInfoNotify.TaskList)
+}
+
+inline const CPlayerTaskInfoNotify* CPlayerTaskInfoNotify::internal_default_instance() {
+  return &CPlayerTaskInfoNotify_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
+// CPlayerSkillInfoNotify
+
+inline const CPlayerSkillInfoNotify* CPlayerSkillInfoNotify::internal_default_instance() {
+  return &CPlayerSkillInfoNotify_default_instance_.get();
+}
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -102,6 +102,10 @@ int CItemUnit::insertItem(int* pItemID, int* pItemNum, int nSize)
 	
 	for (int i = 0; i < nSize; ++ i)
 	{
+		if (0 == pItemID[i])
+		{
+			break;
+		}
 		if (pItemID[i] <= MAX_CURRENCY_ID)
 		{
 			obtainCurrency((EmCurrencyType)CURRENCY_ID_2_TYPE(pItemID[i]), pItemNum[i]);

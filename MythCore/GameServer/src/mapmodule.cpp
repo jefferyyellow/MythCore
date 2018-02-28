@@ -51,13 +51,24 @@ void CMapModule::onNewWeekCome()
 /// 建立实体
 void CMapModule::onCreatePlayer(CEntityPlayer* pPlayer)
 {
-
+	CMap* pMap = CMapManager::Inst()->getMap(pPlayer->getLineID(), pPlayer->getMapID(), pPlayer->getMapIndex());
+	if (NULL == pMap)
+	{
+		return;
+	}
+	
+	pMap->onCreatePlayer(pPlayer);
 }
 
 /// 销毁实体
 void CMapModule::onDestroyPlayer(CEntityPlayer* pPlayer)
 {
-
+	CMap* pMap = CMapManager::Inst()->getMap(pPlayer->getLineID(), pPlayer->getMapID(), pPlayer->getMapIndex());
+	if (NULL == pMap)
+	{
+		return;
+	}
+	pMap->onDestroyPlayer(pPlayer);
 }
 
 void CMapModule::onTimer(unsigned int nTickOffset)
@@ -111,6 +122,18 @@ CEntity* CMapModule::createEntity(CEntityCreator* pCreator)
 		return NULL;
 	}
 	return pMap->createEntity(pCreator);
+}
+
+/// 删除实体
+void CMapModule::destroyEntity(CEntity* pEntity)
+{
+	CMap* pMap = CMapManager::Inst()->getMap(pEntity->getLineID(), pEntity->getMapID(), pEntity->getMapIndex());
+	if (NULL == pMap)
+	{
+		return;
+	}
+
+	pMap->DestroyEntity(pEntity);
 }
 
 void CMapModule::broadCastVisiblePlayer(CEntity* pEntity, unsigned short nMessageID, Message* pMessage)

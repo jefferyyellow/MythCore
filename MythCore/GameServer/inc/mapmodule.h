@@ -48,6 +48,9 @@ public:
 	int			teleportEntity(CEntity* pEntity, unsigned short nMapID, CMythPoint& rPos);
 	/// 创建实体
 	CEntity*	createEntity(CEntityCreator* pCreator);
+	/// 删除实体
+	void		destroyEntity(CEntity* pEntity);
+
 public:
 	/// 广播给附近的可见玩家
 	void		broadCastVisiblePlayer(CEntity* pEntity, unsigned short nMessageID, Message* pMessage);

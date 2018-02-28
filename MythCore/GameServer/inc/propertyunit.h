@@ -20,8 +20,8 @@ public:
 	{
         mExp = 0;
         mLevel = 0;
-        mVIPExp = 0;
-        mVIPLevel = 0;
+        mVipExp = 0;
+        mVipLevel = 0;
 	}
 
 public:
@@ -38,20 +38,20 @@ public:
     byte getLevel(){ return mLevel;}
     void setLevel(byte value){ mLevel = value;}
 
-    int getVIPExp(){ return mVIPExp;}
-    void setVIPExp(int value){ mVIPExp = value;}
+    int getVipExp(){ return mVipExp;}
+    void setVipExp(int value){ mVipExp = value;}
 
-    byte getVIPLevel(){ return mVIPLevel;}
-    void setVIPLevel(byte value){ mVIPLevel = value;}
+    byte getVipLevel(){ return mVipLevel;}
+    void setVipLevel(byte value){ mVipLevel = value;}
 	/// end autocode
 private:
 	/// 经验
 	sint64			mExp;
+	/// Vip经验
+	int				mVipExp;
 	/// 等级
 	byte			mLevel;
-	/// VIP经验
-	int				mVIPExp;
-	/// VIP等级
-	byte			mVIPLevel;
+	/// Vip等级
+	byte			mVipLevel;
 };
 #endif

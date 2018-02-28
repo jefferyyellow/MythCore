@@ -19,6 +19,7 @@ message PBTplConfigSet
 	repeated PBTplLevelExpConfig		LevelExpConfig			= 1;
 	repeated PBTplVIPConfig				VIPConfig				= 2;	
 	repeated PBTplDropTable				Droptable				= 3;
+	repeated PBTplNewPlayerConfig		NewPlayerConfig			= 4;
 }
 
 message PBTplSkillSet
@@ -30,6 +31,16 @@ message PBTplNPCSet
 {
 	repeated PBTplFuncNPC				FuncNpc					= 1;
 	repeated PBTplOgre					Ogre					= 2;
+}
+
+// 新玩家信息
+message PBTplNewPlayerConfig
+{
+				uint32	TempID = 1;
+	repeated	uint32	ItemID = 2;
+	repeated	uint32	ItemNum = 3;
+				uint32	Level = 4;
+				uint32	VipLevel = 5;
 }
 
 // 道具基本信息

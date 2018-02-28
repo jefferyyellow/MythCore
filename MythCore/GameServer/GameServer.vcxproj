@@ -81,6 +81,7 @@
     <ClCompile Include="..\message\mapmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\message.hxx.pb.cc" />
     <ClCompile Include="..\message\propertymodule.hxx.pb.cc" />
+    <ClCompile Include="..\message\rankmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\serveractmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\skillmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\taskmodule.hxx.pb.cc" />
@@ -151,6 +152,8 @@
     <ClInclude Include="..\message\message.hxx.pb.h" />
     <ClInclude Include="..\message\propertymodule.hxx" />
     <ClInclude Include="..\message\propertymodule.hxx.pb.h" />
+    <ClInclude Include="..\message\rankmodule.hxx" />
+    <ClInclude Include="..\message\rankmodule.hxx.pb.h" />
     <ClInclude Include="..\message\serveractmodule.hxx" />
     <ClInclude Include="..\message\serveractmodule.hxx.pb.h" />
     <ClInclude Include="..\message\skillmodule.hxx" />
@@ -202,7 +205,9 @@
     <ClInclude Include="inc\playersubunit.h" />
     <ClInclude Include="inc\geometrytype.h" />
     <ClInclude Include="inc\propertyunit.h" />
+    <ClInclude Include="inc\rank.h" />
     <ClInclude Include="inc\rankmodule.h" />
+    <ClInclude Include="inc\ranktype.h" />
     <ClInclude Include="inc\scenejob.h" />
     <ClInclude Include="inc\serveractivity.h" />
     <ClInclude Include="inc\serveractivitytype.h" />
@@ -214,6 +219,7 @@
     <ClInclude Include="inc\skillmodule.h" />
     <ClInclude Include="inc\skilltype.h" />
     <ClInclude Include="inc\skillunit.h" />
+    <ClInclude Include="inc\sortedvector.h" />
     <ClInclude Include="inc\statemachine.h" />
     <ClInclude Include="inc\strutility.h" />
     <ClInclude Include="inc\taskconfig.h" />
@@ -223,6 +229,9 @@
     <ClInclude Include="inc\taskunit.h" />
     <ClInclude Include="inc\template.h" />
     <ClInclude Include="inc\propertymodule.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="inc\rank.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

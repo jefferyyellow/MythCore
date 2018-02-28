@@ -29,6 +29,7 @@ public:
 
 public:
 	static CEntity* createEntity(EmEntityType eType);
+	static void		destroyEntity(CEntity* pEntity);
 	/// ≥ı ºªØ
 	virtual	void	initEntity(CEntityCreator* pCreator) = 0;
 

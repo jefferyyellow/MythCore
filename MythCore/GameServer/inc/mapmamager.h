@@ -96,9 +96,14 @@ public:
 	void		onRemoveEntityFromMap(CEntity* pEntity);
 
 	/// 创建玩家
-	CEntityPlayer*	createPlayer(CEntityPlayer* pPlayer);
+	void		onCreatePlayer(CEntityPlayer* pPlayer);
 	/// 创建实体
-	CEntity*		createEntity(CEntityCreator* pCreator);
+	CEntity*	createEntity(CEntityCreator* pCreator);
+
+	/// 销毁玩家
+	void		onDestroyPlayer(CEntityPlayer* pPlayer);
+	/// 销毁实体
+	void		DestroyEntity(CEntity* pEntity);
 
 	/// 通知其他玩家创建该玩家
 	void		createPlayer2PlayerList(CEntityPlayer* pPlayer, std::vector<CEntityPlayer*>& rPlayerList);

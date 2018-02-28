@@ -70,6 +70,16 @@ CEntity* CEntity::createEntity(EmEntityType eType)
 	return NULL;
 }
 
+void CEntity::destroyEntity(CEntity* pEntity)
+{
+	if (NULL == pEntity)
+	{
+		return;
+	}
+
+	CObjPool::Inst()->free(pEntity->getObjID());
+}
+
 void CEntityCharacter::reduceHp(CEntityCharacter* pSrcEntity, int nNum)
 {
 	if (mCurHP <= 0)

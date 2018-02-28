@@ -293,9 +293,16 @@ void CMap::onRemoveEntityFromMap(CEntity* pEntity)
 }
 
 /// 创建玩家
-CEntityPlayer* CMap::createPlayer(CEntityPlayer* pPlayer)
+void CMap::onCreatePlayer(CEntityPlayer* pPlayer)
 {
-	return NULL;
+	if (NULL == pPlayer)
+	{
+		return;
+	}
+
+	addEntityToMapUnit(pPlayer);
+	onCreateEntityToMap(pPlayer);
+	return;
 }
 
 /// 创建实体
@@ -319,6 +326,19 @@ CEntity* CMap::createEntity(CEntityCreator* pCreator)
 	addEntityToMapUnit(pEntity);
 	onCreateEntityToMap(pEntity);
 	return pEntity;
+}
+
+/// 销毁玩家
+void CMap::onDestroyPlayer(CEntityPlayer* pPlayer)
+{
+	removeEntityFromMap(pPlayer);
+}
+
+/// 销毁实体
+void CMap::DestroyEntity(CEntity* pEntity)
+{
+	removeEntityFromMap(pEntity);
+	CEntity::destroyEntity(pEntity);
 }
 
 /// 通知其他玩家创建该玩家
