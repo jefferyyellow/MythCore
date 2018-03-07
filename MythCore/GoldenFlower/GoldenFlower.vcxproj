@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{6E36BF49-8B29-43A1-AF0B-0C8B78DDACC1}</ProjectGuid>
+    <RootNamespace>GoldenFlower</RootNamespace>
+    <ProjectName>GoldFlour</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>MYTH_OS_WINDOWS;_CRT_SECURE_NO_WARNINGS;__DEBUG__;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../MythCore/include;../dep/protobuffer;../message;../dep/mysql/include;./inc;../dep/tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>MythCore.lib;libprotobufd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../Debug;../dep/protobuffer/lib</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\dep\tinyxml\tinyxml2.cpp" />
+    <ClCompile Include="message\chatmodule.hxx.pb.cc" />
+    <ClCompile Include="message\common.hxx.pb.cc" />
+    <ClCompile Include="message\dbmodule.hxx.pb.cc" />
+    <ClCompile Include="message\loginmessage.hxx.pb.cc" />
+    <ClCompile Include="message\message.hxx.pb.cc" />
+    <ClCompile Include="message\propertymodule.hxx.pb.cc" />
+    <ClCompile Include="message\roommodule.hxx.pb.cc" />
+    <ClCompile Include="src\chatmodule.cpp" />
+    <ClCompile Include="src\dbjob.cpp" />
+    <ClCompile Include="src\dbmodule.cpp" />
+    <ClCompile Include="src\entityplayer.cpp" />
+    <ClCompile Include="src\gameserver.cpp" />
+    <ClCompile Include="src\gameserverconfig.cpp" />
+    <ClCompile Include="src\gmcommandmanager.cpp" />
+    <ClCompile Include="src\internalmsg.cpp" />
+    <ClCompile Include="src\internalmsgpool.cpp" />
+    <ClCompile Include="src\job.cpp" />
+    <ClCompile Include="src\locallogjob.cpp" />
+    <ClCompile Include="src\loginmodule.cpp" />
+    <ClCompile Include="src\loginplayer.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\messagefactory.cpp" />
+    <ClCompile Include="src\objmanager.cpp" />
+    <ClCompile Include="src\objpool.cpp" />
+    <ClCompile Include="src\geometrytype.cpp" />
+    <ClCompile Include="src\propertymodule.cpp" />
+    <ClCompile Include="src\room.cpp" />
+    <ClCompile Include="src\roommodule.cpp" />
+    <ClCompile Include="src\scenejob.cpp" />
+    <ClCompile Include="src\serverutility.cpp" />
+    <ClCompile Include="src\strutility.cpp" />
+    <ClCompile Include="src\template.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\dep\tinyxml\tinyxml2.h" />
+    <ClInclude Include="inc\chatmodule.h" />
+    <ClInclude Include="inc\dbjob.h" />
+    <ClInclude Include="inc\dbmessage.h" />
+    <ClInclude Include="inc\dbmodule.h" />
+    <ClInclude Include="inc\entitycreator.h" />
+    <ClInclude Include="inc\entityplayer.h" />
+    <ClInclude Include="inc\entitytype.h" />
+    <ClInclude Include="inc\errcode.h" />
+    <ClInclude Include="inc\gameserver.h" />
+    <ClInclude Include="inc\gameserverconfig.h" />
+    <ClInclude Include="inc\gmcommandmanager.h" />
+    <ClInclude Include="inc\internalmsg.h" />
+    <ClInclude Include="inc\internalmsgpool.h" />
+    <ClInclude Include="inc\job.h" />
+    <ClInclude Include="inc\locallogjob.h" />
+    <ClInclude Include="inc\logicmodule.h" />
+    <ClInclude Include="inc\loginmodule.h" />
+    <ClInclude Include="inc\loginplayer.h" />
+    <ClInclude Include="inc\logintype.h" />
+    <ClInclude Include="inc\maptype.h" />
+    <ClInclude Include="inc\messagefactory.h" />
+    <ClInclude Include="inc\obj.h" />
+    <ClInclude Include="inc\objpoolimp.h" />
+    <ClInclude Include="inc\objmanager.h" />
+    <ClInclude Include="inc\objpool.h" />
+    <ClInclude Include="inc\playersubunit.h" />
+    <ClInclude Include="inc\geometrytype.h" />
+    <ClInclude Include="inc\room.h" />
+    <ClInclude Include="inc\roommodule.h" />
+    <ClInclude Include="inc\scenejob.h" />
+    <ClInclude Include="inc\servercommon.h" />
+    <ClInclude Include="inc\serverutility.h" />
+    <ClInclude Include="inc\statemachine.h" />
+    <ClInclude Include="inc\strutility.h" />
+    <ClInclude Include="inc\taskmanager.h" />
+    <ClInclude Include="inc\template.h" />
+    <ClInclude Include="inc\propertymodule.h" />
+    <ClInclude Include="message\chatmodule.hxx" />
+    <ClInclude Include="message\chatmodule.hxx.pb.h" />
+    <ClInclude Include="message\common.hxx" />
+    <ClInclude Include="message\common.hxx.pb.h" />
+    <ClInclude Include="message\dbmodule.hxx" />
+    <ClInclude Include="message\dbmodule.hxx.pb.h" />
+    <ClInclude Include="message\loginmessage.hxx" />
+    <ClInclude Include="message\loginmessage.hxx.pb.h" />
+    <ClInclude Include="message\message.hxx" />
+    <ClInclude Include="message\message.hxx.pb.h" />
+    <ClInclude Include="message\propertymodule.hxx" />
+    <ClInclude Include="message\propertymodule.hxx.pb.h" />
+    <ClInclude Include="message\roommodule.hxx" />
+    <ClInclude Include="message\roommodule.hxx.pb.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="message\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="message\message.bat" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

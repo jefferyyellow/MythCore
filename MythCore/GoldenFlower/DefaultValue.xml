@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<Data>
+  <DefaultValue Type="int" Value="0"/>
+  <DefaultValue Type="float" Value="0.0f"/>
+  <DefaultValue Type="char" Value="0"/>
+  <DefaultValue Type="bool" Value="false"/>
+  <DefaultValue Type="byte" Value="0"/>
+  <DefaultValue Type="short" Value="0"/>
+  <DefaultValue Type="time_t" Value="0"/>
+  <DefaultValue Type="sint64" Value="0"/>
+  <DefaultValue Type="unsigned int" Value="0"/>
+</Data>
