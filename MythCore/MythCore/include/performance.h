@@ -53,7 +53,7 @@ namespace Myth
 		/// clock timer of the node
 		CClockTime		mClockTime;
 		/// name of the node
-		char			mName[STRING_LENGTH_32];
+		char			mName[STR_LENGTH_32];
 		/// visit times
 		int				mCallNum;
 		/// max time of the clock timer record

@@ -7,6 +7,7 @@ enum EmRankType
 	emRankTypeMax
 };
 
-#define MAX_RANK_NUM	1000
+#define MAX_RANK_NUM			1000
+#define MAX_RANK_SHOW_NUM		100		// 排行榜最大显示人数
 
 #endif

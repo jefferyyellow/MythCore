@@ -143,7 +143,7 @@ namespace Myth
 		char tBuffer[MAX_LOG_BUFFER_NUM] = { 0 };
 		vsnprintf(tBuffer, sizeof(tBuffer) - 1, pFormat, vaList);
 
-		char tDateBuffer[STRING_LENGTH_32] = { 0 };
+		char tDateBuffer[STR_LENGTH_32] = { 0 };
 		FormatDateString(tDateBuffer, sizeof(tDateBuffer));
 
 		snprintf(pDataBuffer, nBuffSize - 1, "%s %s: %s\n", tDateBuffer, pLogTypeName, tBuffer);
@@ -151,7 +151,7 @@ namespace Myth
 
 	void CLogManager::FormatLogMessage(char* pDataBuffer, int nBuffSize, const char* pLogTypeName, const char* pLogContent)
 	{
-		char tDateBuffer[STRING_LENGTH_32] = { 0 };
+		char tDateBuffer[STR_LENGTH_32] = { 0 };
 		FormatDateString(tDateBuffer, sizeof(tDateBuffer));
 
 		snprintf(pDataBuffer, nBuffSize - 1, "%s %s: %s\n", tDateBuffer, pLogTypeName, pLogContent);

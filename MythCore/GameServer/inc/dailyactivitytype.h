@@ -1,11 +1,12 @@
 #ifndef __DAILYACTIVITYTYPE_H__
 #define __DAILYACTIVITYTYPE_H__
 
-enum EmDailyActID
+#define MAX_DAILY_ACT_ID	64
+enum EmDailyActType
 {
-	emDailyActID_None = 0,
-	emDailyActID_XXX = 1,
-	emDailyActIDMax
+	emDailyActType_None = 0,
+	emDailyActType_XXX = 1,
+	emDailyActTypeMax
 };
 
 enum EmDailyActStatus

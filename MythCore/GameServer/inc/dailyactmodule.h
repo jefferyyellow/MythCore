@@ -11,7 +11,7 @@ class CEntityPlayer;
 class CDailyActModule : public CLogicModule, public CSingleton <CDailyActModule>
 {
 public:
-	typedef vector<CActivityTime> DAILY_ACT_TIME_LIST;
+	typedef vector<CDailyActTime> DAILY_ACT_TIME_LIST;
 	friend class CSingleton <CDailyActModule> ;
 private:
 	CDailyActModule();
@@ -19,9 +19,24 @@ private:
 
 	void init()
 	{
+        memset(mActivity, NULL, sizeof(mActivity));
         mTimeListIndex = 0;
         mLastMinute = 0;
         mLastTime = 0;
+	}
+	
+	void clear()
+	{
+		mTimeListIndex = 0;
+		mTimeList.clear();
+		for (int i = 0; i < MAX_DAILY_ACT_ID; ++i)
+		{
+			if (NULL != mActivity[i])
+			{
+				delete mActivity[i];
+				mActivity[i] = NULL;
+			}
+		}
 	}
 public:
 	/// 启动服务器
@@ -52,6 +67,10 @@ public:
 	void onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
 	/// 加载活动配置
 	void loadActivityConfig(const char* pConfigFile);
+	/// 加载详细活动配置
+	void				loadSpecifyActivityConfig(const char* pConfigFile);
+	/// 创建活动
+	CDailyActivity* createDailyActivity(EmDailyActType eType);
 	/// 检测已经开启/过时的活动
 	void checkPassedActivity();
 	/// 检测活动时间
@@ -66,15 +85,15 @@ public:
 	/// autocode,don't edit !!!
     CDailyActivity* getActivity(int nIndex)
     {
-        if(nIndex < 0 || nIndex >= emDailyActIDMax)
+        if(nIndex < 0 || nIndex >= MAX_DAILY_ACT_ID)
         {
             return NULL;
         }
-        return &mActivity[nIndex];
+        return mActivity[nIndex];
     }
-    void setActivity(int nIndex, CDailyActivity& value)
+    void setActivity(int nIndex, CDailyActivity* value)
     {
-        if(nIndex < 0 || nIndex >= emDailyActIDMax)
+        if(nIndex < 0 || nIndex >= MAX_DAILY_ACT_ID)
         {
             return;
         }
@@ -95,7 +114,7 @@ public:
 
 	///
 private:
-	CDailyActivity		mActivity[emDailyActIDMax];
+	CDailyActivity*		mActivity[MAX_DAILY_ACT_ID];
 	DAILY_ACT_TIME_LIST	mTimeList;
 	/// 当前已经处理到的时间列表索引
 	unsigned int		mTimeListIndex;

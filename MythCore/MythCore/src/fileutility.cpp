@@ -76,8 +76,8 @@ namespace Myth
 	/// get file name exclude extension from file path
 	char* CFileUtility::GetFileNameWithoutExtension(const char* pFilePath, char* pNewFileName, int nSize)
 	{
-		char tBuffer[STRING_LENGTH_64] = { 0 };
-		GetFileName(pFilePath, tBuffer, STRING_LENGTH_64);
+		char tBuffer[STR_LENGTH_64] = { 0 };
+		GetFileName(pFilePath, tBuffer, STR_LENGTH_64);
 
 		char* pFind = strrchr(tBuffer, '.');
 		if (NULL == pFind)
@@ -279,7 +279,7 @@ namespace Myth
 		bool bLastResult = true;
 
 		int i = 0;
-		char tBuffer[STRING_LENGTH_256] = { 0 };
+		char tBuffer[STR_LENGTH_256] = { 0 };
 		int nLength = strlen(pDirName);
 
 		// skip windows drive name, for example "C:"
@@ -333,7 +333,7 @@ namespace Myth
 		WIN32_FIND_DATA tFindFileData;
 		HANDLE hFind = INVALID_HANDLE_VALUE;
 		DWORD dwError;
-		char tBuffer[STRING_LENGTH_256] = { 0 };
+		char tBuffer[STR_LENGTH_256] = { 0 };
 		snprintf(tBuffer, sizeof(tBuffer) - 1, "%s\\*", pDirName);
 
 		hFind = FindFirstFile(tBuffer, &tFindFileData);
@@ -372,7 +372,7 @@ namespace Myth
 		DIR	*pDir;
 		struct	dirent *pDirent;
 		struct 	stat tStatBuf;
-		char tBuffer[STRING_LENGTH_256] = { 0 };
+		char tBuffer[STR_LENGTH_256] = { 0 };
 
 		if ((pDir = opendir(pDirName)) == NULL)
 		{

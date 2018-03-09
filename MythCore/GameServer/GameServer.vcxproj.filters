@@ -55,6 +55,9 @@
     <Filter Include="logicmodule\dailyactivity">
       <UniqueIdentifier>{80239438-02dc-4c0b-9c5f-395689205f1c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="logicmodule\instance">
+      <UniqueIdentifier>{5afd0aab-e8c5-4fc4-82ee-8649c1660842}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\message\loginmessage.hxx.pb.cc">
@@ -236,6 +239,12 @@
     </ClCompile>
     <ClCompile Include="..\message\rankmodule.hxx.pb.cc">
       <Filter>message</Filter>
+    </ClCompile>
+    <ClCompile Include="src\instancemodule.cpp">
+      <Filter>logicmodule\instance</Filter>
+    </ClCompile>
+    <ClCompile Include="src\instance.cpp">
+      <Filter>logicmodule\instance</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -526,6 +535,15 @@
     </ClInclude>
     <ClInclude Include="..\message\rankmodule.hxx.pb.h">
       <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\instancemodule.h">
+      <Filter>logicmodule\instance</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\instance.h">
+      <Filter>logicmodule\instance</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\instancetype.h">
+      <Filter>logicmodule\instance</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

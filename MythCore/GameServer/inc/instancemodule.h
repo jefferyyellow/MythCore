@@ -1,20 +1,16 @@
-#ifndef __RANKMODULE_H__
-#define __RANKMODULE_H__
-#include "logicmodule.h"
+#ifndef __INSTANCEMODULE_H__
+#define __INSTANCEMODULE_H__
 #include "singleton.h"
-#include "ranktype.h"
-#include "rank.h"
+#include "logicmodule.h"
 #include "messagefactory.h"
 using namespace Myth;
-
-typedef CRank<MAX_RANK_NUM> CRankList;
-class CEntityPlayer;
-class CRankModule : public CLogicModule, public CSingleton<CRankModule>
+class CInstance;
+class CInstanceModule : public CLogicModule, public CSingleton < CInstanceModule >
 {
-	friend class CSingleton<CRankModule>;
+	friend class CSingleton<CInstanceModule>;
 private:
-	CRankModule();
-	~CRankModule();
+	CInstanceModule();
+	~CInstanceModule();
 
 public:
 	/// 启动服务器
@@ -38,14 +34,8 @@ public:
 
 public:
 	void onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
-	void onGetRankInfoRequest(CEntityPlayer* pPlayer, Message* pMessage);
-	void sendGetRankInfoResponse(CEntityPlayer* pPlayer, EmRankType eType);
 
 public:
-	// 更新玩家的排行榜
-	void updateRoleRank(EmRankType eType, CEntityPlayer* pPlayer, int nValue);
-
-private:
-	CRankList		mRankList[emRankTypeMax];
+	CInstance* createInstance(int nInstance);
 };
 #endif

@@ -128,12 +128,12 @@ namespace Myth
 		}
 #ifdef MYTH_OS_WINDOWS
 
-		wchar_t tBuffer[STRING_LENGTH_1024] = { 0 };
-		if (0 == MultiByteToWideChar(CP_UTF8, 0, pSrc, -1, tBuffer, STRING_LENGTH_1024 - 1))
+		wchar_t tBuffer[STR_LENGTH_1024] = { 0 };
+		if (0 == MultiByteToWideChar(CP_UTF8, 0, pSrc, -1, tBuffer, STR_LENGTH_1024 - 1))
 		{
 			return NULL;
 		}
-		tBuffer[STRING_LENGTH_1024 - 1] = 0;
+		tBuffer[STR_LENGTH_1024 - 1] = 0;
 
 		if (0 == WideCharToMultiByte(CP_ACP, 0, tBuffer, -1, pDst, nMaxSize - 1, NULL, 0))
 		{
@@ -185,12 +185,12 @@ namespace Myth
 		}
 #ifdef MYTH_OS_WINDOWS
 
-		wchar_t tBuffer[STRING_LENGTH_1024] = { 0 };
-		if (0 == MultiByteToWideChar(CP_ACP, 0, pSrc, -1, tBuffer, STRING_LENGTH_1024 - 1))
+		wchar_t tBuffer[STR_LENGTH_1024] = { 0 };
+		if (0 == MultiByteToWideChar(CP_ACP, 0, pSrc, -1, tBuffer, STR_LENGTH_1024 - 1))
 		{
 			return NULL;
 		}
-		tBuffer[STRING_LENGTH_1024 - 1] = 0;
+		tBuffer[STR_LENGTH_1024 - 1] = 0;
 
 		if (0 == WideCharToMultiByte(CP_UTF8, 0, tBuffer, -1, pDst, nMaxSize - 1, NULL, 0))
 		{

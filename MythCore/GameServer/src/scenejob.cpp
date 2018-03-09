@@ -285,6 +285,7 @@ bool CSceneJob::init(int nDBBuffSize)
 	mLastTimerTick = CTimeManager::Inst()->getCurrTime();
 	mLastTime = mLastTimerTick;
 	mMorningTime = timeToMorning(mLastTimerTick);
+	setTmNow(mLastTime);
 
 	mServerState = emServerStateInit;
 	bool bResult = initShareMemory();
@@ -310,7 +311,6 @@ bool CSceneJob::init(int nDBBuffSize)
 	mLogicModuleList.push_back(CDailyActModule::CreateInst());
 	mLogicModuleList.push_back(CRankModule::CreateInst());
 
-	CRankModule::Inst()->updateRoleRank(emRankType_Level, NULL, 100);
 	return true;
 }
 
@@ -534,7 +534,6 @@ void CSceneJob::send2AllPlayer(unsigned short nMessageID, Message* pMessage)
 	}
 }
 
-
 /// 断开玩家的连接
 void CSceneJob::disconnectPlayer(CExchangeHead& rExchangeHead)
 {
@@ -655,8 +654,6 @@ void CSceneJob::onSocketDisconnect(int nSocketIndex)
 		}
 	}
 }
-
-
 
 /// 通过角色ID得到玩家
 CEntityPlayer* CSceneJob::getPlayerByRoleID(unsigned int nRoleID)

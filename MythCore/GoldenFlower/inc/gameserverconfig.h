@@ -23,13 +23,13 @@ public:
 
 private:
 	/// 注意，Host不只是有IP，还可能是域名
-	char			mDBHost[STRING_LENGTH_64];
+	char			mDBHost[STR_LENGTH_64];
 	/// 用户名
-	char			mDBUserName[STRING_LENGTH_16];
+	char			mDBUserName[STR_LENGTH_16];
 	/// 密码
-	char			mDBPasswd[STRING_LENGTH_16];
+	char			mDBPasswd[STR_LENGTH_16];
 	/// 连接的数据库名
-	char			mDefaultDataBase[STRING_LENGTH_16];
+	char			mDefaultDataBase[STR_LENGTH_16];
 	/// 端口
 	short			mDBPort;
 };

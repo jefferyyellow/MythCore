@@ -60,15 +60,15 @@ namespace Myth
 		MYSQL			*mMysql;
 		/// 保持数据库信息用于断线重连
 		/// 注意，Host不只是有IP，还可能是域名
-		char			mHost[STRING_LENGTH_64];
+		char			mHost[STR_LENGTH_64];
 		/// 用户名
-		char			mUserName[STRING_LENGTH_16];
+		char			mUserName[STR_LENGTH_16];
 		/// 密码
-		char			mPasswd[STRING_LENGTH_16];
+		char			mPasswd[STR_LENGTH_16];
 		/// 连接的数据库名
-		char			mDataBase[STRING_LENGTH_16];
+		char			mDataBase[STR_LENGTH_16];
 		/// unix socket
-		char			mUnixSocket[STRING_LENGTH_32];
+		char			mUnixSocket[STR_LENGTH_32];
 		/// 端口
 		int				mPort;
 	};

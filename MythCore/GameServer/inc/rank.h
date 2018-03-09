@@ -33,7 +33,7 @@ public:
 		mSortRankNum = 0;
 	}
 public:
-	// 刷新玩家数据
+	// 刷新玩家数据(稳定排序)
 	int refreshRankValue(CRankValueType &rRankValue);
 
 	// 获取某项排行榜数据

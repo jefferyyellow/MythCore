@@ -219,11 +219,18 @@ class PBRankRoleInfo : public ::google::protobuf::Message /* @@protoc_insertion_
   ::google::protobuf::uint32 roleid() const;
   void set_roleid(::google::protobuf::uint32 value);
 
+  // optional uint32 RankValue = 2;
+  void clear_rankvalue();
+  static const int kRankValueFieldNumber = 2;
+  ::google::protobuf::uint32 rankvalue() const;
+  void set_rankvalue(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:PBRankRoleInfo)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::uint32 roleid_;
+  ::google::protobuf::uint32 rankvalue_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_rankmodule_2ehxx_impl();
   friend void  protobuf_AddDesc_rankmodule_2ehxx_impl();
@@ -374,6 +381,20 @@ inline void PBRankRoleInfo::set_roleid(::google::protobuf::uint32 value) {
   
   roleid_ = value;
   // @@protoc_insertion_point(field_set:PBRankRoleInfo.RoleID)
+}
+
+// optional uint32 RankValue = 2;
+inline void PBRankRoleInfo::clear_rankvalue() {
+  rankvalue_ = 0u;
+}
+inline ::google::protobuf::uint32 PBRankRoleInfo::rankvalue() const {
+  // @@protoc_insertion_point(field_get:PBRankRoleInfo.RankValue)
+  return rankvalue_;
+}
+inline void PBRankRoleInfo::set_rankvalue(::google::protobuf::uint32 value) {
+  
+  rankvalue_ = value;
+  // @@protoc_insertion_point(field_set:PBRankRoleInfo.RankValue)
 }
 
 inline const PBRankRoleInfo* PBRankRoleInfo::internal_default_instance() {

@@ -76,7 +76,7 @@ namespace Myth
 		}
 
 	private:
-		char	mName[STRING_LENGTH_32];
+		char	mName[STR_LENGTH_32];
 	};
 
 	/// 自动重置计算器

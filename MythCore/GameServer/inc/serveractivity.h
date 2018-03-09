@@ -76,7 +76,7 @@ public:
 	virtual const char* getConfigFileName()					= 0;
 	/// 活动开启
 	virtual void start()									= 0;
-	/// 活动结束
+	/// 活动结束的清理
 	virtual void end()										= 0;
 	/// 刷新玩家数据
 	virtual void refreshPlayerData(CEntityPlayer* pPlayer, int nParam) = 0;
@@ -138,12 +138,12 @@ public:
 	virtual const char* getConfigFileName();
 	/// 活动开启
 	virtual void start();
-	/// 活动结束
+	/// 活动结束的清理
 	virtual void end();
 	/// 刷新玩家数据
 	virtual void refreshPlayerData(CEntityPlayer* pPlayer, int nParam);
 	/// 清空玩家数据
-	virtual  void clearPlayerData(CEntityPlayer* pPlayer);
+	virtual void clearPlayerData(CEntityPlayer* pPlayer);
 	/// 得到活动奖励
 	virtual	void getActivityPrize(CEntityPlayer* pPlayer, int nParam);
 public:

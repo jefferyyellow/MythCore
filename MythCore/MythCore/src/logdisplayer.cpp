@@ -59,11 +59,11 @@ namespace Myth
 		if (mMaxBackNum > 0)
 		{
 			close(mFd);
-			char tNewBuffer[STRING_LENGTH_256] = { 0 };
+			char tNewBuffer[STR_LENGTH_256] = { 0 };
 			snprintf(tNewBuffer, sizeof(tNewBuffer) - 1, "%s.%d", mFileName, mMaxBackNum);
 			remove(tNewBuffer);
 
-			char tOldBuffer[STRING_LENGTH_256] = { 0 };
+			char tOldBuffer[STR_LENGTH_256] = { 0 };
 			for (int i = mMaxBackNum - 1; i >= 1; --i)
 			{
 				snprintf(tOldBuffer, sizeof(tOldBuffer) - 1, "%s.%d", mFileName, i);

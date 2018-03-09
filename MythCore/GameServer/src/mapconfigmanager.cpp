@@ -5,7 +5,7 @@
 #include "entitycreator.h"
 bool CMapConfig::loadMapConfig(unsigned short nMapID)
 {
-	char szFilePath[STRING_LENGTH_256] = {0};
+	char szFilePath[STR_LENGTH_256] = {0};
 	snprintf(szFilePath, sizeof(szFilePath) - 1, "gameserverconfig/map/%d.xml", nMapID);
 
 	tinyxml2::XMLDocument tDocument;
@@ -59,7 +59,7 @@ bool CMapConfig::loadMapConfig(unsigned short nMapID)
 bool CMapConfig::loadMapNPCConfig(unsigned short nMapID)
 {
 
-	char szFilePath[STRING_LENGTH_256] = { 0 };
+	char szFilePath[STR_LENGTH_256] = { 0 };
 	snprintf(szFilePath, sizeof(szFilePath) - 1, "gameserverconfig/map/%d_monster.xml", nMapID);
 
 	tinyxml2::XMLDocument tDocument;

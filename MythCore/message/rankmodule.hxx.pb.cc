@@ -55,8 +55,9 @@ void protobuf_AssignDesc_rankmodule_2ehxx() {
       sizeof(CGetRankInfoRequest),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetRankInfoRequest, _internal_metadata_));
   PBRankRoleInfo_descriptor_ = file->message_type(1);
-  static const int PBRankRoleInfo_offsets_[1] = {
+  static const int PBRankRoleInfo_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBRankRoleInfo, roleid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBRankRoleInfo, rankvalue_),
   };
   PBRankRoleInfo_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -138,13 +139,13 @@ void protobuf_AddDesc_rankmodule_2ehxx_impl() {
   protobuf_InitDefaults_rankmodule_2ehxx();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\016rankmodule.hxx\"\'\n\023CGetRankInfoRequest\022"
-    "\020\n\010RankType\030\001 \001(\r\" \n\016PBRankRoleInfo\022\016\n\006R"
-    "oleID\030\001 \001(\r\"K\n\024CGetRankInfoResponse\022\020\n\010R"
-    "ankType\030\001 \001(\r\022!\n\010RoleInfo\030\002 \003(\0132\017.PBRank"
-    "RoleInfo*u\n\022RANK_MODULE_MSG_ID\022\030\n\024ID_RAN"
-    "K_MODULE_ERROR\020\000\022!\n\034ID_C2S_REQUEST_GET_R"
-    "ANK_INFO\020\200H\022\"\n\035ID_S2C_RESPONSE_GET_RANK_"
-    "INFO\020\201Hb\006proto3", 295);
+    "\020\n\010RankType\030\001 \001(\r\"3\n\016PBRankRoleInfo\022\016\n\006R"
+    "oleID\030\001 \001(\r\022\021\n\tRankValue\030\002 \001(\r\"K\n\024CGetRa"
+    "nkInfoResponse\022\020\n\010RankType\030\001 \001(\r\022!\n\010Role"
+    "Info\030\002 \003(\0132\017.PBRankRoleInfo*u\n\022RANK_MODU"
+    "LE_MSG_ID\022\030\n\024ID_RANK_MODULE_ERROR\020\000\022!\n\034I"
+    "D_C2S_REQUEST_GET_RANK_INFO\020\200H\022\"\n\035ID_S2C"
+    "_RESPONSE_GET_RANK_INFO\020\201Hb\006proto3", 314);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "rankmodule.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_rankmodule_2ehxx);
@@ -435,6 +436,7 @@ inline const CGetRankInfoRequest* CGetRankInfoRequest::internal_default_instance
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int PBRankRoleInfo::kRoleIDFieldNumber;
+const int PBRankRoleInfo::kRankValueFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 PBRankRoleInfo::PBRankRoleInfo()
@@ -456,7 +458,8 @@ PBRankRoleInfo::PBRankRoleInfo(const PBRankRoleInfo& from)
 }
 
 void PBRankRoleInfo::SharedCtor() {
-  roleid_ = 0u;
+  ::memset(&roleid_, 0, reinterpret_cast<char*>(&rankvalue_) -
+    reinterpret_cast<char*>(&roleid_) + sizeof(rankvalue_));
   _cached_size_ = 0;
 }
 
@@ -495,7 +498,27 @@ PBRankRoleInfo* PBRankRoleInfo::New(::google::protobuf::Arena* arena) const {
 
 void PBRankRoleInfo::Clear() {
 // @@protoc_insertion_point(message_clear_start:PBRankRoleInfo)
-  roleid_ = 0u;
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(PBRankRoleInfo, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<PBRankRoleInfo*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&(first), 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(roleid_, rankvalue_);
+
+#undef ZR_HELPER_
+#undef ZR_
+
 }
 
 bool PBRankRoleInfo::MergePartialFromCodedStream(
@@ -515,6 +538,21 @@ bool PBRankRoleInfo::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &roleid_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_RankValue;
+        break;
+      }
+
+      // optional uint32 RankValue = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_RankValue:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &rankvalue_)));
         } else {
           goto handle_unusual;
         }
@@ -551,6 +589,11 @@ void PBRankRoleInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->roleid(), output);
   }
 
+  // optional uint32 RankValue = 2;
+  if (this->rankvalue() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->rankvalue(), output);
+  }
+
   // @@protoc_insertion_point(serialize_end:PBRankRoleInfo)
 }
 
@@ -561,6 +604,11 @@ void PBRankRoleInfo::SerializeWithCachedSizes(
   // optional uint32 RoleID = 1;
   if (this->roleid() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->roleid(), target);
+  }
+
+  // optional uint32 RankValue = 2;
+  if (this->rankvalue() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->rankvalue(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:PBRankRoleInfo)
@@ -576,6 +624,13 @@ size_t PBRankRoleInfo::ByteSizeLong() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->roleid());
+  }
+
+  // optional uint32 RankValue = 2;
+  if (this->rankvalue() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->rankvalue());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -614,6 +669,9 @@ void PBRankRoleInfo::UnsafeMergeFrom(const PBRankRoleInfo& from) {
   if (from.roleid() != 0) {
     set_roleid(from.roleid());
   }
+  if (from.rankvalue() != 0) {
+    set_rankvalue(from.rankvalue());
+  }
 }
 
 void PBRankRoleInfo::CopyFrom(const ::google::protobuf::Message& from) {
@@ -641,6 +699,7 @@ void PBRankRoleInfo::Swap(PBRankRoleInfo* other) {
 }
 void PBRankRoleInfo::InternalSwap(PBRankRoleInfo* other) {
   std::swap(roleid_, other->roleid_);
+  std::swap(rankvalue_, other->rankvalue_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -668,6 +727,20 @@ void PBRankRoleInfo::set_roleid(::google::protobuf::uint32 value) {
   
   roleid_ = value;
   // @@protoc_insertion_point(field_set:PBRankRoleInfo.RoleID)
+}
+
+// optional uint32 RankValue = 2;
+void PBRankRoleInfo::clear_rankvalue() {
+  rankvalue_ = 0u;
+}
+::google::protobuf::uint32 PBRankRoleInfo::rankvalue() const {
+  // @@protoc_insertion_point(field_get:PBRankRoleInfo.RankValue)
+  return rankvalue_;
+}
+void PBRankRoleInfo::set_rankvalue(::google::protobuf::uint32 value) {
+  
+  rankvalue_ = value;
+  // @@protoc_insertion_point(field_set:PBRankRoleInfo.RankValue)
 }
 
 inline const PBRankRoleInfo* PBRankRoleInfo::internal_default_instance() {

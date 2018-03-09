@@ -59,8 +59,6 @@ public:
 	void				loadServerActivityConfig(const char* pConfigFile);
 	/// 加载详细活动配置
 	void				loadSpecifyActivityConfig(const char* pConfigFile);
-	/// 加载所有的详细的活动配置
-	void				loadAllSpecifyConfig();
 
 	CServerActivity*	createServerActivity(EmServerActType emServerActType);
 	/// 清算结束的活动

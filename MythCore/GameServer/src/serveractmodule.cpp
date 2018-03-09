@@ -22,7 +22,7 @@ CServerActModule::~CServerActModule()
 /// 启动服务器
 void CServerActModule::onLaunchServer()
 {
-	loadServerActivityConfig("gameserverconfig/ServerActivity.xml");
+	loadServerActivityConfig("gameserverconfig/server_activity/server_activity.xml");
 }
 
 /// 启动完成检查
@@ -49,7 +49,7 @@ void CServerActModule::onNewDayCome()
 	// 结算结束的活动
 	clearEndedActivity();
 	// 加载新的一天的活动
-	loadServerActivityConfig("gameserverconfig/ServerActivity.xml");
+	loadServerActivityConfig("gameserverconfig/server_activity/server_activity.xml");
 }
 
 /// 新一周到来
@@ -130,7 +130,8 @@ void CServerActModule::loadServerActivityConfig(const char* pConfigFile)
 	time_t nTimeNow = CTimeManager::Inst()->getCurrTime();
 
 
-	bool bAlreadyLoad[emServerActTypeMax] = {false};	
+	bool bAlreadyLoad[emServerActTypeMax] = {false};
+	char acPathFile[emServerActTypeMax][STR_LENGTH_256] = { 0 };
 	XMLElement* pActivityElem = pRootElem->FirstChildElement("Activity");
 	for (; NULL != pActivityElem; pActivityElem = pActivityElem->NextSiblingElement("Activity"))
 	{
@@ -178,9 +179,14 @@ void CServerActModule::loadServerActivityConfig(const char* pConfigFile)
 		if (!bAlreadyLoad[nType])
 		{
 			bAlreadyLoad[nType] = true;
-			char acPathFile[STRING256] = { 0 };
-			snprintf(acPathFile, sizeof(acPathFile)-1, "%s%s", "gameserverconfig/", pActivity->getConfigFileName());
-			loadSpecifyActivityConfig(acPathFile);
+			snprintf(acPathFile[nType],  STR_LENGTH_256 - 1, "%s%s", "gameserverconfig/server_activity/", pActivity->getConfigFileName());
+		}
+	}
+	for (int nType = 0; nType < emServerActTypeMax; ++ nType)
+	{
+		if (bAlreadyLoad[nType])
+		{
+			loadSpecifyActivityConfig(acPathFile[nType]);
 		}
 	}
 }

@@ -97,6 +97,8 @@
     <ClCompile Include="src\gameserver.cpp" />
     <ClCompile Include="src\gameserverconfig.cpp" />
     <ClCompile Include="src\gmcommandmanager.cpp" />
+    <ClCompile Include="src\instance.cpp" />
+    <ClCompile Include="src\instancemodule.cpp" />
     <ClCompile Include="src\internalmsg.cpp" />
     <ClCompile Include="src\internalmsgpool.cpp" />
     <ClCompile Include="src\itemcontainer.cpp" />
@@ -178,6 +180,9 @@
     <ClInclude Include="inc\gameserver.h" />
     <ClInclude Include="inc\gameserverconfig.h" />
     <ClInclude Include="inc\gmcommandmanager.h" />
+    <ClInclude Include="inc\instance.h" />
+    <ClInclude Include="inc\instancemodule.h" />
+    <ClInclude Include="inc\instancetype.h" />
     <ClInclude Include="inc\internalmsg.h" />
     <ClInclude Include="inc\internalmsgpool.h" />
     <ClInclude Include="inc\itemcontainer.h" />

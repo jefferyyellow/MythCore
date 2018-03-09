@@ -10,13 +10,13 @@ CDailyActModule::CDailyActModule()
 
 CDailyActModule::~CDailyActModule()
 {
-
+	clear();
 }
 
 /// 启动服务器
 void CDailyActModule::onLaunchServer()
 {
-	loadActivityConfig("gameserverconfig/DailyActivity.xml");
+	loadActivityConfig("gameserverconfig/daily_activity/daily_activity.xml");
 	checkPassedActivity();
 }
 
@@ -41,7 +41,7 @@ void CDailyActModule::onExitServer()
 /// 新一天到来
 void CDailyActModule::onNewDayCome()
 {
-	loadActivityConfig("gameserverconfig/DailyActivity.xml");
+	loadActivityConfig("gameserverconfig/daily_activity/daily_activity.xml");
 }
 
 /// 新一周到来
@@ -91,7 +91,7 @@ void CDailyActModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMess
 	}
 }
 
-bool operator < (const CActivityTime& rLeft, const CActivityTime& rRight)
+bool operator < (const CDailyActTime& rLeft, const CDailyActTime& rRight)
 {
 	return rLeft.mTime < rRight.mTime;
 }
@@ -104,9 +104,7 @@ void CDailyActModule::loadActivityConfig(const char* pConfigFile)
 		return;
 	}
 
-	mTimeListIndex = 0;
-	memset(mActivity, 0, sizeof(mActivity));
-	mTimeList.clear();
+	clear();
 
 	tinyxml2::XMLDocument tDocument;
 	if (XML_SUCCESS != tDocument.LoadFile(pConfigFile))
@@ -123,14 +121,12 @@ void CDailyActModule::loadActivityConfig(const char* pConfigFile)
 	}
 
 	tm tTempTm = CSceneJob::Inst()->getTmNow();
+	bool bAlreadyLoad[emDailyActTypeMax] = { false };
+	char acPathFile[emDailyActTypeMax][STR_LENGTH_256] = { 0 };
+
 	XMLElement* pActivityElem = pRootElem->FirstChildElement("Activity");
 	for (; NULL != pActivityElem; pActivityElem = pActivityElem->NextSiblingElement("Activity"))
 	{
-		CDailyActivity tActivity;
-		tActivity.SetStatus(emDailyActStatus_None);
-		tActivity.mID = pActivityElem->IntAttribute("ID");
-		tActivity.mMinLevel = pActivityElem->IntAttribute("LevelMin");
-		tActivity.mMaxLevel = pActivityElem->IntAttribute("LevelMax");
 
 		XMLElement* pChildElem = pActivityElem->FirstChildElement("Date");
 		if (NULL != pChildElem)
@@ -186,41 +182,120 @@ void CDailyActModule::loadActivityConfig(const char* pConfigFile)
 			}
 		}
 
+		int nActivityID = pActivityElem->IntAttribute("ID");
+		if (nActivityID < 0 || nActivityID >= MAX_DAILY_ACT_ID)
+		{
+			LOG_ERROR("activity id is valid, %d", nActivityID);
+			continue;
+		}
+		EmDailyActType emActType = (EmDailyActType)pActivityElem->IntAttribute("Type");
+		CDailyActivity* pActivity = createDailyActivity(emActType);
+		if (NULL == pActivity)
+		{
+			LOG_ERROR("create daily activity failure, Type: %d, ID: %d", emActType, nActivityID);
+			continue;
+		}
+		pActivity->SetStatus(emDailyActStatus_None);
+		pActivity->mID = nActivityID;
+		pActivity->mType = emActType;
+		pActivity->mMinLevel = pActivityElem->IntAttribute("LevelMin");
+		pActivity->mMaxLevel = pActivityElem->IntAttribute("LevelMax");
+
 		int nCount = 0;
-		CActivityTime tActivityTime;
-		tActivityTime.mID = tActivity.mID;
+		CDailyActTime tActivityTime;
+		tActivityTime.mID = pActivity->mID;
 		XMLElement* pTimeElem = pActivityElem->FirstChildElement("Time");
 		for (; NULL != pTimeElem; pTimeElem = pTimeElem->NextSiblingElement("Time"))
 		{
 			tActivityTime.mTimeIndex = nCount;
 
-			tActivity.mStartTime[nCount] = pTimeElem->IntAttribute("StartTime");
-			if (tActivity.mStartTime[nCount] > 0)
-			{
-				tActivityTime.mTime = tActivity.mStartTime[nCount];
-				tActivityTime.mStatus = emDailyActStatus_Start;
-				mTimeList.push_back(tActivityTime);
-			}
+			pActivity->mStartTime[nCount] = pTimeElem->IntAttribute("StartTime");
+			tActivityTime.mTime = pActivity->mStartTime[nCount];
+			tActivityTime.mStatus = emDailyActStatus_Start;
+			mTimeList.push_back(tActivityTime);
 
-			tActivity.mEndTime[nCount] = pTimeElem->IntAttribute("EndTime");
-			if (tActivity.mEndTime[nCount] > 0)
-			{
-				tActivityTime.mTime = tActivity.mEndTime[nCount];
-				tActivityTime.mStatus = emDailyActStatus_End;
-				mTimeList.push_back(tActivityTime);
-			}
+			pActivity->mEndTime[nCount] = pTimeElem->IntAttribute("EndTime");
+			tActivityTime.mTime = pActivity->mEndTime[nCount];
+			tActivityTime.mStatus = emDailyActStatus_End;
+			mTimeList.push_back(tActivityTime);
 
-			tActivity.mNoticeTime[nCount] = pTimeElem->IntAttribute("NoticeTime");
-			if (tActivity.mNoticeTime[nCount] > 0)
-			{
-				tActivityTime.mTime = tActivity.mNoticeTime[nCount];
-				tActivityTime.mStatus = emDailyActStatus_Notice;
-				mTimeList.push_back(tActivityTime);
-			}
+			pActivity->mNoticeTime[nCount] = pTimeElem->IntAttribute("NoticeTime");
+			tActivityTime.mTime = pActivity->mNoticeTime[nCount];
+			tActivityTime.mStatus = emDailyActStatus_Notice;
+			mTimeList.push_back(tActivityTime);
+			++ nCount;
+		}
+
+
+		if (!bAlreadyLoad[emActType])
+		{
+			bAlreadyLoad[emActType] = true;
+			snprintf(acPathFile[emActType], STR_LENGTH_256 - 1, "%s%s", "gameserverconfig/daily_activity/", pActivity->getConfigFileName());
 		}
 	}
 
 	std::sort(mTimeList.begin(), mTimeList.end());
+	for (int nActType = 0; nActType < emDailyActTypeMax; ++ nActType)
+	{
+		if (bAlreadyLoad[nActType])
+		{
+			loadSpecifyActivityConfig(acPathFile[nActType]);
+		}
+	}
+}
+
+/// 加载详细活动配置
+void CDailyActModule::loadSpecifyActivityConfig(const char* pConfigFile)
+{
+	if (NULL == pConfigFile)
+	{
+		return;
+	}
+
+	tinyxml2::XMLDocument tDocument;
+	if (XML_SUCCESS != tDocument.LoadFile(pConfigFile))
+	{
+		LOG_ERROR("Load special server activity config file failure, %s", pConfigFile);
+		return;
+	}
+
+	XMLElement* pRootElem = tDocument.RootElement();
+	if (NULL == pRootElem)
+	{
+		LOG_ERROR("Don't find special server activity config root element, %s", pConfigFile);
+		return;
+	}
+
+	XMLElement* pActivityElem = pRootElem->FirstChildElement("Activity");
+	for (; NULL != pActivityElem; pActivityElem = pActivityElem->NextSiblingElement("Activity"))
+	{
+		int nID = pActivityElem->IntAttribute("ID");
+		if (nID < 0  || nID >= MAX_DAILY_ACT_ID)
+		{
+			continue;
+		}
+		if (NULL == mActivity[nID])
+		{
+			continue;
+		}
+		
+		mActivity[nID]->loadActivity(pActivityElem);
+	}
+}
+
+/// 创建活动
+CDailyActivity* CDailyActModule::createDailyActivity(EmDailyActType eType)
+{
+	CDailyActivity* pActivity = NULL;
+	switch (eType)
+	{
+		case emDailyActType_XXX:
+			break;
+		default:
+			break;
+	}
+
+	return pActivity;
 }
 
 /// 检测已经开启/过时的活动
@@ -240,7 +315,7 @@ void CDailyActModule::checkPassedActivity()
 		}
 		
 		int nActivityID = mTimeList[mTimeListIndex].mID;
-		if (nActivityID <= 0 || nActivityID >= emDailyActIDMax)
+		if (nActivityID <= 0 || nActivityID >= MAX_DAILY_ACT_ID)
 		{
 			continue;
 		}
@@ -250,17 +325,21 @@ void CDailyActModule::checkPassedActivity()
 		{
 			continue;
 		}
+		if (NULL == mActivity[nActivityID])
+		{
+			continue;
+		}
 
-		int nEndTime = mActivity[nActivityID].mEndTime[nTimeIndex];
+		int nEndTime = mActivity[nActivityID]->mEndTime[nTimeIndex];
 		// 活动已经结束
 		if (checkTimePassed(nEndTime, CSceneJob::Inst()->getTmNow()))
 		{
-			mActivity[nActivityID].SetStatus(emDailyActStatus_End);
+			mActivity[nActivityID]->SetStatus(emDailyActStatus_End);
 			continue;
 		}
 
 		onActivityStart(nActivityID);
-		mActivity[nActivityID].SetStatus(emDailyActStatus_Start);
+		mActivity[nActivityID]->SetStatus(emDailyActStatus_Start);
 	}
 
 }
@@ -273,7 +352,11 @@ void CDailyActModule::checkActivityTime()
 		if (checkTimePassed(mTimeList[mTimeListIndex].mTime, CSceneJob::Inst()->getTmNow()))
 		{
 			int nActivityID = mTimeList[mTimeListIndex].mID;
-			if (nActivityID <= 0 || nActivityID >= emDailyActIDMax)
+			if (nActivityID <= 0 || nActivityID >= MAX_DAILY_ACT_ID)
+			{
+				continue;
+			}
+			if (NULL == mActivity[nActivityID])
 			{
 				continue;
 			}
@@ -283,14 +366,14 @@ void CDailyActModule::checkActivityTime()
 				case emDailyActStatus_Start:
 				{
 					onActivityStart(mTimeList[mTimeListIndex].mID);
-					mActivity[nActivityID].SetStatus(emDailyActStatus_Start);
+					mActivity[nActivityID]->SetStatus(emDailyActStatus_Start);
 					LOG_INFO("Activity Start : %d", mTimeList[mTimeListIndex].mID);
 					break;
 				}
 				case emDailyActStatus_End:
 				{
 					onActivityEnd(mTimeList[mTimeListIndex].mID);
-					mActivity[nActivityID].SetStatus(emDailyActStatus_End);
+					mActivity[nActivityID]->SetStatus(emDailyActStatus_End);
 					LOG_INFO("Activity End : %d", mTimeList[mTimeListIndex].mID);
 					break;
 				}

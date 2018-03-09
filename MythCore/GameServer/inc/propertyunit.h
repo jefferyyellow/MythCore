@@ -19,8 +19,8 @@ public:
 	void init()
 	{
         mExp = 0;
-        mLevel = 0;
         mVipExp = 0;
+        mLevel = 0;
         mVipLevel = 0;
 	}
 
@@ -35,11 +35,11 @@ public:
     sint64 getExp(){ return mExp;}
     void setExp(sint64 value){ mExp = value;}
 
-    byte getLevel(){ return mLevel;}
-    void setLevel(byte value){ mLevel = value;}
-
     int getVipExp(){ return mVipExp;}
     void setVipExp(int value){ mVipExp = value;}
+
+    byte getLevel(){ return mLevel;}
+    void setLevel(byte value){ mLevel = value;}
 
     byte getVipLevel(){ return mVipLevel;}
     void setVipLevel(byte value){ mVipLevel = value;}

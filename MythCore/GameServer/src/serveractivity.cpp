@@ -29,7 +29,7 @@ int CPhaseActivity::loadActivity(XMLElement* pActivityElem)
 /// 得到配置文件的名字
 const char* CPhaseActivity::getConfigFileName()
 {
-	return "PhaseActivity.xml";
+	return "phase_activity.xml";
 }
 
 /// 活动开启

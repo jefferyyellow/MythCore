@@ -18,6 +18,7 @@ message CGetRankInfoRequest
 message PBRankRoleInfo
 {
 	uint32		RoleID		= 1;	// 角色ID
+	uint32		RankValue	= 2;	// 排行榜值
 }
 
 // 得到排行信息回应 ID_S2C_RESPONSE_GET_RANK_INFO

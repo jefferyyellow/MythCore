@@ -2,6 +2,7 @@
 #include "timemanager.h"
 #include "entityplayer.h"
 #include "rankmodule.hxx.pb.h"
+#include "scenejob.h"
 /*
 	for (int i = 0; i < 1000; ++ i)
 	{
@@ -100,12 +101,39 @@ void CRankModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageI
 
 void CRankModule::onGetRankInfoRequest(CEntityPlayer* pPlayer, Message* pMessage)
 {
+	MYTH_ASSERT(NULL == pPlayer || NULL == pMessage, return);
+	CGetRankInfoRequest* pGetRankInfoRequest = static_cast<CGetRankInfoRequest*>(pMessage);
+	MYTH_ASSERT(NULL == pGetRankInfoRequest, return);
 
+	sendGetRankInfoResponse(pPlayer, (EmRankType)pGetRankInfoRequest->ranktype());
 }
 
-void CRankModule::sendGetRankInfoResponse()
+void CRankModule::sendGetRankInfoResponse(CEntityPlayer* pPlayer, EmRankType eType)
 {
+	CGetRankInfoResponse tResponse;
+	tResponse.set_ranktype(eType);
 
+	int nRoldId[MAX_RANK_SHOW_NUM] = {0};
+	int nRankValue[MAX_RANK_SHOW_NUM] = {0};
+
+	for (int i = 0; i < MAX_RANK_SHOW_NUM; ++ i)
+	{
+		CRankList::CRankValueType* pRankValueType = mRankList[eType].getRankValueByIndex(i);
+		if (NULL == pRankValueType)
+		{
+			continue;
+		}
+
+		PBRankRoleInfo* pRankRoleInfo = tResponse.add_roleinfo();
+		if (NULL == pRankRoleInfo)
+		{
+			continue;
+		}
+		pRankRoleInfo->set_roleid(pRankValueType->mRankKey);
+		pRankRoleInfo->set_rankvalue(pRankValueType->mRankValue);
+	}
+
+	CSceneJob::Inst()->send2Player(pPlayer, ID_C2S_REQUEST_GET_RANK_INFO, &tResponse);
 }
 
 // 更新玩家的排行榜，暂时这么做吧，如果需要缓存再说

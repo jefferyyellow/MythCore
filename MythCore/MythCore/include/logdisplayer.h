@@ -47,7 +47,7 @@ namespace Myth
 
 	private:
 		/// base name of roll file
-		char 	mFileName[STRING_LENGTH_64];
+		char 	mFileName[STR_LENGTH_64];
 		/// current file fd
 		int		mFd;
 		/// max file size of roll file

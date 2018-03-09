@@ -44,7 +44,7 @@ namespace Myth
 		void			DisplayLog(char* pLogMessage);
 	private:
 		/// Name of log
-		char			mLogName[STRING_LENGTH_16];
+		char			mLogName[STR_LENGTH_16];
 		/// Displayers of log,these decide where the log display
 		CLogDisplayer*	mDisplayer[MAX_NUM_LOG_DISPLAYER];
 		/// Number of displayer

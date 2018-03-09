@@ -33,13 +33,13 @@ typedef	int64_t		sint64;
 typedef	uint64_t	uint64;
 #endif // MYTH_OS_UNIX
 
-#define STRING_LENGTH_8		8			/// string length 8 byte
-#define STRING_LENGTH_16	16			/// string length 16 byte
-#define STRING_LENGTH_32	32			/// string length 32 byte
-#define STRING_LENGTH_64	64			/// string length 64 byte
-#define STRING_LENGTH_128	128			/// string length 128 byte
-#define STRING_LENGTH_256	256			/// string length 256 byte
-#define STRING_LENGTH_1024	1024		/// string length 1024 byte
+#define STR_LENGTH_8		8			/// string length 8 byte
+#define STR_LENGTH_16		16			/// string length 16 byte
+#define STR_LENGTH_32		32			/// string length 32 byte
+#define STR_LENGTH_64		64			/// string length 64 byte
+#define STR_LENGTH_128		128			/// string length 128 byte
+#define STR_LENGTH_256		256			/// string length 256 byte
+#define STR_LENGTH_1024		1024		/// string length 1024 byte
 
 #define	MAX_NUM_LOG_DISPLAYER	4		/// max displayer per log
 #define MAX_NUM_DEBUG_LOG	16			/// max debug log

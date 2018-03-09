@@ -3,7 +3,7 @@
 #define MAX_ACTIVITY_TIMES		4
 #include "servercommon.h"
 #include "dailyactivitytype.h"
-class CActivityTime
+class CDailyActTime
 {
 public:
 	int					mID;			// 活动ID
@@ -16,6 +16,8 @@ class CDailyActivity
 {
 public:
 	/// 配置部分
+	/// 活动类型
+	short				mType;
 	/// ID
 	short				mID;
 	/// 最小等级
@@ -33,9 +35,20 @@ public:
 	EmDailyActStatus GetStatus() const { return mStatus; }
 	void SetStatus(EmDailyActStatus nValue) { mStatus = nValue; }
 
+public:
+	/// 加载配置文件
+	virtual int loadActivity(XMLElement* pActivityElem) = 0;
+	/// 得到配置文件的名字
+	virtual const char* getConfigFileName() = 0;
+	/// 活动开启
+	virtual void start() = 0;
+	/// 活动结束的清理
+	virtual void end() = 0;
+
 private:
 	/// 数据部分
 	EmDailyActStatus	mStatus;
 };
+
 
 #endif
