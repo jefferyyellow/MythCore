@@ -2,9 +2,6 @@
 //char CMessageFactory::sMsgBuff[MAX_MSG_BUFF_LEN] = { 0 };
 #include "loginmessage.hxx.pb.h"
 #include "propertymodule.hxx.pb.h"
-#include "itemmodule.hxx.pb.h"
-#include "mapmodule.hxx.pb.h"
-#include "taskmodule.hxx.pb.h"
 #include "chatmodule.hxx.pb.h"
 #define CASE_NEW_MSG(msg, msgid)						\
 		case msgid:										\

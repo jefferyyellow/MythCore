@@ -148,8 +148,8 @@ void protobuf_AddDesc_chatmodule_2ehxx_impl() {
     "ayerID\030\001 \001(\r\022\022\n\nPlayerName\030\002 \001(\t\022\017\n\007Chan"
     "nel\030\003 \001(\r\022\017\n\007Content\030\004 \001(\t*|\n\022CHAT_MODUL"
     "E_MSG_ID\022\030\n\024ID_CHAT_MODULE_ERROR\020\000\022\030\n\023ID"
-    "_C2S_REQUEST_CHAT\020\2000\022\031\n\024ID_S2C_RESPONSE_"
-    "CHAT\020\2010\022\027\n\022ID_S2C_NOTIFY_CHAT\020\2020b\006proto3", 320);
+    "_C2S_REQUEST_CHAT\020\200$\022\031\n\024ID_S2C_RESPONSE_"
+    "CHAT\020\201$\022\027\n\022ID_S2C_NOTIFY_CHAT\020\202$b\006proto3", 320);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "chatmodule.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_chatmodule_2ehxx);
@@ -173,9 +173,9 @@ const ::google::protobuf::EnumDescriptor* CHAT_MODULE_MSG_ID_descriptor() {
 bool CHAT_MODULE_MSG_ID_IsValid(int value) {
   switch (value) {
     case 0:
-    case 6144:
-    case 6145:
-    case 6146:
+    case 4608:
+    case 4609:
+    case 4610:
       return true;
     default:
       return false;

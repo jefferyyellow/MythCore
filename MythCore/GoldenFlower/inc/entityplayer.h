@@ -4,6 +4,13 @@
 #include "logintype.h"
 #include "obj.h"
 class PBPlayerSceneInfo;
+#define MAX_PLAYER_POKER_NUM 3
+enum EmPokerStatus
+{
+	emPokerStatus_None		= 0,
+	emPokerStatus_Play		= 1,
+	emPokerStatus_Discard	= 2,
+};
 
 class CEntityPlayer : public CObj
 {
@@ -16,9 +23,17 @@ public:
 		mOnTime = 0;
 		mPlayerStauts = 0;
 		mLoadStatus = 0;
+		mPokerNum = 0;
+		mReady = false;
 	}
 	~CEntityPlayer(){}
 
+	void clear()
+	{
+		mPokerNum = 0;
+		mRoomID = 0;
+		mReady = false;
+	}
 public:
 	/// 角色ID
 	unsigned int	getRoleID(){ return mRoleID; }
@@ -63,6 +78,35 @@ public:
 	time_t getOnTime() const { return mOnTime; }
 	void setOnTime(time_t nValue) { mOnTime = nValue; }
 
+	void			addPoker(byte nPoker);
+
+	int getRoomID() const { return mRoomID; }
+	void setRoomID(int val) { mRoomID = val; }
+
+	bool getReady() const { return mReady; }
+	void setReady(bool val) { mReady = val; }
+
+	byte getPoker(int nIndex)
+	{
+		if (nIndex < 0 || nIndex >= mPokerNum)
+		{
+			return -1;
+		}
+		return mPoker[nIndex];
+	}
+
+	void setPoker(int nIndex, byte nValue)
+	{
+		if (nIndex < 0 || nIndex >= mPokerNum)
+		{
+			return;
+		}
+		mPoker[nIndex] = nValue;
+	}
+
+	EmPokerStatus getPokerStatus() const { return mPokerStatus; }
+	void setPokerStatus(EmPokerStatus val) { mPokerStatus = val; }
+
 private:
 	/// socket连接信息
 	CExchangeHead	mExhangeHead;
@@ -82,5 +126,16 @@ private:
 	byte			mSaveStatus;
 	/// 玩家加载状态 EmPlayerLoadStatus
 	byte			mLoadStatus;
+
+	/// 玩家手里的牌
+	byte			mPoker[MAX_PLAYER_POKER_NUM];
+	/// 玩家手里牌的数目
+	byte			mPokerNum;
+	/// 玩家的房间ID
+	int				mRoomID;
+	/// 是否准备
+	bool			mReady;
+	/// 牌的状态
+	EmPokerStatus	mPokerStatus;
 };
 #endif 

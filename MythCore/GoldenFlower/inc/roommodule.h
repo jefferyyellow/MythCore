@@ -40,6 +40,10 @@ public:
 
 public:
 	void onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
-
+	void onCreateRoom(CEntityPlayer* pPlayer, Message* pMessage);
+	void onLeaveRoom(CEntityPlayer* pPlayer, Message* pMessage);
+	void onEnterGame(CEntityPlayer* pPlayer, Message* pMessage);
+	void onReady(CEntityPlayer* pPlayer, Message* pMessage);
+	void onCheckPoker(CEntityPlayer* pPlayer, Message* pMessage);
 };
 #endif

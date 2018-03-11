@@ -1,5 +1,4 @@
 syntax = "proto3";
-import "common.hxx";
 // 消息ID范围（1-65535），共16位，前6位表示模块号，后10位表示模块内的序号，一个模块最多只有1024个消息
 
 enum PROPERTY_MODULE_MSG_ID
@@ -74,22 +73,4 @@ message CPlayerBaseInfoNotify
 	uint64 Exp					= 9;			// 经验
 	uint32 VipLevel				= 10;			// Vip等级
 	uint32 VipExp				= 11;			// Vip经验
-}
-
-/// 玩家道具信息通知 ID_S2C_NOTIFY_PLAYER_ITEM_INFO
-message CPlayerItemInfoNotify
-{
-	PBItemList Bag				= 1;			// 包裹
-}
-
-/// 玩家任务信息通知 ID_S2C_NOTIFY_PLAYER_TASK_INFO
-message CPlayerTaskInfoNotify
-{
-	PBTaskList TaskList			= 1;			// 任务列表
-}
-
-/// 玩家技能信息通知 ID_S2C_NOTIFY_PLAYER_SKILL_INFO
-message CPlayerSkillInfoNotify
-{
-	
 }

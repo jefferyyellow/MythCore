@@ -63,9 +63,6 @@
     <ClCompile Include="src\objpool.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\template.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\entityplayer.cpp">
       <Filter>player</Filter>
     </ClCompile>
@@ -165,9 +162,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="inc\logintype.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\template.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="inc\objpoolimp.h">

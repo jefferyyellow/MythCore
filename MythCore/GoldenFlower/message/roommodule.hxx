@@ -11,14 +11,15 @@ enum ROOM_MODULE_MSG_ID
 	ID_S2C_RESPONSE_READY					= 0x0804;
 	ID_S2C_NOTIFY_SYNC_PLAYER_DATA			= 0x0805;
 	ID_C2S_REQUEST_LEAVE_ROOM				= 0x0806;
-	ID_C2S_REQUEST_LEAVEROOM				= 0x0807;
+	ID_C2S_RESPONSE_LEAVEROOM				= 0x0807;
 	ID_S2C_NOTIFY_LEAVE_ROOM				= 0x0808;
 	ID_C2S_REQUEST_START_GAME				= 0x0809;
 	ID_S2C_NOTIFY_START_GAME				= 0x080A;
 	ID_S2C_NOTIFY_GAME_OVER					= 0x080B;
 	ID_C2S_REQUEST_GAME_BET					= 0x080C;
 	ID_S2C_NOTIFY_ALL_GAME_BET				= 0x080D;
-
+	ID_C2S_REQUEST_CHECK_POKER				= 0x080E;
+	ID_S2C_RESPONSE_CHECK_POKER				= 0x080F;
 };
 
 //创建房间 ID_C2S_REQUEST_CREATE_ROOM
@@ -79,7 +80,7 @@ message DLeaveRoom{
 }
 //各种错误提示
 message DErrorMessage{
-	GameStatus errorCode = 1;  // 错误类型
+	uint32 errorCode = 1;  // 错误类型
 }
 //开始游戏
 message UStartGame{
@@ -87,7 +88,7 @@ message UStartGame{
 }
 //开始游戏反馈
 message DStartGame{
-	GameStatus status = 1;
+	uint32 status = 1;
 }
 //客户端重连同步
 message DReconnectData{
@@ -121,5 +122,43 @@ message UDissposeConfirm{
 }
 //最终解散房间反馈
 message DDissposeRoom{
+
+}
+
+// 看牌 CheckPoker ID_C2S_REQUEST_CHECK_POKER
+message UYSZCheckPoker
+{
+
+}
+
+// 看牌的回应 ID_S2C_RESPONSE_CHECK_POKER
+message DYSZCheckPoker
+{
+	uint32 card1	= 1;
+	uint32 card2	= 2;
+	uint32 card3	= 3;
+}
+
+// 比牌
+message UYSZCompareCards
+{
+
+}
+
+// 比牌的回应
+message DYSZCompareCards
+{
+
+}
+
+// 弃牌的请求
+message UYSZPass
+{
+
+}
+
+// 弃牌的通知
+message DYSZNoticePlayPassCard
+{
 
 }

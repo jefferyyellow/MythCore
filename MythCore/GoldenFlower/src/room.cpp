@@ -1,6 +1,7 @@
 #include "room.h"
 
 #include "entityplayer.h"
+#include "objpool.h"
 void CRoom::init()
 {
 	for (int i = 0; i < MAX_GOLD_FLOUR_POKER_NUM; ++ i)
@@ -12,13 +13,40 @@ void CRoom::init()
 
 void CRoom::addPlayer(CEntityPlayer* pPlayer)
 {
-	if (mPlayerNum >= MAX_GOLD_FLOUR_PLAYER_NUM)
+	// 是否已经在里面了
+	for (int i = 0; i < MAX_GOLD_FLOUR_PLAYER_NUM; ++i)
+	{
+		if (pPlayer->getObjID() == mPlayer[i])
+		{
+			return;
+		}
+	}
+	for (int i = 0; i < MAX_GOLD_FLOUR_PLAYER_NUM; ++i)
+	{
+		if (INVALID_OBJ_ID == mPlayer[i])
+		{
+			mPlayer[i] = 0;
+			break;
+		}
+	}
+
+}
+
+void CRoom::removePlayer(CEntityPlayer* pPlayer)
+{
+	if (NULL == pPlayer)
 	{
 		return;
 	}
 
-	mPlayer[mPlayerNum] = pPlayer->getRoleID();
-	++ mPlayerNum;
+	for (int i = 0; i < MAX_GOLD_FLOUR_PLAYER_NUM; ++ i)
+	{
+		if (pPlayer->getObjID() == mPlayer[i])
+		{
+			mPlayer[i] = INVALID_OBJ_ID;
+			break;
+		}
+	}
 }
 
 int CRoom::randomDrawPoker()
@@ -33,3 +61,25 @@ int CRoom::randomDrawPoker()
 	mPoker[nRand] = mPoker[mPokerNum - 1];
 	return nPoker;
 }
+
+void CRoom::onPlayerReady(CEntityPlayer* pPlayer)
+{
+	int nCount = 0;
+	for (int i = 0; i < MAX_GOLD_FLOUR_PLAYER_NUM; ++i)
+	{
+		if (INVALID_OBJ_ID != mPlayer[i])
+		{
+			CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(mPlayer[i]));
+			if (NULL != pPlayer)
+			{
+				++ nCount;
+			}
+		}
+	}
+	// 大于最少人数
+	if (nCount >= MIN_GOLD_FLOUR_PLAYER_NUM)
+	{
+
+	}
+}
+

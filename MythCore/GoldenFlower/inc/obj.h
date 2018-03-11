@@ -32,11 +32,7 @@ enum  EmObjType
 	emObjType_None					= 0,	// 未知
 	emObjType_LoginPlayer			= 1,	// 登录玩家
 	emObjType_Entity_Player			= 2,	// 玩家
-	emObjType_Entity_Ogre			= 3,	// 怪物
-	emObjType_Entity_FuncNPC		= 4,	// 功能NPC
-	emObjType_Entity_Item			= 5,	// 掉落道具
-	emObjType_Item_Common			= 6,	// 普通道具
-	emObjType_Item_Equip			= 7,	// 装备道具
+	emObjType_Room					= 3,	// 房间
 };
 
 

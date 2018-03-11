@@ -20,6 +20,11 @@ CObj* CObjPool::allocObj(EmObjType eType)
 		pObj = static_cast<CObj*>(mPoolImp->mPlayerEntityPool.allocObj());
 		break;
 	}
+	case emObjType_Room:
+	{
+		pObj = static_cast<CObj*>(mPoolImp->mRoomPool.allocObj());
+		break;
+	}
 	default:
 		break;
 	}
@@ -42,6 +47,11 @@ CObj* CObjPool::getObj(int nObjID)
 		pObj = static_cast<CObj*>(mPoolImp->mPlayerEntityPool.getObj(nObjID));
 		break;
 	}
+	case emObjType_Room:
+	{
+		pObj = static_cast<CObj*>(mPoolImp->mRoomPool.getObj(nObjID));
+		break;
+	}
 	default:
 		break;
 	}
@@ -61,6 +71,11 @@ void CObjPool::free(int nObjID)
 	case emObjType_Entity_Player:
 	{
 		mPoolImp->mPlayerEntityPool.freeByID(nObjID);
+		break;
+	}
+	case emObjType_Room:
+	{
+		mPoolImp->mRoomPool.freeByID(nObjID);
 		break;
 	}
 	default:

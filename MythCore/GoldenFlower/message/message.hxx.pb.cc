@@ -67,14 +67,10 @@ void protobuf_AddDesc_message_2ehxx_impl() {
 
   protobuf_InitDefaults_message_2ehxx();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\013message.hxx*\246\002\n\021MESSAGE_MODULE_ID\022\030\n\024M"
-    "ESSAGE_MODULE_LOGIN\020\000\022\034\n\027MESSAGE_MODULE_"
-    "PROPERTY\020\200\010\022\030\n\023MESSAGE_MODULE_ITEM\020\200\020\022\027\n"
-    "\022MESSAGE_MODULE_MAP\020\200\030\022\030\n\023MESSAGE_MODULE"
-    "_TASK\020\200 \022\031\n\024MESSAGE_MODULE_SKILL\020\200(\022\030\n\023M"
-    "ESSAGE_MODULE_CHAT\020\2000\022\036\n\031MESSAGE_MODULE_"
-    "SERVER_ACT\020\2008\022\035\n\030MESSAGE_MODULE_DAILY_AC"
-    "T\020\200@\022\030\n\023MESSAGE_MODULE_RANK\020\200Hb\006proto3", 318);
+    "\n\013message.hxx*\177\n\021MESSAGE_MODULE_ID\022\030\n\024ME"
+    "SSAGE_MODULE_LOGIN\020\000\022\034\n\027MESSAGE_MODULE_P"
+    "ROPERTY\020\200\010\022\030\n\023MESSAGE_MODULE_ROOM\020\200\020\022\030\n\023"
+    "MESSAGE_MODULE_CHAT\020\200$b\006proto3", 150);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "message.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_message_2ehxx);
@@ -100,13 +96,7 @@ bool MESSAGE_MODULE_ID_IsValid(int value) {
     case 0:
     case 1024:
     case 2048:
-    case 3072:
-    case 4096:
-    case 5120:
-    case 6144:
-    case 7168:
-    case 8192:
-    case 9216:
+    case 4608:
       return true;
     default:
       return false;
