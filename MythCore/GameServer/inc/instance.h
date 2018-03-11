@@ -77,8 +77,4 @@ public:
 };
 
 
-union CInstanceUnion
-{
-	char mCommonInstance[sizeof(CCommonInstance)];
-};
 #endif

@@ -40,9 +40,6 @@
     <Filter Include="logicmodule\item">
       <UniqueIdentifier>{25611dfd-f5f9-45f9-ae17-d9078f3bc602}</UniqueIdentifier>
     </Filter>
-    <Filter Include="logicmodule\skillmodule">
-      <UniqueIdentifier>{d5d427dd-c508-4109-9559-fa43b7acf616}</UniqueIdentifier>
-    </Filter>
     <Filter Include="logicmodule\chat">
       <UniqueIdentifier>{dd57df47-51bf-4ded-be4f-e027da08196a}</UniqueIdentifier>
     </Filter>
@@ -57,6 +54,15 @@
     </Filter>
     <Filter Include="logicmodule\instance">
       <UniqueIdentifier>{5afd0aab-e8c5-4fc4-82ee-8649c1660842}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logicmodule\property">
+      <UniqueIdentifier>{115c8c1b-0b74-4ee2-a084-b0d3e75b5727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logicmodule\skill">
+      <UniqueIdentifier>{d5d427dd-c508-4109-9559-fa43b7acf616}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logicmodule\team">
+      <UniqueIdentifier>{f5cb94b7-b1e1-4db6-8c1b-e376f2885cde}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -114,23 +120,14 @@
     <ClCompile Include="..\dep\tinyxml\tinyxml2.cpp">
       <Filter>tinyxml</Filter>
     </ClCompile>
-    <ClCompile Include="src\propertymodule.cpp">
-      <Filter>logicmodule</Filter>
-    </ClCompile>
     <ClCompile Include="src\propertyunit.cpp">
       <Filter>player</Filter>
     </ClCompile>
     <ClCompile Include="..\message\propertymodule.hxx.pb.cc">
       <Filter>message</Filter>
     </ClCompile>
-    <ClCompile Include="src\itemmodule.cpp">
-      <Filter>logicmodule</Filter>
-    </ClCompile>
     <ClCompile Include="..\message\itemmodule.hxx.pb.cc">
       <Filter>message</Filter>
-    </ClCompile>
-    <ClCompile Include="src\gmcommandmanager.cpp">
-      <Filter>logicmodule</Filter>
     </ClCompile>
     <ClCompile Include="src\strutility.cpp">
       <Filter>头文件</Filter>
@@ -140,9 +137,6 @@
     </ClCompile>
     <ClCompile Include="src\mapmamager.cpp">
       <Filter>logicmodule\map</Filter>
-    </ClCompile>
-    <ClCompile Include="src\mapregionsearch.cpp">
-      <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\geometrytype.cpp">
       <Filter>源文件</Filter>
@@ -193,7 +187,7 @@
       <Filter>logicmodule\item</Filter>
     </ClCompile>
     <ClCompile Include="src\skillmodule.cpp">
-      <Filter>logicmodule\skillmodule</Filter>
+      <Filter>logicmodule\skill</Filter>
     </ClCompile>
     <ClCompile Include="src\chatmodule.cpp">
       <Filter>logicmodule\chat</Filter>
@@ -202,7 +196,7 @@
       <Filter>logicmodule\rank</Filter>
     </ClCompile>
     <ClCompile Include="src\skillunit.cpp">
-      <Filter>logicmodule\skillmodule</Filter>
+      <Filter>logicmodule\skill</Filter>
     </ClCompile>
     <ClCompile Include="..\message\skillmodule.hxx.pb.cc">
       <Filter>message</Filter>
@@ -245,6 +239,21 @@
     </ClCompile>
     <ClCompile Include="src\instance.cpp">
       <Filter>logicmodule\instance</Filter>
+    </ClCompile>
+    <ClCompile Include="src\propertymodule.cpp">
+      <Filter>logicmodule\property</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gmcommandmanager.cpp">
+      <Filter>logicmodule\property</Filter>
+    </ClCompile>
+    <ClCompile Include="src\itemmodule.cpp">
+      <Filter>logicmodule\item</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mapregionsearch.cpp">
+      <Filter>logicmodule\map</Filter>
+    </ClCompile>
+    <ClCompile Include="src\teammodule.cpp">
+      <Filter>logicmodule\team</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -323,17 +332,11 @@
     <ClInclude Include="inc\logicmodule.h">
       <Filter>logicmodule</Filter>
     </ClInclude>
-    <ClInclude Include="inc\propertymodule.h">
-      <Filter>logicmodule</Filter>
-    </ClInclude>
     <ClInclude Include="..\message\propertymodule.hxx">
       <Filter>message</Filter>
     </ClInclude>
     <ClInclude Include="..\message\propertymodule.hxx.pb.h">
       <Filter>message</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\itemmodule.h">
-      <Filter>logicmodule</Filter>
     </ClInclude>
     <ClInclude Include="..\message\itemmodule.hxx">
       <Filter>message</Filter>
@@ -343,9 +346,6 @@
     </ClInclude>
     <ClInclude Include="inc\errcode.h">
       <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\gmcommandmanager.h">
-      <Filter>logicmodule</Filter>
     </ClInclude>
     <ClInclude Include="inc\strutility.h">
       <Filter>头文件</Filter>
@@ -367,9 +367,6 @@
     </ClInclude>
     <ClInclude Include="inc\entitytype.h">
       <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\mapregionsearch.h">
-      <Filter>源文件</Filter>
     </ClInclude>
     <ClInclude Include="inc\geometrytype.h">
       <Filter>头文件</Filter>
@@ -453,7 +450,7 @@
       <Filter>logicmodule\task</Filter>
     </ClInclude>
     <ClInclude Include="inc\skillmodule.h">
-      <Filter>logicmodule\skillmodule</Filter>
+      <Filter>logicmodule\skill</Filter>
     </ClInclude>
     <ClInclude Include="inc\chatmodule.h">
       <Filter>logicmodule\chat</Filter>
@@ -462,7 +459,7 @@
       <Filter>logicmodule\rank</Filter>
     </ClInclude>
     <ClInclude Include="inc\skillunit.h">
-      <Filter>logicmodule\skillmodule</Filter>
+      <Filter>logicmodule\skill</Filter>
     </ClInclude>
     <ClInclude Include="inc\skilltype.h">
       <Filter>logicmodule\task</Filter>
@@ -544,6 +541,21 @@
     </ClInclude>
     <ClInclude Include="inc\instancetype.h">
       <Filter>logicmodule\instance</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\propertymodule.h">
+      <Filter>logicmodule\property</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gmcommandmanager.h">
+      <Filter>logicmodule\property</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\itemmodule.h">
+      <Filter>logicmodule\item</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\mapregionsearch.h">
+      <Filter>logicmodule\map</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\teammodule.h">
+      <Filter>logicmodule\team</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -132,6 +132,7 @@
     <ClCompile Include="src\taskconfig.cpp" />
     <ClCompile Include="src\taskmodule.cpp" />
     <ClCompile Include="src\taskunit.cpp" />
+    <ClCompile Include="src\teammodule.cpp" />
     <ClCompile Include="src\template.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +233,7 @@
     <ClInclude Include="inc\taskmodule.h" />
     <ClInclude Include="inc\tasktype.h" />
     <ClInclude Include="inc\taskunit.h" />
+    <ClInclude Include="inc\teammodule.h" />
     <ClInclude Include="inc\template.h" />
     <ClInclude Include="inc\propertymodule.h" />
   </ItemGroup>

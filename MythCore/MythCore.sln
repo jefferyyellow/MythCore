@@ -22,8 +22,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TcpServer", "TcpServer\TcpS
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameClient", "GameClient\GameClient.vcxproj", "{2DB1DD7D-8968-4E22-89A2-AFA0F2900499}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GoldFlour", "GoldenFlower\GoldenFlower.vcxproj", "{6E36BF49-8B29-43A1-AF0B-0C8B78DDACC1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -50,10 +48,6 @@ Global
 		{2DB1DD7D-8968-4E22-89A2-AFA0F2900499}.Debug|Win32.Build.0 = Debug|Win32
 		{2DB1DD7D-8968-4E22-89A2-AFA0F2900499}.Release|Win32.ActiveCfg = Release|Win32
 		{2DB1DD7D-8968-4E22-89A2-AFA0F2900499}.Release|Win32.Build.0 = Release|Win32
-		{6E36BF49-8B29-43A1-AF0B-0C8B78DDACC1}.Debug|Win32.ActiveCfg = Debug|Win32
-		{6E36BF49-8B29-43A1-AF0B-0C8B78DDACC1}.Debug|Win32.Build.0 = Debug|Win32
-		{6E36BF49-8B29-43A1-AF0B-0C8B78DDACC1}.Release|Win32.ActiveCfg = Release|Win32
-		{6E36BF49-8B29-43A1-AF0B-0C8B78DDACC1}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
