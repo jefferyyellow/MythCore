@@ -19,7 +19,6 @@ namespace Myth
 		{
 			if (NULL == pThead->mpJob)
 			{
-				pThead->mpThreadPool->pushIdleThread(pThead);
 				pThead->suspend();
 				if (NULL != pThead->mpThreadPool)
 				{

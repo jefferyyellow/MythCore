@@ -45,7 +45,6 @@ namespace Myth
 				{
 					mThreadList[i]->setThreadPool(this);
 					mThreadList[i]->setSerialNum(i);
-					mThreadList[i]->setBusy(true);
 					mThreadList[i]->start();
 					printf("%x\n", mThreadList[i]);
 				}
@@ -101,32 +100,6 @@ namespace Myth
 		{
 			mSimpleLock.lock();
 			pJob->setBusy(false);
-			mSimpleLock.unlock();
-		}
-
-
-
-		IThread*			popIdleThread()
-		{
-			mSimpleLock.lock();
-			IThread* pIdleThread = NULL;
-			for (int i = 0; i < mThreadNum; ++ i)
-			{
-				if (!mThreadList[i]->getBusy())
-				{
-					mThreadList[i]->setBusy(true);
-					pIdleThread = mThreadList[i];
-					break;
-				}
-			}
-			mSimpleLock.unlock();
-			return pIdleThread;
-		}
-
-		void				pushIdleThread(IThread* pIdleThread)
-		{
-			mSimpleLock.lock();
-			pIdleThread->setBusy(false);
 			mSimpleLock.unlock();
 		}
 

@@ -8,11 +8,7 @@ namespace Myth
 		mJobIndex = 0;
 		for (int i = 0; i < mThreadNum; ++ i)
 		{
-			IThread* pThread = popIdleThread();
-			if (NULL != pThread)
-			{
-				pThread->resume();
-			}
+			mThreadList[i]->resume();
 		}
 		mSimpleLock.unlock();
 	}
