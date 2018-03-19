@@ -24,7 +24,7 @@ int CEquipList::equip(CEntityPlayer& rPlayer, CItemBox& rBox, int nBoxIndex, int
 		case emItemType_Equip:
 		{
 			CTplEquip* pTplEquip = static_cast<CTplEquip*>(pTplItem);
-			if (pTplEquip->mEquipPart < 0 && pTplEquip->mEquipPart >= MAX_EQUIP_LIST)
+			if (pTplEquip->mEquipPart < 0 && pTplEquip->mEquipPart >= emEquipPartMax)
 			{
 				return ERR_EQUIP_PART_IS_INVALID;
 			}
@@ -68,7 +68,7 @@ int CEquipList::equip(CEntityPlayer& rPlayer, CItemBox& rBox, int nBoxIndex, int
 
 int CEquipList::unequip(CEntityPlayer& rPlayer, int nEquipPart, CItemBox& rBox, int nBoxIndex)
 {
-	if (nEquipPart < 0 || nEquipPart >= MAX_EQUIP_LIST)
+	if (nEquipPart < 0 || nEquipPart >= emEquipPartMax)
 	{
 		return ERR_EQUIP_PART_IS_INVALID;
 	}

@@ -20,6 +20,7 @@ CLoginTester::~CLoginTester()
 /// ³õÊ¼»¯
 bool CLoginTester::init()
 {
+	srand(time(NULL));
 	CSelectModel::initSocketSystem();
 
 	if (!initLog())
@@ -115,6 +116,11 @@ void CLoginTester::processServerMessage()
 				pAllSocket[i].closeSocket();
 				mSelectModel.removeSocket(nRemoveFd);
 				printf("disconnect with server!!!\n");
+				PLAYER_SOCKET_LIST::iterator it = mPlayerSocketList.find(i);
+				if (it != mPlayerSocketList.end())
+				{
+					mPlayerSocketList.erase(it);
+				}
 				break;
 			}
 			else
@@ -293,13 +299,19 @@ uint64 CLoginTester::getTickCount()
 
 void CLoginTester::onTime(int nElapseTime)
 {
+	if (mAccountNameCount > 150)
+	{
+		return;
+	}
+	
 	if (mResetTimer.elapse(nElapseTime))
 	{
-		//mResetTimer.setLeftTime(100000000);
-		for (int i = 0; i < 3; ++ i)
+		mResetTimer.setLeftTime(100000000);
+		for (int i = 0; i < 1; ++ i)
 		{
+			int nRand = rand() % 300;
 			char szAccountName[MAX_NAME_LENGTH] = {0};
-			snprintf(szAccountName, sizeof(szAccountName) - 1, "hjh%d", mAccountNameCount);
+			snprintf(szAccountName, sizeof(szAccountName) - 1, "hjh%d", nRand);
 			newPlayer(szAccountName, 1, 1);
 			++ mAccountNameCount;
 		}

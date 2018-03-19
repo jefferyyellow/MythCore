@@ -23,6 +23,15 @@ public:
 	CLoginPlayer()
 	{
 		init();
+		mAccountID = 0;
+		mChannelID = 0;
+		mServerID = 0;
+		mRoleID = 0;
+		memset(mAccountName, 0, sizeof(mAccountName));
+		mClientMessage = NULL;
+		mClientMessageID = 0;
+		mDBResponse = NULL;
+		mDBSessionType = emSessionType_None;
 	}
 
 	~CLoginPlayer(){}

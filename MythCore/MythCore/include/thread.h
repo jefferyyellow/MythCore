@@ -47,7 +47,7 @@ namespace Myth
 	public:
 		IThread()
 		{
-
+			mBusy = false;
 		}
 		virtual ~IThread()
 		{

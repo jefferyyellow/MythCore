@@ -11,12 +11,14 @@
 using namespace Myth;
 class CDBResponse;
 class CLoginPlayer;
-#define  MAKE_LOGIN_KEY(AccountID, ChannelID, ServerID) ( (ChannelID << 48) | (ServerID << 32) | AccountID)
+#define  MAKE_LOGIN_KEY(AccountID, ChannelID, ServerID) ((ChannelID << 48) | (ServerID << 32) | AccountID)
 class CLoginModule : public CLogicModule, public CSingleton < CLoginModule >
 {
 	friend class CSingleton < CLoginModule > ;
 public:
 	typedef std::map<short, int> LOGIN_LIST;
+	typedef std::map<uint64, int> VERIFY_LIST;
+
 private:
 	CLoginModule();
 	~CLoginModule();
@@ -54,7 +56,12 @@ public:
 	void		loadAllocateRoleId();
 	/// 加载数据库里分配角色ID的处理
 	void		onLoadAllocateRoleId(CDBResponse& rResponse);
-
+	/// 增加正在校验的玩家
+	bool		addVerifyPlayer(short nChannelId, short nServerId, int nAccountId, int nLoginObjId);
+	/// 是否是正在校验的玩家
+	bool		checkVerifyPlayer(short nChannelId, short nServerId, int nAccountId);
+	/// 删除正在校验的玩家
+	void		removeVerifyPlayer(short nChannelId, short nServerId, int nAccountId);
 	unsigned int getBeginRoleID(int nServerId)
 	{
 		if (nServerId <= 0 || nServerId > MAX_ROLE_PER_SERVER)
@@ -87,6 +94,7 @@ public:
 	}
 private:
 	LOGIN_LIST			mLoginList;						// 登录列表
+	VERIFY_LIST			mVerifyList;					// 校验列表
 	CAutoResetTimer		mLoginCheckTime;				// 登录校验时间
 	unsigned int		mAllocateRoleId[MAX_SERVER_ID];	// 角色ID分配器
 	bool				mCheckResult;

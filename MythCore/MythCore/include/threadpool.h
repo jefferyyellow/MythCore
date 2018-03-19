@@ -127,11 +127,6 @@ namespace Myth
 		{
 			mSimpleLock.lock();
 			pIdleThread->setBusy(false);
-			//printf("\npushIdleThread: %p\n", pIdleThread);
-			if (pIdleThread == (void*)0xcdcdcdcd)
-			{
-				int i = 0;
-			}
 			mSimpleLock.unlock();
 		}
 

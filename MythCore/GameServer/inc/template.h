@@ -11,19 +11,6 @@
 #define MAX_TEMPLATE_NUM			100000				// 最大模版数
 #define TEMPLATE_CACHE_SIZE			10 * 1024 * 1024	// 大Cache
 class CTemplate;
-class PBTplTemplate;
-class PBItem;
-class PBTplLevelExpConfig;
-class PBTplVIPConfig;
-class PBTplNPC;
-class PBTplFuncNPC;
-class PBTplOgre;
-class PBTplEquip;
-class PBTplProperty;
-class PBTplDropItem;
-class PBTplDropTable;
-class PBTplSkill;
-class PBTplNewPlayerConfig;
 #define TEMPLATE_SET_FROM_PB(ClassName, PBParent, PBName) \
 	{ \
 			for (int i = 0; i < (int)PBParent->PBName##_size(); ++ i) \
@@ -45,7 +32,7 @@ class PBTplNewPlayerConfig;
 			} \
 	}
 
-
+class PBTplTemplate;
 class CStaticData
 {
 
@@ -120,11 +107,12 @@ public:
 
 // ********************************************************************** //
 // BEGINMAKE
-// virtual	= true						## 代表不生成到数据库中
-// name		= 新玩家信息				## 模版名称
-// path		=							## 路径
+// virtual	= false						## 代表不生成到数据库中
+// name		= x新玩家信息				## 模版名称
+// path		= Config/x新玩家信息		## 路径
 // parent	=							## 父亲模版
 // ********************************************************************** //
+class PBTplNewPlayerConfig;
 #define MAX_NEW_PLAYER_ITEM		8
 class CTplNewPlayerConfig : public CTemplate
 {
@@ -136,7 +124,7 @@ public:
 
 	// FieldName: 第%d个道具数量
 	// FieldType: INT4
-	// Type:	  EDITNUMBER(1,10000000)
+	// Type:	  EDITNUMBER(0,10000000)
 	int		mItemNum[MAX_NEW_PLAYER_ITEM];
 
 	// FieldName: 初始等级
@@ -177,6 +165,7 @@ enum EmItemType
 // path		=							## 路径
 // parent	=							## 父亲模版
 // ********************************************************************** //
+class PBItem;
 class CTplItem : public CTemplate
 {
 public:
@@ -225,10 +214,22 @@ public:
 // BEGINMAKE
 // virtual	= false						## 
 // name		= z装备						## 模版名称
-// path		=							## 路径
+// path		= z装备						## 路径
 // parent	=							## 父亲模版
 // ********************************************************************** //
+class PBTplEquip;
+class PBTplProperty;
 #define EQUIP_PROPERTY_NUM	6					// 装备最大的属性数目
+enum EmTplEquipPart
+{
+	emEquipPart_Hat				= 0,			// 帽子
+	emEquipPart_Clothes			= 1,			// 衣服
+	emEquipPart_Shoes			= 2,			// 鞋子
+	emEquipPart_Weapon			= 3,			// 武器
+	emEquipPart_Ring			= 4,			// 戒指
+	emEquipPart_Accessory		= 5,			// 饰品
+	emEquipPartMax
+};
 class CTplEquip : public CTplItem
 {
 public:
@@ -258,7 +259,7 @@ public:
 
 	// FieldName: 装备部位
 	// FieldType: INT4
-	// Type:	  COMBOENUM(TmTplEquipPart)
+	// Type:	  COMBOENUM(EmTplEquipPart)
 	int		mEquipPart;
 
 	// FieldName: 等级限制
@@ -282,7 +283,7 @@ public:
 // ENDMAKE
 // ********************************************************************** //
 
-#define MAX_LEVEL		100
+
 // ********************************************************************** //
 // BEGINMAKE
 // virtual	= false						##
@@ -290,6 +291,8 @@ public:
 // path		= Config/d等级经验表		## 路径
 // parent	=							## 父亲模版
 // ********************************************************************** //
+#define MAX_LEVEL		100
+class PBTplLevelExpConfig;
 class CTplLevelExpConfig : public CTemplate
 {
 public:
@@ -324,6 +327,7 @@ public:
 // path		= Config/VIP经验表			## 路径
 // parent	=							## 父亲模版
 // ********************************************************************** //
+class PBTplVIPConfig;
 class CTplVIPConfig : public CTemplate
 {
 public:
@@ -356,6 +360,7 @@ public:
 // path		=							## 路径
 // parent	=							## 父亲模版
 // ********************************************************************** //
+class PBTplNPC;
 class CTplNPC : public CTemplate
 {
 	// FieldName: $NPC名称
@@ -381,6 +386,7 @@ public:
 // path		= NPC/g功能NPC				## 路径
 // parent	= NPC基本信息				## 父亲模版
 // ********************************************************************** //
+class PBTplFuncNPC;
 class CTplFuncNPC : public CTplNPC
 {
 public:
@@ -405,13 +411,14 @@ public:
 // path		= NPC/g怪物					## 路径
 // parent	= NPC基本信息				## 父亲模版
 // ********************************************************************** //
+class PBTplOgre;
 #define MAX_OGRE_DROP	4
 class CTplOgre : public CTplNPC
 {
 public:
 	// FieldName: 杀怪经验
 	// FieldType: INT4
-	// Type:	  EDITNUMBER(1,100000000)
+	// Type:	  EDITNUMBER(0,100000000)
 	int			mExp;
 
 	// FieldName: 怪物掉落
@@ -439,9 +446,10 @@ public:
 // BEGINMAKE
 // virtual	= false						## 
 // name		= j技能						## 模版名称
-// path		= j技能/j技能				## 路径
+// path		= j技能						## 路径
 // parent	=							## 父亲模版
 // ********************************************************************** //
+class PBTplSkill;
 class CTplSkill : public CTemplate
 {
 public:
@@ -482,6 +490,8 @@ public:
 // path		= d掉落表					## 路径
 // parent	=							## 父亲模版
 // ********************************************************************** //
+class PBTplDropItem;
+class PBTplDropTable;
 #define MAX_DROP_ITEM		16	// 最大的掉落道具
 class CTplDropTable : public CTemplate
 {

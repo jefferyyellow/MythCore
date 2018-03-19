@@ -473,10 +473,20 @@ BOOL CParseHeadFile::ParseTemplateBody(CTemplateInfo& rRoot, CTemplateInfo& info
 	{
 		strLine = acBuffer;
 
+		// 分析宏
+		if ((nIndex = strLine.find("#define")) != string::npos)
+		{
+			ParseMacro(strLine.substr(nIndex + m_nDefineLen));
+		}
 		//进入嵌套模板处理
-		if((nIndex = strLine.find("struct")) != string::npos || 
+		else if((nIndex = strLine.find("struct")) != string::npos || 
 			(nIndex = strLine.find("class")) != string::npos)
 		{
+			// 类/结构体声明
+			if (strLine.find(";") != string::npos)
+			{
+				continue;
+			}
 			bInClass++;
 
 			if(bInClass > 1)

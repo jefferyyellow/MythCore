@@ -48,11 +48,11 @@ BEGIN
 	DECLARE tmpRoleID INT UNSIGNED;
 	SELECT role_id INTO tmpRoleID from PlayerRole where account_id=AccountID and channel_id=ChannelID and server_id=ServerID;
 	IF FOUND_ROWS() = 0 THEN
-		
 		INSERT INTO PlayerRole (role_id,role_name,account_id,channel_id,server_id) values(RoleID, RoleName, AccountID, ChannelID, ServerID);
+		INSERT INTO PlayerBaseProperty (role_id) values(RoleID);
 		SELECT role_id INTO tmpRoleID from PlayerRole WHERE role_id=RoleID;
 		IF FOUND_ROWS() = 0 THEN
-			SELECT 0;
+			SELECT -1;
 		ELSE
 			SELECT tmpRoleID;
 		END IF;

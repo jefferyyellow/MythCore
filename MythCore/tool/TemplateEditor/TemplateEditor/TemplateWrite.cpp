@@ -651,10 +651,12 @@ BOOL CTemplateWrite::AddPBData(PBTplTemplate* pTplTemplate, CString& strTempName
 	PBTplSkillSet*	pbTplSkillSet = pTplTemplate->mutable_skillset();
 	PBTplNPCSet*	pbTplNPCSet = pTplTemplate->mutable_npcset();
 
-	CREATE_DATA_TO_PB("d等级经验表", CTplPlayerLevelExpConfig, pbTplConfigSet, levelexpconfig);
+	CREATE_DATA_TO_PB("d等级经验表", CTplLevelExpConfig, pbTplConfigSet, levelexpconfig);
 	CREATE_DATA_TO_PB("VIP经验表", CTplVIPConfig, pbTplConfigSet, vipconfig);
 	CREATE_DATA_TO_PB("g功能NPC", CTplFuncNPC, pbTplNPCSet, funcnpc);
 	CREATE_DATA_TO_PB("NPC基本信息", CTplOgre, pbTplNPCSet, ogre);
-
+	CREATE_DATA_TO_PB("x新玩家信息", CTplNewPlayerConfig, pbTplConfigSet, newplayerconfig);
+	CREATE_DATA_TO_PB("j技能", CTplSkill, pbTplSkillSet, skill);
+	CREATE_DATA_TO_PB("d掉落表", CTplDropTable, pbTplConfigSet, droptable);
 	return TRUE;
 }

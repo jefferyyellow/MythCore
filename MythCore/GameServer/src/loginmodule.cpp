@@ -90,6 +90,7 @@ void CLoginModule::onTimer(unsigned int nTickOffset)
 			if (pLoginPlayer->elapse(1))
 			{
 				printf("\n*****33333****%s******\n", pLoginPlayer->getAccountName());
+				removeVerifyPlayer(pLoginPlayer->getChannelID(), pLoginPlayer->getServerID(), pLoginPlayer->getAccountID());
 				++ it;
 				mLoginList.erase(itOld);
 				CObjPool::Inst()->free(nObjID);
@@ -142,6 +143,7 @@ void CLoginModule::onClientMessage(CExchangeHead& rExchangeHead, unsigned int nM
 	if (nMessageID == ID_C2S_REQUEST_ENTER_SCENE)
 	{
 		processWaitEnterGame(pLoginPlayer, pMessage);
+		removeVerifyPlayer(pLoginPlayer->getChannelID(), pLoginPlayer->getServerID(), pLoginPlayer->getAccountID());
 		mLoginList.erase(rExchangeHead.mSocketIndex);
 		// 完成使命，释放掉
 		CObjPool::Inst()->free(pLoginPlayer->getObjID());
@@ -216,11 +218,8 @@ void CLoginModule::processWaitEnterGame(CLoginPlayer* pLoginPlayer, Message* pMe
 			CSceneJob::Inst()->disconnectPlayer(pLoginPlayer->getExchangeHead());
 			return;
 		}
-		// 如果已经是下线状态，改成正常的游戏状态
-		if (pPlayer->getPlayerStauts() == emPlayerStatus_Exiting)
-		{
-			pPlayer->setPlayerStauts(emPlayerStatus_Gameing);
-		}
+		// 改成正常的游戏状态
+		pPlayer->setPlayerStauts(emPlayerStatus_Gameing);
 		// 将原来的玩家下线
 		CSceneJob::Inst()->disconnectPlayer(pPlayer);
 
@@ -266,6 +265,11 @@ void CLoginModule::onSocketDisconnect(int nSocketIndex)
 	LOGIN_LIST::iterator it = mLoginList.find(nSocketIndex);
 	if (it != mLoginList.end())
 	{
+		CLoginPlayer* pLoginPlayer = static_cast<CLoginPlayer*>(CObjPool::Inst()->getObj(it->second));
+		if (NULL != pLoginPlayer)
+		{
+			removeVerifyPlayer(pLoginPlayer->getChannelID(), pLoginPlayer->getServerID(), pLoginPlayer->getAccountID());
+		}
 		// 完成使命，释放掉
 		CObjPool::Inst()->free(it->second);
 		mLoginList.erase(nSocketIndex);
@@ -335,4 +339,37 @@ unsigned int CLoginModule::allocateRoleID(int nServerId)
 	CDBModule::Inst()->pushDBTask(0, emSessionType_UpdateAllocateRoleId, 0, 0,
 		"update AllocateRoleId set max_role_id=%d where server_id=%d", nMaxRoleId + 1, nServerId);
 	return nMaxRoleId;
+}
+
+/// 增加正在校验的玩家
+bool CLoginModule::addVerifyPlayer(short nChannelId, short nServerId, int nAccountId, int nLoginObjId)
+{
+	uint64 nLoginKey = MAKE_LOGIN_KEY((uint64)nAccountId, (uint64)nChannelId, (uint64)nServerId);
+	std::pair<VERIFY_LIST::iterator, bool> tRet = mVerifyList.insert(
+		VERIFY_LIST::value_type(nLoginKey, nLoginObjId));
+	if (tRet.second)
+	{
+		return true;
+	}
+	return false;
+}
+
+/// 是否是正在校验的玩家
+bool CLoginModule::checkVerifyPlayer(short nChannelId, short nServerId, int nAccountId)
+{
+	uint64 nLoginKey = MAKE_LOGIN_KEY((uint64)nAccountId, (uint64)nChannelId, (uint64)nServerId);
+	VERIFY_LIST::iterator it = mVerifyList.find(nLoginKey);
+	if (it != mVerifyList.end())
+	{
+		return true;
+	}
+
+	return false;
+}
+
+/// 删除正在校验的玩家
+void CLoginModule::removeVerifyPlayer(short nChannelId, short nServerId, int nAccountId)
+{
+	uint64 nLoginKey = MAKE_LOGIN_KEY((uint64)nAccountId, (uint64)nChannelId, (uint64)nServerId);
+	mVerifyList.erase(nLoginKey);
 }

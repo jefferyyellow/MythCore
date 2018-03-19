@@ -143,8 +143,16 @@ namespace Myth
 				}
 				*pValueLength = pColumn[nCount];
 				pValueLength += 1;
-				memcpy(pValue, tRow[nCount], pColumn[nCount] + 1);
-				pValue += pColumn[nCount] + 1;
+				if (NULL != tRow[nCount])
+				{
+					memcpy(pValue, tRow[nCount], pColumn[nCount] + 1);
+					pValue += pColumn[nCount] + 1;
+				}
+				else
+				{
+					*pValue = '\0';
+					pValue += 1;
+				}
 			}
 		}
 		mysql_free_result(pResult);

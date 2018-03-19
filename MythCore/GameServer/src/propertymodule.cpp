@@ -180,6 +180,11 @@ void CPropertyModule::kickAllPlayer()
 /// 加载玩家信息
 void CPropertyModule::onLoadPlayerInfo(CDBResponse& rResponse)
 {
+	if (rResponse.mRowNum <= 0)
+	{
+		LOG_ERROR("load player info failure, has no result return!");
+		return;
+	}
 	CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(rResponse.mParam1));
 	if (NULL == pPlayer)
 	{
@@ -206,6 +211,12 @@ void CPropertyModule::onLoadPlayerInfo(CDBResponse& rResponse)
 /// 加载玩家基础属性
 void CPropertyModule::onLoadPlayerBaseProperty(CDBResponse& rResponse)
 {
+	if (rResponse.mRowNum <= 0)
+	{
+		LOG_ERROR("load player base property failure, has no result return!");
+		return;
+	}
+
 	CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(rResponse.mParam1));
 	if (NULL == pPlayer)
 	{
@@ -253,6 +264,7 @@ void CPropertyModule::onLoadComplete(CEntityPlayer* pPlayer)
 	CSceneJob::Inst()->createPlayer(pPlayer);
 
 	printf("%s%d%s\n", "*****************Load Complete:", pPlayer->getRoleID(), "*****************");
+	LOG_INFO("Player load complete, %d", pPlayer->getRoleID());
 	// 将玩家放入地图
 	// 往客户端推送数据
 }
@@ -320,11 +332,12 @@ void CPropertyModule::savePlayerInfo(CEntityPlayer* pPlayer)
 		return;
 	}
 
+	time_t tCurrTime = CTimeManager::Inst()->getCurrTime();
 	CDBModule::Inst()->pushDBTask(pPlayer->getRoleID(), emSessionType_SavePlayerInfo, pPlayer->getObjID(), 0,
-		"call UpdatePlayerInfo(%d, %d,%lld,%d,%d,%d,%d)", pPlayer->getRoleID(),
+		"call UpdatePlayerInfo(%d, %d,%lld,%d,%d,%d,%d,%d)", pPlayer->getRoleID(),
 		pPlayer->getPropertyUnit().getLevel(), pPlayer->getPropertyUnit().getExp(),
 		pPlayer->getPropertyUnit().getVipLevel(), pPlayer->getPropertyUnit().getVipExp(),
-		pPlayer->getItemUnit().getMoney(), pPlayer->getItemUnit().getDiamond());
+		pPlayer->getItemUnit().getMoney(), pPlayer->getItemUnit().getDiamond(), tCurrTime);
 }
 
 void CPropertyModule::savePlayerBaseProperty(CEntityPlayer* pPlayer)
@@ -390,8 +403,12 @@ void CPropertyModule::setNewPlayerValue(CEntityPlayer* pPlayer)
 	{
 		return;
 	}
-	
+	//
 	CTplNewPlayerConfig* pTplConfig = CTplNewPlayerConfig::spConfig;
+	if (NULL == pTplConfig)
+	{
+		return;
+	}
 
 	pPlayer->getItemUnit().insertItem(pTplConfig->mItemID, pTplConfig->mItemNum, MAX_NEW_PLAYER_ITEM);
 	pPlayer->getPropertyUnit().setLevel(pTplConfig->mLevel);

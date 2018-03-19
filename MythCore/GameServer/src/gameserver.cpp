@@ -87,7 +87,7 @@ bool CGameServer::initLog()
 
 	// 给警告日志加文件displayer
 	CRollFileDisplayer* pWarnFileDisplayer = new CRollFileDisplayer(const_cast<char*>("../log/gamewarn.log"), 1024000, 10);
-	CLogManager::Inst()->GetInfoLog().AddDisplayer(pWarnFileDisplayer);
+	CLogManager::Inst()->GetWarnLog().AddDisplayer(pWarnFileDisplayer);
 	return true;
 }
 
@@ -114,18 +114,18 @@ bool CGameServer::initStaticData()
 		return bResult;
 	}
 
-	//bResult = CStaticData::loadFromFile("gameserverconfig/template/template_server.dat");
-	//if (!bResult)
-	//{
-	//	return bResult;
-	//}
+	bResult = CStaticData::loadFromFile("gameserverconfig/template/template_server.dat");
+	if (!bResult)
+	{
+		return bResult;
+	}
 	return true;
 }
 
 /// 初始线程
 bool CGameServer::initThread()
 {
-	mThreadPool.init(10);
+	mThreadPool.init(1);
 
 	//Sleep(3000);
 	
