@@ -254,7 +254,7 @@ void CPropertyModule::onLoadComplete(CEntityPlayer* pPlayer)
 	}
 	pPlayer->setPlayerStauts(emPlayerStatus_Gameing);
 	pPlayer->setOnTime(CTimeManager::Inst()->getCurrTime());
-
+	pPlayer->setLastSaveTime(CTimeManager::Inst()->getCurrTime());
 	// ÐÂÍæ¼Ò
 	if (0 == pPlayer->getLastOffTime())
 	{

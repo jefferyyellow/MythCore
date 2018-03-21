@@ -20,6 +20,7 @@ namespace Myth
 			if (NULL == pThead->mpJob)
 			{
 				pThead->suspend();
+				//printf("%d\n", pThead->getSerialNum());
 				if (NULL != pThead->mpThreadPool)
 				{
 					IJob* pJob = pThead->mpThreadPool->popJob();

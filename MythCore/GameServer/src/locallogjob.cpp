@@ -50,6 +50,7 @@ bool CLocalLogJob::init()
 void CLocalLogJob::doing(int uParam)
 {
 	int nCount = 0;
+	//Sleep(100);
 	while (true)
 	{
 		CInternalMsg* pIMMsg = mTaskManager.popTask();

@@ -182,6 +182,9 @@
     <ClInclude Include="include\bytestream.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="include\threadevent.h">
+      <Filter>头文件\thread</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="include\bit_set.inl">

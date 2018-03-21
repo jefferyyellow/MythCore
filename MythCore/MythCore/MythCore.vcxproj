@@ -130,6 +130,7 @@
     <ClInclude Include="include\singleton.h" />
     <ClInclude Include="include\socketstream.h" />
     <ClInclude Include="include\tcpsocket.h" />
+    <ClInclude Include="include\threadevent.h" />
     <ClInclude Include="include\threadpool.h" />
     <ClInclude Include="include\timemanager.h" />
     <ClInclude Include="include\winthread.h" />

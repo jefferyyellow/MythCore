@@ -303,13 +303,13 @@ void CLoginTester::onTime(int nElapseTime)
 	{
 		return;
 	}
-	
+	int nRand = rand() % 300;
+
 	if (mResetTimer.elapse(nElapseTime))
 	{
 		mResetTimer.setLeftTime(100000000);
 		for (int i = 0; i < 1; ++ i)
 		{
-			int nRand = rand() % 300;
 			char szAccountName[MAX_NAME_LENGTH] = {0};
 			snprintf(szAccountName, sizeof(szAccountName) - 1, "hjh%d", nRand);
 			newPlayer(szAccountName, 1, 1);

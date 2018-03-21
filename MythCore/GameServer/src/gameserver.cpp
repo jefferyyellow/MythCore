@@ -125,29 +125,33 @@ bool CGameServer::initStaticData()
 /// ³õÊ¼Ïß³Ì
 bool CGameServer::initThread()
 {
-	mThreadPool.init(1);
+	mThreadPool.init(10);
 
 	//Sleep(3000);
 	
-	if (0 != mDBJob.init(CGameServerConfig::Inst()->getDBHost(),
-		CGameServerConfig::Inst()->getDBUserName(), CGameServerConfig::Inst()->getDBPasswd(),
-		CGameServerConfig::Inst()->getDefaultDataBase(), CGameServerConfig::Inst()->getDBPort(),
-		NULL))
+	for (int i = 0; i < MAX_DB_JOB; ++ i)
 	{
-		return false;
+		if (0 != mDBJob[i].init(CGameServerConfig::Inst()->getDBHost(),
+			CGameServerConfig::Inst()->getDBUserName(), CGameServerConfig::Inst()->getDBPasswd(),
+			CGameServerConfig::Inst()->getDefaultDataBase(), CGameServerConfig::Inst()->getDBPort(),
+			NULL))
+		{
+			return false;
+		}
+		mDBJob[i].setBuffer(MAX_DB_JOB_BUFFER_SIZE);
+		mThreadPool.pushBackJob(&mDBJob[i]);
 	}
+
 
 	bool bResult = mSceneJob.init(MAX_SCENE_DB_BUFFER_SIZE);
 	if (!bResult)
 	{
 		return false;
 	}
-	mDBJob.setBuffer(MAX_DB_JOB_BUFFER_SIZE);
 	mLocalLogJob.init();
 
 	printf("initThread\n");
 	mThreadPool.pushBackJob(&mSceneJob);
-	mThreadPool.pushBackJob(&mDBJob);
 	mThreadPool.pushBackJob(&mLocalLogJob);
 	return true;
 }
@@ -165,11 +169,11 @@ void CGameServer::run()
 		//printf("*dddd*");
 		mThreadPool.run();
 #ifdef MYTH_OS_WINDOWS
-		Sleep(1);
+		Sleep(20);
 #else
 		struct timespec tv;
 		tv.tv_sec = 0;
-		tv.tv_nsec = 1000;
+		tv.tv_nsec = 20000000;
 		nanosleep(&tv, NULL);
 #endif
 	}
@@ -232,11 +236,6 @@ void CGameServer::pushTask(EmTaskType eTaskType, CInternalMsg* pMsg)
 {
 	switch (eTaskType)
 	{
-		case emTaskType_DB:
-		{
-			mDBJob.pushTask(pMsg);
-			break;
-		}
 		case emTaskType_LocalLog:
 		{
 			mLocalLogJob.pushTask(pMsg);
@@ -256,5 +255,6 @@ void CGameServer::pushTask(EmTaskType eTaskType, CInternalMsg* pMsg)
 
 void CGameServer::pushDBTask(int nUid, byte* pData, int nDataLength)
 {
-	mDBJob.pushBackJobData(pData, nDataLength);
+	int nIndex = nUid % MAX_DB_JOB;
+	mDBJob[nIndex].pushBackJobData(pData, nDataLength);
 }

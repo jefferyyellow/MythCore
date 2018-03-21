@@ -51,13 +51,17 @@ namespace Myth
 		mpThreadPool = NULL;
 		mThreadID = 0;
 		pthread_cond_init(&mCond, NULL);
-		pthread_mutex_init(&mMutex, NULL);
+		pthread_mutexattr_init(&mMutexAttr);
+		pthread_mutexattr_settype(&mMutexAttr,PTHREAD_MUTEX_RECURSIVE_NP); 
+		pthread_mutex_init(&mMutex, &mMutexAttr);
 		mThreadState = emThreadState_None;
 		mSerialNum = 0;
 	}
 
 	CPThread::~CPThread()
 	{
+		pthread_cond_destroy(&mCond);
+		pthread_mutexattr_destroy(&mMutexAttr);
 		terminate();
 	}
 
@@ -125,9 +129,9 @@ namespace Myth
 			return;
 		}
 		pthread_mutex_lock(&mMutex);
+		setThreadState(emThreadState_Suspend);
 		pthread_cond_wait(&mCond, &mMutex);
 		pthread_mutex_unlock(&mMutex);
-		setThreadState(emThreadState_Suspend);
 	}
 
 	/// resume thread
@@ -139,9 +143,9 @@ namespace Myth
 		}
 
 		pthread_mutex_lock(&mMutex);
+		setThreadState(emThreadState_Runing);
 		pthread_cond_signal(&mCond);
 		pthread_mutex_unlock(&mMutex);
-		setThreadState(emThreadState_Runing);
 	}
 }
 #endif

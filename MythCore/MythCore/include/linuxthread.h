@@ -41,6 +41,7 @@ namespace Myth
 	private:
 		pthread_t			mThreadID;		// 线程ID
 		pthread_mutex_t		mMutex;			// 互斥体
+		pthread_mutexattr_t	mMutexAttr;		// 互斥体属性
 		pthread_cond_t		mCond;			// 条件变量
 
 		// thread state 

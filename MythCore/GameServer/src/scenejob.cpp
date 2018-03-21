@@ -28,6 +28,7 @@ CSceneJob::CSceneJob()
 void CSceneJob::doing(int uParam)
 {
 	//printf("CSceneJob::doing %d\n", uParam);
+	//Sleep(100);
 	switch (mServerState)
 	{
 		case emServerStateInit:
@@ -107,13 +108,15 @@ void CSceneJob::doRun()
 
 		CInternalMsgPool::Inst()->freeMsg(pIMMsg);
 	}
-	time_t tTimeNow = CTimeManager::Inst()->getCurrTime();
-	int nElapseTime = (int)(tTimeNow - mLastTimerTick);
+	uint64 nNowTick = getTickCount();
+	int nElapseTime = (int)(nNowTick - mLastTimerTick);
 	if (nElapseTime > 100)
 	{
 		timer(nElapseTime);
-		mLastTimerTick = tTimeNow;
+		mLastTimerTick = nNowTick;
 	}
+
+	time_t tTimeNow = CTimeManager::Inst()->getCurrTime();
 	if (tTimeNow != mLastTime)
 	{
 		int nDay = mTmNow.tm_yday;
@@ -282,9 +285,9 @@ void CSceneJob::onTask(CInternalMsg* pMsg)
 bool CSceneJob::init(int nDBBuffSize)
 {
 	// 初始化时间变量
-	mLastTimerTick = CTimeManager::Inst()->getCurrTime();
-	mLastTime = mLastTimerTick;
-	mMorningTime = timeToMorning(mLastTimerTick);
+	mLastTimerTick = getTickCount();
+	mLastTime = CTimeManager::Inst()->getCurrTime();
+	mMorningTime = timeToMorning(CTimeManager::Inst()->getCurrTime());
 	setTmNow(mLastTime);
 
 	mServerState = emServerStateInit;
@@ -491,6 +494,10 @@ void CSceneJob::processClientMessage()
 /// 发送前端消息
 void CSceneJob::send2Player(CExchangeHead& rExchangeHead, unsigned short nMessageID, Message* pMessage)
 {
+	if (rExchangeHead.mSocketIndex < 0)
+	{
+		return;
+	}
 	char* pTemp = mBuffer;
 	memcpy(pTemp, &rExchangeHead, sizeof(rExchangeHead));
 	pTemp += sizeof(rExchangeHead);
@@ -641,17 +648,16 @@ void CSceneJob::onSocketDisconnect(int nSocketIndex)
 	PLAYER_SOCKET_LIST::iterator it = mPlayerSocketList.find(nSocketIndex);
 	if (it != mPlayerSocketList.end())
 	{
+
 		CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
 		if (NULL != pPlayer)
 		{
+			pPlayer->GetExhangeHead().mSocketIndex = -1;
 			// 将玩家置为下线状态
 			pPlayer->setPlayerStauts(emPlayerStatus_Exiting);
 			CPropertyModule::Inst()->savePlayer(pPlayer);
 		}
-		else
-		{
-			mPlayerSocketList.erase(it);
-		}
+		mPlayerSocketList.erase(it);
 	}
 }
 

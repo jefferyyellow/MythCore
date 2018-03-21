@@ -8,6 +8,7 @@
 #include "singleton.h"
 #include "scenejob.h"
 
+#define MAX_DB_JOB		8
 using namespace Myth;
 
 class CGameServer : public CSingleton<CGameServer>
@@ -48,7 +49,7 @@ public:
 private:
 	CLog*					mDefaultLog;
 
-	CDBJob					mDBJob;
+	CDBJob					mDBJob[MAX_DB_JOB];
 	CLocalLogJob			mLocalLogJob;
 	CSceneJob				mSceneJob;
 

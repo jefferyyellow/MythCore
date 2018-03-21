@@ -28,7 +28,7 @@ int CDBJob::init(char* pHost, char* pUserName, char* pPasswd, char* pDataBase, i
 void CDBJob::doing(int uParam)
 {
 	//printf("CDBJob:: %d\n", uParam);
-	//Sleep(3000);
+	//Sleep(100);
 	checkDBStream();
 	while (true)
 	{

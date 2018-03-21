@@ -92,7 +92,8 @@ CREATE PROCEDURE `UpdatePlayerInfo`(RoleID int unsigned,
 									tVipLevel tinyint,
 									tVipExp int,
 									tMoney int,
-									tDiamond int)
+									tDiamond int,
+									tLastOffTime int)
 BEGIN
 	update PlayerRole set
 		level = tLevel,
@@ -100,7 +101,8 @@ BEGIN
 		vip_level = tVipLevel,
 		vip_exp = tVipExp,
 		money = tMoney,
-		diamond = tDiamond
+		diamond = tDiamond,
+		last_off_time = tLastOffTime
 	WHERE role_id=RoleID;
 END
 ;;
