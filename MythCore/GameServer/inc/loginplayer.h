@@ -5,7 +5,7 @@
 #include "messagefactory.h"
 #include "dbmessage.h"
 class CDBResponse;
-enum EMLoginState
+enum EmLoginState
 {
 	emLoginState_None				= 0,	// 无状态
 	emLoginState_AccountVerify		= 1,	// 登录验证
@@ -15,6 +15,14 @@ enum EMLoginState
 	//emLoginState_WaitEnterGame		= 4,	// 等待进入游戏
 	//emLoginState_Playing			= 5,	// 游戏状态
 	emLoginStateMax
+};
+
+// 登录删除状态
+enum EmLoginDelState
+{
+	emLoginDelState_None		= 0,		// 不是删除状态
+	emLoginDelState_Error		= 1,		// 出错删除
+	emLoginDelState_Complete	= 2,		// 完成删除
 };
 
 class CLoginPlayer : public CObj
@@ -32,6 +40,7 @@ public:
 		mClientMessageID = 0;
 		mDBResponse = NULL;
 		mDBSessionType = emSessionType_None;
+		mDelState = emLoginDelState_None;
 	}
 
 	~CLoginPlayer(){}
@@ -43,6 +52,9 @@ public:
 	int			processAccountVerify();
 	int			processWaitCreateRole();
 	int			processCreateRoleing();
+	int			processLoginComplete();
+	int			onSwitchFailure();
+
 	bool		elapse(unsigned int nTickOffset);
 	void		setCurStateTime(int nTime);
 public:
@@ -82,7 +94,11 @@ public:
 	EmSessionType getDBSessionType() const { return mDBSessionType; }
 	void		setDBSessionType(EmSessionType eValue) { mDBSessionType = eValue; }
 
-	EMLoginState getLoginState(){return (EMLoginState)mStateMachine.getCurState();}
+	EmLoginState getLoginState(){return (EmLoginState)mStateMachine.getCurState();}
+
+	EmLoginDelState GetDelState() const { return mDelState; }
+	void SetDelState(EmLoginDelState nValue) { mDelState = nValue; }
+
 private:
 	unsigned int					mAccountID;								// 账号ID
 	short							mChannelID;								// 渠道
@@ -101,5 +117,7 @@ private:
 	CDBResponse*					mDBResponse;
 	// 从DB发过来的消息ID
 	EmSessionType					mDBSessionType;
+	// 是否是删除状态(已经出错或者登录完成)
+	EmLoginDelState					mDelState;
 };
 #endif

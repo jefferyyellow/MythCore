@@ -58,6 +58,10 @@ public:
 		int nNewState = (mpClass->*mStateData[mCurState].mStateFunc)();
 		if (nNewState < 0)
 		{
+			if (NULL != mSwitchFailure)
+			{
+				(mpClass->*mSwitchFailure)();
+			}
 			return;
 		}
 
@@ -97,10 +101,15 @@ public:
 		mStateData[mCurState].mLeftTime = nTime;
 	}
 
+	void setSwitchFailure(StateFunc pFailureFunc)
+	{
+		mSwitchFailure = pFailureFunc;
+	}
 
 private:
 	CState		mStateData[Size];		// 状态机所有状态
 	int			mCurState;				// 当前状态
-	ClassType*	mpClass;
+	ClassType*	mpClass;				// 关联的类指针
+	StateFunc	mSwitchFailure;			// 切换失败的回调
 };
 #endif

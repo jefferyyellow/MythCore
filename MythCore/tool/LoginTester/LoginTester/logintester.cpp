@@ -308,7 +308,7 @@ void CLoginTester::onTime(int nElapseTime)
 	if (mResetTimer.elapse(nElapseTime))
 	{
 		mResetTimer.setLeftTime(100000000);
-		for (int i = 0; i < 1; ++ i)
+		for (int i = 0; i < 3; ++ i)
 		{
 			char szAccountName[MAX_NAME_LENGTH] = {0};
 			snprintf(szAccountName, sizeof(szAccountName) - 1, "hjh%d", nRand);

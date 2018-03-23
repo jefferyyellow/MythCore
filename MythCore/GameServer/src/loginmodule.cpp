@@ -79,22 +79,24 @@ void CLoginModule::onTimer(unsigned int nTickOffset)
 		{
 			int nObjID = it->second;
 			CLoginPlayer* pLoginPlayer = static_cast<CLoginPlayer*>(CObjPool::Inst()->getObj(nObjID));
-			LOGIN_LIST::iterator itOld = it;
 			if (NULL == pLoginPlayer)
 			{
-				++ it;
-				mLoginList.erase(itOld);
+				it = mLoginList.erase(it);
 				continue;
 			}
-			// 超时
-			if (pLoginPlayer->elapse(1))
+
+			bool bOverTime = pLoginPlayer->elapse(1);
+			// 如果是删除状态或者超时
+			if (emLoginDelState_None != pLoginPlayer->GetDelState() || bOverTime)
 			{
-				printf("\n*****33333****%s******\n", pLoginPlayer->getAccountName());
 				removeVerifyPlayer(pLoginPlayer->getChannelID(), pLoginPlayer->getServerID(), pLoginPlayer->getAccountID());
-				++ it;
-				mLoginList.erase(itOld);
+				it = mLoginList.erase(it);
 				CObjPool::Inst()->free(nObjID);
-				CSceneJob::Inst()->disconnectPlayer(pLoginPlayer->getExchangeHead());
+				// 如果登录完成了就不能断开连接
+				if (emLoginDelState_Complete != pLoginPlayer->GetDelState())
+				{
+					CSceneJob::Inst()->disconnectPlayer(pLoginPlayer->getExchangeHead());
+				}
 				continue;
 			}
 
@@ -140,20 +142,17 @@ void CLoginModule::onClientMessage(CExchangeHead& rExchangeHead, unsigned int nM
 
 	printf("pLoginPlayer: %d", pLoginPlayer->getObjID());
 
-	if (nMessageID == ID_C2S_REQUEST_ENTER_SCENE)
+	// 如果是删除状态了，直接不处理
+	if (emLoginDelState_None != pLoginPlayer->GetDelState())
 	{
-		processWaitEnterGame(pLoginPlayer, pMessage);
-		removeVerifyPlayer(pLoginPlayer->getChannelID(), pLoginPlayer->getServerID(), pLoginPlayer->getAccountID());
-		mLoginList.erase(rExchangeHead.mSocketIndex);
-		// 完成使命，释放掉
-		CObjPool::Inst()->free(pLoginPlayer->getObjID());
+		return;
 	}
-	else
-	{
-		pLoginPlayer->setClientMessage(pMessage);
-		pLoginPlayer->setClientMessageID(nMessageID);
-		pLoginPlayer->checkState();
-	}
+
+	pLoginPlayer->setClientMessage(pMessage);
+	pLoginPlayer->setClientMessageID(nMessageID);
+	pLoginPlayer->checkState();
+	pLoginPlayer->setClientMessage(NULL);
+	pLoginPlayer->setClientMessageID(0);
 }
 
 void CLoginModule::OnDBMessage(CDBResponse* pMsg)
@@ -165,6 +164,12 @@ void CLoginModule::OnDBMessage(CDBResponse* pMsg)
 	int nLoginPlayerObjID  = pMsg->mParam1;
 	CLoginPlayer* pLoginPlayer = static_cast<CLoginPlayer*>(CObjPool::Inst()->getObj(nLoginPlayerObjID));
 	if (NULL == pLoginPlayer)
+	{
+		return;
+	}
+
+	// 如果是删除状态了，直接不处理
+	if (emLoginDelState_None != pLoginPlayer->GetDelState())
 	{
 		return;
 	}
@@ -194,69 +199,7 @@ void CLoginModule::processWaitEnterGame(CLoginPlayer* pLoginPlayer, Message* pMe
 		return;
 	}
 
-	if (pLoginPlayer->getServerID() != pEnterSceneRequest->serverid()
-	|| pLoginPlayer->getChannelID() != pEnterSceneRequest->channelid()
-	|| pLoginPlayer->getAccountID() != pEnterSceneRequest->accountid()
-	|| pLoginPlayer->getRoleID() != pEnterSceneRequest->roleid())
-	{
-		return;
-	}
 
-	if (0 == pEnterSceneRequest->roleid())
-	{
-		LOG_ERROR("enter scene role id invalid: %d", pEnterSceneRequest->roleid());
-		return;
-	}
-
-	CEntityPlayer* pPlayer = CSceneJob::Inst()->getPlayerByRoleID(pEnterSceneRequest->roleid());
-	if (NULL != pPlayer)
-	{
-		printf("Kick out by other: %d\n", pEnterSceneRequest->roleid());
-		// 如果加入不了到列表，就踢不下线
-		if (!CSceneJob::Inst()->addPlayerSocketIndex(pLoginPlayer->getExchangeHead().mSocketIndex, pPlayer->getObjID()))
-		{
-			CSceneJob::Inst()->disconnectPlayer(pLoginPlayer->getExchangeHead());
-			return;
-		}
-		// 改成正常的游戏状态
-		pPlayer->setPlayerStauts(emPlayerStatus_Gameing);
-		// 将原来的玩家下线
-		CSceneJob::Inst()->disconnectPlayer(pPlayer);
-
-		// 换成新的玩家socket信息
-		pPlayer->GetExhangeHead() = pLoginPlayer->getExchangeHead();
-		CEnterSceneResponse tEnterSceneResponse;
-		tEnterSceneResponse.set_result(0);
-		CSceneJob::Inst()->send2Player(pPlayer->GetExhangeHead(), ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
-	}
-	else
-	{
-		printf("new player login: %d\n", pEnterSceneRequest->roleid());
-		CEntityPlayer* pNewPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->allocObj(emObjType_Entity_Player));
-		if (NULL == pNewPlayer)
-		{
-			return;
-		}
-
-		pNewPlayer->setPlayerStauts(emPlayerStatus_Loading);
-		pNewPlayer->setRoleID(pEnterSceneRequest->roleid());
-		pNewPlayer->GetExhangeHead() = pLoginPlayer->getExchangeHead();
-
-
-		bool bResult = CSceneJob::Inst()->onPlayerLogin(pNewPlayer);
-		if (!bResult)
-		{
-			CObjPool::Inst()->free(pNewPlayer->getObjID());
-			return;
-		}
-		printf("******processWaitEnterGame: %d\n", pNewPlayer->getObjID());
-		CDBModule::Inst()->pushDBTask(pLoginPlayer->getRoleID(), emSessionType_LoadPlayerInfo, pNewPlayer->getObjID(), 0, "call LoadPlayerInfo(%d)", pLoginPlayer->getRoleID());
-		CDBModule::Inst()->pushDBTask(pLoginPlayer->getRoleID(), emSessionType_LoadPlayerBaseProperty, pNewPlayer->getObjID(), 0, "call LoadPlayerBaseProperty(%d)", pLoginPlayer->getRoleID());
-
-		CEnterSceneResponse tEnterSceneResponse;
-		tEnterSceneResponse.set_result(0);
-		CSceneJob::Inst()->send2Player(pNewPlayer->GetExhangeHead(), ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
-	}
 }
 
 ///  一个Socket断开

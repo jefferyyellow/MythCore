@@ -13,8 +13,8 @@ void CLoginPlayer::init()
 	mStateMachine.addState(emLoginState_AccountVerify,	5, &CLoginPlayer::processAccountVerify);
 	mStateMachine.addState(emLoginState_WaitCreateRole, 10, &CLoginPlayer::processWaitCreateRole);
 	mStateMachine.addState(emLoginState_CreateRoleing,	5, &CLoginPlayer::processCreateRoleing);
-	mStateMachine.addState(emLoginState_LoginComplete, 5, NULL);
-
+	mStateMachine.addState(emLoginState_LoginComplete, 5, &CLoginPlayer::processLoginComplete);
+	mStateMachine.setSwitchFailure(&CLoginPlayer::onSwitchFailure);
 	//mStateMachine.addState(emLoginState_WaitEnterGame,	10, &CLoginPlayer::processWaitEnterGame);
 	//mStateMachine.addState(emLoginState_Playing,		10, &CLoginPlayer::processWaitPlaying);
 }
@@ -30,7 +30,6 @@ int CLoginPlayer::processStateNone()
 	{
 		// 将当前的状态时间置零
 		LOG_ERROR("Client message is null or client message id is login request!");
-		setCurStateTime(0);
 		return -1;
 	}
 
@@ -39,7 +38,6 @@ int CLoginPlayer::processStateNone()
 	{
 		// 将当前的状态时间置零
 		LOG_ERROR("CLoginRequest message is null!");
-		setCurStateTime(0);
 		return -1;
 	}
 
@@ -59,13 +57,11 @@ int CLoginPlayer::processAccountVerify()
 	if (NULL == mDBResponse || emSessionType_AccountVerify != mDBSessionType)
 	{
 		// 将当前的状态时间置零
-		setCurStateTime(0);
 		LOG_ERROR("processAccountVerify, Account Name: %s, ChannelId: %d, ServerId: %d, DB Session Type: %d", mAccountName, mChannelID, mServerID, mDBSessionType);
 		return -1;
 	}
 	if (SUCCESS != mDBResponse->mResult)
 	{
-		setCurStateTime(0);
 		LOG_ERROR("processAccountVerify, Account Name: %s, ChannelId: %d, ServerId: %d, DB Result: %d", mAccountName, mChannelID, mServerID, mDBResponse->mResult);
 		return -1;
 	}
@@ -76,7 +72,6 @@ int CLoginPlayer::processAccountVerify()
 	if (0 != strncmp(acName, mAccountName, MAX_PLAYER_NAME_LEN))
 	{
 		LOG_ERROR("Account Name is not match, Account Name: %s, AccountId: %d, ChannelId: %d, ServerId: %d, Another Name: %s", mAccountName, mAccountID, mChannelID, mServerID, acName);
-		setCurStateTime(0);
 		return -1;
 	}
 
@@ -86,7 +81,6 @@ int CLoginPlayer::processAccountVerify()
 	if (0 == mAccountID)
 	{
 		LOG_ERROR("Account id is zero, Account Name: %s, AccountId: %d, ChannelId: %d, ServerId: %d", mAccountName, mAccountID, mChannelID, mServerID);
-		setCurStateTime(0);
 		return -1;
 	}
 
@@ -96,7 +90,6 @@ int CLoginPlayer::processAccountVerify()
 	{
 		LOG_ERROR("Player already verify, AccountName: %s, ChannelID: %d, ServerID: %d, AccountID: %d",
 			mAccountName, mChannelID, mServerID, mAccountID);
-		setCurStateTime(0);
 		return -1;
 	}
 
@@ -105,7 +98,6 @@ int CLoginPlayer::processAccountVerify()
 	{
 		LOG_ERROR("Add player to verify list failure, AccountName: %s, ChannelID: %d, ServerID: %d, AccountID: %d",
 			mAccountName, mChannelID, mServerID, mAccountID);
-		setCurStateTime(0);
 		return -1;
 	}
 	mRoleID = mDBResponse->getInt();
@@ -133,7 +125,6 @@ int CLoginPlayer::processWaitCreateRole()
 	{
 		LOG_ERROR("Client message is null or client message id not create role!");
 		// 将当前的状态时间置零
-		setCurStateTime(0);
 		return -1;
 	}
 	CCreateRoleRequest* pCreateRoleRequest = static_cast<CCreateRoleRequest*>(mClientMessage);
@@ -141,7 +132,6 @@ int CLoginPlayer::processWaitCreateRole()
 	{
 		LOG_ERROR("Create role request is null!");
 		// 将当前的状态时间置零
-		setCurStateTime(0);
 		return -1;
 	}
 
@@ -152,14 +142,12 @@ int CLoginPlayer::processWaitCreateRole()
 		// 将当前的状态时间置零
 		LOG_ERROR("Server id, channel id, account id is not match, old server id: %d, channel id: %d, account id: %d,request server id: %d, channel id: %d, account id: %d",
 			mServerID, mChannelID, mAccountID, pCreateRoleRequest->serverid(), pCreateRoleRequest->channelid(), pCreateRoleRequest->accountid());
-		setCurStateTime(0);
 		return -1;
 	}
 
 	int nRoleID = CLoginModule::Inst()->allocateRoleID(mServerID);
 	if (nRoleID <= 0)
 	{
-		setCurStateTime(0);
 		LOG_ERROR("allocate role id invalid, role id: %d", nRoleID);
 		return -1;
 	}
@@ -177,7 +165,6 @@ int CLoginPlayer::processCreateRoleing()
 	{
 		LOG_ERROR("DBResponse is null or session type is create role!");
 		// 将当前的状态时间置零
-		setCurStateTime(0);
 		return -1;
 	}
 	
@@ -203,6 +190,90 @@ int CLoginPlayer::processCreateRoleing()
 	return emLoginState_LoginComplete;
 }
 
+int CLoginPlayer::processLoginComplete()
+{
+	if (NULL == mClientMessage || ID_C2S_REQUEST_ENTER_SCENE != mClientMessageID)
+	{
+		LOG_ERROR("Client message is null or client message id not create role!");
+		// 将当前的状态时间置零
+		return -1;
+	}
+
+	CEnterSceneRequest* pEnterSceneRequest = static_cast<CEnterSceneRequest*>(mClientMessage);
+	if (NULL == pEnterSceneRequest)
+	{
+		LOG_ERROR("Create role request is null!");
+		// 将当前的状态时间置零
+		return -1;
+	}
+	if (getServerID() != pEnterSceneRequest->serverid()
+		|| getChannelID() != pEnterSceneRequest->channelid()
+		|| getAccountID() != pEnterSceneRequest->accountid()
+		|| getRoleID() != pEnterSceneRequest->roleid())
+	{
+		return -1;
+	}
+
+	if (0 == pEnterSceneRequest->roleid())
+	{
+		LOG_ERROR("enter scene role id invalid: %d", pEnterSceneRequest->roleid());
+		return -1;
+	}
+
+	CEntityPlayer* pPlayer = CSceneJob::Inst()->getPlayerByRoleID(pEnterSceneRequest->roleid());
+	if (NULL != pPlayer)
+	{
+		printf("Kick out by other: %d\n", pEnterSceneRequest->roleid());
+		// 如果加入不了到列表，就踢不下线
+		if (!CSceneJob::Inst()->addPlayerSocketIndex(getExchangeHead().mSocketIndex, pPlayer->getObjID()))
+		{
+			CSceneJob::Inst()->disconnectPlayer(getExchangeHead());
+			return -1;
+		}
+		// 改成正常的游戏状态
+		pPlayer->setPlayerStauts(emPlayerStatus_Gameing);
+		// 将原来的玩家下线
+		CSceneJob::Inst()->disconnectPlayer(pPlayer);
+
+		// 换成新的玩家socket信息
+		pPlayer->GetExhangeHead() = getExchangeHead();
+		CEnterSceneResponse tEnterSceneResponse;
+		tEnterSceneResponse.set_result(0);
+		CSceneJob::Inst()->send2Player(pPlayer->GetExhangeHead(), ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
+	}
+	else
+	{
+		printf("new player login: %d\n", pEnterSceneRequest->roleid());
+		CEntityPlayer* pNewPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->allocObj(emObjType_Entity_Player));
+		if (NULL == pNewPlayer)
+		{
+			return -1;
+		}
+
+		pNewPlayer->setPlayerStauts(emPlayerStatus_Loading);
+		pNewPlayer->setRoleID(pEnterSceneRequest->roleid());
+		pNewPlayer->GetExhangeHead() = getExchangeHead();
+
+
+		bool bResult = CSceneJob::Inst()->onPlayerLogin(pNewPlayer);
+		if (!bResult)
+		{
+			CObjPool::Inst()->free(pNewPlayer->getObjID());
+			return -1;
+		}
+		printf("******processWaitEnterGame: %d\n", pNewPlayer->getObjID());
+		CDBModule::Inst()->pushDBTask(getRoleID(), emSessionType_LoadPlayerInfo, pNewPlayer->getObjID(), 0, "call LoadPlayerInfo(%d)", getRoleID());
+		CDBModule::Inst()->pushDBTask(getRoleID(), emSessionType_LoadPlayerBaseProperty, pNewPlayer->getObjID(), 0, "call LoadPlayerBaseProperty(%d)", getRoleID());
+
+		CEnterSceneResponse tEnterSceneResponse;
+		tEnterSceneResponse.set_result(0);
+		CSceneJob::Inst()->send2Player(pNewPlayer->GetExhangeHead(), ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
+	}
+
+	SetDelState(emLoginDelState_Complete);
+	return emLoginState_None;
+}
+
 bool CLoginPlayer::elapse(unsigned int nTickOffset)
 {
 	return mStateMachine.elapse(nTickOffset);
@@ -211,4 +282,10 @@ bool CLoginPlayer::elapse(unsigned int nTickOffset)
 void CLoginPlayer::setCurStateTime(int nTime)
 {
 	mStateMachine.setTime(nTime);
+}
+
+int CLoginPlayer::onSwitchFailure()
+{
+	SetDelState(emLoginDelState_Error);
+	return 0;
 }
