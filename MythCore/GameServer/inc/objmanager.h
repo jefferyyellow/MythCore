@@ -51,6 +51,14 @@ public:
 		mFixMemory.free(nIndex);
 	}
 
+	/// 得到已经分配的Obj数目
+	int getObjNum(){ return mFixMemory.getAllocCount(); }
+
+	/// 得到最大的obj数目
+	int	getMaxNum(){return MaxCount;}
+
+	/// 得到已经用了的Obj数目
+	int getUsedNum(){return mFixMemory.getUsedCount();}
 private:
 	// ***********************************************************************
 	// 算法注释
@@ -88,6 +96,7 @@ private:
 
 		return (nID - IDStart) % MaxCount;
 	}
+
 
 private:
 	CFixBlockMemory<T, MaxCount, BaseCount, IncreCount> mFixMemory;

@@ -16,6 +16,7 @@ public:
 	CObj*	allocObj(EmObjType eType);
 	CObj*	getObj(int nObjID);
 	void	free(int nObjID);
+	void	logObjNum();
 
 private:
 	CObjPoolImp* mPoolImp;

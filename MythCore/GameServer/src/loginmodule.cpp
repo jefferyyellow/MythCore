@@ -153,6 +153,15 @@ void CLoginModule::onClientMessage(CExchangeHead& rExchangeHead, unsigned int nM
 	pLoginPlayer->checkState();
 	pLoginPlayer->setClientMessage(NULL);
 	pLoginPlayer->setClientMessageID(0);
+
+	const ::google::protobuf::Descriptor* pDescriptor = pMessage->GetDescriptor();
+
+	LOG_DEBUG("default", "---- Receive from client(Obj Id:%d|Account Id:%d|Channel:%d|Server:%d|Role:%d|Name:%s) \
+Msg[ %s ][id: 0x%04x/%d] ---",
+		pLoginPlayer->getObjID(), pLoginPlayer->getAccountID(), pLoginPlayer->getChannelID(),
+		pLoginPlayer->getServerID(), pLoginPlayer->getRoleID(), pLoginPlayer->getAccountName(), 
+		pDescriptor->name().c_str(),nMessageID, nMessageID);
+	LOG_DEBUG("default", "[%s]", pMessage->ShortDebugString().c_str());
 }
 
 void CLoginModule::OnDBMessage(CDBResponse* pMsg)

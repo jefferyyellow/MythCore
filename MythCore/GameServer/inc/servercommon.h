@@ -16,5 +16,5 @@ using namespace tinyxml2;
 #define TEAM_MEM_NUM			4
 #define PLAYER_NAME_LENGTH		32
 
-#define SECONDS_PER_DAY			86400	 // 每天的秒数
-
+#define SECONDS_PER_DAY			86400		// 每天的秒数
+#define SECONDS_PER_MIN			60			// 每分钟的秒数

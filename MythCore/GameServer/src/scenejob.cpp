@@ -19,8 +19,10 @@
 #include "chatmodule.h"
 #include "skillmodule.h"
 #include "rankmodule.h"
+#include "loginplayer.h"
 
 CSceneJob::CSceneJob()
+:mMinuteTimer(SECONDS_PER_MIN)
 {
 
 }
@@ -119,6 +121,12 @@ void CSceneJob::doRun()
 	time_t tTimeNow = CTimeManager::Inst()->getCurrTime();
 	if (tTimeNow != mLastTime)
 	{
+		// 就是秒
+		if(mMinuteTimer.elapse((int)(tTimeNow - mLastTime)))
+		{
+			CObjPool::Inst()->logObjNum();
+		}
+
 		int nDay = mTmNow.tm_yday;
 		setTmNow(tTimeNow);
 		mLastTime = tTimeNow;
@@ -484,11 +492,33 @@ void CSceneJob::processClientMessage()
 				{
 					return;
 				}
-
+				const ::google::protobuf::Descriptor* pDescriptor = pMessage->GetDescriptor();
+				LOG_DEBUG("default", "---- Receive from client(Obj Id:%d|Role:%d|Name:%s) Msg[ %s ][id: 0x%04x/%d] ---",
+									 pPlayer->getObjID(), pPlayer->getRoleID(), pPlayer->getName(),
+									 pDescriptor->name().c_str(), nMessageID, nMessageID);
+				LOG_DEBUG("default", "[%s]", pMessage->ShortDebugString().c_str());
 				dispatchClientMessage(pPlayer, nMessageID, pMessage);
 			}
 		}
 	}
+}
+
+void CSceneJob::send2Player(CLoginPlayer* pLoginPlayer, unsigned short nMessageID, Message* pMessage)
+{
+	if (NULL == pLoginPlayer)
+	{
+		return;
+	}
+
+	const ::google::protobuf::Descriptor* pDescriptor = pMessage->GetDescriptor();
+
+	LOG_DEBUG("default", "---- Receive from client(Obj Id:%d|Account Id:%d|Channel:%d|Server:%d|Role:%d|Name:%s) \
+						 Msg[ %s ][id: 0x%04x/%d] ---",
+						 pLoginPlayer->getObjID(), pLoginPlayer->getAccountID(), pLoginPlayer->getChannelID(),
+						 pLoginPlayer->getServerID(), pLoginPlayer->getRoleID(), pLoginPlayer->getAccountName(),
+						 pDescriptor->name().c_str(), nMessageID, nMessageID);
+	LOG_DEBUG("default", "[%s]", pMessage->ShortDebugString().c_str());
+	send2Player(pLoginPlayer->getExchangeHead(), nMessageID, pMessage);
 }
 
 /// 发送前端消息
@@ -522,6 +552,13 @@ void CSceneJob::send2Player(CEntityPlayer* pPlayer, unsigned short nMessageID, M
 	{
 		return;
 	}
+
+	const ::google::protobuf::Descriptor* pDescriptor = pMessage->GetDescriptor();
+	LOG_DEBUG("default", "---- Send to client(Obj Id:%d|Role:%d|Name:%s) Msg[ %s ][id: 0x%04x/%d] ---",
+		pPlayer->getObjID(), pPlayer->getRoleID(), pPlayer->getName(),
+		pDescriptor->name().c_str(), nMessageID, nMessageID);
+	LOG_DEBUG("default", "[%s]", pMessage->ShortDebugString().c_str());
+	
 	send2Player(pPlayer->GetExhangeHead(), nMessageID, pMessage);
 }
 

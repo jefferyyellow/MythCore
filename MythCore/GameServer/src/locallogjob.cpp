@@ -3,42 +3,58 @@
 #include "logmanager.h"
 #include "internalmsgpool.h"
 #include "internalmsg.h"
-const char* gXXXXXXX = NULL;
 void LogLocalLog(EmLogType eLogType, const char* pFile, int nLine, const char* pFunction, const char* pFormat, ...)
 {
+	CIMLocalLogRequest* pLocalLogRequest = static_cast<CIMLocalLogRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_LOCAL_LOG));
+	if (NULL == pLocalLogRequest)
+	{
+		return;
+	}
+	const char* pFileName = NULL;
 	va_list valist;
 	va_start(valist, pFormat);
-	char tBuffer[MAX_LOG_BUFFER_NUM] = { 0 };
-	int nSize = snprintf(tBuffer, sizeof(tBuffer) - 1, "[%s:%d (%s)] ", LOG_FILE(pFile), nLine, pFunction);
-	vsnprintf(tBuffer + nSize, sizeof(tBuffer) - nSize - 1, pFormat, valist);
+	int nSize = snprintf(pLocalLogRequest->mLogContent, sizeof(pLocalLogRequest->mLogContent)-1, "[%s:%d (%s)] ", LOG_FILE(pFile), nLine, pFunction);
+	vsnprintf(pLocalLogRequest->mLogContent + nSize, sizeof(pLocalLogRequest->mLogContent)-nSize - 1, pFormat, valist);
 	va_end(valist);
-	
+	pLocalLogRequest->mLogType = eLogType;
+	CGameServer::Inst()->pushTask(emTaskType_LocalLog, pLocalLogRequest);
+}
+
+void LogNoLocation(EmLogType eLogType, const char* pFormat, ...)
+{
 	CIMLocalLogRequest* pLocalLogRequest = static_cast<CIMLocalLogRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_LOCAL_LOG));
-	if (NULL != pLocalLogRequest)
+	if (NULL == pLocalLogRequest)
 	{
-		pLocalLogRequest->mLogType = eLogType;
-		strncpy(pLocalLogRequest->mLogContent, tBuffer, sizeof(pLocalLogRequest->mLogContent));
-		CGameServer::Inst()->pushTask(emTaskType_LocalLog, pLocalLogRequest);
+		return;
 	}
+	const char* pFileName = NULL;
+	va_list valist;
+	va_start(valist, pFormat);
+	vsnprintf(pLocalLogRequest->mLogContent, sizeof(pLocalLogRequest->mLogContent) - 1, pFormat, valist);
+	va_end(valist);
+
+
+	pLocalLogRequest->mLogType = eLogType;
+	CGameServer::Inst()->pushTask(emTaskType_LocalLog, pLocalLogRequest);
 }
 
 void LogLocalDebugLog(const char* pLogName, const char* pFile, int nLine, const char* pFunction, const char* pFormat, ...)
 {
+	CIMLocalLogRequest* pLocalLogRequest = static_cast<CIMLocalLogRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_LOCAL_LOG));
+	if (NULL == pLocalLogRequest)
+	{
+		return;
+	}
+	const char* pFileName = NULL;
+
+	pLocalLogRequest->mLogType = emLogType_Debug;
+	strncpy(pLocalLogRequest->mDebugName, pLogName, sizeof(pLocalLogRequest->mDebugName));
 	va_list valist;
 	va_start(valist, pFormat);
-	char tBuffer[MAX_LOG_BUFFER_NUM] = { 0 };
-	int nSize = snprintf(tBuffer, sizeof(tBuffer) - 1, "[%s:%d (%s)] ", LOG_FILE(pFile), nLine, pFunction);
-	vsnprintf(tBuffer + nSize, sizeof(tBuffer) - nSize - 1, pFormat, valist);
+	int nSize = snprintf(pLocalLogRequest->mLogContent, sizeof(pLocalLogRequest->mLogContent)-1, "[%s:%d (%s)] ", LOG_FILE(pFile), nLine, pFunction);
+	vsnprintf(pLocalLogRequest->mLogContent + nSize, sizeof(pLocalLogRequest->mLogContent)-nSize - 1, pFormat, valist);
 	va_end(valist);
-
-	CIMLocalLogRequest* pLocalLogRequest = static_cast<CIMLocalLogRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_LOCAL_LOG));
-	if (NULL != pLocalLogRequest)
-	{
-		pLocalLogRequest->mLogType = emLogType_Debug;
-		strncpy(pLocalLogRequest->mDebugName, pLogName, sizeof(pLocalLogRequest->mDebugName));
-		strncpy(pLocalLogRequest->mLogContent, tBuffer, sizeof(pLocalLogRequest->mLogContent));
-		CGameServer::Inst()->pushTask(emTaskType_LocalLog, pLocalLogRequest);
-	}
+	CGameServer::Inst()->pushTask(emTaskType_LocalLog, pLocalLogRequest);
 }
 
 bool CLocalLogJob::init()

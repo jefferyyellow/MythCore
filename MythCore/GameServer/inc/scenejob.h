@@ -26,6 +26,7 @@ enum EmServerState
 class CEntityPlayer;
 class CLogicModule;
 class CEntity;
+class CLoginPlayer;
 class CSceneJob : public CJob < 1000, 100 >, public CSingleton<CSceneJob>
 {
 public:
@@ -75,8 +76,7 @@ public:
 	void		onNewDayCome();
 
 public:
-	/// 发送前端消息
-	void		send2Player(CExchangeHead& rExchangeHead, unsigned short nMessageID, Message* pMessage);
+	void		send2Player(CLoginPlayer* pLoginPlayer, unsigned short nMessageID, Message* pMessage);
 	void		send2Player(CEntityPlayer* pPlayer, unsigned short nMessageID, Message* pMessage);
 	/// 发生给所有的玩家消息
 	void		send2AllPlayer(unsigned short nMessageID, Message* pMessage);
@@ -102,6 +102,8 @@ public:
 	/// 删除socket index
 	void			removePlayerSocketIndex(short nSocketIndex);
 private:
+	/// 发送前端消息
+	void		send2Player(CExchangeHead& rExchangeHead, unsigned short nMessageID, Message* pMessage);
 	void		onTask(CInternalMsg* pMsg);
 	/// 处理前端消息
 	void		processClientMessage();
@@ -152,5 +154,7 @@ private:
 	struct tm				mTmNow;
 	/// 指定时间的那天早上（00：00：00）
 	time_t					mMorningTime;
+	/// 秒计时器,按秒计数
+	CAutoResetTimer			mMinuteTimer;
 };
 #endif

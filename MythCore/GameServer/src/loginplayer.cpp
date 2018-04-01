@@ -108,7 +108,7 @@ int CLoginPlayer::processAccountVerify()
 	tLoginResponse.set_serverid(mServerID);
 	tLoginResponse.set_roleid(mRoleID);
 	
-	CSceneJob::Inst()->send2Player(mExchangeHead, ID_S2C_RESPONSE_LOGIN, &tLoginResponse);
+	CSceneJob::Inst()->send2Player(this, ID_S2C_RESPONSE_LOGIN, &tLoginResponse);
 	if (mRoleID == 0)
 	{
 		return emLoginState_WaitCreateRole;
@@ -185,7 +185,7 @@ int CLoginPlayer::processCreateRoleing()
 	CCreateRoleResponse tCreateRoleResponse;
 	tCreateRoleResponse.set_result(0);
 	tCreateRoleResponse.set_roleid(mRoleID);
-	CSceneJob::Inst()->send2Player(mExchangeHead, ID_S2C_RESPONSE_CREATE_ROLE, &tCreateRoleResponse);
+	CSceneJob::Inst()->send2Player(this, ID_S2C_RESPONSE_CREATE_ROLE, &tCreateRoleResponse);
 
 	return emLoginState_LoginComplete;
 }
@@ -239,7 +239,7 @@ int CLoginPlayer::processLoginComplete()
 		pPlayer->GetExhangeHead() = getExchangeHead();
 		CEnterSceneResponse tEnterSceneResponse;
 		tEnterSceneResponse.set_result(0);
-		CSceneJob::Inst()->send2Player(pPlayer->GetExhangeHead(), ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
+		CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
 	}
 	else
 	{
@@ -267,7 +267,7 @@ int CLoginPlayer::processLoginComplete()
 
 		CEnterSceneResponse tEnterSceneResponse;
 		tEnterSceneResponse.set_result(0);
-		CSceneJob::Inst()->send2Player(pNewPlayer->GetExhangeHead(), ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
+		CSceneJob::Inst()->send2Player(pNewPlayer, ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
 	}
 
 	SetDelState(emLoginDelState_Complete);
