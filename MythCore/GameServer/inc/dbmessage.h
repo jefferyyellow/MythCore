@@ -36,6 +36,16 @@ public:
 class CDBResponse : public CDBResponseHeader
 {
 public:
+	CDBResponse()
+	{
+		mpValue = NULL;
+		mpLength = NULL;
+	}
+	~CDBResponse()
+	{
+
+	}
+public:
 	void		resetPoint()
 	{
 		mpLength = (unsigned long*)mSqlBuffer;

@@ -45,15 +45,21 @@ public:
 		mSkillUnit(*this),
 		mServerActUnit(*this)
 	{
-		mName[0] = '\0';
-		mRoleID = 0;
-		mLastOffTime = 0;
-		mOnTime = 0;
-		mPlayerStauts = 0;
-		mLoadStatus = 0;
+		init();
 	}
 	~CEntityPlayer(){}
 
+	void			init()
+	{
+        mName[0] = '\0';
+        mRoleID = 0;
+        mLastOffTime = 0;
+        mOnTime = 0;
+        mLastSaveTime = 0;
+        mPlayerStauts = 0;
+        mSaveStatus = 0;
+        mLoadStatus = 0;
+	}
 public:
 	/// 刷新基本属性
 	void			refreshBaseProperty();
@@ -109,71 +115,81 @@ public:
 		mBaseProperty[eType].setDirty(bDirty);
 	}
 
-	/// 角色ID
-	unsigned int	getRoleID(){ return mRoleID; }
-	void			setRoleID(unsigned int nRoleID){ mRoleID = nRoleID; }
+	void			setSaveStatusBit(byte val){ mSaveStatus |= val; }
 
-	/// 上次下线的时间
-	time_t getLastOffTime() const { return mLastOffTime; }
-	void setLastOffTime(time_t val) { mLastOffTime = val; }
+	int				getLevel(){ return mPropertyUnit.getLevel(); }
 
-	/// 角色名字
-	char*			getName(){ return mName; }
-	void			setName(char* pName)
-	{
-		if (NULL == pName)
-		{
-			return;
-		}
-		strncpy(mName, pName, sizeof(mName)-1);
-	}
-
-	int				getLevel(){return mPropertyUnit.getLevel();}
-
+	void			setLoadStatusBit(byte val){ mLoadStatus |= val; }
 	// 用mTempID保存职业属性
-	int				getMetier(){return mTempID;}
-	void			setMetier(int nMetier){mTempID = nMetier;}
+	int				getMetier(){ return mTempID; }
+	void			setMetier(int nMetier){ mTempID = nMetier; }
 
-	/// 与TCP交换用的头
+	/// autocode don't edit!!!
+    CExchangeHead& getExchangeHead(){ return mExchangeHead;}
 
-	CExchangeHead&	GetExhangeHead(){ return mExhangeHead; }
+    CPropertyUnit& getPropertyUnit(){ return mPropertyUnit;}
 
-	/// 上次的存储时间
-	time_t			getLastSaveTime() const{return mLastSaveTime;}
-	void			setLastSaveTime(time_t val)	{mLastSaveTime = val;}
+    CItemUnit& getItemUnit(){ return mItemUnit;}
 
-	/// 玩家状态
-	byte			getPlayerStauts(){ return mPlayerStauts;	}
-	void			setPlayerStauts(byte val){ mPlayerStauts = val;}
+    CTaskUnit& getTaskUnit(){ return mTaskUnit;}
 
-	/// 存储状态
-	byte			getSaveStatus()const{return mSaveStatus;}
-	void			setSaveStatus(byte val){mSaveStatus = val;}
-	void			setSaveStatusBit(byte val){mSaveStatus |= val;}
+    CSkillUnit& getSkillUnit(){ return mSkillUnit;}
 
-	/// 加载状态
-	byte			getLoadStatus()const{return mLoadStatus;}
-	void			setLoadStatus(byte val){mLoadStatus = val;}
-	void			setLoadStatusBit(byte val){mLoadStatus |= val;}
+    CServerActivityUnit& getServerActUnit(){ return mServerActUnit;}
 
-	/// 各种单元
-	/// 属性单元
-	CPropertyUnit&	getPropertyUnit(){ return mPropertyUnit; }
-	/// 道具单元
-	CItemUnit&		getItemUnit(){ return mItemUnit; }
-	/// 任务单元
-	CTaskUnit&		getTaskUnit(){ return mTaskUnit; }
-	/// 技能单元
-	CSkillUnit&		getSkillUnit(){return mSkillUnit;}
-	/// 开服活动单元
-	CServerActivityUnit getServerActUnit(){return mServerActUnit;}
+    char* getName(){ return mName;}
+    void setName(const char* value)
+    {
+        if (NULL == value)
+        {
+            return;
+        }
+        strncpy(mName, value, sizeof(mName) - 1);
+    }
 
-	time_t getOnTime() const { return mOnTime; }
-	void setOnTime(time_t nValue) { mOnTime = nValue; }
+    unsigned int getRoleID(){ return mRoleID;}
+    void setRoleID(unsigned int value){ mRoleID = value;}
+
+    time_t getLastOffTime(){ return mLastOffTime;}
+    void setLastOffTime(time_t value){ mLastOffTime = value;}
+
+    time_t getOnTime(){ return mOnTime;}
+    void setOnTime(time_t value){ mOnTime = value;}
+
+    CBaseProperty* getBaseProperty(int nIndex)
+    {
+        if(nIndex < 0 || nIndex >= emPropertyTypeMax)
+        {
+            return NULL;
+        }
+        return &mBaseProperty[nIndex];
+    }
+    void setBaseProperty(int nIndex, CBaseProperty& value)
+    {
+        if(nIndex < 0 || nIndex >= emPropertyTypeMax)
+        {
+            return;
+        }
+        mBaseProperty[nIndex] = value;
+    }
+
+    time_t getLastSaveTime(){ return mLastSaveTime;}
+    void setLastSaveTime(time_t value){ mLastSaveTime = value;}
+
+    byte getPlayerStauts(){ return mPlayerStauts;}
+    void setPlayerStauts(byte value){ mPlayerStauts = value;}
+
+    byte getSaveStatus(){ return mSaveStatus;}
+    void setSaveStatus(byte value){ mSaveStatus = value;}
+
+    byte getLoadStatus(){ return mLoadStatus;}
+    void setLoadStatus(byte value){ mLoadStatus = value;}
+	/// end autocode
+
 
 private:
 	/// socket连接信息
-	CExchangeHead	mExhangeHead;
+	CExchangeHead	mExchangeHead;
 	/// 属性单元
 	CPropertyUnit	mPropertyUnit;
 	/// 道具单元

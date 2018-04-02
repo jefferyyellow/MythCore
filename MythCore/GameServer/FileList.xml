@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <Data>
-  <File HeadFile="inc/serveractivity.h" SrcFile="src/serveractivity.cpp"/>
-  <File HeadFile="inc/serveractivityunit.h" SrcFile="src/serveractivityunit.cpp"/>
-  <File HeadFile="inc/serveractmodule.h" SrcFile="src/serveractmodule.cpp"/>
-  <File HeadFile="inc/propertyunit.h" SrcFile="src/propertyunit.cpp"/>
+  <File HeadFile="inc/chatmodule.h" SrcFile="src/chatmodule.cpp"/>
+  <File HeadFile="inc/dailyactivity.h" SrcFile="src/dailyactivity.cpp"/>
   <File HeadFile="inc/dailyactmodule.h" SrcFile="src/dailyactmodule.cpp"/>
+  <File HeadFile="inc/dbjob.h" SrcFile="src/dbjob.cpp"/>
+  <File HeadFile="inc/dbmessage.h" SrcFile=""/>
+  <File HeadFile="inc/dbmodule.h" SrcFile="src/dbmodule.cpp"/>
+  <File HeadFile="inc/entity.h" SrcFile="src/entity.cpp"/>
+  <File HeadFile="inc/entitycreator.h" SrcFile="src/entitycreator.cpp"/>
+  <File HeadFile="inc/entityplayer.h" SrcFile="src/entityplayer.cpp"/>
+  <File HeadFile="inc/equip.h" SrcFile="src/equip.cpp"/>
+  <File HeadFile="inc/gameserver.h" SrcFile="src/gameserver.cpp"/>
+  <File HeadFile="inc/gameserverconfig.h" SrcFile="src/gameserverconfig.cpp"/>
 </Data>

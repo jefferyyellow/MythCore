@@ -23,6 +23,9 @@ private:
 	~CChatModule();
 
 public:
+	void	init();
+
+public:
 	/// 启动服务器
 	virtual void onLaunchServer();
 	/// 启动完成检查

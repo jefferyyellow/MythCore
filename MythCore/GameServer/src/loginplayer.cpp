@@ -236,7 +236,7 @@ int CLoginPlayer::processLoginComplete()
 		CSceneJob::Inst()->disconnectPlayer(pPlayer);
 
 		// 换成新的玩家socket信息
-		pPlayer->GetExhangeHead() = getExchangeHead();
+		pPlayer->getExchangeHead() = getExchangeHead();
 		CEnterSceneResponse tEnterSceneResponse;
 		tEnterSceneResponse.set_result(0);
 		CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
@@ -252,7 +252,7 @@ int CLoginPlayer::processLoginComplete()
 
 		pNewPlayer->setPlayerStauts(emPlayerStatus_Loading);
 		pNewPlayer->setRoleID(pEnterSceneRequest->roleid());
-		pNewPlayer->GetExhangeHead() = getExchangeHead();
+		pNewPlayer->getExchangeHead() = getExchangeHead();
 
 
 		bool bResult = CSceneJob::Inst()->onPlayerLogin(pNewPlayer);

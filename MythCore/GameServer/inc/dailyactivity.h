@@ -15,6 +15,16 @@ public:
 class CDailyActivity
 {
 public:
+	CDailyActivity()
+	{
+	}
+	~CDailyActivity()
+	{
+	}
+	
+	void init();
+
+public:
 	/// 配置部分
 	/// 活动类型
 	short				mType;
@@ -45,8 +55,13 @@ public:
 	/// 活动结束的清理
 	virtual void end() = 0;
 
+public:
+	/// autocode, don't edit!!!
+    EmDailyActStatus getStatus(){ return mStatus;}
+    void setStatus(EmDailyActStatus value){ mStatus = value;}
+	/// end autocode
 private:
-	/// 数据部分
+	/// 数据部分 default:emDailyActStatus_None
 	EmDailyActStatus	mStatus;
 };
 

@@ -9,7 +9,7 @@
 #include "errcode.h"
 CDBJob::CDBJob()
 {
-
+	init();
 }
 
 CDBJob::~CDBJob()
@@ -17,7 +17,13 @@ CDBJob::~CDBJob()
 
 }
 
-int CDBJob::init(char* pHost, char* pUserName, char* pPasswd, char* pDataBase, int nPort, char* pUnixSocket)
+void CDBJob::init()
+{
+    mJobBuffer = NULL;
+    mSqlLength = 0;
+}
+
+int CDBJob::initDB(char* pHost, char* pUserName, char* pPasswd, char* pDataBase, int nPort, char* pUnixSocket)
 {
 	int nResult = mDataBase.connectMysqlServer(pHost, pUserName, pPasswd, pDataBase, nPort, pUnixSocket);
 	return nResult;

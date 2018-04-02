@@ -20,7 +20,9 @@ private:
 
 public:
 	/// 初始化
-	bool		init();
+	void		init();
+	/// 初始化
+	bool		initAll();
 	/// 初始日志
 	bool		initLog();
 	/// 初始逻辑模块

@@ -8,18 +8,69 @@ class CGameServerConfig : public CSingleton<CGameServerConfig>
 {
 	friend class CSingleton<CGameServerConfig>;
 private:
-	CGameServerConfig(){}
+	CGameServerConfig()
+	{
+		init();
+	}
 	~CGameServerConfig(){}
+
+	void init()
+	{
+        mDBHost[0] = '\0';
+        mDBUserName[0] = '\0';
+        mDBPasswd[0] = '\0';
+        mDefaultDataBase[0] = '\0';
+        mDBPort = 0;
+	}
 
 public:
 	bool			loadGameServerConfigFromXml(const char* pFilePath);
 
 public:
-	char*			getDBHost(){return mDBHost;}
-	char*			getDBUserName(){return mDBUserName;}
-	char*			getDBPasswd(){return mDBPasswd;}
-	char*			getDefaultDataBase(){return mDefaultDataBase;}
-	short			getDBPort(){return mDBPort;}
+	/// autocode don't edit
+    char* getDBHost(){ return mDBHost;}
+    void setDBHost(const char* value)
+    {
+        if (NULL == value)
+        {
+            return;
+        }
+        strncpy(mDBHost, value, sizeof(mDBHost) - 1);
+    }
+
+    char* getDBUserName(){ return mDBUserName;}
+    void setDBUserName(const char* value)
+    {
+        if (NULL == value)
+        {
+            return;
+        }
+        strncpy(mDBUserName, value, sizeof(mDBUserName) - 1);
+    }
+
+    char* getDBPasswd(){ return mDBPasswd;}
+    void setDBPasswd(const char* value)
+    {
+        if (NULL == value)
+        {
+            return;
+        }
+        strncpy(mDBPasswd, value, sizeof(mDBPasswd) - 1);
+    }
+
+    char* getDefaultDataBase(){ return mDefaultDataBase;}
+    void setDefaultDataBase(const char* value)
+    {
+        if (NULL == value)
+        {
+            return;
+        }
+        strncpy(mDefaultDataBase, value, sizeof(mDefaultDataBase) - 1);
+    }
+
+    short getDBPort(){ return mDBPort;}
+    void setDBPort(short value){ mDBPort = value;}
+	/// end autocode
 
 private:
 	/// 注意，Host不只是有IP，还可能是域名

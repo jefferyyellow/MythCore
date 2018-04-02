@@ -6,6 +6,14 @@
 #include "mapmodule.h"
 #include "entitycreator.h"
 CEntity::PLAYER_ALLOC CEntity::mVisiblePlayerAlloc;
+void CEntity::init()
+{
+    mTempID = 0;
+    mLineID = 0;
+    mMapID = 0;
+    mMapIndex = 0;
+    mEntityType = emEntityType_None;
+}
 void CEntity::addVisiblePlayer(CEntity* pEntity)
 {
 	if (NULL == pEntity)
@@ -78,6 +86,13 @@ void CEntity::destroyEntity(CEntity* pEntity)
 	}
 
 	CObjPool::Inst()->free(pEntity->getObjID());
+}
+
+void CEntityCharacter::init()
+{
+    memset(mFightProperty, 0, sizeof(mFightProperty));
+    mCurHP = 0;
+    mCurMP = 0;
 }
 
 void CEntityCharacter::reduceHp(CEntityCharacter* pSrcEntity, int nNum)
@@ -198,6 +213,11 @@ void CEntityOgre::deadDrop(CEntityPlayer* pPlayer, CTplOgre* pTplOgre)
 void CEntityFuncNPC::initEntity(CEntityCreator* pCreator)
 {
 
+}
+
+void CEntityItem::init()
+{
+    mItemNum = 0;
 }
 
 /// ≥ı ºªØ

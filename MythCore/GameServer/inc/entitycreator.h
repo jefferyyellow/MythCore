@@ -9,13 +9,17 @@ public:
 	CEntityCreator()
 	{
 		mType = emEntityType_None;
-		mTempID = 0;
-		mLineID = 0;
-		mMapID = 0;
-		mMapIndex = 0;
+		init();
 	};
 	~CEntityCreator(){};
 
+	void init()
+	{
+        mTempID = 0;
+        mLineID = 0;
+        mMapID = 0;
+        mMapIndex = 0;
+	}
 public:
 	EmEntityType getType()const{return mType;}
 	void setType(EmEntityType val){	mType = val;}
@@ -44,10 +48,14 @@ public:
 	CItemCreator()
 	{
 		mType = emEntityType_Item;
-		mNum = 0;
-		memset(mOwnerID, 0, sizeof(mOwnerID));
+		init();
 	}
 	~CItemCreator(){}
+	void init()
+	{
+        mNum = 0;
+        memset(mOwnerID, 0, sizeof(mOwnerID));
+	}
 public:
 	/// 道具数目
 	int						mNum;

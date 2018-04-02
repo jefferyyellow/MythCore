@@ -141,7 +141,7 @@ int main(int argc, char* argv[])
 	setExclusive("gameserver.lock");
 
 	CGameServer::CreateInst();
-	CGameServer::Inst()->init();
+	CGameServer::Inst()->initAll();
 	CGameServer::Inst()->run();
 
 	// 释放protobuf中lib和msg占用的内存

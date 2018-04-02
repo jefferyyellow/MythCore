@@ -5,12 +5,16 @@
 #include "scenejob.h"
 CChatModule::CChatModule()
 {
-	
+	init();
 }
 
 CChatModule::~CChatModule()
 {
 	
+}
+
+void CChatModule::init()
+{
 }
 
 /// Æô¶¯·þÎñÆ÷

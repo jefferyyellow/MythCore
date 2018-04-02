@@ -559,7 +559,7 @@ void CSceneJob::send2Player(CEntityPlayer* pPlayer, unsigned short nMessageID, M
 		pDescriptor->name().c_str(), nMessageID, nMessageID);
 	LOG_DEBUG("default", "[%s]", pMessage->ShortDebugString().c_str());
 	
-	send2Player(pPlayer->GetExhangeHead(), nMessageID, pMessage);
+	send2Player(pPlayer->getExchangeHead(), nMessageID, pMessage);
 }
 
 /// 发生给所有的玩家消息
@@ -574,7 +574,7 @@ void CSceneJob::send2AllPlayer(unsigned short nMessageID, Message* pMessage)
 		{
 			continue;
 		}
-		send2Player(pPlayer->GetExhangeHead(), nMessageID, pMessage);
+		send2Player(pPlayer->getExchangeHead(), nMessageID, pMessage);
 	}
 }
 
@@ -594,8 +594,8 @@ void CSceneJob::disconnectPlayer(CEntityPlayer* pPlayer)
 		return;
 	}
 	// 端口连接的时候，将玩家的socket信息清除
-	removePlayerSocketIndex(pPlayer->GetExhangeHead().mSocketIndex);
-	disconnectPlayer(pPlayer->GetExhangeHead());
+	removePlayerSocketIndex(pPlayer->getExchangeHead().mSocketIndex);
+	disconnectPlayer(pPlayer->getExchangeHead());
 }
 
 /// 分发前端消息
@@ -653,7 +653,7 @@ void CSceneJob::dispatchClientMessage(CEntityPlayer* pPlayer, unsigned short nMe
 bool CSceneJob::onPlayerLogin(CEntityPlayer* pNewPlayer)
 {
 	std::pair<PLAYER_SOCKET_LIST::iterator, bool> tSocketIndexRet = mPlayerSocketList.insert(
-		PLAYER_SOCKET_LIST::value_type(pNewPlayer->GetExhangeHead().mSocketIndex, pNewPlayer->getObjID()));
+		PLAYER_SOCKET_LIST::value_type(pNewPlayer->getExchangeHead().mSocketIndex, pNewPlayer->getObjID()));
 		if (!tSocketIndexRet.second)
 		{
 			return false;
@@ -673,7 +673,7 @@ bool CSceneJob::onPlayerLogin(CEntityPlayer* pNewPlayer)
 /// 离开了一个玩家
 void CSceneJob::onPlayerLeaveGame(CEntityPlayer* pPlayer)
 {
-	mPlayerSocketList.erase(pPlayer->GetExhangeHead().mSocketIndex);
+	mPlayerSocketList.erase(pPlayer->getExchangeHead().mSocketIndex);
 	mPlayerList.erase(pPlayer->getRoleID());
 }
 
@@ -689,7 +689,7 @@ void CSceneJob::onSocketDisconnect(int nSocketIndex)
 		CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
 		if (NULL != pPlayer)
 		{
-			pPlayer->GetExhangeHead().mSocketIndex = -1;
+			pPlayer->getExchangeHead().mSocketIndex = -1;
 			// 将玩家置为下线状态
 			pPlayer->setPlayerStauts(emPlayerStatus_Exiting);
 			CPropertyModule::Inst()->savePlayer(pPlayer);

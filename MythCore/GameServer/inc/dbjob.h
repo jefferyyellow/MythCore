@@ -14,7 +14,8 @@ class CDBJob : public CJob<200, 20>
 public:
 	CDBJob();
 	~CDBJob();
-	int		init(char* pHost, char* pUserName, char* pPasswd, char* pDataBase, int nPort, char* pUnixSocket);
+	void	init();
+	int		initDB(char* pHost, char* pUserName, char* pPasswd, char* pDataBase, int nPort, char* pUnixSocket);
 
 public:
 	virtual void doing(int uParam);

@@ -17,15 +17,16 @@ public:
 	typedef CBlockMemory<CShareList<int>::CShareListNode<int>, 20000, 1000>	PLAYER_ALLOC;
 	typedef CShareList<int> PLAYER_LIST;
 public:
-	CEntity(){}
+	CEntity()
+	{
+		init();
+	}
 	virtual ~CEntity(){}
 	
+	void			init();
 public:
 	void			addVisiblePlayer(CEntity* pEntity);
 	void			removeVisiblePlayer(CEntity* pEntity);
-
-	PLAYER_LIST&	getVisiblePlayer() { return mVisiblePlayer; }
-
 
 public:
 	static CEntity* createEntity(EmEntityType eType);
@@ -34,18 +35,6 @@ public:
 	virtual	void	initEntity(CEntityCreator* pCreator) = 0;
 
 public:
-	int			getTempID() const { return mTempID; }
-	void		setTempID(int nValue) { mTempID = nValue; }
-
-	unsigned short	getMapID() const { return mMapID; }
-	void			setMapID(unsigned short nValue) { mMapID = nValue; }
-
-	unsigned short	getLineID() const { return mLineID; }
-	void			setLineID(unsigned short nValue) { mLineID = nValue; }
-
-	int				getMapIndex() const { return mMapIndex; }
-	void			setMapIndex(int nValue) { mMapIndex = nValue; }
-
 	void			setPos(int nX, int nY)
 	{
 		mPos.mX = nX;
@@ -53,21 +42,39 @@ public:
 	}
 
 	void			setPos(CMythPoint& rPos){	mPos = rPos;}
-	CMythPoint&		getPos(){return mPos;}
 	int				getPosX(){return mPos.mX;}
 	int				getPosY(){return mPos.mY;}
 
-	EmEntityType	getEntityType() const { return mEntityType; }
-	void			setEntityType(EmEntityType nValue) { mEntityType = nValue; }
-
 	bool			isPlayer(){return emEntityType_Player == mEntityType;}
 	bool			isItem(){return emEntityType_Item == mEntityType;}
+
+public:
+	/// autocode, don't edit!!!
+    int getTempID(){ return mTempID;}
+    void setTempID(int value){ mTempID = value;}
+
+    PLAYER_LIST& getVisiblePlayer(){ return mVisiblePlayer;}
+
+    unsigned short getLineID(){ return mLineID;}
+    void setLineID(unsigned short value){ mLineID = value;}
+
+    unsigned short getMapID(){ return mMapID;}
+    void setMapID(unsigned short value){ mMapID = value;}
+
+    int getMapIndex(){ return mMapIndex;}
+    void setMapIndex(int value){ mMapIndex = value;}
+
+    CMythPoint& getPos(){ return mPos;}
+
+    EmEntityType getEntityType(){ return mEntityType;}
+    void setEntityType(EmEntityType value){ mEntityType = value;}
+	/// end autocode
 protected:
 	/// 模板ID
 	int						mTempID;
 	/// 看见玩家
 	PLAYER_LIST				mVisiblePlayer;
-	/// 可见玩家分配器(避免每次去地图里搜索，尤其是玩家广播，这里相当于一个缓存）
+	/// 可见玩家分配器(避免每次去地图里搜索，尤其是玩家广播，这里相当于一个缓存）(ignore)
 	static	PLAYER_ALLOC	mVisiblePlayerAlloc;
 	/// 线ID
 	unsigned short			mLineID;
@@ -77,16 +84,20 @@ protected:
 	int						mMapIndex;
 	/// 地图中的位置
 	CMythPoint				mPos;
-	/// 实体类型
+	/// 实体类型 default:emEntityType_None
 	EmEntityType			mEntityType;
 };
 
 class CEntityCharacter : public CEntity
 {
 public:
-	CEntityCharacter(){}
+	CEntityCharacter()
+	{
+		init();
+	}
 	virtual ~CEntityCharacter(){}
 
+	void		init();
 public:
 	/// 刷新战斗属性
 	virtual void	refreshFightProperty(){}
@@ -94,19 +105,36 @@ public:
 	virtual	void	initEntity(CEntityCreator* pCreator) = 0;
 
 public:
-	// 当前血值
-	int			getCurHP() const { return mCurHP; }
-	void		setCurHP(int nValue){ mCurHP = nValue; }
-
-	// 当前魔值
-	int			getCurMP() const { return mCurMP; }
-	void		setCurMP(int nValue) { mCurMP = nValue; }
-
-public:
 	void		reduceHp(CEntityCharacter* pSrcEntity, int nNum);
 	void		addHp(CEntityCharacter* pSrcEntity, int nNum);
 	/// 实体死亡处理
 	virtual void	onDie(CEntityCharacter* pKiller);
+
+public:
+	/// autocode don't edit!!!
+    int getFightProperty(int nIndex)
+    {
+        if(nIndex < 0 || nIndex >= emPropertyTypeMax)
+        {
+            return 0;
+        }
+        return mFightProperty[nIndex];
+    }
+    void setFightProperty(int nIndex, int value)
+    {
+        if(nIndex < 0 || nIndex >= emPropertyTypeMax)
+        {
+            return;
+        }
+        mFightProperty[nIndex] = value;
+    }
+
+    int getCurHP(){ return mCurHP;}
+    void setCurHP(int value){ mCurHP = value;}
+
+    int getCurMP(){ return mCurMP;}
+    void setCurMP(int value){ mCurMP = value;}
+	/// end autocode
 protected:
 	/// 战斗属性
 	int					mFightProperty[emPropertyTypeMax];
@@ -171,17 +199,23 @@ class CEntityItem : public CEntityNPC
 public:
 	CEntityItem()
 	{
+		
 	}
 	virtual ~CEntityItem()
 	{
 	}
 
+	void	init();
+
 public:
-	short getItemNum()const{return mItemNum;}
-	void setItemNum(short val){mItemNum = val;}
 	/// 初始化
 	virtual	void	initEntity(CEntityCreator* pCreator);
 
+public:
+	/// autocode don't edit!!!
+    short getItemNum(){ return mItemNum;}
+    void setItemNum(short value){ mItemNum = value;}
+	/// end autocode
 private:
 	/// 道具数目
 	short				mItemNum;

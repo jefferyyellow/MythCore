@@ -11,12 +11,20 @@
 
 CGameServer::CGameServer()
 {
+	init();
 	mServerID = 1;
 }
 
-/// 初始化
-bool CGameServer::init()
+void CGameServer::init()
 {
+    mDefaultLog = NULL;
+    mServerID = 0;
+}
+
+/// 初始化
+bool CGameServer::initAll()
+{
+	init();
 	// 优先初始化这两个变量
 	bool bResult = initLogicModule();
 	if (!bResult)
@@ -131,7 +139,7 @@ bool CGameServer::initThread()
 	
 	for (int i = 0; i < MAX_DB_JOB; ++ i)
 	{
-		if (0 != mDBJob[i].init(CGameServerConfig::Inst()->getDBHost(),
+		if (0 != mDBJob[i].initDB(CGameServerConfig::Inst()->getDBHost(),
 			CGameServerConfig::Inst()->getDBUserName(), CGameServerConfig::Inst()->getDBPasswd(),
 			CGameServerConfig::Inst()->getDefaultDataBase(), CGameServerConfig::Inst()->getDBPort(),
 			NULL))
