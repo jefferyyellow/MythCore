@@ -9,11 +9,16 @@ class CItemBox : public CItemList < MAX_CONTAINER_ITEM_NUM >
 public:
 	CItemBox()
 	{
-		mSize = 0;
+		init();
 	}
 	~CItemBox()
 	{
 
+	}
+
+	void init()
+	{
+        mSize = 0;
 	}
 
 public:
@@ -36,8 +41,10 @@ public:
 	/// ∑¥–Ú¡–ªØ
 	void setFromPB(PBItemList* pbItemList);
 public:
-	int		getSize(){return mSize;}
-	void	setSize(int nSize){mSize = nSize;}
+	/// autocode don't edit!!!
+    int getSize(){ return mSize;}
+    void setSize(int value){ mSize = value;}
+	/// end autocode
 
 private:
 	int		mSize;

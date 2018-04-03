@@ -12,11 +12,15 @@ public:
 	CItemUnit(CEntityPlayer& rPlayer)
 		:CPlayerSubUnit(rPlayer)
 	{
-		memset(mCurrency, 0, sizeof(mCurrency));
+		init();
 	}
 	~CItemUnit()
 	{
 
+	}
+	void init()
+	{
+        memset(mCurrency, 0, sizeof(mCurrency));
 	}
 
 public:
@@ -78,8 +82,30 @@ public:
 	/// 设置钻石（一般情况下不能用该接口）
 	void		setDiamond(int nDiamond){mCurrency[emCurrency_Diamond] = nDiamond;}
 
-	CItemBox&	getBag(){ return mBag; }
-	CEquipList& getEquipList(){return mEquip;}
+public:
+	/// autocode don't eddit!!!
+    CItemBox& getBag(){ return mBag;}
+
+    CEquipList& getEquip(){ return mEquip;}
+
+    int getCurrency(int nIndex)
+    {
+        if(nIndex < 0 || nIndex >= emCurrencyMax)
+        {
+            return 0;
+        }
+        return mCurrency[nIndex];
+    }
+    void setCurrency(int nIndex, int value)
+    {
+        if(nIndex < 0 || nIndex >= emCurrencyMax)
+        {
+            return;
+        }
+        mCurrency[nIndex] = value;
+    }
+	/// end autocode
+
 private:
 	/// 插入道具
 	int			insertItem(int nItemID, int nItemNum);

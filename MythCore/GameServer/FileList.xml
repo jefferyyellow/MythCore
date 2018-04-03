@@ -12,4 +12,20 @@
   <File HeadFile="inc/equip.h" SrcFile="src/equip.cpp"/>
   <File HeadFile="inc/gameserver.h" SrcFile="src/gameserver.cpp"/>
   <File HeadFile="inc/gameserverconfig.h" SrcFile="src/gameserverconfig.cpp"/>
+  <File HeadFile="inc/geometrytype.h" SrcFile="src/geometrytype.cpp"/>
+  <File HeadFile="inc/gmcommandmanager.h" SrcFile="src/gmcommandmanager.cpp"/>
+  <File HeadFile="inc/instance.h" SrcFile="src/instance.cpp"/>
+  <File HeadFile="inc/instancemodule.h" SrcFile="src/instancemodule.cpp"/>
+  <File HeadFile="inc/instancemodule.h" SrcFile="src/instancemodule.cpp"/>
+  <File HeadFile="inc/internalmsg.h" SrcFile="src/internalmsg.cpp"/>
+  <!--<File HeadFile="inc/internalmsgpool.h" SrcFile="src/internalmsgpool.cpp"/>-->
+  <File HeadFile="inc/itemcontainer.h" SrcFile="src/itemcontainer.cpp"/>
+  <File HeadFile="inc/itemlist.h" SrcFile="src/itemlist.cpp"/>
+  <File HeadFile="inc/itemmodule.h" SrcFile="src/itemmodule.cpp"/>
+  <File HeadFile="inc/itemobject.h" SrcFile="src/itemobject.cpp"/>
+  <File HeadFile="inc/itemunit.h" SrcFile="src/itemunit.cpp"/>
+  <!--<File HeadFile="inc/job.h" SrcFile="src/job.cpp"/>-->
+  <File HeadFile="inc/locallogjob.h" SrcFile="src/locallogjob.cpp"/>
+  <File HeadFile="inc/logicmodule.h" SrcFile="src/logicmodule.cpp"/>
+  <File HeadFile="inc/loginmodule.h" SrcFile="src/loginmodule.cpp"/>
 </Data>

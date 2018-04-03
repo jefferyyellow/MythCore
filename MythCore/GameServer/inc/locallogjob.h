@@ -59,9 +59,11 @@ class CLocalLogJob : public CJob<100, 10>
 public:
 	CLocalLogJob()
 	{
+		init();
 	}
 	~CLocalLogJob(){}
-	bool init();
+	void init();
+	void initAll();
 public:
 	virtual void doing(int uParam);
 

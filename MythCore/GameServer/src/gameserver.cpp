@@ -156,7 +156,7 @@ bool CGameServer::initThread()
 	{
 		return false;
 	}
-	mLocalLogJob.init();
+	mLocalLogJob.initAll();
 
 	printf("initThread\n");
 	mThreadPool.pushBackJob(&mSceneJob);

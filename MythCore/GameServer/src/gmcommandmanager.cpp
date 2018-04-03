@@ -49,7 +49,7 @@ std::string CGMCommandManager::getAllCommnadWith(std::string strName)
 	return strResult;
 }
 
-void CGMCommandManager::Init()
+void CGMCommandManager::InitCommand()
 {
 	COMMAND_HANDLER_ADD(help, "帮助命令，用法：\\help 完整命令名字。\ab,如果没有名字为ab的GM命令，就会列出所有已ab开头的命令");
 	COMMAND_HANDLER_ADD(exp, "获得经验，用法：\\exp 获得经验数。");

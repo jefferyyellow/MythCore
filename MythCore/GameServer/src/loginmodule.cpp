@@ -11,13 +11,19 @@
 CLoginModule::CLoginModule()
 :mLoginCheckTime(1000)
 {
-	mCheckResult = false;
+	init();
 }
 
 
 CLoginModule::~CLoginModule()
 {
 
+}
+
+void CLoginModule::init()
+{
+    memset(mAllocateRoleId, 0, sizeof(mAllocateRoleId));
+    mCheckResult = false;
 }
 
 /// Æô¶¯·þÎñÆ÷

@@ -21,11 +21,8 @@ public:
 public:
 	void		init()
 	{
-		for (int i = 0; i < Capacity; ++i)
-		{
-			mItemObjID[i] = INVALID_OBJ_ID;
-			mItemID[i] = 0;
-		}
+        memset(mItemObjID, 0, sizeof(mItemObjID));
+        memset(mItemID, 0, sizeof(mItemID));
 	}
 
 	void		clear()

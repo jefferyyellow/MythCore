@@ -22,6 +22,7 @@ public:
 private:
 	CLoginModule();
 	~CLoginModule();
+	void init();
 
 public:
 	/// Æô¶¯·þÎñÆ÷

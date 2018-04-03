@@ -26,7 +26,7 @@ public:
 	~CGMCommandManager()
 	{
 	}
-	void Init();
+	void InitCommand();
 
 public:
 	/// Ö´ĞĞGMÃüÁî

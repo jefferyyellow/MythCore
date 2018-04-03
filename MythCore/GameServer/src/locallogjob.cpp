@@ -57,10 +57,14 @@ void LogLocalDebugLog(const char* pLogName, const char* pFile, int nLine, const 
 	CGameServer::Inst()->pushTask(emTaskType_LocalLog, pLocalLogRequest);
 }
 
-bool CLocalLogJob::init()
+void CLocalLogJob::init()
+{
+    mLastTime = 0;
+}
+
+void CLocalLogJob::initAll()
 {
 	mLastTime = CTimeManager::Inst()->getCurrTime();
-	return true;
 }
 
 void CLocalLogJob::doing(int uParam)
