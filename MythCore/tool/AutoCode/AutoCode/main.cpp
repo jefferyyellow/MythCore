@@ -1,5 +1,6 @@
 #include "parseheader.h"
 #include "tinyxml2.h"
+#include <time.h>
 using namespace tinyxml2;
 #define MAX_FILE_BUFF 100 * 1024		// 1M
 class CFilePair
@@ -127,12 +128,14 @@ int main()
 		return false;
 	}
 
+	time_t tNow = time(NULL);
 	char acFileName[MAX_PATH] = {0};
 	for (int i = 0; i < (int)gFileList.size(); ++ i)
 	{
 		tParseHeader.clear();
 		tParseHeader.parseHeaderFile(gFileList[i].mHeadFileName);
 		getFileName(gFileList[i].mHeadFileName, acFileName, sizeof(acFileName));
+		_snprintf_s(acFileName, sizeof(acFileName) - 1, "%s_%d", acFileName, tNow);
 		bResult = copyFile(gFileList[i].mHeadFileName, acFileName);
 		if (!bResult)
 		{
@@ -144,6 +147,7 @@ int main()
 
 		tParseHeader.parseSourceFile(gFileList[i].mSrcFileName);
 		getFileName(gFileList[i].mSrcFileName, acFileName, sizeof(acFileName));
+		_snprintf_s(acFileName, sizeof(acFileName) - 1, "%s_%d", acFileName, tNow);
 		bResult = copyFile(gFileList[i].mSrcFileName, acFileName);
 		if (!bResult)
 		{

@@ -1,5 +1,5 @@
 #include "parseheader.h"
-
+#include <ctype.h>
 void CParseHeader::writeHeaderFile(const char* pHeadFile)
 {
 	if (NULL == pHeadFile)
@@ -48,7 +48,7 @@ void CParseHeader::writeHeaderLine(FILE* pFile, const char* pLine, int nLineLeng
 	// 这行是函数的
 	if (checkFunc(pLine, nLineLength))
 	{
-		if (NULL != strstr(pLine, "init") || NULL != strstr(pLine, "Init"))
+		if (checkInitFunc(pLine))
 		{
 			fwrite(pLine, nLineLength, 1, pFile);
 			if (strchr(pLine, ';') == NULL)
@@ -165,7 +165,7 @@ void CParseHeader::writeSourceLine(FILE* pFile, const char* pLine, int nLineLeng
 	// 这行是函数的
 	if (checkFunc(pLine, nLineLength))
 	{
-		if (NULL != strstr(pLine, "::init") || NULL != strstr(pLine, "::Init"))
+		if ((NULL != strstr(pLine, "::init") || NULL != strstr(pLine, "::Init")) && checkInitFunc(pLine))
 		{
 			fwrite(pLine, nLineLength, 1, pFile);
 			mCurClass = getClass(pLine, nLineLength);
@@ -176,6 +176,10 @@ void CParseHeader::writeSourceLine(FILE* pFile, const char* pLine, int nLineLeng
 				char acBuffer[MAX_PATH] = { 0 };
 				for (; nCurLineIndex < mCurLineIndex; ++nCurLineIndex)
 				{
+					int nLength = strlen(mFileContent[nCurLineIndex]);
+					strncpy(acBuffer, mFileContent[nCurLineIndex], nLength);
+					acBuffer[nLength] = '\0';
+
 					fwrite(mFileContent[nCurLineIndex], strlen(mFileContent[nCurLineIndex]), 1, pFile);
 					const char* pBrace = strchr(acBuffer, '{');
 					if (NULL != pBrace)
@@ -226,6 +230,11 @@ CPlusClass* CParseHeader::getClass(const char* pLine, int nLineLength)
 		pFunc = strstr(pLine, "::Init");
 	}
 	if (NULL == pFunc)
+	{
+		return NULL;
+	}
+
+	if (!checkInitFunc(pLine))
 	{
 		return NULL;
 	}
@@ -385,3 +394,31 @@ void CParseHeader::writeContent(FILE* pFile, int nStartIndex, int nEndIndex)
 	}
 }
 
+/// 确定是否是init/Init函数
+bool CParseHeader::checkInitFunc(const char* pLine)
+{
+	const char* pFunc = strstr(pLine, "init");
+	if (NULL == pFunc)
+	{
+		pFunc = strstr(pLine, "Init");
+	}
+	if (NULL == pFunc)
+	{
+		return false;
+	}
+
+	if (pLine < pFunc)
+	{
+		if (isalpha(*(pFunc - 1)))
+		{
+			return false;
+		}
+	}
+
+	pFunc += strlen("init");
+	if (isalpha(*pFunc))
+	{
+		return false;
+	}
+	return true;
+}

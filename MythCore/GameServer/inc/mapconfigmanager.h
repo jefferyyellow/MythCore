@@ -12,9 +12,16 @@ class CMapPortalConfig
 {
 public:
 	CMapPortalConfig()
-	{}
+	{
+		init();
+	}
 	~CMapPortalConfig()
 	{}
+
+	void	init()
+	{
+        mTargetMapID = 0;
+	}
 
 	/// 目标地图ID
 	unsigned short		mTargetMapID;
@@ -30,6 +37,11 @@ public:
 	{}
 	~CMapNPCConfig()
 	{}
+
+	void init()
+	{
+        mTempID = 0;
+	}
 
 	/// 模板ID
 	int					mTempID;
@@ -51,15 +63,17 @@ public:
 public:
 	CMapConfig()
 	{
-		mLength = 0;
-		mWidth = 0;
-		mMapType = emMapType_None;
-		mMapUnitData = NULL;
 	}
 	~CMapConfig()
 	{
 	}
-
+	void init()
+	{
+        mLength = 0;
+        mWidth = 0;
+        mMapType = emMapType_None;
+        mMapUnitData = NULL;
+	}
 
 public:
 	/// 加载地图配置
@@ -85,7 +99,7 @@ private:
 	short				mLength;
 	/// 宽度
 	short				mWidth;
-	/// 地图类型
+	/// 地图类型 default:emMapType_None
 	EmMapType			mMapType;
 	///	地图格子数据
 	unsigned short*		mMapUnitData;
@@ -104,10 +118,14 @@ class CMapConfigManager : public CSingleton < CMapConfigManager >
 private:
 	CMapConfigManager()
 	{
-		memset(mMapConfig, 0, sizeof(mMapConfig));
 	}
 	~CMapConfigManager()
 	{
+	}
+
+	void init()
+	{
+        memset(mMapConfig, NULL, sizeof(mMapConfig));
 	}
 
 public:

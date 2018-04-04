@@ -15,6 +15,7 @@ void CParseHeader::clear()
 	mCurLineIndex = 0;
 	mCurClassIndex = 0;
 	clearContent();
+	mPublic = false;
 }
 
 void CParseHeader::clearContent()
@@ -113,6 +114,13 @@ void CParseHeader::parseLine(const char* pLine, int nLineLength)
 		return;
 	}
 
+	// 宏定义
+	if (strstr(pLine, "#define") != NULL)
+	{
+		return;
+	}
+
+
 	// 这行是函数的
 	if (checkFunc(pLine, nLineLength))
 	{
@@ -182,12 +190,20 @@ void CParseHeader::parseLine(const char* pLine, int nLineLength)
 		return;
 	}
 
-
-	if (strncmp(acWord, "typedef", strlen("typedef")) == 0 ||
-		strncmp(acWord, "friend", strlen("friend")) == 0 ||
-		strncmp(acWord, "public", strlen("public")) == 0 ||
+	if (strncmp(acWord, "public", strlen("public")) == 0 ||
 		strncmp(acWord, "private", strlen("private")) == 0 ||
 		strncmp(acWord, "protect", strlen("protect")) == 0)
+	{
+		mPublic = false;
+		if (strncmp(acWord, "public", strlen("public")) == 0)
+		{
+			mPublic = true;
+		}
+		return;
+	}
+
+	if (strncmp(acWord, "typedef", strlen("typedef")) == 0 ||
+		strncmp(acWord, "friend", strlen("friend")) == 0)
 	{
 		return;
 	}
@@ -230,6 +246,7 @@ void CParseHeader::parseLine(const char* pLine, int nLineLength)
 		CVariable* pNewVariable = new CVariable;
 		pNewVariable->setType(strType);
 		pNewVariable->setName(acWord);
+		pNewVariable->setPublic(mPublic);
 		pNewVariable->setArrayDimension(calcArrayDimension(pNewVariable, pLine, nLineLength));
 
 		char acBuffer[MAX_PATH] = {};
@@ -400,13 +417,26 @@ bool CParseHeader::getVariableTypeName(const char* pLine, int& rStart, int nLine
 	}
 	
 	int nPos = -1;
+	bool bTemplate = false;
 	for (int i = rStart; i < nLineLength; ++ i)
 	{
-		// ,是因为多个变量名之间
-		if (',' == pLine[i] || ';' == pLine[i] || '[' == pLine[i])
+		if (!bTemplate)
 		{
-			nPos = i;
-			break;
+			// ,是因为多个变量名之间
+			if (',' == pLine[i] || ';' == pLine[i] || '[' == pLine[i] || '<' == pLine[i])
+			{
+				if ('<' == pLine[i])
+				{
+					bTemplate = true;
+					continue;
+				}
+				nPos = i;
+				break;
+			}
+		}
+		else if ('>' == pLine[i])
+		{
+			bTemplate = false;
 		}
 	}
 	// 找不到逗号和分号，一般不会如此
@@ -432,7 +462,7 @@ bool CParseHeader::getVariableTypeName(const char* pLine, int& rStart, int nLine
 			if (pLine[i] == ' ' || pLine[i] == '\t')
 			{
 				strncpy(pVariableName, pLine + rStart - 1, i - rStart + 1);
-				rStart = i; 
+				rStart = i;
 				return true;
 			}
 		}

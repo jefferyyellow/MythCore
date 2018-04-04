@@ -45,6 +45,12 @@ bool CParseHeader::writeGetSetMethod(FILE* pFile, const char* pLine, int nLineLe
 			continue;
 		}
 
+		// public的变量，不生成get/set方法
+		if (rVariableList[i]->getPublic())
+		{
+			continue;
+		}
+
 
 		bool bBuiltIn = false;
 		const char* pDefaultValue = rVariableList[i]->getDefaultValue();

@@ -17,6 +17,7 @@ public:
 		mCurClass = NULL;
 		mCurLineIndex = 0;
 		mCurClassIndex = 0;
+		mPublic = false;
 	}
 	~CParseHeader()
 	{
@@ -78,6 +79,8 @@ public:
 	void writeVariableInit(FILE* pFile, int nSpaceNum);
 	/// 直接写文件的内容
 	void writeContent(FILE* pFile, int nStartIndex, int nEndIndex);
+	/// 确定是否是init/Init函数
+	bool checkInitFunc(const char* pLine);
 
 	// ******写get/set函数******
 	/// 写变量的get/set函数
@@ -107,5 +110,6 @@ private:
 	CPlusClass*			mCurClass;
 	int					mCurLineIndex;
 	int					mCurClassIndex;
+	bool				mPublic;
 };
 #endif

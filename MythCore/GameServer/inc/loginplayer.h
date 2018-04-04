@@ -30,23 +30,15 @@ class CLoginPlayer : public CObj
 public:
 	CLoginPlayer()
 	{
+		initStateMachine();
 		init();
-		mAccountID = 0;
-		mChannelID = 0;
-		mServerID = 0;
-		mRoleID = 0;
-		memset(mAccountName, 0, sizeof(mAccountName));
-		mClientMessage = NULL;
-		mClientMessageID = 0;
-		mDBResponse = NULL;
-		mDBSessionType = emSessionType_None;
-		mDelState = emLoginDelState_None;
 	}
 
 	~CLoginPlayer(){}
 
 public:
 	void		init();
+	void		initStateMachine();
 	void		checkState();
 	int			processStateNone();
 	int			processAccountVerify();
@@ -58,46 +50,46 @@ public:
 	bool		elapse(unsigned int nTickOffset);
 	void		setCurStateTime(int nTime);
 public:
-	unsigned int getAccountID() const { return mAccountID; }
-	void		setAccountID(int nValue) { mAccountID = nValue; }
+	/// autocode don't edit!!!
+    unsigned int getAccountID(){ return mAccountID;}
+    void setAccountID(unsigned int value){ mAccountID = value;}
 
-	short		getChannelID() const { return mChannelID; }
-	void		setChannelID(short nValue) { mChannelID = nValue; }
+    short getChannelID(){ return mChannelID;}
+    void setChannelID(short value){ mChannelID = value;}
 
-	short		getServerID() const { return mServerID; }
-	void		setServerID(short nValue) { mServerID = nValue; }
+    short getServerID(){ return mServerID;}
+    void setServerID(short value){ mServerID = value;}
 
-	unsigned int getRoleID() const { return mRoleID; }
-	void		setRoleID(unsigned int nValue) { mRoleID = nValue; }
+    unsigned int getRoleID(){ return mRoleID;}
+    void setRoleID(unsigned int value){ mRoleID = value;}
 
-	void		setAccountName(const char* pName)
-	{
-		if (NULL == pName)
-		{
-			return;
-		}
-		strncpy(mAccountName, pName, sizeof(mAccountName) - 1);
-	}
-	char*		getAccountName(){return mAccountName;}
+    char* getAccountName(){ return mAccountName;}
+    void setAccountName(const char* value)
+    {
+        if (NULL == value)
+        {
+            return;
+        }
+        strncpy(mAccountName, value, sizeof(mAccountName) - 1);
+    }
 
-	CExchangeHead&	getExchangeHead(){ return mExchangeHead; }
+    CExchangeHead& getExchangeHead(){ return mExchangeHead;}
 
-	Message*	getClientMessage() const { return mClientMessage; }
-	void		setClientMessage(Message* nValue) { mClientMessage = nValue; }
+    Message* getClientMessage(){ return mClientMessage;}
+    void setClientMessage(Message* value){ mClientMessage = value;}
 
-	int			getClientMessageID() const { return mClientMessageID; }
-	void		setClientMessageID(int nValue) { mClientMessageID = nValue; }
+    int getClientMessageID(){ return mClientMessageID;}
+    void setClientMessageID(int value){ mClientMessageID = value;}
 
-	CDBResponse* getDBMessage() const { return mDBResponse; }
-	void		setDBMessage(CDBResponse* nValue) { mDBResponse = nValue; }
+    CDBResponse* getDBResponse(){ return mDBResponse;}
+    void setDBResponse(CDBResponse* value){ mDBResponse = value;}
 
-	EmSessionType getDBSessionType() const { return mDBSessionType; }
-	void		setDBSessionType(EmSessionType eValue) { mDBSessionType = eValue; }
+    EmSessionType getDBSessionType(){ return mDBSessionType;}
+    void setDBSessionType(EmSessionType value){ mDBSessionType = value;}
 
-	EmLoginState getLoginState(){return (EmLoginState)mStateMachine.getCurState();}
-
-	EmLoginDelState GetDelState() const { return mDelState; }
-	void SetDelState(EmLoginDelState nValue) { mDelState = nValue; }
+    EmLoginDelState getDelState(){ return mDelState;}
+    void setDelState(EmLoginDelState value){ mDelState = value;}
+	/// end autocode
 
 private:
 	unsigned int					mAccountID;								// 账号ID
@@ -106,7 +98,7 @@ private:
 	unsigned int					mRoleID;								// 角色ID
 	char							mAccountName[MAX_PLAYER_NAME_LEN + 1];	// 账号名
 	CExchangeHead					mExchangeHead;							// TCP消息交换头
-
+	/// default:ignore
 	CStateMachine<CLoginPlayer, emLoginStateMax>	mStateMachine;			// 状态机
 
 	// 从客户端发过来的消息
@@ -115,9 +107,9 @@ private:
 	int								mClientMessageID;
 	// 从DB发过来的消息
 	CDBResponse*					mDBResponse;
-	// 从DB发过来的消息ID
+	// 从DB发过来的消息ID,default:emSessionType_None
 	EmSessionType					mDBSessionType;
-	// 是否是删除状态(已经出错或者登录完成)
+	// 是否是删除状态(已经出错或者登录完成),default:emLoginDelState_None
 	EmLoginDelState					mDelState;
 };
 #endif

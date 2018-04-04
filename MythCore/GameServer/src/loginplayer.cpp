@@ -8,6 +8,20 @@
 #include "locallogjob.h"
 void CLoginPlayer::init()
 {
+    mAccountID = 0;
+    mChannelID = 0;
+    mServerID = 0;
+    mRoleID = 0;
+    mAccountName[0] = '\0';
+    mClientMessage = NULL;
+    mClientMessageID = 0;
+    mDBResponse = NULL;
+    mDBSessionType = emSessionType_None;
+    mDelState = emLoginDelState_None;
+}
+
+void CLoginPlayer::initStateMachine()
+{
 	mStateMachine.init(this, emLoginState_None);
 	mStateMachine.addState(emLoginState_None,			5, &CLoginPlayer::processStateNone);
 	mStateMachine.addState(emLoginState_AccountVerify,	5, &CLoginPlayer::processAccountVerify);

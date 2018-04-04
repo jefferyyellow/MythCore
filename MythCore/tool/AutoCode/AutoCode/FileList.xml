@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <Data>
-  <File HeadFile="../scenejob.h" SrcFile="../scenejob.cpp"/>
+  <File HeadFile="dailyactivity.h" SrcFile=""/>
 </Data>
