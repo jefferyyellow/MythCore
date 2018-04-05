@@ -34,7 +34,7 @@ void CMapUnit::removeEntity(int nObjID)
 	}
 }
 
-int CMap::init(short nLength, short nWidth)
+int CMap::initSize(short nLength, short nWidth)
 {
 	mMapUnit = new CMapUnit[nLength * nWidth];
 	if (NULL == mMapUnit)
@@ -467,7 +467,7 @@ CMap* CMapManager::createMap(unsigned short nLineID, unsigned short nMapID, int 
 		LOG_ERROR("new CMap failure, LineID: %d, MapID: %d, MapIndex: %d", nLineID, nMapID, nMapIndex);
 		return NULL;
 	}
-	int nResult = pNewMap->init(nLength, nWidth);
+	int nResult = pNewMap->initSize(nLength, nWidth);
 	if (SUCCESS != nResult)
 	{
 		LOG_ERROR("new map unit failure, LineID: %d, MapID: %d, MapIndex: %d, Length: %d, Width: %d", nLineID, nMapID, nMapIndex, nLength, nWidth);

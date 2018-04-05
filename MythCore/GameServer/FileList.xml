@@ -30,6 +30,23 @@
   <File HeadFile="inc/loginmodule.h" SrcFile="src/loginmodule.cpp"/>
   <File HeadFile="inc/loginplayer.h" SrcFile="src/loginplayer.cpp"/>
   <File HeadFile="inc/mapconfigmanager.h" SrcFile="src/mapconfigmanager.cpp"/>
-  <File HeadFile="inc/mapconfigmanager.h" SrcFile="src/mapconfigmanager.cpp"/>
+  <File HeadFile="inc/mapmamager.h" SrcFile="src/mapmamager.cpp"/>
+  <File HeadFile="inc/mapmodule.h" SrcFile="src/mapmodule.cpp"/>
+  <File HeadFile="inc/mapregionsearch.h" SrcFile="src/mapregionsearch.cpp"/>
+  <File HeadFile="inc/propertymodule.h" SrcFile="src/propertymodule.cpp"/>
+  <File HeadFile="inc/propertyunit.h" SrcFile="src/propertyunit.cpp"/>
+  <File HeadFile="inc/rank.h" SrcFile="src/rank.cpp"/>
+  <File HeadFile="inc/rankmodule.h" SrcFile="src/rankmodule.cpp"/>
+  <File HeadFile="inc/scenejob.h" SrcFile="src/scenejob.cpp"/>
+  <File HeadFile="inc/serveractivity.h" SrcFile="src/serveractivity.cpp"/>
+  <File HeadFile="inc/serveractivityunit.h" SrcFile="src/serveractivityunit.cpp"/>
+  <File HeadFile="inc/serveractmodule.h" SrcFile="src/serveractmodule.cpp"/>
+  <File HeadFile="inc/skillmodule.h" SrcFile="src/skillmodule.cpp"/>
+  <File HeadFile="inc/skillunit.h" SrcFile="src/skillunit.cpp"/>
+  <File HeadFile="inc/skillunit.h" SrcFile="src/skillunit.cpp"/>
+  <File HeadFile="inc/taskconfig.h" SrcFile="src/taskconfig.cpp"/>
+  <File HeadFile="inc/taskmodule.h" SrcFile="src/taskmodule.cpp"/>
+  <File HeadFile="inc/taskunit.h" SrcFile="src/taskunit.cpp"/>
+  <File HeadFile="inc/teammodule.h" SrcFile="src/teammodule.cpp"/>
 
 </Data>

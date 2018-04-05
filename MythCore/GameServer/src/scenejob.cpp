@@ -24,7 +24,7 @@
 CSceneJob::CSceneJob()
 :mMinuteTimer(SECONDS_PER_MIN)
 {
-
+	init();
 }
 
 void CSceneJob::doing(int uParam)
@@ -290,7 +290,7 @@ void CSceneJob::onTask(CInternalMsg* pMsg)
 	//}
 }
 
-bool CSceneJob::init(int nDBBuffSize)
+bool CSceneJob::initBase(int nDBBuffSize)
 {
 	// 初始化时间变量
 	mLastTimerTick = getTickCount();
