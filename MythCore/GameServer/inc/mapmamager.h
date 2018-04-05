@@ -21,22 +21,26 @@ public:
 public:
 	CMapUnit()
 	{
-		mBlockData = 0;
 	}
 
 	~CMapUnit()
 	{
-
+	}
+	void				init()
+	{
+        mBlockData = 0;
 	}
 
 public:
-	unsigned short		getBlockData() const { return mBlockData; }
-	void				setBlockData(unsigned short nValue) { mBlockData = nValue; }
-
 	void				pushEntity(int nObjID);
 	void				removeEntity(int nObjID);
 
-	ENTITY_LIST&		GetEntityList() { return mEntityList; }
+	/// autocode don't edit!!!
+    unsigned short getBlockData(){ return mBlockData;}
+    void setBlockData(unsigned short value){ mBlockData = value;}
+
+    ENTITY_LIST& getEntityList(){ return mEntityList;}
+	/// end autocode
 
 private:
 	/// 阻挡数据
@@ -52,9 +56,7 @@ class CMap
 public:
 	CMap()
 	{
-		mLength = 0;
-		mWidth = 0;
-		mMapUnit = NULL;
+		
 	}
 	~CMap()
 	{
@@ -62,7 +64,18 @@ public:
 	}
 
 public:
-	int				init(short nLength, short nWidth);
+	void			init()
+	{
+        mMapUnit = NULL;
+        mLength = 0;
+        mWidth = 0;
+        mLineID = 0;
+        mMapID = 0;
+        mMapIndex = 0;
+        mMapType = emMapType_None;
+	}
+
+	int				initSize(short nLength, short nWidth);
 	void			clear();
 
 	CMapUnit*		getMapUnit(short nPosX, short nPosY)
@@ -124,23 +137,28 @@ public:
 
 	
 public:
-	short			getLength() const { return mLength; }
-	void			setLength(short nValue) { mLength = nValue; }
+	/// autocode don't edit
+    CMapUnit* getMapUnit(){ return mMapUnit;}
+    void setMapUnit(CMapUnit* value){ mMapUnit = value;}
 
-	short			getWidth() const { return mWidth; }
-	void			setWidth(short nValue) { mWidth = nValue; }
+    short getLength(){ return mLength;}
+    void setLength(short value){ mLength = value;}
 
-	unsigned short	getMapID() const { return mMapID; }
-	void			setMapID(unsigned short nValue) { mMapID = nValue; }
+    short getWidth(){ return mWidth;}
+    void setWidth(short value){ mWidth = value;}
 
-	unsigned short	getLineID() const { return mLineID; }
-	void			setLineID(unsigned short nValue) { mLineID = nValue; }
-	
-	int				getMapIndex() const { return mMapIndex; }
-	void			setMapIndex(int nValue) { mMapIndex = nValue; }
+    unsigned short getLineID(){ return mLineID;}
+    void setLineID(unsigned short value){ mLineID = value;}
 
-	EmMapType		getMapType() const { return mMapType; }
-	void			setMapType(EmMapType nValue) { mMapType = nValue; }
+    unsigned short getMapID(){ return mMapID;}
+    void setMapID(unsigned short value){ mMapID = value;}
+
+    int getMapIndex(){ return mMapIndex;}
+    void setMapIndex(int value){ mMapIndex = value;}
+
+    EmMapType getMapType(){ return mMapType;}
+    void setMapType(EmMapType value){ mMapType = value;}
+	/// end autocode
 
 private:
 	/// 地图单元
@@ -155,7 +173,7 @@ private:
 	unsigned short		mMapID;
 	/// 地图索引
 	int					mMapIndex;
-	/// 地图类型
+	/// 地图类型, default:emMapType_None
 	EmMapType			mMapType;
 };
 
@@ -168,9 +186,13 @@ public:
 private:
 	CMapManager()
 	{
+		init();
 	}
 
 	~CMapManager()
+	{
+	}
+	void init()
 	{
 	}
 
@@ -181,6 +203,10 @@ public:
 	CMap*				getMap(unsigned short nLineID, unsigned short nMapID, int nMapIndex);
 	/// 将地图插入地图列表中
 	bool				insertMap(unsigned short nLineID, unsigned short nMapID, int nMapIndex, CMap* pMap);
+
+public:
+	/// autocode don't edit
+	/// end autocode
 
 private:
 	MAP_LIST			mMapList;

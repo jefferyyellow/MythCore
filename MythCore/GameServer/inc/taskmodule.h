@@ -21,7 +21,7 @@ private:
 
 	int init()
 	{
-
+        memset(mTaskConfig, NULL, sizeof(mTaskConfig));
 	}
 
 	/// Æô¶¯·þÎñÆ÷

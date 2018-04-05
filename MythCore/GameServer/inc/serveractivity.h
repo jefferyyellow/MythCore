@@ -47,27 +47,7 @@ public:
 	}
 
 public:
-	// autocode
-    byte getType(){ return mType;}
-    void setType(byte value){ mType = value;}
-
-    byte getSubType(){ return mSubType;}
-    void setSubType(byte value){ mSubType = value;}
-
-    short getID(){ return mID;}
-    void setID(short value){ mID = value;}
-
-    time_t getStartTime(){ return mStartTime;}
-    void setStartTime(time_t value){ mStartTime = value;}
-
-    time_t getEndTime(){ return mEndTime;}
-    void setEndTime(time_t value){ mEndTime = value;}
-
-    time_t getPrizeTime(){ return mPrizeTime;}
-    void setPrizeTime(time_t value){ mPrizeTime = value;}
-
-    EmServerActState getState(){ return mState;}
-    void setState(EmServerActState value){ mState = value;}
+	/// autocode don't edit
 	// end autocode
 public:
 	/// º”‘ÿ≈‰÷√Œƒº˛

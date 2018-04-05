@@ -42,7 +42,18 @@ public:
 	~CSceneJob(){}
 
 public:
-	bool		init(int nDBBuffSize);
+	void		init()
+	{
+        mShareMemory = NULL;
+        mTcp2ServerMemory = NULL;
+        mServer2TcpMemory = NULL;
+        mDBBuffer = NULL;
+        mLastTimerTick = 0;
+        mLastTime = 0;
+        mServerState = emServerStateInit;
+        mMorningTime = 0;
+	}
+	bool		initBase(int nDBBuffSize);
 
 public:
 	/// 压入DB数据
@@ -112,11 +123,6 @@ private:
 	/// 初始化共享内存
 	bool		initShareMemory();
 
-public:
-	/// 服务器状态
-	EmServerState getServerState() const { return mServerState; }
-	void setServerState(EmServerState nValue) { mServerState = nValue; }
-
 	tm&				getTmNow(){ return mTmNow; }
 	void			setTmNow(time_t tTimeNow)
 	{
@@ -126,10 +132,44 @@ public:
 		localtime_r(&tTimeNow, &mTmNow);
 #endif // MYTH_OS_WINDOWS
 	}
+public:
+	/// autocode don't edit
+    CShareMemory* getShareMemory(){ return mShareMemory;}
+    void setShareMemory(CShareMemory* value){ mShareMemory = value;}
 
-	time_t getMorningTime() const { return mMorningTime; }
-	void getMorningTime(time_t val) { mMorningTime = val; }
+    CSocketStream* getTcp2ServerMemory(){ return mTcp2ServerMemory;}
+    void setTcp2ServerMemory(CSocketStream* value){ mTcp2ServerMemory = value;}
 
+    CSocketStream* getServer2TcpMemory(){ return mServer2TcpMemory;}
+    void setServer2TcpMemory(CSocketStream* value){ mServer2TcpMemory = value;}
+
+    PLAYER_LIST& getPlayerList(){ return mPlayerList;}
+
+    PLAYER_SOCKET_LIST& getPlayerSocketList(){ return mPlayerSocketList;}
+
+    CByteStream& getDBStream(){ return mDBStream;}
+
+    byte* getDBBuffer(){ return mDBBuffer;}
+    void setDBBuffer(byte* value){ mDBBuffer = value;}
+
+    CSimpleLock& getDBStreamLock(){ return mDBStreamLock;}
+
+    LOGIC_MODULE_LIST& getLogicModuleList(){ return mLogicModuleList;}
+
+    uint64 getLastTimerTick(){ return mLastTimerTick;}
+    void setLastTimerTick(uint64 value){ mLastTimerTick = value;}
+
+    time_t getLastTime(){ return mLastTime;}
+    void setLastTime(time_t value){ mLastTime = value;}
+
+    EmServerState getServerState(){ return mServerState;}
+    void setServerState(EmServerState value){ mServerState = value;}
+
+    time_t getMorningTime(){ return mMorningTime;}
+    void setMorningTime(time_t value){ mMorningTime = value;}
+
+    CAutoResetTimer& getMinuteTimer(){ return mMinuteTimer;}
+	/// end autocode
 private:
 	CShareMemory*			mShareMemory;
 	CSocketStream*			mTcp2ServerMemory;
@@ -148,7 +188,7 @@ private:
 	uint64					mLastTimerTick;
 	/// 上次刷新的时间
 	time_t					mLastTime;
-	/// 服务器状态
+	/// 服务器状态,default:emServerStateInit
 	EmServerState			mServerState;
 	/// 当前的时间
 	struct tm				mTmNow;

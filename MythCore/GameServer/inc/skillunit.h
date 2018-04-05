@@ -11,20 +11,26 @@ class CPlayerSkill
 public:
 	CPlayerSkill()
 	{
-		mSkillCD = 0;
-		mSkillId = 0;
-		mSkillLevel = 0;
+		init();
 	}
 	~CPlayerSkill(){}
+	void init()
+	{
+        mSkillCD = 0;
+        mSkillId = 0;
+        mSkillLevel = 0;
+	}
 public:
-	time_t getSkillCD()const{return mSkillCD;}
-	void setSkillCD(time_t val){mSkillCD = val;}
+	/// autocode don't edit!!!
+    time_t getSkillCD(){ return mSkillCD;}
+    void setSkillCD(time_t value){ mSkillCD = value;}
 
-	int getSkillId()const{return mSkillId;}
-	void setSkillId(int val){mSkillId = val;}
+    int getSkillId(){ return mSkillId;}
+    void setSkillId(int value){ mSkillId = value;}
 
-	byte getSkillLevel()const{return mSkillLevel;}
-	void setSkillLevel(byte val){mSkillLevel = val;}
+    byte getSkillLevel(){ return mSkillLevel;}
+    void setSkillLevel(byte value){ mSkillLevel = value;}
+	/// end autocode
 
 private:
 	/// ¼¼ÄÜCD
@@ -75,7 +81,9 @@ public:
 	}
 
 public:
-	PLAYER_SKILL_LIST&	getSkillList(){return mSkillList;}
+	/// autocode don't edit!!!
+    PLAYER_SKILL_LIST& getSkillList(){ return mSkillList;}
+	/// end autocode
 
 private:
 	PLAYER_SKILL_LIST	mSkillList;

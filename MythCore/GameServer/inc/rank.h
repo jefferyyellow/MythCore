@@ -7,12 +7,33 @@ using namespace Myth;
 template<typename T>
 class CRankData
 {
+	CRankData()
+	{
+		init();
+	}
+	~CRankData()
+	{
+
+	}
+	void		init()
+	{
+        mRankValue = 0;
+        mRankTime = 0;
+        mRankIndex = 0;
+        mRankKey = 0;
+        mMemIndex = 0;
+	}
 public:
-	int			mRankValue;					// 排行值（等级，战力等）
-	int			mRankTime;					// 刷新时间
-	int			mRankIndex;					// 排名(0,1,2,3,4)
-	int			mRankKey;					// 键(可能是玩家ID，或者公会ID之类的)
-	int			mMemIndex;					// 内存池索引
+	/// 排行值（等级，战力等）
+	int			mRankValue;
+	/// 刷新时间
+	int			mRankTime;
+	/// 排名(0,1,2,3,4)
+	int			mRankIndex;
+	/// 键(可能是玩家ID，或者公会ID之类的)
+	int			mRankKey;
+	/// 内存池索引
+	int			mMemIndex;
 	T 			mValue;
 };
 
@@ -30,7 +51,12 @@ public:
 public:
 	CRank()
 	{
-		mSortRankNum = 0;
+		init();
+	}
+	void init()
+	{
+        memset(mSortRank, 0, sizeof(mSortRank));
+        mSortRankNum = 0;
 	}
 public:
 	// 刷新玩家数据(稳定排序)

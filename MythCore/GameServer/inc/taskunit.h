@@ -19,52 +19,12 @@ public:
 	}
 	void			init()
 	{
-		mTaskID = 0;
-		memset(mTaskParam, 0, sizeof(mTaskParam));
+        mTaskID = 0;
+        memset(mTaskParam, 0, sizeof(mTaskParam));
+        memset(mCondType, 0, sizeof(mCondType));
 	}
+
 public:
-	// 任务ID
-	short			getTaskID() const { return mTaskID; }
-	void			setTaskID(short nValue) { mTaskID = nValue; }
-
-	int			getTaskParam(int nIndex)
-	{
-		if (nIndex < 0 || nIndex >= MAX_COMPLETE_CONDITION)
-		{
-			return 0;
-		}
-		return mTaskParam[nIndex];
-	}
-
-	void			setTaskParam(int nIndex, int nTaskParam)
-	{
-		if (nIndex < 0 || nIndex >= MAX_COMPLETE_CONDITION)
-		{
-			return;
-		}
-
-		mTaskParam[nIndex] = nTaskParam;
-	}
-
-	int				getCondType(int nIndex)
-	{
-		if (nIndex < 0 || nIndex >= MAX_COMPLETE_CONDITION)
-		{
-			return 0;
-		}
-		return mCondType[nIndex];
-	}
-
-	void			setCondType(int nIndex, int nCondType)
-	{
-		if (nIndex < 0 || nIndex >= MAX_COMPLETE_CONDITION)
-		{
-			return;
-		}
-
-		mCondType[nIndex] = nCondType;
-	}
-
 	int				getParamByCondType(int nType)
 	{
 		for (int i = 0; i < MAX_COMPLETE_CONDITION; ++i)
@@ -77,6 +37,47 @@ public:
 
 		return 0;
 	}
+public:
+	/// autocode don't edit!!!
+    short getTaskID(){ return mTaskID;}
+    void setTaskID(short value){ mTaskID = value;}
+
+    int getTaskParam(int nIndex)
+    {
+        if(nIndex < 0 || nIndex >= MAX_COMPLETE_CONDITION)
+        {
+            return 0;
+        }
+        return mTaskParam[nIndex];
+    }
+    void setTaskParam(int nIndex, int value)
+    {
+        if(nIndex < 0 || nIndex >= MAX_COMPLETE_CONDITION)
+        {
+            return;
+        }
+        mTaskParam[nIndex] = value;
+    }
+
+    int getCondType(int nIndex)
+    {
+        if(nIndex < 0 || nIndex >= MAX_COMPLETE_CONDITION)
+        {
+            return 0;
+        }
+        return mCondType[nIndex];
+    }
+    void setCondType(int nIndex, int value)
+    {
+        if(nIndex < 0 || nIndex >= MAX_COMPLETE_CONDITION)
+        {
+            return;
+        }
+        mCondType[nIndex] = value;
+    }
+	/// end autocode
+
+
 private:
 	/// 任务ID
 	short			mTaskID;
@@ -94,11 +95,15 @@ public:
 	CTaskUnit(CEntityPlayer& rPlayer)
 		: CPlayerSubUnit(rPlayer)
 	{
-		mMaxCompleteTaskID = 0;
+		init();
 	}
 	~CTaskUnit()
 	{
 
+	}
+	void init()
+	{
+        mMaxCompleteTaskID = 0;
 	}
 
 public:

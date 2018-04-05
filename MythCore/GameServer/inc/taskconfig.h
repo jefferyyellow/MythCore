@@ -11,11 +11,17 @@ class CTaskCondition
 public:
 	CTaskCondition()
 	{
-		mType = 0;
-		memset(mParam, 0, sizeof(mParam));
+		init();
 	}
 	~CTaskCondition()
 	{
+
+	}
+
+	void init()
+	{
+        mType = 0;
+        memset(mParam, 0, sizeof(mParam));
 	}
 
 public:
@@ -29,8 +35,13 @@ class CTaskRewardItem
 public:
 	CTaskRewardItem()
 	{
-		mItemID = 0;
-		mItemNum = 0;
+		init();
+	}
+
+	void init()
+	{
+        mItemID = 0;
+        mItemNum = 0;
 	}
 
 public:
@@ -44,11 +55,15 @@ class CTaskReward
 public:
 	CTaskReward()
 	{
-		mType = 0;
-		memset(mParam, 0, sizeof(mParam));
+		init();
 	}
 	~CTaskReward()
 	{
+	}
+	void init()
+	{
+        mType = 0;
+        memset(mParam, 0, sizeof(mParam));
 	}
 
 public:
@@ -69,10 +84,14 @@ public:
 public:
 	CTaskConfig()
 	{
-		mID = 0;
+		init();
 	}
 	~CTaskConfig()
 	{
+	}
+	void init()
+	{
+        mID = 0;
 	}
 
 	short					mID;					// »ŒŒÒID
