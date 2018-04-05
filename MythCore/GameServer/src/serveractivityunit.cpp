@@ -6,7 +6,7 @@ CServerActData* CServerActivityUnit::getServerActData(int nUniqueID)
 {
 	for (int i = 0; i < mActivityNum; ++i)
 	{
-		if (mActivityData[i].mUniqueID == nUniqueID)
+		if (mActivityData[i].getUniqueID() == nUniqueID)
 		{
 			return &mActivityData[i];
 		}

@@ -25,7 +25,7 @@ void CMapRegionSearch::searchMapUnity(CMapUnit* pMapUnit)
 		return;
 	}
 
-	CMapUnit::ENTITY_LIST rEntityList = pMapUnit->GetEntityList();
+	CMapUnit::ENTITY_LIST rEntityList = pMapUnit->getEntityList();
 	CMapUnit::ENTITY_LIST::iterator it = rEntityList.begin();
 	for (; it != rEntityList.end(); ++it)
 	{

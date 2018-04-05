@@ -21,9 +21,20 @@ public:
 	}
 
 	/// autocode don't edit
+    int getUniqueID(){ return mUniqueID;}
+    void setUniqueID(int value){ mUniqueID = value;}
+
+    time_t getStartTime(){ return mStartTime;}
+    void setStartTime(time_t value){ mStartTime = value;}
+
+    int getParam1(){ return mParam1;}
+    void setParam1(int value){ mParam1 = value;}
+
+    int getParam2(){ return mParam2;}
+    void setParam2(int value){ mParam2 = value;}
 	/// end autocode
 
-public:
+private:
 	/// 唯一ID
 	int		mUniqueID;
 	/// 开始时间

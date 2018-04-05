@@ -284,7 +284,7 @@ int CLoginPlayer::processLoginComplete()
 		CSceneJob::Inst()->send2Player(pNewPlayer, ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
 	}
 
-	SetDelState(emLoginDelState_Complete);
+	setDelState(emLoginDelState_Complete);
 	return emLoginState_None;
 }
 
@@ -300,6 +300,6 @@ void CLoginPlayer::setCurStateTime(int nTime)
 
 int CLoginPlayer::onSwitchFailure()
 {
-	SetDelState(emLoginDelState_Error);
+	setDelState(emLoginDelState_Error);
 	return 0;
 }

@@ -151,7 +151,7 @@ bool CGameServer::initThread()
 	}
 
 
-	bool bResult = mSceneJob.init(MAX_SCENE_DB_BUFFER_SIZE);
+	bool bResult = mSceneJob.initBase(MAX_SCENE_DB_BUFFER_SIZE);
 	if (!bResult)
 	{
 		return false;

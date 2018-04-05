@@ -118,6 +118,7 @@ class CMapConfigManager : public CSingleton < CMapConfigManager >
 private:
 	CMapConfigManager()
 	{
+		init();
 	}
 	~CMapConfigManager()
 	{

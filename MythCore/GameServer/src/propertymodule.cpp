@@ -231,9 +231,9 @@ void CPropertyModule::onLoadPlayerBaseProperty(CDBResponse& rResponse)
 	PBItemList tEquip;
 	tEquip.ParseFromArray(rResponse.getValue(), rResponse.getLength());
 	rResponse.next();
-	pPlayer->getItemUnit().getEquipList().setFromPB(&tEquip);
+	pPlayer->getItemUnit().getEquip().setFromPB(&tEquip);
 	// 刷新所以装备的属性
-	pPlayer->getItemUnit().getEquipList().refreshProperty();
+	pPlayer->getItemUnit().getEquip().refreshProperty();
 
 	PBTaskList tTaskList;
 	tTaskList.ParseFromArray(rResponse.getValue(), rResponse.getLength());
@@ -348,7 +348,7 @@ void CPropertyModule::savePlayerBaseProperty(CEntityPlayer* pPlayer)
 	}
 	PBSavePlayer tSavePlayer;
 	pPlayer->getItemUnit().getBag().createToPB(tSavePlayer.mutable_bag());
-	pPlayer->getItemUnit().getEquipList().createToPB(tSavePlayer.mutable_equip());
+	pPlayer->getItemUnit().getEquip().createToPB(tSavePlayer.mutable_equip());
 	pPlayer->getTaskUnit().createToPB(tSavePlayer.mutable_task());
 	
 	CDBModule::Inst()->pushDBTask(pPlayer->getRoleID(), emSessionType_SavePlayerBaseProperty, pPlayer->getObjID(), 0, &tSavePlayer);

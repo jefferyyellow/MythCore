@@ -48,5 +48,4 @@
   <File HeadFile="inc/taskmodule.h" SrcFile="src/taskmodule.cpp"/>
   <File HeadFile="inc/taskunit.h" SrcFile="src/taskunit.cpp"/>
   <File HeadFile="inc/teammodule.h" SrcFile="src/teammodule.cpp"/>
-
 </Data>

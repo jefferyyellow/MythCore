@@ -93,13 +93,13 @@ void CLoginModule::onTimer(unsigned int nTickOffset)
 
 			bool bOverTime = pLoginPlayer->elapse(1);
 			// 如果是删除状态或者超时
-			if (emLoginDelState_None != pLoginPlayer->GetDelState() || bOverTime)
+			if (emLoginDelState_None != pLoginPlayer->getDelState() || bOverTime)
 			{
 				removeVerifyPlayer(pLoginPlayer->getChannelID(), pLoginPlayer->getServerID(), pLoginPlayer->getAccountID());
 				it = mLoginList.erase(it);
 				CObjPool::Inst()->free(nObjID);
 				// 如果登录完成了就不能断开连接
-				if (emLoginDelState_Complete != pLoginPlayer->GetDelState())
+				if (emLoginDelState_Complete != pLoginPlayer->getDelState())
 				{
 					CSceneJob::Inst()->disconnectPlayer(pLoginPlayer->getExchangeHead());
 				}
@@ -149,7 +149,7 @@ void CLoginModule::onClientMessage(CExchangeHead& rExchangeHead, unsigned int nM
 	printf("pLoginPlayer: %d", pLoginPlayer->getObjID());
 
 	// 如果是删除状态了，直接不处理
-	if (emLoginDelState_None != pLoginPlayer->GetDelState())
+	if (emLoginDelState_None != pLoginPlayer->getDelState())
 	{
 		return;
 	}
@@ -184,16 +184,16 @@ void CLoginModule::OnDBMessage(CDBResponse* pMsg)
 	}
 
 	// 如果是删除状态了，直接不处理
-	if (emLoginDelState_None != pLoginPlayer->GetDelState())
+	if (emLoginDelState_None != pLoginPlayer->getDelState())
 	{
 		return;
 	}
 
 	printf("OnDBMessage: %d, %s\n", nLoginPlayerObjID, pLoginPlayer->getAccountName());
-	pLoginPlayer->setDBMessage(pMsg);
+	pLoginPlayer->setDBResponse(pMsg);
 	pLoginPlayer->setDBSessionType((EmSessionType)pMsg->mSessionType);
 	pLoginPlayer->checkState();
-	pLoginPlayer->setDBMessage(NULL);
+	pLoginPlayer->setDBResponse(NULL);
 	pLoginPlayer->setDBSessionType(emSessionType_None);
 }
 

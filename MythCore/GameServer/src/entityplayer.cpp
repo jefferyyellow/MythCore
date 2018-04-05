@@ -8,7 +8,7 @@ void CEntityPlayer::refreshBaseProperty()
 		if (mBaseProperty[i].getDirty())
 		{
 			/// 刷新对应的属性
-			int nValue = mItemUnit.getEquipList().getProperty(i);
+			int nValue = mItemUnit.getEquip().getProperty(i);
 			mBaseProperty[i].setValue(nValue);
 			refreshFightProperty(i);
 		}

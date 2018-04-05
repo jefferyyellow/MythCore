@@ -7,6 +7,7 @@ using namespace Myth;
 template<typename T>
 class CRankData
 {
+public:
 	CRankData()
 	{
 		init();

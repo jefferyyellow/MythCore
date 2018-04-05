@@ -100,10 +100,6 @@ public:
 	void		onPlayerLeaveGame(CEntityPlayer* pPlayer);
 	/// 一个Socket断开
 	void		onSocketDisconnect(int nSocketIndex);
-	/// 得到所有的玩家列表
-	PLAYER_LIST& getPlayerList(){	return mPlayerList;	}
-	/// 得到所有玩家的socket列表
-	PLAYER_SOCKET_LIST& getPlayerSocketList(){return mPlayerSocketList;};
 	/// 通过角色ID得到玩家
 	CEntityPlayer* getPlayerByRoleID(unsigned int nRoleID);
 	/// 通过SocketIndex得到玩家
@@ -123,6 +119,7 @@ private:
 	/// 初始化共享内存
 	bool		initShareMemory();
 
+public:
 	tm&				getTmNow(){ return mTmNow; }
 	void			setTmNow(time_t tTimeNow)
 	{

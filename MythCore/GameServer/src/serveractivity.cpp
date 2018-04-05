@@ -59,7 +59,7 @@ void CPhaseActivity::refreshPlayerData(CEntityPlayer* pPlayer, int nParam)
 		return;
 	}
 
-	pActData->mParam1 += nParam;
+	pActData->setParam1(pActData->getParam1() + nParam);
 }
 
 /// 清空玩家数据
@@ -100,7 +100,7 @@ void CPhaseActivity::getActivityPrize(CEntityPlayer* pPlayer, int nParam)
 		return;
 	}
 
-	int nParam2 = pActData->mParam2;
+	int nParam2 = pActData->getParam2();
 	// 已经领取
 	if (0 != (nParam2 & (1 << nParam)))
 	{
@@ -126,5 +126,6 @@ void CPhaseActivity::getActivityPrize(CEntityPlayer* pPlayer, int nParam)
 	}
 
 	pPlayer->getItemUnit().insertItem(nItemID, nItemNum, nCount);
-	pActData->mParam2 |= (1 << nParam);
+	nParam2 |= (1 << nParam);
+	pActData->setParam2(nParam2);
 }
