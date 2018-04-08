@@ -13,6 +13,7 @@
 #include <fcntl.h>
 #include <sys/file.h>
 #endif
+#include "gtest/gtest.h"
 
 #ifdef MYTH_OS_UNIX
 void ignorePipe()
@@ -126,6 +127,9 @@ bool ParseParam(int argc, char* argv[])
 
 int main(int argc, char* argv[])
 {
+	testing::InitGoogleTest(&argc,argv);
+	return RUN_ALL_TESTS();
+
 	bool bExit = ParseParam(argc, argv);
 	if (bExit)
 	{

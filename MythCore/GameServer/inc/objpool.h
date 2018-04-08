@@ -18,6 +18,7 @@ public:
 	void	free(int nObjID);
 	void	logObjNum();
 
+	CObjPoolImp* getPoolImp() const { return mPoolImp; }
 private:
 	CObjPoolImp* mPoolImp;
 };

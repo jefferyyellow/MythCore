@@ -42,12 +42,31 @@ public:
 		}
 
 		int nIndex = calMemIndex(pObj->getObjID());
+		T* pNode = mFixMemory.get(nIndex);
+		if (INVALID_OBJ_ID == pNode->getObjID())
+		{
+			return;
+		}
+		if (NULL != pNode)
+		{
+			pNode->setObjID(INVALID_OBJ_ID);
+		}
+
 		mFixMemory.free(nIndex);
 	}
 
 	void	freeByID(int nObjID)
 	{
 		int nIndex = calMemIndex(nObjID);
+		T* pNode = mFixMemory.get(nIndex);
+		if (INVALID_OBJ_ID == pNode->getObjID())
+		{
+			return;
+		}
+		if (NULL != pNode)
+		{
+			pNode->setObjID(INVALID_OBJ_ID);
+		}
 		mFixMemory.free(nIndex);
 	}
 

@@ -45,13 +45,13 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>MYTH_OS_WINDOWS;_CRT_SECURE_NO_WARNINGS;__DEBUG__;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../MythCore/include;../dep/protobuffer;../message;../dep/mysql/include;./inc;../dep/tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../MythCore/include;../dep/protobuffer;../message;../dep/mysql/include;./inc;../dep/tinyxml;../dep;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>MythCore.lib;libprotobufd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../Debug;../dep/protobuffer/lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>MythCore.lib;libprotobufd.lib;gtestd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../Debug;../dep/protobuffer/lib;../dep/gtest/lib</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
     </Link>
@@ -97,6 +97,7 @@
     <ClCompile Include="src\gameserver.cpp" />
     <ClCompile Include="src\gameserverconfig.cpp" />
     <ClCompile Include="src\gmcommandmanager.cpp" />
+    <ClCompile Include="src\gtest.cpp" />
     <ClCompile Include="src\instance.cpp" />
     <ClCompile Include="src\instancemodule.cpp" />
     <ClCompile Include="src\internalmsg.cpp" />
