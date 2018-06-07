@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<Data>
-  <File HeadFile="inc/serveractivity.h" SrcFile="src/serveractivity.cpp"/>
-  <File HeadFile="inc/serveractivityunit.h" SrcFile="src/serveractivityunit.cpp"/>
-  <File HeadFile="inc/serveractmodule.h" SrcFile="src/serveractmodule.cpp"/>
-  <File HeadFile="inc/propertyunit.h" SrcFile="src/propertyunit.cpp"/>
-  <File HeadFile="inc/dailyactmodule.h" SrcFile="src/dailyactmodule.cpp"/>
-</Data>

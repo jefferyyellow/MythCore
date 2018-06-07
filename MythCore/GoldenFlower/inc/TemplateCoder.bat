@@ -1,1 +1,0 @@
-TemplateCoder.exe CTplNewPlayerConfig
