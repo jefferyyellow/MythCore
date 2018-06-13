@@ -69,6 +69,13 @@ void CLocalLogJob::initAll()
 
 void CLocalLogJob::doing(int uParam)
 {
+	time_t tTmpTime = CTimeManager::Inst()->getCurrTime();
+	if (tTmpTime - mLogTime > TIME_JOB_RUN_LOG)
+	{
+		mLogTime = tTmpTime;
+		LOG_INFO("Job doing, Thread Num: %d, Job ID: %d", uParam, getJobID());
+	}
+
 	int nCount = 0;
 	//Sleep(100);
 	while (true)

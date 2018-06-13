@@ -21,3 +21,5 @@ using namespace tinyxml2;
 
 #define MAX_DB_JOB_BUFFER_SIZE		8 * 1024* 1024		// 8M
 #define MAX_SCENE_DB_BUFFER_SIZE	32 * 1024 * 1024	// 32M
+
+#define TIME_JOB_RUN_LOG		30		// job 运行日志

@@ -21,5 +21,5 @@ enum EmCurrencyType
 
 #define MAX_CURRENCY_NUM     2000000000			// 最大的货币数量（20亿）
 #define MAX_EQUIP_LIST		 6					// 最大的装备列表
-
+#define BASE_BAG_CAPACITY	 60					// 背包的初始大小
 #endif

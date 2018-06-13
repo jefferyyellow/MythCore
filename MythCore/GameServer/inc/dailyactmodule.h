@@ -112,7 +112,6 @@ public:
     void setLastTime(time_t value){ mLastTime = value;}
 	/// autocode,don't edit !!!
 
-	///
 private:
 	CDailyActivity*		mActivity[MAX_DAILY_ACT_ID];
 	DAILY_ACT_TIME_LIST	mTimeList;

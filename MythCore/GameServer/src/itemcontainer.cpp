@@ -206,6 +206,7 @@ int CItemBox::insertItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNum
 		pOutNumber[rOutLen] = nPileLimit > nItemNum ? nItemNum : nPileLimit;
 		++rOutLen;
 
+		pItemObject->SetItemID(nItemID);
 		mItemObjID[tEmpty[i]] = pItemObject->getObjID();
 		mItemID[tEmpty[i]] = nItemID;
 		// 如果没有插入的比堆叠上限还大
@@ -298,6 +299,7 @@ void CItemBox::removeItem(int nItemID, int nItemNum, int *pOutIndex, int *pOutNu
 		}
 		else
 		{
+			nItemNum -= pItemObject->GetItemNum();
 			mItemObjID[i] = INVALID_OBJ_ID;
 			mItemID[i] = 0;
 

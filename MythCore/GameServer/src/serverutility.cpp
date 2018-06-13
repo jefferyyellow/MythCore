@@ -20,7 +20,7 @@ time_t unixTimeStamp(const char* pTime)
 {
 	if (NULL == pTime)
 	{
-		return time(NULL);
+		return 0;
 	}
 
 	int nYear = 0;
@@ -29,7 +29,7 @@ time_t unixTimeStamp(const char* pTime)
 	int nResult = sscanf(pTime, "%d-%d-%d", &nYear, &nMonth, &nDay);
 	if (nResult < 0)
 	{
-		return time(NULL);
+		return 0;
 	}
 
 	int nHour = 0;
@@ -42,7 +42,7 @@ time_t unixTimeStamp(const char* pTime)
 		nResult = sscanf(pDayTime, "%d:%d:%d", &nHour, &nMinute, &nSecond);
 		if (nResult < 0)
 		{
-			return time(NULL);
+			return 0;
 		}
 	}
 

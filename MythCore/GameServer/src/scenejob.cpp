@@ -25,12 +25,20 @@ CSceneJob::CSceneJob()
 :mMinuteTimer(SECONDS_PER_MIN)
 {
 	init();
+	setJobID(emJobID_Scene);
 }
 
 void CSceneJob::doing(int uParam)
 {
 	//printf("CSceneJob::doing %d\n", uParam);
 	//Sleep(100);
+	time_t tTmpTime = CTimeManager::Inst()->getCurrTime();
+	if (tTmpTime - mLogTime > TIME_JOB_RUN_LOG)
+	{
+		mLogTime = tTmpTime;
+		LOG_INFO("Job doing, Thread Num: %d, Job ID: %d", uParam, getJobID());
+	}
+
 	switch (mServerState)
 	{
 		case emServerStateInit:

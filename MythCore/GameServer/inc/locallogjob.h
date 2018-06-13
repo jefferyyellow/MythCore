@@ -60,6 +60,7 @@ public:
 	CLocalLogJob()
 	{
 		init();
+		setJobID(emJobID_Log);
 	}
 	~CLocalLogJob(){}
 	void init();

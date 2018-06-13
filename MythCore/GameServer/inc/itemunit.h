@@ -13,6 +13,7 @@ public:
 		:CPlayerSubUnit(rPlayer)
 	{
 		init();
+		mBag.setSize(BASE_BAG_CAPACITY);
 	}
 	~CItemUnit()
 	{

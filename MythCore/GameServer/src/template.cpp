@@ -113,7 +113,6 @@ void CStaticData::createFromPB(PBTplTemplate* pTplTemplate)
 	TEMPLATE_SET_FROM_PB(CTplOgre, pbTplNPCSet, ogre);
 	TEMPLATE_SET_FROM_PB(CTplEquip, pbTplItemSet, equip);
 	TEMPLATE_SET_FROM_PB(CTplSkill, pbTplSkillSet, skill);
-	TEMPLATE_SET_FROM_PB(CTplSkill, pbTplSkillSet, skill);
 	TEMPLATE_SET_FROM_PB(CTplDropTable, pbTplConfigSet, droptable);
 	TEMPLATE_SET_FROM_PB(CTplNewPlayerConfig, pbTplConfigSet, newplayerconfig);
 }

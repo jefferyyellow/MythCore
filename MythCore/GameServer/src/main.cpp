@@ -128,7 +128,6 @@ bool ParseParam(int argc, char* argv[])
 int main(int argc, char* argv[])
 {
 	testing::InitGoogleTest(&argc,argv);
-	return RUN_ALL_TESTS();
 
 	bool bExit = ParseParam(argc, argv);
 	if (bExit)
@@ -146,6 +145,7 @@ int main(int argc, char* argv[])
 
 	CGameServer::CreateInst();
 	CGameServer::Inst()->initAll();
+	//return RUN_ALL_TESTS();
 	CGameServer::Inst()->run();
 
 	// 释放protobuf中lib和msg占用的内存

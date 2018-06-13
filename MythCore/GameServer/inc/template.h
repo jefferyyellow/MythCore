@@ -215,7 +215,7 @@ public:
 // virtual	= false						## 
 // name		= z装备						## 模版名称
 // path		= z装备						## 路径
-// parent	=							## 父亲模版
+// parent	= 道具基本信息				## 父亲模版
 // ********************************************************************** //
 class PBTplEquip;
 class PBTplProperty;
@@ -268,8 +268,8 @@ public:
 	int		mLevelRequire;
 
 	// FieldName: 第%d项属性
-	// FieldType: INT4
-	// Type:	  EDITNUMBER(0,1000)
+	// FieldType: CLASS
+	// Type:	  CLASS
 	CProperty	mProperty[EQUIP_PROPERTY_NUM];
 
 public:

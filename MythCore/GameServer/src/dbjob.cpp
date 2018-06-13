@@ -10,6 +10,7 @@
 CDBJob::CDBJob()
 {
 	init();
+	setJobID(emJobID_DB);
 }
 
 CDBJob::~CDBJob()
@@ -33,8 +34,12 @@ int CDBJob::initDB(char* pHost, char* pUserName, char* pPasswd, char* pDataBase,
 
 void CDBJob::doing(int uParam)
 {
-	//printf("CDBJob:: %d\n", uParam);
-	//Sleep(100);
+	time_t tTmpTime = CTimeManager::Inst()->getCurrTime();
+	if (tTmpTime - mLogTime > TIME_JOB_RUN_LOG)
+	{
+		mLogTime = tTmpTime;
+		LOG_INFO("Job doing, Thread Num: %d, Job ID: %d", uParam, getJobID());
+	}
 	checkDBStream();
 	while (true)
 	{
