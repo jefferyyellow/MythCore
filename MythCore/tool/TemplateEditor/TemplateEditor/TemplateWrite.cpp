@@ -658,5 +658,6 @@ BOOL CTemplateWrite::AddPBData(PBTplTemplate* pTplTemplate, CString& strTempName
 	CREATE_DATA_TO_PB("x新玩家信息", CTplNewPlayerConfig, pbTplConfigSet, newplayerconfig);
 	CREATE_DATA_TO_PB("j技能", CTplSkill, pbTplSkillSet, skill);
 	CREATE_DATA_TO_PB("d掉落表", CTplDropTable, pbTplConfigSet, droptable);
+	CREATE_DATA_TO_PB("z装备", CTplEquip, pbTplItemSet, equip);
 	return TRUE;
 }

@@ -20,7 +20,7 @@ namespace Myth
 		virtual void doing(int uParam) = 0;
 
 		byte	getJobID(){return mJobID;}
-		void	setJobID(byte mJobID){mJobID = mJobID;}
+		void	setJobID(byte nJobID){mJobID = nJobID;}
 
 		bool	getBusy(){return mBusy;}
 		void	setBusy(bool bBusy){mBusy = bBusy;}

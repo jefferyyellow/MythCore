@@ -258,6 +258,12 @@
     <ClCompile Include="src\gtest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\curlhandle.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\redis.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -485,9 +491,6 @@
     <ClInclude Include="..\message\chatmodule.hxx.pb.h">
       <Filter>message</Filter>
     </ClInclude>
-    <ClInclude Include="inc\serverutility.h">
-      <Filter>源文件</Filter>
-    </ClInclude>
     <ClInclude Include="inc\serveractmodule.h">
       <Filter>logicmodule\serveractivity</Filter>
     </ClInclude>
@@ -559,6 +562,15 @@
     </ClInclude>
     <ClInclude Include="inc\teammodule.h">
       <Filter>logicmodule\team</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\serverutility.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\curlhandle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\redis.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

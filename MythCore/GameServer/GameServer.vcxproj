@@ -45,13 +45,13 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>MYTH_OS_WINDOWS;_CRT_SECURE_NO_WARNINGS;__DEBUG__;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../MythCore/include;../dep/protobuffer;../message;../dep/mysql/include;./inc;../dep/tinyxml;../dep;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../MythCore/include;../dep/protobuffer;../message;../dep/mysql/include;./inc;../dep/tinyxml;../dep;../dep/libcurl/include;../dep/hiredis/windows/include;../dep/jsoncpp/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>MythCore.lib;libprotobufd.lib;gtestd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../Debug;../dep/protobuffer/lib;../dep/gtest/lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>MythCore.lib;libprotobufd.lib;gtestd.lib;libcurl.lib;hiredis.lib;lib_json.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../Debug;../dep/protobuffer/lib;../dep/gtest/lib;../dep/libcurl/lib;../dep/hiredis/windows/lib;../dep/jsoncpp/lib</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
     </Link>
@@ -87,6 +87,7 @@
     <ClCompile Include="..\message\taskmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\template.hxx.pb.cc" />
     <ClCompile Include="src\chatmodule.cpp" />
+    <ClCompile Include="src\curlhandle.cpp" />
     <ClCompile Include="src\dailyactivity.cpp" />
     <ClCompile Include="src\dailyactmodule.cpp" />
     <ClCompile Include="src\dbjob.cpp" />
@@ -122,6 +123,7 @@
     <ClCompile Include="src\propertymodule.cpp" />
     <ClCompile Include="src\propertyunit.cpp" />
     <ClCompile Include="src\rankmodule.cpp" />
+    <ClCompile Include="src\redis.cpp" />
     <ClCompile Include="src\scenejob.cpp" />
     <ClCompile Include="src\serveractivity.cpp" />
     <ClCompile Include="src\serveractivityunit.cpp" />
@@ -167,6 +169,7 @@
     <ClInclude Include="..\message\template.hxx" />
     <ClInclude Include="..\message\template.hxx.pb.h" />
     <ClInclude Include="inc\chatmodule.h" />
+    <ClInclude Include="inc\curlhandle.h" />
     <ClInclude Include="inc\dailyactivity.h" />
     <ClInclude Include="inc\dailyactivitytype.h" />
     <ClInclude Include="inc\dailyactmodule.h" />
@@ -215,6 +218,7 @@
     <ClInclude Include="inc\rank.h" />
     <ClInclude Include="inc\rankmodule.h" />
     <ClInclude Include="inc\ranktype.h" />
+    <ClInclude Include="inc\redis.h" />
     <ClInclude Include="inc\scenejob.h" />
     <ClInclude Include="inc\serveractivity.h" />
     <ClInclude Include="inc\serveractivitytype.h" />
