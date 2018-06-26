@@ -12,6 +12,25 @@ enum EmHttpType
 class CURLSession
 {
 public:
+	CURLSession()
+	{
+		init();
+	}
+	~CURLSession()
+	{
+
+	}
+
+	void			init()
+	{
+		mHttpType = EmHttpType(0);
+		mFile = NULL;
+		mHttpUrl[0] = '\0';
+		mNeedCallBack = false;
+		mReturnData[0] = '\0';
+		mReturnSize = 0;
+	}
+public:
 	EmHttpType		getHttpType() const { return mHttpType; }
 	void			setHttpType(EmHttpType nValue) { mHttpType = nValue; }
 
@@ -80,7 +99,7 @@ public:
 	/// 设置HTTP Get方式的选项
 	void		setHttpGetOption(const char* pHttpURL, const char* pPostData, CURL* pURL, CURLSession* pURLSession);
 	/// 设置HTTP Post方式的选项
-	void		sendHttpPostRequest(const char* pHttpURL, const char* pPostData, CURL* pURL, CURLSession* pURLSession);
+	void		setHttpPostRequest(const char* pHttpURL, const char* pPostData, CURL* pURL, CURLSession* pURLSession);
 	/// 初始Easy URL
 	CURL*		initEasyURL();
 	void		doing();

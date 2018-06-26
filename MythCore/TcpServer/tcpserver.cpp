@@ -200,8 +200,8 @@ bool CTcpServer::initSocket()
 
 
 		pListenSocket->setNonBlock(true);
-		pListenSocket->setSendBuffSizeOption(8192);
-		pListenSocket->setRecvBuffSizeOption(8192);
+		pListenSocket->setSendBuffSizeOption(SOCKET_CACHE_SIZE);
+		pListenSocket->setRecvBuffSizeOption(SOCKET_CACHE_SIZE);
 	}
 
 	return true;
@@ -550,7 +550,7 @@ void CTcpServer::onReceiveMessage(CTcpSocket* pSocket, int nIndex)
 		}
 
 		short nMessageLen = *(short*)pBuffer;
-		if (nMessageLen < 4 || nMessageLen > MAX_TCPBUFF_LEN)
+		if (nMessageLen < 4 || nMessageLen > MAX_SOCKET_BUFF_SIZE)
 		{
 			// ³ö´í
 			break;

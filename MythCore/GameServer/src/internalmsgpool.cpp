@@ -9,7 +9,17 @@ CInternalMsg* CInternalMsgPool::allocMsg(int nMessageID)
 	{
 		case IM_REQUEST_LOCAL_LOG:
 		{
-			pMsg = static_cast<CInternalMsg*>(mLocalLogRequest.allocate());
+			pMsg = static_cast<CInternalMsg*>(mLocalLogRequestPool.allocate());
+			break;
+		}
+		case IM_REQUEST_PLAT_LOG:
+		{
+			pMsg = static_cast<CInternalMsg*>(mPlatLogRequestPool.allocate());
+			break;
+		}
+		case IM_REQUEST_PLAT_WEB:
+		{
+			pMsg = static_cast<CInternalMsg*>(mPlatWebRequestPool.allocate());
 			break;
 		}
 		default:
@@ -33,7 +43,17 @@ void CInternalMsgPool::freeMsg(CInternalMsg* pMsg)
 	{
 		case IM_REQUEST_LOCAL_LOG:
 		{
-			mLocalLogRequest.free((CIMLocalLogRequest*)pMsg);
+			mLocalLogRequestPool.free((CIMLocalLogRequest*)pMsg);
+			break;
+		}
+		case IM_REQUEST_PLAT_LOG:
+		{
+			mPlatLogRequestPool.free((CIMPlatLogRequest*)pMsg);
+			break;
+		}
+		case IM_REQUEST_PLAT_WEB:
+		{
+			mPlatWebRequestPool.free((CIMPlatWebRequest*)pMsg);
 			break;
 		}
 		default:

@@ -158,9 +158,16 @@ bool CGameServer::initThread()
 	}
 	mLocalLogJob.initAll();
 
+	bResult = mPlatJob.initAll("192.168.10.13", 6379, 5, 8999);
+	if (!bResult)
+	{
+		return false;
+	}
+
 	printf("initThread\n");
 	mThreadPool.pushBackJob(&mSceneJob);
 	mThreadPool.pushBackJob(&mLocalLogJob);
+	mThreadPool.pushBackJob(&mPlatJob);
 	return true;
 }
 
@@ -252,6 +259,11 @@ void CGameServer::pushTask(EmTaskType eTaskType, CInternalMsg* pMsg)
 		case emTaskType_Scene:
 		{
 			mSceneJob.pushTask(pMsg);
+			break;
+		}
+		case emTaskType_Plat:
+		{
+			mPlatJob.pushTask(pMsg);
 			break;
 		}
 		default:

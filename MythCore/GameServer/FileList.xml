@@ -48,4 +48,6 @@
   <File HeadFile="inc/taskmodule.h" SrcFile="src/taskmodule.cpp"/>
   <File HeadFile="inc/taskunit.h" SrcFile="src/taskunit.cpp"/>
   <File HeadFile="inc/teammodule.h" SrcFile="src/teammodule.cpp"/>
+  <File HeadFile="inc/curlhandle.h" SrcFile="src/curlhandle.cpp"/>
+  <File HeadFile="inc/redis.h" SrcFile="src/redis.cpp"/>
 </Data>

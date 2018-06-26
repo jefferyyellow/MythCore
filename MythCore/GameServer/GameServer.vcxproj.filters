@@ -264,6 +264,12 @@
     <ClCompile Include="src\redis.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\platjob.cpp">
+      <Filter>job</Filter>
+    </ClCompile>
+    <ClCompile Include="src\platlog.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -571,6 +577,12 @@
     </ClInclude>
     <ClInclude Include="inc\redis.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\platjob.h">
+      <Filter>job</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\platlog.h">
+      <Filter>源文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

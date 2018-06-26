@@ -44,8 +44,8 @@ CURLHandle::~CURLHandle()
 
 void CURLHandle::init()
 {
-	mMultiURL = NULL;
-	mCompleteCallBack = NULL;
+    mMultiURL = NULL;
+    mCompleteCallBack = NULL;
 }
 
 bool CURLHandle::initCURL(int nMaxURLNum)
@@ -154,7 +154,7 @@ void CURLHandle::sendRequest(const char* pHttpURL, const char* pPostData, EmHttp
 	{
 		// pPostData是文件名
 		char tFilePath[256] = { 0 };
-		sprintf(tFilePath, "../../tmpfile/%s", pPostData);
+		sprintf(tFilePath, "%s", pPostData);
 		// 打开文件句柄
 		FILE* pFile = fopen(tFilePath, "w+");
 		pURLSession->setFile(pFile);
@@ -166,7 +166,7 @@ void CURLHandle::sendRequest(const char* pHttpURL, const char* pPostData, EmHttp
 	}
 	else
 	{
-		sendHttpPostRequest(pHttpURL, pPostData, pURL, pURLSession);
+		setHttpPostRequest(pHttpURL, pPostData, pURL, pURLSession);
 	}
 
 	curl_multi_add_handle(mMultiURL, pURL);
@@ -176,12 +176,12 @@ void CURLHandle::sendRequest(const char* pHttpURL, const char* pPostData, EmHttp
 void CURLHandle::setHttpGetOption(const char* pHttpURL, const char* pPostData, CURL* pURL, CURLSession* pURLSession)
 {
 	curl_easy_setopt(pURL, CURLOPT_URL, pURLSession->getHttpUrl());
-	curl_easy_setopt(pURL, CURLOPT_HEADER, 1);
+	curl_easy_setopt(pURL, CURLOPT_HEADER, 0);
 	curl_easy_setopt(pURL, CURLOPT_HTTPGET, 1);
 }
 
 /// 设置HTTP Post方式的选项
-void CURLHandle::sendHttpPostRequest(const char* pHttpURL, const char* pPostData, CURL* pURL, CURLSession* pURLSession)
+void CURLHandle::setHttpPostRequest(const char* pHttpURL, const char* pPostData, CURL* pURL, CURLSession* pURLSession)
 {
 	curl_easy_setopt(pURL, CURLOPT_URL, pURLSession->getHttpUrl());
 	curl_easy_setopt(pURL, CURLOPT_HEADER, 1L);
@@ -200,7 +200,7 @@ CURL* CURLHandle::initEasyURL()
 
 	curl_easy_setopt(pURL, CURLOPT_TCP_KEEPALIVE, 1L);
 	curl_easy_setopt(pURL, CURLOPT_WRITEFUNCTION, onWriteFuncCallBack);
-	curl_easy_setopt(pURL, CURLOPT_VERBOSE, 1L);
+	//curl_easy_setopt(pURL, CURLOPT_VERBOSE, 1L);
 	return pURL;
 }
 

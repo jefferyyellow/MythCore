@@ -18,13 +18,9 @@ public:
 	void			freeMsg(CInternalMsg* pMsg);
 
 private:
-	CBlockMemory<CIMLocalLogRequest, 20, 5>			mLocalLogRequest;
-	CBlockMemory<CIMPlayerLoginRequest, 20, 5>		mPlayerLoginRequest;
-	CBlockMemory<CIMPlayerLoginResponse, 20, 5>		mPlayerLoginResponse;
-	CBlockMemory<CIMCreateRoleRequest, 20, 5>		mCreateRoleRequest;
-	CBlockMemory<CIMCreateRoleResponse, 20, 5>		mCreateRoleResponse;
-	CBlockMemory<CIMEnterSceneRequest, 20, 5>		mEnterSceneRequest;
-	CBlockMemory<CIMEnterSceneResponse, 20, 5>	mEnterSceneResponse;
+	CBlockMemory<CIMLocalLogRequest, 100, 100>			mLocalLogRequestPool;
+	CBlockMemory<CIMPlatLogRequest, 100, 100>			mPlatLogRequestPool;
+	CBlockMemory<CIMPlatWebRequest, 100, 100>			mPlatWebRequestPool;
 
 	Myth::CSimpleLock								mLock;
 };

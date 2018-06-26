@@ -27,7 +27,7 @@ class CEntityPlayer;
 class CLogicModule;
 class CEntity;
 class CLoginPlayer;
-class CSceneJob : public CJob < 1000, 100 >, public CSingleton<CSceneJob>
+class CSceneJob : public CJob < 100, 100 >, public CSingleton<CSceneJob>
 {
 public:
 	friend class CSingleton<CSceneJob>;

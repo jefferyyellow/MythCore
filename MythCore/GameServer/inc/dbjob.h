@@ -9,7 +9,7 @@ using namespace Myth;
 
 class CInternalMsg;
 class CIMPlayerLoginMsg;
-class CDBJob : public CJob<200, 20>
+class CDBJob : public CJob<100, 100>
 {
 public:
 	CDBJob();

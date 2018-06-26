@@ -6,10 +6,11 @@
 // IM表示内部消息（internal message的简写)
 enum EmInternalMsgID
 {
-	IM_REQUEST_LOCAL_LOG				= 1,			// 玩家本地日志要求
+	IM_REQUEST_LOCAL_LOG				= 1,			// 玩家本地日志请求
+	IM_REQUEST_PLAT_LOG					= 2,			// 平台日志请求
+	IM_REQUEST_PLAT_WEB					= 3,			// 平台Web请求
 };
 
-#define MAX_DEBUG_LOG_NAME			32
 
 // 为了和服务器与服务器之间，服务器与客户端之间的消息相区分
 // 内部消息都已CIM开头
@@ -24,10 +25,10 @@ public:
 	void		setMsgID(int uMsgID){mMsgID = uMsgID;}
 
 protected:
-	int			mMsgID;
+	int			mMsgID;										// 消息ID
 };
 
-
+// 本地日志请求
 class CIMLocalLogRequest : public CInternalMsg
 {
 public:
@@ -37,54 +38,21 @@ public:
 	char		mDebugName[MAX_DEBUG_LOG_NAME];				// 调试日志名字
 #endif
 };
-// 玩家登陆内部消息基类
-class CIMPlayerLoginMsg : public CInternalMsg
+
+// 平台日志请求
+class CIMPlatLogRequest : public CInternalMsg
 {
 public:
-	short			mSocketIndex;							// socket索引
-	unsigned int	mAccountID;								// 账号ID
-	short			mChannelID;								// 渠道
-	short			mServerID;								// 服务器ID
+	char		mContent[PLAT_LOG_CONTENT_LEN];			// 日志内容
 };
 
-class CIMPlayerLoginRequest : public CIMPlayerLoginMsg
+// 平台Web请求
+class CIMPlatWebRequest : public CInternalMsg
 {
 public:
-	char			mName[MAX_PLAYER_NAME_LEN];				// 名字
-};
-
-class CIMPlayerLoginResponse : public CIMPlayerLoginMsg
-{
-public:
-	unsigned int	mRoleID;								// 角色ID
-	char			mName[MAX_PLAYER_NAME_LEN];				// 名字
-};
-
-class CIMCreateRoleRequest : public CIMPlayerLoginMsg
-{
-public:
-	char			mRoleName[MAX_PLAYER_NAME_LEN];			// 角色名
-};
-
-
-class CIMCreateRoleResponse : public CIMPlayerLoginMsg
-{
-public:
-	unsigned int	mRoleID;								// 角色ID
-	char			mRoleName[MAX_PLAYER_NAME_LEN];			// 角色名
-};
-
-class CIMEnterSceneRequest : public CIMPlayerLoginMsg
-{
-public:
-	unsigned int	mRoleID;								// 角色ID
-	unsigned int	mPlayerEntityID;						// 角色的实体ID
-};
-
-class CIMEnterSceneResponse : public CIMPlayerLoginMsg
-{
-public:
-	unsigned int	mRoleID;								// 角色ID
-	unsigned int	mPlayerEntityID;						// 角色的实体ID
+	char		mURL[WEB_URL_LEN];						// URL
+	char		mPostData[WEB_POST_DATA_LEN];			// Post数据的长度
+	bool		mNeedCallBack;							// 是否需要回调
+	int			mHttpType;								// Http类型
 };
 #endif

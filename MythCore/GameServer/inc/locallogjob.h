@@ -54,7 +54,7 @@ extern void		LogLocalDebugLog(const char* pLogName, const char* pFile, int nLine
 extern void		LogNoLocation(EmLogType eLogType, const char* pFormat, ...);
 
 class CIMLocalLogRequest;
-class CLocalLogJob : public CJob<100, 10>
+class CLocalLogJob : public CJob<100, 100>
 {
 public:
 	CLocalLogJob()

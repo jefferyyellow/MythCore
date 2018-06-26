@@ -7,7 +7,7 @@
 #include "locallogjob.h"
 #include "singleton.h"
 #include "scenejob.h"
-
+#include "platjob.h"
 #define MAX_DB_JOB		8
 using namespace Myth;
 
@@ -54,6 +54,7 @@ private:
 	CDBJob					mDBJob[MAX_DB_JOB];
 	CLocalLogJob			mLocalLogJob;
 	CSceneJob				mSceneJob;
+	CPlatJob				mPlatJob;
 
 	// Ïß³Ì³Ø
 	Myth::CThreadPool		mThreadPool;

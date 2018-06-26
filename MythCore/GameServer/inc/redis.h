@@ -1,6 +1,7 @@
 #ifndef __REDIS_H__
 #define __REDIS_H__
 #include "hiredis.h"
+#include "async.h"
 class CRedisReply
 {
 public:
@@ -19,7 +20,7 @@ public:
 
 	void	init()
 	{
-
+        mReply = NULL;
 	}
 
 public:
@@ -85,54 +86,54 @@ class CRedis
 public:
 	CRedis()
 	{
-		mpContext = NULL;
+		init();
 	}
 	~CRedis()
 	{
-		if (NULL != mpContext)
+		if (NULL != mContext)
 		{
-			redisFree(mpContext);
+			redisFree(mContext);
 		}
+	}
+	
+	void init()
+	{
+        mContext = NULL;
 	}
 
 public:
 	// 连接redis服务器
-	int		ConnectRedisServer(const char *ip, int port, int nTime);
-	int		Command(CRedisReply& rRedisReplay, const char *format, ...);
+	int		connectRedisServer(const char *ip, int port, int nTime);
+	int		command(CRedisReply& rRedisReplay, const char *format, ...);
 
 private:
-	redisContext* mpContext;
+	redisContext* mContext;
 };
 
 
-// 异步的还依赖LibEvent库，先不处理
-//typedef void CommandHandle(void* privdata);
-//struct redisAsyncContext;
-//struct event_base;
-//class CAsyncRedis
-//{
-//public:
-//	CAsyncRedis();
-//	~CAsyncRedis();
-//	void	Clear();
-//
-//	// 连接redis服务器
-//	int		ConnectRedisServer(const char *ip, int port);
-//	void	DoEvent();
-//	int		Command(void *privdata, const char *format, ...);
-//
-//public:
-//	void	SetCommandHandle(CommandHandle* pCommandHandle){ mCommnadHandle = pCommandHandle; }
-//
-//public:
-//	static void	OnConnectCallBack(const redisAsyncContext*, int status);
-//	static void	OnDisconnectCallBack(const redisAsyncContext*, int status);
-//	static void OnCommandCallBack(redisAsyncContext* pContext, void* reply, void* privdata);
-//
-//private:
-//	redisAsyncContext*		mpAsyncContext;
-//	event_base*				mpEventBase;
-//	bool					mConnected;
-//	CommandHandle*			mCommnadHandle;
-//};
+struct redisAsyncContext;
+struct event_base;
+class CAsyncRedis
+{
+public:
+	CAsyncRedis();
+	~CAsyncRedis();
+	void	clear();
+
+	// 连接redis服务器
+	bool	connectRedisServer(const char *ip, int port, redisConnectCallback pConnectHandle, 
+		redisDisconnectCallback pDisconnectHanle, redisCallbackFn pCommandHandle);
+	void	doEvent();
+	int		command(void *privdata, const char *format, ...);
+	char*	getErrStr();
+
+
+	bool	getConnected(){return mConnected;}
+	void	setConnected(bool bConnected){mConnected = bConnected;}
+private:
+	redisAsyncContext*			mAsyncContext;
+	event_base*					mEventBase;
+	bool						mConnected;
+	redisCallbackFn*			mCommandHandle;
+};
 #endif
