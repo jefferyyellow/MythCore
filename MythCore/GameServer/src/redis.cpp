@@ -1,6 +1,5 @@
 #include "redis.h"
-#include <WinSock2.h>
-#include "event2/event.h"
+#include "event.h"
 #include "async.h"
 #include "adapters/libevent.h"
 int CRedis::connectRedisServer(const char *pIp, int nPort, int nMsTime)
