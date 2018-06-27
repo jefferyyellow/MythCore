@@ -3,7 +3,7 @@ PROJECT(GameServer)
 #定义宏
 ADD_DEFINITIONS(-DMYTH_OS_UNIX)
 #包含的头文件目录
-INCLUDE_DIRECTORIES(inc ../MythCore/include ../dep/tinyxml ../dep/mysql/include ../dep/protobuffer ../message ../dep ../dep/libcurl/include ../dep/libevent/include ../dep/jsoncpp)
+INCLUDE_DIRECTORIES(inc ../MythCore/include ../dep/tinyxml ../dep/mysql/include ../dep/protobuffer ../message ../dep ../dep/libcurl/include ../dep/libevent/include/linux ../dep/jsoncpp ../dep/hiredis/linux/include)
 #设置C++的编译标志
 SET(CMAKE_CXX_FLAGS "-g -pipe -Werror -DMEDIUM_SIZE -DMYTH_OS_UNIX -D__DEBUG__ -finput-charset='gbk' -fexec-charset='gbk' -fwide-exec-charset='unicode'")
 
@@ -12,7 +12,7 @@ LINK_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../Debug ${CMAKE_CURRENT_SOURCE_DIR
 SET(EXECUTABLE_OUTPUT_PATH ../../Debug)
 
 #连接MyCore和rt库
-LINK_LIBRARIES(MythCore rt mysqlclient protobuf dl)
+LINK_LIBRARIES(MythCore rt mysqlclient protobuf dl )
 ADD_SUBDIRECTORY(src)
 #message(STATUS "src list*****************************" ${MESSAGE_SRC_LIST})
 

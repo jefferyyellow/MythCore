@@ -1,6 +1,7 @@
 #include "redis.h"
 #include "event.h"
 #include "async.h"
+#include <stdlib.h>
 #include "adapters/libevent.h"
 int CRedis::connectRedisServer(const char *pIp, int nPort, int nMsTime)
 {

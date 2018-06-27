@@ -20,8 +20,8 @@ void LogPlatLog(const char* pLogName, Json::Value& tLogValue)
 
 void LogServerStartComplete()
 {
-	Json::Value tPlatLog;
-	tPlatLog["time"] = CTimeManager::Inst()->getCurrTime();
+	Json::Value tPlatLog(Json::nullValue);
+	tPlatLog["time"] = (Json::Value::UInt)(CTimeManager::Inst()->getCurrTime());
 
 	LogPlatLog("log_server_start", tPlatLog);
 }

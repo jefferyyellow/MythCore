@@ -45,13 +45,13 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>MYTH_OS_WINDOWS;_CRT_SECURE_NO_WARNINGS;__DEBUG__;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../MythCore/include;../dep/protobuffer;../message;../dep/mysql/include;./inc;../dep/tinyxml;../dep;../dep/libcurl/include;../dep/hiredis/windows/include;../dep/jsoncpp/;../dep/libevent/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../MythCore/include;../dep/protobuffer;../message;../dep/mysql/include;./inc;../dep/tinyxml;../dep;../dep/libcurl/include;../dep/hiredis/windows/include;../dep/jsoncpp/;../dep/libevent/windows/include;../dep/gtest/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>MythCore.lib;libprotobufd.lib;gtestd.lib;libcurl.lib;hiredis.lib;lib_json.lib;libevent_core.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../Debug;../dep/protobuffer/lib;../dep/gtest/lib;../dep/libcurl/lib;../dep/hiredis/windows/lib;../dep/jsoncpp/lib;../dep/libevent/lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../Debug;../dep/protobuffer/lib;../dep/gtest/lib;../dep/libcurl/lib;../dep/hiredis/windows/lib;../dep/jsoncpp/lib;../dep/libevent/windows/lib</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
