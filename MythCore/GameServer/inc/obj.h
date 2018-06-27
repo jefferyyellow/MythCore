@@ -9,7 +9,6 @@
 #define OBJ_ID_START(ObjType)	(((ObjType) << OBJ_ID_BITS) + 1)
 #define OBJ_ID_END(ObjType)	((((ObjType) + 1) << OBJ_ID_BITS) - 1)
 
-#define INVALID_OBJ_ID 0		// ·Ç·¨µÄOBJ ID
 class CObj
 {
 public:

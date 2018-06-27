@@ -3,7 +3,7 @@ PROJECT(GameServer)
 #定义宏
 ADD_DEFINITIONS(-DMYTH_OS_UNIX)
 #包含的头文件目录
-INCLUDE_DIRECTORIES(inc ../MythCore/include ../dep/tinyxml ../dep/mysql/include ../dep/protobuffer ../message)
+INCLUDE_DIRECTORIES(inc ../MythCore/include ../dep/tinyxml ../dep/mysql/include ../dep/protobuffer ../message ../dep ../dep/libcurl/include ../dep/libevent/include ../dep/jsoncpp)
 #设置C++的编译标志
 SET(CMAKE_CXX_FLAGS "-g -pipe -Werror -DMEDIUM_SIZE -DMYTH_OS_UNIX -D__DEBUG__ -finput-charset='gbk' -fexec-charset='gbk' -fwide-exec-charset='unicode'")
 

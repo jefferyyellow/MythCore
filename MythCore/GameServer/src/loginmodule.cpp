@@ -81,13 +81,16 @@ void CLoginModule::onTimer(unsigned int nTickOffset)
 	{
 		time_t tTimeNow = CTimeManager::Inst()->getCurrTime();
 		LOGIN_LIST::iterator it = mLoginList.begin();
+		LOGIN_LIST::iterator itTmp = mLoginList.end();
 		for (; it != mLoginList.end(); )
 		{
 			int nObjID = it->second;
 			CLoginPlayer* pLoginPlayer = static_cast<CLoginPlayer*>(CObjPool::Inst()->getObj(nObjID));
 			if (NULL == pLoginPlayer)
 			{
-				it = mLoginList.erase(it);
+				itTmp = it;
+				++ it;
+				mLoginList.erase(itTmp);
 				continue;
 			}
 
@@ -96,7 +99,11 @@ void CLoginModule::onTimer(unsigned int nTickOffset)
 			if (emLoginDelState_None != pLoginPlayer->getDelState() || bOverTime)
 			{
 				removeVerifyPlayer(pLoginPlayer->getChannelID(), pLoginPlayer->getServerID(), pLoginPlayer->getAccountID());
-				it = mLoginList.erase(it);
+				
+				itTmp = it;
+				++it;
+				mLoginList.erase(it);
+
 				CObjPool::Inst()->free(nObjID);
 				// 如果登录完成了就不能断开连接
 				if (emLoginDelState_Complete != pLoginPlayer->getDelState())
