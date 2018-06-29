@@ -274,7 +274,7 @@ void CLoginModule::onLoadAllocateRoleId(CDBResponse& rResponse)
 			int nBeginRoleID = getBeginRoleID(CGameServer::Inst()->getServerID());
 			if (nBeginRoleID == 0)
 			{
-				LOG_ERROR("default", "begin role id is zero, server id: %d", CGameServer::Inst()->getServerID());
+				LOG_ERROR("begin role id is zero, server id: %d", CGameServer::Inst()->getServerID());
 			}
 			else
 			{

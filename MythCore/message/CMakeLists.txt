@@ -10,6 +10,9 @@ SET(TMP_MESSAGE_SRC_LIST
 	skillmodule.hxx.pb.cc
 	taskmodule.hxx.pb.cc
 	template.hxx.pb.cc
+	dailyactmodule.hxx.pb.cc
+	rankmodule.hxx.pb.cc
+	serveractmodule.hxx.pb.cc
 )
 
 #下面这一句要这么写主CMakeLists才能得到对应的值

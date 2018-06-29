@@ -3,16 +3,17 @@ PROJECT(GameServer)
 #定义宏
 ADD_DEFINITIONS(-DMYTH_OS_UNIX)
 #包含的头文件目录
-INCLUDE_DIRECTORIES(inc ../MythCore/include ../dep/tinyxml ../dep/mysql/include ../dep/protobuffer ../message ../dep ../dep/libcurl/include ../dep/libevent/include/linux ../dep/jsoncpp ../dep/hiredis/linux/include)
+INCLUDE_DIRECTORIES(inc ../MythCore/include ../dep/tinyxml ../dep/mysql/include ../dep/protobuffer ../message ../dep ../dep/libcurl/include ../dep/libevent/include/linux ../dep/jsoncpp ../dep/hiredis/linux/include ../dep/gtest/include)
 #设置C++的编译标志
 SET(CMAKE_CXX_FLAGS "-g -pipe -Werror -DMEDIUM_SIZE -DMYTH_OS_UNIX -D__DEBUG__ -finput-charset='gbk' -fexec-charset='gbk' -fwide-exec-charset='unicode'")
 
 #指定可执行文件目录
-LINK_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../Debug ${CMAKE_CURRENT_SOURCE_DIR}/../dep/mysql/lib ${CMAKE_CURRENT_SOURCE_DIR}/../dep/protobuffer/lib)
+LINK_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../Debug ${CMAKE_CURRENT_SOURCE_DIR}/../dep/mysql/lib ${CMAKE_CURRENT_SOURCE_DIR}/../dep/protobuffer/lib ${CMAKE_CURRENT_SOURCE_DIR}/../dep/gtest/lib ${CMAKE_CURRENT_SOURCE_DIR}/../dep/hiredis/linux/lib ${CMAKE_CURRENT_SOURCE_DIR}/../dep/jsoncpp/lib ${CMAKE_CURRENT_SOURCE_DIR}/../dep/libcurl/lib ${CMAKE_CURRENT_SOURCE_DIR}/../dep/libevent/linux/lib)
 SET(EXECUTABLE_OUTPUT_PATH ../../Debug)
 
 #连接MyCore和rt库
-LINK_LIBRARIES(MythCore rt mysqlclient protobuf dl )
+#idn ldap ssl这些库都是因为curl库链接需要
+LINK_LIBRARIES(MythCore rt mysqlclient protobuf dl gtest hiredis json_linux-gcc-4.4.7_libmt curl event_core idn ldap ssl)
 ADD_SUBDIRECTORY(src)
 #message(STATUS "src list*****************************" ${MESSAGE_SRC_LIST})
 

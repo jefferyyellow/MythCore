@@ -63,6 +63,7 @@ public:
 public:
 	CMapConfig()
 	{
+		init();
 	}
 	~CMapConfig()
 	{

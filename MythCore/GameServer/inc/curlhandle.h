@@ -44,7 +44,7 @@ public:
 		{
 			return;
 		}
-		strncpy(mHttpUrl, pUrl, size_t(mHttpUrl) - 1);
+		strncpy(mHttpUrl, pUrl, sizeof(mHttpUrl) - 1);
 	}
 
 	bool			getNeedCallBack() const { return mNeedCallBack; }
