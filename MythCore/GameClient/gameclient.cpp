@@ -14,7 +14,7 @@ CGameClient::CGameClient()
 /// 初始化
 bool CGameClient::init()
 {
-	CMessageFactory::CreateInst();
+	CMessageFactory::createInst();
 	CSelectModel::initSocketSystem();
 	mTcpSocket.createSocket();
 	int nResult = mTcpSocket.connectServer("127.0.0.1", 6688);
@@ -33,7 +33,7 @@ bool CGameClient::init()
 /// 初始日志
 bool CGameClient::initLog()
 {
-	CLogManager* pLogManger = CLogManager::CreateInst();
+	CLogManager* pLogManger = CLogManager::createInst();
 	if (NULL == pLogManger)
 	{
 		printf("create log manager failure");

@@ -45,7 +45,7 @@ namespace Myth
 			return mInst;
 		}
 		/// create the singleton instance
-		static T*   CreateInst()
+		static T*   createInst()
 		{
 			if (mInst == NULL)
 			{
@@ -54,11 +54,12 @@ namespace Myth
 			return mInst;
 		}
 		/// destroy the singleton instance
-		static void DestroyInst()
+		static void destroyInst()
 		{
 			if (NULL != mInst)
 			{
 				delete mInst;
+				mInst = NULL;
 			}
 		}
 	private:

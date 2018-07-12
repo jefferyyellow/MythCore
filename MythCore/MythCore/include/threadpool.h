@@ -26,7 +26,14 @@ namespace Myth
 		}
 		~CThreadPool()
 		{
-			
+			for (int i = 0; i < 32; ++ i)
+			{
+				if (NULL != mThreadList[i])
+				{
+					delete mThreadList[i];
+					mThreadList[i] = NULL;
+				}
+			}
 		}
 
 		void				init(int nThreadSize)
@@ -111,6 +118,7 @@ namespace Myth
 		}
 
 		void				run();
+		void				terminateAllThread();
 
 	private:
 		byte				mJobIndex;

@@ -10,6 +10,7 @@ namespace Myth
 {
 	int CLogManager::Init()
 	{
+		memset(&mTmNow, 0, sizeof(tm));
 		return 0;
 	}
 

@@ -16,6 +16,7 @@ public:
 	~CDBJob();
 	void	init();
 	int		initDB(char* pHost, char* pUserName, char* pPasswd, char* pDataBase, int nPort, char* pUnixSocket);
+	void	clear();
 
 public:
 	virtual void doing(int uParam);
@@ -34,8 +35,6 @@ public:
 	int		parsePBForSql(Message& rMessage);
 	/// 分析PB结构，组成调用precedure语句
 	int		parsePBForPrecedure(Message& rMessage);
-private:
-	void	onTask(CInternalMsg* pMsg);
 
 private:
 	CMysqlDataBase	mDataBase;

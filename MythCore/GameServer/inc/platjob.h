@@ -23,6 +23,7 @@ public:
 	}
 	~CPlatJob()
 	{
+		clear();
 	}
 	
 	void	init()
@@ -30,7 +31,7 @@ public:
 
 	}
 	bool	initAll(const char* pRedisIP, int nRedisPort, int nSocketNum, int nListenPort);
-
+	void	clear();
 public:
 	virtual void doing(int uParam);
 

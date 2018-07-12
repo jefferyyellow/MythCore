@@ -56,7 +56,7 @@ class CMap
 public:
 	CMap()
 	{
-		
+		init();
 	}
 	~CMap()
 	{
@@ -74,7 +74,6 @@ public:
         mMapIndex = 0;
         mMapType = emMapType_None;
 	}
-
 	int				initSize(short nLength, short nWidth);
 	void			clear();
 
@@ -191,10 +190,13 @@ private:
 
 	~CMapManager()
 	{
+		clear();
 	}
 	void init()
 	{
 	}
+
+	void				clear();
 
 public:
 	/// ´´½¨µØÍ¼

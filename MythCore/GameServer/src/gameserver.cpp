@@ -19,12 +19,12 @@ void CGameServer::init()
 {
     mDefaultLog = NULL;
     mServerID = 0;
+	mExit = false;
 }
 
 /// 初始化
 bool CGameServer::initAll()
 {
-	init();
 	// 优先初始化这两个变量
 	bool bResult = initLogicModule();
 	if (!bResult)
@@ -58,7 +58,7 @@ bool CGameServer::initAll()
 /// 初始日志
 bool CGameServer::initLog()
 {
-	CLogManager* pLogManger = CLogManager::CreateInst();
+	CLogManager* pLogManger = CLogManager::createInst();
 	if (NULL == pLogManger)
 	{
 		printf("create log manager failure");
@@ -103,11 +103,11 @@ bool CGameServer::initLog()
 /// 初始逻辑模块
 bool CGameServer::initLogicModule()
 {
-	CMessageFactory::CreateInst();
-	CInternalMsgPool::CreateInst();
-	CGameServerConfig::CreateInst();
-	CObjPool::CreateInst();
-	CTimeManager::CreateInst();
+	CMessageFactory::createInst();
+	CInternalMsgPool::createInst();
+	CGameServerConfig::createInst();
+	CObjPool::createInst();
+	CTimeManager::createInst();
 
 	return true;
 }
@@ -136,7 +136,8 @@ bool CGameServer::initThread()
 	mThreadPool.init(10);
 
 	//Sleep(3000);
-	
+	mLocalLogJob.initAll();
+
 	for (int i = 0; i < MAX_DB_JOB; ++ i)
 	{
 		if (0 != mDBJob[i].initDB(CGameServerConfig::Inst()->getDBHost(),
@@ -151,18 +152,18 @@ bool CGameServer::initThread()
 	}
 
 
-	bool bResult = mSceneJob.initBase(MAX_SCENE_DB_BUFFER_SIZE);
+	bool bResult = mPlatJob.initAll("192.168.10.13", 6379, 5, 8999);
 	if (!bResult)
 	{
 		return false;
 	}
-	mLocalLogJob.initAll();
 
-	bResult = mPlatJob.initAll("192.168.10.13", 6379, 5, 8999);
+	bResult = mSceneJob.initBase(MAX_SCENE_DB_BUFFER_SIZE);
 	if (!bResult)
 	{
 		return false;
 	}
+
 
 	printf("initThread\n");
 	mThreadPool.pushBackJob(&mSceneJob);
@@ -177,6 +178,7 @@ void CGameServer::run()
 	//LOG_ERROR("Hello World");
 	//MYTH_ASSERT(1,;);
 	//MYTH_ASSERT_INFO(1,;,"I love you macro!");
+	static int i = 0;
 	while (true)
 	{
 		CTimeManager::Inst()->setCurrTime(time(NULL));
@@ -191,6 +193,17 @@ void CGameServer::run()
 		tv.tv_nsec = 20000000;
 		nanosleep(&tv, NULL);
 #endif
+		// 如果是退出状态，并且所以的job都已经退出完成
+		if (mExit && checkAllJobExit())
+		{
+			break;
+		}
+
+		++ i;
+		if ( i > 100)
+		{
+			break;
+		}
 	}
 }
 
@@ -198,7 +211,10 @@ void CGameServer::run()
 /// 开始为退出做准备
 void CGameServer::clear()
 {
-
+	clearThread();
+	clearStaticData();
+	clearLog();
+	clearLogicModule();
 }
 
 /// 清理日志资源
@@ -239,13 +255,80 @@ void CGameServer::clearLog()
 
 		delete mDefaultLog;
 	}
+
+	CLogManager::destroyInst();
+}
+
+/// 清理逻辑模块
+void CGameServer::clearLogicModule()
+{
+	CTimeManager::destroyInst();
+	CObjPool::destroyInst();
+	CGameServerConfig::destroyInst();
+	CInternalMsgPool::destroyInst();
+	CMessageFactory::destroyInst();
+}
+
+/// 清理静态数据
+void CGameServer::clearStaticData()
+{
+	CStaticData::clearTemplate();
+}
+
+/// 清理线程
+void CGameServer::clearThread()
+{
+	mThreadPool.terminateAllThread();
+	mSceneJob.clearBase();
+	mPlatJob.clear();
+
+	for (int i = 0; i < MAX_DB_JOB; ++ i)
+	{
+		mDBJob[i].clear();
+	}
 }
 
 /// 退出
 void CGameServer::exit()
 {
-
+	clear();
 }
+
+/// 检查除了log job是否都已经退出
+bool CGameServer::checkOtherJobExit()
+{
+	if (!mSceneJob.getExited())
+	{
+		return false;
+	}
+
+	if (!mPlatJob.getExited())
+	{
+		return false;
+	}
+
+	for (int i = 0; i < MAX_DB_JOB; ++ i)
+	{
+		if (!mDBJob[i].getExited())
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
+/// 检查所有的 job是否退出
+bool CGameServer::checkAllJobExit()
+{
+	if (!mLocalLogJob.getExited())
+	{
+		return false;
+	}
+
+	return checkOtherJobExit();
+}
+
 
 void CGameServer::pushTask(EmTaskType eTaskType, CInternalMsg* pMsg)
 {

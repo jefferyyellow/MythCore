@@ -167,6 +167,18 @@ int CMapConfig::getPortalPos(unsigned short nMapID, CMythPoint& rPortalPos)
 	return -1;
 }
 
+void CMapConfigManager::clear()
+{
+	for (int i = 0; i < MAX_MAP_ID; ++i)
+	{
+		if (NULL != mMapConfig[i])
+		{
+			delete mMapConfig[i];
+			mMapConfig[i] = NULL;
+		}
+	}
+}
+
 /// ´´½¨µØÍ¼
 int CMapConfigManager::createMapFromConfig(CMap* pMap)
 {

@@ -5,6 +5,15 @@ CObjPool::CObjPool()
 	mPoolImp = new CObjPoolImp;
 }
 
+CObjPool::~CObjPool()
+{
+	if (NULL != mPoolImp)
+	{
+		delete mPoolImp;
+		mPoolImp = NULL;
+	}
+}
+
 CObj* CObjPool::allocObj(EmObjType eType)
 {
 	CObj* pObj = NULL;

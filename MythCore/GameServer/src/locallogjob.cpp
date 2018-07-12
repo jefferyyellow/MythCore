@@ -106,6 +106,15 @@ void CLocalLogJob::doing(int uParam)
 		CLogManager::Inst()->setTmNow(tTimeNow);
 		mLastTime = tTimeNow;
 	}
+
+	// 如果scene job已经退出完成了,表示服务器开始进入退出的流程了
+	if (CSceneJob::Inst()->getExited())
+	{
+		if (CGameServer::Inst()->checkOtherJobExit())
+		{
+			setExited(true);
+		}
+	}
 }
 
 void CLocalLogJob::OnIMLocalLogRequest(CIMLocalLogRequest* pLogRequest)

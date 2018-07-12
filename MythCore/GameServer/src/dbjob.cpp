@@ -15,7 +15,7 @@ CDBJob::CDBJob()
 
 CDBJob::~CDBJob()
 {
-
+	clear();
 }
 
 void CDBJob::init()
@@ -32,6 +32,15 @@ int CDBJob::initDB(char* pHost, char* pUserName, char* pPasswd, char* pDataBase,
 	return 0;
 }
 
+void CDBJob::clear()
+{
+	if (NULL != mJobBuffer)
+	{
+		delete []mJobBuffer;
+		mJobBuffer = NULL;
+	}
+}
+
 void CDBJob::doing(int uParam)
 {
 	time_t tTmpTime = CTimeManager::Inst()->getCurrTime();
@@ -41,17 +50,17 @@ void CDBJob::doing(int uParam)
 		LOG_INFO("Job doing, Thread Num: %d, Job ID: %d", uParam, getJobID());
 	}
 	checkDBStream();
-	while (true)
-	{
-		CInternalMsg* pIMMsg = mTaskManager.popTask();
-		// 如果
-		if (NULL == pIMMsg)
-		{
-			break;
-		}
-		onTask(pIMMsg);
 
-		CInternalMsgPool::Inst()->freeMsg(pIMMsg);
+	// 如果scene job已经退出完成了，表示需要保存的数据基本都完成了
+	if (CSceneJob::Inst()->getExited())
+	{
+		// 检查请求队列里是否还有数据，如果没有数据了，表示可以退出了
+		int nLength = 0;
+		popUpJobData((byte*)&mDBRequest, nLength);
+		if (nLength <= 0)
+		{
+			setExited(true);
+		}
 	}
 }
 
@@ -413,8 +422,4 @@ int CDBJob::parsePBForPrecedure(Message& rMessage)
 		}
 	}
 	return SUCCESS;
-}
-
-void CDBJob::onTask(CInternalMsg* pMsg)
-{
 }

@@ -127,7 +127,13 @@ bool ParseParam(int argc, char* argv[])
 
 int main(int argc, char* argv[])
 {
-	testing::InitGoogleTest(&argc,argv);
+#ifdef MYTH_OS_WINDOWS
+	int nMemCheckFlag = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
+	nMemCheckFlag |= _CRTDBG_LEAK_CHECK_DF;
+	_CrtSetDbgFlag(nMemCheckFlag);
+	//_CrtSetBreakAlloc(6717);
+#endif
+	//testing::InitGoogleTest(&argc,argv);
 
 	bool bExit = ParseParam(argc, argv);
 	if (bExit)
@@ -143,12 +149,16 @@ int main(int argc, char* argv[])
 
 	setExclusive("gameserver.lock");
 
-	CGameServer::CreateInst();
+	CGameServer::createInst();
 	CGameServer::Inst()->initAll();
 	//return RUN_ALL_TESTS();
 	CGameServer::Inst()->run();
+	CGameServer::Inst()->exit();
+	CGameServer::destroyInst();
 
 	// 释放protobuf中lib和msg占用的内存
 	::google::protobuf::ShutdownProtobufLibrary();
+	//_CrtDumpMemoryLeaks();
+
 	return 0;
 }

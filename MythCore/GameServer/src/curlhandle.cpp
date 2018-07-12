@@ -39,7 +39,7 @@ CURLHandle::CURLHandle()
 
 CURLHandle::~CURLHandle()
 {
-
+	clear();
 }
 
 void CURLHandle::init()
@@ -94,6 +94,14 @@ void CURLHandle::clear()
 	curl_multi_cleanup(mMultiURL);
 	// 全局清理
 	curl_global_cleanup();
+	for (size_t i = 0; i < mvecURLSession.size(); ++i)
+	{
+		if (NULL != mvecURLSession[i])
+		{
+			delete mvecURLSession[i];
+		}
+	}
+	mvecURLSession.clear();
 }
 
 void CURLHandle::sendRequest(const char* pHttpURL, const char* pPostData, EmHttpType eHttpType, bool bNeedCallBack)

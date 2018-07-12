@@ -927,8 +927,8 @@ void testHashMap()
 	//}
 	//HASH_MAP::iterator it;
 
-	CTimeManager* pTime = CTimeManager::CreateInst();
-	CPerformance* pPerformance = CPerformance::CreateInst();
+	CTimeManager* pTime = CTimeManager::createInst();
+	CPerformance* pPerformance = CPerformance::createInst();
 	PERFOR_TIMER_BEFORE(testHashMap);
 
 	//for (int j = 0; j < 100; ++ j)
@@ -943,8 +943,8 @@ void testHashMap()
 	PERFOR_TIMER_AFTER(testHashMap);
 	CPerformance::Inst()->PrintResult();
 
-	CTimeManager::DestroyInst();
-	CPerformance::DestroyInst();
+	CTimeManager::destroyInst();
+	CPerformance::destroyInst();
 }
 //
 //void testVector()

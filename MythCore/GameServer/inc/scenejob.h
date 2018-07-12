@@ -54,6 +54,7 @@ public:
         mMorningTime = 0;
 	}
 	bool		initBase(int nDBBuffSize);
+	void		clearBase();
 
 public:
 	/// Ñ¹ÈëDBÊý¾Ý

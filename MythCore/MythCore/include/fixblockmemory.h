@@ -24,7 +24,7 @@ namespace Myth
 		}
 		~CFixBlockMemory()
 		{
-			for (int i = 0; i < MaxCount;)
+			for (int i = 0; i < MaxCount; ++ i)
 			{
 				if (NULL != mBlockMemory[i])
 				{

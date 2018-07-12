@@ -18,4 +18,11 @@ namespace Myth
 		mSimpleLock.unlock();
 	}
 
+	void CThreadPool::terminateAllThread()
+	{
+		for (int i = 0; i < mThreadNum; ++i)
+		{
+			mThreadList[i]->terminate();
+		}
+	}
 }

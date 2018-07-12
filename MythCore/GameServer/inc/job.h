@@ -16,6 +16,7 @@ class CJob : public IJob
 public:
 	CJob()
 	{
+		init();
 	}
 	~CJob()
 	{
@@ -24,6 +25,7 @@ public:
 	void	init()
 	{
         mLogTime = 0;
+		mExited = false;
 	}
 public:
 	virtual void doing(int uParam) = 0;
@@ -36,8 +38,14 @@ public:
 	{
 		return mTaskManager.popTask();
 	}
+	
+	bool getExited() const { return mExited; }
+	void setExited(bool nValue) { mExited = nValue; }
+
 protected:
 	time_t								mLogTime;
 	CTaskManager<BaseCount, Increment>	mTaskManager;
+	/// ÍË³öÍê³É
+	bool								mExited;
 };
 #endif

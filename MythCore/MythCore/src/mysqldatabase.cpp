@@ -19,6 +19,10 @@ namespace Myth
 		{
 			mysql_close(mMysql);
 		}
+		//if (NULL != mMysqlInit)
+		//{
+		//	mysql_close(mMysqlInit);
+		//}
 
 		if (--mDBCount == 0)
 		{
@@ -34,8 +38,8 @@ namespace Myth
 			return -1;
 		}
 
-		MYSQL *pMysqlInit = mysql_init(NULL);
-		if (NULL == pMysqlInit)
+		mMysqlInit = mysql_init(NULL);
+		if (NULL == mMysqlInit)
 		{
 			return -1;
 		}
@@ -44,15 +48,15 @@ namespace Myth
 		{
 #ifdef MYTH_OS_WINDOWS
 			unsigned int opt = MYSQL_PROTOCOL_PIPE;
-			mysql_options(pMysqlInit,MYSQL_OPT_PROTOCOL,(char const*)&opt);
+			mysql_options(mMysqlInit,MYSQL_OPT_PROTOCOL,(char const*)&opt);
 #else
 			unsigned int opt = MYSQL_PROTOCOL_SOCKET;
-			mysql_options(pMysqlInit, MYSQL_OPT_PROTOCOL, (char const*)&opt);
+			mysql_options(mMysqlInit, MYSQL_OPT_PROTOCOL, (char const*)&opt);
 #endif
 		}
 
 		// Á¬½Ómysql
-		mMysql = mysql_real_connect(pMysqlInit, pHost, pUserName,
+		mMysql = mysql_real_connect(mMysqlInit, pHost, pUserName,
 			pPasswd, pDataBase, nPort, pUnixSocket, CLIENT_MULTI_RESULTS);
 
 		if (NULL == mMysql)

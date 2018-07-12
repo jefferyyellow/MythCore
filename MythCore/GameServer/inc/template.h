@@ -8,7 +8,7 @@
 
 #define STRING32					32
 #define STRING256					256
-#define MAX_TEMPLATE_NUM			100000				// 最大模版数
+#define MAX_TEMPLATE_NUM			65536				// 最大模版数
 #define TEMPLATE_CACHE_SIZE			10 * 1024 * 1024	// 大Cache
 class CTemplate;
 #define TEMPLATE_SET_FROM_PB(ClassName, PBParent, PBName) \
@@ -41,6 +41,7 @@ public:
 	static bool	loadFromFile(const char* pFilePath);
 	/// 从PB中创建
 	static void	createFromPB(PBTplTemplate* pTplTemplate);
+	static void clearTemplate();
 public:
 	static CTemplate* searchTpl(unsigned int vTempID);
 

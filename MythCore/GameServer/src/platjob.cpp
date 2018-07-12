@@ -62,6 +62,42 @@ bool CPlatJob::initAll(const char* pRedisIP, int nRedisPort, int nSocketNum, int
 	return true;
 }
 
+void CPlatJob::clear()
+{
+	if (NULL != mURLHandle)
+	{
+		delete mURLHandle;
+		mURLHandle = NULL;
+	}
+
+	if (NULL != mAsyncRedis)
+	{
+		delete mAsyncRedis;
+		mAsyncRedis = NULL;
+	}
+
+	if (NULL != mSelectModel)
+	{
+		delete mSelectModel;
+		mSelectModel = NULL;
+	}
+
+	for (int i = 0; i < mSocketNum; ++ i)
+	{
+		if (NULL != mTcpSocket[i].getRecvBuff())
+		{
+			delete mTcpSocket[i].getRecvBuff();
+			mTcpSocket[i].setRecvBuff(NULL);
+		}
+	}
+	mSocketNum = 0;
+	if (NULL != mTcpSocket)
+	{
+		delete []mTcpSocket;
+		mTcpSocket = NULL;
+	}
+}
+
 void CPlatJob::doing(int uParam)
 {
 	mAsyncRedis->doEvent();
@@ -99,6 +135,17 @@ void CPlatJob::doing(int uParam)
 		if (nCount > 1000)
 		{
 			break;
+		}
+	}
+
+	// 如果scene job已经退出完成了，表示需要保存的数据基本都完成了
+	if (CSceneJob::Inst()->getExited())
+	{
+		CInternalMsg* pIMMsg = mTaskManager.popTask();
+		// 如果没有任务了
+		if (NULL == pIMMsg)
+		{
+			setExited(true);
 		}
 	}
 }

@@ -58,6 +58,7 @@ namespace Myth
 		/// 引用计数
 		static short	mDBCount;
 		MYSQL			*mMysql;
+		MYSQL			*mMysqlInit;
 		/// 保持数据库信息用于断线重连
 		/// 注意，Host不只是有IP，还可能是域名
 		char			mHost[STR_LENGTH_64];

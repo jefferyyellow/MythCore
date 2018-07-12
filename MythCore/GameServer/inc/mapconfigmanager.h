@@ -123,12 +123,14 @@ private:
 	}
 	~CMapConfigManager()
 	{
+		clear();
 	}
 
 	void init()
 	{
-        memset(mMapConfig, NULL, sizeof(mMapConfig));
+		memset(mMapConfig, NULL, sizeof(mMapConfig));
 	}
+	void clear();
 
 public:
 	/// 从配置创建地图
@@ -140,7 +142,7 @@ public:
 	/// 通过地图ID得到地图配置
 	CMapConfig*				getMapConfig(unsigned short nMapID)
 	{
-		if (nMapID > 0 && nMapID < MAX_MAP_ID)
+		if (nMapID < MAX_MAP_ID)
 		{
 			return mMapConfig[nMapID];
 		}

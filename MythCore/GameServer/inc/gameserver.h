@@ -39,15 +39,29 @@ public:
 	void		clear();
 	/// 清理日志资源
 	void		clearLog();
+	/// 清理逻辑模块
+	void		clearLogicModule();
+	/// 清理静态数据
+	void		clearStaticData();
+	/// 清理线程
+	void		clearThread();
 	/// 退出
 	void		exit();
+	/// 检查除了log job是否都已经退出
+	bool		checkOtherJobExit();
+	/// 检查所有的 job是否退出
+	bool		checkAllJobExit();
 
 public:
 	void		pushTask(EmTaskType eTaskType, CInternalMsg* pMsg);
 	void		pushDBTask(int nUid, byte* pData, int nDataLength);
 
-	short getServerID() const { return mServerID; }
-	void setServerID(short nValue) { mServerID = nValue; }
+	short		getServerID() const { return mServerID; }
+	void		setServerID(short nValue) { mServerID = nValue; }
+
+	bool		getExit() const { return mExit; }
+	void		setExit(bool nValue) { mExit = nValue; }
+
 private:
 	CLog*					mDefaultLog;
 
@@ -60,5 +74,7 @@ private:
 	Myth::CThreadPool		mThreadPool;
 	// 服务器对应的服务器ID，服务器的唯一ID
 	short					mServerID;
+	// 退出状态
+	bool					mExit;
 };
 #endif

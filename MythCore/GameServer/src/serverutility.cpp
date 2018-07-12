@@ -48,6 +48,7 @@ time_t unixTimeStamp(const char* pTime)
 
 
 	struct tm tTm;
+	memset(&tTm, 0, sizeof(tm));
 
 	tTm.tm_year = nYear - 1900;
 	tTm.tm_mon = nMonth - 1;

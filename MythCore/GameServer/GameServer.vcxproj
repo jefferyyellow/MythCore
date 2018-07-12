@@ -50,7 +50,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>MythCore.lib;libprotobufd.lib;gtestd.lib;libcurl.lib;hiredis.lib;lib_json.lib;libevent_core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>MythCore.lib;libprotobufd.lib;libcurl.lib;hiredis.lib;lib_json.lib;libevent_core.lib;gtestd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../Debug;../dep/protobuffer/lib;../dep/gtest/lib;../dep/libcurl/lib;../dep/hiredis/windows/lib;../dep/jsoncpp/lib;../dep/libevent/windows/lib</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
     </Link>

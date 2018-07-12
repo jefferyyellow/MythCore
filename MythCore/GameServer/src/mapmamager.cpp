@@ -52,7 +52,8 @@ void CMap::clear()
 {
 	if (NULL != mMapUnit)
 	{
-		delete[]mMapUnit;
+		delete []mMapUnit;
+		mMapUnit = NULL;
 	}
 }
 
@@ -458,6 +459,15 @@ void CMap::destroyNPC2PlayerList(CEntityNPC* pNPC, std::vector<CEntityPlayer*>& 
 	}
 }
 
+void CMapManager::clear()
+{
+	MAP_LIST::iterator it = mMapList.begin();
+	for (; it != mMapList.end(); ++ it)
+	{
+		delete it->second;
+	}
+	mMapList.clear();
+}
 
 CMap* CMapManager::createMap(unsigned short nLineID, unsigned short nMapID, int nMapIndex, short nLength, short nWidth)
 {

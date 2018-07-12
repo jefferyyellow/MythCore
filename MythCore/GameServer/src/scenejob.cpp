@@ -102,7 +102,7 @@ void CSceneJob::doLaunch()
 		mServerState = emServerStateRun;
 		
 		LogServerStartComplete();
-		sendPlatWebRequest("https://13767458185.taobao.com", "aa.xml", EmHttpType(emHttpTypeGet | emHttpTypeSSL | emHttpTypeFile), false);
+		sendPlatWebRequest("http://127.0.0.1:8080/aaa.xml", "aa.xml", EmHttpType(emHttpTypeGet | emHttpTypeFile), false);
 	}
 }
 
@@ -148,6 +148,11 @@ void CSceneJob::doRun()
 			checkNewDayCome();
 		}
 	}
+
+	if (CGameServer::Inst()->getExit())
+	{
+		mServerState = emServerStateExit;
+	}
 }
 
 void CSceneJob::doExit()
@@ -169,6 +174,7 @@ void CSceneJob::doExit()
 	if (0 == mPlayerList.size())
 	{
 		printf("All Player Kick Out\n");
+		setExited(true);
 	}
 }
 
@@ -321,20 +327,36 @@ bool CSceneJob::initBase(int nDBBuffSize)
 	mDBStream.Initialize(mDBBuffer, nDBBuffSize);
 
 	// 逻辑模块
-	CMapConfigManager::CreateInst();
-	CMapManager::CreateInst();
+	CMapConfigManager::createInst();
+	CMapManager::createInst();
 
-	mLogicModuleList.push_back(CLoginModule::CreateInst());
-	mLogicModuleList.push_back(CPropertyModule::CreateInst());
-	mLogicModuleList.push_back(CMapModule::CreateInst());
-	mLogicModuleList.push_back(CDBModule::CreateInst());
-	mLogicModuleList.push_back(CServerActModule::CreateInst());
-	mLogicModuleList.push_back(CDailyActModule::CreateInst());
-	mLogicModuleList.push_back(CChatModule::CreateInst());
-	mLogicModuleList.push_back(CDailyActModule::CreateInst());
-	mLogicModuleList.push_back(CRankModule::CreateInst());
+	mLogicModuleList.push_back(CLoginModule::createInst());
+	mLogicModuleList.push_back(CPropertyModule::createInst());
+	mLogicModuleList.push_back(CMapModule::createInst());
+	mLogicModuleList.push_back(CDBModule::createInst());
+	mLogicModuleList.push_back(CServerActModule::createInst());
+	mLogicModuleList.push_back(CDailyActModule::createInst());
+	mLogicModuleList.push_back(CChatModule::createInst());
+	mLogicModuleList.push_back(CRankModule::createInst());
 
 	return true;
+}
+
+void CSceneJob::clearBase()
+{
+	CRankModule::destroyInst();
+	CChatModule::destroyInst();
+	CDailyActModule::destroyInst();
+	CServerActModule::destroyInst();
+	CDBModule::destroyInst();
+	CMapModule::destroyInst();
+	CPropertyModule::destroyInst();
+	CLoginModule::destroyInst();
+
+	CMapManager::destroyInst();
+	CMapConfigManager::destroyInst();
+
+	delete []mDBBuffer;
 }
 
 /// 初始化管道

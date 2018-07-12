@@ -23,7 +23,7 @@ CTcpServer::~CTcpServer()
 /// 初始化
 bool CTcpServer::init()
 {
-	CTimeManager* pTimeManager = CTimeManager::CreateInst();
+	CTimeManager* pTimeManager = CTimeManager::createInst();
 	if (NULL == pTimeManager)
 	{
 		return false;
@@ -52,7 +52,7 @@ bool CTcpServer::init()
 /// 初始日志
 bool CTcpServer::initLog()
 {
-	CLogManager* pLogManger = CLogManager::CreateInst();
+	CLogManager* pLogManger = CLogManager::createInst();
 	if (NULL == pLogManger)
 	{
 		printf("create log manager failure");

@@ -117,6 +117,18 @@ void CStaticData::createFromPB(PBTplTemplate* pTplTemplate)
 	TEMPLATE_SET_FROM_PB(CTplNewPlayerConfig, pbTplConfigSet, newplayerconfig);
 }
 
+void CStaticData::clearTemplate()
+{
+	for (int i = 0; i < MAX_TEMPLATE_NUM; ++ i)
+	{
+		if (NULL != spTemplate[i])
+		{
+			free(spTemplate[i]);
+			spTemplate[i] = NULL;
+		}
+	}
+}
+
 void CTplNewPlayerConfig::setFromPB(PBTplNewPlayerConfig* pbData)
 {
 	mTempID = pbData->tempid();
