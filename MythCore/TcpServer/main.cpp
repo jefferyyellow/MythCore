@@ -123,6 +123,12 @@ bool ParseParam(int argc, char* argv[])
 
 int main(int argc, char* argv[])
 {
+#ifdef MYTH_OS_WINDOWS
+	int nMemCheckFlag = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
+	nMemCheckFlag |= _CRTDBG_LEAK_CHECK_DF;
+	_CrtSetDbgFlag(nMemCheckFlag);
+	//_CrtSetBreakAlloc(79);
+#endif
 	bool bExit = ParseParam(argc, argv);
 	if (bExit)
 	{

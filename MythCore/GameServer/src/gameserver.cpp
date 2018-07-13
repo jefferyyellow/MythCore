@@ -202,7 +202,7 @@ void CGameServer::run()
 		++ i;
 		if ( i > 100)
 		{
-			break;
+			mExit = true;
 		}
 	}
 }
@@ -279,6 +279,7 @@ void CGameServer::clearStaticData()
 void CGameServer::clearThread()
 {
 	mThreadPool.terminateAllThread();
+	mThreadPool.waitAllThread();
 	mSceneJob.clearBase();
 	mPlatJob.clear();
 

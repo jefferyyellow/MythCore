@@ -23,6 +23,10 @@ namespace Myth
 		{
 			mThreadNum = 0;
 			mJobIndex = 0;
+			for (int i = 0; i < 32; ++ i)
+			{
+				mThreadList[i] = NULL;
+			}
 		}
 		~CThreadPool()
 		{
@@ -119,6 +123,7 @@ namespace Myth
 
 		void				run();
 		void				terminateAllThread();
+		void				waitAllThread();
 
 	private:
 		byte				mJobIndex;

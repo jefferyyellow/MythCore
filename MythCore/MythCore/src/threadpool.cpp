@@ -25,4 +25,12 @@ namespace Myth
 			mThreadList[i]->terminate();
 		}
 	}
+
+	void CThreadPool::waitAllThread()
+	{
+		for (int i = 0; i < mThreadNum; ++i)
+		{
+			mThreadList[i]->wait();
+		}
+	}
 }

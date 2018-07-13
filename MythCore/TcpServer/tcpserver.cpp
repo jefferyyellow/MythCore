@@ -259,6 +259,7 @@ bool CTcpServer::initSocket()
 /// 运行
 void CTcpServer::run()
 {
+	static int i = 0;
 	while (true)
 	{
 		CTimeManager::Inst()->setCurrTime(time(NULL));
@@ -281,6 +282,11 @@ void CTcpServer::run()
 		receiveMessage();
 		sendMessage();
 		checkTimeOut();
+		++i;
+		if (i > 100)
+		{
+			break;
+		}
 	}
 	
 }
@@ -845,17 +851,6 @@ void CTcpServer::clearLog(CLog* pLog)
 /// 开始为退出做准备
 void CTcpServer::clear()
 {
-#ifdef __DEBUG__
-	clearLog(mDefaultLog);
-	delete mDefaultLog;
-#endif // __DEBUG__
-	clearLog(&CLogManager::Inst()->GetErrorLog());
-	clearLog(&CLogManager::Inst()->GetInfoLog());
-	clearLog(&CLogManager::Inst()->GetWarnLog());
-	clearLog(mStatisticsLog);
-	delete mStatisticsLog;
-
-
 	for (int i = 0; i < MAX_SOCKET_NUM; ++ i)
 	{
 		byte* pBuff = mTcpSocket[i].getRecvBuff();
@@ -873,6 +868,18 @@ void CTcpServer::clear()
 	delete mEpollModel;
 #endif
 
+#ifdef __DEBUG__
+	clearLog(mDefaultLog);
+	delete mDefaultLog;
+#endif // __DEBUG__
+	clearLog(&CLogManager::Inst()->GetErrorLog());
+	clearLog(&CLogManager::Inst()->GetInfoLog());
+	clearLog(&CLogManager::Inst()->GetWarnLog());
+	clearLog(mStatisticsLog);
+	delete mStatisticsLog;
+
+	CLogManager::destroyInst();
+	CTimeManager::destroyInst();
 }
 
 /// 退出

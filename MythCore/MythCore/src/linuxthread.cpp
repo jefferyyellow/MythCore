@@ -62,7 +62,6 @@ namespace Myth
 	{
 		pthread_cond_destroy(&mCond);
 		pthread_mutexattr_destroy(&mMutexAttr);
-		terminate();
 	}
 
 	void CPThread::start()
@@ -90,6 +89,10 @@ namespace Myth
 			return;
 		}
 		int error = pthread_join(mThreadID, 0);
+		if (error != 0)
+		{
+			printf("%d", error);
+		}
 		//switch (error)
 		//{
 		//	case 0:
