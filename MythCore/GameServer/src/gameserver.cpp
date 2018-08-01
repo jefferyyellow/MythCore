@@ -19,7 +19,7 @@ void CGameServer::init()
 {
     mDefaultLog = NULL;
     mServerID = 0;
-	mExit = false;
+    mExit = false;
 }
 
 /// ≥ı ºªØ
@@ -163,7 +163,7 @@ bool CGameServer::initThread()
 	{
 		return false;
 	}
-
+	mSceneJob.doInit();
 
 	printf("initThread\n");
 	mThreadPool.pushBackJob(&mSceneJob);

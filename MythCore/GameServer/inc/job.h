@@ -25,7 +25,7 @@ public:
 	void	init()
 	{
         mLogTime = 0;
-		mExited = false;
+        mExited = false;
 	}
 public:
 	virtual void doing(int uParam) = 0;

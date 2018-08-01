@@ -38,6 +38,7 @@ public:
         mCreateTime = 0;
         mExpiredTime = 0;
         mStatus = emInstanceStatus_None;
+        mSingle = false;
 	}
 public:
 	/// 创建
@@ -83,6 +84,11 @@ public:
 
     EmInstanceStatus getStatus(){ return mStatus;}
     void setStatus(EmInstanceStatus value){ mStatus = value;}
+
+    bool getSingle(){ return mSingle;}
+    void setSingle(bool value){ mSingle = value;}
+
+    EmInstanceType& getType(){ return mType;}
 	/// end autocode
 
 private:
@@ -96,14 +102,43 @@ private:
 	time_t				mExpiredTime;
 	/// 状态 default:emInstanceStatus_None
 	EmInstanceStatus	mStatus;
+	/// 是否是单人副本
+	bool				mSingle;
+	///  副本类型
+	EmInstanceType		mType;
 };
 
-/// 普通副本
-class CCommonInstance : public CInstance
+/// 单人副本
+class CSingleInstance : public CInstance
 {
 public:
-	CCommonInstance(){}
-	virtual ~CCommonInstance(){}
+	CSingleInstance(){}
+	virtual ~CSingleInstance(){}
+public:
+	/// 创建
+	virtual void	create();
+	/// 结束
+	virtual void	end();
+	/// 销毁
+	virtual void	destroy();
+	/// 发奖
+	virtual void	givePrize();
+	/// 玩家进入
+	virtual	void	playerEnter(CEntityPlayer* pPlayer);
+	/// 玩家离开
+	virtual void	playerLeave(CEntityPlayer* pPlayer);
+
+public:
+	
+};
+
+/// 多人副本（包括团队本）
+class CMultipleInstance : public CInstance
+{
+public:
+	CMultipleInstance(){}
+	virtual ~CMultipleInstance(){}
+
 public:
 	/// 创建
 	virtual void	create();
@@ -118,6 +153,5 @@ public:
 	/// 玩家离开
 	virtual void	playerLeave(CEntityPlayer* pPlayer);
 };
-
 
 #endif

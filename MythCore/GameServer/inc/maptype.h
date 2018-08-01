@@ -11,7 +11,9 @@ enum EmMapType
 	emMapType_Instance		= 3,		// 副本
 };
 
-#define MAX_MAP_ID			256			// 最大的地图ID	
-#define MAX_MAP_PORTAL_NUM	8			// 地图中最大的传送门的数目
-#define MAP_UNIT_SIZE		40			// 地图单元大小
+#define MAX_MAP_ID						256			// 最大的地图ID	
+#define MAX_MAP_PORTAL_NUM				8			// 地图中最大的传送门的数目
+#define MAP_UNIT_SIZE					40			// 地图单元大小
+#define AUTO_DESTORY_MAP_TIME			300			// 自动销毁地图的时间
+#define CHECK_AUTO_DESTORY_MAP_TIME		60			// 自动销毁地图的检测时间
 #endif

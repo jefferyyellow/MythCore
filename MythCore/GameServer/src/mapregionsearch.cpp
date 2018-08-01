@@ -11,22 +11,22 @@ void CMapRegionSearch::searchEntity(CMap* pMap, CMythRect& tRect)
 	{
 		for (int nX = tRect.mTopLeft.mX; nX <= tRect.mBottomRight.mX; ++nX)
 		{
-			CMapUnit* pMapUnit = pMap->getMapUnit(nX, nY);
-			searchMapUnity(pMapUnit);
+			CMapCell* pMapCell = pMap->getMapCell(nX, nY);
+			searchMapCell(pMapCell);
 		}
 	}
 }
 
 // ËÑË÷µØÍ¼µ¥Ôª
-void CMapRegionSearch::searchMapUnity(CMapUnit* pMapUnit)
+void CMapRegionSearch::searchMapCell(CMapCell* pMapCell)
 {
-	if (NULL == pMapUnit)
+	if (NULL == pMapCell)
 	{
 		return;
 	}
 
-	CMapUnit::ENTITY_LIST rEntityList = pMapUnit->getEntityList();
-	CMapUnit::ENTITY_LIST::iterator it = rEntityList.begin();
+	CMapCell::ENTITY_LIST rEntityList = pMapCell->getEntityList();
+	CMapCell::ENTITY_LIST::iterator it = rEntityList.begin();
 	for (; it != rEntityList.end(); ++it)
 	{
 		CEntity* pEntity = static_cast<CEntity*>(CObjPool::Inst()->getObj(*it));

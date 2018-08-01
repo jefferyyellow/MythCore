@@ -22,6 +22,10 @@ bool CMapConfig::loadMapConfig(unsigned short nMapID)
 		return false;
 	}
 
+	// 测试代码
+	mWidth = 100;
+	mLength = 200;
+
 	XMLElement* pDoorElement = pRootElement->FirstChildElement("door");
 	if (NULL != pDoorElement)
 	{
@@ -177,44 +181,6 @@ void CMapConfigManager::clear()
 			mMapConfig[i] = NULL;
 		}
 	}
-}
-
-/// 创建地图
-int CMapConfigManager::createMapFromConfig(CMap* pMap)
-{
-	if (NULL == pMap)
-	{
-		return -1;
-	}
-	CMapConfig* pMapConfig = getMapConfig(pMap->getMapID());
-	if (NULL == pMapConfig)
-	{
-		return -1;
-	}
-	pMapConfig->createMapFromConfig(pMap);
-
-	return SUCCESS;
-}
-
-/// 创建所有地图
-bool CMapConfigManager::createAllMapFromConfig()
-{
-	for (int i = 0; i < MAX_MAP_ID; ++ i)
-	{
-		if (NULL == mMapConfig[i])
-		{
-			continue;
-		}
-		CMap* pMap = CMapManager::Inst()->createMap(1, i, 0, mMapConfig[i]->getLength(), mMapConfig[i]->getWidth());
-		if (NULL == pMap)
-		{
-			return false;
-		}
-
-		createMapFromConfig(pMap);
-	}
-
-	return true;
 }
 
 /// 加载地图配置

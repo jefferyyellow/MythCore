@@ -120,11 +120,11 @@ void CTaskUnit::onSubmitTaskRequest(Message* pMessage)
 
 void CTaskUnit::sendSubmitTaskResponse(int nResult, int nTaskID)
 {
-	CSubmitTaskResponse tSubmitTaskResponse;
-	tSubmitTaskResponse.set_result(nResult);
-	tSubmitTaskResponse.set_taskid(nTaskID);
+	CSubmitTaskResponse tResponse;
+	tResponse.set_result(nResult);
+	tResponse.set_taskid(nTaskID);
 
-	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_RESPONSE_SUBMIT_TASK, &tSubmitTaskResponse);
+	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_RESPONSE_SUBMIT_TASK, &tResponse);
 }
 
 
@@ -144,13 +144,19 @@ void CTaskUnit::onAbortTaskRequest(Message* pMessage)
 /// 发送放弃任务回应
 void CTaskUnit::sendAbortTaskResponse(int nResult, int nTaskID)
 {
-
+	CAbortTaskResponse tResponse;
+	tResponse.set_result(nResult);
+	tResponse.set_taskid(nTaskID);
+	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_RESPONSE_ABORT_TASK, &tResponse);
 }
 
 /// 发送更新任务进度通知
-void CTaskUnit::sendUpdateTaskProcessNotify(int nTaskID, int nCondType, int nParam)
+void CTaskUnit::sendUpdateTaskProcessNotify(int nTaskID, int nCondIndex, int nParam)
 {
-
+	CUpdateTaskProcessNotify tNotify;
+	tNotify.set_taskid(nTaskID);
+	tNotify.set_param1(nParam);
+	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_NOTIFY_UPDATE_TASK_PROCESS, &tNotify);
 }
 
 // 玩家身上是否有这个任务
@@ -188,7 +194,6 @@ void CTaskUnit::setFromPB(PBTaskList* pbTaskList)
 		return;
 	}
 
-	mMaxCompleteTaskID = pbTaskList->maxcompletetaskid();
 	for (int i = 0; i < pbTaskList->completetasks_size(); ++ i)
 	{
 		mCompleteTasks.setBitSet(i, pbTaskList->completetasks(i));
@@ -222,10 +227,7 @@ void CTaskUnit::createToPB(PBTaskList* pbTaskList)
 	{
 		return;
 	}
-	pbTaskList->set_maxcompletetaskid(mMaxCompleteTaskID);
-
-	int nCompleteTasksSize = BIT_SET_LEN(mMaxCompleteTaskID);
-	for (int i = 0; i < nCompleteTasksSize; ++ i)
+	for (int i = 0; i < MAX_TASK_ID; ++ i)
 	{
 		pbTaskList->add_completetasks(mCompleteTasks.getBitSet(i));
 	}
@@ -259,10 +261,6 @@ void CTaskUnit::completeTask(int nTaskID)
 {
 	removeTask(nTaskID);
 	mCompleteTasks.setBit(nTaskID);
-	if (nTaskID > mMaxCompleteTaskID)
-	{
-		mMaxCompleteTaskID = nTaskID;
-	}
 }
 
 bool CTaskUnit::checkTaskComplete(int nTaskID)
@@ -580,7 +578,8 @@ void CTaskUnit::refreshTask(EmCompleteCondition eCondition, int nParam0, int nPa
 				{
 					if (pTaskConfig->mCompleteCondition[nConditionNum].mParam[0] == nParam0)
 					{
-						refreshTaskCond(rPlayerTask, eCondition, nParam1);
+						rPlayerTask.setTaskParam(nConditionNum, rPlayerTask.getTaskParam(nConditionNum) + nParam1);
+						sendUpdateTaskProcessNotify(rPlayerTask.getTaskID(), eCondition, rPlayerTask.getTaskParam(nConditionNum));
 					}
 					break;
 				}
@@ -589,7 +588,8 @@ void CTaskUnit::refreshTask(EmCompleteCondition eCondition, int nParam0, int nPa
 					CTaskCondition& rCondition = pTaskConfig->mCompleteCondition[nConditionNum];
 					if (rCondition.mParam[0] == nParam0 && rCondition.mParam[1] == nParam1 && rCondition.mParam[2] == nParam2)
 					{
-						refreshTaskCond(rPlayerTask, eCondition, 1);
+						rPlayerTask.setTaskParam(nConditionNum, rPlayerTask.getTaskParam(nConditionNum) + 1);
+						sendUpdateTaskProcessNotify(rPlayerTask.getTaskID(), eCondition, rPlayerTask.getTaskParam(nConditionNum));
 					}
 					break;
 				}
@@ -653,14 +653,14 @@ int CTaskUnit::checkTaskReward(int nTaskID)
 	int nItemID[MAX_TASK_PRIZE_NUM] = { 0 };
 	int nItemNum[MAX_TASK_PRIZE_NUM] = { 0 };
 	int nItemCount = 0;
-	for (unsigned int i = 0; i < pTaskConfig->mPrizeList.size(); ++i)
+	for (unsigned int i = 0; i < pTaskConfig->mPrizeList.size() && i < MAX_TASK_PRIZE_NUM; ++i)
 	{
 		if (emTaskPrize_Item != pTaskConfig->mPrizeList[i].mType)
 		{
 			continue;
 		}
-		nItemID[i] = pTaskConfig->mPrizeList[i].mParam[0];
-		nItemNum[i] = pTaskConfig->mPrizeList[i].mParam[1];
+		nItemID[nItemCount] = pTaskConfig->mPrizeList[i].mParam[0];
+		nItemNum[nItemCount] = pTaskConfig->mPrizeList[i].mParam[1];
 		++nItemCount;
 	}
 
@@ -671,26 +671,4 @@ int CTaskUnit::checkTaskReward(int nTaskID)
 	}
 
 	return SUCCESS;
-}
-
-// 刷新任务条件
-void CTaskUnit::refreshTaskCond(CPlayerTask& rPlayerTask, EmCompleteCondition eCondition, int nParam)
-{
-	for (int i = 0; i < MAX_COMPLETE_CONDITION; ++i)
-	{
-		// 没有对应的条件，末尾加上
-		if (emComplete_None == rPlayerTask.getCondType(i))
-		{
-			rPlayerTask.setCondType(i, eCondition);
-			rPlayerTask.setTaskParam(i, nParam);
-			sendUpdateTaskProcessNotify(rPlayerTask.getTaskID(), eCondition, rPlayerTask.getTaskParam(i));
-			break;
-		}
-
-		if (eCondition == rPlayerTask.getCondType(i))
-		{
-			rPlayerTask.setTaskParam(i, rPlayerTask.getTaskParam(i) + nParam);
-			sendUpdateTaskProcessNotify(rPlayerTask.getTaskID(), eCondition, rPlayerTask.getTaskParam(i));
-		}
-	}
 }

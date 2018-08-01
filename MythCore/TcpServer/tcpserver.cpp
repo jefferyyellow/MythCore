@@ -30,6 +30,8 @@ bool CTcpServer::init()
 	}
 	pTimeManager->setCurrTime(time(NULL));
 	mLastTime = pTimeManager->getCurrTime();
+	mLastStatisticsTime = mLastTime;
+	mLastKeepLiveTime = mLastTime;
 
 	bool bResult = initLog();
 	if (!bResult)

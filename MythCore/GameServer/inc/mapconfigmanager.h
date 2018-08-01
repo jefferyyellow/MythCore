@@ -34,7 +34,9 @@ class CMapNPCConfig
 {
 public:
 	CMapNPCConfig()
-	{}
+	{
+		init();
+	}
 	~CMapNPCConfig()
 	{}
 
@@ -73,7 +75,9 @@ public:
         mLength = 0;
         mWidth = 0;
         mMapType = emMapType_None;
-        mMapUnitData = NULL;
+        mMapCellData = NULL;
+        mAutoDestory = false;
+        mAutoMirror = false;
 	}
 
 public:
@@ -86,15 +90,31 @@ public:
 	/// 传送门的位置
 	int						getPortalPos(unsigned short nMapID, CMythPoint& rPortalPos);
 public:
-	short					getLength() const { return mLength; }
-	void					setLength(short nValue) { mLength = nValue; }
+	/// autocode don't edit
+    short getLength(){ return mLength;}
+    void setLength(short value){ mLength = value;}
 
-	short					getWidth() const { return mWidth; }
-	void					setWidth(short nValue) { mWidth = nValue; }
+    short getWidth(){ return mWidth;}
+    void setWidth(short value){ mWidth = value;}
 
-	EmMapType				getMapType() const { return mMapType; }
-	void					setMapType(EmMapType eValue) { mMapType = eValue; }
+    EmMapType getMapType(){ return mMapType;}
+    void setMapType(EmMapType value){ mMapType = value;}
 
+    unsigned short* getMapCellData(){ return mMapCellData;}
+    void setMapCellData(unsigned short* value){ mMapCellData = value;}
+
+    MAP_PORTAL_VECTOR& getMapPortal(){ return mMapPortal;}
+
+    MAP_RELIEVE_POS& getRelievePos(){ return mRelievePos;}
+
+    MAP_NPC_VECTOR& getMapNPC(){ return mMapNPC;}
+
+    bool getAutoDestory(){ return mAutoDestory;}
+    void setAutoDestory(bool value){ mAutoDestory = value;}
+
+    bool getAutoMirror(){ return mAutoMirror;}
+    void setAutoMirror(bool value){ mAutoMirror = value;}
+	/// end autocode
 private:
 	/// 长度
 	short				mLength;
@@ -103,13 +123,17 @@ private:
 	/// 地图类型 default:emMapType_None
 	EmMapType			mMapType;
 	///	地图格子数据
-	unsigned short*		mMapUnitData;
+	unsigned short*		mMapCellData;
 	/// 地图中的传送门，前端自己创建就行，不用服务器创建实体
 	MAP_PORTAL_VECTOR	mMapPortal;
 	/// 地图中复活点的数据
 	MAP_RELIEVE_POS		mRelievePos;
 	/// 地图中的NPC
 	MAP_NPC_VECTOR		mMapNPC;
+	/// 是否定时删除地图
+	bool				mAutoDestory;
+	/// 是否自动生成镜像
+	bool				mAutoMirror;
 };
 
 class CMapConfigManager : public CSingleton < CMapConfigManager >
@@ -128,15 +152,11 @@ private:
 
 	void init()
 	{
-		memset(mMapConfig, NULL, sizeof(mMapConfig));
+        memset(mMapConfig, NULL, sizeof(mMapConfig));
 	}
 	void clear();
 
 public:
-	/// 从配置创建地图
-	int						createMapFromConfig(CMap* pMap);
-	/// 创建所有地图
-	bool					createAllMapFromConfig();
 	/// 加载地图配置
 	bool					loadMapConfig(const char* pMapListFile);
 	/// 通过地图ID得到地图配置

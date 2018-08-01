@@ -11,11 +11,16 @@
 #include "errcode.h"
 #include "entitycreator.h"
 
+CMapModule::CMapModule()
+	:mDestroyTimer(CHECK_AUTO_DESTORY_MAP_TIME)
+{
+
+}
+
 /// 启动服务器
 void CMapModule::onLaunchServer()
 {
 	CMapConfigManager::Inst()->loadMapConfig("gameserverconfig/map/maplist.xml");
-	CMapConfigManager::Inst()->createAllMapFromConfig();
 }
 
 /// 启动完成检查
@@ -52,12 +57,28 @@ void CMapModule::onNewWeekCome()
 void CMapModule::onCreatePlayer(CEntityPlayer* pPlayer)
 {
 	CMap* pMap = CMapManager::Inst()->getMap(pPlayer->getLineID(), pPlayer->getMapID(), pPlayer->getMapIndex());
+	// 如果地图不存在，检查是不是自动销毁的地图，如果是，重新创建一张
 	if (NULL == pMap)
 	{
-		return;
+		CMapConfig* pMapConfig = CMapConfigManager::Inst()->getMapConfig(pPlayer->getMapID());
+		if (NULL == pMapConfig)
+		{
+			LOG_ERROR("find map config error, line id: %d, map id: %d, map index: %d", pPlayer->getLineID(), pPlayer->getMapID(), pPlayer->getMapIndex());
+			return;
+		}
+		if (pMapConfig->getAutoDestory())
+		{
+			pMap = createMapFromConfig(pPlayer->getLineID(), pPlayer->getMapID(), pPlayer->getMapIndex());
+		}
 	}
 	
-	pMap->onCreatePlayer(pPlayer);
+	if (NULL == pMap)
+	{
+		LOG_ERROR("the map of the player's location is null , line id: %d, map id: %d, map index: %d", pPlayer->getLineID(), pPlayer->getMapID(), pPlayer->getMapIndex());
+		return;
+	}
+
+	pMap->createPlayer(pPlayer);
 }
 
 /// 销毁实体
@@ -68,12 +89,15 @@ void CMapModule::onDestroyPlayer(CEntityPlayer* pPlayer)
 	{
 		return;
 	}
-	pMap->onDestroyPlayer(pPlayer);
+	pMap->destroyPlayer(pPlayer);
 }
 
 void CMapModule::onTimer(unsigned int nTickOffset)
 {
-
+	if (mDestroyTimer.elapse(nTickOffset))
+	{
+		CMapManager::Inst()->checkAutoDestoryMap();
+	}
 }
 
 void CMapModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)
@@ -90,8 +114,27 @@ int CMapModule::teleportEntity(CEntity* pEntity, unsigned short nMapID, CMythPoi
 	CMap* pMap = CMapManager::Inst()->getMap(pEntity->getLineID(), nMapID, pEntity->getMapIndex());
 	if (NULL == pMap)
 	{
+		// 如果是玩家,检查是不是自动销毁的地图，如果是的，自动创建一张新的地图
+		if (pEntity->isPlayer())
+		{
+			CMapConfig* pMapConfig = CMapConfigManager::Inst()->getMapConfig(pEntity->getMapID());
+			if (NULL == pMapConfig)
+			{
+				LOG_ERROR("find map config error, line id: %d, map id: %d, map index: %d", pEntity->getLineID(), pEntity->getMapID(), pEntity->getMapIndex());
+				return -1;
+			}
+			if (pMapConfig->getAutoDestory())
+			{
+				pMap = createMapFromConfig(pEntity->getLineID(), pEntity->getMapID(), pEntity->getMapIndex());
+			}
+		}
+	}
+	if (NULL == pMap)
+	{
+		LOG_ERROR("target map is null, line id: %d, map id: %d, map index: %d", pEntity->getLineID(), pEntity->getMapID(), pEntity->getMapIndex());
 		return -1;
 	}
+
 	if (!pMap->removeEntityFromMap(pEntity))
 	{
 		LOG_ERROR("remove entity from map failure, EntityID: %d, PosX: %d, PosY: %d", pEntity->getObjID(), rPos.mX, rPos.mY);
@@ -133,7 +176,26 @@ void CMapModule::destroyEntity(CEntity* pEntity)
 		return;
 	}
 
-	pMap->DestroyEntity(pEntity);
+	pMap->destroyEntity(pEntity);
+}
+
+/// 根据地图线ID，地图ID，地图索引创建地图
+CMap* CMapModule::createMapFromConfig(unsigned short nLineID, unsigned short nMapID, int nMapIndex)
+{
+	CMapConfig* pMapConfig = CMapConfigManager::Inst()->getMapConfig(nMapID);
+	if (NULL == pMapConfig)
+	{
+		return NULL;
+	}
+
+	CMap* pMap = CMapManager::Inst()->createMap(nLineID, nMapID, nMapIndex, pMapConfig->getLength(), pMapConfig->getWidth());
+	if (NULL == pMap)
+	{
+		return NULL;
+	}
+
+	pMapConfig->createMapFromConfig(pMap);
+	return pMap;
 }
 
 void CMapModule::broadCastVisiblePlayer(CEntity* pEntity, unsigned short nMessageID, Message* pMessage)
@@ -156,7 +218,7 @@ void CMapModule::broadCastVisiblePlayer(CEntity* pEntity, unsigned short nMessag
 			rPlayerList.eraseNode(it++);
 			continue;
 		}
-		if (emEntityType_Player != pVisibleEntity->getEntityType())
+		if (!pVisibleEntity->isPlayer())
 		{
 			// 注意这里用it++
 			rPlayerList.eraseNode(it++);
@@ -167,6 +229,36 @@ void CMapModule::broadCastVisiblePlayer(CEntity* pEntity, unsigned short nMessag
 		 ++ it;
 	}
 }
+
+/// 广播地图上所有玩家
+void CMapModule::broadCastMapPlayer(CEntity* pEntity, unsigned short nMessageID, Message* pMessage)
+{
+	CMap* pMap = CMapManager::Inst()->getMap(pEntity->getLineID(), pEntity->getMapID(), pEntity->getMapIndex());
+	if (NULL == pMap)
+	{
+		return;
+	}
+
+	CMap::PLAYER_LIST& rPlayerList = pMap->getPlayerList();
+	CMap::PLAYER_LIST::iterator it = rPlayerList.begin();
+	for (; it != rPlayerList.end(); ++ it)
+	{
+		CEntity* pEntity = static_cast<CEntity*>(CObjPool::Inst()->getObj(*it));
+		if (NULL == pEntity)
+		{
+			LOG_ERROR("entity data is null, entity id: %d", *it);
+			continue;
+		}
+		if (!pEntity->isPlayer())
+		{
+			LOG_ERROR("entity is not a player, entity id: %d", *it);
+			continue;
+		}
+
+		CSceneJob::Inst()->send2Player(static_cast<CEntityPlayer*>(pEntity), nMessageID, pMessage);
+	}
+}
+
 
 /// 实体移动
 void CMapModule::onEntityMove(CEntityCharacter* pEntity, CMythPoint& rDesPos)

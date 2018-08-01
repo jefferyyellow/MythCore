@@ -16,47 +16,48 @@ enum TASK_MODULE_MSG_ID
 // 接受任务请求 ID_C2S_REQUEST_ACCEPT_TASK
 message CAcceptTaskRequest
 {
-		uint32	TaskID		= 1;		// 任务ID
-		uint32	NpcEntityID = 2;		// NPC实体ID
+		uint32	TaskID				= 1;		// 任务ID
+		uint32	NpcEntityID			= 2;		// NPC实体ID
 }
 
 // 接受任务回应 ID_S2C_RESPONSE_ACCEPT_TASK
 message CAcceptTaskResponse
 {
-		uint32	Result	= 1;		// 结果
-		uint32	TaskID	= 2;		// 任务ID
+		uint32	Result				= 1;		// 结果
+		uint32	TaskID				= 2;		// 任务ID
 }
 
 // 交任务请求 ID_C2S_REQUEST_SUBMIT_TASK
 message CSubmitTaskRequest
 {
-		uint32	TaskID		= 1;		// 任务ID
-		uint32	ItemIndex	= 2;		// 道具索引
+		uint32	TaskID				= 1;		// 任务ID
+		uint32	ItemIndex			= 2;		// 道具索引
 }
 
 // 交任务回应 ID_S2C_RESPONSE_SUBMIT_TASK
 message CSubmitTaskResponse
 {
-		uint32	Result	= 1;		// 结果
-		uint32	TaskID	= 2;		// 任务ID
+		uint32	Result				= 1;		// 结果
+		uint32	TaskID				= 2;		// 任务ID
 }
 
 // 放弃任务请求 ID_C2S_REQUEST_ABORT_TASK
 message CAbortTaskRequest
 {
-		uint32			TaskID = 1;		// 任务ID
+		uint32			TaskID		= 1;		// 任务ID
 }
 
 // 放弃任务回应 ID_S2C_RESPONSE_ABORT_TASK
 message CAbortTaskResponse
 {
-		uint32			Result = 1;		// 结果
-		uint32			TaskID = 2;		// 任务ID
+		uint32			Result		= 1;		// 结果
+		uint32			TaskID		= 2;		// 任务ID
 }
 
 // 刷新任务进度通知 ID_S2C_NOTIFY_UPDATE_TASK_PROCESS
 message CUpdateTaskProcessNotify
 {
-		uint32			TaskID = 1;		// 任务ID
-		uint32			Param1 = 2;		// 任务参数
+		uint32			TaskID		= 1;		// 任务ID
+		uint32			CondIndex	= 2;		// 完成条件索引
+		uint32			Param		= 3;		// 任务参数
 }

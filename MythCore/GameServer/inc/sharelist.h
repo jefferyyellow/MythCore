@@ -123,7 +123,7 @@ public:
 		pointer
 			operator->() const
 		{
-			return (mNode->mData);
+			return &(mNode->mData);
 		}
 
 		Self&

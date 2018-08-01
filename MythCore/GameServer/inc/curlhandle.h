@@ -23,12 +23,12 @@ public:
 
 	void			init()
 	{
-		mHttpType = EmHttpType(0);
-		mFile = NULL;
-		mHttpUrl[0] = '\0';
-		mNeedCallBack = false;
-		mReturnData[0] = '\0';
-		mReturnSize = 0;
+        mHttpType = emHttpTypeGet;
+        mFile = NULL;
+        mHttpUrl[0] = '\0';
+        mNeedCallBack = false;
+        mReturnData[0] = '\0';
+        mReturnSize = 0;
 	}
 public:
 	EmHttpType		getHttpType() const { return mHttpType; }
@@ -65,7 +65,7 @@ public:
 	void			setReturnSize(int nValue) { mReturnSize = nValue; }
 
 private:
-	/// 指定Http的类型
+	/// 指定Http的类型 default:emHttpTypeGet
 	EmHttpType		mHttpType;
 	/// 获取文件时文件的句柄
 	FILE*			mFile;

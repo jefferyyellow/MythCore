@@ -76,8 +76,8 @@ public:
 class CTaskConfig
 {
 public:
-	typedef	vector<CTaskCondition>		ACCEPT_CONDITION_LIST;
-	typedef vector<CTaskCondition>		COMPLETE_CONDITION_LIST;
+	typedef	vector<CTaskCondition>			ACCEPT_CONDITION_LIST;
+	typedef vector<CTaskCondition>			COMPLETE_CONDITION_LIST;
 	typedef vector<CTaskCondition>			CLOSE_CONDITION_LIST;
 	typedef vector<CTaskReward>				TASK_PRIZE_LIST;
 

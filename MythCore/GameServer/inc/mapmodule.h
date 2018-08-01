@@ -3,6 +3,7 @@
 #include "singleton.h"
 #include "messagefactory.h"
 #include "logicmodule.h"
+#include "timemanager.h"
 
 class CEntity;
 class CEntityPlayer;
@@ -10,14 +11,13 @@ class CEntityCharacter;
 class CMythPoint;
 class CEntityNPC;
 class CEntityCreator;
+class CMap;
 using namespace Myth;
 class CMapModule : public CLogicModule, public CSingleton < CMapModule >
 {
 	friend class CSingleton < CMapModule > ;
 private:
-	CMapModule()
-	{
-	}
+	CMapModule();
 	~CMapModule()
 	{
 	}
@@ -50,10 +50,14 @@ public:
 	CEntity*	createEntity(CEntityCreator* pCreator);
 	/// 删除实体
 	void		destroyEntity(CEntity* pEntity);
+	/// 根据地图线ID，地图ID，地图索引创建地图
+	CMap*		createMapFromConfig(unsigned short nLineID, unsigned short nMapID, int nMapIndex);
 
-public:
+private:
 	/// 广播给附近的可见玩家
 	void		broadCastVisiblePlayer(CEntity* pEntity, unsigned short nMessageID, Message* pMessage);
+	/// 广播地图上所有玩家
+	void		broadCastMapPlayer(CEntity* pEntity, unsigned short nMessageID, Message* pMessage);
 	/// 实体移动
 	void		onEntityMove(CEntityCharacter* pEntity, CMythPoint& rDesPos);
 	/// 处理玩家移动的请求
@@ -64,5 +68,9 @@ public:
 	void		onMessagePlayerTeleportRequest(CEntityPlayer* pPlayer, Message* pMessage);
 	// 发送玩家传送回应
 	void		sendPlayerTeleportResponse(CEntityPlayer* pPlayer, int nResult);
+
+private:
+	/// 定时销毁计时器
+	CAutoResetTimer		mDestroyTimer;
 };
 #endif

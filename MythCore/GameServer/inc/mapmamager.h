@@ -13,17 +13,17 @@ class CMythPoint;
 class CMythRect;
 class CEntityCreator;
 using namespace Myth;
-class CMapUnit
+class CMapCell
 {
 public:
 	typedef CBlockMemory<CShareList<int>::CShareListNode<int>, 2000, 200> ENTITY_ALLOC;
 	typedef CShareList<int> ENTITY_LIST;
 public:
-	CMapUnit()
+	CMapCell()
 	{
 	}
 
-	~CMapUnit()
+	~CMapCell()
 	{
 	}
 	void				init()
@@ -32,8 +32,14 @@ public:
 	}
 
 public:
+	/// 加入实体
 	void				pushEntity(int nObjID);
+	/// 移除实体
 	void				removeEntity(int nObjID);
+	/// 当前地图格子是否有改实体
+	bool				checkEntity(int nObjID);
+	/// 得到实体数量
+	int					getEntityNum();
 
 	/// autocode don't edit!!!
     unsigned short getBlockData(){ return mBlockData;}
@@ -54,6 +60,9 @@ private:
 class CMap
 {
 public:
+	typedef std::vector<int>		ENTITY_LIST;
+	typedef std::vector<int>		PLAYER_LIST;
+public:
 	CMap()
 	{
 		init();
@@ -66,22 +75,23 @@ public:
 public:
 	void			init()
 	{
-        mMapUnit = NULL;
+        mMapCell = NULL;
         mLength = 0;
         mWidth = 0;
         mLineID = 0;
         mMapID = 0;
         mMapIndex = 0;
         mMapType = emMapType_None;
+        mNoPlayerTime = 0;
 	}
 	int				initSize(short nLength, short nWidth);
 	void			clear();
 
-	CMapUnit*		getMapUnit(short nPosX, short nPosY)
+	CMapCell*		getMapCell(short nPosX, short nPosY)
 	{
 		if (nPosX < mLength && nPosY < mWidth)
 		{
-			return mMapUnit + (nPosY * mLength + nPosX);
+			return mMapCell + (nPosY * mLength + nPosX);
 		}
 		return NULL;
 	}
@@ -91,13 +101,13 @@ public:
 	/// 得到可以区域
 	void		getVisibleRect(CEntity* pEntity, CMythRect& rRect);
 	/// 把实体加入地图单元
-	bool		addEntityToMapUnit(CEntity* pEntity);
+	bool		addEntityToMapCell(CEntity* pEntity);
 	/// 把实体加入地图单元触发
-	void		onAddEntityToMapUnit(CEntity* pEntity, CMythRect& rSrcRect, CMythRect& rDesRect);
+	void		onAddEntityToMapCell(CEntity* pEntity, CMythRect& rSrcRect, CMythRect& rDesRect);
 	/// 将实体从地图单元中移除
-	bool		removeEntityFromMapUnit(CEntity* pEntity);
+	bool		removeEntityFromMapCell(CEntity* pEntity);
 	/// 将实体从地图单元中移除触发
-	void		onRemoveEntityFromMapUnit(CEntity* pEntity, CMythRect& rSrcRect, CMythRect& rDesRect);
+	void		onRemoveEntityFromMapCell(CEntity* pEntity, CMythRect& rSrcRect, CMythRect& rDesRect);
 	/// 在地图中创建实体
 	bool		createEntityToMap(CEntity* pEntity, CMythPoint& rPos);
 	/// 在地图中创建实体触发
@@ -108,14 +118,16 @@ public:
 	void		onRemoveEntityFromMap(CEntity* pEntity);
 
 	/// 创建玩家
-	void		onCreatePlayer(CEntityPlayer* pPlayer);
+	void		createPlayer(CEntityPlayer* pPlayer);
 	/// 创建实体
 	CEntity*	createEntity(CEntityCreator* pCreator);
 
 	/// 销毁玩家
-	void		onDestroyPlayer(CEntityPlayer* pPlayer);
+	void		destroyPlayer(CEntityPlayer* pPlayer);
 	/// 销毁实体
-	void		DestroyEntity(CEntity* pEntity);
+	void		destroyEntity(CEntity* pEntity);
+	/// 销毁地图上所有的实体（不包含玩家）
+	void		destroyAllEntity();
 
 	/// 通知其他玩家创建该玩家
 	void		createPlayer2PlayerList(CEntityPlayer* pPlayer, std::vector<CEntityPlayer*>& rPlayerList);
@@ -137,8 +149,8 @@ public:
 	
 public:
 	/// autocode don't edit
-    CMapUnit* getMapUnit(){ return mMapUnit;}
-    void setMapUnit(CMapUnit* value){ mMapUnit = value;}
+    CMapCell* getMapCell(){ return mMapCell;}
+    void setMapCell(CMapCell* value){ mMapCell = value;}
 
     short getLength(){ return mLength;}
     void setLength(short value){ mLength = value;}
@@ -157,11 +169,18 @@ public:
 
     EmMapType getMapType(){ return mMapType;}
     void setMapType(EmMapType value){ mMapType = value;}
+
+    ENTITY_LIST& getEntityList(){ return mEntityList;}
+
+    PLAYER_LIST& getPlayerList(){ return mPlayerList;}
+
+    time_t getNoPlayerTime(){ return mNoPlayerTime;}
+    void setNoPlayerTime(time_t value){ mNoPlayerTime = value;}
 	/// end autocode
 
 private:
 	/// 地图单元
-	CMapUnit*			mMapUnit;
+	CMapCell*			mMapCell;
 	/// 长度
 	short				mLength;
 	/// 宽度
@@ -174,14 +193,24 @@ private:
 	int					mMapIndex;
 	/// 地图类型, default:emMapType_None
 	EmMapType			mMapType;
+	/// 实体列表(除玩家以外)
+	ENTITY_LIST			mEntityList;
+	/// 玩家列表
+	PLAYER_LIST			mPlayerList;
+	/// 检测到没有玩家的设置的时间戳
+	time_t				mNoPlayerTime;
 };
 
 #define  MAKE_MAP_KEY(LineID, MapID, MapIndex) ( (LineID << 48) | (MapID << 32) | MapIndex)
+#define	 MAP_KEY_TO_LINE_ID(nKey) (nKey >> 48)
+#define  MAP_KEY_TO_MAP_ID(nKey) (nKey >> 32 & 0x0000FFFF)
+#define	 MAP_KEY_TO_MAP_INDEX(nKey) (nKey & 0xFFFFFFFF)
 class CMapManager : public CSingleton<CMapManager>
 {
 	friend class CSingleton<CMapManager>;
 public:
 	typedef std::map<uint64, CMap*> MAP_LIST;
+	typedef std::set<uint64> TIMER_DESTROY_SET;
 private:
 	CMapManager()
 	{
@@ -205,12 +234,22 @@ public:
 	CMap*				getMap(unsigned short nLineID, unsigned short nMapID, int nMapIndex);
 	/// 将地图插入地图列表中
 	bool				insertMap(unsigned short nLineID, unsigned short nMapID, int nMapIndex, CMap* pMap);
+	/// 销毁地图
+	void				destroyMap(unsigned short nLineID, unsigned short nMapID, int nMapIndex);
+
+public:
+	void				checkAutoDestoryMap();
 
 public:
 	/// autocode don't edit
 	/// end autocode
 
+	TIMER_DESTROY_SET&	getTimerDestroyList(){return mTimerDestroyList;}
+	MAP_LIST&			getMapList(){return mMapList;}
 private:
+	/// 地图列表
 	MAP_LIST			mMapList;
+	/// 定时删除列表
+	TIMER_DESTROY_SET	mTimerDestroyList;
 };
 #endif

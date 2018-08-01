@@ -5,7 +5,7 @@
 using namespace std;
 class CEntityNPC;
 class CEntityPlayer;
-class CMapUnit;
+class CMapCell;
 class CMap;
 class CMapRegionSearch
 {
@@ -28,7 +28,7 @@ public:
 
 private:
 	/// ËÑË÷µØÍ¼µ¥Ôª
-	void	searchMapUnity(CMapUnit* pMapUnit);
+	void	searchMapCell(CMapCell* pMapCell);
 
 public:
 	std::vector<CEntityPlayer*>		mPlayerList;

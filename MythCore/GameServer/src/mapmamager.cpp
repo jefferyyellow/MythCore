@@ -10,8 +10,8 @@
 #include "template.h"
 #include "entitycreator.h"
 
-CMapUnit::ENTITY_ALLOC CMapUnit::mEntityAlloc;
-void CMapUnit::pushEntity(int nObjID)
+CMapCell::ENTITY_ALLOC CMapCell::mEntityAlloc;
+void CMapCell::pushEntity(int nObjID)
 {
 	CShareList<int>::CShareListNode<int>* pNode = mEntityAlloc.allocate();
 	pNode->mData = nObjID;
@@ -20,7 +20,7 @@ void CMapUnit::pushEntity(int nObjID)
 	mEntityList.push_front(pNode);
 }
 
-void CMapUnit::removeEntity(int nObjID)
+void CMapCell::removeEntity(int nObjID)
 {
 	ENTITY_LIST::iterator it = mEntityList.begin();
 	for (; it != mEntityList.end(); ++ it)
@@ -34,10 +34,35 @@ void CMapUnit::removeEntity(int nObjID)
 	}
 }
 
+bool CMapCell::checkEntity(int nObjID)
+{
+	ENTITY_LIST::iterator it = mEntityList.begin();
+	for (; it != mEntityList.end(); ++it)
+	{
+		if (*it == nObjID)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+int CMapCell::getEntityNum()
+{
+	int nEntityNum = 0;
+	ENTITY_LIST::iterator it = mEntityList.begin();
+	for (; it != mEntityList.end(); ++it)
+	{
+		++ nEntityNum;
+	}
+
+	return nEntityNum;
+}
+
 int CMap::initSize(short nLength, short nWidth)
 {
-	mMapUnit = new CMapUnit[nLength * nWidth];
-	if (NULL == mMapUnit)
+	mMapCell = new CMapCell[nLength * nWidth];
+	if (NULL == mMapCell)
 	{
 		LOG_ERROR("create map unit failure!");
 		return ERR_MAP_CREATE_MAP_UNIT_FAILURE;
@@ -50,10 +75,10 @@ int CMap::initSize(short nLength, short nWidth)
 
 void CMap::clear()
 {
-	if (NULL != mMapUnit)
+	if (NULL != mMapCell)
 	{
-		delete []mMapUnit;
-		mMapUnit = NULL;
+		delete []mMapCell;
+		mMapCell = NULL;
 	}
 }
 
@@ -82,7 +107,7 @@ void CMap::onEntityMove(CEntity* pEntity, CMythPoint& rDesPos)
 	getVisibleRect(pEntity, tSrcRect);
 	
 	// 从原来的地图单元里移除
-	if (!removeEntityFromMapUnit(pEntity))
+	if (!removeEntityFromMapCell(pEntity))
 	{
 		return;
 	}
@@ -91,31 +116,31 @@ void CMap::onEntityMove(CEntity* pEntity, CMythPoint& rDesPos)
 	CMythRect tDesRect;
 	getVisibleRect(pEntity, tDesRect);
 	// 从原来的地图单元移除触发
-	onRemoveEntityFromMapUnit(pEntity, tSrcRect, tDesRect);
+	onRemoveEntityFromMapCell(pEntity, tSrcRect, tDesRect);
 	// 加入到新的地图单元
-	addEntityToMapUnit(pEntity);
+	addEntityToMapCell(pEntity);
 	// 加入到新的地图单元触发
-	onAddEntityToMapUnit(pEntity, tSrcRect, tDesRect);
+	onAddEntityToMapCell(pEntity, tSrcRect, tDesRect);
 }
 
 
 /// 把实体加入地图单元
-bool CMap::addEntityToMapUnit(CEntity* pEntity)
+bool CMap::addEntityToMapCell(CEntity* pEntity)
 {
 	MYTH_ASSERT(NULL == pEntity, return false);
 
-	CMapUnit* pMapUnit = getMapUnit(pEntity->getPosX(), pEntity->getPosY());
-	if (NULL == pMapUnit)
+	CMapCell* pMapCell = getMapCell(pEntity->getPosX(), pEntity->getPosY());
+	if (NULL == pMapCell)
 	{
 		return false;
 	}
 
-	pMapUnit->pushEntity(pEntity->getObjID());
+	pMapCell->pushEntity(pEntity->getObjID());
 	return true;
 }
 
 /// 把实体加入地图单元触发
-void CMap::onAddEntityToMapUnit(CEntity* pEntity, CMythRect& rSrcRect, CMythRect& rDesRect)
+void CMap::onAddEntityToMapCell(CEntity* pEntity, CMythRect& rSrcRect, CMythRect& rDesRect)
 {
 	CMythRect tRectArray[4];
 	// tDesRect - tSrcRect,从新增的那一部分中增加
@@ -149,21 +174,21 @@ void CMap::onAddEntityToMapUnit(CEntity* pEntity, CMythRect& rSrcRect, CMythRect
 }
 
 /// 将实体从地图单元中移除
-bool CMap::removeEntityFromMapUnit(CEntity* pEntity)
+bool CMap::removeEntityFromMapCell(CEntity* pEntity)
 {
 	MYTH_ASSERT(NULL == pEntity, return false);
 
-	CMapUnit* pMapUnit = getMapUnit(pEntity->getPosX(), pEntity->getPosY());
-	if (NULL == pMapUnit)
+	CMapCell* pMapCell = getMapCell(pEntity->getPosX(), pEntity->getPosY());
+	if (NULL == pMapCell)
 	{
 		return false;
 	}
-	pMapUnit->removeEntity(pEntity->getObjID());
+	pMapCell->removeEntity(pEntity->getObjID());
 	return true;
 }
 
 /// 将实体从地图单元中移除触发
-void CMap::onRemoveEntityFromMapUnit(CEntity* pEntity, CMythRect& rSrcRect, CMythRect& rDesRect)
+void CMap::onRemoveEntityFromMapCell(CEntity* pEntity, CMythRect& rSrcRect, CMythRect& rDesRect)
 {
 	MYTH_ASSERT(NULL == pEntity, return);
 	CMythRect tRectArray[4];
@@ -204,14 +229,22 @@ bool CMap::createEntityToMap(CEntity* pEntity, CMythPoint& rPos)
 	{
 		return false;
 	}
-	CMapUnit* pMapUnit = getMapUnit(rPos.mX, rPos.mY);
-	if (NULL == pMapUnit)
+	CMapCell* pMapCell = getMapCell(rPos.mX, rPos.mY);
+	if (NULL == pMapCell)
 	{
 		return false;
 	}
 
-	pMapUnit->pushEntity(pEntity->getObjID());
+	pMapCell->pushEntity(pEntity->getObjID());
 	onCreateEntityToMap(pEntity);
+	if (pEntity->isPlayer())
+	{
+		mPlayerList.push_back(pEntity->getObjID());
+	}
+	else
+	{
+		mEntityList.push_back(pEntity->getObjID());
+	}
 	return true;
 }
 
@@ -251,13 +284,37 @@ bool CMap::removeEntityFromMap(CEntity* pEntity)
 {
 	MYTH_ASSERT(NULL == pEntity, return false);
 
-	CMapUnit* pMapUnit = getMapUnit(pEntity->getPosX(), pEntity->getPosY());
-	if (NULL == pMapUnit)
+	CMapCell* pMapCell = getMapCell(pEntity->getPosX(), pEntity->getPosY());
+	if (NULL == pMapCell)
 	{
 		return false;
 	}
-	pMapUnit->removeEntity(pEntity->getObjID());
+	pMapCell->removeEntity(pEntity->getObjID());
 	onRemoveEntityFromMap(pEntity);
+	if (pEntity->isPlayer())
+	{
+		PLAYER_LIST::iterator it = mPlayerList.begin();
+		for (; it != mPlayerList.end(); ++it)
+		{
+			if (*it == pEntity->getObjID())
+			{
+				mPlayerList.erase(it);
+				break;
+			}
+		}
+	}
+	else
+	{
+		ENTITY_LIST::iterator it = mEntityList.begin();
+		for (; it != mEntityList.begin(); ++it)
+		{
+			if (*it == pEntity->getObjID())
+			{
+				mEntityList.erase(it);
+				break;
+			}
+		}
+	}
 	return true;
 }
 
@@ -294,15 +351,17 @@ void CMap::onRemoveEntityFromMap(CEntity* pEntity)
 }
 
 /// 创建玩家
-void CMap::onCreatePlayer(CEntityPlayer* pPlayer)
+void CMap::createPlayer(CEntityPlayer* pPlayer)
 {
 	if (NULL == pPlayer)
 	{
 		return;
 	}
 
-	addEntityToMapUnit(pPlayer);
+	addEntityToMapCell(pPlayer);
 	onCreateEntityToMap(pPlayer);
+	// 加入玩家列表中
+	mPlayerList.push_back(pPlayer->getObjID());
 	return;
 }
 
@@ -324,23 +383,66 @@ CEntity* CMap::createEntity(CEntityCreator* pCreator)
 	pEntity->setMapIndex(pCreator->mMapIndex);
 	pEntity->setPos(pCreator->mPos);
 	pEntity->initEntity(pCreator);
-	addEntityToMapUnit(pEntity);
+	addEntityToMapCell(pEntity);
 	onCreateEntityToMap(pEntity);
+	// 加入实体列表中
+	mEntityList.push_back(pEntity->getObjID());
 	return pEntity;
 }
 
 /// 销毁玩家
-void CMap::onDestroyPlayer(CEntityPlayer* pPlayer)
+void CMap::destroyPlayer(CEntityPlayer* pPlayer)
 {
 	removeEntityFromMap(pPlayer);
+
+	PLAYER_LIST::iterator it = mPlayerList.begin();
+	for (; it != mPlayerList.end(); ++it)
+	{
+		if (*it == pPlayer->getObjID())
+		{
+			mPlayerList.erase(it);
+			break;
+		}
+	}
 }
 
 /// 销毁实体
-void CMap::DestroyEntity(CEntity* pEntity)
+void CMap::destroyEntity(CEntity* pEntity)
 {
 	removeEntityFromMap(pEntity);
 	CEntity::destroyEntity(pEntity);
+
+	ENTITY_LIST::iterator it = mEntityList.begin();
+	for (; it != mEntityList.begin(); ++ it)
+	{
+		if (*it == pEntity->getObjID())
+		{
+			mEntityList.erase(it);
+			break;
+		}
+	}
 }
+
+
+/// 销毁地图上所有的实体（不包含玩家）
+void CMap::destroyAllEntity()
+{
+	ENTITY_LIST::iterator it = mEntityList.begin();
+	for (; it != mEntityList.end(); )
+	{
+		CEntity* pEntity = static_cast<CEntity*>(CObjPool::Inst()->getObj(*it));
+		if (NULL == pEntity)
+		{
+			continue;
+		}
+		// 先将迭代器移到下一个，就算destroyEntity中将其删除，也没关系
+		++ it;
+		destroyEntity(pEntity);
+	}
+
+	mEntityList.clear();
+}
+
 
 /// 通知其他玩家创建该玩家
 void CMap::createPlayer2PlayerList(CEntityPlayer* pPlayer, std::vector<CEntityPlayer*>& rPlayerList)
@@ -514,4 +616,71 @@ bool CMapManager::insertMap(unsigned short nLineID, unsigned short nMapID, int n
 	uint64 nKey = MAKE_MAP_KEY((uint64)nLineID, (uint64)nMapID, (uint64)nMapIndex);
 	std::pair<MAP_LIST::iterator,bool> tResult = mMapList.insert(std::pair<uint64, CMap*>(nKey, pMap));
 	return tResult.second;
+}
+
+/// 销毁地图
+void CMapManager::destroyMap(unsigned short nLineID, unsigned short nMapID, int nMapIndex)
+{
+	uint64 nKey = MAKE_MAP_KEY((uint64)nLineID, (uint64)nMapID, (uint64)nMapIndex);
+	MAP_LIST::iterator it = mMapList.find(nKey);
+	if (it == mMapList.end())
+	{
+		return;
+	}
+	CMap* pMap = it->second;
+	if (NULL == pMap)
+	{
+		return;
+	}
+	// 销毁所有的实体
+	pMap->destroyAllEntity();
+	// 清除资源
+	pMap->clear();
+	CMapConfig* pMapConfig = CMapConfigManager::Inst()->getMapConfig(nMapID);
+	if (NULL != pMapConfig && pMapConfig->getAutoDestory())
+	{
+		mTimerDestroyList.erase(nKey);
+	}
+	mMapList.erase(nKey);
+	delete pMap;
+}
+
+void CMapManager::checkAutoDestoryMap()
+{
+	time_t tNowTime = CTimeManager::Inst()->getCurrTime();
+	TIMER_DESTROY_SET::iterator it = mTimerDestroyList.begin();
+	for (; it != mTimerDestroyList.end(); )
+	{
+		uint64 nKey = *it;
+		MAP_LIST::iterator it = mMapList.find(nKey);
+		if (mMapList.end() == it)
+		{
+			continue;
+		}
+		CMap* pMap = it->second;
+		if (NULL == pMap)
+		{
+			continue;
+		}
+
+		++ it;
+		if (pMap->getPlayerList().size() == 0)
+		{
+			time_t nNoPlayerTime = pMap->getNoPlayerTime();
+			if (0 == nNoPlayerTime)
+			{
+				pMap->setNoPlayerTime(tNowTime);
+				continue;
+			}
+
+			if (tNowTime - nNoPlayerTime > AUTO_DESTORY_MAP_TIME)
+			{
+				destroyMap(MAP_KEY_TO_LINE_ID(nKey), MAP_KEY_TO_MAP_ID(nKey), MAP_KEY_TO_MAP_INDEX(nKey));
+			}
+		}
+		else
+		{
+			pMap->setNoPlayerTime(0);
+		}
+	}
 }

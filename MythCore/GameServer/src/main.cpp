@@ -131,9 +131,8 @@ int main(int argc, char* argv[])
 	int nMemCheckFlag = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
 	nMemCheckFlag |= _CRTDBG_LEAK_CHECK_DF;
 	_CrtSetDbgFlag(nMemCheckFlag);
-	//_CrtSetBreakAlloc(6717);
+//	_CrtSetBreakAlloc(11350);
 #endif
-	//testing::InitGoogleTest(&argc,argv);
 
 	bool bExit = ParseParam(argc, argv);
 	if (bExit)
@@ -151,6 +150,11 @@ int main(int argc, char* argv[])
 
 	CGameServer::createInst();
 	CGameServer::Inst()->initAll();
+
+	/// gtest´úÂë
+	testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
+
 	//return RUN_ALL_TESTS();
 	CGameServer::Inst()->run();
 	CGameServer::Inst()->exit();

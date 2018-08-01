@@ -53,7 +53,7 @@ private:
 	char 			mType[CLASS_NAME_LENGTH];			// 变量类型
 	char			mName[CLASS_NAME_LENGTH];			// 变量名
 	int				mCount;								// 数组维数
-	bool			mAlreadyWrite;					// 是否已经写
+	bool			mAlreadyWrite;						// 是否已经写
 };
 
 #endif

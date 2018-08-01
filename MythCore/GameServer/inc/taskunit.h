@@ -103,17 +103,12 @@ public:
 	}
 	void init()
 	{
-        mMaxCompleteTaskID = 0;
 	}
 
 public:
 	void	setTaskComplete(int nTaskID)
 	{
 		mCompleteTasks.setBit(nTaskID);
-		if (nTaskID > mMaxCompleteTaskID)
-		{
-			mMaxCompleteTaskID = nTaskID;
-		}
 	}
 
 public:
@@ -128,7 +123,7 @@ public:
 	/// 发送放弃任务回应
 	void sendAbortTaskResponse(int nResult, int nTaskID);
 	/// 发送更新任务进度通知
-	void sendUpdateTaskProcessNotify(int nTaskID, int nCondType, int nParam);
+	void sendUpdateTaskProcessNotify(int nTaskID, int nCondIndex, int nParam);
 
 	// 检查是否可以接受任务
 	int		checkAcceptTask(int nTaskID);
@@ -154,8 +149,6 @@ public:
 	void	giveTaskReward(CTaskConfig::TASK_PRIZE_LIST& rPrizeList);
 	// 检查是否可以得到奖励
 	int		checkTaskReward(int nTaskID);
-	// 刷新任务条件
-	void	refreshTaskCond(CPlayerTask& rPlayerTask, EmCompleteCondition eCondition, int nParam);
 
 public:
 	/// 玩家身上是否有这个任务
@@ -186,8 +179,6 @@ public:
 private:
 	/// 所有已经完成的任务
 	Myth::CBitSet<MAX_TASK_ID>		mCompleteTasks;
-	/// 最大的已经完成的任务
-	short							mMaxCompleteTaskID;
 	/// 已经接受的任务列表
 	PLAYER_TASK_LIST				mTaskList;
 };

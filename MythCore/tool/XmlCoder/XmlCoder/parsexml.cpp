@@ -96,7 +96,13 @@ void CParseXml::parseXmlElement(XMLElement* pElement, CClass* pParent)
 				continue;
 			}
 
-			CVariable* pVariable = pCurClass->getVariable(pAttribute->Name());
+			const char* pVariableName = pAttribute->Name();
+			if (0 == strncmp("value", pAttribute->Name(), CLASS_NAME_LENGTH))
+			{
+				pVariableName = pElement->Name();
+			}
+
+			CVariable* pVariable = pCurClass->getVariable(pVariableName);
 			if (NULL != pVariable)
 			{
 				pVariable->setCount(pVariable->getCount() + 1);
@@ -104,7 +110,7 @@ void CParseXml::parseXmlElement(XMLElement* pElement, CClass* pParent)
 			else
 			{
 				CVariable* pNewVariable = new CVariable;
-				pNewVariable->setName(pAttribute->Name());
+				pNewVariable->setName(pVariableName);
 				pNewVariable->setType(pAttribute->Value());
 				pNewVariable->setCount(1);
 				pCurClass->getVariableList().push_back(pNewVariable);

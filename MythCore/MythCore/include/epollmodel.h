@@ -45,12 +45,12 @@ namespace Myth
 
 		void finial()
 		{
-			if (NULL != mpAllSocket)
-			{
-				free(mpAllSocket);
-				mpAllSocket = NULL;
-			}
 			close(mEpollFd);
+			if(NULL != mpWaitEvents)
+			{
+				free(mpWaitEvents);
+				mpWaitEvents = NULL;
+			}
 		}
 
 
