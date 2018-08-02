@@ -25,7 +25,7 @@ void CMapRegionSearch::searchMapCell(CMapCell* pMapCell)
 		return;
 	}
 
-	CMapCell::ENTITY_LIST rEntityList = pMapCell->getEntityList();
+	CMapCell::ENTITY_LIST& rEntityList = pMapCell->getEntityList();
 	CMapCell::ENTITY_LIST::iterator it = rEntityList.begin();
 	for (; it != rEntityList.end(); ++it)
 	{

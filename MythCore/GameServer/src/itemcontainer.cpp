@@ -11,6 +11,7 @@ bool CItemBox::checkSpace(int* pItemID, int* pNumber, int nSize)
 {
 	if (nSize > MAX_INSERT_TYPE_NUM)
 	{
+		LOG_ERROR("item id size is max than MaxSize, Size: %d, MaxSize", nSize, MAX_INSERT_TYPE_NUM);
 		return false;
 	}
 
@@ -28,6 +29,7 @@ bool CItemBox::checkSpace(int* pItemID, int* pNumber, int nSize)
 		CTplItem* pTplItem = static_cast<CTplItem*>(CStaticData::searchTpl(pItemID[i]));
 		if (NULL == pTplItem)
 		{
+			LOG_ERROR("item can't find template, template id: %d", pItemID[i]);
 			nPileLimit[i] = 0;
 			continue;
 		}

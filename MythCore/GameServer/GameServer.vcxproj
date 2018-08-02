@@ -105,6 +105,7 @@
     <ClCompile Include="src\itemcontainer.cpp" />
     <ClCompile Include="src\itemmodule.cpp" />
     <ClCompile Include="src\itemobject.cpp" />
+    <ClCompile Include="src\itemmoduletest.cpp" />
     <ClCompile Include="src\itemunit.cpp" />
     <ClCompile Include="src\job.cpp" />
     <ClCompile Include="src\locallogjob.cpp" />
@@ -114,6 +115,7 @@
     <ClCompile Include="src\mapmamager.cpp" />
     <ClCompile Include="src\mapconfigmanager.cpp" />
     <ClCompile Include="src\mapmodule.cpp" />
+    <ClCompile Include="src\mapmoduletest.cpp" />
     <ClCompile Include="src\mapregionsearch.cpp" />
     <ClCompile Include="src\messagefactory.cpp" />
     <ClCompile Include="src\objmanager.cpp" />

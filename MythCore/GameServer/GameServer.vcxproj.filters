@@ -270,6 +270,12 @@
     <ClCompile Include="src\platlog.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\itemmoduletest.cpp">
+      <Filter>logicmodule\item</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mapmoduletest.cpp">
+      <Filter>logicmodule\map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">

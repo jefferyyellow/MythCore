@@ -306,7 +306,7 @@ bool CMap::removeEntityFromMap(CEntity* pEntity)
 	else
 	{
 		ENTITY_LIST::iterator it = mEntityList.begin();
-		for (; it != mEntityList.begin(); ++it)
+		for (; it != mEntityList.end(); ++it)
 		{
 			if (*it == pEntity->getObjID())
 			{
@@ -411,16 +411,6 @@ void CMap::destroyEntity(CEntity* pEntity)
 {
 	removeEntityFromMap(pEntity);
 	CEntity::destroyEntity(pEntity);
-
-	ENTITY_LIST::iterator it = mEntityList.begin();
-	for (; it != mEntityList.begin(); ++ it)
-	{
-		if (*it == pEntity->getObjID())
-		{
-			mEntityList.erase(it);
-			break;
-		}
-	}
 }
 
 
