@@ -15,6 +15,12 @@
 #define MAX_TASK_ID						8192		// 所有任务最大ID
 
 
+enum EmTaskType
+{
+	emTaskType_None						= 0,		// 无
+	emTaskType_Main						= 1,		// 主线任务
+	emTaskType_Branch					= 2,		// 分支任务
+};
 
 enum EmAcceptCondition
 {

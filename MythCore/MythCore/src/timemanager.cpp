@@ -126,7 +126,6 @@ namespace Myth
 	uint64 CTimeManager::GetWindowsToUnixBaseTimeOffset()
 	{
 	#ifdef MYTH_OS_WINDOWS
-		uint64 offset = 0;
 		// compute the offset to convert windows base time into unix time (aka epoch)
 		// build a WIN32 system time for jan 1, 1970
 		SYSTEMTIME baseTime;
@@ -142,8 +141,7 @@ namespace Myth
 		FILETIME baseFileTime = {0,0};
 		// convert it into a FILETIME value
 		SystemTimeToFileTime(&baseTime, &baseFileTime);
-		offset = baseFileTime.dwLowDateTime | (uint64(baseFileTime.dwHighDateTime)<<32);
-		return offset;
+		return baseFileTime.dwLowDateTime | (uint64(baseFileTime.dwHighDateTime)<<32);
 	#else
 		return 0;
 	#endif

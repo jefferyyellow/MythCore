@@ -11,9 +11,10 @@ namespace Myth
 	public:
 		CMysqlDataBase();
 		~CMysqlDataBase();
+		void init();
 
 		/// 连接mysql
-		int		connectMysqlServer(char* pHost, char* pUserName, char* pPasswd, char* pDataBase, int nPort, char* pUnixSocket);
+		int		connectMysqlServer(const char* pHost, const char* pUserName, const char* pPasswd, const char* pDataBase, int nPort, const char* pUnixSocket);
 		/// 查询，返回结果
 		int		query(const char *pSql, CMysqlQueryResult& rQueryResult);
 		/// 查询，将结果返回字节流中

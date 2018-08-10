@@ -1,6 +1,5 @@
 #include "logmanager.h"
 #include "timemanager.h"
-#include "log.h"
 #include <stdio.h>
 #ifdef MYTH_OS_UNIX
 #include <time.h>
@@ -133,7 +132,7 @@ namespace Myth
 	/// format date into data buffer
 	void CLogManager::FormatDateString(char* pDateBuffer, int nBuffSize)
 	{
-		snprintf(pDateBuffer, nBuffSize - 1, "[%04d-%02d-%02d %02d:%02d:%02d]", mTmNow.tm_year + 1900,
+		snprintf(pDateBuffer, size_t(nBuffSize - 1), "[%04d-%02d-%02d %02d:%02d:%02d]", mTmNow.tm_year + 1900,
 			mTmNow.tm_mon + 1, mTmNow.tm_mday, mTmNow.tm_hour, mTmNow.tm_min, mTmNow.tm_sec);
 		pDateBuffer[nBuffSize - 1] = '\0';
 	}
@@ -147,7 +146,7 @@ namespace Myth
 		char tDateBuffer[STR_LENGTH_32] = { 0 };
 		FormatDateString(tDateBuffer, sizeof(tDateBuffer));
 
-		snprintf(pDataBuffer, nBuffSize - 1, "%s %s: %s\n", tDateBuffer, pLogTypeName, tBuffer);
+		snprintf(pDataBuffer, size_t(nBuffSize - 1), "%s %s: %s\n", tDateBuffer, pLogTypeName, tBuffer);
 	}
 
 	void CLogManager::FormatLogMessage(char* pDataBuffer, int nBuffSize, const char* pLogTypeName, const char* pLogContent)
@@ -155,7 +154,7 @@ namespace Myth
 		char tDateBuffer[STR_LENGTH_32] = { 0 };
 		FormatDateString(tDateBuffer, sizeof(tDateBuffer));
 
-		snprintf(pDataBuffer, nBuffSize - 1, "%s %s: %s\n", tDateBuffer, pLogTypeName, pLogContent);
+		snprintf(pDataBuffer, size_t(nBuffSize - 1), "%s %s: %s\n", tDateBuffer, pLogTypeName, pLogContent);
 
 	}
 }

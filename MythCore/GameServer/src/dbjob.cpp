@@ -4,13 +4,12 @@
 #include "mysqlqueryresult.h"
 #include "gameserver.h"
 #include "entityplayer.h"
-#include "objpool.h"
 #include "dbmodule.hxx.pb.h"
 #include "errcode.h"
 CDBJob::CDBJob()
 {
 	init();
-	setJobID(emJobID_DB);
+	setJobID((int)emJobID_DB);
 }
 
 CDBJob::~CDBJob()
@@ -24,12 +23,10 @@ void CDBJob::init()
     mSqlLength = 0;
 }
 
-int CDBJob::initDB(char* pHost, char* pUserName, char* pPasswd, char* pDataBase, int nPort, char* pUnixSocket)
+int CDBJob::initDB(const char* pHost, const char* pUserName, const char* pPasswd, const char* pDataBase, int nPort, const char* pUnixSocket)
 {
 	int nResult = mDataBase.connectMysqlServer(pHost, pUserName, pPasswd, pDataBase, nPort, pUnixSocket);
 	return nResult;
-
-	return 0;
 }
 
 void CDBJob::clear()
@@ -76,7 +73,7 @@ int CDBJob::setBuffer(int nBufferSize)
 }
 
 /// 压入工作数据
-void CDBJob::pushBackJobData(byte* pData, int nDataLength)
+void CDBJob::pushBackJobData(const byte* pData, int nDataLength)
 {
 	if (NULL == pData || 0 == nDataLength)
 	{
@@ -112,7 +109,7 @@ void CDBJob::checkDBStream()
 		{
 			return;
 		}
-		nLength -= sizeof(CDBRequestHeader);
+		nLength -= (int)(sizeof(CDBRequestHeader));
 
 		int nResultLength = sizeof(mDBResponse.mSqlBuffer) - 1;
 
@@ -147,10 +144,10 @@ void CDBJob::checkDBStream()
 		mDBResponse.mParam1 = mDBRequest.mParam1;
 		mDBResponse.mParam2 = mDBRequest.mParam2;
 		mDBResponse.mSessionType = mDBRequest.mSessionType;
-		mDBResponse.mRowNum = nRowNum;
-		mDBResponse.mColNum = nColNum;
-		mDBResponse.mSqlLenth = nResultLength;
-		CSceneJob::Inst()->pushBackDBData((byte*)&mDBResponse, sizeof(CDBResponseHeader)+nResultLength);
+		mDBResponse.mRowNum = (short)nRowNum;
+		mDBResponse.mColNum = (short)nColNum;
+		mDBResponse.mSqlLenth = (short)nResultLength;
+		CSceneJob::Inst()->pushBackDBData((byte*)&mDBResponse, (int)(sizeof(CDBResponseHeader)+nResultLength));
 	}
 }
 
@@ -177,7 +174,7 @@ int CDBJob::onSavePlayerBaseProperty(int nLength)
 	//	" where role_id=%d", mDBRequest.mPlayerID);
 
 	mSqlLength = 0;
-	int tLen = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+	int tLen = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer),
 		"call UpdatePlayerBaseProperty(%d,", mDBRequest.mPlayerID);
 	mSqlLength += tLen;
 	int nResult = parsePBForPrecedure(tSavePlayer);
@@ -186,13 +183,13 @@ int CDBJob::onSavePlayerBaseProperty(int nLength)
 		return nResult;
 	}
 
-	tLen = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+	snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
 		")");
 	return SUCCESS;
 }
 
 /// 分析PB结构，组成sql语句
-int CDBJob::parsePBForSql(Message& rMessage)
+int CDBJob::parsePBForSql(const Message& rMessage)
 {
 	const ::google::protobuf::Descriptor* pDesc = rMessage.GetDescriptor();
 	const ::google::protobuf::Reflection* pRef = rMessage.GetReflection();
@@ -283,7 +280,7 @@ int CDBJob::parsePBForSql(Message& rMessage)
 				mSqlLength += nLength;
 				if (rSubMsg.SerializeToArray(tBuffer, sizeof(tBuffer) - 1))
 				{
-					nLength = mysql_real_escape_string(pMysql, (char*)&(mDBRequest.mSqlBuffer[mSqlLength]), tBuffer, rSubMsg.ByteSize());
+					nLength = (int)mysql_real_escape_string(pMysql, (char*)&(mDBRequest.mSqlBuffer[mSqlLength]), tBuffer, (unsigned long)rSubMsg.ByteSize());
 					if (nLength == 0)
 					{
 						nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
@@ -302,6 +299,8 @@ int CDBJob::parsePBForSql(Message& rMessage)
 
 				break;
 			}
+			case ::google::protobuf::FieldDescriptor::CPPTYPE_BOOL:
+			case ::google::protobuf::FieldDescriptor::CPPTYPE_ENUM:
 			default:
 				break;
 		}
@@ -310,7 +309,7 @@ int CDBJob::parsePBForSql(Message& rMessage)
 }
 
 /// 分析PB结构，组成调用precedure语句
-int CDBJob::parsePBForPrecedure(Message& rMessage)
+int CDBJob::parsePBForPrecedure(const Message& rMessage)
 {
 	const ::google::protobuf::Descriptor* pDesc = rMessage.GetDescriptor();
 	const ::google::protobuf::Reflection* pRef = rMessage.GetReflection();
@@ -398,7 +397,7 @@ int CDBJob::parsePBForPrecedure(Message& rMessage)
 				const Message &rSubMsg = pRef->GetMessage(rMessage, pFieldDescriptor);
 				if (rSubMsg.SerializeToArray(tBuffer, sizeof(tBuffer) - 1))
 				{
-					nLength = mysql_real_escape_string(pMysql, (char*)&(mDBRequest.mSqlBuffer[mSqlLength]), tBuffer, rSubMsg.ByteSize());
+					nLength = (int)mysql_real_escape_string(pMysql, (char*)&(mDBRequest.mSqlBuffer[mSqlLength]), tBuffer, (unsigned long)rSubMsg.ByteSize());
 					if (nLength == 0)
 					{
 						nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
@@ -417,6 +416,8 @@ int CDBJob::parsePBForPrecedure(Message& rMessage)
 
 				break;
 			}
+			case ::google::protobuf::FieldDescriptor::CPPTYPE_BOOL:
+			case ::google::protobuf::FieldDescriptor::CPPTYPE_ENUM:
 			default:
 				break;
 		}

@@ -15,7 +15,7 @@ namespace Myth
 
 
 	// 初始化
-	int CSocketStream::Initialize(byte* pBuffer, int nTotalSize)
+	int CSocketStream::Initialize(const byte* pBuffer, int nTotalSize)
 	{
 		if (NULL == pBuffer)
 		{
@@ -28,7 +28,7 @@ namespace Myth
 	}
 
 	// 重置
-	int	CSocketStream::Resume(byte* pBuffer, int nTotalSize)
+	int	CSocketStream::Resume(const byte* pBuffer, int nTotalSize)
 	{
 		if (NULL == pBuffer)
 		{
@@ -48,7 +48,6 @@ namespace Myth
 		}
 
 
-		int nLeftSpace = 0;
 		int nBegin = -1;
 		int nEnd = -1;
 
@@ -63,7 +62,7 @@ namespace Myth
 			ClearBuffer();
 			return -3;
 		}
-		nLeftSpace = GetLeftSpace();
+		int nLeftSpace = GetLeftSpace();
 
 		if ((int)(nLength + sizeof(short)) > nLeftSpace || nLength > 0xFFFF)
 		{
@@ -162,7 +161,7 @@ namespace Myth
 		}
 
 		// 消息是否已经收全了
-		if (usLength >(int)(nDataLength - sizeof(short)) || usLength <= 0)
+		if (usLength >(int)(nDataLength - sizeof(short)) || usLength == 0)
 		{
 			rLength = 0;
 			SetCriticalData(nEnd, -1);
@@ -248,7 +247,7 @@ namespace Myth
 		}
 
 		// 消息是否已经收全了
-		if (usLength >(int)(nDataLength - sizeof(short)) || usLength <= 0)
+		if (usLength >(int)(nDataLength - sizeof(short)) || usLength == 0)
 		{
 			rLength = 0;
 			SetCriticalData(nEnd, -1);
@@ -281,7 +280,6 @@ namespace Myth
 			}
 		}
 
-		nBegin = (nBegin + usLength) % mSize;
 		return 0;
 	}
 
@@ -324,7 +322,7 @@ namespace Myth
 		}
 
 		// 消息是否已经收全了
-		if (usLength >(int)(nDataLength - sizeof(short)) || usLength <= 0)
+		if (usLength >(int)(nDataLength - sizeof(short)) || usLength == 0)
 		{
 			SetCriticalData(nEnd, -1);
 			return -4;
@@ -401,7 +399,7 @@ namespace Myth
 			nBegin = (nBegin + 1) % mSize;
 		}
 		// 消息是否已经收全了
-		if (usLength >(int)(nDataLength - sizeof(short)) || usLength <= 0 || nLength != usLength)
+		if (usLength >(int)(nDataLength - sizeof(short)) || usLength == 0 || nLength != usLength)
 		{
 			rOutLength = 0;
 			return -7;

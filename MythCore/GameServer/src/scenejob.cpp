@@ -21,7 +21,7 @@
 #include "rankmodule.h"
 #include "loginplayer.h"
 #include "platlog.h"
-
+#include "entitytimer.h"
 CSceneJob::CSceneJob()
 :mMinuteTimer(SECONDS_PER_MIN)
 {
@@ -315,6 +315,7 @@ bool CSceneJob::initBase(int nDBBuffSize)
 	mLastTime = CTimeManager::Inst()->getCurrTime();
 	mMorningTime = timeToMorning(CTimeManager::Inst()->getCurrTime());
 	setTmNow(mLastTime);
+	CTimerList::setTimeOutFunc(timeOutCallFunc);
 
 	mServerState = emServerStateInit;
 	bool bResult = initShareMemory();
@@ -338,7 +339,7 @@ bool CSceneJob::initBase(int nDBBuffSize)
 	mLogicModuleList.push_back(CDailyActModule::createInst());
 	mLogicModuleList.push_back(CChatModule::createInst());
 	mLogicModuleList.push_back(CRankModule::createInst());
-
+	mLogicModuleList.push_back(CTaskModule::createInst());
 	return true;
 }
 
@@ -575,7 +576,7 @@ void CSceneJob::send2Player(CExchangeHead& rExchangeHead, unsigned short nMessag
 	pTemp += sizeof(nMessageID);
 
 	pMessage->SerializeToArray(pTemp, sizeof(mBuffer) - sizeof(rExchangeHead) - sizeof(unsigned short) * 2);
-	printf("PushPacket nMessageID: %d\n", nMessageID);
+	//printf("PushPacket nMessageID: %d\n", nMessageID);
 	mServer2TcpMemory->PushPacket((byte*)mBuffer, pMessage->ByteSize() + sizeof(rExchangeHead) + sizeof(unsigned short) * 2);
 
 }
@@ -678,6 +679,51 @@ void CSceneJob::dispatchClientMessage(CEntityPlayer* pPlayer, unsigned short nMe
 			CDailyActModule::Inst()->onClientMessage(pPlayer, nMessageID, pMessage);
 			break;
 		}
+		default:
+			break;
+	}
+}
+
+void CSceneJob::timeOutCallFunc(CEntityTimer* pTimer)
+{
+	if (NULL == pTimer)
+	{
+		return;
+	}
+	switch (pTimer->mModule)
+	{
+		case MESSAGE_MODULE_PROPERTY:
+			{
+				break;
+			}
+		case MESSAGE_MODULE_ITEM:
+			{
+				break;
+			}
+		case MESSAGE_MODULE_MAP:
+			{
+				break;
+			}
+		case MESSAGE_MODULE_TASK:
+			{
+				break;
+			}
+		case MESSAGE_MODULE_SKILL:
+			{
+				break;
+			}
+		case MESSAGE_MODULE_CHAT:
+			{
+				break;
+			}
+		case MESSAGE_MODULE_SERVER_ACT:
+			{
+				break;
+			}
+		case MESSAGE_MODULE_DAILY_ACT:
+			{
+				break;
+			}
 		default:
 			break;
 	}

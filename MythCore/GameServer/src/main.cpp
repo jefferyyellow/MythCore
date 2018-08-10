@@ -131,7 +131,7 @@ int main(int argc, char* argv[])
 	int nMemCheckFlag = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
 	nMemCheckFlag |= _CRTDBG_LEAK_CHECK_DF;
 	_CrtSetDbgFlag(nMemCheckFlag);
-//	_CrtSetBreakAlloc(11350);
+	//_CrtSetBreakAlloc(19992);
 #endif
 
 	bool bExit = ParseParam(argc, argv);
@@ -151,9 +151,17 @@ int main(int argc, char* argv[])
 	CGameServer::createInst();
 	CGameServer::Inst()->initAll();
 
+	/// ***********************************************************
 	/// gtest代码
 	testing::InitGoogleTest(&argc, argv);
-	return RUN_ALL_TESTS();
+	int nResult = RUN_ALL_TESTS();
+	CGameServer::destroyInst();
+
+	// 释放protobuf中lib和msg占用的内存
+	::google::protobuf::ShutdownProtobufLibrary();
+	//_CrtDumpMemoryLeaks();
+	return nResult;
+	/// ***********************************************************
 
 	//return RUN_ALL_TESTS();
 	CGameServer::Inst()->run();

@@ -13,7 +13,7 @@ namespace Myth
 #endif // MYTH_OS_WINDOWS
 		return 0;
 	}
-	CTcpSocket* CSelectModel::createListenSocket(char* pIP, short uPort, int nListNum, int& rSocketIndex)
+	CTcpSocket* CSelectModel::createListenSocket(const char* pIP, short uPort, int nListNum, int& rSocketIndex)
 	{
 		int nSocketIndex = -1;
 
@@ -53,11 +53,10 @@ namespace Myth
 	void CSelectModel::selectAllFd()
 	{
 		mReadSet = mReadBackSet;
-		int nResult = select(mMaxFd + 1, &mReadSet, NULL, NULL, &mSelectTime);
+		int nResult = select((int)(mMaxFd + 1), &mReadSet, NULL, NULL, &mSelectTime);
 		if (nResult < 0)
 		{
 			//int nError = WSAGetLastError();
-			int i = 0;
 		}
 	}
 
@@ -161,7 +160,7 @@ namespace Myth
 		FD_SET(nFd, &mReadBackSet);
 		if (nSocketIndex > mMaxSocketIndex)
 		{
-			mMaxSocketIndex = nSocketIndex;
+			mMaxSocketIndex = (short)nSocketIndex;
 		}
 #ifdef MYTH_OS_UNIX
 		//SetFdNotInherited(nFd);
@@ -205,7 +204,7 @@ namespace Myth
 			}
 			if (INVALID_SOCKET != nFd)
 			{
-				mMaxSocketIndex = nIndex;
+				mMaxSocketIndex = (short)nIndex;
 				break;
 			}
 		}

@@ -8,6 +8,8 @@
 #include "gameserver.h"
 #include "dbmodule.h"
 #include "dbmodule.hxx.pb.h"
+#include "entitycreator.h"
+#include "objpoolimp.h"
 CPropertyModule::CPropertyModule()
 :mSavePlayerTimer(1000)
 {
@@ -65,35 +67,47 @@ void CPropertyModule::onDestroyPlayer(CEntityPlayer* pPlayer)
 /// 时间函数
 void CPropertyModule::onTimer(unsigned int nTickOffset)
 {
+	time_t tTimeNow = CTimeManager::Inst()->getCurrTime();
+
+	CEntityPlayer* tArrayPlayer[CAPACITY_PLAYER];
+	int nPlayerNum = 0;
+	CSceneJob::PLAYER_LIST rPlayerList = CSceneJob::Inst()->getPlayerList();
+	CSceneJob::PLAYER_LIST::iterator tPlayerIt = rPlayerList.begin();
+	for (; tPlayerIt != rPlayerList.end(); ++tPlayerIt)
+	{
+		CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(tPlayerIt->second));
+		if (NULL == pPlayer)
+		{
+			LOG_ERROR("player charid  %d don't exist", tPlayerIt->first);
+			continue;
+		}
+		// 游戏里面
+		if (pPlayer->getPlayerStauts() != emPlayerStatus_Gameing)
+		{
+			continue;
+		}
+		
+		pPlayer->getTimerList().elapseTime(nTickOffset);
+		tArrayPlayer[nPlayerNum] = pPlayer;
+		++ nPlayerNum;
+	}
+
 	if (mSavePlayerTimer.elapse(nTickOffset))
 	{
-		time_t tTimeNow = CTimeManager::Inst()->getCurrTime();
 		int nSavePlayerCount = 0;
-		CSceneJob::PLAYER_LIST rPlayerList = CSceneJob::Inst()->getPlayerList();
-		CSceneJob::PLAYER_LIST::iterator tPlayerIt = rPlayerList.begin();
-		for (; tPlayerIt != rPlayerList.end(); ++tPlayerIt)
+		for (int i = 0; i < nPlayerNum; ++ i)
 		{
-			CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(tPlayerIt->second));
-			if (NULL == pPlayer)
+			if (tTimeNow - tArrayPlayer[i]->getLastSaveTime() < 60)
 			{
-				LOG_ERROR("player charid  %d don't exist", tPlayerIt->first);
 				continue;
 			}
 
-			// 游戏里面
-			if (pPlayer->getPlayerStauts() == emPlayerStatus_Gameing)
+			savePlayer(tArrayPlayer[i]);
+			tArrayPlayer[i]->setLastSaveTime(tTimeNow);
+			++nSavePlayerCount;
+			if (nSavePlayerCount >= 50)
 			{
-				if (tTimeNow - pPlayer->getLastSaveTime() > 60)
-				{
-					printf("CPropertyModule::OnTimer\n");
-					savePlayer(pPlayer);
-					pPlayer->setLastSaveTime(tTimeNow);
-					++nSavePlayerCount;
-					if (nSavePlayerCount >= 50)
-					{
-						break;
-					}
-				}
+				break;
 			}
 		}
 	}
@@ -413,4 +427,23 @@ void CPropertyModule::setNewPlayerValue(CEntityPlayer* pPlayer)
 	pPlayer->getItemUnit().insertItem(pTplConfig->mItemID, pTplConfig->mItemNum, MAX_NEW_PLAYER_ITEM);
 	pPlayer->getPropertyUnit().setLevel(pTplConfig->mLevel);
 	pPlayer->getPropertyUnit().setVipLevel(pTplConfig->mVipLevel);
+}
+
+/// 创建实体后的处理
+void CPropertyModule::onCreateEntity(CEntityCreator* pCreator, CEntity* pEntity)
+{
+	if (NULL == pCreator || NULL == pEntity)
+	{
+		return;
+	}
+
+	switch (pEntity->getEntityType())
+	{
+		case emEntityType_Item:
+		{
+			break;
+		}
+		default:
+			break;
+	}
 }

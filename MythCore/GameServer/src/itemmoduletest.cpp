@@ -1,10 +1,9 @@
 #include "gtest/gtest.h"
 #include "objpoolimp.h"
 #include "errcode.h"
-#define ITEM_ID				133		// 堆叠数为1
-#define ITEM_ID_PILE		144		// 堆叠数为10
+#include "testtype.h"
 
-/// 测试背包插入
+/// 测试背包插入（不可堆叠道具）
 TEST(ItemBox, TestBoxInsert)
 {
 	CItemBox tBox;
@@ -14,6 +13,7 @@ TEST(ItemBox, TestBoxInsert)
 	int nOutItemNum[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutSize = 0;
 
+	// 插入1个不可以堆叠道具
 	tBox.insertItem(ITEM_ID, 1, nOutItemIndex, nOutItemNum, nOutSize);
 	CItemObject* pObject = tBox.getItem(0);
 	EXPECT_EQ(ITEM_ID, pObject->GetItemID());
@@ -21,6 +21,7 @@ TEST(ItemBox, TestBoxInsert)
 	EXPECT_EQ(0, nOutItemIndex[0]);
 	EXPECT_EQ(1, nOutItemNum[0]);
 
+	// 再次插入1个不可以堆叠的道具
 	tBox.insertItem(ITEM_ID, 1, nOutItemIndex, nOutItemNum, nOutSize);
 	pObject = tBox.getItem(1);
 	EXPECT_EQ(ITEM_ID, pObject->GetItemID());
@@ -28,6 +29,7 @@ TEST(ItemBox, TestBoxInsert)
 	EXPECT_EQ(1, nOutItemIndex[0]);
 	EXPECT_EQ(1, nOutItemNum[0]);
 
+	// 第三次插入3个不可堆叠的道具
 	tBox.insertItem(ITEM_ID, 3, nOutItemIndex, nOutItemNum, nOutSize);
 	pObject = tBox.getItem(2);
 	EXPECT_EQ(ITEM_ID, pObject->GetItemID());
@@ -51,7 +53,7 @@ TEST(ItemBox, TestBoxInsert)
 
 }
 
-/// 测试背包插入
+/// 测试背包插入（可堆叠道具）
 TEST(ItemBox, TestBoxInsertPile)
 {
 	CItemBox tBox;
@@ -60,7 +62,7 @@ TEST(ItemBox, TestBoxInsertPile)
 	int nOutItemIndex[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutItemNum[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutSize = 0;
-
+	// 插入1个可以堆叠道具
 	tBox.insertItem(ITEM_ID_PILE, 1, nOutItemIndex, nOutItemNum, nOutSize);
 	CItemObject* pObject = tBox.getItem(0);
 	EXPECT_EQ(ITEM_ID_PILE, pObject->GetItemID());
@@ -68,6 +70,7 @@ TEST(ItemBox, TestBoxInsertPile)
 	EXPECT_EQ(0, nOutItemIndex[0]);
 	EXPECT_EQ(1, nOutItemNum[0]);
 
+	// 插入11个可以堆叠道具
 	tBox.insertItem(ITEM_ID_PILE, 11, nOutItemIndex, nOutItemNum, nOutSize);
 	pObject = tBox.getItem(0);
 	EXPECT_EQ(ITEM_ID_PILE, pObject->GetItemID());
@@ -81,6 +84,7 @@ TEST(ItemBox, TestBoxInsertPile)
 	EXPECT_EQ(1, nOutItemIndex[1]);
 	EXPECT_EQ(2, nOutItemNum[1]);
 
+	// 插入223个可以堆叠道具
 	tBox.insertItem(ITEM_ID_PILE, 223, nOutItemIndex, nOutItemNum, nOutSize);
 	pObject = tBox.getItem(23);
 	EXPECT_EQ(ITEM_ID_PILE, pObject->GetItemID());
@@ -89,7 +93,7 @@ TEST(ItemBox, TestBoxInsertPile)
 
 }
 
-/// 测试背包插入
+/// 测试背包插入（可堆叠的，不可堆叠的交叉插入）
 TEST(ItemBox, TestBoxInsertMixPile)
 {
 	CItemBox tBox;
@@ -98,10 +102,13 @@ TEST(ItemBox, TestBoxInsertMixPile)
 	int nOutItemIndex[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutItemNum[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutSize = 0;
-
+	// 插入3个不可堆叠的
 	tBox.insertItem(ITEM_ID, 3, nOutItemIndex, nOutItemNum, nOutSize);
+	// 插入33个可以堆叠的
 	tBox.insertItem(ITEM_ID_PILE, 33, nOutItemIndex, nOutItemNum, nOutSize);
+	// 插入3个不可以堆叠的
 	tBox.insertItem(ITEM_ID, 3, nOutItemIndex, nOutItemNum, nOutSize);
+	// 插入33个可以堆叠的
 	tBox.insertItem(ITEM_ID_PILE, 33, nOutItemIndex, nOutItemNum, nOutSize);
 
 	CItemObject* pObject = NULL;
@@ -140,6 +147,7 @@ TEST(ItemBox, TestBoxInsertMixPile)
 	EXPECT_EQ(6, pObject->GetItemNum());
 }
 
+// 测试背包删除
 TEST(ItemBox, TestBoxRemove)
 {
 	CItemBox tBox;
@@ -148,7 +156,7 @@ TEST(ItemBox, TestBoxRemove)
 	int nOutItemIndex[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutItemNum[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutSize = 0;
-
+	// 插入3个不可堆叠的
 	tBox.insertItem(ITEM_ID, 3, nOutItemIndex, nOutItemNum, nOutSize);
 	CItemObject* pObject = NULL;
 	for (int i = 0; i < 3; ++i)
@@ -158,6 +166,7 @@ TEST(ItemBox, TestBoxRemove)
 		EXPECT_EQ(1, pObject->GetItemNum());
 	}
 
+	// 移除3个不可堆叠的
 	tBox.removeItem(ITEM_ID, 3, nOutItemIndex, nOutItemNum, nOutSize);
 	for (int i = 0; i < 3; ++i)
 	{
@@ -165,7 +174,7 @@ TEST(ItemBox, TestBoxRemove)
 		EXPECT_EQ(NULL, pObject);
 	}
 
-
+	// 插入33个可以堆叠的
 	tBox.insertItem(ITEM_ID_PILE, 33, nOutItemIndex, nOutItemNum, nOutSize);
 	for (int i = 0; i < 3; ++i)
 	{
@@ -176,19 +185,19 @@ TEST(ItemBox, TestBoxRemove)
 	pObject = tBox.getItem(3);
 	EXPECT_EQ(ITEM_ID_PILE, pObject->GetItemID());
 	EXPECT_EQ(3, pObject->GetItemNum());
-
+	// 移除3个可以堆叠的
 	tBox.removeItem(ITEM_ID_PILE, 3, nOutItemIndex, nOutItemNum, nOutSize);
 	pObject = tBox.getItem(0);
 	EXPECT_EQ(ITEM_ID_PILE, pObject->GetItemID());
 	EXPECT_EQ(7, pObject->GetItemNum());
-
+	// 移除10个可以堆叠的
 	tBox.removeItem(ITEM_ID_PILE, 10, nOutItemIndex, nOutItemNum, nOutSize);
 	pObject = tBox.getItem(0);
 	EXPECT_EQ(NULL, pObject);
 	pObject = tBox.getItem(1);
 	EXPECT_EQ(ITEM_ID_PILE, pObject->GetItemID());
 	EXPECT_EQ(7, pObject->GetItemNum());
-
+	// 移除20个可以堆叠的
 	tBox.removeItem(ITEM_ID_PILE, 20, nOutItemIndex, nOutItemNum, nOutSize);
 	pObject = tBox.getItem(0);
 	EXPECT_EQ(NULL, pObject);
@@ -200,6 +209,7 @@ TEST(ItemBox, TestBoxRemove)
 	EXPECT_EQ(NULL, pObject);
 }
 
+// 测试背包删除
 TEST(ItemBox, TestBoxRemove2)
 {
 	CItemBox tBox;
@@ -208,9 +218,11 @@ TEST(ItemBox, TestBoxRemove2)
 	int nOutItemIndex[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutItemNum[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutSize = 0;
-
+	// 插入3个不可堆叠的
 	tBox.insertItem(ITEM_ID, 3, nOutItemIndex, nOutItemNum, nOutSize);
+	// 插入33个可以堆叠的
 	tBox.insertItem(ITEM_ID_PILE, 33, nOutItemIndex, nOutItemNum, nOutSize);
+	// 插入3个不可以堆叠的
 	tBox.insertItem(ITEM_ID, 3, nOutItemIndex, nOutItemNum, nOutSize);
 	CItemObject* pObject = NULL;
 
@@ -237,6 +249,7 @@ TEST(ItemBox, TestBoxRemove2)
 	EXPECT_EQ(ERR_ITEM_INDEX_NUM_NOT_ENOUGH, tBox.removeItem(5, 11));
 }
 
+// 测试检查背包空间（不可堆叠）
 TEST(ItemBox, TestBoxSpace)
 {
 	CItemBox tBox;
@@ -245,7 +258,7 @@ TEST(ItemBox, TestBoxSpace)
 	int nOutItemIndex[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutItemNum[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutSize = 0;
-
+	// 插入3个不可堆叠的
 	tBox.insertItem(ITEM_ID, 3, nOutItemIndex, nOutItemNum, nOutSize);
 
 	int nItemID = ITEM_ID;
@@ -258,6 +271,7 @@ TEST(ItemBox, TestBoxSpace)
 	EXPECT_EQ(true, bCheck);
 }
 
+// 测试检查背包空间（可堆叠）
 TEST(ItemBox, TestBoxSpacePile)
 {
 	CItemBox tBox;
@@ -266,9 +280,11 @@ TEST(ItemBox, TestBoxSpacePile)
 	int nOutItemIndex[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutItemNum[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutSize = 0;
-
+	// 插入3个不可堆叠的
 	tBox.insertItem(ITEM_ID, 3, nOutItemIndex, nOutItemNum, nOutSize);
+	// 插入33个可堆叠的
 	tBox.insertItem(ITEM_ID_PILE, 33, nOutItemIndex, nOutItemNum, nOutSize);
+	// 插入3个不可堆叠的
 	tBox.insertItem(ITEM_ID, 3, nOutItemIndex, nOutItemNum, nOutSize);
 
 	int nItemID = ITEM_ID_PILE;
@@ -281,6 +297,7 @@ TEST(ItemBox, TestBoxSpacePile)
 	EXPECT_EQ(true, bCheck);
 }
 
+// 测试检查背包空间(不可堆叠和可堆叠混合的检查）
 TEST(ItemBox, TestBoxSpaceMixPile)
 {
 	CItemBox tBox;
@@ -289,9 +306,11 @@ TEST(ItemBox, TestBoxSpaceMixPile)
 	int nOutItemIndex[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutItemNum[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutSize = 0;
-
+	// 插入3个不可堆叠的
 	tBox.insertItem(ITEM_ID, 3, nOutItemIndex, nOutItemNum, nOutSize);
+	// 插入33个可堆叠的
 	tBox.insertItem(ITEM_ID_PILE, 33, nOutItemIndex, nOutItemNum, nOutSize);
+	// 插入3个不可堆叠的
 	tBox.insertItem(ITEM_ID, 3, nOutItemIndex, nOutItemNum, nOutSize);
 
 
@@ -305,6 +324,7 @@ TEST(ItemBox, TestBoxSpaceMixPile)
 	EXPECT_EQ(true, bCheck);
 }
 
+// 检查道具是否足够
 TEST(ItemBox, TestCheckItemEnough)
 {
 	CItemBox tBox;
@@ -313,9 +333,11 @@ TEST(ItemBox, TestCheckItemEnough)
 	int nOutItemIndex[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutItemNum[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutSize = 0;
-
+	// 插入3个不可堆叠的
 	tBox.insertItem(ITEM_ID, 3, nOutItemIndex, nOutItemNum, nOutSize);
+	// 插入33个可堆叠的
 	tBox.insertItem(ITEM_ID_PILE, 33, nOutItemIndex, nOutItemNum, nOutSize);
+	// 插入3个不可堆叠的
 	tBox.insertItem(ITEM_ID, 3, nOutItemIndex, nOutItemNum, nOutSize);
 
 	EXPECT_FALSE(tBox.checkEnough(ITEM_ID, 7));
@@ -325,6 +347,7 @@ TEST(ItemBox, TestCheckItemEnough)
 	EXPECT_TRUE(tBox.checkEnough(ITEM_ID_PILE,33));
 }
 
+// 测试得到指定道具数目的接口
 TEST(ItemBox, TestHasItem)
 {
 	CItemBox tBox;
@@ -334,9 +357,13 @@ TEST(ItemBox, TestHasItem)
 	int nOutItemNum[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutSize = 0;
 
+	// 插入3个不可堆叠的
 	tBox.insertItem(ITEM_ID, 3, nOutItemIndex, nOutItemNum, nOutSize);
+	// 插入33个可堆叠的
 	tBox.insertItem(ITEM_ID_PILE, 33, nOutItemIndex, nOutItemNum, nOutSize);
+	// 插入3个不可堆叠的
 	tBox.insertItem(ITEM_ID, 3, nOutItemIndex, nOutItemNum, nOutSize);
+	// 插入33个可堆叠的
 	tBox.insertItem(ITEM_ID_PILE, 33, nOutItemIndex, nOutItemNum, nOutSize);
 
 	EXPECT_EQ(6, tBox.hasItem(ITEM_ID));

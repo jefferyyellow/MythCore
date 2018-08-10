@@ -19,10 +19,13 @@ private:
 	{
 	}
 
-	int init()
+public:
+	void init()
 	{
         memset(mTaskConfig, NULL, sizeof(mTaskConfig));
 	}
+
+	void clear();
 
 	/// 启动服务器
 	virtual void onLaunchServer();
@@ -45,11 +48,13 @@ private:
 
 public:
 	// 加载所以的任务配置
-	void	loadAllTaskConfig(const char* pPath);
+	int		loadAllTaskConfig(const char* pPath);
 	// 加载单个任务配置
-	void	loadTaskConfig(const char* pFileName);
+	int		loadTaskConfig(const char* pFilePath);
+	// 加载条件
+	void	loadTaskCond(XMLElement* pXmlElem, CTaskCondition& rCondition);
 
-	CTaskConfig*			getTaskConfig(unsigned int nTaskID)
+	CTaskConfig* getTaskConfig(unsigned int nTaskID)
 	{
 		if (nTaskID >= MAX_TASK_ID)
 		{
@@ -58,8 +63,18 @@ public:
 		return mTaskConfig[nTaskID];
 	}
 
+	void		setTaskConfig(unsigned int nTaskID, CTaskConfig* pTaskConfig)
+	{
+		if (nTaskID >= MAX_TASK_ID)
+		{
+			return ;
+		}
+
+		mTaskConfig[nTaskID] = pTaskConfig;
+	}
+
 public:
-	void onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
+	void	onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
 
 private:
 	CTaskConfig*			mTaskConfig[MAX_TASK_ID];	// 任务配置

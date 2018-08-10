@@ -25,14 +25,19 @@ namespace Myth
 	/// get the file name from file path
 	char* CFileUtility::GetFileName(const char* pFilePath, char* pFileName, int nSize)
 	{
+		if (NULL == pFilePath || NULL == pFileName)
+		{
+			return NULL;
+		}
+
 		const char* pFind = GetLastSeparator(pFilePath);
 		if (NULL == pFind)
 		{
-			strncpy(pFileName, pFilePath, nSize - 1);
+			strncpy(pFileName, pFilePath, size_t(nSize - 1));
 		}
 		else
 		{
-			strncpy(pFileName, pFind + 1, nSize - 1);
+			strncpy(pFileName, pFind + 1, size_t(nSize - 1));
 		}
 		return pFileName;
 	}
@@ -40,10 +45,15 @@ namespace Myth
 	/// get the path name from file path
 	char* CFileUtility::GetPathName(const char* pFilePath, char* pPathName, int nSize)
 	{
+		if (NULL == pFilePath || NULL == pPathName)
+		{
+			return NULL;
+		}
+
 		const char* pFind = GetLastSeparator(pFilePath);
 		if (NULL == pFind)
 		{
-			strncpy(pPathName, pFilePath, nSize - 1);
+			strncpy(pPathName, pFilePath, size_t(nSize - 1));
 		}
 		else
 		{
@@ -52,7 +62,7 @@ namespace Myth
 			{
 				nBufferSize = nSize - 1;
 			}
-			strncpy(pPathName, pFilePath, nBufferSize);
+			strncpy(pPathName, pFilePath, (size_t)nBufferSize);
 		}
 
 		return pPathName;
@@ -64,11 +74,11 @@ namespace Myth
 		const char* pFind = strrchr(pFilePath, '.');
 		if (NULL == pFind)
 		{
-			strncpy(pExtension, "", nSize - 1);
+			strncpy(pExtension, "", size_t(nSize - 1));
 		}
 		else
 		{
-			strncpy(pExtension, pFind + 1, nSize - 1);
+			strncpy(pExtension, pFind + 1, (size_t)(nSize - 1));
 		}
 		return pExtension;
 	}
@@ -82,7 +92,7 @@ namespace Myth
 		char* pFind = strrchr(tBuffer, '.');
 		if (NULL == pFind)
 		{
-			strncpy(pNewFileName, pFilePath, nSize - 1);
+			strncpy(pNewFileName, pFilePath, size_t(nSize - 1));
 		}
 		else
 		{
@@ -91,7 +101,7 @@ namespace Myth
 			{
 				nBufferSize = nSize - 1;
 			}
-			strncpy(pNewFileName, tBuffer, nBufferSize);
+			strncpy(pNewFileName, tBuffer, size_t(nBufferSize));
 		}
 		return pNewFileName;
 	}
@@ -143,7 +153,7 @@ namespace Myth
 		{
 			return 0;
 		}
-		return tTempStat.st_size;
+		return (unsigned int)tTempStat.st_size;
 	}
 
 	unsigned int CFileUtility::GetFileSize(FILE* pFile)
@@ -160,7 +170,7 @@ namespace Myth
 		{
 			return 0;
 		}
-		return tTempStat.st_size;
+		return (unsigned int)tTempStat.st_size;
 	}
 
 	unsigned int CFileUtility::GetFileModifyTime(const char* pFilePath)
@@ -278,9 +288,9 @@ namespace Myth
 
 		bool bLastResult = true;
 
-		int i = 0;
+		unsigned int i = 0;
 		char tBuffer[STR_LENGTH_256] = { 0 };
-		int nLength = strlen(pDirName);
+		unsigned int nLength = strlen(pDirName);
 
 		// skip windows drive name, for example "C:"
 		if (nLength > 1 && ':' == pDirName[1])
@@ -331,12 +341,11 @@ namespace Myth
 
 #ifdef MYTH_OS_WINDOWS
 		WIN32_FIND_DATA tFindFileData;
-		HANDLE hFind = INVALID_HANDLE_VALUE;
 		DWORD dwError;
 		char tBuffer[STR_LENGTH_256] = { 0 };
 		snprintf(tBuffer, sizeof(tBuffer) - 1, "%s\\*", pDirName);
 
-		hFind = FindFirstFile(tBuffer, &tFindFileData);
+		HANDLE hFind = FindFirstFile(tBuffer, &tFindFileData);
 		if (hFind == INVALID_HANDLE_VALUE)
 		{
 			return false;
@@ -404,7 +413,72 @@ namespace Myth
 		closedir(pDir);
 		return rmdir(pDirName) == 0;
 #endif
-		return true;
 	}
 
+
+	void CDir::findFirstFile(const char* pFilePath, char* pFileName, int nNameSize)
+	{
+#ifdef MYTH_OS_UNIX
+		if ((mDir = opendir (pFilePath)) == NULL) 
+		{
+			LOG_ERROR(strerror(errno));
+			pFileName[0] = '\0';
+			return;
+		}
+		return nextFile();
+#else
+		WIN32_FIND_DATA ffd;
+		mFindHandle = FindFirstFile(pFilePath, &ffd);
+		if (INVALID_HANDLE_VALUE == mFindHandle)
+		{
+			pFileName[0] = '\0';
+			return;
+		}
+		// 只处理非文件夹文件
+		if (!(ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+		{
+			strncpy(pFileName, ffd.cFileName, (size_t)(nNameSize - 1));
+			return;
+		}
+		return nextFile(pFileName, nNameSize);
+#endif
+	}
+
+	void CDir::nextFile(char* pFileName, int nNameSize)
+	{
+#ifdef MYTH_OS_UNIX
+		struct 	stat tStatBuf;
+		char tBuffer[STR_LENGTH_256] = { 0 };
+		struct dirent *dp = NULL;
+
+		while((dp = readdir (mDir)) != NULL)
+		{
+			int nReulst = lstat(tBuffer, &tStatBuf);
+			// 不处理子文件夹
+			if (S_ISDIR(tStatBuf.st_mode))
+			{
+				continue;
+			}
+			strncpy(pFileName, dp->d_name, nNameSize - 1);
+			return;
+		}
+		pFileName[0] = '\0';
+		return NULL;
+#else
+		WIN32_FIND_DATA ffd;
+		while (FindNextFile(mFindHandle, &ffd) != 0)
+		{
+			// 只处理非文件夹文件
+			if ((ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+			{
+				continue;
+			}
+			strncpy(pFileName, ffd.cFileName, (size_t)(nNameSize - 1));
+			return;
+		}
+
+		pFileName[0] = '\0';
+		return;
+#endif
+	}
 }

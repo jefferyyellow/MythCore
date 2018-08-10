@@ -209,6 +209,17 @@ void CEntityOgre::deadDrop(CEntityPlayer* pPlayer, CTplOgre* pTplOgre)
 
 }
 
+/// 设置毫秒级计时器(不能超过24天)
+int CEntityOgre::setTimer(int nOwerObjID, int nModule, int nMilliSec, const int* pParam, int nParamNum, int nCallTimes)
+{
+	if (mTimerList.getTimeListSize() >= MAX_NPC_TIMER_NUM)
+	{
+		return INVALID_OBJ_ID;
+	}
+	return mTimerList.setTimer(nOwerObjID, nModule, nMilliSec, pParam, nParamNum, nCallTimes);
+}
+
+
 /// 初始化
 void CEntityFuncNPC::initEntity(CEntityCreator* pCreator)
 {

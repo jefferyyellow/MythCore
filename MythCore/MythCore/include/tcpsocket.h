@@ -84,7 +84,7 @@ namespace Myth
 
 	public:
 		SOCKET	createSocket();
-		int		connectServer(char* pIP, short uPort);
+		int		connectServer(const char* pIP, unsigned short uPort);
 		int		reconnectServer();
 		int		bindPort();
 		int		bindAdress();
@@ -113,7 +113,7 @@ namespace Myth
 		int		getRecvBuffSizeOption();
 		int		setRecvBuffSizeOption(int nBuffSize);
 
-		int		sendData(byte* pBuff, int nBuffSize);
+		int		sendData(const byte* pBuff, int nBuffSize);
 		int		recvData(byte* pBuff, int nBuffSize);
 
 	public:
@@ -131,8 +131,8 @@ namespace Myth
 			mIP[sizeof(mIP) - 1] = '\0';
 		}
 
-		short	getPort(){ return mPort; }
-		void	setPort(short uPort){ mPort = uPort; }
+		unsigned short	getPort(){ return mPort; }
+		void	setPort(unsigned short uPort){ mPort = uPort; }
 
 		byte	getSocketStatus(){return mSocketStatus;}
 		void	SetSocketStatus(byte nStatus){mSocketStatus = nStatus;}
@@ -170,7 +170,7 @@ namespace Myth
 		/// IP adress
 		char	mIP[IP_SIZE];
 		/// IP port
-		short	mPort;
+		unsigned short	mPort;
 		/// socket status
 		byte	mSocketStatus;
 		/// listen socket

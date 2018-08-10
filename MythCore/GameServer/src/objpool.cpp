@@ -54,6 +54,11 @@ CObj* CObjPool::allocObj(EmObjType eType)
 			pObj = static_cast<CObj*>(mPoolImp->mItemEquipPool.allocObj());
 			break;
 		}
+		case emObjType_Entity_Timer:
+		{
+			pObj = static_cast<CObj*>(mPoolImp->mEntityTimerPool.allocObj());
+			break;
+		}
 		default:
 			break;
 	}
@@ -99,6 +104,11 @@ CObj* CObjPool::getObj(int nObjID)
 		case emObjType_Item_Equip:
 		{
 			pObj = static_cast<CObj*>(mPoolImp->mItemEquipPool.getObj(nObjID));
+			break;
+		}
+		case emObjType_Entity_Timer:
+		{
+			pObj = static_cast<CObj*>(mPoolImp->mEntityTimerPool.getObj(nObjID));
 			break;
 		}
 		default:
@@ -151,6 +161,11 @@ void CObjPool::free(int nObjID)
 			mPoolImp->mItemEquipPool.freeByID(nObjID);
 			break;
 		}
+		case emObjType_Entity_Timer:
+		{
+			mPoolImp->mEntityTimerPool.freeByID(nObjID);
+			break;
+		}
 		default:
 			break;
 	}
@@ -197,6 +212,12 @@ void CObjPool::logObjNum()
 		"mItemEquipPool",
 		mPoolImp->mItemEquipPool.getUsedNum(),
 		mPoolImp->mItemEquipPool.getMaxNum());
+
+	nLen += snprintf(acBuffer + nLen, nMaxLen - nLen, "%20s\t%6d\t%6d\n",
+		"mEntityTimerPool",
+		mPoolImp->mEntityTimerPool.getUsedNum(),
+		mPoolImp->mEntityTimerPool.getMaxNum());
+
 	nLen += snprintf(acBuffer + nLen, nMaxLen - nLen, "************************************************");
 
 	LOG_INFO(acBuffer);

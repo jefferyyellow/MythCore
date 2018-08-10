@@ -76,6 +76,16 @@ int CRank< MaxRankNum, T >::refreshRankValue(CRankValueType &rRankValue)
 	int nIndex = -1;
 	if (bUp)
 	{
+		//// 比前一个还小，都不用上升了
+		//if (tRankIndex - 1 >= 0)
+		//{
+		//	CRankValueType* tpLastValue = mRankDataPool.get(mSortRank[tRankIndex - 1]);
+		//	if (CompareRankValue(tpLastValue, &rRankValue))
+		//	{
+		//		return tRankIndex;
+		//	}
+		//}
+		// 二分法查找，只能有序，不能把tRankIndex包含，但是如果不用上升，会返回tRankIndex - 1,所以提前判断一下
 		CRankValueType* tpRankValueType = NULL;
 		nIndex = upperBound(0, tRankIndex - 1, tRankIndex);
 		if (nIndex < tRankIndex)
@@ -84,7 +94,7 @@ int CRank< MaxRankNum, T >::refreshRankValue(CRankValueType &rRankValue)
 			for (int i = tRankIndex - 1; i >= nIndex; -- i)
 			{
 				mSortRank[i + 1] = mSortRank[i];
-				tpRankValueType = mRankDataPool.get(mSortRank[i]);
+				tpRankValueType = mRankDataPool.get(mSortRank[i + 1]);
 				if (NULL != tpRankValueType)
 				{
 					tpRankValueType->mRankIndex = i + 1;
@@ -102,16 +112,27 @@ int CRank< MaxRankNum, T >::refreshRankValue(CRankValueType &rRankValue)
 	// 下降
 	else
 	{
+		//// 比前一个还小，都不用上升了
+		//if (tRankIndex + 1 < mSortRankNum)
+		//{
+		//	CRankValueType* tpNextValue = mRankDataPool.get(mSortRank[tRankIndex + 1]);
+		//	if (CompareRankValue(&rRankValue, tpNextValue))
+		//	{
+		//		return tRankIndex;
+		//	}
+		//}
+
+		// 二分法查找，只能有序，不能把tRankIndex包含，但是如果不用下降，会返回tRankIndex + 1,所以提前判断一下
 		nIndex = upperBound(tRankIndex + 1, mSortRankNum - 1, tRankIndex);
 		if (nIndex > tRankIndex)
 		{
 			CRankValueType* tpRankValueType = NULL;
 
 			int nMemberIndex = mSortRank[tRankIndex];
-			for (int i = nIndex; i < tRankIndex; --i)
+			for (int i = tRankIndex + 1; i <= nIndex; ++ i)
 			{
 				mSortRank[i - 1] = mSortRank[i];
-				tpRankValueType = mRankDataPool.get(mSortRank[i]);
+				tpRankValueType = mRankDataPool.get(mSortRank[i - 1]);
 				if (NULL != tpRankValueType)
 				{
 					tpRankValueType->mRankIndex = i - 1;
@@ -180,7 +201,7 @@ bool CRank< MaxRankNum, T >::CompareRankValue(CRankValueType *pSrcValue, CRankVa
 	if (pSrcValue->mRankValue == pDesValue->mRankValue)
 	{
 		// 时间小的优先
-		if (pSrcValue->mRankTime < pDesValue->mRankTime)
+		if (pSrcValue->mRankTime <= pDesValue->mRankTime)
 		{
 			return true;
 		}
@@ -191,6 +212,10 @@ bool CRank< MaxRankNum, T >::CompareRankValue(CRankValueType *pSrcValue, CRankVa
 template< int MaxRankNum, class T  >
 int	CRank< MaxRankNum, T >::upperBound(int nFirst, int nLast, int nIndex)
 {
+	if (nLast < 0 || nFirst >= mSortRankNum)
+	{
+		return nIndex;
+	}
 	int nCount = nLast - nFirst + 1;
 	int nMiddle = 0;
 	CRankValueType* tpIndexValue = mRankDataPool.get(mSortRank[nIndex]);
@@ -217,5 +242,15 @@ int	CRank< MaxRankNum, T >::upperBound(int nFirst, int nLast, int nIndex)
 			nCount = nCount >> 1;
 		}
 	}
+	if (nFirst < 0)
+	{
+		nFirst = 0;
+	}
+	else if (nFirst >= mSortRankNum)
+	{
+		nFirst = mSortRankNum - 1;
+	}
+
+
 	return nFirst;
 }

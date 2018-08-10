@@ -136,7 +136,7 @@ public:
 	// 检查是否可以提交任务
 	int		checkCommitTask(int nTaskID, int nItemIndex);
 	// 检查是否满足提交任务条件
-	int		checkCommitCondition(CPlayerTask* pPlayerTask, int nItemIndex, CTaskCondition& rCondition);
+	int		checkCommitCondition(CPlayerTask* pPlayerTask, int nParamIndex, CTaskCondition& rCondition, int nItemIndex);
 	// 扣除任务道具
 	void	removeTaskItem(int nTaskID, int nItemIndex);
 	// 刷新任务条件

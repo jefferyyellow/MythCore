@@ -44,7 +44,8 @@ public:
 public:
 	// 更新玩家的排行榜
 	void updateRoleRank(EmRankType eType, CEntityPlayer* pPlayer, int nValue);
-
+	// 获得玩家的排名
+	int getRoleRank(EmRankType eType, int nRoleID);
 private:
 	CRankList		mRankList[emRankTypeMax];
 };

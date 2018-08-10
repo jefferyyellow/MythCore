@@ -43,7 +43,7 @@ namespace Myth
 		static			int initSocketSystem();
 
 	public:
-		CTcpSocket*		createListenSocket(char* pIP, short uPort, int nListNum, int& rSocketIndex);
+		CTcpSocket*		createListenSocket(const char* pIP, short uPort, int nListNum, int& rSocketIndex);
 		void			selectAllFd();
 		//void			processRead();
 		//int				processWrite(int nSocketIndex, char* pBuffer, int nBuffSize);

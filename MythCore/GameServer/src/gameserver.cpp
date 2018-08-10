@@ -8,7 +8,7 @@
 #include "objpool.h"
 #include "timemanager.h"
 #include "template.h"
-
+#include "dirtyword.h"
 CGameServer::CGameServer()
 {
 	init();
@@ -108,7 +108,7 @@ bool CGameServer::initLogicModule()
 	CGameServerConfig::createInst();
 	CObjPool::createInst();
 	CTimeManager::createInst();
-
+	CDirtyWord::createInst();
 	return true;
 }
 
@@ -123,6 +123,12 @@ bool CGameServer::initStaticData()
 	}
 
 	bResult = CStaticData::loadFromFile("gameserverconfig/template/template_server.dat");
+	if (!bResult)
+	{
+		return bResult;
+	}
+
+	bResult = CDirtyWord::Inst()->loadDirtyWordConfig("gameserverconfig/dirtyword/dirtyword.dat");
 	if (!bResult)
 	{
 		return bResult;
@@ -262,6 +268,7 @@ void CGameServer::clearLog()
 /// ÇåÀíÂß¼­Ä£¿é
 void CGameServer::clearLogicModule()
 {
+	CDirtyWord::destroyInst();
 	CTimeManager::destroyInst();
 	CObjPool::destroyInst();
 	CGameServerConfig::destroyInst();
@@ -331,21 +338,21 @@ bool CGameServer::checkAllJobExit()
 }
 
 
-void CGameServer::pushTask(EmTaskType eTaskType, CInternalMsg* pMsg)
+void CGameServer::pushTask(EmJobTaskType eTaskType, CInternalMsg* pMsg)
 {
 	switch (eTaskType)
 	{
-		case emTaskType_LocalLog:
+		case emJobTaskType_LocalLog:
 		{
 			mLocalLogJob.pushTask(pMsg);
 			break;
 		}
-		case emTaskType_Scene:
+		case emJobTaskType_Scene:
 		{
 			mSceneJob.pushTask(pMsg);
 			break;
 		}
-		case emTaskType_Plat:
+		case emJobTaskType_Plat:
 		{
 			mPlatJob.pushTask(pMsg);
 			break;

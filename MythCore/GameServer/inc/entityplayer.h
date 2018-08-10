@@ -7,6 +7,7 @@
 #include "skillunit.h"
 #include "serveractivityunit.h"
 #include "servercommon.h"
+#include "entitytimer.h"
 class PBPlayerSceneInfo;
 
 class CBaseProperty
@@ -72,6 +73,8 @@ public:
 public:
 	/// 序列化场景信息到PB
 	void			serializeSceneInfoToPB(PBPlayerSceneInfo* pbSceneInfo);
+	/// 设置毫秒级计时器(不能超过24天)
+	int				setTimer(int nOwerObjID, int nModule, int nMilliSec, const int* pParam, int nParamNum, int nCallTimes);
 
 public:
 	/// 设置属性
@@ -116,9 +119,6 @@ public:
 	}
 
 	void			setSaveStatusBit(byte val){ mSaveStatus |= val; }
-
-	int				getLevel(){ return mPropertyUnit.getLevel(); }
-
 	void			setLoadStatusBit(byte val){ mLoadStatus |= val; }
 	// 用mTempID保存职业属性
 	int				getMetier(){ return mTempID; }
@@ -184,9 +184,12 @@ public:
 
     byte getLoadStatus(){ return mLoadStatus;}
     void setLoadStatus(byte value){ mLoadStatus = value;}
+
+    CTimerList& getTimerList(){ return mTimerList;}
 	/// end autocode
 
-
+	byte getLevel(){return mPropertyUnit.getLevel();}
+	void setLevel(byte value){mPropertyUnit.setLevel(value);}
 private:
 	/// socket连接信息
 	CExchangeHead	mExchangeHead;
@@ -219,5 +222,7 @@ private:
 	byte			mSaveStatus;
 	/// 玩家加载状态 EmPlayerLoadStatus
 	byte			mLoadStatus;
+	///	计时器列表
+	CTimerList		mTimerList;
 };
 #endif 

@@ -19,6 +19,7 @@ SET(TMP_SRC_LIST
     internalmsgpool.cpp
     itemcontainer.cpp
     itemmodule.cpp
+	itemmoduletest.cpp
     itemobject.cpp
     itemunit.cpp
     job.cpp
@@ -29,6 +30,7 @@ SET(TMP_SRC_LIST
     mapconfigmanager.cpp
     mapmamager.cpp
     mapmodule.cpp
+	mapmoduletest.cpp
     mapregionsearch.cpp
     messagefactory.cpp
     objmanager.cpp

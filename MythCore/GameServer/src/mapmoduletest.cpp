@@ -113,7 +113,7 @@ TEST(MapModule, createEntity)
 	EXPECT_TRUE(pMapCell->checkEntity(pOgre->getObjID()));
 
 
-	CMythPoint tPoint(1,1);
+	CMythPoint tPoint(11,11);
 	pMap->onEntityMove(pPlayer, tPoint);
 
 	pMapCell = pMap->getMapCell(0, 0);
@@ -122,7 +122,7 @@ TEST(MapModule, createEntity)
 	EXPECT_TRUE(pMapCell->checkEntity(pOgre->getObjID()));
 
 
-	pMapCell = pMap->getMapCell(1, 1);
+	pMapCell = pMap->getMapCell(11, 11);
 	EXPECT_EQ(1, pMapCell->getEntityNum());
 	EXPECT_TRUE(pMapCell->checkEntity(pPlayer->getObjID()));
 	EXPECT_FALSE(pMapCell->checkEntity(pOgre->getObjID()));
@@ -134,14 +134,14 @@ TEST(MapModule, createEntity)
 	EXPECT_FALSE(pMapCell->checkEntity(pPlayer->getObjID()));
 	EXPECT_FALSE(pMapCell->checkEntity(pOgre->getObjID()));
 
-	pMapCell = pMap->getMapCell(1, 1);
+	pMapCell = pMap->getMapCell(11, 11);
 	EXPECT_EQ(2, pMapCell->getEntityNum());
 	EXPECT_TRUE(pMapCell->checkEntity(pPlayer->getObjID()));
 	EXPECT_TRUE(pMapCell->checkEntity(pOgre->getObjID()));
 
 
 	pMap->destroyPlayer(pPlayer);
-	pMapCell = pMap->getMapCell(1, 1);
+	pMapCell = pMap->getMapCell(11, 11);
 	EXPECT_EQ(1, pMapCell->getEntityNum());
 	EXPECT_FALSE(pMapCell->checkEntity(pPlayer->getObjID()));
 	EXPECT_TRUE(pMapCell->checkEntity(pOgre->getObjID()));

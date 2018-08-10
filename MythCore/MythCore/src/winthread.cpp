@@ -56,7 +56,18 @@ namespace Myth
 
 	CWinThread::~CWinThread()
 	{
-		terminate();
+		if (mThreadHand != INVALID_HANDLE_VALUE)
+		{
+			TerminateThread(mThreadHand, 0);
+			CloseHandle(mThreadHand);
+		}
+
+		mThreadHand = INVALID_HANDLE_VALUE;
+		mpThreadPool = NULL;
+		mThreadID = 0;
+		mThreadState = emThreadState_None;
+		mSerialNum = 0;
+		mpJob = NULL;
 	}
 
 	/// create thread
@@ -103,7 +114,7 @@ namespace Myth
 		{
 			return;
 		}
-		int newSuspendCount = ::SuspendThread(mThreadHand) + 1;
+		unsigned int newSuspendCount = ::SuspendThread(mThreadHand) + 1;
 		if (newSuspendCount == 0xffffffff)
 		{
 
@@ -123,7 +134,7 @@ namespace Myth
 		{
 			return;
 		}
-		int newSuspendCount = ::ResumeThread(mThreadHand) - 1;
+		unsigned int newSuspendCount = ::ResumeThread(mThreadHand) - 1;
 		if (newSuspendCount == 0xffffffff)
 		{
 

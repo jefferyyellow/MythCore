@@ -21,6 +21,11 @@ namespace Myth
 			mFd = open(pFileName, O_CREAT | O_APPEND | O_WRONLY, 00644);
 			strncpy(mFileName, pFileName, sizeof(mFileName) - 1);
 		}
+		else
+		{
+			mFileName[0] = '\0';
+			mFd = 0;
+		}
 		mMaxFileSize = uMaxFileSize;
 		mMaxBackNum = uMaxBackNum;
 	}

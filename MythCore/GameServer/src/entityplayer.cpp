@@ -48,3 +48,13 @@ void CEntityPlayer::serializeSceneInfoToPB(PBPlayerSceneInfo* pbPlayerInfo)
 	pbPlayerInfo->set_posx(mPos.mX);
 	pbPlayerInfo->set_posy(mPos.mY);
 }
+
+/// 设置毫秒级计时器(不能超过24天)
+int CEntityPlayer::setTimer(int nOwerObjID, int nModule, int nMilliSec, const int* pParam, int nParamNum, int nCallTimes)
+{
+	if (mTimerList.getTimeListSize() >= MAX_PLAYER_TIMER_NUM)
+	{
+		return INVALID_OBJ_ID;
+	}
+	return mTimerList.setTimer(nOwerObjID, nModule, nMilliSec, pParam, nParamNum, nCallTimes);
+}

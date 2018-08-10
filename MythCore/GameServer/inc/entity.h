@@ -7,6 +7,7 @@
 #include "geometrytype.h"
 #include "entitytype.h"
 #include "template.h"
+#include "entitytimer.h"
 using namespace Myth;
 class PBNpcSceneInfo;
 class CEntityPlayer;
@@ -179,6 +180,12 @@ public:
 	virtual void	onDead(CEntityCharacter* pKiller);
 	/// 死亡掉落
 	void			deadDrop(CEntityPlayer* pPlayer, CTplOgre* pTplOgre);
+	/// 设置毫秒级计时器(不能超过24天)
+	int				setTimer(int nOwerObjID, int nModule, int nMilliSec, const int* pParam, int nParamNum, int nCallTimes);
+
+private:
+	///	计时器列表
+	CTimerList		mTimerList;
 };
 
 /// 功能NPC

@@ -8,6 +8,7 @@ namespace Myth
 		mResult = NULL;
 		mFieldCount = 0;
 		mRowCount = 0;
+		mFieldDataType[0] = emMysqlDataType_Unknow;
 	}
 
 	CMysqlQueryResult::~CMysqlQueryResult()
@@ -28,6 +29,7 @@ namespace Myth
 		{
 			mMysqlDataBase->clearResult();
 		}
+		mMysqlDataBase = NULL;
 	}
 
 	int CMysqlQueryResult::init(MYSQL_RES *pResult, int nRowCount, int nFieldCount)
@@ -54,7 +56,7 @@ namespace Myth
 		 MYSQL_FIELD *pFields = mysql_fetch_fields(mResult);
 		 for (int i = 0; i < mFieldCount; i++)
 		 {
-			setFieldDataType(i, convertNativeType(pFields[i].type));
+			setFieldDataType((unsigned int)i, convertNativeType(pFields[i].type));
 		 }
 		 return 0;
 	}
@@ -75,7 +77,7 @@ namespace Myth
 
 		for (int i = 0; i < mFieldCount; i++)
 		{
-			setField(i, tRow[i], pColumn[i]);
+			setField((unsigned int)i, tRow[i], (int)pColumn[i]);
 		}
 		return 0;
 	}

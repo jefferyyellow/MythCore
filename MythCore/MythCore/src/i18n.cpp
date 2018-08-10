@@ -41,7 +41,7 @@ namespace Myth
 
 #endif
 
-	char* CI18N::UnicodeToAnsi(wchar_t* pSrc, char* pDst, int nMaxSize)
+	char* CI18N::UnicodeToAnsi(const wchar_t* pSrc, char* pDst, int nMaxSize)
 	{
 		// check params
 		if (NULL == pSrc || NULL == pDst || nMaxSize <= 0)
@@ -67,7 +67,7 @@ namespace Myth
 
 	}
 
-	char* CI18N::UnicodeToUtf8(wchar_t* pSrc, char* pDst, int nMaxSize)
+	char* CI18N::UnicodeToUtf8(const wchar_t* pSrc, char* pDst, int nMaxSize)
 	{
 		// check params
 		if (NULL == pSrc || NULL == pDst || nMaxSize <= 0)
@@ -93,7 +93,7 @@ namespace Myth
 #endif
 	}
 
-	wchar_t* CI18N::Utf8ToUnicode(char* pSrc, wchar_t* pDst, int nMaxSize)
+	wchar_t* CI18N::Utf8ToUnicode(const char* pSrc, wchar_t* pDst, int nMaxSize)
 	{
 		// check params
 		if (NULL == pSrc || NULL == pDst || nMaxSize <= 0)
@@ -119,7 +119,7 @@ namespace Myth
 #endif
 	}
 
-	char* CI18N::Utf8ToAnsi(char* pSrc, char* pDst, int nMaxSize)
+	char* CI18N::Utf8ToAnsi(const char* pSrc, char* pDst, int nMaxSize)
 	{
 		// check params
 		if (NULL == pSrc || NULL == pDst || nMaxSize <= 0)
@@ -153,7 +153,7 @@ namespace Myth
 #endif
 	}
 
-	wchar_t* CI18N::AnsiToUnicode(char*pSrc, wchar_t* pDst, int nMaxSize)
+	wchar_t* CI18N::AnsiToUnicode(const char*pSrc, wchar_t* pDst, int nMaxSize)
 	{
 		if (NULL == pSrc || NULL == pDst || nMaxSize <= 0)
 		{
@@ -177,7 +177,7 @@ namespace Myth
 #endif
 	}
 
-	char* CI18N::AnsiToUtf8(char* pSrc, char* pDst, int nMaxSize)
+	char* CI18N::AnsiToUtf8(const char* pSrc, char* pDst, int nMaxSize)
 	{
 		if (NULL == pSrc || NULL == pDst || nMaxSize <= 0)
 		{

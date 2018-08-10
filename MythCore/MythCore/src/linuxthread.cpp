@@ -1,6 +1,6 @@
+#ifdef MYTH_OS_UNIX
 #include "linuxthread.h"
 #include "threadpool.h"
-#ifdef MYTH_OS_UNIX
 namespace Myth
 {
 

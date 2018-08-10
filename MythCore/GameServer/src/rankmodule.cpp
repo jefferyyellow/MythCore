@@ -163,3 +163,15 @@ void CRankModule::updateRoleRank(EmRankType eType, CEntityPlayer* pPlayer, int n
 		}
 	}
 }
+
+
+// 获得玩家的排名
+int CRankModule::getRoleRank(EmRankType eType, int nRoleID)
+{
+	if (eType <= emRankType_None || eType >= emRankTypeMax)
+	{
+		return -1;
+	}
+
+	return mRankList[eType].getRankIndexByKey(nRoleID);
+}

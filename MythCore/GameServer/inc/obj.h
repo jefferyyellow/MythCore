@@ -36,6 +36,7 @@ enum  EmObjType
 	emObjType_Entity_Item			= 5,	// 掉落道具
 	emObjType_Item_Common			= 6,	// 普通道具
 	emObjType_Item_Equip			= 7,	// 装备道具
+	emObjType_Entity_Timer			= 8,	// 实体计时器
 };
 
 

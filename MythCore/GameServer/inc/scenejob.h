@@ -27,6 +27,7 @@ class CEntityPlayer;
 class CLogicModule;
 class CEntity;
 class CLoginPlayer;
+class CEntityTimer;
 class CSceneJob : public CJob < 100, 100 >, public CSingleton<CSceneJob>
 {
 public:
@@ -120,6 +121,9 @@ private:
 	/// 初始化共享内存
 	bool		initShareMemory();
 
+public:
+	/// 计时器到时回调函数
+	static void		timeOutCallFunc(CEntityTimer* pTimer);
 public:
 	tm&				getTmNow(){ return mTmNow; }
 	void			setTmNow(time_t tTimeNow)

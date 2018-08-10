@@ -18,7 +18,7 @@ namespace Myth
 		return mSocketFd;
 	}
 
-	int	CTcpSocket::connectServer(char* pIP, short uPort)
+	int	CTcpSocket::connectServer(const char* pIP, unsigned short uPort)
 	{
 		if (NULL == pIP)
 		{
@@ -62,7 +62,6 @@ namespace Myth
 		serverAddr.sin_addr.s_addr = inet_addr(mIP);
 		serverAddr.sin_port = htons(mPort);
 		return bind(mSocketFd, (const struct sockaddr*)&serverAddr, sizeof(serverAddr));
-		return 0;
 	}
 
 	int	CTcpSocket::checkNoBlockConnected(int nMS)
@@ -109,7 +108,7 @@ namespace Myth
 	{
 #ifdef MYTH_OS_WINDOWS
 		ULONG arg = bBlock ? 1 : 0;
-		return ioctlsocket(mSocketFd, FIONBIO, &arg);
+		return ioctlsocket(mSocketFd, (long)FIONBIO, &arg);
 #else
 		int nFlag = fcntl(mSocketFd, F_GETFL, 0);
 		if (nFlag < 0)
@@ -138,7 +137,7 @@ namespace Myth
 	bool CTcpSocket::getNonBlock()
 	{
 #ifdef MYTH_OS_WINDOWS
-		return 0;
+		return false;
 #else
 		int nFlag = fcntl(mSocketFd, F_GETFL, 0);
 		if (nFlag < 0)
@@ -165,7 +164,7 @@ namespace Myth
 	{
 		struct linger ling;
 		ling.l_onoff = nTime > 0 ? 1 : 0;
-		ling.l_linger = nTime;
+		ling.l_linger = (unsigned short)nTime;
 
 		return setsockopt(mSocketFd, SOL_SOCKET, SO_LINGER, (char*)&ling, sizeof(ling));
 	}
@@ -264,14 +263,14 @@ namespace Myth
 	}
 
 #ifdef MYTH_OS_WINDOWS
-	int	CTcpSocket::sendData(byte* pBuff, int nBuffSize)
+	int	CTcpSocket::sendData(const byte* pBuff, int nBuffSize)
 	{
 		int nSendBytes = 0;
 		int nLeftLen = nBuffSize;
 		
 		while (true)
 		{
-			nSendBytes = send(mSocketFd, (char*)pBuff, nLeftLen, 0);
+			nSendBytes = send(mSocketFd, (const char*)pBuff, nLeftLen, 0);
 			if (nSendBytes == nLeftLen)
 			{
 				return nSendBytes;

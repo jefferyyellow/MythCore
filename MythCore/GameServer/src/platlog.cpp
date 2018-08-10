@@ -15,7 +15,7 @@ void LogPlatLog(const char* pLogName, Json::Value& tLogValue)
 	}
 	Json::StreamWriterBuilder wbuilder;
 	strncpy(pRequest->mContent, Json::writeString(wbuilder, tLogValue).c_str(), sizeof(pRequest->mContent) - 1);
-	CGameServer::Inst()->pushTask(emTaskType_Plat, pRequest);
+	CGameServer::Inst()->pushTask(emJobTaskType_Plat, pRequest);
 }
 
 void LogServerStartComplete()

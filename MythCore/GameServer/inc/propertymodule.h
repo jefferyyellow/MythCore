@@ -8,7 +8,9 @@
 
 using namespace Myth;
 class CEntityPlayer;
+class CEntity;
 class CDBResponse;
+class CEntityCreator;
 class CPropertyModule : public CLogicModule, public CSingleton < CPropertyModule >
 {
 	friend class CSingleton < CPropertyModule >;
@@ -42,6 +44,8 @@ public:
 	void		onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
 
 public:
+	void			checkSavePlayerTimer();
+public:
 	/// 加载玩家信息
 	void			onLoadPlayerInfo(CDBResponse& rResponse);
 	/// 加载玩家基础属性
@@ -62,7 +66,8 @@ public:
 	void			dailyRefresh(CEntityPlayer* pPlayer);
 	/// 新玩家处理
 	void			setNewPlayerValue(CEntityPlayer* pPlayer);
-	
+	/// 创建实体后的处理
+	void			onCreateEntity(CEntityCreator* pCreator, CEntity* pEntity);
 private:
 	/// GM命令请求
 	void		onGMCommandRequest(CEntityPlayer* pPlayer, Message* pMessage);

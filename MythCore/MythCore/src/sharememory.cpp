@@ -15,7 +15,7 @@ namespace Myth
 		bCreate = true;
 		char szKeyBuffer[MAX_PATH] = { 0 };
 		snprintf(szKeyBuffer, sizeof(szKeyBuffer) - 1, "%d", nKey);
-		HANDLE hHandle = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, nSize, szKeyBuffer);
+		HANDLE hHandle = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, (unsigned int)nSize, szKeyBuffer);
 		if (INVALID_HANDLE_VALUE == hHandle)
 		{
 			return NULL;
@@ -23,7 +23,7 @@ namespace Myth
 
 		// 不知道如何得到共享内存的大小，所以没法对大小做校验，先暂时这样吧，
 		// 如果以后知道怎么处理，再加上
-		int nErrno = GetLastError();
+		unsigned int nErrno = GetLastError();
 		if (nErrno != 0)
 		{
 			bCreate = false;
@@ -32,7 +32,7 @@ namespace Myth
 		return (byte *)MapViewOfFile(hHandle, FILE_MAP_ALL_ACCESS, 0, 0, 0);
 	}
 
-	int CShareMemory::destroyShareMemory(int nKey, byte* pShmPoint)
+	int CShareMemory::destroyShareMemory(int nKey, const byte* pShmPoint)
 	{
 		if (NULL != pShmPoint)
 		{

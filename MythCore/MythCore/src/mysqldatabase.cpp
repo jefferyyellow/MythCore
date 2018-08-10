@@ -6,6 +6,7 @@ namespace Myth
 	short CMysqlDataBase::mDBCount = 0;
 	CMysqlDataBase::CMysqlDataBase()
 	{
+		init();
 		if (0 == mDBCount++)
 		{
 			// 初始化数据库
@@ -29,9 +30,23 @@ namespace Myth
 			// 卸载
 			mysql_library_end();
 		}
+		mMysql = NULL;
+		mMysqlInit = NULL;
+	}
+	
+	void CMysqlDataBase::init()
+	{
+		mMysql = NULL;
+		mMysqlInit = NULL;
+		mHost[0] = '\0';
+		mUserName[0] = '\0';
+		mPasswd[0] = '\0';
+		mDataBase[0] = '\0';
+		mUnixSocket[0] = '\0';
+		mPort = 0;
 	}
 
-	int CMysqlDataBase::connectMysqlServer(char* pHost, char* pUserName, char* pPasswd, char* pDataBase, int nPort, char* pUnixSocket)
+	int CMysqlDataBase::connectMysqlServer(const char* pHost, const char* pUserName, const char* pPasswd, const char* pDataBase, int nPort, const char* pUnixSocket)
 	{
 		if (NULL == pHost || NULL == pUserName || NULL == pPasswd || NULL == pDataBase)
 		{
@@ -47,7 +62,7 @@ namespace Myth
 		if (0 == nPort)
 		{
 #ifdef MYTH_OS_WINDOWS
-			unsigned int opt = MYSQL_PROTOCOL_PIPE;
+			unsigned int opt = (unsigned int)MYSQL_PROTOCOL_PIPE;
 			mysql_options(mMysqlInit,MYSQL_OPT_PROTOCOL,(char const*)&opt);
 #else
 			unsigned int opt = MYSQL_PROTOCOL_SOCKET;
@@ -57,7 +72,7 @@ namespace Myth
 
 		// 连接mysql
 		mMysql = mysql_real_connect(mMysqlInit, pHost, pUserName,
-			pPasswd, pDataBase, nPort, pUnixSocket, CLIENT_MULTI_RESULTS);
+			pPasswd, pDataBase, (unsigned int)nPort, pUnixSocket, CLIENT_MULTI_RESULTS);
 
 		if (NULL == mMysql)
 		{
@@ -87,7 +102,7 @@ namespace Myth
 
 		MYSQL_RES *pResult = mysql_store_result(mMysql);
 		int nRowCount = (int)mysql_affected_rows(mMysql);
-		int nFieldCount = mysql_field_count(mMysql);
+		int nFieldCount = (int)mysql_field_count(mMysql);
 
 		if (NULL == pResult)
 		{
@@ -113,7 +128,7 @@ namespace Myth
 		rLength = 0;
 		MYSQL_RES *pResult = mysql_store_result(mMysql);
 		int nRowCount = (int)mysql_affected_rows(mMysql);
-		int nFieldCount = mysql_field_count(mMysql);
+		int nFieldCount = (int)mysql_field_count(mMysql);
 
 		rRowNum = nRowCount;
 		rColNum = nFieldCount;
@@ -123,7 +138,7 @@ namespace Myth
 		}
 
 		unsigned long* pValueLength = (unsigned long*)pBuffer;
-		rLength = (nRowCount * nFieldCount * sizeof(unsigned long));
+		rLength = (int)(nRowCount * nFieldCount * sizeof(unsigned long));
 		byte* pValue = pBuffer + rLength;
 
 		for (int i = 0; i < nRowCount; ++ i)
@@ -137,7 +152,7 @@ namespace Myth
 			
 			for (int nCount = 0; nCount < nFieldCount; ++ nCount)
 			{
-				rLength += pColumn[nCount] + 1;
+				rLength += (int)(pColumn[nCount] + 1);
 				if (rLength > nMaxSize)
 				{
 					mysql_free_result(pResult);
@@ -178,14 +193,11 @@ namespace Myth
 		int ret = mysql_query(mMysql, pSql);
 		if (ret)
 		{
-			int nErrorNo = mysql_errno(mMysql);
+			unsigned int nErrorNo = mysql_errno(mMysql);
 			// 如果和mysql的连接已经失效，或者mysql已经重启，自动重连
 			if (nErrorNo == CR_SERVER_GONE_ERROR || nErrorNo == CR_SERVER_LOST || nErrorNo == CR_UNKNOWN_ERROR)
 			{
-				if (mMysql)
-				{
-					mysql_close(mMysql);
-				}
+				mysql_close(mMysql);
 
 				// 重连mysql
 				if (0 == connectMysqlServer(mHost, mPasswd, mPasswd, mDataBase, mPort, mUnixSocket))
@@ -206,7 +218,7 @@ namespace Myth
 		MYSQL_RES* tRes = NULL;
 		while (mysql_next_result(mMysql) == 0)
 		{
-			if(tRes = mysql_store_result(mMysql))
+			if(NULL != (tRes = mysql_store_result(mMysql)))
 			{
 				mysql_free_result(tRes);
 			}

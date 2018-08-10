@@ -3,13 +3,13 @@
 #include "servercommon.h"
 #include "simplelock.h"
 #include <list>
-enum EmTaskType
+enum EmJobTaskType
 {
-	emTaskType_None			= 0,			// 未知
-	emTaskType_DB			= 1,			// DB
-	emTaskType_LocalLog		= 2,			// 本地日志
-	emTaskType_Scene		= 3,			// 场景
-	emTaskType_Plat			= 4,			// 平台
+	emJobTaskType_None			= 0,			// 未知
+	emJobTaskType_DB			= 1,			// DB
+	emJobTaskType_LocalLog		= 2,			// 本地日志
+	emJobTaskType_Scene			= 3,			// 场景
+	emJobTaskType_Plat			= 4,			// 平台
 };
 
 using namespace Myth;

@@ -276,6 +276,18 @@
     <ClCompile Include="src\mapmoduletest.cpp">
       <Filter>logicmodule\map</Filter>
     </ClCompile>
+    <ClCompile Include="src\rankmoduletest.cpp">
+      <Filter>logicmodule\rank</Filter>
+    </ClCompile>
+    <ClCompile Include="src\taskmoduletest.cpp">
+      <Filter>logicmodule\task</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entitytimer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dirtyword.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -589,6 +601,15 @@
     </ClInclude>
     <ClInclude Include="inc\platlog.h">
       <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\testtype.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\entitytimer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\dirtyword.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

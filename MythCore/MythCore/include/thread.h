@@ -10,6 +10,7 @@ namespace Myth
 		IJob()
 		{
 			mBusy = false;
+			mJobID = 0;
 		}
 		virtual ~IJob()
 		{

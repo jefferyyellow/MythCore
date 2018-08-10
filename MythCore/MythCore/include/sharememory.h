@@ -8,7 +8,7 @@ namespace Myth
 	{
 	public:
 		static byte*		createShareMemory(int nKey, int nSize, bool& bCreate);
-		static int			destroyShareMemory(int nKey, byte* pShmPoint);
+		static int			destroyShareMemory(int nKey, const byte* pShmPoint);
 
 	public:
 		int			getShmKey(){ return mShmKey; }

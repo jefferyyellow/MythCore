@@ -91,8 +91,10 @@
     <ClCompile Include="src\dailyactmodule.cpp" />
     <ClCompile Include="src\dbjob.cpp" />
     <ClCompile Include="src\dbmodule.cpp" />
+    <ClCompile Include="src\dirtyword.cpp" />
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\entityplayer.cpp" />
+    <ClCompile Include="src\entitytimer.cpp" />
     <ClCompile Include="src\equip.cpp" />
     <ClCompile Include="src\gameserver.cpp" />
     <ClCompile Include="src\gameserverconfig.cpp" />
@@ -126,6 +128,7 @@
     <ClCompile Include="src\propertymodule.cpp" />
     <ClCompile Include="src\propertyunit.cpp" />
     <ClCompile Include="src\rankmodule.cpp" />
+    <ClCompile Include="src\rankmoduletest.cpp" />
     <ClCompile Include="src\redis.cpp" />
     <ClCompile Include="src\scenejob.cpp" />
     <ClCompile Include="src\serveractivity.cpp" />
@@ -137,6 +140,7 @@
     <ClCompile Include="src\strutility.cpp" />
     <ClCompile Include="src\taskconfig.cpp" />
     <ClCompile Include="src\taskmodule.cpp" />
+    <ClCompile Include="src\taskmoduletest.cpp" />
     <ClCompile Include="src\taskunit.cpp" />
     <ClCompile Include="src\teammodule.cpp" />
     <ClCompile Include="src\template.cpp" />
@@ -179,9 +183,11 @@
     <ClInclude Include="inc\dbjob.h" />
     <ClInclude Include="inc\dbmessage.h" />
     <ClInclude Include="inc\dbmodule.h" />
+    <ClInclude Include="inc\dirtyword.h" />
     <ClInclude Include="inc\entity.h" />
     <ClInclude Include="inc\entitycreator.h" />
     <ClInclude Include="inc\entityplayer.h" />
+    <ClInclude Include="inc\entitytimer.h" />
     <ClInclude Include="inc\entitytype.h" />
     <ClInclude Include="inc\equip.h" />
     <ClInclude Include="inc\errcode.h" />
@@ -246,6 +252,7 @@
     <ClInclude Include="inc\teammodule.h" />
     <ClInclude Include="inc\template.h" />
     <ClInclude Include="inc\propertymodule.h" />
+    <ClInclude Include="inc\testtype.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="inc\rank.inl" />

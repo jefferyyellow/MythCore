@@ -420,7 +420,7 @@ int CTaskUnit::checkCommitTask(int nTaskID, int nItemIndex)
 		{
 			continue;
 		}
-		int nResult = checkCommitCondition(pPlayerTask, nItemIndex, rCondition);
+		int nResult = checkCommitCondition(pPlayerTask, i, rCondition, nItemIndex);
 		if (SUCCESS != nResult)
 		{
 			return nResult;
@@ -431,7 +431,7 @@ int CTaskUnit::checkCommitTask(int nTaskID, int nItemIndex)
 }
 
 // 检查是否满足提交任务条件
-int CTaskUnit::checkCommitCondition(CPlayerTask* pPlayerTask, int nItemIndex, CTaskCondition& rCondition)
+int CTaskUnit::checkCommitCondition(CPlayerTask* pPlayerTask, int nParamIndex, CTaskCondition& rCondition, int nItemIndex)
 {
 	if (NULL == pPlayerTask)
 	{
@@ -442,7 +442,7 @@ int CTaskUnit::checkCommitCondition(CPlayerTask* pPlayerTask, int nItemIndex, CT
 	{
 		case emComplete_KillOgre:
 		{
-			if (pPlayerTask->getParamByCondType(rCondition.mType) < rCondition.mParam[1])
+			if (pPlayerTask->getTaskParam(nParamIndex) < rCondition.mParam[1])
 			{
 				return ERROR_TASK_KILL_OGRE_NOT_ENOUGH;
 			}
@@ -489,7 +489,7 @@ int CTaskUnit::checkCommitCondition(CPlayerTask* pPlayerTask, int nItemIndex, CT
 		}
 		case emComplete_PassFB:
 		{
-			if (pPlayerTask->getParamByCondType(rCondition.mType) < rCondition.mParam[3])
+			if (pPlayerTask->getTaskParam(nParamIndex) < rCondition.mParam[3])
 			{
 				return ERROR_TASK_INSTANCE_TIMES_NOT_ENOUGH;
 			}
@@ -497,7 +497,7 @@ int CTaskUnit::checkCommitCondition(CPlayerTask* pPlayerTask, int nItemIndex, CT
 		}
 		case emComplete_Collect:
 		{
-			if (pPlayerTask->getParamByCondType(rCondition.mType) < rCondition.mParam[1])
+			if (pPlayerTask->getTaskParam(nParamIndex) < rCondition.mParam[1])
 			{
 				return ERROR_TASK_COLLECT_NUM_NOT_MATCH;
 			}
@@ -596,6 +596,8 @@ void CTaskUnit::refreshTask(EmCompleteCondition eCondition, int nParam0, int nPa
 				default:
 					break;
 			}
+
+			break;
 		}
 	}
 }

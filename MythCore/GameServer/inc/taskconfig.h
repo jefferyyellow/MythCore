@@ -91,15 +91,26 @@ public:
 	}
 	void init()
 	{
-        mID = 0;
+        mId = 0;
+        mType = emTaskType_None;
+        mAcceptMapId = 0;
+        mSubmitMapId = 0;
+        mAcceptNpc = 0;
+        mSubmitNpc = 0;
 	}
 
-	short					mID;					// 任务ID
-	ACCEPT_CONDITION_LIST	mAcceptCondition;		// 接受任务条件
-	COMPLETE_CONDITION_LIST mCompleteCondition;		// 完成条件
-	TASK_PRIZE_LIST			mPrizeList;				// 奖励列表
-	TASK_PRIZE_LIST			mAcceptPrizeList;		// 接受任务奖励
-	CLOSE_CONDITION_LIST	mCloseCondition;		// 关闭条件
+	short						mId;					// 任务ID
+	// default:emTaskType_None
+	EmTaskType					mType;					// 任务类型
+	short						mAcceptMapId;			// 接受任务地图Id
+	short						mSubmitMapId;			// 提交任务地图Id
+	int							mAcceptNpc;				// 接受任务Npc Id
+	int							mSubmitNpc;				// 提交任务Npc id
+	ACCEPT_CONDITION_LIST		mAcceptCondition;		// 接受任务条件
+	COMPLETE_CONDITION_LIST		mCompleteCondition;		// 完成条件
+	TASK_PRIZE_LIST				mPrizeList;				// 奖励列表
+	TASK_PRIZE_LIST				mAcceptPrizeList;		// 接受任务奖励
+	CLOSE_CONDITION_LIST		mCloseCondition;		// 关闭条件
 };
 
 #endif

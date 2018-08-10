@@ -14,9 +14,9 @@ namespace Myth
 
 	public:
 		// 初始化
-		int			Initialize(byte* pBuffer, int nTotalSize);
+		int			Initialize(const byte* pBuffer, int nTotalSize);
 		// 重置
-		int			Resume(byte* pBuffer, int nTotalSize);
+		int			Resume(const byte* pBuffer, int nTotalSize);
 		// 将一个数据附加在缓冲区后面
 		int			PushPacket(const byte* pCode, int nLength);
 		// 从缓冲区取出一个消息

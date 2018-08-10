@@ -817,10 +817,10 @@ void CTaskEditorView::OnSize(UINT nType, int cx, int cy)
 		// 处理主Grid控件的位置重新计算
 		CRect tMainRect = rectView;
 		tMainRect.bottom = tMainRect.top + mMainGrid->GetRowHeight(0) * (mMainGrid->GetRowCount())+6;
-		int nWidth = (tMainRect.Width() - 200 - 6) / 2;
-		mMainGrid->SetColumnWidth(0, 100);
+		int nWidth = (tMainRect.Width() - 240 - 6) / 2;
+		mMainGrid->SetColumnWidth(0, 120);
 		mMainGrid->SetColumnWidth(1, nWidth);
-		mMainGrid->SetColumnWidth(2, 100);
+		mMainGrid->SetColumnWidth(2, 120);
 		mMainGrid->SetColumnWidth(3, nWidth);
 		mMainGrid->MoveWindow(tMainRect);
 
@@ -841,9 +841,9 @@ void CTaskEditorView::OnSize(UINT nType, int cx, int cy)
 		CRect tDiagRect = rectView;
 		tDiagRect.top += tMainRect.bottom;
 		tDiagRect.left = tCondRect.right;
-		mDiagGrid->SetColumnWidth(0, 100);
-		mDiagGrid->SetColumnWidth(1, tDiagRect.Width() - 200 - 6);
-		mDiagGrid->SetColumnWidth(2, 100);
+		mDiagGrid->SetColumnWidth(0, 120);
+		mDiagGrid->SetColumnWidth(1, tDiagRect.Width() - 240 - 6);
+		mDiagGrid->SetColumnWidth(2, 120);
 		mDiagGrid->MoveWindow(tDiagRect);
 	}
 }

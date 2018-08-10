@@ -25,7 +25,7 @@ void	sendPlatWebRequest(const char* pURL, const char* pData, EmHttpType eHttpTyp
 	pPlatWebRequest->mHttpType = eHttpType;
 	pPlatWebRequest->mNeedCallBack = bNeedBack;
 
-	CGameServer::Inst()->pushTask(emTaskType_Plat, pPlatWebRequest);
+	CGameServer::Inst()->pushTask(emJobTaskType_Plat, pPlatWebRequest);
 }
 
 bool CPlatJob::initAll(const char* pRedisIP, int nRedisPort, int nSocketNum, int nListenPort)

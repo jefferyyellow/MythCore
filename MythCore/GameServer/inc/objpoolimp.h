@@ -6,7 +6,10 @@
 #include "entityplayer.h"
 #include "itemobject.h"
 #include "loginplayer.h"
+#include "entitytimer.h"
 #define OBJ_ID_RANGE(ObjType) OBJ_ID_START(ObjType),OBJ_ID_END(ObjType)
+
+
 #define CAPACITY_LOGIN_PLAYER		256
 #define	CAPACITY_PLAYER				2000
 #define CAPACITY_ENTITY_OGRE		100000
@@ -14,6 +17,8 @@
 #define CAPACITY_ENTITY_ITEM		CAPACITY_PLAYER * 10
 #define CAPACITY_ITEM_COMMON		CAPACITY_PLAYER * 200
 #define CAPACITY_ITEM_EQUIP			CAPACITY_PLAYER * 200
+#define CAPACITY_ENTITY_TIMER		200000	// 20万的计时器
+
 class CObjPoolImp
 {
 public:
@@ -24,6 +29,7 @@ public:
 	typedef CObjManager<CEntityItem, CAPACITY_ENTITY_ITEM, 100, 100, OBJ_ID_RANGE(emObjType_Entity_Item)> ItemEntityPool;
 	typedef CObjManager<CItemCommon, CAPACITY_ITEM_COMMON, 1000, 1000, OBJ_ID_RANGE(emObjType_Item_Common)> ItemCommonPool;
 	typedef CObjManager<CItemEquip, CAPACITY_ITEM_EQUIP, 1000, 1000, OBJ_ID_RANGE(emObjType_Item_Equip)> ItemEquipPool;
+	typedef CObjManager<CEntityTimer, CAPACITY_ENTITY_TIMER, 1000, 1000, OBJ_ID_RANGE(emObjType_Entity_Timer)> EntityTimerPool;
 
 public:
 	LoginPlayerPool			mLoginPlayerPool;			// 登录玩家池
@@ -33,5 +39,6 @@ public:
 	ItemEntityPool			mItemEntityPool;			// 道具实体池
 	ItemCommonPool			mItemCommonPool;			// 通用道具实体池
 	ItemEquipPool			mItemEquipPool;				// 装备道具实体池
+	EntityTimerPool			mEntityTimerPool;			// 实体计时器池
 };
 #endif

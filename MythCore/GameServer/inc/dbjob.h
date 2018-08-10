@@ -15,7 +15,7 @@ public:
 	CDBJob();
 	~CDBJob();
 	void	init();
-	int		initDB(char* pHost, char* pUserName, char* pPasswd, char* pDataBase, int nPort, char* pUnixSocket);
+	int		initDB(const char* pHost, const char* pUserName, const char* pPasswd, const char* pDataBase, int nPort, const char* pUnixSocket);
 	void	clear();
 
 public:
@@ -24,7 +24,7 @@ public:
 public:
 	int		setBuffer(int nBufferSize);
 	/// 压入工作数据
-	void	pushBackJobData(byte* pData, int nDataLength);
+	void	pushBackJobData(const byte* pData, int nDataLength);
 	/// 取出工作数据
 	void	popUpJobData(byte* pData, int &rLength);
 	/// 处理DB流里的数据
@@ -32,9 +32,9 @@ public:
 	/// 处理保存玩家基本属性
 	int		onSavePlayerBaseProperty(int nLength);
 	/// 分析PB结构，组成update的sql语句
-	int		parsePBForSql(Message& rMessage);
+	int		parsePBForSql(const Message& rMessage);
 	/// 分析PB结构，组成调用precedure语句
-	int		parsePBForPrecedure(Message& rMessage);
+	int		parsePBForPrecedure(const Message& rMessage);
 
 private:
 	CMysqlDataBase	mDataBase;

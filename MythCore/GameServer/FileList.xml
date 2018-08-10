@@ -50,4 +50,5 @@
   <File HeadFile="inc/teammodule.h" SrcFile="src/teammodule.cpp"/>
   <File HeadFile="inc/curlhandle.h" SrcFile="src/curlhandle.cpp"/>
   <File HeadFile="inc/redis.h" SrcFile="src/redis.cpp"/>
+  <File HeadFile="inc/entitytimer.h" SrcFile="src/entitytimer.cpp"/>
 </Data>

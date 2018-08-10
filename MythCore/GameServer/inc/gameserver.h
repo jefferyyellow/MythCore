@@ -53,7 +53,7 @@ public:
 	bool		checkAllJobExit();
 
 public:
-	void		pushTask(EmTaskType eTaskType, CInternalMsg* pMsg);
+	void		pushTask(EmJobTaskType eTaskType, CInternalMsg* pMsg);
 	void		pushDBTask(int nUid, byte* pData, int nDataLength);
 
 	short		getServerID() const { return mServerID; }

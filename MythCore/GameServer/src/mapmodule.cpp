@@ -164,7 +164,9 @@ CEntity* CMapModule::createEntity(CEntityCreator* pCreator)
 	{
 		return NULL;
 	}
-	return pMap->createEntity(pCreator);
+	CEntity* pEntity = pMap->createEntity(pCreator);
+
+	return pEntity;
 }
 
 /// É¾³ıÊµÌå
