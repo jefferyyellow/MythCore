@@ -44,7 +44,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>MYTH_OS_WINDOWS;_CRT_SECURE_NO_WARNINGS;__DEBUG__;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MYTH_OS_WINDOWS;_CRT_SECURE_NO_WARNINGS;__DEBUG__;NOMINMAX;__USE_PERF_FUNC__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>../MythCore/include;../dep/protobuffer;../message;../dep/mysql/include;./inc;../dep/tinyxml;../dep;../dep/libcurl/include;../dep/hiredis/windows/include;../dep/jsoncpp/;../dep/libevent/windows/include;../dep/gtest/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -120,9 +120,11 @@
     <ClCompile Include="src\mapmoduletest.cpp" />
     <ClCompile Include="src\mapregionsearch.cpp" />
     <ClCompile Include="src\messagefactory.cpp" />
+    <ClCompile Include="src\aistate.cpp" />
     <ClCompile Include="src\objmanager.cpp" />
     <ClCompile Include="src\objpool.cpp" />
     <ClCompile Include="src\geometrytype.cpp" />
+    <ClCompile Include="src\perfmanager.cpp" />
     <ClCompile Include="src\platjob.cpp" />
     <ClCompile Include="src\platlog.cpp" />
     <ClCompile Include="src\propertymodule.cpp" />
@@ -144,6 +146,7 @@
     <ClCompile Include="src\taskunit.cpp" />
     <ClCompile Include="src\teammodule.cpp" />
     <ClCompile Include="src\template.cpp" />
+    <ClCompile Include="src\aistrategy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\dep\tinyxml\tinyxml2.h" />
@@ -175,6 +178,7 @@
     <ClInclude Include="..\message\taskmodule.hxx.pb.h" />
     <ClInclude Include="..\message\template.hxx" />
     <ClInclude Include="..\message\template.hxx.pb.h" />
+    <ClInclude Include="inc\aistrategy.h" />
     <ClInclude Include="inc\chatmodule.h" />
     <ClInclude Include="inc\curlhandle.h" />
     <ClInclude Include="inc\dailyactivity.h" />
@@ -217,10 +221,12 @@
     <ClInclude Include="inc\mapregionsearch.h" />
     <ClInclude Include="inc\maptype.h" />
     <ClInclude Include="inc\messagefactory.h" />
+    <ClInclude Include="inc\aistate.h" />
     <ClInclude Include="inc\obj.h" />
     <ClInclude Include="inc\objpoolimp.h" />
     <ClInclude Include="inc\objmanager.h" />
     <ClInclude Include="inc\objpool.h" />
+    <ClInclude Include="inc\perfmanager.h" />
     <ClInclude Include="inc\platjob.h" />
     <ClInclude Include="inc\platlog.h" />
     <ClInclude Include="inc\playersubunit.h" />

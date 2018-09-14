@@ -10,14 +10,12 @@ class CEntityTimer :  public CObj
 public:
 	/// 主人角色ID
 	int		mOwerObjID;
-	/// 毫秒数
-	int		mElapseMilliSec;
+	/// 结束的时间
+	uint64	mTickCount;
 	///	原始的毫秒数
 	int		mInitialMilliSec;
 	/// 参数数目
 	int		mParam[PARAM_NUM];
-	/// 秒级计时器还是毫秒级的计时器
-	bool	mSecElapse;
 	/// 调用次数
 	short	mCallTimes;
 	/// 模块
@@ -42,7 +40,7 @@ public:
 	/// 清理所有的计时器
 	void	clearAllTimer();
 	/// 流逝时间
-	void	elapseTime(unsigned int nTickOffset);
+	void	update(uint64 nNowTickCount);
 
 public:
 	static void	setTimeOutFunc(TimeOutFunc* pFunc){mpTimeOutFunc = pFunc;}

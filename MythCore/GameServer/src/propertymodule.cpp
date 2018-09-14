@@ -68,6 +68,7 @@ void CPropertyModule::onDestroyPlayer(CEntityPlayer* pPlayer)
 void CPropertyModule::onTimer(unsigned int nTickOffset)
 {
 	time_t tTimeNow = CTimeManager::Inst()->getCurrTime();
+	uint64 tTickCount = CSceneJob::Inst()->getLastTimerTick();
 
 	CEntityPlayer* tArrayPlayer[CAPACITY_PLAYER];
 	int nPlayerNum = 0;
@@ -87,7 +88,7 @@ void CPropertyModule::onTimer(unsigned int nTickOffset)
 			continue;
 		}
 		
-		pPlayer->getTimerList().elapseTime(nTickOffset);
+		pPlayer->getTimerList().update(tTickCount);
 		tArrayPlayer[nPlayerNum] = pPlayer;
 		++ nPlayerNum;
 	}

@@ -69,6 +69,9 @@ public:
 
     EmEntityType getEntityType(){ return mEntityType;}
     void setEntityType(EmEntityType value){ mEntityType = value;}
+
+    EmAliveState getAliveState(){ return mAliveState;}
+    void setAliveState(EmAliveState value){ mAliveState = value;}
 	/// end autocode
 protected:
 	/// 模板ID
@@ -87,6 +90,8 @@ protected:
 	CMythPoint				mPos;
 	/// 实体类型 default:emEntityType_None
 	EmEntityType			mEntityType;
+	/// 生存状态 default:emAliveState_Alive
+	EmAliveState			mAliveState;
 };
 
 class CEntityCharacter : public CEntity
@@ -151,7 +156,11 @@ class CEntityNPC : public CEntityCharacter
 public:
 	CEntityNPC(){}
 	virtual ~CEntityNPC(){}
-	
+	void			init()
+	{
+        mStrategyID = 0;
+	}
+
 public:
 	/// 刷新战斗属性
 	virtual void	refreshFightProperty(){}
@@ -161,7 +170,12 @@ public:
 public:
 	/// 序列化场景信息到PB·
 	void			serializeSceneInfoToPB(PBNpcSceneInfo* pbNpcInfo);
-
+	/// autocode don't edit!!!
+    int getStrategyID(){ return mStrategyID;}
+    void setStrategyID(int value){ mStrategyID = value;}
+	/// end autocode
+private:
+	int				mStrategyID;
 };
 
 /// Ogre类

@@ -51,4 +51,7 @@
   <File HeadFile="inc/curlhandle.h" SrcFile="src/curlhandle.cpp"/>
   <File HeadFile="inc/redis.h" SrcFile="src/redis.cpp"/>
   <File HeadFile="inc/entitytimer.h" SrcFile="src/entitytimer.cpp"/>
+  <File HeadFile="inc/perfmanager.h" SrcFile="src/perfmanager.cpp"/>
+  <File HeadFile="inc/aistate.h" SrcFile="src/aistate.cpp"/>
+  <File HeadFile="inc/aistrategy.h" SrcFile="src/aistrategy.cpp"/>
 </Data>

@@ -9,7 +9,9 @@
 #include "timemanager.h"
 #include "template.h"
 #include "dirtyword.h"
+#include "perfmanager.h"
 CGameServer::CGameServer()
+	:mMinuteTimer(SECONDS_PER_MIN)
 {
 	init();
 	mServerID = 1;
@@ -20,6 +22,7 @@ void CGameServer::init()
     mDefaultLog = NULL;
     mServerID = 0;
     mExit = false;
+    mLastTime = 0;
 }
 
 /// 初始化
@@ -34,6 +37,7 @@ bool CGameServer::initAll()
 
 	CTimeManager::Inst()->setCurrTime(time(NULL));
 	srand((unsigned int)CTimeManager::Inst()->getCurrTime());
+	mLastTime = CTimeManager::Inst()->getCurrTime();
 
 	bResult = initLog();
 	if (!bResult)
@@ -103,6 +107,7 @@ bool CGameServer::initLog()
 /// 初始逻辑模块
 bool CGameServer::initLogicModule()
 {
+	CPerfManager::createInst();
 	CMessageFactory::createInst();
 	CInternalMsgPool::createInst();
 	CGameServerConfig::createInst();
@@ -205,6 +210,15 @@ void CGameServer::run()
 			break;
 		}
 
+		time_t tTimeNow = CTimeManager::Inst()->getCurrTime();
+		if (tTimeNow != mLastTime)
+		{
+			// 就是秒
+			if (mMinuteTimer.elapse((int)(tTimeNow - mLastTime)))
+			{
+				logPerf();
+			}
+		}
 		++ i;
 		if ( i > 100)
 		{
@@ -250,6 +264,7 @@ void CGameServer::clearLog()
 	}
 	CLogManager::Inst()->GetWarnLog().SetDisplayerSize(0);
 
+#ifdef __DEBUG__
 	// 删除默认日志的displayer
 	if (NULL != mDefaultLog)
 	{
@@ -261,6 +276,7 @@ void CGameServer::clearLog()
 
 		delete mDefaultLog;
 	}
+#endif
 
 	CLogManager::destroyInst();
 }
@@ -274,6 +290,7 @@ void CGameServer::clearLogicModule()
 	CGameServerConfig::destroyInst();
 	CInternalMsgPool::destroyInst();
 	CMessageFactory::destroyInst();
+	CPerfManager::destroyInst();
 }
 
 /// 清理静态数据
@@ -337,6 +354,39 @@ bool CGameServer::checkAllJobExit()
 	return checkOtherJobExit();
 }
 
+/// 记录所有的Perf的记录
+void CGameServer::logPerf()
+{
+	CSimpleLock tPerfLock = CPerfManager::Inst()->getLock();
+	tPerfLock.lock();
+	CPerfManager::PERF_HASH& rHashMap = CPerfManager::Inst()->getPerfHash();
+	CPerfManager::PERF_HASH::iterator it = rHashMap.begin();
+	char tBuffer[1024];
+	int nOffset = 0;
+	nOffset = snprintf(tBuffer, sizeof(tBuffer) - 1 - nOffset, "%40s\t%8s\t%8s\t%8s\t%8s\t%8s\n",
+		"name", "call", "cost(us)", "most(us)", "lest(us)", "avg(us)");
+
+	int nCount = 0;
+	for (; it != rHashMap.end(); ++ it)
+	{
+		CPerfData& rData = it->second;
+		nOffset += snprintf(tBuffer + nOffset, sizeof(tBuffer) - nOffset - 1, "%40s\t%8d\t%8d\t%8d\t%8d\t%8d\n", 
+			it->first.c_str(), rData.getCallTimes(), rData.getCostTime(), rData.getMaxTime(), rData.getMinTime(), 
+			(rData.getCallTimes() != 0) ? rData.getCostTime() / rData.getCallTimes() : 0);
+		++ nCount;
+		if (nCount >= 10)
+		{
+			LOG_INFO(tBuffer);
+			nCount = 0;
+			nOffset = 0;
+		}
+	}
+	if (nCount > 0)
+	{
+		LOG_INFO(tBuffer);
+	}
+	tPerfLock.unlock();
+}
 
 void CGameServer::pushTask(EmJobTaskType eTaskType, CInternalMsg* pMsg)
 {

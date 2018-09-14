@@ -263,7 +263,7 @@ void CMapModule::broadCastMapPlayer(CEntity* pEntity, unsigned short nMessageID,
 
 
 ///  µÃÂ“∆∂Ø
-void CMapModule::onEntityMove(CEntityCharacter* pEntity, CMythPoint& rDesPos)
+void CMapModule::onEntityMove(CEntity* pEntity, CMythPoint& rDesPos)
 {
 	if (NULL == pEntity)
 	{

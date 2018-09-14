@@ -288,6 +288,12 @@
     <ClCompile Include="src\dirtyword.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\perfmanager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\aistate.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -610,6 +616,18 @@
     </ClInclude>
     <ClInclude Include="inc\dirtyword.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\perfmanager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\aistate.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\aistrategy.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\aistrategy.cpp">
+      <Filter>源文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -464,7 +464,7 @@ public:
 	// Type:	  EDITSTRING
 	char	mDescription[STRING256];
 
-	// FieldName: 技能CD(秒)
+	// FieldName: 技能CD(毫秒)
 	// FieldType: INT4
 	// Type:	  EDITNUMBER(1,10000)
 	int		mSkillCD;
@@ -473,6 +473,16 @@ public:
 	// FieldType: INT4
 	// Type:	  EDITNUMBER(1,10000)
 	int		mAddDamage;
+
+	// FieldName: 准备时间(毫秒)
+	// FieldType: INT4
+	// Type:	  EDITNUMBER(1,10000)
+	int		mPrepareTime;
+
+	// FieldName: 释放时间
+	// FieldType: INT4
+	// Type:	  EDITNUMBER(1,10000)
+	int		mActionTime;
 
 public:
 	CTplSkill(){};

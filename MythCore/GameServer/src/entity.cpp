@@ -13,6 +13,7 @@ void CEntity::init()
     mMapID = 0;
     mMapIndex = 0;
     mEntityType = emEntityType_None;
+    mAliveState = emAliveState_Alive;
 }
 void CEntity::addVisiblePlayer(CEntity* pEntity)
 {

@@ -110,6 +110,8 @@ public:
 	bool			addPlayerSocketIndex(short nSocketIndex, int nObjID);
 	/// 删除socket index
 	void			removePlayerSocketIndex(short nSocketIndex);
+	/// 记录perf日志
+	void			logPerf();
 private:
 	/// 发送前端消息
 	void		send2Player(CExchangeHead& rExchangeHead, unsigned short nMessageID, Message* pMessage);

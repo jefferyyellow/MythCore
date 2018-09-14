@@ -1,18 +1,17 @@
 #include "entitytimer.h"
 #include "objpool.h"
-#include "locallogjob.h"
+#include "scenejob.h"
 CTimerList::TimeOutFunc* CTimerList::mpTimeOutFunc = NULL;
 int	CTimerList::setTimer(int nOwerObjID, int nModule, int nMilliSec, const int* pParam, int nParamNum, int nCallTimes)
 {
 	CEntityTimer* pTimer = (CEntityTimer*)CObjPool::Inst()->allocObj(emObjType_Entity_Timer);
 	if (NULL == pTimer)
 	{
-		LOG_ERROR("allocate entity timer failure, OwerObjID: %d, Module:%d, MilliSec: %d", nOwerObjID, nModule, nMilliSec);
 		return INVALID_OBJ_ID;
 	}
 
 	pTimer->mOwerObjID = nOwerObjID;
-	pTimer->mElapseMilliSec = nMilliSec;
+	pTimer->mTickCount = nMilliSec + CSceneJob::Inst()->getLastTimerTick();
 	pTimer->mInitialMilliSec = nMilliSec;
 	if (NULL != pParam)
 	{
@@ -22,7 +21,6 @@ int	CTimerList::setTimer(int nOwerObjID, int nModule, int nMilliSec, const int* 
 		}
 	}
 	pTimer->mModule = nModule;
-	pTimer->mSecElapse = false;
 	mTimerList.push_back(pTimer);
 	return pTimer->getObjID();
 }
@@ -53,20 +51,13 @@ void CTimerList::clearAllTimer()
 }
 
 /// 流逝时间
-void CTimerList::elapseTime(unsigned int nTickOffset)
+void CTimerList::update(uint64 nNowTickCount)
 {
 	std::list<CEntityTimer*>::iterator it = mTimerList.begin();
 	for (; it != mTimerList.end(); )
 	{
 		CEntityTimer* pTimer = *it;
-		// 以秒为单位流逝,直接continue
-		if (pTimer->mSecElapse)
-		{
-			++ it;
-			continue;
-		}
-		pTimer->mElapseMilliSec -= (int)nTickOffset;
-		if (pTimer->mElapseMilliSec > 0)
+		if (pTimer->mTickCount < nNowTickCount)
 		{
 			++ it;
 			continue;
@@ -79,10 +70,13 @@ void CTimerList::elapseTime(unsigned int nTickOffset)
 		}
 		if (pTimer->mCallTimes <= 0)
 		{
+			CObjPool::Inst()->free((*it)->getObjID());
 			it = mTimerList.erase(it);
 		}
 		else
 		{
+			// 重置计时器
+			pTimer->mTickCount = nNowTickCount + pTimer->mInitialMilliSec;
 			++ it;
 		}
 	}

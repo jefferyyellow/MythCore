@@ -51,6 +51,8 @@ public:
 	bool		checkOtherJobExit();
 	/// 检查所有的 job是否退出
 	bool		checkAllJobExit();
+	/// 记录所有的Perf的记录
+	void		logPerf();
 
 public:
 	void		pushTask(EmJobTaskType eTaskType, CInternalMsg* pMsg);
@@ -63,8 +65,9 @@ public:
 	void		setExit(bool nValue) { mExit = nValue; }
 
 private:
+#ifdef __DEBUG__
 	CLog*					mDefaultLog;
-
+#endif
 	CDBJob					mDBJob[MAX_DB_JOB];
 	CLocalLogJob			mLocalLogJob;
 	CSceneJob				mSceneJob;
@@ -76,5 +79,9 @@ private:
 	short					mServerID;
 	// 退出状态
 	bool					mExit;
+	/// 秒计时器,按秒计数
+	CAutoResetTimer			mMinuteTimer;
+	/// 上次刷新的时间
+	time_t					mLastTime;
 };
 #endif

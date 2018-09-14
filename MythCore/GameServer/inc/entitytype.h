@@ -9,6 +9,12 @@ enum EmEntityType
 	emEntityType_Item			= 4,	// 道具
 };
 
+
+enum EmAliveState
+{
+	emAliveState_Alive			= 0,	// 正常状态
+	emAliveState_Dead			= 1,	// 死亡状态
+};
 #define MAX_PLAYER_TIMER_NUM	64		// 玩家最大的计时器数目
 #define MAX_NPC_TIMER_NUM		16		// NPC最大的计时器数目
 #endif

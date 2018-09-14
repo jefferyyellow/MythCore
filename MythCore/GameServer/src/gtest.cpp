@@ -4,6 +4,8 @@
 #include "objpoolimp.h"
 #include "dirtyword.h"
 #include "i18n.h"
+#include "perfmanager.h"
+#include "gameserver.h"
 
 /// 测试obj池释放以后是否还能获得
 TEST(ObjPool, TestFreeObj)
@@ -50,4 +52,39 @@ TEST(CDirtyWord, checkDirtyWord)
 	EXPECT_TRUE(CDirtyWord::Inst()->checkDirtyWord(tBuffer));
 	CI18N::AnsiToUtf8("哈哈哈", tBuffer, sizeof(tBuffer) - 1);
 	EXPECT_FALSE(CDirtyWord::Inst()->checkDirtyWord(tBuffer));
+}
+
+
+
+
+double testMultiFloat()
+{
+	double nTotal = 1.001;
+	for (int i = 0; i < 10000; ++i)
+	{
+		nTotal *= 1.001;
+	}
+	return nTotal;
+}
+
+double testDivideFloat()
+{
+	double nTotal = 100000000;
+	for (int i = 0; i < 10000; ++i)
+	{
+		nTotal /= 1.001;
+	}
+	return nTotal;
+}
+
+TEST(CGameServer, PERF_FUNC)
+{
+	PERF_FUNC("testMultiFloat", testMultiFloat());
+	PERF_FUNC("testDivideFloat", testDivideFloat());
+
+	double result = 0;
+	PERF_FUNC_RETURN("testMultiFloat", testMultiFloat(), result);
+	int nElapse = 0;
+	PERF_FUNC_ELAPSE("testMultiFloat", testMultiFloat(), nElapse);
+	CGameServer::Inst()->logPerf();
 }

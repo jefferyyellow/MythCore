@@ -52,14 +52,14 @@ public:
 	void		destroyEntity(CEntity* pEntity);
 	/// 根据地图线ID，地图ID，地图索引创建地图
 	CMap*		createMapFromConfig(unsigned short nLineID, unsigned short nMapID, int nMapIndex);
+	/// 实体移动
+	void		onEntityMove(CEntity* pEntity, CMythPoint& rDesPos);
 
 private:
 	/// 广播给附近的可见玩家
 	void		broadCastVisiblePlayer(CEntity* pEntity, unsigned short nMessageID, Message* pMessage);
 	/// 广播地图上所有玩家
 	void		broadCastMapPlayer(CEntity* pEntity, unsigned short nMessageID, Message* pMessage);
-	/// 实体移动
-	void		onEntityMove(CEntityCharacter* pEntity, CMythPoint& rDesPos);
 	/// 处理玩家移动的请求
 	void		onMessagePlayerMoveRequest(CEntityPlayer* pPlayer, Message* pMessage);
 	/// 发送处理玩家移动的回应
