@@ -59,7 +59,7 @@ void CGMCommandManager::InitCommand()
 
 COMMAND_HANDLER_IMPL(help)
 {
-	MYTH_ASSERT_INFO(tTokens.size() < 1, return, 
+	MYTH_ASSERT_INFO(tTokens.size() >= 1, return, 
 		"help command parameter number invalid, %d", tTokens.size());
 
 	CGMCommandManager& rCmdManager = CPropertyModule::Inst()->getGMCmdManager();
@@ -77,7 +77,7 @@ COMMAND_HANDLER_IMPL(help)
 
 COMMAND_HANDLER_IMPL(exp)
 {
-	MYTH_ASSERT_INFO(tTokens.size() < 1, return,
+	MYTH_ASSERT_INFO(tTokens.size() >= 1, return,
 		"exp command parameter number invalid, %d", tTokens.size());
 
 	int nExp = atoi(tTokens[0].c_str());
@@ -86,7 +86,7 @@ COMMAND_HANDLER_IMPL(exp)
 
 //COMMAND_HANDLER_IMPL(money)
 //{
-//	MYTH_ASSERT_INFO(tTokens.size() < 1, return,
+//	MYTH_ASSERT_INFO(tTokens.size() >= 1, return,
 //		"money command parameter number invalid, %d", tTokens.size());
 //
 //	int nMoney = atoi(tTokens[0].c_str());
@@ -102,7 +102,7 @@ COMMAND_HANDLER_IMPL(exp)
 //
 //COMMAND_HANDLER_IMPL(diamond)
 //{
-//	MYTH_ASSERT_INFO(tTokens.size() < 1, return,
+//	MYTH_ASSERT_INFO(tTokens.size() >= 1, return,
 //		"diamond command parameter number invalid, %d", tTokens.size());
 //
 //	int nDiamond = atoi(tTokens[0].c_str());

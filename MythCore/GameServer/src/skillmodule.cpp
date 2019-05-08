@@ -86,9 +86,9 @@ void CSkillModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessage
 
 void CSkillModule::onUseSkillRequest(CEntityPlayer* pPlayer, Message* pMessage)
 {
-	MYTH_ASSERT(NULL == pMessage || NULL == pPlayer, return);
+	MYTH_ASSERT(NULL != pMessage && NULL != pPlayer, return);
 	CUseSkillRequest* pUseSkillRequest = static_cast<CUseSkillRequest*>(pMessage);
-	MYTH_ASSERT(NULL == pUseSkillRequest, return);
+	MYTH_ASSERT(NULL != pUseSkillRequest, return);
 
 	int nSkillIndex = pUseSkillRequest->skillindex();
 	CPlayerSkill* pPlayerSkill = pPlayer->getSkillUnit().getPlayerSkill(nSkillIndex);

@@ -88,7 +88,7 @@ void CChatModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageI
 
 void CChatModule::onChatRequest(CEntityPlayer* pPlayer, Message* pMessage)
 {
-	MYTH_ASSERT(NULL == pPlayer || NULL == pMessage, return);
+	MYTH_ASSERT(NULL != pPlayer && NULL != pMessage, return);
 	CChatRequest* pChatRequest = static_cast<CChatRequest*>(pMessage);
 
 	int nChannel = pChatRequest->channel();

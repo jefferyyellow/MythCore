@@ -9,9 +9,9 @@
 
 void CTaskUnit::onAcceptTaskRequest(Message* pMessage)
 {
-	MYTH_ASSERT(NULL == pMessage, return);
+	MYTH_ASSERT(NULL != pMessage, return);
 	CAcceptTaskRequest* pAcceptTaskRequest = static_cast<CAcceptTaskRequest*>(pMessage);
-	MYTH_ASSERT(NULL == pAcceptTaskRequest, return);
+	MYTH_ASSERT(NULL != pAcceptTaskRequest, return);
 
 	int nTaskID = pAcceptTaskRequest->taskid();
 	int nNpcEntityID = pAcceptTaskRequest->npcentityid();
@@ -85,9 +85,9 @@ void CTaskUnit::sendAcceptTaskResponse(int nResult, int nTaskID)
 
 void CTaskUnit::onSubmitTaskRequest(Message* pMessage)
 {
-	MYTH_ASSERT(NULL == pMessage, return);
+	MYTH_ASSERT(NULL != pMessage, return);
 	CSubmitTaskRequest* pSubmitTaskRequest = static_cast<CSubmitTaskRequest*>(pMessage);
-	MYTH_ASSERT(NULL == pSubmitTaskRequest, return);
+	MYTH_ASSERT(NULL != pSubmitTaskRequest, return);
 
 	int nTaskID = pSubmitTaskRequest->taskid();
 	int nItemIndex = pSubmitTaskRequest->itemindex();
@@ -131,9 +131,9 @@ void CTaskUnit::sendSubmitTaskResponse(int nResult, int nTaskID)
 /// 处理放弃任务请求
 void CTaskUnit::onAbortTaskRequest(Message* pMessage)
 {
-	MYTH_ASSERT(NULL == pMessage, return);
+	MYTH_ASSERT(NULL != pMessage, return);
 	CAbortTaskRequest* pAbortTaskRequest = static_cast<CAbortTaskRequest*>(pMessage);
-	MYTH_ASSERT(NULL == pAbortTaskRequest, return);
+	MYTH_ASSERT(NULL != pAbortTaskRequest, return);
 
 	int nTaskID = pAbortTaskRequest->taskid();
 

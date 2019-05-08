@@ -282,9 +282,9 @@ void CMapModule::onEntityMove(CEntity* pEntity, CMythPoint& rDesPos)
 /// 处理玩家移动的请求
 void CMapModule::onMessagePlayerMoveRequest(CEntityPlayer* pPlayer, Message* pMessage)
 {
-	MYTH_ASSERT(NULL == pPlayer || NULL == pMessage, return);
+	MYTH_ASSERT(NULL != pPlayer && NULL != pMessage, return);
 	CPlayerMoveRequest* pPlayerMoveRequest = (CPlayerMoveRequest*)pMessage;
-	MYTH_ASSERT(NULL == pPlayerMoveRequest, return)
+	MYTH_ASSERT(NULL != pPlayerMoveRequest, return)
 
 	CMythPoint tPos((int)pPlayerMoveRequest->desposx(), (int)pPlayerMoveRequest->desposy());
 	onEntityMove(pPlayer, tPos);
@@ -293,7 +293,7 @@ void CMapModule::onMessagePlayerMoveRequest(CEntityPlayer* pPlayer, Message* pMe
 /// 发送处理玩家移动的回应
 void CMapModule::sendPlayerMoveResponse(CEntityPlayer* pPlayer, int nResult)
 {
-	MYTH_ASSERT(NULL == pPlayer, return);
+	MYTH_ASSERT(NULL != pPlayer, return);
 	CPlayerMoveResponse tPlayerMoveResponse;
 	tPlayerMoveResponse.set_result(nResult);
 
@@ -303,9 +303,9 @@ void CMapModule::sendPlayerMoveResponse(CEntityPlayer* pPlayer, int nResult)
 /// 处理玩家传送的消息
 void CMapModule::onMessagePlayerTeleportRequest(CEntityPlayer* pPlayer, Message* pMessage)
 {
-	MYTH_ASSERT(NULL == pPlayer || NULL == pMessage, return);
+	MYTH_ASSERT(NULL != pPlayer && NULL != pMessage, return);
 	CPlayerTeleportRequest* pPlayerTeleportRequest = (CPlayerTeleportRequest*)pMessage;
-	MYTH_ASSERT(NULL == pPlayerTeleportRequest, return);
+	MYTH_ASSERT(NULL != pPlayerTeleportRequest, return);
 
 	unsigned short nMapID = pPlayerTeleportRequest->mapid();
 	CMythPoint tPoint;
@@ -322,7 +322,7 @@ void CMapModule::onMessagePlayerTeleportRequest(CEntityPlayer* pPlayer, Message*
 // 发送玩家传送回应
 void CMapModule::sendPlayerTeleportResponse(CEntityPlayer* pPlayer, int nResult)
 {
-	MYTH_ASSERT(NULL == pPlayer, return);
+	MYTH_ASSERT(NULL != pPlayer, return);
 
 	CPlayerTeleportResponse tPlayerTeleportResponse;
 	tPlayerTeleportResponse.set_result(nResult);

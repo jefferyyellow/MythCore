@@ -137,7 +137,7 @@ void CPropertyModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMess
 // GM命令请求
 void CPropertyModule::onGMCommandRequest(CEntityPlayer* pPlayer, Message* pMessage)
 {
-	MYTH_ASSERT(NULL == pPlayer || NULL == pMessage, return);
+	MYTH_ASSERT(NULL != pPlayer && NULL != pMessage, return);
 
 	CGMCommandRequest* pGMCommandRequest = static_cast<CGMCommandRequest*>(pMessage);
 	if (NULL == pGMCommandRequest)
@@ -157,7 +157,7 @@ void CPropertyModule::onGMCommandRequest(CEntityPlayer* pPlayer, Message* pMessa
 /// 玩家离开游戏的请求
 void CPropertyModule::onLeaveGameRequest(CEntityPlayer* pPlayer, Message* pMessage)
 {
-	MYTH_ASSERT(NULL == pPlayer || NULL == pMessage, return);
+	MYTH_ASSERT(NULL != pPlayer && NULL != pMessage, return);
 	// 将玩家置为下线状态
 	pPlayer->setPlayerStauts(emPlayerStatus_Exiting);
 	savePlayer(pPlayer);

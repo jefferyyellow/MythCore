@@ -94,7 +94,9 @@
     <ClCompile Include="src\mysqldatabase.cpp" />
     <ClCompile Include="src\mysqlqueryresult.cpp" />
     <ClCompile Include="src\performance.cpp" />
+    <ClCompile Include="src\selectclient.cpp" />
     <ClCompile Include="src\selectmodel.cpp" />
+    <ClCompile Include="src\selectserver.cpp" />
     <ClCompile Include="src\sharememory.cpp" />
     <ClCompile Include="src\simplelock.cpp" />
     <ClCompile Include="src\socketstream.cpp" />
@@ -124,7 +126,9 @@
     <ClInclude Include="include\mysqlqueryresult.h" />
     <ClInclude Include="include\performance.h" />
     <ClInclude Include="include\linuxthread.h" />
+    <ClInclude Include="include\selectclient.h" />
     <ClInclude Include="include\selectmodel.h" />
+    <ClInclude Include="include\selectserver.h" />
     <ClInclude Include="include\sharememory.h" />
     <ClInclude Include="include\simplelock.h" />
     <ClInclude Include="include\singleton.h" />

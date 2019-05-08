@@ -101,9 +101,9 @@ void CRankModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageI
 
 void CRankModule::onGetRankInfoRequest(CEntityPlayer* pPlayer, Message* pMessage)
 {
-	MYTH_ASSERT(NULL == pPlayer || NULL == pMessage, return);
+	MYTH_ASSERT(NULL != pPlayer && NULL != pMessage, return);
 	CGetRankInfoRequest* pGetRankInfoRequest = static_cast<CGetRankInfoRequest*>(pMessage);
-	MYTH_ASSERT(NULL == pGetRankInfoRequest, return);
+	MYTH_ASSERT(NULL != pGetRankInfoRequest, return);
 
 	sendGetRankInfoResponse(pPlayer, (EmRankType)pGetRankInfoRequest->ranktype());
 }

@@ -98,13 +98,13 @@ void CServerActModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMes
 
 void CServerActModule::onGetServerActRequest(CEntityPlayer* pPlayer, Message* pMessage)
 {
-	MYTH_ASSERT(NULL == pPlayer || NULL == pMessage, return);
+	MYTH_ASSERT(NULL != pPlayer && NULL != pMessage, return);
 	sendGetServerActResponse(pPlayer);
 }
 
 void CServerActModule::sendGetServerActResponse(CEntityPlayer* pPlayer)
 {
-	MYTH_ASSERT(NULL == pPlayer, return);
+	MYTH_ASSERT(NULL != pPlayer, return);
 
 }
 

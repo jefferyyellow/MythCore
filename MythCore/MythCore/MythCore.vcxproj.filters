@@ -96,6 +96,12 @@
     <ClCompile Include="src\bytestream.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\selectserver.cpp">
+      <Filter>头文件\network</Filter>
+    </ClCompile>
+    <ClCompile Include="src\selectclient.cpp">
+      <Filter>头文件\network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\commontype.h">
@@ -184,6 +190,12 @@
     </ClInclude>
     <ClInclude Include="include\threadevent.h">
       <Filter>头文件\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="include\selectserver.h">
+      <Filter>头文件\network</Filter>
+    </ClInclude>
+    <ClInclude Include="include\selectclient.h">
+      <Filter>头文件\network</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

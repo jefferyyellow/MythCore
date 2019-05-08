@@ -5,14 +5,14 @@
 
 
 #define MYTH_ASSERT(a, fail_handle)  \
-	if (a)   \
+	if (!(a))   \
 	{         \
 		LogLocalLog(emLogType_Error, __FILE__, __LINE__, __FUNCTION__, "ASSERT:%s ", #a); \
 		fail_handle; \
 	}
 
 #define MYTH_ASSERT_INFO( a, fail_handle, fmt, ... )														\
-	if(a)																									\
+	if(!(a))																									\
 	{																										\
 		char log_str[1024] = {0};																			\
 		snprintf(log_str, sizeof(log_str) - 1, fmt, ##__VA_ARGS__ );										\

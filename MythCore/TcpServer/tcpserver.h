@@ -23,8 +23,8 @@
 #endif	
 
 #define PIPE_SIZE					((int)0x1000000)	/*内存管道的大小*/
-#define SOCKET_CACHE_SIZE			8192				// socket的缓存
-#define MAX_SOCKET_BUFF_SIZE		4096				// Socket数据缓冲区大小
+#define SOCKET_CACHE_SIZE			102400				// socket的缓存
+#define MAX_SOCKET_BUFF_SIZE		40960				// Socket数据缓冲区大小
 #define MIN_PACKET_SIZE				6					// 最小的包大小
 #define MAX_SEND_PACKAGE_ONCE		1000				/*一次从内存管道中取的最大的数据包*/
 #define	MAX_LISTEN_PORT_NUM			2					// 最大的侦听端口数目

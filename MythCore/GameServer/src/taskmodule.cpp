@@ -100,7 +100,7 @@ void CTaskModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageI
 // º”‘ÿ≈‰÷√
 int CTaskModule::loadAllTaskConfig(const char* pPath)
 {
-	MYTH_ASSERT(pPath == NULL, return -1);
+	MYTH_ASSERT(pPath != NULL, return -1);
 	CDir tDir;
 	char tPathFile[STR_LENGTH_256] = {0};
 	char tFileName[STR_LENGTH_256] = {0};

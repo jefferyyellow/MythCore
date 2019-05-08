@@ -142,15 +142,15 @@ namespace Myth
 
 
 		byte*		getRecvBuffPoint(){ return mpRecvBuff + mRecvBuffSize; }
-		short		getRecvBuffCapacity(){ return mMaxRecvBuffSize - mRecvBuffSize; }
+		int			getRecvBuffCapacity(){ return mMaxRecvBuffSize - mRecvBuffSize; }
 
 		byte*		getRecvBuff(){return mpRecvBuff;}
 		void		setRecvBuff(byte* pRecvBuff){mpRecvBuff = pRecvBuff;}
 
-		short		getRecvBuffSize(){return mRecvBuffSize;}
-		void		setRecvBuffSize(short nRecvBuffSize){mRecvBuffSize = nRecvBuffSize;}
+		int			getRecvBuffSize(){return mRecvBuffSize;}
+		void		setRecvBuffSize(int nRecvBuffSize){mRecvBuffSize = nRecvBuffSize;}
 
-		void		setMaxRecvBuffSize(short nMaxRecvBuffSize){mMaxRecvBuffSize = nMaxRecvBuffSize;}
+		void		setMaxRecvBuffSize(int nMaxRecvBuffSize){mMaxRecvBuffSize = nMaxRecvBuffSize;}
 
 		void		resetRecvBuffPoint(int nSize)
 		{
@@ -178,9 +178,9 @@ namespace Myth
 		/// 接收缓存
 		byte*	mpRecvBuff;
 		/// 接受缓存已经接受的数据长度
-		short	mRecvBuffSize;
+		int		mRecvBuffSize;
 		/// 接受缓存最大的数据长度
-		short	mMaxRecvBuffSize;
+		int		mMaxRecvBuffSize;
 	};
 
 	//class CBuffTcpSocket : public CTcpSocket

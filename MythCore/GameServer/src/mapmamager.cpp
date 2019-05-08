@@ -96,7 +96,7 @@ void CMap::getVisibleRect(CEntity* pEntity, CMythRect& rRect)
 /// 实体移动
 void CMap::onEntityMove(CEntity* pEntity, CMythPoint& rDesPos)
 {
-	MYTH_ASSERT(NULL == pEntity, return);
+	MYTH_ASSERT(NULL != pEntity, return);
 	// 已经在目的地了
 	if (pEntity->getPos() == rDesPos)
 	{
@@ -127,7 +127,7 @@ void CMap::onEntityMove(CEntity* pEntity, CMythPoint& rDesPos)
 /// 把实体加入地图单元
 bool CMap::addEntityToMapCell(CEntity* pEntity)
 {
-	MYTH_ASSERT(NULL == pEntity, return false);
+	MYTH_ASSERT(NULL != pEntity, return false);
 
 	CMapCell* pMapCell = getMapCell(pEntity->getPosX(), pEntity->getPosY());
 	if (NULL == pMapCell)
@@ -176,7 +176,7 @@ void CMap::onAddEntityToMapCell(CEntity* pEntity, CMythRect& rSrcRect, CMythRect
 /// 将实体从地图单元中移除
 bool CMap::removeEntityFromMapCell(CEntity* pEntity)
 {
-	MYTH_ASSERT(NULL == pEntity, return false);
+	MYTH_ASSERT(NULL != pEntity, return false);
 
 	CMapCell* pMapCell = getMapCell(pEntity->getPosX(), pEntity->getPosY());
 	if (NULL == pMapCell)
@@ -190,7 +190,7 @@ bool CMap::removeEntityFromMapCell(CEntity* pEntity)
 /// 将实体从地图单元中移除触发
 void CMap::onRemoveEntityFromMapCell(CEntity* pEntity, CMythRect& rSrcRect, CMythRect& rDesRect)
 {
-	MYTH_ASSERT(NULL == pEntity, return);
+	MYTH_ASSERT(NULL != pEntity, return);
 	CMythRect tRectArray[4];
 	// tSrcRect - tDesRect,从原来的那一部分中删除
 	int nRectNum = rDesRect.subtractRect(rSrcRect, tRectArray);
@@ -282,7 +282,7 @@ void CMap::onCreateEntityToMap(CEntity* pEntity)
 /// 在地图中移除实体
 bool CMap::removeEntityFromMap(CEntity* pEntity)
 {
-	MYTH_ASSERT(NULL == pEntity, return false);
+	MYTH_ASSERT(NULL != pEntity, return false);
 
 	CMapCell* pMapCell = getMapCell(pEntity->getPosX(), pEntity->getPosY());
 	if (NULL == pMapCell)

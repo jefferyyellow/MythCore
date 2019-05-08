@@ -254,9 +254,9 @@ void CItemUnit::sendInsertItemObjNotify(int nIndex)
 /// 使用道具
 void CItemUnit::onUseItemRequest(Message* pMessage)
 {
-	MYTH_ASSERT(NULL == pMessage, return);
+	MYTH_ASSERT(NULL != pMessage, return);
 	CUseItemRequest* pUseItemRequest = static_cast<CUseItemRequest*>(pMessage);
-	MYTH_ASSERT(NULL == pUseItemRequest, return);
+	MYTH_ASSERT(NULL != pUseItemRequest, return);
 	
 	int nItemIndex = pUseItemRequest->index();
 	int nItemNum = pUseItemRequest->number();
@@ -312,9 +312,9 @@ void CItemUnit::sendUseItemResponse(int nResult)
 /// 卖出道具
 void CItemUnit::onSellItemRequest(Message* pMessage)
 {
-	MYTH_ASSERT(NULL == pMessage, return);
+	MYTH_ASSERT(NULL != pMessage, return);
 	CSellItemRequest* pSellItemRequest = static_cast<CSellItemRequest*>(pMessage);
-	MYTH_ASSERT(NULL == pSellItemRequest, return);
+	MYTH_ASSERT(NULL != pSellItemRequest, return);
 
 	int nItemIndex = pSellItemRequest->index();
 
@@ -356,7 +356,7 @@ void CItemUnit::sendSellItemResponse(int nResult)
 /// 购买道具
 void CItemUnit::onPurchaseItemRequest(Message* pMessage)
 {
-	MYTH_ASSERT(NULL == pMessage, return);
+	MYTH_ASSERT(NULL != pMessage, return);
 	CPurchaseItemRequest* pPurchaseItemRequest = static_cast<CPurchaseItemRequest*>(pMessage);
 
 	int nIndex = pPurchaseItemRequest->index();
@@ -379,7 +379,7 @@ void CItemUnit::sendPurchaseItemResponse(int nResult)
 /// 装备道具
 void CItemUnit::onEquipItemRequest(Message* pMessage)
 {
-	MYTH_ASSERT(NULL == pMessage, return);
+	MYTH_ASSERT(NULL != pMessage, return);
 	CEquipItemRequest* pEquipItemRequest = static_cast<CEquipItemRequest*>(pMessage);
 
 	int nItemIndex = pEquipItemRequest->itemindex();
@@ -407,7 +407,7 @@ void CItemUnit::sendEquipItemResponse(int nResult, int nItemIndex)
 /// 卸载道具
 void CItemUnit::onUnEquipItemRequest(Message* pMessage)
 {
-	MYTH_ASSERT(NULL == pMessage, return);
+	MYTH_ASSERT(NULL != pMessage, return);
 	CUnEquipItemRequest* pUnEquipItemRequest = static_cast<CUnEquipItemRequest*>(pMessage);
 	int nEquipPart = pUnEquipItemRequest->equippart();
 	int nItemIndex = pUnEquipItemRequest->itemindex();
@@ -447,7 +447,7 @@ void CItemUnit::broadcastChangeNotify(int nEntityID, int nEquipPart, int nEquipI
 // 拾取道具的请求
 void CItemUnit::onPickItemRequest(Message* pMessage)
 {
-	MYTH_ASSERT(NULL == pMessage, return);
+	MYTH_ASSERT(NULL != pMessage, return);
 	CPickItemRequest* pPickItemRequest = static_cast<CPickItemRequest*>(pMessage);
 
 	int nEntityID = pPickItemRequest->entityid();
