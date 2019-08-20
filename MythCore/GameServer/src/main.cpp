@@ -90,6 +90,7 @@ void setExclusive(char* pLockFile)
 	{
 		exit(0);
 	}
+	CloseHandle(hFile);
 }
 #endif
 

@@ -97,7 +97,10 @@ int	CItemModule::getFromDropTable(int nDropTableID, int& rDropItemNum)
 {
 	// 得到具体的掉落表
 	CTemplate* tpTempalte = CStaticData::searchTpl(nDropTableID);
-	MYTH_ASSERT(tpTempalte != NULL, return 0);
+	if (NULL == tpTempalte)
+	{
+		return 0;
+	}
 
 	if (tpTempalte->mTemplateType != emTemplateType_DropTable)
 	{

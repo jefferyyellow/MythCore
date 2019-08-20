@@ -39,6 +39,7 @@ bool CDirtyWord::loadDirtyWordConfig(const char* pFilePath)
 			break;
 		}
 	}
+	fclose(pFile);
 	return true;
 }
 

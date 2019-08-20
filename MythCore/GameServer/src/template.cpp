@@ -54,6 +54,8 @@ bool CStaticData::loadFromFile(const char* pFilePath)
 	if (fstm.is_open() == false)
 	{
 		//LOG_ERROR("open fsteam failed.\n");
+		free(pcRetBuffer);
+		pcRetBuffer = NULL;
 		return false;
 	}
 
@@ -77,6 +79,8 @@ bool CStaticData::loadFromFile(const char* pFilePath)
 	if (pTplTemplate->ParseFromArray(pcRetBuffer, tLen) == false)
 	{
 		//LOG_ERROR("parse failed");
+		free(pcRetBuffer);
+		pcRetBuffer = NULL;
 		return false;
 	}
 

@@ -90,6 +90,7 @@ void setExclusive(char* pLockFile)
 		printf("Tcp server already start!");
 		exit(0);
 	}
+	CloseHandle(hFile);
 }
 #endif
 

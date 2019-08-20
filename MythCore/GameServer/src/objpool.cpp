@@ -114,6 +114,10 @@ CObj* CObjPool::getObj(int nObjID)
 		default:
 			break;
 	}
+	if (NULL == pObj)
+	{
+		return NULL;
+	}
 	if(INVALID_OBJ_ID == pObj->getObjID())
 	{
 		return NULL;

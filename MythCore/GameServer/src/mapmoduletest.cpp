@@ -107,6 +107,11 @@ TEST(MapModule, createEntity)
 	tOgreCreator.mMapIndex = 1;
 	tOgreCreator.mPos = CMythPoint(0,0);
 	CEntityOgre* pOgre = static_cast<CEntityOgre*>(pMap->createEntity(&tOgreCreator));
+	if (NULL == pOgre)
+	{
+		EXPECT_NE((void*)0, pOgre);
+		return;
+	}
 	EXPECT_NE((void*)0, pOgre);
 	EXPECT_EQ(2, pMapCell->getEntityNum());
 	EXPECT_TRUE(pMapCell->checkEntity(pPlayer->getObjID()));

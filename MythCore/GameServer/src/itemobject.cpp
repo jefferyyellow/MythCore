@@ -60,7 +60,7 @@ void CItemEquip::setFromPB(PBItemObject* pItemObject)
 		return;
 	}
 	PBItemEquip* pbItemEqup = pItemObject->mutable_itemequip();
-	if (NULL != pbItemEqup)
+	if (NULL == pbItemEqup)
 	{
 		return;
 	}
@@ -78,7 +78,7 @@ void CItemEquip::createToPB(PBItemObject* pItemObject)
 		return;
 	}
 	PBItemEquip* pbItemEqup = pItemObject->mutable_itemequip();
-	if (NULL != pbItemEqup)
+	if (NULL == pbItemEqup)
 	{
 		return;
 	}
