@@ -12,7 +12,6 @@ namespace Myth
 			return 0;
 		}
 
-		pThead->setThreadState(emThreadState_Runing);
 		while (true)
 		{
 			if (NULL == pThead->mpJob)
@@ -132,6 +131,11 @@ namespace Myth
 			return;
 		}
 		pthread_mutex_lock(&mMutex);
+		if (getThreadState() == emThreadState_Suspend)
+		{
+			pthread_mutex_unlock(&mMutex);
+			return;
+		}
 		setThreadState(emThreadState_Suspend);
 		pthread_cond_wait(&mCond, &mMutex);
 		pthread_mutex_unlock(&mMutex);
@@ -146,6 +150,12 @@ namespace Myth
 		}
 
 		pthread_mutex_lock(&mMutex);
+		// 如果已经是运行中了，直接退出
+		if (getThreadState() == emThreadState_Runing)
+		{
+			pthread_mutex_unlock(&mMutex);
+			return;
+		}
 		setThreadState(emThreadState_Runing);
 		pthread_cond_signal(&mCond);
 		pthread_mutex_unlock(&mMutex);
