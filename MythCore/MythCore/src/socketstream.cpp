@@ -271,7 +271,7 @@ namespace Myth
 			if (mSize - nBegin < usLength)
 			{
 				memcpy((void*)pCode, (const void*)&pBuffer[nBegin], (size_t)(mSize - nBegin));
-				memcpy((void*)(pCode[mSize - nBegin]), (const void*)&pBuffer, (size_t)(usLength + nBegin - mSize));
+				memcpy((void*)&(pCode[mSize - nBegin]), (const void*)&pBuffer, (size_t)(usLength + nBegin - mSize));
 			}
 			else
 			{

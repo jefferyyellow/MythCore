@@ -1,5 +1,11 @@
 #include "commontype.h"
 #include "sharememory.h"
+
+#ifdef MYTH_OS_UNIX
+#include <unistd.h>
+#include <stdio.h>
+#endif 
+
 using namespace Myth;
 class CMemUnit
 {
@@ -32,6 +38,7 @@ private:
 };
 int main()
 {
+	printf("\n\n **********************  Crash *** Re *** Save ***********************\n");
 	bool bCreate = true;
 
 	int nShareMemorySize = sizeof(int) + sizeof(CMemUnit) * 10;
@@ -55,5 +62,9 @@ int main()
 		printf("Exp:	%d\n", pTempUnit->GetExp());
 		pTempUnit += 1;
 	}
+#ifdef MYTH_OS_UNIX
+	sleep(100);
+#else
 	Sleep(100000);
+#endif
 }

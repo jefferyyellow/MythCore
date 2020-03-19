@@ -109,7 +109,7 @@ namespace Myth
 		pDst[nMaxSize - 1] = 0;
 		return pDst;
 #else
-		int nSize = CharsetConvert("utf8", "unicode", pSrc, strlen(pSrc), (char*)pDst, (nMaxSize - 1) << 1);
+		int nSize = CharsetConvert("utf8", "unicode", const_cast<char*>(pSrc), strlen(pSrc), (char*)pDst, (nMaxSize - 1) << 1);
 		if (0 >= nSize)
 		{
 			return NULL;
@@ -143,7 +143,7 @@ namespace Myth
 		pDst[nMaxSize - 1] = 0;
 		return pDst;
 #else
-		int nSize = CharsetConvert("UTF8", "GBK", pSrc, strlen(pSrc), pDst, nMaxSize - 1);
+		int nSize = CharsetConvert("UTF8", "GBK", const_cast<char*>(pSrc), strlen(pSrc), pDst, nMaxSize - 1);
 		if (0 >= nSize)
 		{
 			return NULL;
@@ -167,7 +167,7 @@ namespace Myth
 		pDst[nMaxSize - 1] = 0;
 		return pDst;
 #else
-		int nSize = CharsetConvert("gbk", "unicode", pSrc, strlen(pSrc), (char*)pDst, (nMaxSize - 1) << 1);
+		int nSize = CharsetConvert("gbk", "unicode", const_cast<char*>(pSrc), strlen(pSrc), (char*)pDst, (nMaxSize - 1) << 1);
 		if (0 >= nSize)
 		{
 			return NULL;
@@ -200,7 +200,7 @@ namespace Myth
 		pDst[nMaxSize - 1] = 0;
 		return pDst;
 #else
-		int nSize = CharsetConvert("GBK", "UTF8", pSrc, strlen(pSrc), pDst, nMaxSize - 1);
+		int nSize = CharsetConvert("GBK", "UTF8", const_cast<char*>(pSrc), strlen(pSrc), pDst, nMaxSize - 1);
 		if (0 >= nSize)
 		{
 			return NULL;

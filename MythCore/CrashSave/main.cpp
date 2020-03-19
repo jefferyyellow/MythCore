@@ -1,6 +1,13 @@
 #include "commontype.h"
 #include "sharememory.h"
 using namespace Myth;
+
+#ifdef MYTH_OS_UNIX
+#include <unistd.h>
+#include <signal.h>
+#include <stdio.h>
+#endif
+
 class CMemUnit
 {
 public:
@@ -40,22 +47,31 @@ LONG WINAPI DumpException(struct _EXCEPTION_POINTERS *pExceptionInfo)
 #else
 void sigCrash(int signo)
 {
-	pid_t pid = fork();
-	if (pid < 0)
-	{
-		printf("³ö´íÀ²");
-		return;
-	}
-
-	if (execle("CrashResave", (char*)0) < 0)
-	{
-		return;
-	}
+	system("./CrashResave");
+	signal(SIGSEGV, SIG_DFL);
+	//pid_t pid = fork();
+	//if (pid < 0)
+	//{
+	//	printf("³ö´íÀ²");
+	//	return;
+	//}
+	//if(pid == 0)
+	//{
+	//	if (execle("CrashResave", (char*)0) < 0)
+	//	{
+	//		return;
+	//	}
+	//}
+	//else
+	//{
+	//	signal(SIGSEGV, SIG_DFL);
+	//}
 }
 #endif // MYTH_OS_WINDOWS
 
 int main()
 {
+	printf("\n\n **********************  CrashSave ***********************\n");
 
 #ifdef MYTH_OS_WINDOWS
 	SetUnhandledExceptionFilter(DumpException);
@@ -63,7 +79,7 @@ int main()
 	if (signal(SIGSEGV, sigCrash) == SIG_ERR)
 	{
 		printf("can't catch SIGUSR1");
-		return;
+		return -1;
 	}
 #endif // MYTH_OS_WINDOWS
 
