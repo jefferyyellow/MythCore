@@ -2,7 +2,9 @@
 #define __FILEUTILITY_H__
 #include "commontype.h"
 #include <stdio.h>
-
+#ifdef MYTH_OS_UNIX
+#include <dirent.h>
+#endif
 namespace Myth
 {
 	class CFileUtility
@@ -39,44 +41,44 @@ namespace Myth
 		static bool			DeleteDirTree(const char* pDirName);
 	};
 
-//	class CDir
-//	{
-//	public:
-//		CDir()
-//		{
-//#ifdef MYTH_OS_UNIX
-//			mDir = NULL;
-//#else
-//			mFindHandle = INVALID_HANDLE_VALUE;
-//#endif
-//		}
-//		~CDir()
-//		{
-//#ifdef MYTH_OS_UNIX
-//			if (NULL != mDir)
-//			{
-//				closedir(mDir);
-//				mDir = NULL;
-//			}
-//#else
-//			if (INVALID_HANDLE_VALUE != mFindHandle)
-//			{
-//				FindClose(mFindHandle);
-//			}
-//#endif
-//		}
-//
-//	public:
-//		void findFirstFile(const char* pFilePath, char* pFileName, int nNameSize);
-//		void nextFile(char* pFileName, int nNameSize);
-//
-//	private:
-//#ifdef MYTH_OS_UNIX
-//		DIR*	mDir;
-//#else
-//		HANDLE	mFindHandle;
-//#endif
-//	};
+	class CDir
+	{
+	public:
+		CDir()
+		{
+#ifdef MYTH_OS_UNIX
+			mDir = NULL;
+#else
+			mFindHandle = INVALID_HANDLE_VALUE;
+#endif
+		}
+		~CDir()
+		{
+#ifdef MYTH_OS_UNIX
+			if (NULL != mDir)
+			{
+				closedir(mDir);
+				mDir = NULL;
+			}
+#else
+			if (INVALID_HANDLE_VALUE != mFindHandle)
+			{
+				FindClose(mFindHandle);
+			}
+#endif
+		}
+
+	public:
+		void findFirstFile(const char* pFilePath, char* pFileName, int nNameSize);
+		void nextFile(char* pFileName, int nNameSize);
+
+	private:
+#ifdef MYTH_OS_UNIX
+		DIR*	mDir;
+#else
+		HANDLE	mFindHandle;
+#endif
+	};
 }
 
 

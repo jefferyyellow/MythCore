@@ -12,6 +12,7 @@
 #include <tchar.h>
 #else
 #include <stdarg.h>
+#include <sys/types.h>
 #endif
 
 #ifdef MYTH_OS_WINDOWS

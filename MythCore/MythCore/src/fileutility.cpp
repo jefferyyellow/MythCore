@@ -5,7 +5,6 @@
 #else
 #include <sys/stat.h>
 #include <unistd.h>
-#include <dirent.h>
 #endif
 
 namespace Myth
@@ -416,68 +415,68 @@ namespace Myth
 	}
 
 
-//	void CDir::findFirstFile(const char* pFilePath, char* pFileName, int nNameSize)
-//	{
-//#ifdef MYTH_OS_UNIX
-//		if ((mDir = opendir (pFilePath)) == NULL) 
-//		{
-//			pFileName[0] = '\0';
-//			return;
-//		}
-//		return nextFile(pFileName, nNameSize);
-//#else
-//		WIN32_FIND_DATA ffd;
-//		mFindHandle = FindFirstFile(pFilePath, &ffd);
-//		if (INVALID_HANDLE_VALUE == mFindHandle)
-//		{
-//			pFileName[0] = '\0';
-//			return;
-//		}
-//		// 只处理非文件夹文件
-//		if (!(ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
-//		{
-//			strncpy(pFileName, ffd.cFileName, (size_t)(nNameSize - 1));
-//			return;
-//		}
-//		return nextFile(pFileName, nNameSize);
-//#endif
-//	}
-//
-//	void CDir::nextFile(char* pFileName, int nNameSize)
-//	{
-//#ifdef MYTH_OS_UNIX
-//		struct 	stat tStatBuf;
-//		char tBuffer[STR_LENGTH_256] = { 0 };
-//		struct dirent *dp = NULL;
-//
-//		while((dp = readdir (mDir)) != NULL)
-//		{
-//			int nReulst = lstat(tBuffer, &tStatBuf);
-//			// 不处理子文件夹
-//			if (S_ISDIR(tStatBuf.st_mode))
-//			{
-//				continue;
-//			}
-//			strncpy(pFileName, dp->d_name, nNameSize - 1);
-//			return;
-//		}
-//		pFileName[0] = '\0';
-//		return NULL;
-//#else
-//		WIN32_FIND_DATA ffd;
-//		while (FindNextFile(mFindHandle, &ffd) != 0)
-//		{
-//			// 只处理非文件夹文件
-//			if ((ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
-//			{
-//				continue;
-//			}
-//			strncpy(pFileName, ffd.cFileName, (size_t)(nNameSize - 1));
-//			return;
-//		}
-//
-//		pFileName[0] = '\0';
-//		return;
-//#endif
-//	}
+	void CDir::findFirstFile(const char* pFilePath, char* pFileName, int nNameSize)
+	{
+#ifdef MYTH_OS_UNIX
+		if ((mDir = opendir (pFilePath)) == NULL) 
+		{
+			pFileName[0] = '\0';
+			return;
+		}
+		return nextFile(pFileName, nNameSize);
+#else
+		WIN32_FIND_DATA ffd;
+		mFindHandle = FindFirstFile(pFilePath, &ffd);
+		if (INVALID_HANDLE_VALUE == mFindHandle)
+		{
+			pFileName[0] = '\0';
+			return;
+		}
+		// 只处理非文件夹文件
+		if (!(ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+		{
+			strncpy(pFileName, ffd.cFileName, (size_t)(nNameSize - 1));
+			return;
+		}
+		return nextFile(pFileName, nNameSize);
+#endif
+	}
+
+	void CDir::nextFile(char* pFileName, int nNameSize)
+	{
+#ifdef MYTH_OS_UNIX
+		struct 	stat tStatBuf;
+		char tBuffer[STR_LENGTH_256] = { 0 };
+		struct dirent *dp = NULL;
+
+		while((dp = readdir (mDir)) != NULL)
+		{
+			int nReulst = lstat(tBuffer, &tStatBuf);
+			// 不处理子文件夹
+			if (S_ISDIR(tStatBuf.st_mode))
+			{
+				continue;
+			}
+			strncpy(pFileName, dp->d_name, nNameSize - 1);
+			return;
+		}
+		pFileName[0] = '\0';
+		return;
+#else
+		WIN32_FIND_DATA ffd;
+		while (FindNextFile(mFindHandle, &ffd) != 0)
+		{
+			// 只处理非文件夹文件
+			if ((ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+			{
+				continue;
+			}
+			strncpy(pFileName, ffd.cFileName, (size_t)(nNameSize - 1));
+			return;
+		}
+
+		pFileName[0] = '\0';
+		return;
+#endif
+	}
 }
