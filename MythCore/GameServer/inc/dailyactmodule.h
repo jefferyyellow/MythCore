@@ -19,7 +19,7 @@ private:
 
 	void init()
 	{
-        memset(mActivity, NULL, sizeof(mActivity));
+        memset(mActivity, 0, sizeof(mActivity));
         mTimeListIndex = 0;
         mLastMinute = 0;
         mLastTime = 0;

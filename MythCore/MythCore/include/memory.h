@@ -5,7 +5,7 @@
 namespace Myth
 {
 	/// Get the class member memory offset byte from the class(instance) head
-#define CLASS_MEM_OFFSET(Class,Member) ((int)(&((Class*)0)->Member))
+#define CLASS_MEM_OFFSET(Class,Member) ((byte*)(&((Class*)0)->Member))
 
 	template<typename T, bool>
 	class comconstruct
