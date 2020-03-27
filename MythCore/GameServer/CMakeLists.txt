@@ -13,7 +13,7 @@ SET(EXECUTABLE_OUTPUT_PATH ../../Debug)
 
 #连接MyCore和rt库
 #idn ldap ssl这些库都是因为curl库链接需要
-LINK_LIBRARIES(MythCore rt mysqlclient protobuf dl gtest hiredis json_linux-gcc-4.4.7_libmt curl event_core idn ldap ssl)
+LINK_LIBRARIES(MythCore rt mysqlclient protobuf dl gtest hiredis curl event_core idn ldap ssl pthread)
 ADD_SUBDIRECTORY(src)
 #message(STATUS "src list*****************************" ${MESSAGE_SRC_LIST})
 
