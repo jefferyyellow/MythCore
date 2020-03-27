@@ -54,6 +54,8 @@ SET(TMP_SRC_LIST
     taskunit.cpp
     teammodule.cpp
     template.cpp
+	entitytimer.cpp
+	dirtyword.cpp
 )
 
 #所有的文件名面前加上 src/(相对主CMakeLists的目录)

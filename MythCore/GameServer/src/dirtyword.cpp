@@ -1,5 +1,6 @@
 #include "dirtyword.h"
 #include "commontype.h"
+#include <stdio.h>
 void CDirtyWord::clear()
 {
 	mDirtyWordSet.clear();
