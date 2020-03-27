@@ -105,7 +105,7 @@
 #define HAVE_GETEGID 1
 #define HAVE_LSTAT 1
 #define HAVE_MADVISE 1
-#define HAVE_MALLOC_INFO 1
+/* #undef HAVE_MALLOC_INFO */
 #define HAVE_MEMRCHR 1
 #define HAVE_MLOCK 1
 #define HAVE_MLOCKALL 1
@@ -158,7 +158,7 @@
 /* #undef FIONREAD_IN_SYS_FILIO */
 #define HAVE_SIGEV_THREAD_ID 1
 /* #undef HAVE_SIGEV_PORT */
-#define HAVE_LOG2 1
+/* #undef HAVE_LOG2 */
 
 #define HAVE_ISINF 1
 
@@ -169,14 +169,14 @@
 /* #undef WORDS_BIGENDIAN */
 
 /* Type sizes */
-#define SIZEOF_VOIDP     4
-#define SIZEOF_CHARP     4
-#define SIZEOF_LONG      4
+#define SIZEOF_VOIDP     8
+#define SIZEOF_CHARP     8
+#define SIZEOF_LONG      8
 #define SIZEOF_SHORT     2
 #define SIZEOF_INT       4
 #define SIZEOF_LONG_LONG 8
 #define SIZEOF_OFF_T     8
-#define SIZEOF_TIME_T    4
+#define SIZEOF_TIME_T    8
 #define HAVE_UINT 1
 #define HAVE_ULONG 1
 #define HAVE_U_INT32_T 1
@@ -214,12 +214,12 @@
 /*
  * Platform specific CMake files
  */
-#define MACHINE_TYPE "i686"
+#define MACHINE_TYPE "x86_64"
 #define HAVE_LINUX_LARGE_PAGES 1
 /* #undef HAVE_SOLARIS_LARGE_PAGES */
 /* #undef HAVE_SOLARIS_ATOMIC */
 /* #undef HAVE_SOLARIS_STYLE_GETHOST */
-#define SYSTEM_TYPE "Linux"
+#define SYSTEM_TYPE "linux-glibc2.5"
 /* Windows stuff, mostly functions, that have Posix analogs but named differently */
 /* #undef IPPROTO_IPV6 */
 /* #undef IPV6_V6ONLY */
@@ -230,13 +230,13 @@
  * From main CMakeLists.txt
  */
 #define MAX_INDEXES 64U
-/* #undef WITH_INNODB_MEMCACHED */
+#define WITH_INNODB_MEMCACHED 1
 /* #undef ENABLE_MEMCACHED_SASL */
 /* #undef ENABLE_MEMCACHED_SASL_PWDB */
 #define ENABLED_PROFILING 1
 /* #undef HAVE_ASAN */
-/* #undef ENABLED_LOCAL_INFILE */
-/* #undef OPTIMIZER_TRACE */
+#define ENABLED_LOCAL_INFILE 1
+#define OPTIMIZER_TRACE 1
 #define DEFAULT_MYSQL_HOME "/usr/local/mysql"
 #define SHAREDIR "/usr/local/mysql/share"
 #define DEFAULT_BASEDIR "/usr/local/mysql"
@@ -267,21 +267,21 @@
 /*
  * Readline
  */
-/* #undef HAVE_MBSTATE_T */
-/* #undef HAVE_LANGINFO_CODESET */
-/* #undef HAVE_WCSDUP */
-/* #undef HAVE_WCHAR_T */
-/* #undef HAVE_WINT_T */
-/* #undef HAVE_CURSES_H */
+#define HAVE_MBSTATE_T
+#define HAVE_LANGINFO_CODESET 
+#define HAVE_WCSDUP
+#define HAVE_WCHAR_T 1
+#define HAVE_WINT_T 1
+#define HAVE_CURSES_H 1
 /* #undef HAVE_NCURSES_H */
-/* #undef USE_LIBEDIT_INTERFACE */
-/* #undef HAVE_HIST_ENTRY */
+#define USE_LIBEDIT_INTERFACE 1
+#define HAVE_HIST_ENTRY 1
 /* #undef USE_NEW_EDITLINE_INTERFACE */
 
 /*
  * Libedit
  */
-/* #undef HAVE_DECL_TGOTO */
+#define HAVE_DECL_TGOTO 1
 
 /*
  * DTrace
@@ -343,7 +343,7 @@
 /*
  * Performance schema
  */
-/* #undef WITH_PERFSCHEMA_STORAGE_ENGINE */
+#define WITH_PERFSCHEMA_STORAGE_ENGINE 1
 /* #undef DISABLE_PSI_THREAD */
 /* #undef DISABLE_PSI_MUTEX */
 /* #undef DISABLE_PSI_RWLOCK */
@@ -365,10 +365,10 @@
  * syscall
 */
 /* #undef HAVE_SYS_THREAD_SELFID */
-/* #undef HAVE_SYS_GETTID */
+#define HAVE_SYS_GETTID 1
 /* #undef HAVE_PTHREAD_GETTHREADID_NP */
 /* #undef HAVE_PTHREAD_SETNAME_NP */
-/* #undef HAVE_INTEGER_PTHREAD_SELF */
+#define HAVE_INTEGER_PTHREAD_SELF 1
 
 /* Platform-specific C++ compiler behaviors we rely upon */
 
@@ -387,17 +387,17 @@
  * MySQL version
  */
 #define DOT_FRM_VERSION 6
-#define MYSQL_VERSION_MAJOR 6
-#define MYSQL_VERSION_MINOR 1
-#define MYSQL_VERSION_PATCH 9
+#define MYSQL_VERSION_MAJOR 5
+#define MYSQL_VERSION_MINOR 7
+#define MYSQL_VERSION_PATCH 16
 #define MYSQL_VERSION_EXTRA ""
 #define PACKAGE "mysql"
 #define PACKAGE_BUGREPORT ""
 #define PACKAGE_NAME "MySQL Server"
-#define PACKAGE_STRING "MySQL Server 6.1.9"
+#define PACKAGE_STRING "MySQL Server 5.7.16"
 #define PACKAGE_TARNAME "mysql"
-#define PACKAGE_VERSION "6.1.9"
-#define VERSION "6.1.9"
+#define PACKAGE_VERSION "5.7.16"
+#define VERSION "5.7.16"
 #define PROTOCOL_VERSION 10
 
 /*

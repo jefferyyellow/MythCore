@@ -83,10 +83,10 @@
 */
 #define CR_OK_HANDSHAKE_COMPLETE -2
 
-/**
-Flag to be passed back to server from authentication plugins via
-authenticated_as when proxy mapping should be done by the server.
-*/
+/**
+Flag to be passed back to server from authentication plugins via
+authenticated_as when proxy mapping should be done by the server.
+*/
 #define PROXY_FLAG 0
 
 /*

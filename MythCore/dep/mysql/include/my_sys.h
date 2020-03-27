@@ -502,7 +502,7 @@ extern PSI_file_key key_file_io_cache;
 #define my_b_tell(info) ((info)->pos_in_file + \
 			 (size_t) (*(info)->current_pos - (info)->request_pos))
 
-#define my_b_get_buffer_start(info) (info)->request_pos
+#define my_b_get_buffer_start(info) (info)->request_pos 
 #define my_b_get_bytes_in_buffer(info) (char*) (info)->read_end -   \
   (char*) my_b_get_buffer_start(info)
 #define my_b_get_pos_in_file(info) (info)->pos_in_file
@@ -600,7 +600,7 @@ extern my_bool is_filename_allowed(const char *name, size_t length,
                    my_bool allow_current_dir);
 #else /* _WIN32 */
 # define is_filename_allowed(name, length, allow_cwd) (TRUE)
-#endif /* _WIN32 */
+#endif /* _WIN32 */ 
 
 #ifdef _WIN32
 extern int nt_share_delete(const char *name,myf MyFlags);
@@ -814,6 +814,9 @@ static inline char *safe_strdup_root(MEM_ROOT *root, const char *str)
 }
 extern char *strmake_root(MEM_ROOT *root,const char *str,size_t len);
 extern void *memdup_root(MEM_ROOT *root,const void *str, size_t len);
+extern void set_memroot_max_capacity(MEM_ROOT *mem_root, size_t size);
+extern void set_memroot_error_reporting(MEM_ROOT *mem_root,
+                                       my_bool report_error);
 extern my_bool my_compress(uchar *, size_t *, size_t *);
 extern my_bool my_uncompress(uchar *, size_t , size_t *);
 extern uchar *my_compress_alloc(const uchar *packet, size_t *len,
