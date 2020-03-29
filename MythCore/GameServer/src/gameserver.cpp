@@ -219,11 +219,6 @@ void CGameServer::run()
 				logPerf();
 			}
 		}
-		++ i;
-		if ( i > 100)
-		{
-			mExit = true;
-		}
 	}
 }
 

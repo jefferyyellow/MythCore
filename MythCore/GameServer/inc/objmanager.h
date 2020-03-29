@@ -2,6 +2,7 @@
 #define __OBJMANAGER_H__
 #include "servercommon.h"
 #include "fixblockmemory.h"
+#include "shareblockmemory.h"
 using namespace Myth;
 
 template<typename T, int MaxCount, int BaseCount, int IncreCount, int IDStart, int IDEnd>
@@ -70,14 +71,11 @@ public:
 		mFixMemory.free(nIndex);
 	}
 
-	/// 得到已经分配的Obj数目
-	int getObjNum(){ return mFixMemory.getAllocCount(); }
-
 	/// 得到最大的obj数目
 	int	getMaxNum(){return MaxCount;}
 
 	/// 得到已经用了的Obj数目
-	int getUsedNum(){return mFixMemory.getUsedCount();}
+	int getObjNum(){return mFixMemory.getObjNum();}
 private:
 	// ***********************************************************************
 	// 算法注释
@@ -119,6 +117,128 @@ private:
 
 private:
 	CFixBlockMemory<T, MaxCount, BaseCount, IncreCount> mFixMemory;
+	int mLastMaxID;
+};
+
+template<typename T, int MaxCount, int IDStart, int IDEnd>
+class CShareObjManager
+{
+public:
+	CShareObjManager()
+	{
+		mLastMaxID = 0;
+	}
+	~CShareObjManager(){}
+
+public:
+	void	init(byte* pMemory)
+	{
+		mShareMemory.initMemory(pMemory);
+	}
+public:
+
+	int	getMemorySize()
+	{
+		return sizeof(T) * MaxCount;
+	}
+	
+	T*		allocObj()
+	{
+		int nMemIndex = -1;
+		T* pNode = mShareMemory.allocate(nMemIndex);
+		if (NULL == pNode)
+		{
+			return NULL;
+		}
+		new (pNode)T;
+		int nID = generalID(nMemIndex);
+		pNode->setObjID(nID);
+		return pNode;
+	}
+
+	T*		getObj(int nObjID)
+	{
+		int nIndex = calMemIndex(nObjID);
+		return mShareMemory.get(nIndex);
+	}
+	void	free(T *pObj)
+	{
+		if (NULL == pObj)
+		{
+			return;
+		}
+
+		int nIndex = calMemIndex(pObj->getObjID());
+		T* pNode = mShareMemory.get(nIndex);
+		if (INVALID_OBJ_ID == pNode->getObjID())
+		{
+			return;
+		}
+		if (NULL != pNode)
+		{
+			pNode->setObjID(INVALID_OBJ_ID);
+		}
+
+		mShareMemory.free(nIndex);
+	}
+
+	void	freeByID(int nObjID)
+	{
+		int nIndex = calMemIndex(nObjID);
+		T* pNode = mShareMemory.get(nIndex);
+		if (INVALID_OBJ_ID == pNode->getObjID())
+		{
+			return;
+		}
+		if (NULL != pNode)
+		{
+			pNode->setObjID(INVALID_OBJ_ID);
+		}
+		mShareMemory.free(nIndex);
+	}
+
+	/// 得到已经分配的Obj数目
+	int getObjNum(){ return MaxCount - mShareMemory.GetFreeCount(); }
+
+	/// 得到最大的obj数目
+	int	getMaxNum(){ return MaxCount; }
+	
+	// 得到最小的ID值
+	int getMinID(){return IDStart;}
+	// 得到最大的ID值
+	int getMaxID(){return IDEnd;}
+private:
+	// 解释如CObjManager同名函数
+	int	generalID(int nMemIndex)
+	{
+		int nLastID = nMemIndex + IDStart;
+		if (nLastID <= mLastMaxID)
+		{
+			int nTempID = nLastID + ((mLastMaxID - nLastID) / MaxCount + 1) * MaxCount;
+			// 如果累加的小于最大值才用，不然的话回到最小值
+			if (nTempID < IDEnd)
+			{
+				nLastID = nTempID;
+			}
+		}
+
+		mLastMaxID = nLastID;
+		return nLastID;
+	}
+
+	int calMemIndex(int nID)
+	{
+		if (nID < IDStart || nID >= IDEnd)
+		{
+			return -1;
+		}
+
+		return (nID - IDStart) % MaxCount;
+	}
+
+
+private:
+	CShareBlockMemory<T, MaxCount> mShareMemory;
 	int mLastMaxID;
 };
 #endif

@@ -101,7 +101,7 @@ namespace Myth
 		}
 
 		int			getAllocCount(){return mAllocCount;}
-		int			getUsedCount(){return mAllocCount - mFreeCount;}
+		int			getObjNum(){return mAllocCount - mFreeCount;}
 	private:
 		T*			mBlockMemory[MaxCount];
 		int			mAllocCount;

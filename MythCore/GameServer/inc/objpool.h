@@ -13,6 +13,14 @@ private:
 	~CObjPool();
 
 public:
+	int		getShareMemorySize();
+	void	setShareMemory(byte* pShareMemory);
+
+public:
+	int		getPlayerMinID();
+	int		getPlayerMaxID();
+
+public:
 	CObj*	allocObj(EmObjType eType);
 	CObj*	getObj(int nObjID);
 	void	free(int nObjID);

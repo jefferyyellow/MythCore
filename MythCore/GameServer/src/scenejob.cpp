@@ -402,6 +402,15 @@ bool CSceneJob::initShareMemory()
 	{
 		mServer2TcpMemory->Initialize(pSharePoint + sizeof(CSocketStream), PIPE_SIZE);
 	}
+
+	nShareMemorySize = CObjPool::Inst()->getShareMemorySize();
+	pSharePoint = CShareMemory::createShareMemory(37345235, nShareMemorySize, bCreate);
+	if (NULL == pSharePoint)
+	{
+		return false;
+	}
+	CObjPool::Inst()->setShareMemory(pSharePoint);
+
 	return true;
 }
 

@@ -48,7 +48,7 @@ bool CTcpServer::init()
 	}
 
 	bResult = initSocket();
-	return true;
+	return bResult;
 }
 
 /// ³õÊ¼ÈÕÖ¾
@@ -284,11 +284,6 @@ void CTcpServer::run()
 		receiveMessage();
 		sendMessage();
 		checkTimeOut();
-		++i;
-		if (i > 100)
-		{
-			break;
-		}
 	}
 	
 }

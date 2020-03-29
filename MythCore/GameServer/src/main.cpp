@@ -16,6 +16,11 @@
 #include "gtest/gtest.h"
 
 #ifdef MYTH_OS_UNIX
+void sigCrash(int signo)
+{
+	system("./CrashResave");
+	signal(SIGSEGV, SIG_DFL);
+}
 void ignorePipe()
 {
 	struct sigaction sig;
@@ -37,6 +42,10 @@ void setSignal()
 	signal(SIGCHLD, SIG_IGN);
 	signal(SIGTERM, SIG_IGN);
 	signal(SIGHUP, SIG_IGN);
+	if (signal(SIGSEGV, sigCrash) == SIG_ERR)
+	{
+		printf("can't catch SIGUSR1");
+	}
 	ignorePipe();
 }
 
@@ -92,6 +101,13 @@ void setExclusive(char* pLockFile)
 	}
 	CloseHandle(hFile);
 }
+
+// 崩溃转存
+LONG WINAPI DumpException(struct _EXCEPTION_POINTERS *pExceptionInfo)
+{
+	ShellExecute(NULL, _T("open"), _T("CrashResave.exe"), NULL, NULL, SW_SHOWNORMAL);
+	return 0;
+}
 #endif
 
 
@@ -133,6 +149,8 @@ int main(int argc, char* argv[])
 	nMemCheckFlag |= _CRTDBG_LEAK_CHECK_DF;
 	_CrtSetDbgFlag(nMemCheckFlag);
 	//_CrtSetBreakAlloc(19992);
+	// 崩溃转存
+	SetUnhandledExceptionFilter(DumpException);
 #endif
 
 	bool bExit = ParseParam(argc, argv);
@@ -146,22 +164,25 @@ int main(int argc, char* argv[])
 	setSignal();
 	//initDaemon();
 #endif
-
 	setExclusive("gameserver.lock");
 
 	CGameServer::createInst();
-	CGameServer::Inst()->initAll();
+ 	CGameServer::Inst()->initAll();
 
 	/// ***********************************************************
 	/// gtest代码
+
+#ifdef GOOGLE_TEST_ALL
 	testing::InitGoogleTest(&argc, argv);
 	int nResult = RUN_ALL_TESTS();
-	CGameServer::destroyInst();
 
+
+	CGameServer::destroyInst();
 	// 释放protobuf中lib和msg占用的内存
 	::google::protobuf::ShutdownProtobufLibrary();
 	//_CrtDumpMemoryLeaks();
 	return nResult;
+#endif
 	/// ***********************************************************
 
 	//return RUN_ALL_TESTS();

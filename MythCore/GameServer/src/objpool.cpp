@@ -14,6 +14,25 @@ CObjPool::~CObjPool()
 	}
 }
 
+int CObjPool::getShareMemorySize()
+{
+	int nSize = mPoolImp->mPlayerEntityPool.getMemorySize();
+	nSize += mPoolImp->mItemCommonPool.getMemorySize();
+	nSize += mPoolImp->mItemEquipPool.getMemorySize();
+	return nSize;
+}
+
+void CObjPool::setShareMemory(byte* pShareMemory)
+{
+	mPoolImp->mPlayerEntityPool.init(pShareMemory);
+	pShareMemory += mPoolImp->mPlayerEntityPool.getMemorySize();
+
+	mPoolImp->mItemCommonPool.init(pShareMemory);
+	pShareMemory += mPoolImp->mItemCommonPool.getMemorySize();
+
+	mPoolImp->mItemEquipPool.init(pShareMemory);
+}
+
 CObj* CObjPool::allocObj(EmObjType eType)
 {
 	CObj* pObj = NULL;
@@ -184,45 +203,55 @@ void CObjPool::logObjNum()
 
 	nLen += snprintf(acBuffer + nLen, nMaxLen - nLen, "%20s\t%6d\t%6d\n",
 		"mLoginPlayerPool",
-		mPoolImp->mLoginPlayerPool.getUsedNum(),
+		mPoolImp->mLoginPlayerPool.getObjNum(),
 		mPoolImp->mLoginPlayerPool.getMaxNum());
 
 	nLen += snprintf(acBuffer + nLen, nMaxLen - nLen, "%20s\t%6d\t%6d\n",
 		"mPlayerEntityPool",
-		mPoolImp->mPlayerEntityPool.getUsedNum(),
+		mPoolImp->mPlayerEntityPool.getObjNum(),
 		mPoolImp->mPlayerEntityPool.getMaxNum());
 
 	nLen += snprintf(acBuffer + nLen, nMaxLen - nLen, "%20s\t%6d\t%6d\n",
 		"mOgreEntityPool",
-		mPoolImp->mOgreEntityPool.getUsedNum(),
+		mPoolImp->mOgreEntityPool.getObjNum(),
 		mPoolImp->mOgreEntityPool.getMaxNum());
 
 	nLen += snprintf(acBuffer + nLen, nMaxLen - nLen, "%20s\t%6d\t%6d\n",
 		"mFuncNPCEntityPool",
-		mPoolImp->mFuncNPCEntityPool.getUsedNum(),
+		mPoolImp->mFuncNPCEntityPool.getObjNum(),
 		mPoolImp->mFuncNPCEntityPool.getMaxNum());
 
 	nLen += snprintf(acBuffer + nLen, nMaxLen - nLen, "%20s\t%6d\t%6d\n",
 		"mItemEntityPool",
-		mPoolImp->mItemEntityPool.getUsedNum(),
+		mPoolImp->mItemEntityPool.getObjNum(),
 		mPoolImp->mItemEntityPool.getMaxNum());
 
 	nLen += snprintf(acBuffer + nLen, nMaxLen - nLen, "%20s\t%6d\t%6d\n",
 		"mItemCommonPool",
-		mPoolImp->mItemCommonPool.getUsedNum(),
+		mPoolImp->mItemCommonPool.getObjNum(),
 		mPoolImp->mItemCommonPool.getMaxNum());
 
 	nLen += snprintf(acBuffer + nLen, nMaxLen - nLen, "%20s\t%6d\t%6d\n",
 		"mItemEquipPool",
-		mPoolImp->mItemEquipPool.getUsedNum(),
+		mPoolImp->mItemEquipPool.getObjNum(),
 		mPoolImp->mItemEquipPool.getMaxNum());
 
 	nLen += snprintf(acBuffer + nLen, nMaxLen - nLen, "%20s\t%6d\t%6d\n",
 		"mEntityTimerPool",
-		mPoolImp->mEntityTimerPool.getUsedNum(),
+		mPoolImp->mEntityTimerPool.getObjNum(),
 		mPoolImp->mEntityTimerPool.getMaxNum());
 
 	nLen += snprintf(acBuffer + nLen, nMaxLen - nLen, "************************************************");
 
 	LOG_INFO(acBuffer);
+}
+
+int CObjPool::getPlayerMinID()
+{
+	return mPoolImp->mPlayerEntityPool.getMinID();
+}
+
+int CObjPool::getPlayerMaxID()
+{
+	return mPoolImp->mPlayerEntityPool.getMaxID();
 }

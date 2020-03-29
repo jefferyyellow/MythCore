@@ -102,7 +102,7 @@ void CLoginModule::onTimer(unsigned int nTickOffset)
 				
 				itTmp = it;
 				++it;
-				mLoginList.erase(it);
+				mLoginList.erase(itTmp);
 
 				CObjPool::Inst()->free(nObjID);
 				// 如果登录完成了就不能断开连接

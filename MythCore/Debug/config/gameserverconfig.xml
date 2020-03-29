@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <Data>
   <DBInfo>
-    <Host value="192.168.10.13"/>
+    <Host value="106.13.146.178"/>
     <UserName value="root"/>
     <PassWord value="webgame"/>
     <DefaultDataBase value="Myth"/>

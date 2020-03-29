@@ -22,12 +22,12 @@ TEST(ObjPool, TestDoubleFreeObj)
 {
 	CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->allocObj(emObjType_Entity_Player));
 	CObjPoolImp* pPoolImp = CObjPool::Inst()->getPoolImp();
-	int nUsedNum = pPoolImp->mPlayerEntityPool.getUsedNum();
+	int nUsedNum = pPoolImp->mPlayerEntityPool.getObjNum();
 
 	int nObjId = pPlayer->getObjID();
 	CObjPool::Inst()->free(nObjId);
 	CObjPool::Inst()->free(nObjId);
-	nUsedNum = pPoolImp->mPlayerEntityPool.getUsedNum();
+	nUsedNum = pPoolImp->mPlayerEntityPool.getObjNum();
 	EXPECT_EQ(0, nUsedNum);
 }
 
