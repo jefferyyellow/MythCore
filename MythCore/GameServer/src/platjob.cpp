@@ -4,6 +4,8 @@
 #include "internalmsgpool.h"
 #include "locallogjob.h"
 #include "gameserver.h"
+#include "jobmanager.h"
+#include "scenejob.h"
 void	sendPlatWebRequest(const char* pURL, const char* pData, EmHttpType eHttpType, bool bNeedBack)
 {
 	CIMPlatWebRequest* pPlatWebRequest = static_cast<CIMPlatWebRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_PLAT_WEB));
@@ -25,7 +27,7 @@ void	sendPlatWebRequest(const char* pURL, const char* pData, EmHttpType eHttpTyp
 	pPlatWebRequest->mHttpType = eHttpType;
 	pPlatWebRequest->mNeedCallBack = bNeedBack;
 
-	CGameServer::Inst()->pushTask(emJobTaskType_Plat, pPlatWebRequest);
+	CJobManager::Inst()->pushTask(emJobTaskType_Plat, pPlatWebRequest);
 }
 
 bool CPlatJob::initAll(const char* pRedisIP, int nRedisPort, int nSocketNum, int nListenPort)

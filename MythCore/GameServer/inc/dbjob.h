@@ -27,6 +27,8 @@ public:
 	void	pushBackJobData(const byte* pData, int nDataLength);
 	/// 取出工作数据
 	void	popUpJobData(byte* pData, int &rLength);
+	/// 检查工作数据是否为空
+	int		checkJobDataEmpty();
 	/// 处理DB流里的数据
 	void	checkDBStream();
 	/// 处理保存玩家基本属性

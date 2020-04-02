@@ -6,6 +6,7 @@
 #include "entityplayer.h"
 #include "dbmodule.hxx.pb.h"
 #include "errcode.h"
+#include "scenejob.h"
 CDBJob::CDBJob()
 {
 	init();
@@ -52,9 +53,7 @@ void CDBJob::doing(int uParam)
 	if (CSceneJob::Inst()->getExited())
 	{
 		// 检查请求队列里是否还有数据，如果没有数据了，表示可以退出了
-		int nLength = 0;
-		popUpJobData((byte*)&mDBRequest, nLength);
-		if (nLength <= 0)
+		if ((!getExited()) && checkJobDataEmpty())
 		{
 			setExited(true);
 		}
@@ -95,6 +94,14 @@ void CDBJob::popUpJobData(byte* pData, int &rLength)
 
 	mJobStreamLock.lock();
 	mJobStream.GetHeadPacket(pData, rLength);
+	mJobStreamLock.unlock();
+}
+
+/// 得到工作数据量大小
+int CDBJob::checkJobDataEmpty()
+{
+	mJobStreamLock.lock();
+	return mJobStream.IsEmpty();
 	mJobStreamLock.unlock();
 }
 
@@ -268,7 +275,7 @@ int CDBJob::parsePBForSql(const Message& rMessage)
 			case ::google::protobuf::FieldDescriptor::CPPTYPE_STRING:
 			{
 				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
-					"%s=%s", pFieldDescriptor->name().c_str(), pRef->GetString(rMessage, pFieldDescriptor).c_str());
+					"%s='%s'", pFieldDescriptor->name().c_str(), pRef->GetString(rMessage, pFieldDescriptor).c_str());
 				mSqlLength += nLength;
 				break;
 			}
@@ -276,15 +283,21 @@ int CDBJob::parsePBForSql(const Message& rMessage)
 			{
 				const Message &rSubMsg = pRef->GetMessage(rMessage, pFieldDescriptor);
 				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
-					"%s=", pFieldDescriptor->name().c_str());
+					"%s='", pFieldDescriptor->name().c_str());
 				mSqlLength += nLength;
 				if (rSubMsg.SerializeToArray(tBuffer, sizeof(tBuffer) - 1))
 				{
 					nLength = (int)mysql_real_escape_string(pMysql, (char*)&(mDBRequest.mSqlBuffer[mSqlLength]), tBuffer, (unsigned long)rSubMsg.ByteSize());
-					if (nLength == 0)
+					if (nLength > 0)
+					{
+						mSqlLength += nLength;
+						nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+							"%s", "'");
+					}
+					else if(nLength == 0)
 					{
 						nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
-							"%s", "NULL");
+							"%s", "NULL'");
 					}
 					else if (nLength < 0)
 					{
@@ -388,7 +401,7 @@ int CDBJob::parsePBForPrecedure(const Message& rMessage)
 			case ::google::protobuf::FieldDescriptor::CPPTYPE_STRING:
 			{
 				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
-					"%s", pFieldDescriptor->name().c_str(), pRef->GetString(rMessage, pFieldDescriptor).c_str());
+					"'%s'", pFieldDescriptor->name().c_str(), pRef->GetString(rMessage, pFieldDescriptor).c_str());
 				mSqlLength += nLength;
 				break;
 			}
@@ -397,6 +410,10 @@ int CDBJob::parsePBForPrecedure(const Message& rMessage)
 				const Message &rSubMsg = pRef->GetMessage(rMessage, pFieldDescriptor);
 				if (rSubMsg.SerializeToArray(tBuffer, sizeof(tBuffer) - 1))
 				{
+					nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+						"%s", "'");
+					mSqlLength += nLength;
+
 					nLength = (int)mysql_real_escape_string(pMysql, (char*)&(mDBRequest.mSqlBuffer[mSqlLength]), tBuffer, (unsigned long)rSubMsg.ByteSize());
 					if (nLength == 0)
 					{
@@ -407,6 +424,9 @@ int CDBJob::parsePBForPrecedure(const Message& rMessage)
 					{
 						return -1;
 					}
+					mSqlLength += nLength;
+					nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+						"%s", "'");
 					mSqlLength += nLength;
 				}
 				else

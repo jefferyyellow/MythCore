@@ -19,7 +19,7 @@
 #define CAPACITY_ITEM_EQUIP			CAPACITY_PLAYER * 200
 #define CAPACITY_ENTITY_TIMER		200000	// 20万的计时器
 
-class CObjPoolImp
+class CShareObjPoolImp
 {
 public:
 	/// 和玩家相关的一定要放在这里，使用共享内存的方式,加在这里的，注意加CObjPool::getShareMemorySize和初始化
@@ -31,8 +31,10 @@ public:
 	PlayerEntityPool		mPlayerEntityPool;			// 玩家实体池
 	ItemCommonPool			mItemCommonPool;			// 通用道具实体池
 	ItemEquipPool			mItemEquipPool;				// 装备道具实体池
+};
 
-
+class CObjPoolImp
+{
 public:
 	typedef CObjManager<CLoginPlayer, CAPACITY_LOGIN_PLAYER, 32, 32, OBJ_ID_RANGE(emObjType_LoginPlayer)> LoginPlayerPool;
 	typedef CObjManager<CEntityOgre, CAPACITY_ENTITY_OGRE, 1000, 100, OBJ_ID_RANGE(emObjType_Entity_Ogre)> OgreEntityPool;

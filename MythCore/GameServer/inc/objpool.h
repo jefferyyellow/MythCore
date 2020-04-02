@@ -5,6 +5,7 @@
 #include "servercommon.h"
 using namespace Myth;
 class CObjPoolImp;
+class CShareObjPoolImp;
 class CObjPool : public CSingleton<CObjPool>
 {
 	friend class CSingleton<CObjPool>;
@@ -28,6 +29,7 @@ public:
 
 	CObjPoolImp* getPoolImp() const { return mPoolImp; }
 private:
-	CObjPoolImp* mPoolImp;
+	CObjPoolImp*		mPoolImp;
+	CShareObjPoolImp*	mSharePoolImp;
 };
 #endif

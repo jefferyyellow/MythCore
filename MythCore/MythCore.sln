@@ -25,6 +25,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ServerManager", "ServerManager\ServerManager.vcxproj", "{D8C74AC3-6DA4-453E-AC64-53BA0ECFD63E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ServerCrashResave", "ServerCrashResave\ServerCrashResave.vcxproj", "{2F4102DF-50D7-4528-A99A-7CF7DAD31D97}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E5884C80-3425-4699-A336-9A08CF368C8C} = {E5884C80-3425-4699-A336-9A08CF368C8C}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

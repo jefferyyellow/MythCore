@@ -41,14 +41,35 @@ private:
 LONG WINAPI DumpException(struct _EXCEPTION_POINTERS *pExceptionInfo)
 {
 	//WinExec("cmd.exe", SW_SHOWNORMAL);
-	ShellExecute(NULL,_T("open"),_T("CrashResave.exe"),NULL,NULL,SW_SHOWNORMAL);
+	ShellExecute(NULL, _T("open"), _T("CrashResave.exe"), NULL, NULL, SW_SHOWNORMAL);
 	return 0;
 }
 #else
 void sigCrash(int signo)
 {
-	system("./CrashResave");
-	signal(SIGSEGV, SIG_DFL);
+	//system("./CrashResave");
+	//signal(SIGSEGV, SIG_DFL);
+
+	pid_t pid;
+	if ((pid = fork()) < 0)
+	{
+		return;
+	}
+	else if (pid == 0)
+	{
+		printf("\n\n--------------excele  Crash   Resave  --------------\n");
+		if (execle("./CrashResave", (char*)0) < 0)
+		{
+				return;
+		}
+		// 注意下面这行是打印不了的，因为execle成功了就不会返回，失败了就return返回了
+		printf("222222222222excele  Crash   Resave  ");
+	}
+	else
+	{
+		signal(SIGSEGV, SIG_DFL);
+		return;
+	}
 	//pid_t pid = fork();
 	//if (pid < 0)
 	//{

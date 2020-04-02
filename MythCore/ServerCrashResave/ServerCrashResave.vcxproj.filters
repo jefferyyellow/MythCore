@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="msg">
+      <UniqueIdentifier>{f4317d2c-aef9-4afe-a768-8f8b7acc8606}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gameserver">
+      <UniqueIdentifier>{856a5c31-3a08-43d4-9ebc-c08760b7de19}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -21,10 +27,288 @@
     <ClCompile Include="ServerResave.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\message\dbmodule.hxx.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\common.hxx.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\chatmodule.hxx.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\dailyactmodule.hxx.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\itemmodule.hxx.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\loginmessage.hxx.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\mapmodule.hxx.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\message.hxx.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\propertymodule.hxx.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\rankmodule.hxx.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\serveractmodule.hxx.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\skillmodule.hxx.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\taskmodule.hxx.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\template.hxx.pb.cc">
+      <Filter>msg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dep\tinyxml\tinyxml2.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\aistate.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\aistrategy.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\chatmodule.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\curlhandle.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\dailyactivity.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\dailyactmodule.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\dbjob.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\dbmodule.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\dirtyword.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\entity.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\entityplayer.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\entitytimer.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\equip.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\gameserver.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\gameserverconfig.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\geometrytype.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\gmcommandmanager.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\gtest.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\instance.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\instancemodule.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\internalmsg.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\internalmsgpool.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\itemcontainer.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\itemmodule.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\itemmoduletest.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\itemobject.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\itemunit.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\job.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\jobmanager.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\locallogjob.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\loginmodule.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\loginplayer.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\mapconfigmanager.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\mapmamager.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\mapmodule.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\mapmoduletest.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\mapregionsearch.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\messagefactory.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\objmanager.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\objpool.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\perfmanager.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\platjob.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\platlog.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\propertymodule.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\propertyunit.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\rankmodule.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\rankmoduletest.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\redis.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\scenejob.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\serveractivity.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\serveractivityunit.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\serveractmodule.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\serverutility.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\skillmodule.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\skillunit.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\strutility.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\taskconfig.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\taskmodule.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\taskmoduletest.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\taskunit.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\teammodule.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GameServer\src\template.cpp">
+      <Filter>gameserver</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ServerResave.h">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\message\dbmodule.hxx.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\common.hxx.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\chatmodule.hxx.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\dailyactmodule.hxx.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\itemmodule.hxx.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\loginmessage.hxx.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\mapmodule.hxx.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\message.hxx.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\propertymodule.hxx.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\rankmodule.hxx.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\serveractmodule.hxx.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\skillmodule.hxx.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\taskmodule.hxx.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\template.hxx.pb.h">
+      <Filter>msg</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\GameServer\src\CMakeLists.txt">
+      <Filter>gameserver</Filter>
+    </Text>
   </ItemGroup>
 </Project>

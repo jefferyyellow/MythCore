@@ -20,7 +20,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -51,13 +51,17 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;MYTH_OS_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;MYTH_OS_WINDOWS;_CRT_SECURE_NO_WARNINGS;__SERVER_CRASH_RESAVE__;__DEBUG__;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\MythCore\include;..\GameServer\inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../MythCore/include;../dep/protobuffer;../message;../dep/mysql/include;./inc;../dep/tinyxml;../dep;../dep/libcurl/include;../dep/hiredis/windows/include;../dep/jsoncpp/;../dep/libevent/windows/include;../dep/gtest/include;../GameServer/inc</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>../Debug;../dep/protobuffer/lib;../dep/gtest/lib;../dep/libcurl/lib;../dep/hiredis/windows/lib;../dep/jsoncpp/lib;../dep/libevent/windows/lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>MythCore.lib;libprotobufd.lib;libcurl.lib;hiredis.lib;lib_json.lib;libevent_core.lib;gtestd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -79,11 +83,105 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\dep\tinyxml\tinyxml2.cpp" />
+    <ClCompile Include="..\GameServer\src\aistate.cpp" />
+    <ClCompile Include="..\GameServer\src\aistrategy.cpp" />
+    <ClCompile Include="..\GameServer\src\chatmodule.cpp" />
+    <ClCompile Include="..\GameServer\src\curlhandle.cpp" />
+    <ClCompile Include="..\GameServer\src\dailyactivity.cpp" />
+    <ClCompile Include="..\GameServer\src\dailyactmodule.cpp" />
+    <ClCompile Include="..\GameServer\src\dbjob.cpp" />
+    <ClCompile Include="..\GameServer\src\dbmodule.cpp" />
+    <ClCompile Include="..\GameServer\src\dirtyword.cpp" />
+    <ClCompile Include="..\GameServer\src\entity.cpp" />
+    <ClCompile Include="..\GameServer\src\entityplayer.cpp" />
+    <ClCompile Include="..\GameServer\src\entitytimer.cpp" />
+    <ClCompile Include="..\GameServer\src\equip.cpp" />
+    <ClCompile Include="..\GameServer\src\gameserver.cpp" />
+    <ClCompile Include="..\GameServer\src\gameserverconfig.cpp" />
+    <ClCompile Include="..\GameServer\src\geometrytype.cpp" />
+    <ClCompile Include="..\GameServer\src\gmcommandmanager.cpp" />
+    <ClCompile Include="..\GameServer\src\gtest.cpp" />
+    <ClCompile Include="..\GameServer\src\instance.cpp" />
+    <ClCompile Include="..\GameServer\src\instancemodule.cpp" />
+    <ClCompile Include="..\GameServer\src\internalmsg.cpp" />
+    <ClCompile Include="..\GameServer\src\internalmsgpool.cpp" />
+    <ClCompile Include="..\GameServer\src\itemcontainer.cpp" />
+    <ClCompile Include="..\GameServer\src\itemmodule.cpp" />
+    <ClCompile Include="..\GameServer\src\itemmoduletest.cpp" />
+    <ClCompile Include="..\GameServer\src\itemobject.cpp" />
+    <ClCompile Include="..\GameServer\src\itemunit.cpp" />
+    <ClCompile Include="..\GameServer\src\job.cpp" />
+    <ClCompile Include="..\GameServer\src\jobmanager.cpp" />
+    <ClCompile Include="..\GameServer\src\locallogjob.cpp" />
+    <ClCompile Include="..\GameServer\src\loginmodule.cpp" />
+    <ClCompile Include="..\GameServer\src\loginplayer.cpp" />
+    <ClCompile Include="..\GameServer\src\mapconfigmanager.cpp" />
+    <ClCompile Include="..\GameServer\src\mapmamager.cpp" />
+    <ClCompile Include="..\GameServer\src\mapmodule.cpp" />
+    <ClCompile Include="..\GameServer\src\mapmoduletest.cpp" />
+    <ClCompile Include="..\GameServer\src\mapregionsearch.cpp" />
+    <ClCompile Include="..\GameServer\src\messagefactory.cpp" />
+    <ClCompile Include="..\GameServer\src\objmanager.cpp" />
+    <ClCompile Include="..\GameServer\src\objpool.cpp" />
+    <ClCompile Include="..\GameServer\src\perfmanager.cpp" />
+    <ClCompile Include="..\GameServer\src\platjob.cpp" />
+    <ClCompile Include="..\GameServer\src\platlog.cpp" />
+    <ClCompile Include="..\GameServer\src\propertymodule.cpp" />
+    <ClCompile Include="..\GameServer\src\propertyunit.cpp" />
+    <ClCompile Include="..\GameServer\src\rankmodule.cpp" />
+    <ClCompile Include="..\GameServer\src\rankmoduletest.cpp" />
+    <ClCompile Include="..\GameServer\src\redis.cpp" />
+    <ClCompile Include="..\GameServer\src\scenejob.cpp" />
+    <ClCompile Include="..\GameServer\src\serveractivity.cpp" />
+    <ClCompile Include="..\GameServer\src\serveractivityunit.cpp" />
+    <ClCompile Include="..\GameServer\src\serveractmodule.cpp" />
+    <ClCompile Include="..\GameServer\src\serverutility.cpp" />
+    <ClCompile Include="..\GameServer\src\skillmodule.cpp" />
+    <ClCompile Include="..\GameServer\src\skillunit.cpp" />
+    <ClCompile Include="..\GameServer\src\strutility.cpp" />
+    <ClCompile Include="..\GameServer\src\taskconfig.cpp" />
+    <ClCompile Include="..\GameServer\src\taskmodule.cpp" />
+    <ClCompile Include="..\GameServer\src\taskmoduletest.cpp" />
+    <ClCompile Include="..\GameServer\src\taskunit.cpp" />
+    <ClCompile Include="..\GameServer\src\teammodule.cpp" />
+    <ClCompile Include="..\GameServer\src\template.cpp" />
+    <ClCompile Include="..\message\chatmodule.hxx.pb.cc" />
+    <ClCompile Include="..\message\common.hxx.pb.cc" />
+    <ClCompile Include="..\message\dailyactmodule.hxx.pb.cc" />
+    <ClCompile Include="..\message\dbmodule.hxx.pb.cc" />
+    <ClCompile Include="..\message\itemmodule.hxx.pb.cc" />
+    <ClCompile Include="..\message\loginmessage.hxx.pb.cc" />
+    <ClCompile Include="..\message\mapmodule.hxx.pb.cc" />
+    <ClCompile Include="..\message\message.hxx.pb.cc" />
+    <ClCompile Include="..\message\propertymodule.hxx.pb.cc" />
+    <ClCompile Include="..\message\rankmodule.hxx.pb.cc" />
+    <ClCompile Include="..\message\serveractmodule.hxx.pb.cc" />
+    <ClCompile Include="..\message\skillmodule.hxx.pb.cc" />
+    <ClCompile Include="..\message\taskmodule.hxx.pb.cc" />
+    <ClCompile Include="..\message\template.hxx.pb.cc" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ServerResave.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\message\chatmodule.hxx.pb.h" />
+    <ClInclude Include="..\message\common.hxx.pb.h" />
+    <ClInclude Include="..\message\dailyactmodule.hxx.pb.h" />
+    <ClInclude Include="..\message\dbmodule.hxx.pb.h" />
+    <ClInclude Include="..\message\itemmodule.hxx.pb.h" />
+    <ClInclude Include="..\message\loginmessage.hxx.pb.h" />
+    <ClInclude Include="..\message\mapmodule.hxx.pb.h" />
+    <ClInclude Include="..\message\message.hxx.pb.h" />
+    <ClInclude Include="..\message\propertymodule.hxx.pb.h" />
+    <ClInclude Include="..\message\rankmodule.hxx.pb.h" />
+    <ClInclude Include="..\message\serveractmodule.hxx.pb.h" />
+    <ClInclude Include="..\message\skillmodule.hxx.pb.h" />
+    <ClInclude Include="..\message\taskmodule.hxx.pb.h" />
+    <ClInclude Include="..\message\template.hxx.pb.h" />
     <ClInclude Include="ServerResave.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\GameServer\src\CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

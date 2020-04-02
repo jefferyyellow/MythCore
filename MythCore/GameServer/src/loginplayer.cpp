@@ -6,6 +6,7 @@
 #include "dbmodule.h"
 #include "errcode.h"
 #include "locallogjob.h"
+#include "scenejob.h"
 void CLoginPlayer::init()
 {
     mAccountID = 0;

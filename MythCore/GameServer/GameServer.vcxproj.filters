@@ -294,6 +294,12 @@
     <ClCompile Include="src\aistate.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\aistrategy.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\jobmanager.cpp">
+      <Filter>job</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -626,8 +632,8 @@
     <ClInclude Include="inc\aistrategy.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="src\aistrategy.cpp">
-      <Filter>源文件</Filter>
+    <ClInclude Include="inc\jobmanager.h">
+      <Filter>job</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

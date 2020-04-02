@@ -105,7 +105,7 @@ void setExclusive(char* pLockFile)
 // ±ÀÀ£×ª´æ
 LONG WINAPI DumpException(struct _EXCEPTION_POINTERS *pExceptionInfo)
 {
-	ShellExecute(NULL, _T("open"), _T("CrashResave.exe"), NULL, NULL, SW_SHOWNORMAL);
+	ShellExecute(NULL, _T("open"), _T("ServerCrashResave.exe"), NULL, NULL, SW_SHOWNORMAL);
 	return 0;
 }
 #endif
@@ -167,7 +167,11 @@ int main(int argc, char* argv[])
 	setExclusive("gameserver.lock");
 
 	CGameServer::createInst();
- 	CGameServer::Inst()->initAll();
+ 	bool bResult = CGameServer::Inst()->initAll();
+	if (!bResult)
+	{
+		return -1;
+	}
 
 	/// ***********************************************************
 	/// gtest´úÂë

@@ -3,7 +3,7 @@
 #include "propertymodule.h"
 #include "objpool.h"
 #include "entityplayer.h"
-
+#include "jobmanager.h"
 /// Æô¶¯·þÎñÆ÷
 void CDBModule::onLaunchServer()
 {
@@ -73,7 +73,7 @@ void CDBModule::pushDBTask(int nPlayerID, int nSessionType, int nParam1, int nPa
 	mDBRequest.mSqlLenth = nLength;
 
 	int nTotalLength = nLength + sizeof(CDBRequestHeader);
-	CGameServer::Inst()->pushDBTask(nPlayerID, (byte*)(&mDBRequest), nTotalLength);
+	CJobManager::Inst()->pushDBTask(nPlayerID, (byte*)(&mDBRequest), nTotalLength);
 }
 
 void CDBModule::pushDBTask(int nPlayerID, int nSessionType, int nParam1, int nParam2, Message* pMessage)
@@ -90,7 +90,7 @@ void CDBModule::pushDBTask(int nPlayerID, int nSessionType, int nParam1, int nPa
 	mDBRequest.mSqlLenth = pMessage->ByteSize();
 
 	int nTotalLength = pMessage->ByteSize() + sizeof(CDBRequestHeader);
-	CGameServer::Inst()->pushDBTask(nPlayerID, (byte*)(&mDBRequest), nTotalLength);
+	CJobManager::Inst()->pushDBTask(nPlayerID, (byte*)(&mDBRequest), nTotalLength);
 }
 
 void CDBModule::onDBSession()

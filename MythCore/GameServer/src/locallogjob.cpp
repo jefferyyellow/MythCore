@@ -1,6 +1,8 @@
 #include "locallogjob.h"
 #include "gameserver.h"
 #include "internalmsgpool.h"
+#include "jobmanager.h"
+#include "scenejob.h"
 void LogLocalLog(EmLogType eLogType, const char* pFile, int nLine, const char* pFunction, const char* pFormat, ...)
 {
 	CIMLocalLogRequest* pLocalLogRequest = static_cast<CIMLocalLogRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_LOCAL_LOG));
@@ -15,7 +17,7 @@ void LogLocalLog(EmLogType eLogType, const char* pFile, int nLine, const char* p
 	vsnprintf(pLocalLogRequest->mLogContent + nSize, sizeof(pLocalLogRequest->mLogContent)-nSize - 1, pFormat, valist);
 	va_end(valist);
 	pLocalLogRequest->mLogType = eLogType;
-	CGameServer::Inst()->pushTask(emJobTaskType_LocalLog, pLocalLogRequest);
+	CJobManager::Inst()->pushTask(emJobTaskType_LocalLog, pLocalLogRequest);
 }
 
 void LogNoLocation(EmLogType eLogType, const char* pFormat, ...)
@@ -33,7 +35,7 @@ void LogNoLocation(EmLogType eLogType, const char* pFormat, ...)
 
 
 	pLocalLogRequest->mLogType = eLogType;
-	CGameServer::Inst()->pushTask(emJobTaskType_LocalLog, pLocalLogRequest);
+	CJobManager::Inst()->pushTask(emJobTaskType_LocalLog, pLocalLogRequest);
 }
 
 void LogLocalDebugLog(const char* pLogName, const char* pFile, int nLine, const char* pFunction, const char* pFormat, ...)
@@ -52,7 +54,7 @@ void LogLocalDebugLog(const char* pLogName, const char* pFile, int nLine, const 
 	int nSize = snprintf(pLocalLogRequest->mLogContent, sizeof(pLocalLogRequest->mLogContent)-1, "[%s:%d (%s)] ", LOG_FILE(pFile), nLine, pFunction);
 	vsnprintf(pLocalLogRequest->mLogContent + nSize, sizeof(pLocalLogRequest->mLogContent)-nSize - 1, pFormat, valist);
 	va_end(valist);
-	CGameServer::Inst()->pushTask(emJobTaskType_LocalLog, pLocalLogRequest);
+	CJobManager::Inst()->pushTask(emJobTaskType_LocalLog, pLocalLogRequest);
 }
 
 void CLocalLogJob::init()
@@ -108,7 +110,7 @@ void CLocalLogJob::doing(int uParam)
 	// 如果scene job已经退出完成了,表示服务器开始进入退出的流程了
 	if (CSceneJob::Inst()->getExited())
 	{
-		if (CGameServer::Inst()->checkOtherJobExit())
+		if (CJobManager::Inst()->checkOtherJobExit())
 		{
 			setExited(true);
 		}

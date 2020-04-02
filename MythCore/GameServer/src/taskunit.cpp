@@ -227,7 +227,7 @@ void CTaskUnit::createToPB(PBTaskList* pbTaskList)
 	{
 		return;
 	}
-	for (int i = 0; i < MAX_TASK_ID; ++ i)
+	for (int i = 0; i < mCompleteTasks.getBitSetSize(); ++ i)
 	{
 		pbTaskList->add_completetasks(mCompleteTasks.getBitSet(i));
 	}

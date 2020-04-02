@@ -3,14 +3,6 @@
 #include "servercommon.h"
 #include "simplelock.h"
 #include <list>
-enum EmJobTaskType
-{
-	emJobTaskType_None			= 0,			// 未知
-	emJobTaskType_DB			= 1,			// DB
-	emJobTaskType_LocalLog		= 2,			// 本地日志
-	emJobTaskType_Scene			= 3,			// 场景
-	emJobTaskType_Plat			= 4,			// 平台
-};
 
 using namespace Myth;
 class CInternalMsg;

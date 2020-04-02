@@ -38,7 +38,7 @@ public:
 	typedef std::map<unsigned int, int> PLAYER_SOCKET_LIST;
 	/// Âß¼­Ä£¿éÁÐ±í
 	typedef std::list<CLogicModule*> LOGIC_MODULE_LIST;
-public:
+private:
 	CSceneJob();
 	~CSceneJob(){}
 

@@ -22,9 +22,11 @@ namespace Myth
 			T* pMemory = (T*)pShareMemory;
 			for (int i = 0; i < MaxCount; ++ i)
 			{
+				mFreeIndex[i] = i;
 				mBlockMemory[i] = pMemory;
 				++ pMemory;
 			}
+			mFreeCount = MaxCount;
 		}
 
 		T*			allocate(int &nMemIndex)

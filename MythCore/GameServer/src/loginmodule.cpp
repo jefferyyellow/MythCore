@@ -8,6 +8,7 @@
 #include "timemanager.h"
 #include "loginplayer.h"
 #include "dbmodule.h"
+#include "scenejob.h"
 CLoginModule::CLoginModule()
 :mLoginCheckTime(1000)
 {

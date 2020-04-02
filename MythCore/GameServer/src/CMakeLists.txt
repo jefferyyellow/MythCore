@@ -26,7 +26,6 @@ SET(TMP_SRC_LIST
     locallogjob.cpp
     loginmodule.cpp
     loginplayer.cpp
-    main.cpp
     mapconfigmanager.cpp
     mapmamager.cpp
     mapmodule.cpp

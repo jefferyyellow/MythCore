@@ -3,6 +3,7 @@
 #include "timemanager.h"
 #include "internalmsgpool.h"
 #include "gameserver.h"
+#include "jobmanager.h"
 using namespace Myth;
 
 void LogPlatLog(const char* pLogName, Json::Value& tLogValue)
@@ -15,7 +16,7 @@ void LogPlatLog(const char* pLogName, Json::Value& tLogValue)
 	}
 	Json::StreamWriterBuilder wbuilder;
 	strncpy(pRequest->mContent, Json::writeString(wbuilder, tLogValue).c_str(), sizeof(pRequest->mContent) - 1);
-	CGameServer::Inst()->pushTask(emJobTaskType_Plat, pRequest);
+	CJobManager::Inst()->pushTask(emJobTaskType_Plat, pRequest);
 }
 
 void LogServerStartComplete()

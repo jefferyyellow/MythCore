@@ -1,9 +1,9 @@
 cmake_minimum_required (VERSION 2.8)
-PROJECT(GameServer)
+PROJECT(ServerCrashResave)
 #定义宏
 ADD_DEFINITIONS(-DMYTH_OS_UNIX)
 #包含的头文件目录
-INCLUDE_DIRECTORIES(inc ../MythCore/include ../dep/tinyxml ../dep/mysql/include ../dep/protobuffer ../message ../dep ../dep/libcurl/include ../dep/libevent/linux/include/ ../dep/jsoncpp ../dep/hiredis/linux/include ../dep/gtest/include)
+INCLUDE_DIRECTORIES(../GameServer/inc ../MythCore/include ../dep/tinyxml ../dep/mysql/include ../dep/protobuffer ../message ../dep ../dep/libcurl/include ../dep/libevent/linux/include/ ../dep/jsoncpp ../dep/hiredis/linux/include ../dep/gtest/include)
 #设置C++的编译标志
 SET(CMAKE_CXX_FLAGS "-g -pipe  -fprofile-arcs -ftest-coverage -DMEDIUM_SIZE -DMYTH_OS_UNIX -D__DEBUG__ -finput-charset='gbk' -fexec-charset='gbk' -fwide-exec-charset='unicode'")
 
@@ -14,7 +14,7 @@ SET(EXECUTABLE_OUTPUT_PATH ../../Debug)
 #连接MyCore和rt库
 #idn ldap ssl这些库都是因为curl库链接需要
 LINK_LIBRARIES(MythCore rt mysqlclient protobuf dl gtest hiredis curl event_core idn ldap ssl pthread jsoncpp)
-ADD_SUBDIRECTORY(src)
+ADD_SUBDIRECTORY(../GameServer/src)
 #message(STATUS "src list*****************************" ${MESSAGE_SRC_LIST})
 
 ADD_SUBDIRECTORY(../message/ message)
@@ -23,8 +23,12 @@ foreach(messagesrcfile ${MESSAGE_SRC_LIST})
 	list(APPEND COMPLETE_MESSAGE_SRC_LIST ../message/${messagesrcfile})
 endforeach(messagesrcfile)
 
+foreach(srcfile ${SRC_LIST})
+	list(APPEND GAME_SERVER_SRC_LIST ../GameServer/${srcfile})
+endforeach(srcfile)
+
 SET(TINY_XML_SRC_LIST ../dep/tinyxml/tinyxml2.cpp)
-SET(MAIN_SRC ./src/main.cpp)
+SET(MAIN_SRC main.cpp ServerResave.cpp)
 
 #生成MythCore
-ADD_EXECUTABLE(GameServer ${MAIN_SRC} ${SRC_LIST} ${COMPLETE_MESSAGE_SRC_LIST} ${TINY_XML_SRC_LIST})
+ADD_EXECUTABLE(GameServer ${MAIN_SRC} ${GAME_SERVER_SRC_LIST} ${COMPLETE_MESSAGE_SRC_LIST} ${TINY_XML_SRC_LIST})

@@ -1,3 +1,5 @@
+#ifndef __CURLHANDLE_H__
+#define __CURLHANDLE_H__
 #include "curl.h"
 #include <vector>
 #define MAX_URL_LENGTH 256
@@ -122,3 +124,5 @@ private:
 	/// 完成的回调
 	URLCompleteCallBack*	mCompleteCallBack;
 };
+
+#endif

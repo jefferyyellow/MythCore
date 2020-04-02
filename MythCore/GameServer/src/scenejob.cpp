@@ -22,6 +22,8 @@
 #include "loginplayer.h"
 #include "platlog.h"
 #include "entitytimer.h"
+#include "curlhandle.h"
+#include "platjob.h"
 CSceneJob::CSceneJob()
 :mMinuteTimer(SECONDS_PER_MIN)
 {

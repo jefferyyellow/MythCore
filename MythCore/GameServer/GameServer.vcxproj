@@ -110,6 +110,7 @@
     <ClCompile Include="src\itemmoduletest.cpp" />
     <ClCompile Include="src\itemunit.cpp" />
     <ClCompile Include="src\job.cpp" />
+    <ClCompile Include="src\jobmanager.cpp" />
     <ClCompile Include="src\locallogjob.cpp" />
     <ClCompile Include="src\loginmodule.cpp" />
     <ClCompile Include="src\loginplayer.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="inc\itemtype.h" />
     <ClInclude Include="inc\itemunit.h" />
     <ClInclude Include="inc\job.h" />
+    <ClInclude Include="inc\jobmanager.h" />
     <ClInclude Include="inc\locallogjob.h" />
     <ClInclude Include="inc\logicmodule.h" />
     <ClInclude Include="inc\loginmodule.h" />
