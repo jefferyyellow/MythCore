@@ -9,7 +9,7 @@ SET(CMAKE_CXX_FLAGS "-g -pipe  -fprofile-arcs -ftest-coverage -DMEDIUM_SIZE -DMY
 
 #指定可执行文件目录
 LINK_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/../Debug ${CMAKE_CURRENT_SOURCE_DIR}/../dep/mysql/lib ${CMAKE_CURRENT_SOURCE_DIR}/../dep/protobuffer/lib ${CMAKE_CURRENT_SOURCE_DIR}/../dep/gtest/lib ${CMAKE_CURRENT_SOURCE_DIR}/../dep/hiredis/linux/lib ${CMAKE_CURRENT_SOURCE_DIR}/../dep/jsoncpp/lib ${CMAKE_CURRENT_SOURCE_DIR}/../dep/libcurl/lib ${CMAKE_CURRENT_SOURCE_DIR}/../dep/libevent/linux/lib)
-SET(EXECUTABLE_OUTPUT_PATH ../../Debug)
+SET(EXECUTABLE_OUTPUT_PATH ../Debug)
 
 #连接MyCore和rt库
 #idn ldap ssl这些库都是因为curl库链接需要

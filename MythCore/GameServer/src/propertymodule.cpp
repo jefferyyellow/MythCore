@@ -336,13 +336,6 @@ void CPropertyModule::savePlayer(CEntityPlayer* pPlayer)
 		return;
 	}
 
-#ifndef __SERVER_CRASH_RESAVE__
-	/// ²âÊÔÓÃ
-	pPlayer->getPropertyUnit().setLevel(pPlayer->getPropertyUnit().getLevel() + 1);
-	int *p = NULL;
-	*p = 100;
-	/// ²âÊÔÓÃ
-#endif
 
 	pPlayer->setSaveStatus(0);
 	savePlayerInfo(pPlayer);

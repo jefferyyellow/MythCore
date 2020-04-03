@@ -17,7 +17,7 @@ using namespace Myth;
 CServerResave::CServerResave()
 :mFiveSecTimer(5)
 {
-	
+	mExit = false;
 }
 
 /// ≥ı ºªØ

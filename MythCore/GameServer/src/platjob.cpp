@@ -49,11 +49,11 @@ bool CPlatJob::initAll(const char* pRedisIP, int nRedisPort, int nSocketNum, int
 		return false;
 	}
 	bResult = mAsyncRedis->connectRedisServer(pRedisIP, nRedisPort, RedisConnectHandle, RedisDisconnectHandle, CommandCallBack);
-	if (!bResult)
-	{
-		LOG_ERROR("%s", mAsyncRedis->getErrStr());
-		return false;
-	}
+	//if (!bResult)
+	//{
+	//	LOG_ERROR("%s", mAsyncRedis->getErrStr());
+	//	return false;
+	//}
 	
 	bResult = initSocket(nSocketNum, nListenPort);
 	if (!bResult)
