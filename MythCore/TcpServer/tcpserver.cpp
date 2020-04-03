@@ -57,7 +57,7 @@ bool CTcpServer::initLog()
 	CLogManager* pLogManger = CLogManager::createInst();
 	if (NULL == pLogManger)
 	{
-		printf("create log manager failure");
+		printf("create log manager failure\n");
 		return false;
 	}
 
@@ -66,7 +66,7 @@ bool CTcpServer::initLog()
 	mDefaultLog = new CLog();
 	if (NULL == mDefaultLog)
 	{
-		printf("create default log failure");
+		printf("create default log failure\n");
 		return false;
 	}
 
@@ -96,7 +96,7 @@ bool CTcpServer::initLog()
 	mStatisticsLog = new CLog();
 	if (NULL == mStatisticsLog)
 	{
-		printf("create StatisticsLog log failure");
+		printf("create StatisticsLog log failure\n");
 		return false;
 	}
 
@@ -321,21 +321,27 @@ void CTcpServer::checkKeepLiveTimeOut(time_t tTimeNow)
 		{
 			continue;
 		}
+#ifdef MYTH_OS_WINDOWS
+		CTcpSocket* pSocket = mSelectModel->getSocket(i);
+#else
+		CTcpSocket* pSocket = mEpollModel->getSocket(i);
+#endif
+		if (NULL == pSocket)
+		{
+			continue;
+		}
+		// 如果是侦听端口，自然不能关了
+		if (pSocket->GetListen())
+		{
+			continue;
+		}
+
 		// 是否在keep live期间没有任何数据到来
 		if (tTimeNow - mSocketInfo[i].mKeepLiveTime > mTcpConfig.mKeepLiveTime)
 		{
-#ifdef MYTH_OS_WINDOWS
-			CTcpSocket* pSocket = mSelectModel->getSocket(i);
-#else
-			CTcpSocket* pSocket = mEpollModel->getSocket(i);
-#endif
-			if (NULL == pSocket)
-			{
-				continue;
-			}
 			// 直接删除
-			clearSocketInfo(i, pSocket);
 			sendSocketErrToGameServer(i, emTcpError_KeepLive);
+			clearSocketInfo(i, pSocket);
 		}
 	}
 }
@@ -360,12 +366,12 @@ void CTcpServer::receiveMessage()
 			{
 				int nSocketIndex = -1;
 				CTcpSocket* pNewSocket = mSelectModel->getFreeSocket(nSocketIndex);
-				pAllSocket[i].acceptConnection(pNewSocket);
 				if (NULL == pNewSocket)
 				{
 					// 出错
 					continue;
 				}
+				pAllSocket[i].acceptConnection(pNewSocket);
 				if (NULL == pNewSocket->getRecvBuff())
 				{
 					byte* pNewSocketBuff = new byte[MAX_SOCKET_BUFF_SIZE];
@@ -407,9 +413,9 @@ void CTcpServer::receiveMessage()
 					CTcpSocket* pSocket = mSelectModel->getSocket(i);
 					if (NULL != pSocket)
 					{
+						sendSocketErrToGameServer(i, emTcpError_SendData);
 						// 客户端已经退出
 						clearSocketInfo(i, pSocket);
-						sendSocketErrToGameServer(i, emTcpError_SendData);
 					}
 					break;
 				}
@@ -451,8 +457,8 @@ void CTcpServer::receiveMessage()
 			// 出错
 			int nSocketError = rTcpSocket.getSocketErrNo();
 			LOG_ERROR("epoll wait event error, Fd: %d, Events: %d, ErrNo: %d Error: %s", nFd, pEvent->events, nSocketError, strerror(nSocketError));
-			clearSocketInfo(rTcpSocket.getSocketFd(), &rTcpSocket);
 			sendSocketErrToGameServer(rTcpSocket.getSocketFd(), emTcpError_SendData);
+			clearSocketInfo(rTcpSocket.getSocketFd(), &rTcpSocket);
 			continue;
 		}
 
@@ -460,8 +466,8 @@ void CTcpServer::receiveMessage()
 		// 不可读，直接滚蛋
 		if (0 == (EPOLLIN & pEvent->events))
 		{
-			clearSocketInfo(nFd, &pAllSocket[nFd]);
 			sendSocketErrToGameServer(i, emTcpError_ReadData);
+			clearSocketInfo(nFd, &pAllSocket[nFd]);
 			continue;
 		}
 
@@ -511,9 +517,9 @@ void CTcpServer::receiveMessage()
 			int nResult = rTcpSocket.recvData(rTcpSocket.getRecvBuffPoint(), rTcpSocket.getRecvBuffCapacity());
 			if (nResult <= 0)
 			{
+				sendSocketErrToGameServer(rTcpSocket.getSocketFd(), emTcpError_SendData);
 				// 客户端已经退出
 				clearSocketInfo(rTcpSocket.getSocketFd(), &rTcpSocket);
-				sendSocketErrToGameServer(rTcpSocket.getSocketFd(), emTcpError_SendData);
 				break;
 			}
 			else
@@ -737,7 +743,7 @@ void CTcpServer::clearSocketInfo(int nTcpIndex, CTcpSocket* pSocket)
 	pSocket->closeSocket();
 	// 总连接数减一
 	-- mServerStatistics.mTotalConnects;
-	printf("client disconnect, nTcpIndex: %d", nTcpIndex);
+	printf("client disconnect, nTcpIndex: %d\n", nTcpIndex);
 }
 
 // 加载TCP服务器配置
