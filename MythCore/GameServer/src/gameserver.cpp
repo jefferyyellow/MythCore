@@ -170,12 +170,6 @@ void CGameServer::run()
 		tv.tv_nsec = 20000000;
 		nanosleep(&tv, NULL);
 #endif
-		// 如果是退出状态，并且所以的job都已经退出完成
-		if (mExit && mpJobManager->checkAllJobExit())
-		{
-			break;
-		}
-
 		time_t tTimeNow = CTimeManager::Inst()->getCurrTime();
 		if (tTimeNow != mLastTime)
 		{
@@ -185,6 +179,12 @@ void CGameServer::run()
 				logPerf();
 			}
 			mLastTime = tTimeNow;
+		}
+
+		// 如果是退出状态，并且所以的job都已经退出完成
+		if (mExit && mpJobManager->checkAllJobExit())
+		{
+			break;
 		}
 	}
 }

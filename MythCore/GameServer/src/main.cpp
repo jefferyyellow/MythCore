@@ -12,6 +12,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/file.h>
+bool gDaemon = false;
 #endif
 #include "gtest/gtest.h"
 
@@ -49,6 +50,18 @@ void ignorePipe()
 	sigaction(SIGPIPE, &sig, NULL);
 }
 
+void sigusr1_handle(int iSigVal)
+{
+	CGameServer::Inst()->setExit(true);
+	signal(SIGUSR1, sigusr1_handle);
+}
+
+void sigusr2_handle(int iSigVal)
+{
+	//CSceneServer::GetSingletonPtr()->SetRunFlag(CSceneServer::EFLG_CTRL_QUIT);
+	signal(SIGUSR2, sigusr2_handle);
+}
+
 void setSignal()
 {
 	//signal(SIGINT, SIG_IGN);
@@ -65,6 +78,8 @@ void setSignal()
 		printf("can't catch SIGUSR1");
 	}
 	ignorePipe();
+	signal(SIGUSR1, sigusr1_handle);
+	signal(SIGUSR2, sigusr2_handle);
 }
 
 int initDaemon()
@@ -151,6 +166,13 @@ bool ParseParam(int argc, char* argv[])
 #endif // __DEBUG__
 			return true;
 		}
+
+#ifdef MYTH_OS_UNIX
+		else if (0 == strcasecmp(argv[1], "-d"))
+		{
+			gDaemon = true;
+		}
+#endif
 	}
 
 	return false;
@@ -177,12 +199,16 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
+	setExclusive("gameserver.lock");
 #ifdef MYTH_OS_UNIX
+	if (gDaemon)
+	{
+		initDaemon();
+	}
 	// ÉèÖÃÐÅºÅ
 	setSignal();
 	//initDaemon();
 #endif
-	setExclusive("gameserver.lock");
 
 	CGameServer::createInst();
  	bool bResult = CGameServer::Inst()->initAll();

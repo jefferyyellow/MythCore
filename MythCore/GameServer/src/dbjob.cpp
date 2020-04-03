@@ -101,8 +101,9 @@ void CDBJob::popUpJobData(byte* pData, int &rLength)
 int CDBJob::checkJobDataEmpty()
 {
 	mJobStreamLock.lock();
-	return mJobStream.IsEmpty();
+	bool bEmpty = mJobStream.IsEmpty();
 	mJobStreamLock.unlock();
+	return bEmpty;
 }
 
 /// 处理DB流里的数据

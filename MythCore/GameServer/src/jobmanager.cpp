@@ -139,6 +139,7 @@ bool CJobManager::initMin()
 void CJobManager::clearThread()
 {
 	mThreadPool.terminateAllThread();
+	mThreadPool.run();
 	mThreadPool.waitAllThread();
 	if (NULL != mpSceneJob)
 	{
