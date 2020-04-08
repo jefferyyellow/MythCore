@@ -1,9 +1,17 @@
-#include "dir.h"
+#include "filelist.h"
+#include "version.h"
 #include <tchar.h>
 int main()
 {
+	CVersion tVersion;
+	tVersion.loadVersionXml("version.xml");
+
 	CFileList tFileList;
-	//tFileList.ListFileDirectory(_T("."), _T(""));
-	//tFileList.SaveFileList();
-	tFileList.LoadFileList();
+	tFileList.loadFileList();
+	tFileList.listFileDirectory(_T("D:\\MythCoreGit\\MythCore\\MythCore\\tool\\VersionUpdate\\Debug\\Resource"), _T(""));
+	tFileList.saveFileList(tVersion.getCurVersion());
+	tFileList.generateDiffList(tVersion.getStartVersion(), tVersion.getCurVersion());
+	tFileList.modifyAllDiffXml(tVersion.getStartVersion(), tVersion.getCurVersion());
+	
+
 }
