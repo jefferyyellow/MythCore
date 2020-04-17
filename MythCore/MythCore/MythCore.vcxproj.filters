@@ -102,6 +102,9 @@
     <ClCompile Include="src\selectclient.cpp">
       <Filter>头文件\network</Filter>
     </ClCompile>
+    <ClCompile Include="src\crc32.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\commontype.h">
@@ -196,6 +199,9 @@
     </ClInclude>
     <ClInclude Include="include\selectclient.h">
       <Filter>头文件\network</Filter>
+    </ClInclude>
+    <ClInclude Include="include\crc32.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -142,9 +142,10 @@ void protobuf_AssignDesc_taskmodule_2ehxx() {
       sizeof(CAbortTaskResponse),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CAbortTaskResponse, _internal_metadata_));
   CUpdateTaskProcessNotify_descriptor_ = file->message_type(6);
-  static const int CUpdateTaskProcessNotify_offsets_[2] = {
+  static const int CUpdateTaskProcessNotify_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CUpdateTaskProcessNotify, taskid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CUpdateTaskProcessNotify, param1_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CUpdateTaskProcessNotify, condindex_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CUpdateTaskProcessNotify, param_),
   };
   CUpdateTaskProcessNotify_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -242,16 +243,16 @@ void protobuf_AddDesc_taskmodule_2ehxx_impl() {
     "skResponse\022\016\n\006Result\030\001 \001(\r\022\016\n\006TaskID\030\002 \001"
     "(\r\"#\n\021CAbortTaskRequest\022\016\n\006TaskID\030\001 \001(\r\""
     "4\n\022CAbortTaskResponse\022\016\n\006Result\030\001 \001(\r\022\016\n"
-    "\006TaskID\030\002 \001(\r\":\n\030CUpdateTaskProcessNotif"
-    "y\022\016\n\006TaskID\030\001 \001(\r\022\016\n\006Param1\030\002 \001(\r*\235\002\n\022TA"
-    "SK_MODULE_MSG_ID\022\030\n\024ID_TASK_MODULE_ERROR"
-    "\020\000\022\037\n\032ID_C2S_REQUEST_ACCEPT_TASK\020\200 \022 \n\033I"
-    "D_S2C_RESPONSE_ACCEPT_TASK\020\201 \022\037\n\032ID_C2S_"
-    "REQUEST_SUBMIT_TASK\020\202 \022 \n\033ID_S2C_RESPONS"
-    "E_SUBMIT_TASK\020\203 \022\036\n\031ID_C2S_REQUEST_ABORT"
-    "_TASK\020\204 \022\037\n\032ID_S2C_RESPONSE_ABORT_TASK\020\205"
-    " \022&\n!ID_S2C_NOTIFY_UPDATE_TASK_PROCESS\020\206"
-    " b\006proto3", 689);
+    "\006TaskID\030\002 \001(\r\"L\n\030CUpdateTaskProcessNotif"
+    "y\022\016\n\006TaskID\030\001 \001(\r\022\021\n\tCondIndex\030\002 \001(\r\022\r\n\005"
+    "Param\030\003 \001(\r*\235\002\n\022TASK_MODULE_MSG_ID\022\030\n\024ID"
+    "_TASK_MODULE_ERROR\020\000\022\037\n\032ID_C2S_REQUEST_A"
+    "CCEPT_TASK\020\200 \022 \n\033ID_S2C_RESPONSE_ACCEPT_"
+    "TASK\020\201 \022\037\n\032ID_C2S_REQUEST_SUBMIT_TASK\020\202 "
+    "\022 \n\033ID_S2C_RESPONSE_SUBMIT_TASK\020\203 \022\036\n\031ID"
+    "_C2S_REQUEST_ABORT_TASK\020\204 \022\037\n\032ID_S2C_RES"
+    "PONSE_ABORT_TASK\020\205 \022&\n!ID_S2C_NOTIFY_UPD"
+    "ATE_TASK_PROCESS\020\206 b\006proto3", 707);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "taskmodule.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_taskmodule_2ehxx);
@@ -2127,7 +2128,8 @@ inline const CAbortTaskResponse* CAbortTaskResponse::internal_default_instance()
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int CUpdateTaskProcessNotify::kTaskIDFieldNumber;
-const int CUpdateTaskProcessNotify::kParam1FieldNumber;
+const int CUpdateTaskProcessNotify::kCondIndexFieldNumber;
+const int CUpdateTaskProcessNotify::kParamFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 CUpdateTaskProcessNotify::CUpdateTaskProcessNotify()
@@ -2149,8 +2151,8 @@ CUpdateTaskProcessNotify::CUpdateTaskProcessNotify(const CUpdateTaskProcessNotif
 }
 
 void CUpdateTaskProcessNotify::SharedCtor() {
-  ::memset(&taskid_, 0, reinterpret_cast<char*>(&param1_) -
-    reinterpret_cast<char*>(&taskid_) + sizeof(param1_));
+  ::memset(&taskid_, 0, reinterpret_cast<char*>(&param_) -
+    reinterpret_cast<char*>(&taskid_) + sizeof(param_));
   _cached_size_ = 0;
 }
 
@@ -2205,7 +2207,7 @@ void CUpdateTaskProcessNotify::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(taskid_, param1_);
+  ZR_(taskid_, param_);
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -2232,18 +2234,33 @@ bool CUpdateTaskProcessNotify::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_Param1;
+        if (input->ExpectTag(16)) goto parse_CondIndex;
         break;
       }
 
-      // optional uint32 Param1 = 2;
+      // optional uint32 CondIndex = 2;
       case 2: {
         if (tag == 16) {
-         parse_Param1:
+         parse_CondIndex:
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &param1_)));
+                 input, &condindex_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_Param;
+        break;
+      }
+
+      // optional uint32 Param = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_Param:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &param_)));
         } else {
           goto handle_unusual;
         }
@@ -2280,9 +2297,14 @@ void CUpdateTaskProcessNotify::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->taskid(), output);
   }
 
-  // optional uint32 Param1 = 2;
-  if (this->param1() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->param1(), output);
+  // optional uint32 CondIndex = 2;
+  if (this->condindex() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->condindex(), output);
+  }
+
+  // optional uint32 Param = 3;
+  if (this->param() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->param(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:CUpdateTaskProcessNotify)
@@ -2297,9 +2319,14 @@ void CUpdateTaskProcessNotify::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->taskid(), target);
   }
 
-  // optional uint32 Param1 = 2;
-  if (this->param1() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->param1(), target);
+  // optional uint32 CondIndex = 2;
+  if (this->condindex() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->condindex(), target);
+  }
+
+  // optional uint32 Param = 3;
+  if (this->param() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->param(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:CUpdateTaskProcessNotify)
@@ -2317,11 +2344,18 @@ size_t CUpdateTaskProcessNotify::ByteSizeLong() const {
         this->taskid());
   }
 
-  // optional uint32 Param1 = 2;
-  if (this->param1() != 0) {
+  // optional uint32 CondIndex = 2;
+  if (this->condindex() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->param1());
+        this->condindex());
+  }
+
+  // optional uint32 Param = 3;
+  if (this->param() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->param());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -2360,8 +2394,11 @@ void CUpdateTaskProcessNotify::UnsafeMergeFrom(const CUpdateTaskProcessNotify& f
   if (from.taskid() != 0) {
     set_taskid(from.taskid());
   }
-  if (from.param1() != 0) {
-    set_param1(from.param1());
+  if (from.condindex() != 0) {
+    set_condindex(from.condindex());
+  }
+  if (from.param() != 0) {
+    set_param(from.param());
   }
 }
 
@@ -2390,7 +2427,8 @@ void CUpdateTaskProcessNotify::Swap(CUpdateTaskProcessNotify* other) {
 }
 void CUpdateTaskProcessNotify::InternalSwap(CUpdateTaskProcessNotify* other) {
   std::swap(taskid_, other->taskid_);
-  std::swap(param1_, other->param1_);
+  std::swap(condindex_, other->condindex_);
+  std::swap(param_, other->param_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -2420,18 +2458,32 @@ void CUpdateTaskProcessNotify::set_taskid(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:CUpdateTaskProcessNotify.TaskID)
 }
 
-// optional uint32 Param1 = 2;
-void CUpdateTaskProcessNotify::clear_param1() {
-  param1_ = 0u;
+// optional uint32 CondIndex = 2;
+void CUpdateTaskProcessNotify::clear_condindex() {
+  condindex_ = 0u;
 }
-::google::protobuf::uint32 CUpdateTaskProcessNotify::param1() const {
-  // @@protoc_insertion_point(field_get:CUpdateTaskProcessNotify.Param1)
-  return param1_;
+::google::protobuf::uint32 CUpdateTaskProcessNotify::condindex() const {
+  // @@protoc_insertion_point(field_get:CUpdateTaskProcessNotify.CondIndex)
+  return condindex_;
 }
-void CUpdateTaskProcessNotify::set_param1(::google::protobuf::uint32 value) {
+void CUpdateTaskProcessNotify::set_condindex(::google::protobuf::uint32 value) {
   
-  param1_ = value;
-  // @@protoc_insertion_point(field_set:CUpdateTaskProcessNotify.Param1)
+  condindex_ = value;
+  // @@protoc_insertion_point(field_set:CUpdateTaskProcessNotify.CondIndex)
+}
+
+// optional uint32 Param = 3;
+void CUpdateTaskProcessNotify::clear_param() {
+  param_ = 0u;
+}
+::google::protobuf::uint32 CUpdateTaskProcessNotify::param() const {
+  // @@protoc_insertion_point(field_get:CUpdateTaskProcessNotify.Param)
+  return param_;
+}
+void CUpdateTaskProcessNotify::set_param(::google::protobuf::uint32 value) {
+  
+  param_ = value;
+  // @@protoc_insertion_point(field_set:CUpdateTaskProcessNotify.Param)
 }
 
 inline const CUpdateTaskProcessNotify* CUpdateTaskProcessNotify::internal_default_instance() {

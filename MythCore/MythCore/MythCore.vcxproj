@@ -85,6 +85,7 @@
   <ItemGroup>
     <ClCompile Include="include\thread.h" />
     <ClCompile Include="src\bytestream.cpp" />
+    <ClCompile Include="src\crc32.cpp" />
     <ClCompile Include="src\epollmodel.cpp" />
     <ClCompile Include="src\fileutility.cpp" />
     <ClCompile Include="src\i18n.cpp" />
@@ -112,6 +113,7 @@
     <ClInclude Include="include\blockmemory.h" />
     <ClInclude Include="include\bytestream.h" />
     <ClInclude Include="include\commontype.h" />
+    <ClInclude Include="include\crc32.h" />
     <ClInclude Include="include\epollmodel.h" />
     <ClInclude Include="include\fileutility.h" />
     <ClInclude Include="include\fixblockmemory.h" />

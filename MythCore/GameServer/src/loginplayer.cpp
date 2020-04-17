@@ -7,6 +7,9 @@
 #include "errcode.h"
 #include "locallogjob.h"
 #include "scenejob.h"
+#include "dirtyword.h"
+#include "i18n.h"
+#include "crc32.h"
 void CLoginPlayer::init()
 {
     mAccountID = 0;
@@ -62,8 +65,12 @@ int CLoginPlayer::processStateNone()
 	LOG_INFO("player login, AccountName:%s, ChannelID:%d, ServerID:%d",
 		mAccountName, mChannelID, mServerID);
 
-	CDBModule::Inst()->pushDBTask(0, emSessionType_AccountVerify,getObjID(), 0, "call CheckUserName('%s', %d, %d)", 
-		pLoginRequest->name().c_str(), pLoginRequest->channelid(), pLoginRequest->serverid());
+	// 电脑直接登录的,计算crc32码
+	unsigned char* pAccountName = (unsigned char*)mAccountName;
+	unsigned int nAccountID = crc32(pAccountName, strlen(mAccountName));
+
+	CDBModule::Inst()->pushDBTask(0, emSessionType_AccountVerify,getObjID(), 0, "call CheckUserName('%s', %u, %d, %d)", 
+		pLoginRequest->name().c_str(), nAccountID, pLoginRequest->channelid(), pLoginRequest->serverid());
 	return emLoginState_AccountVerify;
 }
 
@@ -91,7 +98,7 @@ int CLoginPlayer::processAccountVerify()
 	}
 
 
-	mAccountID = mDBResponse->getInt();
+	mAccountID = (unsigned int)mDBResponse->getUInt();
 	// 账号没有插入成功
 	if (0 == mAccountID)
 	{
@@ -160,7 +167,46 @@ int CLoginPlayer::processWaitCreateRole()
 		return -1;
 	}
 
-	int nRoleID = CLoginModule::Inst()->allocateRoleID(mServerID);
+	const char* pRoleName = pCreateRoleRequest->rolename().c_str();
+	if (NULL == pRoleName)
+	{
+		return -1;
+	}
+
+	EmPlayerSex eSex = (EmPlayerSex)pCreateRoleRequest->sex();
+	int nMetier = pCreateRoleRequest->metier();
+
+	wchar_t acBuffer[MAX_PLAYER_NAME_LEN * 2] = {0};
+	CI18N::AnsiToUnicode(pRoleName, acBuffer, sizeof(acBuffer) - 1);
+
+	// 名字长度
+	int nNameLength = wcslen(acBuffer);
+	if (nNameLength < MIN_PLAYER_NAME_CHAR)
+	{
+		return -1;
+	}
+
+	// 名字长度
+	if (nNameLength > MAX_PLAYER_NAME_LEN - PLAYER_NAME_RESERVE || nNameLength > MAX_PLAYER_NAME_CHAR)
+	{
+		return -1;
+	}
+
+	// 检查脏字
+	if (CDirtyWord::Inst()->checkDirtyWord(pRoleName))
+	{
+		return -1;
+	}
+
+	if (eSex < 0 || eSex >= EmPlayerSex_None)
+	{
+		return -1;
+	}
+
+	// 判断职业是否正确
+
+
+	unsigned int nRoleID = CLoginModule::Inst()->allocateRoleID(mServerID);
 	if (nRoleID <= 0)
 	{
 		LOG_ERROR("allocate role id invalid, role id: %d", nRoleID);
@@ -168,8 +214,8 @@ int CLoginPlayer::processWaitCreateRole()
 	}
 
 	LOG_INFO("Create role Accountid: %d, ChannelId: %d, ServerId: %d", mAccountID, mChannelID, mServerID);
-	CDBModule::Inst()->pushDBTask(0, emSessionType_CreateRole, getObjID(), 0, "call CreateRole(%d, '%s', %d, %d, %d)",
-	nRoleID, pCreateRoleRequest->rolename().c_str(), mAccountID, mChannelID, mServerID);
+	CDBModule::Inst()->pushDBTask(0, emSessionType_CreateRole, getObjID(), 0, "call CreateRole(%u, '%s', %d, %d, '%s', %u, %d, %d)",
+	nRoleID, pCreateRoleRequest->rolename().c_str(), eSex, nMetier, getAccountName(), mAccountID, mChannelID, mServerID);
 
 	return emLoginState_CreateRoleing;
 }
@@ -277,8 +323,8 @@ int CLoginPlayer::processLoginComplete()
 			return -1;
 		}
 		printf("******processWaitEnterGame: %d\n", pNewPlayer->getObjID());
-		CDBModule::Inst()->pushDBTask(getRoleID(), emSessionType_LoadPlayerInfo, pNewPlayer->getObjID(), 0, "call LoadPlayerInfo(%d)", getRoleID());
-		CDBModule::Inst()->pushDBTask(getRoleID(), emSessionType_LoadPlayerBaseProperty, pNewPlayer->getObjID(), 0, "call LoadPlayerBaseProperty(%d)", getRoleID());
+		CDBModule::Inst()->pushDBTask(getRoleID(), emSessionType_LoadPlayerInfo, pNewPlayer->getObjID(), 0, "call LoadPlayerInfo(%u)", getRoleID());
+		CDBModule::Inst()->pushDBTask(getRoleID(), emSessionType_LoadPlayerBaseProperty, pNewPlayer->getObjID(), 0, "call LoadPlayerBaseProperty(%u)", getRoleID());
 
 		CEnterSceneResponse tEnterSceneResponse;
 		tEnterSceneResponse.set_result(0);

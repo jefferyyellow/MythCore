@@ -1,29 +1,49 @@
 
 DROP PROCEDURE IF EXISTS `CheckUserName`;
 DELIMITER ;;
-CREATE PROCEDURE `CheckUserName`(UserName char(32), ChannelID int unsigned, ServerID int unsigned)
+CREATE PROCEDURE `CheckUserName`(AccountName char(32), AccountID int unsigned, ChannelID int unsigned, ServerID int unsigned)
 BEGIN
-	DECLARE AccountID INT UNSIGNED;
 	DECLARE RoleID INT UNSIGNED;
-
-	SELECT account_id INTO AccountID FROM PlayerAccount where user_name=UserName and channel_id=ChannelID and server_id=ServerID;
+	DECLARE	TmpAccountID INT UNSIGNED; 
+	DECLARE	TmpAccountIDCool INT UNSIGNED; 
+	SELECT role_id INTO RoleID from PlayerRole where account_id=AccountID and channel_id=ChannelID and server_id=ServerID and account_name=AccountName;
 	IF FOUND_ROWS() = 0 THEN
-		INSERT INTO PlayerAccount(user_name,channel_id, server_id,account_id) VALUES(UserName, ChannelID, ServerID,AccountID);
-		SELECT account_id INTO AccountID FROM PlayerAccount where user_name=UserName and channel_id=ChannelID and server_id=ServerID;
+		SELECT role_id INTO RoleID from PlayerRoleCool where account_id=AccountID and channel_id=ChannelID and server_id=ServerID and account_name=AccountName;
 		IF FOUND_ROWS() = 0 THEN
-			SET AccountID = 0;
-		END IF;
-	END IF;
+			SELECT AccountName, AccountID, 0;
+		ELSE
+			SELECT AccountName, AccountID, RoleID;
 
-	SELECT role_id INTO RoleID from PlayerRole where account_id=AccountID and channel_id=ChannelID and server_id=ServerID;
-	IF FOUND_ROWS() = 0 THEN
-		SELECT UserName, AccountID, 0;
+			START TRANSACTION;
+			CALL ConverPlayRole(RoleID);
+			COMMIT;
+
+		END IF;
 	ELSE
-		SELECT UserName, AccountID, RoleID;
+		SELECT AccountName, AccountID, RoleID;
 	END IF;
 END
 ;;
 DELIMITER ;
+
+DROP FUNCTION IF EXISTS `ConverPlayRole`;
+DELIMITER ;;
+CREATE FUNCTION `ConverPlayRole`(RoleID int unsigned) RETURNS INT
+BEGIN
+	DELETE FROM PlayerRole WHERE role_id=RoleID;
+	DELETE FROM PlayerBaseProperty WHERE role_id=RoleID;
+	
+	INSERT INTO PlayerRole SELECT * FROM PlayerRoleCool;
+	INSERT INTO PlayerBaseProperty SELECT * FROM PlayerBasePropertyCool;
+	
+	DELETE FROM PlayerRoleCool WHERE role_id=RoleID;
+	DELETE FROM PlayerBasePropertyCool WHERE role_id=RoleID;
+
+	RETURN 0;
+END
+;;
+DELIMITER ;
+
 
 DROP PROCEDURE IF EXISTS `GetRoleInfo`;
 DELIMITER ;;
@@ -43,26 +63,30 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `CreateRole`;
 DELIMITER ;;
-CREATE PROCEDURE `CreateRole`(RoleID int unsigned, RoleName char(32), AccountID int unsigned, ChannelID int unsigned, ServerID int unsigned)
+CREATE PROCEDURE `CreateRole`(RoleID int unsigned, RoleName char(32), Sex tinyint, Metier tinyint, AccountName char(32), AccountID int unsigned, ChannelID int unsigned, ServerID int unsigned)
 BEGIN
 	DECLARE tmpRoleID INT UNSIGNED;
-	SELECT role_id INTO tmpRoleID from PlayerRole where account_id=AccountID and channel_id=ChannelID and server_id=ServerID;
+	SELECT role_id INTO tmpRoleID from PlayerRole where role_name=RoleName;
 	IF FOUND_ROWS() = 0 THEN
-		INSERT INTO PlayerRole (role_id,role_name,account_id,channel_id,server_id) values(RoleID, RoleName, AccountID, ChannelID, ServerID);
-		INSERT INTO PlayerBaseProperty (role_id) values(RoleID);
-		SELECT role_id INTO tmpRoleID from PlayerRole WHERE role_id=RoleID;
+		SELECT role_id INTO tmpRoleID from PlayerRole where account_id=AccountID and channel_id=ChannelID and server_id=ServerID and account_name=AccountName;
 		IF FOUND_ROWS() = 0 THEN
-			SELECT -1;
+			INSERT INTO PlayerRole (role_id,role_name, sex, metier, account_id,channel_id,server_id) values(RoleID, RoleName, Sex, Metier, AccountID, ChannelID, ServerID);
+			INSERT INTO PlayerBaseProperty (role_id) values(RoleID);
+			SELECT role_id INTO tmpRoleID from PlayerRole WHERE role_id=RoleID;
+			IF FOUND_ROWS() = 0 THEN
+				SELECT -1;
+			ELSE
+				SELECT tmpRoleID;
+			END IF;
 		ELSE
-			SELECT tmpRoleID;
+			SELECT -2;
 		END IF;
 	ELSE
-		SELECT 0;
+			SELECT -3;
 	END IF;
 END
 ;;
 DELIMITER ;
-
 
 DROP PROCEDURE IF EXISTS `LoadPlayerInfo`;
 DELIMITER ;;

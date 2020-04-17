@@ -16,6 +16,10 @@ struct CExchangeHead
 
 
 #define MAX_PLAYER_NAME_LEN		32		// 玩家名字最大长度
+#define PLAYER_NAME_RESERVE		6		// 玩家名字合服预留
+
+#define MIN_PLAYER_NAME_CHAR	2		// 玩家名字最小字符
+#define MAX_PLAYER_NAME_CHAR	10		// 玩家名字最大字符
 
 enum EmPlayerStatus
 {
@@ -44,4 +48,11 @@ enum EmPlayerLoadStatus
 #define	MAX_SERVER_ID			10000			// 最大的服务器ID
 #define MAX_ROLE_PER_SERVER		200000			// 每个服务器最多20万角色
 #define BAT_LOAD_ROLE_ID_NUM	2000			// 批量加载分配角色ID数量
+
+enum EmPlayerSex
+{
+	EmPlayerSex_Male			= 0,		// 男性
+	EmPlayerSex_Female			= 1,		// 女性
+	EmPlayerSex_None			= 2,		// 无性别
+};
 #endif

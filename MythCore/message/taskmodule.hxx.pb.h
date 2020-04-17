@@ -693,18 +693,25 @@ class CUpdateTaskProcessNotify : public ::google::protobuf::Message /* @@protoc_
   ::google::protobuf::uint32 taskid() const;
   void set_taskid(::google::protobuf::uint32 value);
 
-  // optional uint32 Param1 = 2;
-  void clear_param1();
-  static const int kParam1FieldNumber = 2;
-  ::google::protobuf::uint32 param1() const;
-  void set_param1(::google::protobuf::uint32 value);
+  // optional uint32 CondIndex = 2;
+  void clear_condindex();
+  static const int kCondIndexFieldNumber = 2;
+  ::google::protobuf::uint32 condindex() const;
+  void set_condindex(::google::protobuf::uint32 value);
+
+  // optional uint32 Param = 3;
+  void clear_param();
+  static const int kParamFieldNumber = 3;
+  ::google::protobuf::uint32 param() const;
+  void set_param(::google::protobuf::uint32 value);
 
   // @@protoc_insertion_point(class_scope:CUpdateTaskProcessNotify)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::uint32 taskid_;
-  ::google::protobuf::uint32 param1_;
+  ::google::protobuf::uint32 condindex_;
+  ::google::protobuf::uint32 param_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_taskmodule_2ehxx_impl();
   friend void  protobuf_AddDesc_taskmodule_2ehxx_impl();
@@ -933,18 +940,32 @@ inline void CUpdateTaskProcessNotify::set_taskid(::google::protobuf::uint32 valu
   // @@protoc_insertion_point(field_set:CUpdateTaskProcessNotify.TaskID)
 }
 
-// optional uint32 Param1 = 2;
-inline void CUpdateTaskProcessNotify::clear_param1() {
-  param1_ = 0u;
+// optional uint32 CondIndex = 2;
+inline void CUpdateTaskProcessNotify::clear_condindex() {
+  condindex_ = 0u;
 }
-inline ::google::protobuf::uint32 CUpdateTaskProcessNotify::param1() const {
-  // @@protoc_insertion_point(field_get:CUpdateTaskProcessNotify.Param1)
-  return param1_;
+inline ::google::protobuf::uint32 CUpdateTaskProcessNotify::condindex() const {
+  // @@protoc_insertion_point(field_get:CUpdateTaskProcessNotify.CondIndex)
+  return condindex_;
 }
-inline void CUpdateTaskProcessNotify::set_param1(::google::protobuf::uint32 value) {
+inline void CUpdateTaskProcessNotify::set_condindex(::google::protobuf::uint32 value) {
   
-  param1_ = value;
-  // @@protoc_insertion_point(field_set:CUpdateTaskProcessNotify.Param1)
+  condindex_ = value;
+  // @@protoc_insertion_point(field_set:CUpdateTaskProcessNotify.CondIndex)
+}
+
+// optional uint32 Param = 3;
+inline void CUpdateTaskProcessNotify::clear_param() {
+  param_ = 0u;
+}
+inline ::google::protobuf::uint32 CUpdateTaskProcessNotify::param() const {
+  // @@protoc_insertion_point(field_get:CUpdateTaskProcessNotify.Param)
+  return param_;
+}
+inline void CUpdateTaskProcessNotify::set_param(::google::protobuf::uint32 value) {
+  
+  param_ = value;
+  // @@protoc_insertion_point(field_set:CUpdateTaskProcessNotify.Param)
 }
 
 inline const CUpdateTaskProcessNotify* CUpdateTaskProcessNotify::internal_default_instance() {

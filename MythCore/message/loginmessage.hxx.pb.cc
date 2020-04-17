@@ -83,11 +83,13 @@ void protobuf_AssignDesc_loginmessage_2ehxx() {
       sizeof(CLoginResponse),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CLoginResponse, _internal_metadata_));
   CCreateRoleRequest_descriptor_ = file->message_type(2);
-  static const int CCreateRoleRequest_offsets_[4] = {
+  static const int CCreateRoleRequest_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CCreateRoleRequest, accountid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CCreateRoleRequest, channelid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CCreateRoleRequest, serverid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CCreateRoleRequest, rolename_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CCreateRoleRequest, sex_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CCreateRoleRequest, metier_),
   };
   CCreateRoleRequest_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -223,20 +225,21 @@ void protobuf_AddDesc_loginmessage_2ehxx_impl() {
     "ame\030\001 \001(\t\022\021\n\tChannelID\030\002 \001(\r\022\020\n\010ServerID"
     "\030\003 \001(\r\"X\n\016CLoginResponse\022\021\n\tAccountID\030\001 "
     "\001(\r\022\016\n\006RoleID\030\002 \001(\r\022\021\n\tChannelID\030\003 \001(\r\022\020"
-    "\n\010ServerID\030\004 \001(\r\"^\n\022CCreateRoleRequest\022\021"
+    "\n\010ServerID\030\004 \001(\r\"{\n\022CCreateRoleRequest\022\021"
     "\n\tAccountID\030\001 \001(\r\022\021\n\tChannelID\030\002 \001(\r\022\020\n\010"
-    "ServerID\030\003 \001(\r\022\020\n\010RoleName\030\004 \001(\t\"5\n\023CCre"
-    "ateRoleResponse\022\016\n\006Result\030\001 \001(\r\022\016\n\006RoleI"
-    "D\030\002 \001(\r\"\\\n\022CEnterSceneRequest\022\016\n\006RoleID\030"
-    "\001 \001(\r\022\021\n\tAccountID\030\002 \001(\r\022\021\n\tChannelID\030\003 "
-    "\001(\r\022\020\n\010ServerID\030\004 \001(\r\"%\n\023CEnterSceneResp"
-    "onse\022\016\n\006Result\030\001 \001(\r*\347\001\n\023LOGIN_MODULE_MS"
-    "G_ID\022\031\n\025ID_LOGIN_MODULE_ERROR\020\000\022\030\n\024ID_C2"
-    "S_REQUEST_LOGIN\020\001\022\031\n\025ID_S2C_RESPONSE_LOG"
-    "IN\020\002\022\036\n\032ID_C2S_REQUEST_CREATE_ROLE\020\003\022\037\n\033"
-    "ID_S2C_RESPONSE_CREATE_ROLE\020\004\022\036\n\032ID_C2S_"
-    "REQUEST_ENTER_SCENE\020\005\022\037\n\033ID_S2C_RESPONSE"
-    "_ENTER_SCENE\020\006b\006proto3", 702);
+    "ServerID\030\003 \001(\r\022\020\n\010RoleName\030\004 \001(\t\022\013\n\003Sex\030"
+    "\005 \001(\r\022\016\n\006Metier\030\006 \001(\r\"5\n\023CCreateRoleResp"
+    "onse\022\016\n\006Result\030\001 \001(\r\022\016\n\006RoleID\030\002 \001(\r\"\\\n\022"
+    "CEnterSceneRequest\022\016\n\006RoleID\030\001 \001(\r\022\021\n\tAc"
+    "countID\030\002 \001(\r\022\021\n\tChannelID\030\003 \001(\r\022\020\n\010Serv"
+    "erID\030\004 \001(\r\"%\n\023CEnterSceneResponse\022\016\n\006Res"
+    "ult\030\001 \001(\r*\347\001\n\023LOGIN_MODULE_MSG_ID\022\031\n\025ID_"
+    "LOGIN_MODULE_ERROR\020\000\022\030\n\024ID_C2S_REQUEST_L"
+    "OGIN\020\001\022\031\n\025ID_S2C_RESPONSE_LOGIN\020\002\022\036\n\032ID_"
+    "C2S_REQUEST_CREATE_ROLE\020\003\022\037\n\033ID_S2C_RESP"
+    "ONSE_CREATE_ROLE\020\004\022\036\n\032ID_C2S_REQUEST_ENT"
+    "ER_SCENE\020\005\022\037\n\033ID_S2C_RESPONSE_ENTER_SCEN"
+    "E\020\006b\006proto3", 731);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "loginmessage.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_loginmessage_2ehxx);
@@ -1122,6 +1125,8 @@ const int CCreateRoleRequest::kAccountIDFieldNumber;
 const int CCreateRoleRequest::kChannelIDFieldNumber;
 const int CCreateRoleRequest::kServerIDFieldNumber;
 const int CCreateRoleRequest::kRoleNameFieldNumber;
+const int CCreateRoleRequest::kSexFieldNumber;
+const int CCreateRoleRequest::kMetierFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 CCreateRoleRequest::CCreateRoleRequest()
@@ -1144,8 +1149,8 @@ CCreateRoleRequest::CCreateRoleRequest(const CCreateRoleRequest& from)
 
 void CCreateRoleRequest::SharedCtor() {
   rolename_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&accountid_, 0, reinterpret_cast<char*>(&serverid_) -
-    reinterpret_cast<char*>(&accountid_) + sizeof(serverid_));
+  ::memset(&accountid_, 0, reinterpret_cast<char*>(&metier_) -
+    reinterpret_cast<char*>(&accountid_) + sizeof(metier_));
   _cached_size_ = 0;
 }
 
@@ -1201,7 +1206,7 @@ void CCreateRoleRequest::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(accountid_, serverid_);
+  ZR_(accountid_, metier_);
   rolename_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 
 #undef ZR_HELPER_
@@ -1276,6 +1281,36 @@ bool CCreateRoleRequest::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(40)) goto parse_Sex;
+        break;
+      }
+
+      // optional uint32 Sex = 5;
+      case 5: {
+        if (tag == 40) {
+         parse_Sex:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &sex_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(48)) goto parse_Metier;
+        break;
+      }
+
+      // optional uint32 Metier = 6;
+      case 6: {
+        if (tag == 48) {
+         parse_Metier:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &metier_)));
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -1329,6 +1364,16 @@ void CCreateRoleRequest::SerializeWithCachedSizes(
       4, this->rolename(), output);
   }
 
+  // optional uint32 Sex = 5;
+  if (this->sex() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->sex(), output);
+  }
+
+  // optional uint32 Metier = 6;
+  if (this->metier() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->metier(), output);
+  }
+
   // @@protoc_insertion_point(serialize_end:CCreateRoleRequest)
 }
 
@@ -1360,6 +1405,16 @@ void CCreateRoleRequest::SerializeWithCachedSizes(
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         4, this->rolename(), target);
+  }
+
+  // optional uint32 Sex = 5;
+  if (this->sex() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->sex(), target);
+  }
+
+  // optional uint32 Metier = 6;
+  if (this->metier() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(6, this->metier(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:CCreateRoleRequest)
@@ -1396,6 +1451,20 @@ size_t CCreateRoleRequest::ByteSizeLong() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::StringSize(
         this->rolename());
+  }
+
+  // optional uint32 Sex = 5;
+  if (this->sex() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->sex());
+  }
+
+  // optional uint32 Metier = 6;
+  if (this->metier() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->metier());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -1444,6 +1513,12 @@ void CCreateRoleRequest::UnsafeMergeFrom(const CCreateRoleRequest& from) {
 
     rolename_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.rolename_);
   }
+  if (from.sex() != 0) {
+    set_sex(from.sex());
+  }
+  if (from.metier() != 0) {
+    set_metier(from.metier());
+  }
 }
 
 void CCreateRoleRequest::CopyFrom(const ::google::protobuf::Message& from) {
@@ -1474,6 +1549,8 @@ void CCreateRoleRequest::InternalSwap(CCreateRoleRequest* other) {
   std::swap(channelid_, other->channelid_);
   std::swap(serverid_, other->serverid_);
   rolename_.Swap(&other->rolename_);
+  std::swap(sex_, other->sex_);
+  std::swap(metier_, other->metier_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -1573,6 +1650,34 @@ void CCreateRoleRequest::set_allocated_rolename(::std::string* rolename) {
   }
   rolename_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), rolename);
   // @@protoc_insertion_point(field_set_allocated:CCreateRoleRequest.RoleName)
+}
+
+// optional uint32 Sex = 5;
+void CCreateRoleRequest::clear_sex() {
+  sex_ = 0u;
+}
+::google::protobuf::uint32 CCreateRoleRequest::sex() const {
+  // @@protoc_insertion_point(field_get:CCreateRoleRequest.Sex)
+  return sex_;
+}
+void CCreateRoleRequest::set_sex(::google::protobuf::uint32 value) {
+  
+  sex_ = value;
+  // @@protoc_insertion_point(field_set:CCreateRoleRequest.Sex)
+}
+
+// optional uint32 Metier = 6;
+void CCreateRoleRequest::clear_metier() {
+  metier_ = 0u;
+}
+::google::protobuf::uint32 CCreateRoleRequest::metier() const {
+  // @@protoc_insertion_point(field_get:CCreateRoleRequest.Metier)
+  return metier_;
+}
+void CCreateRoleRequest::set_metier(::google::protobuf::uint32 value) {
+  
+  metier_ = value;
+  // @@protoc_insertion_point(field_set:CCreateRoleRequest.Metier)
 }
 
 inline const CCreateRoleRequest* CCreateRoleRequest::internal_default_instance() {

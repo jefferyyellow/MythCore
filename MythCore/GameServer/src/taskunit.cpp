@@ -155,7 +155,7 @@ void CTaskUnit::sendUpdateTaskProcessNotify(int nTaskID, int nCondIndex, int nPa
 {
 	CUpdateTaskProcessNotify tNotify;
 	tNotify.set_taskid(nTaskID);
-	tNotify.set_param1(nParam);
+	tNotify.set_param(nParam);
 	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_NOTIFY_UPDATE_TASK_PROCESS, &tNotify);
 }
 

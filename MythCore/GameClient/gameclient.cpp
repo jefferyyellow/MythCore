@@ -202,7 +202,7 @@ void CGameClient::onMessageLoginResponse(Message* pMessage)
 {
 	char acName[256] = { 0 };
 	CLoginResponse* pLoginResponse = (CLoginResponse*)pMessage;
-	snprintf(acName, sizeof(acName), "hjh%d", pLoginResponse->accountid());
+	snprintf(acName, sizeof(acName), "»Æ½¨1");
 
 	int nRoleID = pLoginResponse->roleid();
 

@@ -375,6 +375,18 @@ class CCreateRoleRequest : public ::google::protobuf::Message /* @@protoc_insert
   ::std::string* release_rolename();
   void set_allocated_rolename(::std::string* rolename);
 
+  // optional uint32 Sex = 5;
+  void clear_sex();
+  static const int kSexFieldNumber = 5;
+  ::google::protobuf::uint32 sex() const;
+  void set_sex(::google::protobuf::uint32 value);
+
+  // optional uint32 Metier = 6;
+  void clear_metier();
+  static const int kMetierFieldNumber = 6;
+  ::google::protobuf::uint32 metier() const;
+  void set_metier(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:CCreateRoleRequest)
  private:
 
@@ -383,6 +395,8 @@ class CCreateRoleRequest : public ::google::protobuf::Message /* @@protoc_insert
   ::google::protobuf::uint32 accountid_;
   ::google::protobuf::uint32 channelid_;
   ::google::protobuf::uint32 serverid_;
+  ::google::protobuf::uint32 sex_;
+  ::google::protobuf::uint32 metier_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_loginmessage_2ehxx_impl();
   friend void  protobuf_AddDesc_loginmessage_2ehxx_impl();
@@ -913,6 +927,34 @@ inline void CCreateRoleRequest::set_allocated_rolename(::std::string* rolename) 
   }
   rolename_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), rolename);
   // @@protoc_insertion_point(field_set_allocated:CCreateRoleRequest.RoleName)
+}
+
+// optional uint32 Sex = 5;
+inline void CCreateRoleRequest::clear_sex() {
+  sex_ = 0u;
+}
+inline ::google::protobuf::uint32 CCreateRoleRequest::sex() const {
+  // @@protoc_insertion_point(field_get:CCreateRoleRequest.Sex)
+  return sex_;
+}
+inline void CCreateRoleRequest::set_sex(::google::protobuf::uint32 value) {
+  
+  sex_ = value;
+  // @@protoc_insertion_point(field_set:CCreateRoleRequest.Sex)
+}
+
+// optional uint32 Metier = 6;
+inline void CCreateRoleRequest::clear_metier() {
+  metier_ = 0u;
+}
+inline ::google::protobuf::uint32 CCreateRoleRequest::metier() const {
+  // @@protoc_insertion_point(field_get:CCreateRoleRequest.Metier)
+  return metier_;
+}
+inline void CCreateRoleRequest::set_metier(::google::protobuf::uint32 value) {
+  
+  metier_ = value;
+  // @@protoc_insertion_point(field_set:CCreateRoleRequest.Metier)
 }
 
 inline const CCreateRoleRequest* CCreateRoleRequest::internal_default_instance() {

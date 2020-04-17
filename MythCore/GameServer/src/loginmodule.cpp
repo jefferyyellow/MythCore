@@ -143,7 +143,6 @@ void CLoginModule::onClientMessage(CExchangeHead& rExchangeHead, unsigned int nM
 			return;
 		}
 		pLoginPlayer->getExchangeHead() = rExchangeHead;
-		it = ret.first;
 	}
 	else
 	{

@@ -73,6 +73,14 @@ public:
 		return tInt;
 	}
 
+	unsigned int getUInt()
+	{
+		sint64 tInt64 = atoll((const char*)mpValue);
+		mpValue += (*mpLength + 1);
+		++mpLength;
+		return (unsigned int)tInt64;
+	}
+
 	sint64 getInt64()
 	{
 		sint64 tInt64 = atoll((const char*)mpValue);

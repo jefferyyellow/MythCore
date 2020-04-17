@@ -36,6 +36,8 @@ message CCreateRoleRequest
 	uint32	ChannelID				= 2;
 	uint32	ServerID				= 3;
 	string	RoleName				= 4;
+	uint32	Sex						= 5;
+	uint32	Metier					= 6;
 }
 
 /// 创建角色回应 ID_S2C_RESPONSE_CREATE_ROLE
