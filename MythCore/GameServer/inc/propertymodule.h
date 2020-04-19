@@ -61,6 +61,8 @@ public:
 	/// 玩家存盘完成
 	void			onSavePlayerComplete(CEntityPlayer* pPlayer);
 	/// 玩家离开游戏
+	void			playerLeaveGame(CEntityPlayer* pPlayer);
+	/// 玩家离开游戏
 	void			onPlayerLeaveGame(CEntityPlayer* pPlayer);
 	/// 每日刷新
 	void			dailyRefresh(CEntityPlayer* pPlayer);

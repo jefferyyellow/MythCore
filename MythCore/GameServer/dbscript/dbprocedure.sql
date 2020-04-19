@@ -4,20 +4,17 @@ DELIMITER ;;
 CREATE PROCEDURE `CheckUserName`(AccountName char(32), AccountID int unsigned, ChannelID int unsigned, ServerID int unsigned)
 BEGIN
 	DECLARE RoleID INT UNSIGNED;
-	DECLARE	TmpAccountID INT UNSIGNED; 
-	DECLARE	TmpAccountIDCool INT UNSIGNED; 
+	DECLARE TmpValue INT UNSIGNED;
 	SELECT role_id INTO RoleID from PlayerRole where account_id=AccountID and channel_id=ChannelID and server_id=ServerID and account_name=AccountName;
 	IF FOUND_ROWS() = 0 THEN
 		SELECT role_id INTO RoleID from PlayerRoleCool where account_id=AccountID and channel_id=ChannelID and server_id=ServerID and account_name=AccountName;
 		IF FOUND_ROWS() = 0 THEN
 			SELECT AccountName, AccountID, 0;
 		ELSE
-			SELECT AccountName, AccountID, RoleID;
-
 			START TRANSACTION;
-			CALL ConverPlayRole(RoleID);
+			SELECT ConverPlayRole(RoleID) INTO TmpValue;
 			COMMIT;
-
+			SELECT AccountName, AccountID, RoleID;
 		END IF;
 	ELSE
 		SELECT AccountName, AccountID, RoleID;
@@ -70,7 +67,7 @@ BEGIN
 	IF FOUND_ROWS() = 0 THEN
 		SELECT role_id INTO tmpRoleID from PlayerRole where account_id=AccountID and channel_id=ChannelID and server_id=ServerID and account_name=AccountName;
 		IF FOUND_ROWS() = 0 THEN
-			INSERT INTO PlayerRole (role_id,role_name, sex, metier, account_id,channel_id,server_id) values(RoleID, RoleName, Sex, Metier, AccountID, ChannelID, ServerID);
+			INSERT INTO PlayerRole (role_id, role_name, account_id, account_name, channel_id, server_id, sex, metier) values(RoleID, RoleName, AccountID, AccountName, ChannelID, ServerID, Sex, Metier);
 			INSERT INTO PlayerBaseProperty (role_id) values(RoleID);
 			SELECT role_id INTO tmpRoleID from PlayerRole WHERE role_id=RoleID;
 			IF FOUND_ROWS() = 0 THEN

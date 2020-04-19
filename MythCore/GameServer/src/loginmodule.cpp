@@ -9,6 +9,7 @@
 #include "loginplayer.h"
 #include "dbmodule.h"
 #include "scenejob.h"
+#include "propertymodule.h"
 CLoginModule::CLoginModule()
 :mLoginCheckTime(1000)
 {
@@ -99,6 +100,16 @@ void CLoginModule::onTimer(unsigned int nTickOffset)
 			// 如果是删除状态或者超时
 			if (emLoginDelState_None != pLoginPlayer->getDelState() || bOverTime)
 			{
+				// 如果已经在加载状态了，那肯定有对应的CEntityPlayer，不能存盘，直接删除对应的实体和socket
+				if (emLoginState_RoleLoading == pLoginPlayer->getLoginState())
+				{
+					CEntityPlayer* pPlayer = CSceneJob::Inst()->getPlayerBySocketIndex(pLoginPlayer->getExchangeHead().mSocketIndex);
+					if (NULL != pPlayer)
+					{
+						CPropertyModule::Inst()->onPlayerLeaveGame(pPlayer);
+					}
+				}
+
 				removeVerifyPlayer(pLoginPlayer->getChannelID(), pLoginPlayer->getServerID(), pLoginPlayer->getAccountID());
 				
 				itTmp = it;
@@ -337,4 +348,15 @@ void CLoginModule::removeVerifyPlayer(short nChannelId, short nServerId, int nAc
 {
 	uint64 nLoginKey = MAKE_LOGIN_KEY((uint64)nAccountId, (uint64)nChannelId, (uint64)nServerId);
 	mVerifyList.erase(nLoginKey);
+}
+
+/// 得到登录玩家数据
+CLoginPlayer* CLoginModule::getLoginPlayer(int nSocketIndex)
+{
+	LOGIN_LIST::iterator it = mLoginList.find(nSocketIndex);
+	if (it != mLoginList.end())
+	{
+		return static_cast<CLoginPlayer*>(CObjPool::Inst()->getObj(it->second));
+	}
+	return NULL;
 }

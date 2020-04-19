@@ -12,6 +12,7 @@ enum EmLoginState
 	emLoginState_WaitCreateRole		= 2,	// 等待创建角色
 	emLoginState_CreateRoleing		= 3,	// 创建角色中
 	emLoginState_LoginComplete		= 4,	// 登录完成
+	emLoginState_RoleLoading		= 5,	// 角色数据加载
 	//emLoginState_WaitEnterGame		= 4,	// 等待进入游戏
 	//emLoginState_Playing			= 5,	// 游戏状态
 	emLoginStateMax
@@ -45,6 +46,7 @@ public:
 	int			processWaitCreateRole();
 	int			processCreateRoleing();
 	int			processLoginComplete();
+	int			processRoleLoading();
 	int			onSwitchFailure();
 
 	bool		elapse(unsigned int nTickOffset);
