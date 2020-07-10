@@ -4,20 +4,17 @@ DELIMITER ;;
 CREATE PROCEDURE `CheckUserName`(AccountName char(32), AccountID int unsigned, ChannelID int unsigned, ServerID int unsigned)
 BEGIN
 	DECLARE RoleID INT UNSIGNED;
-	DECLARE	TmpAccountID INT UNSIGNED; 
-	DECLARE	TmpAccountIDCool INT UNSIGNED; 
+	DECLARE TmpValue INT UNSIGNED;
 	SELECT role_id INTO RoleID from PlayerRole where account_id=AccountID and channel_id=ChannelID and server_id=ServerID and account_name=AccountName;
 	IF FOUND_ROWS() = 0 THEN
 		SELECT role_id INTO RoleID from PlayerRoleCool where account_id=AccountID and channel_id=ChannelID and server_id=ServerID and account_name=AccountName;
 		IF FOUND_ROWS() = 0 THEN
 			SELECT AccountName, AccountID, 0;
 		ELSE
-			SELECT AccountName, AccountID, RoleID;
-
 			START TRANSACTION;
-			CALL ConverPlayRole(RoleID);
+			SELECT ConverPlayRole(RoleID) INTO TmpValue;
 			COMMIT;
-
+			SELECT AccountName, AccountID, RoleID;
 		END IF;
 	ELSE
 		SELECT AccountName, AccountID, RoleID;

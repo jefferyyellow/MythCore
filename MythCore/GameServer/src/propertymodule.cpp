@@ -283,6 +283,13 @@ void CPropertyModule::onLoadComplete(CEntityPlayer* pPlayer)
 	{
 		return;
 	}
+	// 登录完成删除
+	CLoginPlayer* pLoginPlayer = CLoginModule::Inst()->getLoginPlayer(pPlayer->getExchangeHead().mSocketIndex);
+	if (NULL != pLoginPlayer)
+	{
+		pLoginPlayer->setDelState(emLoginDelState_Complete);
+	}
+
 	pPlayer->setPlayerStauts(emPlayerStatus_Gameing);
 	pPlayer->setOnTime(CTimeManager::Inst()->getCurrTime());
 	pPlayer->setLastSaveTime(CTimeManager::Inst()->getCurrTime());
@@ -290,6 +297,11 @@ void CPropertyModule::onLoadComplete(CEntityPlayer* pPlayer)
 	if (0 == pPlayer->getLastOffTime())
 	{
 		setNewPlayerValue(pPlayer);
+	}
+	// 老玩家
+	else
+	{
+
 	}
 
 	CSceneJob::Inst()->createPlayer(pPlayer);
@@ -398,6 +410,38 @@ void CPropertyModule::onSavePlayerComplete(CEntityPlayer* pPlayer)
 	if (pPlayer->getPlayerStauts() == emPlayerStatus_Exiting)
 	{
 		onPlayerLeaveGame(pPlayer);
+	}
+}
+
+/// 玩家离开游戏
+void CPropertyModule::playerLeaveGame(CEntityPlayer* pPlayer)
+{
+	if (NULL == pPlayer)
+	{
+		return;
+	}
+	if (emPlayerStatus_Exiting == pPlayer->getPlayerStauts())
+	{
+		return;
+	}
+
+	// 将玩家置为下线状态
+	pPlayer->setPlayerStauts(emPlayerStatus_Exiting);
+
+	switch (pPlayer->getPlayerStauts())
+	{
+		case emPlayerStatus_Gameing:
+		{
+			// 玩家是在游戏状态，先保存
+			savePlayer(pPlayer);
+			break;
+		}
+		case emPlayerStatus_Loading:
+		{
+			// 直接离开游戏，不保存
+			onPlayerLeaveGame(pPlayer);
+			break;
+		}
 	}
 }
 

@@ -776,7 +776,7 @@ void CSceneJob::onSocketDisconnect(int nSocketIndex)
 	PLAYER_SOCKET_LIST::iterator it = mPlayerSocketList.find(nSocketIndex);
 	if (it != mPlayerSocketList.end())
 	{
-
+		// 注意只有玩家已经在游戏当中了才存盘，如果玩家是退出状态或者加载折腾，不需要存盘
 		CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
 		if (NULL != pPlayer)
 		{

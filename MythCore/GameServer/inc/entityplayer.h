@@ -60,6 +60,7 @@ public:
         mPlayerStauts = 0;
         mSaveStatus = 0;
         mLoadStatus = 0;
+		mNewDayTime = 0;
 	}
 public:
 	/// 刷新基本属性
@@ -188,6 +189,9 @@ public:
     void setLoadStatus(byte value){ mLoadStatus = value;}
 
     CTimerList& getTimerList(){ return mTimerList;}
+
+	time_t getNewDayTime(){return mNewDayTime;}
+	void setNewDayTime(time_t tNewDayTime){mNewDayTime = tNewDayTime;}
 	/// end autocode
 
 	byte getLevel(){return mPropertyUnit.getLevel();}
@@ -226,5 +230,7 @@ private:
 	byte			mLoadStatus;
 	///	计时器列表
 	CTimerList		mTimerList;
+	/// 新的一天计算时间
+	time_t			mNewDayTime;
 };
 #endif 

@@ -63,6 +63,9 @@ public:
 	bool		checkVerifyPlayer(short nChannelId, short nServerId, int nAccountId);
 	/// 删除正在校验的玩家
 	void		removeVerifyPlayer(short nChannelId, short nServerId, int nAccountId);
+	/// 得到登录玩家数据
+	CLoginPlayer* getLoginPlayer(int nSocketIndex);
+
 	unsigned int getBeginRoleID(int nServerId)
 	{
 		if (nServerId <= 0 || nServerId > MAX_ROLE_PER_SERVER)

@@ -29,9 +29,10 @@ void CLoginPlayer::initStateMachine()
 	mStateMachine.init(this, emLoginState_None);
 	mStateMachine.addState(emLoginState_None,			5, &CLoginPlayer::processStateNone);
 	mStateMachine.addState(emLoginState_AccountVerify,	5, &CLoginPlayer::processAccountVerify);
-	mStateMachine.addState(emLoginState_WaitCreateRole, 10, &CLoginPlayer::processWaitCreateRole);
+	mStateMachine.addState(emLoginState_WaitCreateRole, 120, &CLoginPlayer::processWaitCreateRole);
 	mStateMachine.addState(emLoginState_CreateRoleing,	5, &CLoginPlayer::processCreateRoleing);
 	mStateMachine.addState(emLoginState_LoginComplete, 5, &CLoginPlayer::processLoginComplete);
+	mStateMachine.addState(emLoginState_RoleLoading, 15, &CLoginPlayer::processLoginComplete);
 	mStateMachine.setSwitchFailure(&CLoginPlayer::onSwitchFailure);
 	//mStateMachine.addState(emLoginState_WaitEnterGame,	10, &CLoginPlayer::processWaitEnterGame);
 	//mStateMachine.addState(emLoginState_Playing,		10, &CLoginPlayer::processWaitPlaying);
@@ -183,19 +184,19 @@ int CLoginPlayer::processWaitCreateRole()
 	int nNameLength = wcslen(acBuffer);
 	if (nNameLength < MIN_PLAYER_NAME_CHAR)
 	{
-		return -1;
+		return emLoginState_WaitCreateRole;
 	}
 
 	// 名字长度
 	if (nNameLength > MAX_PLAYER_NAME_LEN - PLAYER_NAME_RESERVE || nNameLength > MAX_PLAYER_NAME_CHAR)
 	{
-		return -1;
+		return emLoginState_WaitCreateRole;
 	}
 
 	// 检查脏字
 	if (CDirtyWord::Inst()->checkDirtyWord(pRoleName))
 	{
-		return -1;
+		return emLoginState_WaitCreateRole;
 	}
 
 	if (eSex < 0 || eSex >= EmPlayerSex_None)
@@ -283,7 +284,7 @@ int CLoginPlayer::processLoginComplete()
 		return -1;
 	}
 
-	if (0 == pEnterSceneRequest->roleid())
+	if (mRoleID == pEnterSceneRequest->roleid())
 	{
 		LOG_ERROR("enter scene role id invalid: %d", pEnterSceneRequest->roleid());
 		return -1;
@@ -309,6 +310,8 @@ int CLoginPlayer::processLoginComplete()
 		CEnterSceneResponse tEnterSceneResponse;
 		tEnterSceneResponse.set_result(0);
 		CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
+		setDelState(emLoginDelState_Complete);
+		return emLoginState_None;
 	}
 	else
 	{
@@ -339,10 +342,15 @@ int CLoginPlayer::processLoginComplete()
 		CEnterSceneResponse tEnterSceneResponse;
 		tEnterSceneResponse.set_result(0);
 		CSceneJob::Inst()->send2Player(pNewPlayer, ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
+		// 进入角色加载状态，如果超时没有加载完成，删除的时候会把CEntityPlayer也删除
+		return emLoginState_RoleLoading;
 	}
+}
 
-	setDelState(emLoginDelState_Complete);
-	return emLoginState_None;
+int CLoginPlayer::processRoleLoading()
+{
+	// 返回本来状态
+	return emLoginState_RoleLoading;
 }
 
 bool CLoginPlayer::elapse(unsigned int nTickOffset)
