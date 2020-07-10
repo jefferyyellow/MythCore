@@ -5,6 +5,10 @@
 #include <string.h>
 #include <stdlib.h>
 #ifdef MYTH_OS_WINDOWS
+// 如果定义了模型fd_set最大值，先清除，再重新定义
+#ifdef FD_SETSIZE
+#undef FD_SETSIZE
+#endif // _DEBUG
 /// 将windows select 模型fd_set最大值改成1024
 #define FD_SETSIZE  1024
 #include <windows.h>

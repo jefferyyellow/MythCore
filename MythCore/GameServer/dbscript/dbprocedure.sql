@@ -70,19 +70,19 @@ BEGIN
 	IF FOUND_ROWS() = 0 THEN
 		SELECT role_id INTO tmpRoleID from PlayerRole where account_id=AccountID and channel_id=ChannelID and server_id=ServerID and account_name=AccountName;
 		IF FOUND_ROWS() = 0 THEN
-			INSERT INTO PlayerRole (role_id,role_name, sex, metier, account_id,channel_id,server_id) values(RoleID, RoleName, Sex, Metier, AccountID, ChannelID, ServerID);
+			INSERT INTO PlayerRole (role_id,role_name, sex, metier, account_id,account_name,channel_id,server_id) values(RoleID, RoleName, Sex, Metier, AccountID, AccountName, ChannelID, ServerID);
 			INSERT INTO PlayerBaseProperty (role_id) values(RoleID);
 			SELECT role_id INTO tmpRoleID from PlayerRole WHERE role_id=RoleID;
 			IF FOUND_ROWS() = 0 THEN
-				SELECT -1;
+				SELECT -1, 0;
 			ELSE
-				SELECT tmpRoleID;
+				SELECT 0, tmpRoleID;
 			END IF;
 		ELSE
-			SELECT -2;
+			SELECT -2, 0;
 		END IF;
 	ELSE
-			SELECT -3;
+			SELECT -3, 0;
 	END IF;
 END
 ;;

@@ -150,8 +150,12 @@ void CPropertyModule::onGMCommandRequest(CEntityPlayer* pPlayer, Message* pMessa
 	MYTH_ASSERT(tTokens.size() >= 1, return);
 
 	const char* pCommandName = tTokens[0].c_str();
+	char acCommandName[STR_LENGTH_32] = {0};
+	strncpy(acCommandName, pCommandName, sizeof(acCommandName) - 1);
+	acCommandName[sizeof(acCommandName) - 1] = '\0';
+
 	tTokens.erase(tTokens.begin());
-	mGMCmdManager.excuteCommand(pCommandName, tTokens, pPlayer);
+	mGMCmdManager.excuteCommand(acCommandName, tTokens, pPlayer);
 }
 
 /// 玩家离开游戏的请求
@@ -205,6 +209,12 @@ void CPropertyModule::onLoadPlayerInfo(CDBResponse& rResponse)
 	{
 		return;
 	}
+
+	// 已经加载了，避免加载两遍，前段时间就出现了加载两次导致玩家有部分数据有点问题的情况
+	if (pPlayer->getLoadStatusBit(emLoadStatus_Info) > 0)
+	{
+		return;
+	}
 	// 	select role_name, level, exp, vip_level, vip_exp, money, diamond from PlayerRole WHERE role_id=RoleID;
 	
 	rResponse.getString(pPlayer->getName(), PLAYER_NAME_LENGTH - 1);
@@ -234,6 +244,12 @@ void CPropertyModule::onLoadPlayerBaseProperty(CDBResponse& rResponse)
 
 	CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(rResponse.mParam1));
 	if (NULL == pPlayer)
+	{
+		return;
+	}
+
+	// 已经加载了，避免加载两遍，前段时间就出现了加载两次导致玩家有部分数据有点问题的情况
+	if (pPlayer->getLoadStatusBit(emLoadStatus_BaseProperty) > 0)
 	{
 		return;
 	}

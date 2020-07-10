@@ -234,6 +234,14 @@ int CLoginPlayer::processCreateRoleing()
 		LOG_ERROR("mysql create role error: %d", mDBResponse->mResult);
 		return -1;
 	}
+	int nResult = mDBResponse->getInt();
+	if (nResult < 0)
+	{
+		LOG_ERROR("create role failure, nResult: %d, RoleID:%d, AccountName:%s, AccountID:%d, ChannelID:%d, ServerID:%d",
+			nResult, mRoleID, mAccountName, mAccountID, mChannelID, mServerID);
+		return -1;
+	}
+
 	mRoleID = mDBResponse->getInt();
 	if (mRoleID <= 0)
 	{
@@ -323,6 +331,8 @@ int CLoginPlayer::processLoginComplete()
 			return -1;
 		}
 		printf("******processWaitEnterGame: %d\n", pNewPlayer->getObjID());
+
+		pNewPlayer->setLoadStatus(0);
 		CDBModule::Inst()->pushDBTask(getRoleID(), emSessionType_LoadPlayerInfo, pNewPlayer->getObjID(), 0, "call LoadPlayerInfo(%u)", getRoleID());
 		CDBModule::Inst()->pushDBTask(getRoleID(), emSessionType_LoadPlayerBaseProperty, pNewPlayer->getObjID(), 0, "call LoadPlayerBaseProperty(%u)", getRoleID());
 

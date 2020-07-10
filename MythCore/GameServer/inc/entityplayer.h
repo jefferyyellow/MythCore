@@ -119,7 +119,9 @@ public:
 	}
 
 	void			setSaveStatusBit(byte val){ mSaveStatus |= val; }
+
 	void			setLoadStatusBit(byte val){ mLoadStatus |= val; }
+	byte			getLoadStatusBit(byte val){ return mLoadStatus & val;}
 	// 用mTempID保存职业属性
 	int				getMetier(){ return mTempID; }
 	void			setMetier(int nMetier){ mTempID = nMetier; }

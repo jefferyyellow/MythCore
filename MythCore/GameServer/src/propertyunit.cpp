@@ -18,7 +18,7 @@ void CPropertyUnit::obtainExp(int nExp)
 	mExp += nExp;
 
 	byte nOldLevel = mLevel;
-	while (mLevel >= CTplLevelExpConfig::spConfig->mLevelUpExp[mLevel] && mLevel <= MAX_LEVEL)
+	while (mExp >= CTplLevelExpConfig::spConfig->mLevelUpExp[mLevel] && mLevel <= MAX_LEVEL)
 	{
 		mExp -= CTplLevelExpConfig::spConfig->mLevelUpExp[mLevel];
 		++mLevel;

@@ -21,6 +21,7 @@ public:
 public:
 	CGMCommandManager()
 	{
+		InitCommand();
 	}
 
 	~CGMCommandManager()

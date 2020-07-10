@@ -4,9 +4,9 @@
 //#include "log.h"
 //#include "logmanager.h"
 //#include "fileutility.h"
-#include "timemanager.h"
-#include "performance.h"
-#include "commontype.h"
+//#include "timemanager.h"
+//#include "performance.h"
+//#include "commontype.h"
 //#include "i18n.h"
 //#include <vector>
 //#include <list>
@@ -22,13 +22,13 @@
 //#include "deque.h"
 //#include "vector.h"
 //#include "selectmodel.h"
-#include "threadpool.h"
-#include "thread.h"
-#include "logmanager.h"
-#include "log.h"
-#include "logdisplayer.h"
-#include "simplelock.h"
-using namespace Myth;
+//#include "threadpool.h"
+//#include "thread.h"
+//#include "logmanager.h"
+//#include "log.h"
+//#include "logdisplayer.h"
+//#include "simplelock.h"
+//using namespace Myth;
 //#include <stdio.h>
 //using namespace std;
 //
@@ -361,25 +361,25 @@ using namespace Myth;
 //	int i; 
 //};
 //
-class CTestPod
-{
-public:
-	CTestPod()
-	{
-		mData = 0;
-	}
-	virtual ~CTestPod()
-	{
-		mData = 0;
-	}
-
-public:
-	void	SetData(int nData){ mData = nData; }
-
-protected:
-private:
-	int		mData;
-};
+//class CTestPod
+//{
+//public:
+//	CTestPod()
+//	{
+//		mData = 0;
+//	}
+//	virtual ~CTestPod()
+//	{
+//		mData = 0;
+//	}
+//
+//public:
+//	void	SetData(int nData){ mData = nData; }
+//
+//protected:
+//private:
+//	int		mData;
+//};
 //void testtypetrait()
 //{
 //
@@ -915,155 +915,155 @@ private:
 //	int t;
 //};
 //
-using namespace std;
-#include <string>
-#include <map>
-
-class CPerfInfo
-{
-public:
-	CPerfInfo()
-		: mPerfLog(1), mTotalCalled(0), mCostTime(0), mMostCostTime(0), mLestCostTime(1000)
-	{}
-	~CPerfInfo()
-	{}
-
-public:
-
-	int	mPerfLog;		// 是否统计本信息。为了以后控制统计项制定.默认统计
-	int	mTotalCalled;	// 被调用的总次数
-	int	mCostTime;		// 总共花费的时间
-	int mMostCostTime;	// 最长消耗时间
-	int mLestCostTime;	// 最短消耗时间
-};
-
-
-
-/// 性能优化，不直接使用string作为map的key,封装CPerfIndex作为key
-class CPerfIndex
-{
-public:
-	CPerfIndex( unsigned int uiHashCode, const char* pszName ) : 
-	  mHashCode( uiHashCode ), mName( pszName ) {}
-	~CPerfIndex(){}
-
-	unsigned int	mHashCode;		// 作为优先比较关键字
-	std::string		mName;			// perf统计的信息
-};
-
-
-
-class CLessPrefIndex
-{
-public:
-
-	bool operator()(const CPerfIndex& __x, const CPerfIndex& __y) const
-	{
-		return ( __x.mHashCode < __y.mHashCode )
-			|| ( __x.mHashCode == __y.mHashCode && __x.mName < __y.mName );
-	}
-};
-
-typedef std::map<CPerfIndex, CPerfInfo, CLessPrefIndex> PerfMap;
-typedef PerfMap::iterator PerfMapIterator;
-class CPerfStat
-{
-public:
-	static PerfMap msPerfMap;
-	/**
-	* DJB Hash Function
-	* An algorithm produced by Professor Daniel J. Bernstein and shown first to the
-	* world on the usenet newsgroup comp.lang.c. It is one of the most efficient
-	* hash functions ever published.
-	*
-	* @param str    需要计算hash值的字符串，必须以ASCII 0结尾
-	*
-	* @return 字符串对应的hash值
-	*/
-	static inline unsigned int DJBHash(const char* str)
-	{
-		unsigned int hash = 5381;
-
-		for(const unsigned char* p = reinterpret_cast<const unsigned char*> (str); 0 != *p; ++p)
-		{
-			hash = ((hash << 5) + hash) + *p;
-		}
-		return (hash & 0x7FFFFFFF);
-	}
-
-
-	static inline CPerfInfo& GetPerfInfo(const char* name)
-	{
-		unsigned int hashCode = DJBHash(name);
-		CPerfIndex perfIndex(hashCode, name);
-		return msPerfMap[perfIndex];
-	}
-
-	static inline CPerfInfo& GetPerfInfo(unsigned int hashCode, const char* name)
-	{
-		CPerfIndex perfIndex(hashCode, name);
-		return msPerfMap[perfIndex];
-	}
-
-	// 记录统计信息到日志文件
-	static void LogPerfInfo(PerfMap& rPerfMap, const char* pKey);
-
-};
-
-class CTestInit
-{
-public:
-	CTestInit()
-		:a(0), b(0), c(0), d(0), e(0), f(0), g(0)
-	{
-		//init();
-	}
-
-	void init()
-	{
-		a = 0;
-		b = 0;
-		c = 0;
-		d = 0;
-		e = 0;
-		f = 0;
-		g = 0;
-	}
-
-private:
-	int a;
-	int b;
-	int c;
-	int d;
-	int e;
-	int f;
-	int g;
-};
-void testHashMap()
-{
-	//typedef hash_map<int, int>  HASH_MAP;
-	//HASH_MAP tMap;
-	//for (int i = 0; i <= 2000; ++i)
-	//{
-	//	tMap[i] = i;
-	//}
-	//HASH_MAP::iterator it;
-
-	CTimeManager* pTime = CTimeManager::createInst();
-	CPerformance* pPerformance = CPerformance::createInst();
-	PERFOR_TIMER_BEFORE(testHashMap);
-
-	for (int i = 0; i < 1000000; ++ i)
-	{
-		CTestInit a;
-	}
-
-	PERFOR_TIMER_AFTER(testHashMap);
-	CPerformance::Inst()->PrintResult();
-
-	CTimeManager::destroyInst();
-	CPerformance::destroyInst();
-}
+//using namespace std;
+//#include <string>
+//#include <map>
+//
+//class CPerfInfo
+//{
+//public:
+//	CPerfInfo()
+//		: mPerfLog(1), mTotalCalled(0), mCostTime(0), mMostCostTime(0), mLestCostTime(1000)
+//	{}
+//	~CPerfInfo()
+//	{}
+//
+//public:
+//
+//	int	mPerfLog;		// 是否统计本信息。为了以后控制统计项制定.默认统计
+//	int	mTotalCalled;	// 被调用的总次数
+//	int	mCostTime;		// 总共花费的时间
+//	int mMostCostTime;	// 最长消耗时间
+//	int mLestCostTime;	// 最短消耗时间
+//};
+//
+//
+//
+///// 性能优化，不直接使用string作为map的key,封装CPerfIndex作为key
+//class CPerfIndex
+//{
+//public:
+//	CPerfIndex( unsigned int uiHashCode, const char* pszName ) : 
+//	  mHashCode( uiHashCode ), mName( pszName ) {}
+//	~CPerfIndex(){}
+//
+//	unsigned int	mHashCode;		// 作为优先比较关键字
+//	std::string		mName;			// perf统计的信息
+//};
+//
+//
+//
+//class CLessPrefIndex
+//{
+//public:
+//
+//	bool operator()(const CPerfIndex& __x, const CPerfIndex& __y) const
+//	{
+//		return ( __x.mHashCode < __y.mHashCode )
+//			|| ( __x.mHashCode == __y.mHashCode && __x.mName < __y.mName );
+//	}
+//};
+//
+//typedef std::map<CPerfIndex, CPerfInfo, CLessPrefIndex> PerfMap;
+//typedef PerfMap::iterator PerfMapIterator;
+//class CPerfStat
+//{
+//public:
+//	static PerfMap msPerfMap;
+//	/**
+//	* DJB Hash Function
+//	* An algorithm produced by Professor Daniel J. Bernstein and shown first to the
+//	* world on the usenet newsgroup comp.lang.c. It is one of the most efficient
+//	* hash functions ever published.
+//	*
+//	* @param str    需要计算hash值的字符串，必须以ASCII 0结尾
+//	*
+//	* @return 字符串对应的hash值
+//	*/
+//	static inline unsigned int DJBHash(const char* str)
+//	{
+//		unsigned int hash = 5381;
+//
+//		for(const unsigned char* p = reinterpret_cast<const unsigned char*> (str); 0 != *p; ++p)
+//		{
+//			hash = ((hash << 5) + hash) + *p;
+//		}
+//		return (hash & 0x7FFFFFFF);
+//	}
+//
+//
+//	static inline CPerfInfo& GetPerfInfo(const char* name)
+//	{
+//		unsigned int hashCode = DJBHash(name);
+//		CPerfIndex perfIndex(hashCode, name);
+//		return msPerfMap[perfIndex];
+//	}
+//
+//	static inline CPerfInfo& GetPerfInfo(unsigned int hashCode, const char* name)
+//	{
+//		CPerfIndex perfIndex(hashCode, name);
+//		return msPerfMap[perfIndex];
+//	}
+//
+//	// 记录统计信息到日志文件
+//	static void LogPerfInfo(PerfMap& rPerfMap, const char* pKey);
+//
+//};
+//
+//class CTestInit
+//{
+//public:
+//	CTestInit()
+//		:a(0), b(0), c(0), d(0), e(0), f(0), g(0)
+//	{
+//		//init();
+//	}
+//
+//	void init()
+//	{
+//		a = 0;
+//		b = 0;
+//		c = 0;
+//		d = 0;
+//		e = 0;
+//		f = 0;
+//		g = 0;
+//	}
+//
+//private:
+//	int a;
+//	int b;
+//	int c;
+//	int d;
+//	int e;
+//	int f;
+//	int g;
+//};
+//void testHashMap()
+//{
+//	//typedef hash_map<int, int>  HASH_MAP;
+//	//HASH_MAP tMap;
+//	//for (int i = 0; i <= 2000; ++i)
+//	//{
+//	//	tMap[i] = i;
+//	//}
+//	//HASH_MAP::iterator it;
+//
+//	CTimeManager* pTime = CTimeManager::createInst();
+//	CPerformance* pPerformance = CPerformance::createInst();
+//	PERFOR_TIMER_BEFORE(testHashMap);
+//
+//	for (int i = 0; i < 1000000; ++ i)
+//	{
+//		CTestInit a;
+//	}
+//
+//	PERFOR_TIMER_AFTER(testHashMap);
+//	CPerformance::Inst()->PrintResult();
+//
+//	CTimeManager::destroyInst();
+//	CPerformance::destroyInst();
+//}
 //
 //void testVector()
 //{
@@ -1149,20 +1149,120 @@ void testHashMap()
 //
 //}
 //#endif
-PerfMap CPerfStat::msPerfMap;
+//PerfMap CPerfStat::msPerfMap;
+//
+//Myth::CSimpleLock cs;
+//class CJob : public Myth::IJob
+//{
+//public:
+//	virtual void doing(int uParam)
+//	{
+//		cs.lock();
+//		//printf("Thread Serial Num :%d, %d\n", uParam, mNum);
+//		//LOG_DEBUG("pro", "Thread Serial Num :%d, %d\n", uParam, getJobID());
+//		cs.unlock();
+//	}
+//};
+#include "mysqldatabase.h"
+#include "mysqlqueryresult.h"
+#include "tinyxml2.h"
+#include "logmanager.h"
+#include "logdisplayer.h"
+#include <vector>
+#include <string>
+using namespace std;
 
-Myth::CSimpleLock cs;
-class CJob : public Myth::IJob
+using namespace Myth;
+using namespace tinyxml2;
+#	define LOG_INFO(fmt, ... )				CLogManager::Inst()->LogInfoMessageFormat(fmt, ##__VA_ARGS__ )
+#	define LOG_WARN(fmt, ... )				CLogManager::Inst()->LogWarnMessageFormat(fmt, ##__VA_ARGS__ )
+#	define LOG_ERROR(fmt, ... )				CLogManager::Inst()->LogErrorMessageFormat(fmt, ##__VA_ARGS__ )
+#	define LOG_DEBUG(logname, fmt, ... )	CLogManager::Inst()->LogDebugMessageFormat(logname, fmt, ##__VA_ARGS__ )
+
+typedef std::vector<std::string> Tokens;
+Tokens StrSplit(const std::string &src, const std::string &sep)
+{
+	Tokens r;
+	std::string s;
+	for (std::string::const_iterator i = src.begin(); i != src.end(); i++)
+	{
+		if (sep.find(*i) != std::string::npos)
+		{
+			if (s.length()) r.push_back(s);
+			s = "";
+		}
+		else
+		{
+			s += *i;
+		}
+	}
+	if (s.length()) r.push_back(s);
+	return r;
+}
+
+
+class CServerInfo
 {
 public:
-	virtual void doing(int uParam)
-	{
-		cs.lock();
-		//printf("Thread Serial Num :%d, %d\n", uParam, mNum);
-		//LOG_DEBUG("pro", "Thread Serial Num :%d, %d\n", uParam, getJobID());
-		cs.unlock();
-	}
+	string	strServerID;
+	string	strServerName;
+	string	strIP;
+	string	strDataBase;
 };
+
+typedef std::vector<CServerInfo> SERVER_LIST;
+SERVER_LIST gServerList;
+void LoadConfig()
+{
+	FILE* fp = fopen("realInfo.txt", "r");
+	char acBuff[10000] = {0};
+	while (!feof(fp))
+	{
+		fgets(acBuff, 10000, fp);
+		Tokens tToken = StrSplit(acBuff, "\t" );
+
+		CServerInfo tInfo;
+		tInfo.strServerID = tToken[0];
+		tInfo.strServerName = tToken[1];
+		tInfo.strIP = tToken[2];
+		tInfo.strDataBase = tToken[3];
+		gServerList.push_back(tInfo);
+	}
+	fclose(fp);
+}
+
+
+void PrintfMysqlResult(CMysqlQueryResult& rResult)
+{
+	char acBuffer[100000];
+	int nResultLen = 100000;
+	int nLength = 0;
+
+	for (int i = 0; i < rResult.getRowCount(); ++i)
+	{
+
+		nResultLen = 0;
+		nLength = 0;
+		for (int j = 0; j < rResult.getFieldCount(); ++j)
+		{
+			if (j == 0 || j == 1)
+			{
+				nLength = snprintf((char*)&(acBuffer[nResultLen]), sizeof(acBuffer) - nResultLen - 1, "%-30s", rResult.getFileValue(j));
+				nResultLen += nLength;
+				//printf("%-30s", tResult.getFileValue(j));
+			}
+			else
+			{
+				nLength = snprintf((char*)&(acBuffer[nResultLen]), sizeof(acBuffer) - nResultLen - 1, "%-10s", rResult.getFileValue(j));
+				nResultLen += nLength;
+			}
+		}
+
+		LOG_INFO(acBuffer);
+		rResult.nextRow();
+	}
+
+}
 
 int main(int argc, char** argv)
 {
@@ -1245,7 +1345,7 @@ int main(int argc, char** argv)
 //	int size = sizeof(CSizeA);
 //	int size2 = sizeof(CSizeB);
 //
-	testHashMap();
+//	testHashMap();
 //	testVector();
 //	testCriticalSection();
 
@@ -1314,5 +1414,41 @@ int main(int argc, char** argv)
 //	}
 //
 //	CLogManager::DestroyInst();
+	//CMysqlDataBase	mDataBase;
+	//int nResult = mDataBase.connectMysqlServer("192.168.10.13', "root", "webgame", "mxwHDB", 3306, NULL);
+	LoadConfig();
+	CLogManager::createInst();
+
+	// 给信息日志加文件displayer
+	CRollFileDisplayer* pInfoFileDisplayer = new CRollFileDisplayer(const_cast<char*>("testinfo.log"), 1024000, 10);
+	CLogManager::Inst()->GetInfoLog().AddDisplayer(pInfoFileDisplayer);
+
+
+	for (int i = 0; i < gServerList.size(); ++ i)
+	{
+		CServerInfo& rInfo = gServerList[i];
+
+		CMysqlDataBase mDataBase;
+
+		int nResult = mDataBase.connectMysqlServer(rInfo.strIP.c_str(), "mxw2-server", "FMxxfh7brodkhx", rInfo.strDataBase.c_str(), 3306, NULL);
+		if (0 != nResult)
+		{
+			return 0;
+		}
+
+
+		CMysqlQueryResult tResult(&mDataBase, false);
+
+		nResult = mDataBase.query("desc UMS_ROLE;", tResult);
+		PrintfMysqlResult(tResult);
+		LOG_INFO("\n\n\n");
+
+		nResult = mDataBase.query("desc UMS_ROLE_INFO;", tResult);
+		PrintfMysqlResult(tResult);
+		LOG_INFO("\n\n\n");
+	}
+
+
+
 }
 
