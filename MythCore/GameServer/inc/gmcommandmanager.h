@@ -36,9 +36,8 @@ public:
 private:
 	COMMAND_HANDLER_DECL(help);
 	COMMAND_HANDLER_DECL(exp);
-	//COMMAND_HANDLER_DECL(money);
-	//COMMAND_HANDLER_DECL(diamond);
-
+	COMMAND_HANDLER_DECL(ii);
+	COMMAND_HANDLER_DECL(setlevel);
 
 private:
 	/// µÃµ½ÃüÁîµÄ°ïÖú×Ö·û´®

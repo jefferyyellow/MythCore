@@ -147,7 +147,10 @@ int CItemUnit::insertItem(int nItemID, int nItemNum)
 	// 通用的道具没有特殊属性
 	if (emItemType_Equip == pTplITem->mItemType)
 	{
-		sendInsertItemObjNotify(nOutItemIndex[0]);
+		for (int i = 0; i < nOutSize; ++ i)
+		{
+			sendInsertItemObjNotify(nOutItemIndex[i]);
+		}
 	}
 	else
 	{

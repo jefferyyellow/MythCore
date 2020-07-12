@@ -7,6 +7,8 @@
 #include "GameClientDlgDlg.h"
 #include "afxdialogex.h"
 #include "i18n.h"
+#include "./gameclient.h"
+
 using namespace Myth;
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -104,6 +106,7 @@ BOOL CGameClientDlgDlg::OnInitDialog()
 	// TODO:  在此添加额外的初始化代码
 	mpClient = new CGameClient();
 	mpClient->init();
+	mpClient->setDlg(this);
 	SetTimer(GAME_MAIN_TIMER, 30, NULL);
 	((CEdit*)GetDlgItem(IDC_LOG))->SetReadOnly(TRUE);
 	((CEdit*)GetDlgItem(IDC_LOG))->SetWindowText(_T("我不吃"));
@@ -210,4 +213,21 @@ void CGameClientDlgDlg::OnBnClickedSendgmcommand()
 	((CEdit*)GetDlgItem(IDC_GM_COMMAND))->GetWindowText(strCommand);
 
 	mpClient->sendGMCommandRequest(strCommand.GetBuffer());
+}
+
+void CGameClientDlgDlg::DisplayLog(char* pLog)
+{
+	if (NULL == pLog)
+	{
+		return;
+	}
+	if (pLog[0] == '\0')
+	{
+		return;
+	}
+
+	mStrLog += pLog;
+	mStrLog += "\r\n";
+	((CEdit*)GetDlgItem(IDC_LOG))->SetWindowText(mStrLog);
+	UpdateData(FALSE);
 }

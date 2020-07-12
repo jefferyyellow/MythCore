@@ -220,8 +220,8 @@ void CPropertyModule::onLoadPlayerInfo(CDBResponse& rResponse)
 	rResponse.getString(pPlayer->getName(), PLAYER_NAME_LENGTH - 1);
 	pPlayer->getPropertyUnit().setLevel((byte)rResponse.getShort());
 	pPlayer->getPropertyUnit().setExp(rResponse.getInt64());
-	pPlayer->getPropertyUnit().setVipLevel(rResponse.getByte());
-	pPlayer->getPropertyUnit().setVipExp(rResponse.getInt());
+	pPlayer->getVIPUnit().setVipLevel(rResponse.getByte());
+	pPlayer->getVIPUnit().setVipExp(rResponse.getInt());
 
 
 	pPlayer->getItemUnit().setMoney(rResponse.getInt());
@@ -288,6 +288,7 @@ void CPropertyModule::onLoadComplete(CEntityPlayer* pPlayer)
 	if (NULL != pLoginPlayer)
 	{
 		pLoginPlayer->setDelState(emLoginDelState_Complete);
+		pLoginPlayer->setLoginState(emLoginState_None);
 	}
 
 	pPlayer->setPlayerStauts(emPlayerStatus_Gameing);
@@ -326,8 +327,8 @@ void CPropertyModule::sendPlayerBaseInfoNotify(CEntityPlayer* pPlayer)
 	tNotify.set_posy(pPlayer->getPosY());
 	tNotify.set_level(pPlayer->getLevel());
 	tNotify.set_exp(pPlayer->getPropertyUnit().getExp());
-	tNotify.set_viplevel(pPlayer->getPropertyUnit().getVipLevel());
-	tNotify.set_vipexp(pPlayer->getPropertyUnit().getVipExp());
+	tNotify.set_viplevel(pPlayer->getVIPUnit().getVipLevel());
+	tNotify.set_vipexp(pPlayer->getVIPUnit().getVipExp());
 
 	CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIFY_PLAYER_BASE_INFO, &tNotify);
 }
@@ -381,7 +382,7 @@ void CPropertyModule::savePlayerInfo(CEntityPlayer* pPlayer)
 	CDBModule::Inst()->pushDBTask(pPlayer->getRoleID(), emSessionType_SavePlayerInfo, pPlayer->getObjID(), 0,
 		"call UpdatePlayerInfo(%d, %d,%lld,%d,%d,%d,%d,%d)", pPlayer->getRoleID(),
 		pPlayer->getPropertyUnit().getLevel(), pPlayer->getPropertyUnit().getExp(),
-		pPlayer->getPropertyUnit().getVipLevel(), pPlayer->getPropertyUnit().getVipExp(),
+		pPlayer->getVIPUnit().getVipLevel(), pPlayer->getVIPUnit().getVipExp(),
 		pPlayer->getItemUnit().getMoney(), pPlayer->getItemUnit().getDiamond(), tCurrTime);
 }
 
@@ -489,7 +490,7 @@ void CPropertyModule::setNewPlayerValue(CEntityPlayer* pPlayer)
 
 	pPlayer->getItemUnit().insertItem(pTplConfig->mItemID, pTplConfig->mItemNum, MAX_NEW_PLAYER_ITEM);
 	pPlayer->getPropertyUnit().setLevel(pTplConfig->mLevel);
-	pPlayer->getPropertyUnit().setVipLevel(pTplConfig->mVipLevel);
+	pPlayer->getVIPUnit().setVipLevel(pTplConfig->mVipLevel);
 }
 
 /// 创建实体后的处理

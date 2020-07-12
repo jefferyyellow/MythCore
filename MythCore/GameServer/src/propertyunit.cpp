@@ -32,30 +32,20 @@ void CPropertyUnit::obtainExp(int nExp)
 
 	if (mLevel > nOldLevel)
 	{
-		CLevelUpNotify tLevelUpNotify;
-		tLevelUpNotify.set_level(mLevel);
-		CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_NOTIYF_LEVEL_UP, &tLevelUpNotify);
+		onLevelUp(nOldLevel);
 	}
 }
 
-/// 获得VIP经验
-void CPropertyUnit::obtainVIPExp(int nVIPExp)
+// 
+void CPropertyUnit::onLevelUp(int nOldLevel)
 {
-	if (mVipLevel >= MAX_VIP_LEVEL)
+	// 出来对应的升级的问题
+	for (int i = nOldLevel + 1; i <= mLevel; ++ i)
 	{
-		return;
+
 	}
 
-	mVipExp += nVIPExp;
-	while (mVipExp >= CTplVIPConfig::spConfig->mVIPExp[mVipLevel] && mVipLevel <= MAX_VIP_LEVEL)
-	{
-		mVipExp -= CTplVIPConfig::spConfig->mVIPExp[mVipLevel];
-		++mVipLevel;
-		if (mVipLevel == MAX_VIP_LEVEL)
-		{
-			mVipExp = 0;
-		}
-	}
-
-
+	CLevelUpNotify tLevelUpNotify;
+	tLevelUpNotify.set_level(mLevel);
+	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_NOTIYF_LEVEL_UP, &tLevelUpNotify);
 }

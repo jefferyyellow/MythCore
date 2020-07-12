@@ -27,7 +27,7 @@ void CLoginPlayer::init()
 void CLoginPlayer::initStateMachine()
 {
 	mStateMachine.init(this, emLoginState_None);
-	mStateMachine.addState(emLoginState_None,			5, &CLoginPlayer::processStateNone);
+	mStateMachine.addState(emLoginState_None,			1, &CLoginPlayer::processStateNone);
 	mStateMachine.addState(emLoginState_AccountVerify,	5, &CLoginPlayer::processAccountVerify);
 	mStateMachine.addState(emLoginState_WaitCreateRole, 120, &CLoginPlayer::processWaitCreateRole);
 	mStateMachine.addState(emLoginState_CreateRoleing,	5, &CLoginPlayer::processCreateRoleing);
@@ -284,7 +284,7 @@ int CLoginPlayer::processLoginComplete()
 		return -1;
 	}
 
-	if (mRoleID == pEnterSceneRequest->roleid())
+	if (mRoleID != pEnterSceneRequest->roleid())
 	{
 		LOG_ERROR("enter scene role id invalid: %d", pEnterSceneRequest->roleid());
 		return -1;

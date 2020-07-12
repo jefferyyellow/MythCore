@@ -3,7 +3,8 @@
 //
 
 #pragma once
-#include "./gameclient.h"
+#include "resource.h"
+class CGameClient;
 // CGameClientDlgDlg ¶Ô»°¿ò
 class CGameClientDlgDlg : public CDialogEx
 {
@@ -31,7 +32,9 @@ protected:
 	
 
 public:
-	CGameClient* mpClient;
+	CGameClient*	mpClient;
+	CString			mStrLog;
+	void DisplayLog(char* pLog);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	CBrush m_brush;

@@ -52,6 +52,8 @@ public:
 	bool		elapse(unsigned int nTickOffset);
 	void		setCurStateTime(int nTime);
 	EmLoginState getLoginState(){return (EmLoginState)mStateMachine.getCurState();}
+	void		setLoginState(int nState){mStateMachine.switchState(nState);}
+
 public:
 	/// autocode don't edit!!!
     unsigned int getAccountID(){ return mAccountID;}

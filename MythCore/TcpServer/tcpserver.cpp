@@ -341,6 +341,7 @@ void CTcpServer::checkKeepLiveTimeOut(time_t tTimeNow)
 		{
 			// Ö±½ÓÉ¾³ý
 			sendSocketErrToGameServer(i, emTcpError_KeepLive);
+			printf("Keep live time out, nTcpIndex: %d, IP: %d\n", i, pSocket->getIP());
 			clearSocketInfo(i, pSocket);
 		}
 	}

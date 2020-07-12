@@ -106,7 +106,7 @@ void CLoginModule::onTimer(unsigned int nTickOffset)
 					CEntityPlayer* pPlayer = CSceneJob::Inst()->getPlayerBySocketIndex(pLoginPlayer->getExchangeHead().mSocketIndex);
 					if (NULL != pPlayer)
 					{
-						CPropertyModule::Inst()->onPlayerLeaveGame(pPlayer);
+						CPropertyModule::Inst()->playerLeaveGame(pPlayer);
 					}
 				}
 

@@ -31,8 +31,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ServerCrashResave", "Server
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameClientDlg", "GameClientDlg\GameClientDlg.vcxproj", "{7BEEEDD4-0BDC-4A7B-BF53-83EDB67E5221}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MFCApplication1", "MFCApplication1\MFCApplication1.vcxproj", "{124D001A-DA6B-4C06-97DB-E4FF3192CFA3}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -71,10 +69,6 @@ Global
 		{7BEEEDD4-0BDC-4A7B-BF53-83EDB67E5221}.Debug|Win32.Build.0 = Debug|Win32
 		{7BEEEDD4-0BDC-4A7B-BF53-83EDB67E5221}.Release|Win32.ActiveCfg = Release|Win32
 		{7BEEEDD4-0BDC-4A7B-BF53-83EDB67E5221}.Release|Win32.Build.0 = Release|Win32
-		{124D001A-DA6B-4C06-97DB-E4FF3192CFA3}.Debug|Win32.ActiveCfg = Debug|Win32
-		{124D001A-DA6B-4C06-97DB-E4FF3192CFA3}.Debug|Win32.Build.0 = Debug|Win32
-		{124D001A-DA6B-4C06-97DB-E4FF3192CFA3}.Release|Win32.ActiveCfg = Release|Win32
-		{124D001A-DA6B-4C06-97DB-E4FF3192CFA3}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

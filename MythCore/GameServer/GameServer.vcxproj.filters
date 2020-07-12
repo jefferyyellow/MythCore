@@ -300,6 +300,9 @@
     <ClCompile Include="src\jobmanager.cpp">
       <Filter>job</Filter>
     </ClCompile>
+    <ClCompile Include="src\vipunit.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -634,6 +637,9 @@
     </ClInclude>
     <ClInclude Include="inc\jobmanager.h">
       <Filter>job</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\vipunit.h">
+      <Filter>player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

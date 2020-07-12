@@ -148,6 +148,7 @@
     <ClCompile Include="src\teammodule.cpp" />
     <ClCompile Include="src\template.cpp" />
     <ClCompile Include="src\aistrategy.cpp" />
+    <ClCompile Include="src\vipunit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\dep\tinyxml\tinyxml2.h" />
@@ -261,6 +262,7 @@
     <ClInclude Include="inc\template.h" />
     <ClInclude Include="inc\propertymodule.h" />
     <ClInclude Include="inc\testtype.h" />
+    <ClInclude Include="inc\vipunit.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="inc\rank.inl" />

@@ -6,7 +6,7 @@
 #include "loginmessage.hxx.pb.h"
 #include "propertymodule.hxx.pb.h"
 #include "../GameServer/inc/messagefactory.h"
-
+#include "GameClientDlgDlg.h"
 CGameClient::CGameClient()
 	:mSelectModel(&mTcpSocket, 1)
 {
@@ -140,27 +140,28 @@ void CGameClient::onServerMessage(CTcpSocket* pTcpSocket)
 	{
 		return;
 	}
-
-	byte* pTemp = pTcpSocket->getRecvBuff();
-	if (pTcpSocket->getRecvBuffSize() < sizeof(unsigned short) * 2)
+	for (int i = 0; i < 200; ++ i)
 	{
-		return;
-	}
-
-	short nLength = *(short*)pTemp;
-	pTemp += sizeof(short);
-
-	short nMessageID = *(short*)pTemp;
-	pTemp += sizeof(short);
-	printf("receive message MessageID : %d\n", nMessageID);
-	Message* pMessage = CMessageFactory::Inst()->createClientMessage(nMessageID);
-	if (NULL != pMessage)
-	{
-		pMessage->ParseFromArray(pTemp, nLength - sizeof(unsigned short) * 2);
-		pTcpSocket->resetRecvBuffPoint(nLength);
-		switch (nMessageID)
+		byte* pTemp = pTcpSocket->getRecvBuff();
+		if (pTcpSocket->getRecvBuffSize() < sizeof(unsigned short) * 2)
 		{
-			
+			return;
+		}
+
+		short nLength = *(short*)pTemp;
+		pTemp += sizeof(short);
+
+		short nMessageID = *(short*)pTemp;
+		pTemp += sizeof(short);
+		printf("receive message MessageID : %d\n", nMessageID);
+		Message* pMessage = CMessageFactory::Inst()->createClientMessage(nMessageID);
+		if (NULL != pMessage)
+		{
+			pMessage->ParseFromArray(pTemp, nLength - sizeof(unsigned short) * 2);
+			pTcpSocket->resetRecvBuffPoint(nLength);
+			switch (nMessageID)
+			{
+
 			case ID_S2C_RESPONSE_LOGIN:
 			{
 				onMessageLoginResponse(pMessage);
@@ -172,10 +173,14 @@ void CGameClient::onServerMessage(CTcpSocket* pTcpSocket)
 				break;
 			}
 			default:
-
+				const ::google::protobuf::Descriptor* pDescriptor = pMessage->GetDescriptor();
+				printf("---- Receive from server Msg[ %s ][id: 0x%04x/%d] ---", pDescriptor->name().c_str(), nMessageID, nMessageID);
+				printf("[%s]", pMessage->ShortDebugString().c_str());
+				mDlg->DisplayLog(const_cast<char*>(pMessage->ShortDebugString().c_str()));
 				break;
-		}
+			}
 
+		}
 	}
 }
 

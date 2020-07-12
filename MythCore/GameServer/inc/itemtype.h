@@ -10,10 +10,10 @@ enum EmCurrencyType
 
 // 货币ID, 这个顺序和EmCurrencyType一致才行
 // 在模板里定义货币的ID道具
-#define MONEY_ID			80			// 金币
-#define DIAMOND_ID			81			// 钻石
+#define MONEY_ID			100			// 金币
+#define DIAMOND_ID			101			// 钻石
 
-#define MAX_CURRENCY_ID		99			// 最大的货币ID
+#define MAX_CURRENCY_ID		199			// 最大的货币ID
 
 // 各种货币
 #define CURRENCY_TYPE_2_ID(eType) (MONEY_ID + eType)

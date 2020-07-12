@@ -5,6 +5,7 @@
 #include "itemunit.h"
 #include "taskunit.h"
 #include "skillunit.h"
+#include "vipunit.h"
 #include "serveractivityunit.h"
 #include "servercommon.h"
 #include "entitytimer.h"
@@ -44,7 +45,8 @@ public:
 		mItemUnit(*this), 
 		mTaskUnit(*this),
 		mSkillUnit(*this),
-		mServerActUnit(*this)
+		mServerActUnit(*this),
+		mVIPUnit(*this)
 	{
 		init();
 	}
@@ -140,6 +142,7 @@ public:
 
     CServerActivityUnit& getServerActUnit(){ return mServerActUnit;}
 
+	CVIPUnit& getVIPUnit(){return mVIPUnit;}
     char* getName(){ return mName;}
     void setName(const char* value)
     {
@@ -209,6 +212,8 @@ private:
 	CSkillUnit		mSkillUnit;
 	/// 开服活动单元
 	CServerActivityUnit	mServerActUnit;
+	/// VIP单元
+	CVIPUnit		mVIPUnit;
 
 	/// 角色名字
 	char			mName[PLAYER_NAME_LENGTH];

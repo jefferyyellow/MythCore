@@ -9,6 +9,7 @@ typedef ::google::protobuf::Message Message;
 
 #define MAX_SOCKET_BUFF_SIZE		4096				// Socket缓冲区大小
 #define MAX_PLAYER_NAME_LEN			32					// 玩家姓名长度
+class CGameClientDlgDlg;
 class CGameClient
 {
 public:
@@ -37,6 +38,11 @@ public:
 private:
 	void		onMessageLoginResponse(Message* pMessage);
 	void		onCreateRoleResponse(Message* pMessage);
+
+public:
+	CGameClientDlgDlg* getDlg() const { return mDlg; }
+	void setDlg(CGameClientDlgDlg* val) { mDlg = val; }
+
 private:
 	CLog*					mDefaultLog;
 	CTcpSocket				mTcpSocket;
@@ -50,5 +56,6 @@ private:
 
 	char					mAccountName[MAX_PLAYER_NAME_LEN];
 	char					mRoleName[MAX_PLAYER_NAME_LEN];
+	CGameClientDlgDlg*		mDlg;
 };
 #endif
