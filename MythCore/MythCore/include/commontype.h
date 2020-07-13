@@ -25,17 +25,19 @@
 #endif
 #include <stddef.h>
 #ifdef MYTH_OS_WINDOWS
-typedef unsigned char byte;
+typedef unsigned char			byte;
 typedef	signed		__int64		sint64;
 typedef	unsigned	__int64		uint64;
+typedef unsigned int			uint;
 #elif defined (MYTH_OS_UNIX)
 
 #include <sys/types.h>
 #include <stdint.h>
 #include <climits>
-typedef unsigned char byte;
-typedef	int64_t		sint64;
-typedef	uint64_t	uint64;
+typedef unsigned char			byte;
+typedef	int64_t					sint64;
+typedef	uint64_t				uint64;
+typedef unsigned int			uint;
 #endif // MYTH_OS_UNIX
 
 #define STR_LENGTH_8		8			/// string length 8 byte

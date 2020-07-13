@@ -161,10 +161,17 @@ int CItemUnit::insertItem(int nItemID, int nItemNum)
 	return SUCCESS;
 }
 
-/// 拥有道具的数目
+///  拥有道具的数目（注意，包括货币道具）
 int CItemUnit::hasItem(int nItemID)
 {
-	return mBag.hasItem(nItemID);
+	if (nItemID <= MAX_CURRENCY_ID)
+	{
+		return getCurrency(CURRENCY_ID_2_TYPE(nItemID));
+	}
+	else
+	{
+		return mBag.hasItem(nItemID);
+	}
 }
 
 /// 删除道具
@@ -194,8 +201,21 @@ int CItemUnit::removeItem(int nIndex, int nItemNum)
 	return SUCCESS;
 }
 
-/// 删除道具,首先保证有这么多道具,这个接口应该用得不多（如果很多需要优化一下消息）
+/// 删除道具（注意，包括货币道具）
 void CItemUnit::removeItemByID(int nItemID, int nItemNum)
+{
+	if (nItemID <= MAX_CURRENCY_ID)
+	{
+		consumeCurrency((EmCurrencyType)CURRENCY_ID_2_TYPE(nItemID), nItemNum);
+	}
+	else
+	{
+		removeItemOnly(nItemID, nItemNum);
+	}
+}
+
+/// 删除道具（注意，不处理货币道具）,首先保证有这么多道具,这个接口应该用得不多（如果很多需要优化一下消息）
+void CItemUnit::removeItemOnly(int nItemID, int nItemNum)
 {
 	int nOutItemIndex[MAX_CONTAINER_ITEM_NUM] = { 0 };
 	int nOutItemNum[MAX_CONTAINER_ITEM_NUM] = { 0 };

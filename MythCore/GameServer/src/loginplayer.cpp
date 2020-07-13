@@ -32,7 +32,7 @@ void CLoginPlayer::initStateMachine()
 	mStateMachine.addState(emLoginState_WaitCreateRole, 120, &CLoginPlayer::processWaitCreateRole);
 	mStateMachine.addState(emLoginState_CreateRoleing,	5, &CLoginPlayer::processCreateRoleing);
 	mStateMachine.addState(emLoginState_LoginComplete, 5, &CLoginPlayer::processLoginComplete);
-	mStateMachine.addState(emLoginState_RoleLoading, 15, &CLoginPlayer::processLoginComplete);
+	mStateMachine.addState(emLoginState_RoleLoading, 15, &CLoginPlayer::processRoleLoading);
 	mStateMachine.setSwitchFailure(&CLoginPlayer::onSwitchFailure);
 	//mStateMachine.addState(emLoginState_WaitEnterGame,	10, &CLoginPlayer::processWaitEnterGame);
 	//mStateMachine.addState(emLoginState_Playing,		10, &CLoginPlayer::processWaitPlaying);

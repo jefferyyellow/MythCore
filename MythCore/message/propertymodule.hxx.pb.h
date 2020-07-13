@@ -39,6 +39,8 @@ void protobuf_ShutdownFile_propertymodule_2ehxx();
 
 class CGMCommandRequest;
 class CGMCommandResponse;
+class CGetPlayerPropertyRequest;
+class CGetPlayerPropertyResponse;
 class CLeaveGameRequest;
 class CLeaveGameResponse;
 class CLevelUpNotify;
@@ -62,12 +64,13 @@ enum PROPERTY_MODULE_MSG_ID {
   ID_S2C_NOTIFY_PLAYER_ITEM_INFO = 1032,
   ID_S2C_NOTIFY_PLAYER_TASK_INFO = 1033,
   ID_S2C_NOTIFY_PLAYER_SKILL_INFO = 1034,
+  ID_C2S_REQUEST_GET_PLAYER_PROPERTY = 1035,
   PROPERTY_MODULE_MSG_ID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   PROPERTY_MODULE_MSG_ID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool PROPERTY_MODULE_MSG_ID_IsValid(int value);
 const PROPERTY_MODULE_MSG_ID PROPERTY_MODULE_MSG_ID_MIN = ID_PROPERTY_MODULE_ERROR;
-const PROPERTY_MODULE_MSG_ID PROPERTY_MODULE_MSG_ID_MAX = ID_S2C_NOTIFY_PLAYER_SKILL_INFO;
+const PROPERTY_MODULE_MSG_ID PROPERTY_MODULE_MSG_ID_MAX = ID_C2S_REQUEST_GET_PLAYER_PROPERTY;
 const int PROPERTY_MODULE_MSG_ID_ARRAYSIZE = PROPERTY_MODULE_MSG_ID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* PROPERTY_MODULE_MSG_ID_descriptor();
@@ -1086,6 +1089,178 @@ class CPlayerSkillInfoNotify : public ::google::protobuf::Message /* @@protoc_in
 };
 extern ::google::protobuf::internal::ExplicitlyConstructed<CPlayerSkillInfoNotify> CPlayerSkillInfoNotify_default_instance_;
 
+// -------------------------------------------------------------------
+
+class CGetPlayerPropertyRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CGetPlayerPropertyRequest) */ {
+ public:
+  CGetPlayerPropertyRequest();
+  virtual ~CGetPlayerPropertyRequest();
+
+  CGetPlayerPropertyRequest(const CGetPlayerPropertyRequest& from);
+
+  inline CGetPlayerPropertyRequest& operator=(const CGetPlayerPropertyRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CGetPlayerPropertyRequest& default_instance();
+
+  static const CGetPlayerPropertyRequest* internal_default_instance();
+
+  void Swap(CGetPlayerPropertyRequest* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CGetPlayerPropertyRequest* New() const { return New(NULL); }
+
+  CGetPlayerPropertyRequest* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CGetPlayerPropertyRequest& from);
+  void MergeFrom(const CGetPlayerPropertyRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CGetPlayerPropertyRequest* other);
+  void UnsafeMergeFrom(const CGetPlayerPropertyRequest& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:CGetPlayerPropertyRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_propertymodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_propertymodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_propertymodule_2ehxx();
+  friend void protobuf_ShutdownFile_propertymodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CGetPlayerPropertyRequest> CGetPlayerPropertyRequest_default_instance_;
+
+// -------------------------------------------------------------------
+
+class CGetPlayerPropertyResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CGetPlayerPropertyResponse) */ {
+ public:
+  CGetPlayerPropertyResponse();
+  virtual ~CGetPlayerPropertyResponse();
+
+  CGetPlayerPropertyResponse(const CGetPlayerPropertyResponse& from);
+
+  inline CGetPlayerPropertyResponse& operator=(const CGetPlayerPropertyResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CGetPlayerPropertyResponse& default_instance();
+
+  static const CGetPlayerPropertyResponse* internal_default_instance();
+
+  void Swap(CGetPlayerPropertyResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CGetPlayerPropertyResponse* New() const { return New(NULL); }
+
+  CGetPlayerPropertyResponse* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CGetPlayerPropertyResponse& from);
+  void MergeFrom(const CGetPlayerPropertyResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CGetPlayerPropertyResponse* other);
+  void UnsafeMergeFrom(const CGetPlayerPropertyResponse& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated uint32 PropertyValue = 1;
+  int propertyvalue_size() const;
+  void clear_propertyvalue();
+  static const int kPropertyValueFieldNumber = 1;
+  ::google::protobuf::uint32 propertyvalue(int index) const;
+  void set_propertyvalue(int index, ::google::protobuf::uint32 value);
+  void add_propertyvalue(::google::protobuf::uint32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+      propertyvalue() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+      mutable_propertyvalue();
+
+  // @@protoc_insertion_point(class_scope:CGetPlayerPropertyResponse)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > propertyvalue_;
+  mutable int _propertyvalue_cached_byte_size_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_propertymodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_propertymodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_propertymodule_2ehxx();
+  friend void protobuf_ShutdownFile_propertymodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CGetPlayerPropertyResponse> CGetPlayerPropertyResponse_default_instance_;
+
 // ===================================================================
 
 
@@ -1499,7 +1674,55 @@ inline const CPlayerTaskInfoNotify* CPlayerTaskInfoNotify::internal_default_inst
 inline const CPlayerSkillInfoNotify* CPlayerSkillInfoNotify::internal_default_instance() {
   return &CPlayerSkillInfoNotify_default_instance_.get();
 }
+// -------------------------------------------------------------------
+
+// CGetPlayerPropertyRequest
+
+inline const CGetPlayerPropertyRequest* CGetPlayerPropertyRequest::internal_default_instance() {
+  return &CGetPlayerPropertyRequest_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
+// CGetPlayerPropertyResponse
+
+// repeated uint32 PropertyValue = 1;
+inline int CGetPlayerPropertyResponse::propertyvalue_size() const {
+  return propertyvalue_.size();
+}
+inline void CGetPlayerPropertyResponse::clear_propertyvalue() {
+  propertyvalue_.Clear();
+}
+inline ::google::protobuf::uint32 CGetPlayerPropertyResponse::propertyvalue(int index) const {
+  // @@protoc_insertion_point(field_get:CGetPlayerPropertyResponse.PropertyValue)
+  return propertyvalue_.Get(index);
+}
+inline void CGetPlayerPropertyResponse::set_propertyvalue(int index, ::google::protobuf::uint32 value) {
+  propertyvalue_.Set(index, value);
+  // @@protoc_insertion_point(field_set:CGetPlayerPropertyResponse.PropertyValue)
+}
+inline void CGetPlayerPropertyResponse::add_propertyvalue(::google::protobuf::uint32 value) {
+  propertyvalue_.Add(value);
+  // @@protoc_insertion_point(field_add:CGetPlayerPropertyResponse.PropertyValue)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+CGetPlayerPropertyResponse::propertyvalue() const {
+  // @@protoc_insertion_point(field_list:CGetPlayerPropertyResponse.PropertyValue)
+  return propertyvalue_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+CGetPlayerPropertyResponse::mutable_propertyvalue() {
+  // @@protoc_insertion_point(field_mutable_list:CGetPlayerPropertyResponse.PropertyValue)
+  return &propertyvalue_;
+}
+
+inline const CGetPlayerPropertyResponse* CGetPlayerPropertyResponse::internal_default_instance() {
+  return &CGetPlayerPropertyResponse_default_instance_.get();
+}
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

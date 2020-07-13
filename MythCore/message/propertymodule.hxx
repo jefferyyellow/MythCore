@@ -16,6 +16,7 @@ enum PROPERTY_MODULE_MSG_ID
 	ID_S2C_NOTIFY_PLAYER_ITEM_INFO		= 0x0408;		// 玩家道具信息通知
 	ID_S2C_NOTIFY_PLAYER_TASK_INFO		= 0x0409;		// 玩家任务信息通知
 	ID_S2C_NOTIFY_PLAYER_SKILL_INFO		= 0x040A;		// 玩家技能信息通知
+	ID_C2S_REQUEST_GET_PLAYER_PROPERTY	= 0x040B;		// 得到玩家属性请求
 }
 
 /// 玩家升级通知 ID_S2C_NOTIYF_LEVEL_UP
@@ -92,4 +93,16 @@ message CPlayerTaskInfoNotify
 message CPlayerSkillInfoNotify
 {
 	
+}
+
+/// 得到玩家属性请求 ID_C2S_REQUEST_GET_PLAYER_PROPERTY
+message CGetPlayerPropertyRequest
+{
+
+}
+
+/// 得到玩家属性回应
+message CGetPlayerPropertyResponse
+{
+	repeated uint32		PropertyValue	= 1;	// 属性值
 }

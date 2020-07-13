@@ -5,7 +5,7 @@ import "common.hxx";
 enum ITEM_MODULE_MSG_ID
 {
 	ID_ITEM_MODULE_ERROR					= 0x0;
-	ID_S2C_NOTIYF_CURRENCY_UPDATE			= 0x0800;	// 玩家金钱更新通知
+	ID_S2C_NOTIYF_CURRENCY_UPDATE			= 0x0800;	// 玩家货币更新通知
 	ID_S2C_NOTIYF_INSERT_ITEM				= 0x0802;	// 插入道具通知(没有特殊属性的道具)
 	ID_S2C_NOTIYF_INSERT_ITEM_OBJ			= 0x0803;	// 插入道具通知(有特殊属性的道具)
 	ID_S2C_NOTIYF_REMOVE_ITEM				= 0x0804;	// 删除道具通知

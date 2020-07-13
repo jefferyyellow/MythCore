@@ -34,9 +34,17 @@ public:
 	void		excuteCommand(std::string strCommandName, StrTokens& tTokens, CEntityPlayer* pPlayer);
 
 private:
+	/// 帮助命令
 	COMMAND_HANDLER_DECL(help);
+	/// 获得经验命令
 	COMMAND_HANDLER_DECL(exp);
+	/// 插入道具命令
 	COMMAND_HANDLER_DECL(ii);
+	/// 删除道具命令
+	COMMAND_HANDLER_DECL(removeitem);
+	/// 清空背包命令
+	COMMAND_HANDLER_DECL(clearbag);
+	/// 设置玩家等级命令
 	COMMAND_HANDLER_DECL(setlevel);
 
 private:

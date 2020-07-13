@@ -8,7 +8,7 @@
 #include "afxdialogex.h"
 #include "i18n.h"
 #include "./gameclient.h"
-
+#include "itemmodule.hxx.pb.h"
 using namespace Myth;
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -69,6 +69,8 @@ BEGIN_MESSAGE_MAP(CGameClientDlgDlg, CDialogEx)
 	ON_WM_CTLCOLOR()
 	ON_BN_CLICKED(IDC_PLAYER_LOGIN, &CGameClientDlgDlg::OnBnClickedPlayerLogin)
 	ON_BN_CLICKED(IDC_SENDGMCOMMAND, &CGameClientDlgDlg::OnBnClickedSendgmcommand)
+	ON_BN_CLICKED(IDC_EQUIP, &CGameClientDlgDlg::OnBnClickedEquip)
+	ON_BN_CLICKED(IDC_UNEQUIP, &CGameClientDlgDlg::OnBnClickedUnequip)
 END_MESSAGE_MAP()
 
 
@@ -230,4 +232,34 @@ void CGameClientDlgDlg::DisplayLog(char* pLog)
 	mStrLog += "\r\n";
 	((CEdit*)GetDlgItem(IDC_LOG))->SetWindowText(mStrLog);
 	UpdateData(FALSE);
+}
+
+void CGameClientDlgDlg::OnBnClickedEquip()
+{
+	// TODO:  在此添加控件通知处理程序代码
+	CEquipItemRequest tRequest;
+
+	CString stEquipIndex;
+	((CEdit*)GetDlgItem(IDC_EQUIP_INDEX))->GetWindowText(stEquipIndex);
+	int nIndex = atoi(stEquipIndex.GetBuffer());
+	tRequest.set_itemindex(nIndex);
+	mpClient->sendMessage(ID_C2S_REQUEST_EQUIP_ITEM, &tRequest);
+}
+
+
+void CGameClientDlgDlg::OnBnClickedUnequip()
+{
+	// TODO:  在此添加控件通知处理程序代码
+	CString stBuffer;
+	((CEdit*)GetDlgItem(IDC_UNEQUIP_PART))->GetWindowText(stBuffer);
+	int nEquipPart = atoi(stBuffer.GetBuffer());
+
+	((CEdit*)GetDlgItem(IDC_UNEQUIP_INDEX))->GetWindowText(stBuffer);
+	int nItemIndex = atoi(stBuffer.GetBuffer());
+
+	CUnEquipItemRequest tRequest;
+	tRequest.set_equippart(nEquipPart);
+	tRequest.set_itemindex(nItemIndex);
+
+	mpClient->sendMessage(ID_C2S_REQUEST_UNEQUIP_ITEM, &tRequest);
 }

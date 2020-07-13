@@ -52,6 +52,12 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* CPlayerSkillInfoNotify_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   CPlayerSkillInfoNotify_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CGetPlayerPropertyRequest_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CGetPlayerPropertyRequest_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CGetPlayerPropertyResponse_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CGetPlayerPropertyResponse_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* PROPERTY_MODULE_MSG_ID_descriptor_ = NULL;
 
 }  // namespace
@@ -225,6 +231,33 @@ void protobuf_AssignDesc_propertymodule_2ehxx() {
       -1,
       sizeof(CPlayerSkillInfoNotify),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPlayerSkillInfoNotify, _internal_metadata_));
+  CGetPlayerPropertyRequest_descriptor_ = file->message_type(11);
+  static const int CGetPlayerPropertyRequest_offsets_[1] = {
+  };
+  CGetPlayerPropertyRequest_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      CGetPlayerPropertyRequest_descriptor_,
+      CGetPlayerPropertyRequest::internal_default_instance(),
+      CGetPlayerPropertyRequest_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(CGetPlayerPropertyRequest),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetPlayerPropertyRequest, _internal_metadata_));
+  CGetPlayerPropertyResponse_descriptor_ = file->message_type(12);
+  static const int CGetPlayerPropertyResponse_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetPlayerPropertyResponse, propertyvalue_),
+  };
+  CGetPlayerPropertyResponse_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      CGetPlayerPropertyResponse_descriptor_,
+      CGetPlayerPropertyResponse::internal_default_instance(),
+      CGetPlayerPropertyResponse_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(CGetPlayerPropertyResponse),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetPlayerPropertyResponse, _internal_metadata_));
   PROPERTY_MODULE_MSG_ID_descriptor_ = file->enum_type(0);
 }
 
@@ -261,6 +294,10 @@ void protobuf_RegisterTypes(const ::std::string&) {
       CPlayerTaskInfoNotify_descriptor_, CPlayerTaskInfoNotify::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       CPlayerSkillInfoNotify_descriptor_, CPlayerSkillInfoNotify::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      CGetPlayerPropertyRequest_descriptor_, CGetPlayerPropertyRequest::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      CGetPlayerPropertyResponse_descriptor_, CGetPlayerPropertyResponse::internal_default_instance());
 }
 
 }  // namespace
@@ -288,6 +325,10 @@ void protobuf_ShutdownFile_propertymodule_2ehxx() {
   delete CPlayerTaskInfoNotify_reflection_;
   CPlayerSkillInfoNotify_default_instance_.Shutdown();
   delete CPlayerSkillInfoNotify_reflection_;
+  CGetPlayerPropertyRequest_default_instance_.Shutdown();
+  delete CGetPlayerPropertyRequest_reflection_;
+  CGetPlayerPropertyResponse_default_instance_.Shutdown();
+  delete CGetPlayerPropertyResponse_reflection_;
 }
 
 void protobuf_InitDefaults_propertymodule_2ehxx_impl() {
@@ -306,6 +347,8 @@ void protobuf_InitDefaults_propertymodule_2ehxx_impl() {
   CPlayerItemInfoNotify_default_instance_.DefaultConstruct();
   CPlayerTaskInfoNotify_default_instance_.DefaultConstruct();
   CPlayerSkillInfoNotify_default_instance_.DefaultConstruct();
+  CGetPlayerPropertyRequest_default_instance_.DefaultConstruct();
+  CGetPlayerPropertyResponse_default_instance_.DefaultConstruct();
   CLevelUpNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
   CGMCommandRequest_default_instance_.get_mutable()->InitAsDefaultInstance();
   CGMCommandResponse_default_instance_.get_mutable()->InitAsDefaultInstance();
@@ -317,6 +360,8 @@ void protobuf_InitDefaults_propertymodule_2ehxx_impl() {
   CPlayerItemInfoNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
   CPlayerTaskInfoNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
   CPlayerSkillInfoNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CGetPlayerPropertyRequest_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CGetPlayerPropertyResponse_default_instance_.get_mutable()->InitAsDefaultInstance();
 }
 
 GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_InitDefaults_propertymodule_2ehxx_once_);
@@ -343,18 +388,21 @@ void protobuf_AddDesc_propertymodule_2ehxx_impl() {
     "\n \001(\r\022\016\n\006VipExp\030\013 \001(\r\"1\n\025CPlayerItemInfo"
     "Notify\022\030\n\003Bag\030\001 \001(\0132\013.PBItemList\"6\n\025CPla"
     "yerTaskInfoNotify\022\035\n\010TaskList\030\001 \001(\0132\013.PB"
-    "TaskList\"\030\n\026CPlayerSkillInfoNotify*\254\003\n\026P"
-    "ROPERTY_MODULE_MSG_ID\022\034\n\030ID_PROPERTY_MOD"
-    "ULE_ERROR\020\000\022\033\n\026ID_S2C_NOTIYF_LEVEL_UP\020\200\010"
-    "\022\036\n\031ID_C2S_REQUEST_GM_COMMAND\020\201\010\022\037\n\032ID_S"
-    "2C_RESPONSE_GM_COMMAND\020\202\010\022\035\n\030ID_S2C_NOTI"
-    "FY_OBTAIN_EXP\020\203\010\022!\n\034ID_S2C_NOTIFY_OBTAIN"
-    "_VIP_EXP\020\204\010\022\036\n\031ID_C2S_REQUEST_LEAVE_GAME"
-    "\020\205\010\022\037\n\032ID_S2C_RESPONSE_LEAVE_GAME\020\206\010\022#\n\036"
-    "ID_S2C_NOTIFY_PLAYER_BASE_INFO\020\207\010\022#\n\036ID_"
-    "S2C_NOTIFY_PLAYER_ITEM_INFO\020\210\010\022#\n\036ID_S2C"
-    "_NOTIFY_PLAYER_TASK_INFO\020\211\010\022$\n\037ID_S2C_NO"
-    "TIFY_PLAYER_SKILL_INFO\020\212\010b\006proto3", 1033);
+    "TaskList\"\030\n\026CPlayerSkillInfoNotify\"\033\n\031CG"
+    "etPlayerPropertyRequest\"3\n\032CGetPlayerPro"
+    "pertyResponse\022\025\n\rPropertyValue\030\001 \003(\r*\325\003\n"
+    "\026PROPERTY_MODULE_MSG_ID\022\034\n\030ID_PROPERTY_M"
+    "ODULE_ERROR\020\000\022\033\n\026ID_S2C_NOTIYF_LEVEL_UP\020"
+    "\200\010\022\036\n\031ID_C2S_REQUEST_GM_COMMAND\020\201\010\022\037\n\032ID"
+    "_S2C_RESPONSE_GM_COMMAND\020\202\010\022\035\n\030ID_S2C_NO"
+    "TIFY_OBTAIN_EXP\020\203\010\022!\n\034ID_S2C_NOTIFY_OBTA"
+    "IN_VIP_EXP\020\204\010\022\036\n\031ID_C2S_REQUEST_LEAVE_GA"
+    "ME\020\205\010\022\037\n\032ID_S2C_RESPONSE_LEAVE_GAME\020\206\010\022#"
+    "\n\036ID_S2C_NOTIFY_PLAYER_BASE_INFO\020\207\010\022#\n\036I"
+    "D_S2C_NOTIFY_PLAYER_ITEM_INFO\020\210\010\022#\n\036ID_S"
+    "2C_NOTIFY_PLAYER_TASK_INFO\020\211\010\022$\n\037ID_S2C_"
+    "NOTIFY_PLAYER_SKILL_INFO\020\212\010\022\'\n\"ID_C2S_RE"
+    "QUEST_GET_PLAYER_PROPERTY\020\213\010b\006proto3", 1156);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "propertymodule.hxx", &protobuf_RegisterTypes);
   ::protobuf_AddDesc_common_2ehxx();
@@ -390,6 +438,7 @@ bool PROPERTY_MODULE_MSG_ID_IsValid(int value) {
     case 1032:
     case 1033:
     case 1034:
+    case 1035:
       return true;
     default:
       return false;
@@ -3558,6 +3607,479 @@ void CPlayerSkillInfoNotify::InternalSwap(CPlayerSkillInfoNotify* other) {
 
 inline const CPlayerSkillInfoNotify* CPlayerSkillInfoNotify::internal_default_instance() {
   return &CPlayerSkillInfoNotify_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+CGetPlayerPropertyRequest::CGetPlayerPropertyRequest()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_propertymodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CGetPlayerPropertyRequest)
+}
+
+void CGetPlayerPropertyRequest::InitAsDefaultInstance() {
+}
+
+CGetPlayerPropertyRequest::CGetPlayerPropertyRequest(const CGetPlayerPropertyRequest& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:CGetPlayerPropertyRequest)
+}
+
+void CGetPlayerPropertyRequest::SharedCtor() {
+  _cached_size_ = 0;
+}
+
+CGetPlayerPropertyRequest::~CGetPlayerPropertyRequest() {
+  // @@protoc_insertion_point(destructor:CGetPlayerPropertyRequest)
+  SharedDtor();
+}
+
+void CGetPlayerPropertyRequest::SharedDtor() {
+}
+
+void CGetPlayerPropertyRequest::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CGetPlayerPropertyRequest::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CGetPlayerPropertyRequest_descriptor_;
+}
+
+const CGetPlayerPropertyRequest& CGetPlayerPropertyRequest::default_instance() {
+  protobuf_InitDefaults_propertymodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<CGetPlayerPropertyRequest> CGetPlayerPropertyRequest_default_instance_;
+
+CGetPlayerPropertyRequest* CGetPlayerPropertyRequest::New(::google::protobuf::Arena* arena) const {
+  CGetPlayerPropertyRequest* n = new CGetPlayerPropertyRequest;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void CGetPlayerPropertyRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:CGetPlayerPropertyRequest)
+}
+
+bool CGetPlayerPropertyRequest::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:CGetPlayerPropertyRequest)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+  handle_unusual:
+    if (tag == 0 ||
+        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+      goto success;
+    }
+    DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+  }
+success:
+  // @@protoc_insertion_point(parse_success:CGetPlayerPropertyRequest)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:CGetPlayerPropertyRequest)
+  return false;
+#undef DO_
+}
+
+void CGetPlayerPropertyRequest::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:CGetPlayerPropertyRequest)
+  // @@protoc_insertion_point(serialize_end:CGetPlayerPropertyRequest)
+}
+
+::google::protobuf::uint8* CGetPlayerPropertyRequest::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:CGetPlayerPropertyRequest)
+  // @@protoc_insertion_point(serialize_to_array_end:CGetPlayerPropertyRequest)
+  return target;
+}
+
+size_t CGetPlayerPropertyRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CGetPlayerPropertyRequest)
+  size_t total_size = 0;
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CGetPlayerPropertyRequest::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CGetPlayerPropertyRequest)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const CGetPlayerPropertyRequest* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CGetPlayerPropertyRequest>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CGetPlayerPropertyRequest)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CGetPlayerPropertyRequest)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void CGetPlayerPropertyRequest::MergeFrom(const CGetPlayerPropertyRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CGetPlayerPropertyRequest)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void CGetPlayerPropertyRequest::UnsafeMergeFrom(const CGetPlayerPropertyRequest& from) {
+  GOOGLE_DCHECK(&from != this);
+}
+
+void CGetPlayerPropertyRequest::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CGetPlayerPropertyRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CGetPlayerPropertyRequest::CopyFrom(const CGetPlayerPropertyRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CGetPlayerPropertyRequest)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool CGetPlayerPropertyRequest::IsInitialized() const {
+
+  return true;
+}
+
+void CGetPlayerPropertyRequest::Swap(CGetPlayerPropertyRequest* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void CGetPlayerPropertyRequest::InternalSwap(CGetPlayerPropertyRequest* other) {
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata CGetPlayerPropertyRequest::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CGetPlayerPropertyRequest_descriptor_;
+  metadata.reflection = CGetPlayerPropertyRequest_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// CGetPlayerPropertyRequest
+
+inline const CGetPlayerPropertyRequest* CGetPlayerPropertyRequest::internal_default_instance() {
+  return &CGetPlayerPropertyRequest_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int CGetPlayerPropertyResponse::kPropertyValueFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+CGetPlayerPropertyResponse::CGetPlayerPropertyResponse()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_propertymodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CGetPlayerPropertyResponse)
+}
+
+void CGetPlayerPropertyResponse::InitAsDefaultInstance() {
+}
+
+CGetPlayerPropertyResponse::CGetPlayerPropertyResponse(const CGetPlayerPropertyResponse& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:CGetPlayerPropertyResponse)
+}
+
+void CGetPlayerPropertyResponse::SharedCtor() {
+  _cached_size_ = 0;
+}
+
+CGetPlayerPropertyResponse::~CGetPlayerPropertyResponse() {
+  // @@protoc_insertion_point(destructor:CGetPlayerPropertyResponse)
+  SharedDtor();
+}
+
+void CGetPlayerPropertyResponse::SharedDtor() {
+}
+
+void CGetPlayerPropertyResponse::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CGetPlayerPropertyResponse::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CGetPlayerPropertyResponse_descriptor_;
+}
+
+const CGetPlayerPropertyResponse& CGetPlayerPropertyResponse::default_instance() {
+  protobuf_InitDefaults_propertymodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<CGetPlayerPropertyResponse> CGetPlayerPropertyResponse_default_instance_;
+
+CGetPlayerPropertyResponse* CGetPlayerPropertyResponse::New(::google::protobuf::Arena* arena) const {
+  CGetPlayerPropertyResponse* n = new CGetPlayerPropertyResponse;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void CGetPlayerPropertyResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:CGetPlayerPropertyResponse)
+  propertyvalue_.Clear();
+}
+
+bool CGetPlayerPropertyResponse::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:CGetPlayerPropertyResponse)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // repeated uint32 PropertyValue = 1;
+      case 1: {
+        if (tag == 10) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, this->mutable_propertyvalue())));
+        } else if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 1, 10, input, this->mutable_propertyvalue())));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:CGetPlayerPropertyResponse)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:CGetPlayerPropertyResponse)
+  return false;
+#undef DO_
+}
+
+void CGetPlayerPropertyResponse::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:CGetPlayerPropertyResponse)
+  // repeated uint32 PropertyValue = 1;
+  if (this->propertyvalue_size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteTag(1, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    output->WriteVarint32(_propertyvalue_cached_byte_size_);
+  }
+  for (int i = 0; i < this->propertyvalue_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32NoTag(
+      this->propertyvalue(i), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:CGetPlayerPropertyResponse)
+}
+
+::google::protobuf::uint8* CGetPlayerPropertyResponse::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:CGetPlayerPropertyResponse)
+  // repeated uint32 PropertyValue = 1;
+  if (this->propertyvalue_size() > 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteTagToArray(
+      1,
+      ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED,
+      target);
+    target = ::google::protobuf::io::CodedOutputStream::WriteVarint32ToArray(
+      _propertyvalue_cached_byte_size_, target);
+  }
+  for (int i = 0; i < this->propertyvalue_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteUInt32NoTagToArray(this->propertyvalue(i), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:CGetPlayerPropertyResponse)
+  return target;
+}
+
+size_t CGetPlayerPropertyResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CGetPlayerPropertyResponse)
+  size_t total_size = 0;
+
+  // repeated uint32 PropertyValue = 1;
+  {
+    size_t data_size = 0;
+    unsigned int count = this->propertyvalue_size();
+    for (unsigned int i = 0; i < count; i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::
+        UInt32Size(this->propertyvalue(i));
+    }
+    if (data_size > 0) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);
+    }
+    int cached_size = ::google::protobuf::internal::ToCachedSize(data_size);
+    GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+    _propertyvalue_cached_byte_size_ = cached_size;
+    GOOGLE_SAFE_CONCURRENT_WRITES_END();
+    total_size += data_size;
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CGetPlayerPropertyResponse::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CGetPlayerPropertyResponse)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const CGetPlayerPropertyResponse* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CGetPlayerPropertyResponse>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CGetPlayerPropertyResponse)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CGetPlayerPropertyResponse)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void CGetPlayerPropertyResponse::MergeFrom(const CGetPlayerPropertyResponse& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CGetPlayerPropertyResponse)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void CGetPlayerPropertyResponse::UnsafeMergeFrom(const CGetPlayerPropertyResponse& from) {
+  GOOGLE_DCHECK(&from != this);
+  propertyvalue_.UnsafeMergeFrom(from.propertyvalue_);
+}
+
+void CGetPlayerPropertyResponse::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CGetPlayerPropertyResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CGetPlayerPropertyResponse::CopyFrom(const CGetPlayerPropertyResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CGetPlayerPropertyResponse)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool CGetPlayerPropertyResponse::IsInitialized() const {
+
+  return true;
+}
+
+void CGetPlayerPropertyResponse::Swap(CGetPlayerPropertyResponse* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void CGetPlayerPropertyResponse::InternalSwap(CGetPlayerPropertyResponse* other) {
+  propertyvalue_.UnsafeArenaSwap(&other->propertyvalue_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata CGetPlayerPropertyResponse::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CGetPlayerPropertyResponse_descriptor_;
+  metadata.reflection = CGetPlayerPropertyResponse_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// CGetPlayerPropertyResponse
+
+// repeated uint32 PropertyValue = 1;
+int CGetPlayerPropertyResponse::propertyvalue_size() const {
+  return propertyvalue_.size();
+}
+void CGetPlayerPropertyResponse::clear_propertyvalue() {
+  propertyvalue_.Clear();
+}
+::google::protobuf::uint32 CGetPlayerPropertyResponse::propertyvalue(int index) const {
+  // @@protoc_insertion_point(field_get:CGetPlayerPropertyResponse.PropertyValue)
+  return propertyvalue_.Get(index);
+}
+void CGetPlayerPropertyResponse::set_propertyvalue(int index, ::google::protobuf::uint32 value) {
+  propertyvalue_.Set(index, value);
+  // @@protoc_insertion_point(field_set:CGetPlayerPropertyResponse.PropertyValue)
+}
+void CGetPlayerPropertyResponse::add_propertyvalue(::google::protobuf::uint32 value) {
+  propertyvalue_.Add(value);
+  // @@protoc_insertion_point(field_add:CGetPlayerPropertyResponse.PropertyValue)
+}
+const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+CGetPlayerPropertyResponse::propertyvalue() const {
+  // @@protoc_insertion_point(field_list:CGetPlayerPropertyResponse.PropertyValue)
+  return propertyvalue_;
+}
+::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+CGetPlayerPropertyResponse::mutable_propertyvalue() {
+  // @@protoc_insertion_point(field_mutable_list:CGetPlayerPropertyResponse.PropertyValue)
+  return &propertyvalue_;
+}
+
+inline const CGetPlayerPropertyResponse* CGetPlayerPropertyResponse::internal_default_instance() {
+  return &CGetPlayerPropertyResponse_default_instance_.get();
 }
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 

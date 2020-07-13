@@ -21,3 +21,8 @@ void CVIPUnit::obtainVIPExp(int nVIPExp)
 	}
 }
 
+void processRecharge(uint nAccountID, short nChannelID, short nServerID, uint nRoleID,
+	char* pGoodsID, char* pOrderID, double dRechargeMoney)
+{
+
+}

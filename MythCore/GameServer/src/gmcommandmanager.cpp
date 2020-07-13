@@ -4,6 +4,8 @@
 #include "locallogjob.h"
 #include "i18n.h"
 #include "entityplayer.h"
+#include "scenejob.h"
+#include "itemmodule.hxx.pb.h"
 
 /// 执行GM命令
 void CGMCommandManager::excuteCommand(std::string strCommandName, StrTokens& tTokens, CEntityPlayer* pPlayer)
@@ -54,6 +56,8 @@ void CGMCommandManager::InitCommand()
 	COMMAND_HANDLER_ADD(help, "帮助命令，用法：\\help 完整命令名字。\ab,如果没有名字为ab的GM命令，就会列出所有已ab开头的命令");
 	COMMAND_HANDLER_ADD(exp, "获得经验，用法：\\exp 获得经验数。");
 	COMMAND_HANDLER_ADD(ii, "获得道具，用法：\\ii 道具ID 道具数目，获得对应的道具，包括货币。");
+	COMMAND_HANDLER_ADD(removeitem, "删除道具，用法：\\removeitem 道具ID 道具数目，删除对应的道具，包括货币,道具数目为-1表示删除所有道具(货币)。");
+	COMMAND_HANDLER_ADD(clearbag, "清空背包，用法：\\clearbag，清空背包，注意：不包括货币，只清除道具。");
 	COMMAND_HANDLER_ADD(setlevel, "获得道具，用法：\\setlevel 等级，设置玩家等级。");
 }
 
@@ -92,6 +96,43 @@ COMMAND_HANDLER_IMPL(ii)
 	int nItemID = atoi(tTokens[0].c_str());
 	int nItemNum = atoi(tTokens[1].c_str());
 	pPlayer->getItemUnit().insertItem(&nItemID, &nItemNum, 1);
+}
+
+COMMAND_HANDLER_IMPL(removeitem)
+{
+	MYTH_ASSERT_INFO(tTokens.size() >= 2, return,
+		"removeitem command parameter number invalid, %d", tTokens.size());
+	int nItemID = atoi(tTokens[0].c_str());
+	int nItemNum = atoi(tTokens[1].c_str());
+	if (nItemNum < 0)
+	{
+		int nAllItemNum = pPlayer->getItemUnit().hasItem(nItemID);
+		pPlayer->getItemUnit().removeItemByID(nItemID, nAllItemNum);
+	}
+	else
+	{
+		pPlayer->getItemUnit().removeItem(nItemID, nItemNum);
+	}
+}
+
+COMMAND_HANDLER_IMPL(clearbag)
+{
+	CItemBox& rBag = pPlayer->getItemUnit().getBag();
+	for (int i = 0; rBag.getSize(); ++ i)
+	{
+		CItemObject* pItemObject = rBag.getItem(i);
+		if (NULL == pItemObject)
+		{
+			continue;
+		}
+
+		CRemoveItemNotify tRemoveItemNotify;
+		tRemoveItemNotify.set_index(i);
+		tRemoveItemNotify.set_number(pItemObject->GetItemNum());
+		CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIYF_REMOVE_ITEM, &tRemoveItemNotify);
+	}
+
+	rBag.clear();
 }
 
 COMMAND_HANDLER_IMPL(setlevel)

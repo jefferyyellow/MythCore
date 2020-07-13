@@ -40,4 +40,6 @@ public:
 	CBrush m_brush;
 	afx_msg void OnBnClickedPlayerLogin();
 	afx_msg void OnBnClickedSendgmcommand();
+	afx_msg void OnBnClickedEquip();
+	afx_msg void OnBnClickedUnequip();
 };

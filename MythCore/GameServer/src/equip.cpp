@@ -24,7 +24,8 @@ int CEquipList::equip(CEntityPlayer& rPlayer, CItemBox& rBox, int nBoxIndex, int
 		case emItemType_Equip:
 		{
 			CTplEquip* pTplEquip = static_cast<CTplEquip*>(pTplItem);
-			if (pTplEquip->mEquipPart < 0 && pTplEquip->mEquipPart >= emEquipPartMax)
+			nEquipPart = pTplEquip->mEquipPart;
+			if (nEquipPart < 0 || nEquipPart >= emEquipPartMax)
 			{
 				return ERR_EQUIP_PART_IS_INVALID;
 			}
@@ -36,9 +37,7 @@ int CEquipList::equip(CEntityPlayer& rPlayer, CItemBox& rBox, int nBoxIndex, int
 
 			int nDetObjID = getItemObjID(nEquipPart);
 			pDstItemObject = static_cast<CItemObject*>(CObjPool::Inst()->getObj(nDetObjID));
-			nEquipPart = pTplEquip->mEquipPart;
 			rEquipPart = nEquipPart;
-			
 			break;
 		}
 		default:
