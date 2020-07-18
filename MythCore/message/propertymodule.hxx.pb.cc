@@ -390,7 +390,7 @@ void protobuf_AddDesc_propertymodule_2ehxx_impl() {
     "yerTaskInfoNotify\022\035\n\010TaskList\030\001 \001(\0132\013.PB"
     "TaskList\"\030\n\026CPlayerSkillInfoNotify\"\033\n\031CG"
     "etPlayerPropertyRequest\"3\n\032CGetPlayerPro"
-    "pertyResponse\022\025\n\rPropertyValue\030\001 \003(\r*\325\003\n"
+    "pertyResponse\022\025\n\rPropertyValue\030\001 \003(\r*\377\003\n"
     "\026PROPERTY_MODULE_MSG_ID\022\034\n\030ID_PROPERTY_M"
     "ODULE_ERROR\020\000\022\033\n\026ID_S2C_NOTIYF_LEVEL_UP\020"
     "\200\010\022\036\n\031ID_C2S_REQUEST_GM_COMMAND\020\201\010\022\037\n\032ID"
@@ -402,7 +402,8 @@ void protobuf_AddDesc_propertymodule_2ehxx_impl() {
     "D_S2C_NOTIFY_PLAYER_ITEM_INFO\020\210\010\022#\n\036ID_S"
     "2C_NOTIFY_PLAYER_TASK_INFO\020\211\010\022$\n\037ID_S2C_"
     "NOTIFY_PLAYER_SKILL_INFO\020\212\010\022\'\n\"ID_C2S_RE"
-    "QUEST_GET_PLAYER_PROPERTY\020\213\010b\006proto3", 1156);
+    "QUEST_GET_PLAYER_PROPERTY\020\213\010\022(\n#ID_S2C_R"
+    "ESPONSE_GET_PLAYER_PROPERTY\020\214\010b\006proto3", 1198);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "propertymodule.hxx", &protobuf_RegisterTypes);
   ::protobuf_AddDesc_common_2ehxx();
@@ -439,6 +440,7 @@ bool PROPERTY_MODULE_MSG_ID_IsValid(int value) {
     case 1033:
     case 1034:
     case 1035:
+    case 1036:
       return true;
     default:
       return false;

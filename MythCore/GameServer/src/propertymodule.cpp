@@ -128,6 +128,12 @@ void CPropertyModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMess
 			onLeaveGameRequest(pPlayer, pMessage);
 			break;
 		}
+		case ID_C2S_REQUEST_GET_PLAYER_PROPERTY:
+		{
+			MYTH_ASSERT(NULL != pPlayer, return);
+			pPlayer->onGetPlayerPropertyRequest(pMessage);
+			break;
+		}
 		default:
 			break;
 	}
@@ -307,6 +313,8 @@ void CPropertyModule::onLoadComplete(CEntityPlayer* pPlayer)
 
 	CSceneJob::Inst()->createPlayer(pPlayer);
 
+	pPlayer->refreshBaseProperty();
+	pPlayer->refreshFightProperty();
 	printf("%s%d%s\n", "*****************Load Complete:", pPlayer->getRoleID(), "*****************");
 	LOG_INFO("Player load complete, %d", pPlayer->getRoleID());
 	// 将玩家放入地图

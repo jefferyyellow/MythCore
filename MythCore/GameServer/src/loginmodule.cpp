@@ -109,7 +109,7 @@ void CLoginModule::onTimer(unsigned int nTickOffset)
 						CPropertyModule::Inst()->playerLeaveGame(pPlayer);
 					}
 				}
-
+				printf("delete login player, State: %d, DelState: %d, OverTime: %d", pLoginPlayer->getLoginState(), pLoginPlayer->getDelState(), bOverTime);
 				removeVerifyPlayer(pLoginPlayer->getChannelID(), pLoginPlayer->getServerID(), pLoginPlayer->getAccountID());
 				
 				itTmp = it;

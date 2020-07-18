@@ -4,19 +4,20 @@ import "common.hxx";
 
 enum PROPERTY_MODULE_MSG_ID
 {
-	ID_PROPERTY_MODULE_ERROR			= 0x0;
-	ID_S2C_NOTIYF_LEVEL_UP				= 0x0400;		// 玩家升级通知
-	ID_C2S_REQUEST_GM_COMMAND			= 0x0401;		// 玩家GM命令请求
-	ID_S2C_RESPONSE_GM_COMMAND			= 0x0402;		// 玩家GM命令回应
-	ID_S2C_NOTIFY_OBTAIN_EXP			= 0x0403;		// 获得经验通知
-	ID_S2C_NOTIFY_OBTAIN_VIP_EXP		= 0x0404;		// 获得VIP经验通知
-	ID_C2S_REQUEST_LEAVE_GAME			= 0x0405;		// 离开游戏请求
-	ID_S2C_RESPONSE_LEAVE_GAME			= 0x0406;		// 离开游戏回应
-	ID_S2C_NOTIFY_PLAYER_BASE_INFO		= 0x0407;		// 玩家基本信息通知
-	ID_S2C_NOTIFY_PLAYER_ITEM_INFO		= 0x0408;		// 玩家道具信息通知
-	ID_S2C_NOTIFY_PLAYER_TASK_INFO		= 0x0409;		// 玩家任务信息通知
-	ID_S2C_NOTIFY_PLAYER_SKILL_INFO		= 0x040A;		// 玩家技能信息通知
-	ID_C2S_REQUEST_GET_PLAYER_PROPERTY	= 0x040B;		// 得到玩家属性请求
+	ID_PROPERTY_MODULE_ERROR				= 0x0;
+	ID_S2C_NOTIYF_LEVEL_UP					= 0x0400;		// 玩家升级通知
+	ID_C2S_REQUEST_GM_COMMAND				= 0x0401;		// 玩家GM命令请求
+	ID_S2C_RESPONSE_GM_COMMAND				= 0x0402;		// 玩家GM命令回应
+	ID_S2C_NOTIFY_OBTAIN_EXP				= 0x0403;		// 获得经验通知
+	ID_S2C_NOTIFY_OBTAIN_VIP_EXP			= 0x0404;		// 获得VIP经验通知
+	ID_C2S_REQUEST_LEAVE_GAME				= 0x0405;		// 离开游戏请求
+	ID_S2C_RESPONSE_LEAVE_GAME				= 0x0406;		// 离开游戏回应
+	ID_S2C_NOTIFY_PLAYER_BASE_INFO			= 0x0407;		// 玩家基本信息通知
+	ID_S2C_NOTIFY_PLAYER_ITEM_INFO			= 0x0408;		// 玩家道具信息通知
+	ID_S2C_NOTIFY_PLAYER_TASK_INFO			= 0x0409;		// 玩家任务信息通知
+	ID_S2C_NOTIFY_PLAYER_SKILL_INFO			= 0x040A;		// 玩家技能信息通知
+	ID_C2S_REQUEST_GET_PLAYER_PROPERTY		= 0x040B;		// 得到玩家属性请求
+	ID_S2C_RESPONSE_GET_PLAYER_PROPERTY		= 0x040C;		// 得到玩家属性的回应
 }
 
 /// 玩家升级通知 ID_S2C_NOTIYF_LEVEL_UP
@@ -101,7 +102,7 @@ message CGetPlayerPropertyRequest
 
 }
 
-/// 得到玩家属性回应
+/// 得到玩家属性回应 ID_S2C_RESPONSE_GET_PLAYER_PROPERTY
 message CGetPlayerPropertyResponse
 {
 	repeated uint32		PropertyValue	= 1;	// 属性值

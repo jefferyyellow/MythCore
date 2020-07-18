@@ -42,4 +42,5 @@ public:
 	afx_msg void OnBnClickedSendgmcommand();
 	afx_msg void OnBnClickedEquip();
 	afx_msg void OnBnClickedUnequip();
+	afx_msg void OnBnClickedGetPlayerProperty();
 };

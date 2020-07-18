@@ -35,6 +35,13 @@ Message* CMessageFactory::createClientMessage(unsigned short nMessageID)
 		CASE_NEW_MSG(CObtainVIPExpNotify, ID_S2C_NOTIFY_OBTAIN_VIP_EXP)
 		CASE_NEW_MSG(CLeaveGameRequest, ID_C2S_REQUEST_LEAVE_GAME)
 		CASE_NEW_MSG(CLeaveGameResponse, ID_S2C_RESPONSE_LEAVE_GAME)
+		CASE_NEW_MSG(CPlayerBaseInfoNotify, ID_S2C_NOTIFY_PLAYER_BASE_INFO)
+		CASE_NEW_MSG(CPlayerItemInfoNotify, ID_S2C_NOTIFY_PLAYER_ITEM_INFO)
+		CASE_NEW_MSG(CPlayerTaskInfoNotify, ID_S2C_NOTIFY_PLAYER_TASK_INFO)
+		CASE_NEW_MSG(CPlayerSkillInfoNotify, ID_S2C_NOTIFY_PLAYER_SKILL_INFO)
+		CASE_NEW_MSG(CGetPlayerPropertyRequest, ID_C2S_REQUEST_GET_PLAYER_PROPERTY)
+		CASE_NEW_MSG(CGetPlayerPropertyResponse, ID_S2C_RESPONSE_GET_PLAYER_PROPERTY)
+
 
 		/// item module
 		CASE_NEW_MSG(CCurrencyUpdateNotify, ID_S2C_NOTIYF_CURRENCY_UPDATE)
@@ -51,6 +58,7 @@ Message* CMessageFactory::createClientMessage(unsigned short nMessageID)
 		CASE_NEW_MSG(CEquipItemResponse, ID_S2C_RESPONSE_EQUIP_ITEM)
 		CASE_NEW_MSG(CUnEquipItemRequest, ID_C2S_REQUEST_UNEQUIP_ITEM)
 		CASE_NEW_MSG(CUnEquipItemResponse, ID_S2C_RESPONSE_UNEQUIP_ITEM)
+		CASE_NEW_MSG(CEquipChangeNotify, ID_S2C_NOTIYF_EQUIP_CHANGE)
 
 		/// map module
 		CASE_NEW_MSG(CEntityMoveNotify, ID_S2C_NOTIYF_ENTITY_MOVE)

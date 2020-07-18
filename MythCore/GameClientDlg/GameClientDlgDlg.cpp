@@ -9,6 +9,7 @@
 #include "i18n.h"
 #include "./gameclient.h"
 #include "itemmodule.hxx.pb.h"
+#include "propertymodule.hxx.pb.h"
 using namespace Myth;
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -71,6 +72,7 @@ BEGIN_MESSAGE_MAP(CGameClientDlgDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_SENDGMCOMMAND, &CGameClientDlgDlg::OnBnClickedSendgmcommand)
 	ON_BN_CLICKED(IDC_EQUIP, &CGameClientDlgDlg::OnBnClickedEquip)
 	ON_BN_CLICKED(IDC_UNEQUIP, &CGameClientDlgDlg::OnBnClickedUnequip)
+	ON_BN_CLICKED(IDC_GET_PLAYER_PROPERTY, &CGameClientDlgDlg::OnBnClickedGetPlayerProperty)
 END_MESSAGE_MAP()
 
 
@@ -231,7 +233,7 @@ void CGameClientDlgDlg::DisplayLog(char* pLog)
 	mStrLog += pLog;
 	mStrLog += "\r\n";
 	((CEdit*)GetDlgItem(IDC_LOG))->SetWindowText(mStrLog);
-	UpdateData(FALSE);
+	UpdateData(TRUE);
 }
 
 void CGameClientDlgDlg::OnBnClickedEquip()
@@ -262,4 +264,12 @@ void CGameClientDlgDlg::OnBnClickedUnequip()
 	tRequest.set_itemindex(nItemIndex);
 
 	mpClient->sendMessage(ID_C2S_REQUEST_UNEQUIP_ITEM, &tRequest);
+}
+
+
+void CGameClientDlgDlg::OnBnClickedGetPlayerProperty()
+{
+	// TODO:  在此添加控件通知处理程序代码
+	CGetPlayerPropertyRequest tRequest;
+	mpClient->sendMessage(ID_C2S_REQUEST_GET_PLAYER_PROPERTY, &tRequest);
 }

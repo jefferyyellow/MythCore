@@ -17,7 +17,7 @@ public:
 	CBaseProperty()
 	{
 		mValue = 0;
-		mDirty = false;
+		mDirty = true;
 	}
 	virtual ~CBaseProperty()
 	{
@@ -33,7 +33,7 @@ public:
 private:
 	///	基础属性
 	int				mValue;
-	///	基础属性脏标记
+	///	基础属性脏标记,玩家上线的时候属性就是脏的，需要刷新
 	bool			mDirty;
 };
 
@@ -72,6 +72,8 @@ public:
 	void			refreshFightProperty(int nPropertyType);
 	/// 初始化
 	virtual	void	initEntity(CEntityCreator* pCreator){};
+	//// 得到玩家属性请求
+	void			onGetPlayerPropertyRequest(Message* pMessage);
 
 public:
 	/// 序列化场景信息到PB

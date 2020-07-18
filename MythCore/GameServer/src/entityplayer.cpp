@@ -1,5 +1,7 @@
 #include "entityplayer.h"
 #include "mapmodule.hxx.pb.h"
+#include "propertymodule.hxx.pb.h"
+#include "scenejob.h"
 /// 刷新基本属性
 void CEntityPlayer::refreshBaseProperty()
 {
@@ -35,6 +37,19 @@ void CEntityPlayer::refreshFightProperty(int nPropertyType)
 
 	mFightProperty[nPropertyType] = nPropertyValue;
 }
+
+//// 得到玩家属性请求
+void CEntityPlayer::onGetPlayerPropertyRequest(Message* pMessage)
+{
+	CGetPlayerPropertyResponse tResponse;
+	for (int i = emPropertyType_None ; i < emPropertyTypeMax; ++ i)
+	{
+		tResponse.add_propertyvalue(mBaseProperty[i].getValue());
+	}
+
+	CSceneJob::Inst()->send2Player(this, ID_S2C_RESPONSE_GET_PLAYER_PROPERTY, &tResponse);
+}
+
 
 /// 序列化场景信息到PB·
 void CEntityPlayer::serializeSceneInfoToPB(PBPlayerSceneInfo* pbPlayerInfo)

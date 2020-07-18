@@ -441,7 +441,7 @@ void CItemUnit::onUnEquipItemRequest(Message* pMessage)
 		return;
 	}
 	sendUnEquipItemResponse(SUCCESS, nEquipPart, nItemIndex);
-	broadcastChangeNotify(mPlayer.getObjID(), nEquipPart, mEquip.getItemID(nEquipPart));
+	//broadcastChangeNotify(mPlayer.getObjID(), nEquipPart, mEquip.getItemID(nEquipPart));
 	mPlayer.refreshBaseProperty();
 }
 
