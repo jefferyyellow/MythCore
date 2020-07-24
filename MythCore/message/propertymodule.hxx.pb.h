@@ -41,6 +41,8 @@ class CGMCommandRequest;
 class CGMCommandResponse;
 class CGetPlayerPropertyRequest;
 class CGetPlayerPropertyResponse;
+class CHeartBeatRequest;
+class CHeartBeatResponse;
 class CLeaveGameRequest;
 class CLeaveGameResponse;
 class CLevelUpNotify;
@@ -66,12 +68,14 @@ enum PROPERTY_MODULE_MSG_ID {
   ID_S2C_NOTIFY_PLAYER_SKILL_INFO = 1034,
   ID_C2S_REQUEST_GET_PLAYER_PROPERTY = 1035,
   ID_S2C_RESPONSE_GET_PLAYER_PROPERTY = 1036,
+  ID_C2S_REQUEST_HEART_BEAT = 1037,
+  ID_S2C_RESPONSE_HEART_BEAT = 1038,
   PROPERTY_MODULE_MSG_ID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   PROPERTY_MODULE_MSG_ID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool PROPERTY_MODULE_MSG_ID_IsValid(int value);
 const PROPERTY_MODULE_MSG_ID PROPERTY_MODULE_MSG_ID_MIN = ID_PROPERTY_MODULE_ERROR;
-const PROPERTY_MODULE_MSG_ID PROPERTY_MODULE_MSG_ID_MAX = ID_S2C_RESPONSE_GET_PLAYER_PROPERTY;
+const PROPERTY_MODULE_MSG_ID PROPERTY_MODULE_MSG_ID_MAX = ID_S2C_RESPONSE_HEART_BEAT;
 const int PROPERTY_MODULE_MSG_ID_ARRAYSIZE = PROPERTY_MODULE_MSG_ID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* PROPERTY_MODULE_MSG_ID_descriptor();
@@ -1262,6 +1266,171 @@ class CGetPlayerPropertyResponse : public ::google::protobuf::Message /* @@proto
 };
 extern ::google::protobuf::internal::ExplicitlyConstructed<CGetPlayerPropertyResponse> CGetPlayerPropertyResponse_default_instance_;
 
+// -------------------------------------------------------------------
+
+class CHeartBeatRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CHeartBeatRequest) */ {
+ public:
+  CHeartBeatRequest();
+  virtual ~CHeartBeatRequest();
+
+  CHeartBeatRequest(const CHeartBeatRequest& from);
+
+  inline CHeartBeatRequest& operator=(const CHeartBeatRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CHeartBeatRequest& default_instance();
+
+  static const CHeartBeatRequest* internal_default_instance();
+
+  void Swap(CHeartBeatRequest* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CHeartBeatRequest* New() const { return New(NULL); }
+
+  CHeartBeatRequest* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CHeartBeatRequest& from);
+  void MergeFrom(const CHeartBeatRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CHeartBeatRequest* other);
+  void UnsafeMergeFrom(const CHeartBeatRequest& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:CHeartBeatRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_propertymodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_propertymodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_propertymodule_2ehxx();
+  friend void protobuf_ShutdownFile_propertymodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CHeartBeatRequest> CHeartBeatRequest_default_instance_;
+
+// -------------------------------------------------------------------
+
+class CHeartBeatResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CHeartBeatResponse) */ {
+ public:
+  CHeartBeatResponse();
+  virtual ~CHeartBeatResponse();
+
+  CHeartBeatResponse(const CHeartBeatResponse& from);
+
+  inline CHeartBeatResponse& operator=(const CHeartBeatResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CHeartBeatResponse& default_instance();
+
+  static const CHeartBeatResponse* internal_default_instance();
+
+  void Swap(CHeartBeatResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CHeartBeatResponse* New() const { return New(NULL); }
+
+  CHeartBeatResponse* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CHeartBeatResponse& from);
+  void MergeFrom(const CHeartBeatResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CHeartBeatResponse* other);
+  void UnsafeMergeFrom(const CHeartBeatResponse& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 ServerTime = 1;
+  void clear_servertime();
+  static const int kServerTimeFieldNumber = 1;
+  ::google::protobuf::uint32 servertime() const;
+  void set_servertime(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:CHeartBeatResponse)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 servertime_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_propertymodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_propertymodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_propertymodule_2ehxx();
+  friend void protobuf_ShutdownFile_propertymodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CHeartBeatResponse> CHeartBeatResponse_default_instance_;
+
 // ===================================================================
 
 
@@ -1719,7 +1888,39 @@ CGetPlayerPropertyResponse::mutable_propertyvalue() {
 inline const CGetPlayerPropertyResponse* CGetPlayerPropertyResponse::internal_default_instance() {
   return &CGetPlayerPropertyResponse_default_instance_.get();
 }
+// -------------------------------------------------------------------
+
+// CHeartBeatRequest
+
+inline const CHeartBeatRequest* CHeartBeatRequest::internal_default_instance() {
+  return &CHeartBeatRequest_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
+// CHeartBeatResponse
+
+// optional uint32 ServerTime = 1;
+inline void CHeartBeatResponse::clear_servertime() {
+  servertime_ = 0u;
+}
+inline ::google::protobuf::uint32 CHeartBeatResponse::servertime() const {
+  // @@protoc_insertion_point(field_get:CHeartBeatResponse.ServerTime)
+  return servertime_;
+}
+inline void CHeartBeatResponse::set_servertime(::google::protobuf::uint32 value) {
+  
+  servertime_ = value;
+  // @@protoc_insertion_point(field_set:CHeartBeatResponse.ServerTime)
+}
+
+inline const CHeartBeatResponse* CHeartBeatResponse::internal_default_instance() {
+  return &CHeartBeatResponse_default_instance_.get();
+}
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

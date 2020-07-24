@@ -41,6 +41,8 @@ Message* CMessageFactory::createClientMessage(unsigned short nMessageID)
 		CASE_NEW_MSG(CPlayerSkillInfoNotify, ID_S2C_NOTIFY_PLAYER_SKILL_INFO)
 		CASE_NEW_MSG(CGetPlayerPropertyRequest, ID_C2S_REQUEST_GET_PLAYER_PROPERTY)
 		CASE_NEW_MSG(CGetPlayerPropertyResponse, ID_S2C_RESPONSE_GET_PLAYER_PROPERTY)
+		CASE_NEW_MSG(CHeartBeatRequest, ID_C2S_REQUEST_HEART_BEAT)
+		CASE_NEW_MSG(CHeartBeatResponse, ID_S2C_RESPONSE_HEART_BEAT)
 
 
 		/// item module

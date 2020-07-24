@@ -764,8 +764,9 @@ bool CSceneJob::onPlayerLogin(CEntityPlayer* pNewPlayer)
 /// 离开了一个玩家
 void CSceneJob::onPlayerLeaveGame(CEntityPlayer* pPlayer)
 {
-	mPlayerSocketList.erase(pPlayer->getExchangeHead().mSocketIndex);
+	//mPlayerSocketList.erase(pPlayer->getExchangeHead().mSocketIndex);
 	mPlayerList.erase(pPlayer->getRoleID());
+	disconnectPlayer(pPlayer);
 }
 
 /// 一个Socket断开
@@ -782,8 +783,7 @@ void CSceneJob::onSocketDisconnect(int nSocketIndex)
 		{
 			pPlayer->getExchangeHead().mSocketIndex = -1;
 			// 将玩家置为下线状态
-			pPlayer->setPlayerStauts(emPlayerStatus_Exiting);
-			CPropertyModule::Inst()->savePlayer(pPlayer);
+			CPropertyModule::Inst()->playerLeaveGame(pPlayer);
 		}
 		mPlayerSocketList.erase(it);
 	}

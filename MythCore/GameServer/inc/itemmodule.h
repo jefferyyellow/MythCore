@@ -3,7 +3,7 @@
 #include "logicmodule.h"
 #include "singleton.h"
 #include "messagefactory.h"
-
+#include "shopconfig.h"
 using namespace Myth;
 class CEntityPlayer;
 class CItemModule : public CLogicModule, public CSingleton < CItemModule >
@@ -38,5 +38,8 @@ public:
 
 public:
 	int	getFromDropTable(int nDropTableID, int& rDropItemNum);
+
+public:
+	SHOP_CONFIG_LIST	mShopList;
 };
 #endif

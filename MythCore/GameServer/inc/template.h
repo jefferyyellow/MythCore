@@ -63,16 +63,20 @@ enum EmTemplateType
 	emTemplateTypeMax
 };
 
-
-enum EmPropertyType
+enum EmProType
 {
-	emPropertyType_None				= 0,	// 无
-	emPropertyType_MaxHp			= 1,	// 最大血值
-	emPropertyType_MaxMp			= 2,	// 最大魔值
-	emPropertyType_Attack			= 3,	// 攻击力
-	emPropertyType_Defence			= 4,	// 防御力
-	emPropertyTypeMax
+	emProType_None				= 0,		// 无类型
+	emProType_MaxHp				= 1,		// 最大血值固定值(0x0001)
+	emProType_MaxMp				= 2,		// 最大魔值固定值(0x0002)
+	emProType_Attack			= 3,		// 最大攻击力固定值(0x0003)
+	emProType_Defence			= 4,		// 最大防御力固定值(0x0004)
+	emProTypeMax				   ,		
+	emProType_MaxHpPer			= 257,		// 最大血值百分比(0x0101)
+	emProType_MaxMpPer			= 258,		// 最大魔值百分比(0x0102)
+	emProType_AttackPer			= 259,		// 最大攻击力百分比(0x0103)
+	emProType_DefencePer		= 260,		// 最大防御力百分比(0x0104)
 };
+
 
 enum EmBuffEffect
 {
@@ -239,7 +243,7 @@ public:
 	public:
 		// FieldName: 类型
 		// FieldType: INT4
-		// Type:	  COMBOENUM(EmPropertyType)
+		// Type:	  COMBOENUM(EmProType)
 		int		mType;
 
 		// FieldName: 值

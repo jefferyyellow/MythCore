@@ -87,6 +87,17 @@ public:
 
 		return mItemID[nIndex];
 	}
+
+	void	setItemID(int nIndex, int nItemID)
+	{
+		if (nIndex < 0 || nIndex >= Capacity)
+		{
+			return;
+		}
+
+		mItemID[nIndex] = nItemID;
+	}
+
 	int		getCapacity(){return Capacity;}
 
 	void setFromPB(PBItemList* pbItemList)

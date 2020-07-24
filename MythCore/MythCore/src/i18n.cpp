@@ -9,120 +9,120 @@ namespace Myth
 {
 	#ifdef MYTH_OS_UNIX
 	/// charset one convert to another
-	int CI18N::CharsetConvert(const char* pSrcCharset, const char* pDstCharset, char* pSrc, size_t nSrcLen, char* pDst, size_t nDstLen)
+	int CI18N::CharsetConvert(const char* pSrcCharset, const char* pDestCharset, char* pSrc, size_t nSrcLen, char* pDest, size_t nDestLen)
 	{  
-		int nOldDstLen = nDstLen;
-		if (NULL == pSrcCharset || NULL == pDstCharset)
+		int nOldDestLen = nDestLen;
+		if (NULL == pSrcCharset || NULL == pDestCharset)
 		{
 			return -1;
 		}
 
-		if (NULL == pSrc || nSrcLen <= 0 || NULL == pDst || nDstLen <= 0)
+		if (NULL == pSrc || nSrcLen <= 0 || NULL == pDest || nDestLen <= 0)
 		{
 			return -1;
 		}
 
 		iconv_t cd = 0; 
-		cd = iconv_open(pDstCharset, pSrcCharset);  
+		cd = iconv_open(pDestCharset, pSrcCharset);  
 		if(cd==0)  
 		{
 			return -1;
 		}
 
-		size_t nResult = iconv(cd, &pSrc, &nSrcLen, &pDst, &nDstLen);
+		size_t nResult = iconv(cd, &pSrc, &nSrcLen, &pDest, &nDestLen);
 		if(size_t(-1) == nResult) 
 		{
 			iconv_close(cd);
 			return -1;  
 		}
 		iconv_close(cd);
-		return nOldDstLen - nDstLen;  
+		return nOldDestLen - nDestLen;  
 	}
 
 #endif
 
-	char* CI18N::UnicodeToAnsi(const wchar_t* pSrc, char* pDst, int nMaxSize)
+	char* CI18N::UnicodeToAnsi(const wchar_t* pSrc, char* pDest, int nMaxSize)
 	{
 		// check params
-		if (NULL == pSrc || NULL == pDst || nMaxSize <= 0)
+		if (NULL == pSrc || NULL == pDest || nMaxSize <= 0)
 		{
 			return NULL;
 		}
 #ifdef MYTH_OS_WINDOWS
-		if (0 == WideCharToMultiByte(CP_ACP, 0, pSrc, -1, pDst, nMaxSize - 1, NULL, 0))
+		if (0 == WideCharToMultiByte(CP_ACP, 0, pSrc, -1, pDest, nMaxSize - 1, NULL, 0))
 		{
 			return NULL;
 		}
-		pDst[nMaxSize - 1] = 0;
-		return pDst;
+		pDest[nMaxSize - 1] = 0;
+		return pDest;
 #else
-		int nSize = CharsetConvert("unicode", "gbk", (char*)pSrc, strlen((char*)pSrc) << 1, pDst, nMaxSize - 1);
+		int nSize = CharsetConvert("unicode", "gbk", (char*)pSrc, strlen((char*)pSrc) << 1, pDest, nMaxSize - 1);
 		if (0 >= nSize)
 		{
 			return NULL;
 		}
-		pDst[nSize] = 0;
-		return pDst;
+		pDest[nSize] = 0;
+		return pDest;
 #endif
 
 	}
 
-	char* CI18N::UnicodeToUtf8(const wchar_t* pSrc, char* pDst, int nMaxSize)
+	char* CI18N::UnicodeToUtf8(const wchar_t* pSrc, char* pDest, int nMaxSize)
 	{
 		// check params
-		if (NULL == pSrc || NULL == pDst || nMaxSize <= 0)
-		{
-			return NULL;
-		}
-
-#ifdef MYTH_OS_WINDOWS
-		if (0 == WideCharToMultiByte(CP_UTF8, 0, pSrc, -1, pDst, nMaxSize - 1, NULL, 0))
-		{
-			return NULL;
-		}
-		pDst[nMaxSize - 1] = 0;
-		return pDst;
-#else
-		int nSize = CharsetConvert("unicode", "utf8", (char*)pSrc, strlen((char*)pSrc), pDst, nMaxSize - 1);
-		if (0 >= nSize)
-		{
-			return NULL;
-		}
-		pDst[nSize] = 0;
-		return pDst;
-#endif
-	}
-
-	wchar_t* CI18N::Utf8ToUnicode(const char* pSrc, wchar_t* pDst, int nMaxSize)
-	{
-		// check params
-		if (NULL == pSrc || NULL == pDst || nMaxSize <= 0)
+		if (NULL == pSrc || NULL == pDest || nMaxSize <= 0)
 		{
 			return NULL;
 		}
 
 #ifdef MYTH_OS_WINDOWS
-		if (0 == MultiByteToWideChar(CP_UTF8, 0, pSrc, -1, pDst, nMaxSize - 1))
+		if (0 == WideCharToMultiByte(CP_UTF8, 0, pSrc, -1, pDest, nMaxSize - 1, NULL, 0))
 		{
 			return NULL;
 		}
-		pDst[nMaxSize - 1] = 0;
-		return pDst;
+		pDest[nMaxSize - 1] = 0;
+		return pDest;
 #else
-		int nSize = CharsetConvert("utf8", "unicode", const_cast<char*>(pSrc), strlen(pSrc), (char*)pDst, (nMaxSize - 1) << 1);
+		int nSize = CharsetConvert("unicode", "utf8", (char*)pSrc, strlen((char*)pSrc), pDest, nMaxSize - 1);
 		if (0 >= nSize)
 		{
 			return NULL;
 		}
-		pDst[nSize] = 0;
-		return pDst;
+		pDest[nSize] = 0;
+		return pDest;
 #endif
 	}
 
-	char* CI18N::Utf8ToAnsi(const char* pSrc, char* pDst, int nMaxSize)
+	wchar_t* CI18N::Utf8ToUnicode(const char* pSrc, wchar_t* pDest, int nMaxSize)
 	{
 		// check params
-		if (NULL == pSrc || NULL == pDst || nMaxSize <= 0)
+		if (NULL == pSrc || NULL == pDest || nMaxSize <= 0)
+		{
+			return NULL;
+		}
+
+#ifdef MYTH_OS_WINDOWS
+		if (0 == MultiByteToWideChar(CP_UTF8, 0, pSrc, -1, pDest, nMaxSize - 1))
+		{
+			return NULL;
+		}
+		pDest[nMaxSize - 1] = 0;
+		return pDest;
+#else
+		int nSize = CharsetConvert("utf8", "unicode", const_cast<char*>(pSrc), strlen(pSrc), (char*)pDest, (nMaxSize - 1) << 1);
+		if (0 >= nSize)
+		{
+			return NULL;
+		}
+		pDest[nSize] = 0;
+		return pDest;
+#endif
+	}
+
+	char* CI18N::Utf8ToAnsi(const char* pSrc, char* pDest, int nMaxSize)
+	{
+		// check params
+		if (NULL == pSrc || NULL == pDest || nMaxSize <= 0)
 		{
 			return NULL;
 		}
@@ -135,51 +135,51 @@ namespace Myth
 		}
 		tBuffer[STR_LENGTH_1024 - 1] = 0;
 
-		if (0 == WideCharToMultiByte(CP_ACP, 0, tBuffer, -1, pDst, nMaxSize - 1, NULL, 0))
+		if (0 == WideCharToMultiByte(CP_ACP, 0, tBuffer, -1, pDest, nMaxSize - 1, NULL, 0))
 		{
 			return NULL;
 		}
 
-		pDst[nMaxSize - 1] = 0;
-		return pDst;
+		pDest[nMaxSize - 1] = 0;
+		return pDest;
 #else
-		int nSize = CharsetConvert("UTF8", "GBK", const_cast<char*>(pSrc), strlen(pSrc), pDst, nMaxSize - 1);
+		int nSize = CharsetConvert("UTF8", "GBK", const_cast<char*>(pSrc), strlen(pSrc), pDest, nMaxSize - 1);
 		if (0 >= nSize)
 		{
 			return NULL;
 		}
-		pDst[nSize] = 0;
-		return pDst;
+		pDest[nSize] = 0;
+		return pDest;
 #endif
 	}
 
-	wchar_t* CI18N::AnsiToUnicode(const char*pSrc, wchar_t* pDst, int nMaxSize)
+	wchar_t* CI18N::AnsiToUnicode(const char*pSrc, wchar_t* pDest, int nMaxSize)
 	{
-		if (NULL == pSrc || NULL == pDst || nMaxSize <= 0)
+		if (NULL == pSrc || NULL == pDest || nMaxSize <= 0)
 		{
 			return NULL;
 		}
 #ifdef MYTH_OS_WINDOWS
-		if (0 == MultiByteToWideChar(CP_ACP, 0, pSrc, -1, pDst, nMaxSize - 1))
+		if (0 == MultiByteToWideChar(CP_ACP, 0, pSrc, -1, pDest, nMaxSize - 1))
 		{
 			return NULL;
 		}
-		pDst[nMaxSize - 1] = 0;
-		return pDst;
+		pDest[nMaxSize - 1] = 0;
+		return pDest;
 #else
-		int nSize = CharsetConvert("gbk", "unicode", const_cast<char*>(pSrc), strlen(pSrc), (char*)pDst, (nMaxSize - 1) << 1);
+		int nSize = CharsetConvert("gbk", "unicode", const_cast<char*>(pSrc), strlen(pSrc), (char*)pDest, (nMaxSize - 1) << 1);
 		if (0 >= nSize)
 		{
 			return NULL;
 		}
-		pDst[nSize] = 0;
-		return pDst;
+		pDest[nSize] = 0;
+		return pDest;
 #endif
 	}
 
-	char* CI18N::AnsiToUtf8(const char* pSrc, char* pDst, int nMaxSize)
+	char* CI18N::AnsiToUtf8(const char* pSrc, char* pDest, int nMaxSize)
 	{
-		if (NULL == pSrc || NULL == pDst || nMaxSize <= 0)
+		if (NULL == pSrc || NULL == pDest || nMaxSize <= 0)
 		{
 			return NULL;
 		}
@@ -192,21 +192,21 @@ namespace Myth
 		}
 		tBuffer[STR_LENGTH_1024 - 1] = 0;
 
-		if (0 == WideCharToMultiByte(CP_UTF8, 0, tBuffer, -1, pDst, nMaxSize - 1, NULL, 0))
+		if (0 == WideCharToMultiByte(CP_UTF8, 0, tBuffer, -1, pDest, nMaxSize - 1, NULL, 0))
 		{
 			return NULL;
 		}
 
-		pDst[nMaxSize - 1] = 0;
-		return pDst;
+		pDest[nMaxSize - 1] = 0;
+		return pDest;
 #else
-		int nSize = CharsetConvert("GBK", "UTF8", const_cast<char*>(pSrc), strlen(pSrc), pDst, nMaxSize - 1);
+		int nSize = CharsetConvert("GBK", "UTF8", const_cast<char*>(pSrc), strlen(pSrc), pDest, nMaxSize - 1);
 		if (0 >= nSize)
 		{
 			return NULL;
 		}
-		pDst[nSize] = 0;
-		return pDst;
+		pDest[nSize] = 0;
+		return pDest;
 #endif
 	}
 }

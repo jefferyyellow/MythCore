@@ -88,7 +88,7 @@ void CPropertyModule::onTimer(unsigned int nTickOffset)
 			continue;
 		}
 		
-		pPlayer->getTimerList().update(tTickCount);
+		pPlayer->getTimeUnit().getTimerList().update(tTickCount);
 		tArrayPlayer[nPlayerNum] = pPlayer;
 		++ nPlayerNum;
 	}
@@ -98,13 +98,13 @@ void CPropertyModule::onTimer(unsigned int nTickOffset)
 		int nSavePlayerCount = 0;
 		for (int i = 0; i < nPlayerNum; ++ i)
 		{
-			if (tTimeNow - tArrayPlayer[i]->getLastSaveTime() < 60)
+			if (tTimeNow - tArrayPlayer[i]->getTimeUnit().getLastSaveTime() < 60)
 			{
 				continue;
 			}
 
 			savePlayer(tArrayPlayer[i]);
-			tArrayPlayer[i]->setLastSaveTime(tTimeNow);
+			tArrayPlayer[i]->getTimeUnit().setLastSaveTime(tTimeNow);
 			++nSavePlayerCount;
 			if (nSavePlayerCount >= 50)
 			{
@@ -132,6 +132,12 @@ void CPropertyModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMess
 		{
 			MYTH_ASSERT(NULL != pPlayer, return);
 			pPlayer->onGetPlayerPropertyRequest(pMessage);
+			break;
+		}
+		case ID_C2S_REQUEST_HEART_BEAT:
+		{
+			MYTH_ASSERT(NULL != pPlayer, return);
+			pPlayer->getTimeUnit().onHeartBeatRequest(pMessage);
 			break;
 		}
 		default:
@@ -169,8 +175,7 @@ void CPropertyModule::onLeaveGameRequest(CEntityPlayer* pPlayer, Message* pMessa
 {
 	MYTH_ASSERT(NULL != pPlayer && NULL != pMessage, return);
 	// 将玩家置为下线状态
-	pPlayer->setPlayerStauts(emPlayerStatus_Exiting);
-	savePlayer(pPlayer);
+	playerLeaveGame(pPlayer);
 }
 
 /// 踢出所以玩家
@@ -191,8 +196,7 @@ void CPropertyModule::kickAllPlayer()
 			continue;
 		}
 
-		pPlayer->setPlayerStauts(emPlayerStatus_Exiting);
-		savePlayer(pPlayer);
+		playerLeaveGame(pPlayer);
 		++ nCount;
 		// 每次30个
 		if (nCount >= 30)
@@ -233,7 +237,7 @@ void CPropertyModule::onLoadPlayerInfo(CDBResponse& rResponse)
 	pPlayer->getItemUnit().setMoney(rResponse.getInt());
 	pPlayer->getItemUnit().setDiamond(rResponse.getInt());
 	
-	pPlayer->setLastOffTime(rResponse.getInt());
+	pPlayer->getTimeUnit().setLastOffTime(rResponse.getInt());
 
 	pPlayer->setLoadStatusBit(emLoadStatus_Info);
 	onLoadComplete(pPlayer);
@@ -297,11 +301,12 @@ void CPropertyModule::onLoadComplete(CEntityPlayer* pPlayer)
 		pLoginPlayer->setLoginState(emLoginState_None);
 	}
 
+	CTimeUnit& rTimeUnit = pPlayer->getTimeUnit();
 	pPlayer->setPlayerStauts(emPlayerStatus_Gameing);
-	pPlayer->setOnTime(CTimeManager::Inst()->getCurrTime());
-	pPlayer->setLastSaveTime(CTimeManager::Inst()->getCurrTime());
+	rTimeUnit.setOnTime(CTimeManager::Inst()->getCurrTime());
+	rTimeUnit.setLastSaveTime(CTimeManager::Inst()->getCurrTime());
 	// 新玩家
-	if (0 == pPlayer->getLastOffTime())
+	if (0 == rTimeUnit.getLastOffTime())
 	{
 		setNewPlayerValue(pPlayer);
 	}
@@ -434,10 +439,11 @@ void CPropertyModule::playerLeaveGame(CEntityPlayer* pPlayer)
 		return;
 	}
 
+	byte bPlayerStatus = pPlayer->getPlayerStauts();
 	// 将玩家置为下线状态
 	pPlayer->setPlayerStauts(emPlayerStatus_Exiting);
 
-	switch (pPlayer->getPlayerStauts())
+	switch (bPlayerStatus)
 	{
 		case emPlayerStatus_Gameing:
 		{
@@ -475,7 +481,7 @@ void CPropertyModule::dailyRefresh(CEntityPlayer* pPlayer)
 	}
 
 	/// 如果上次下线的时间在今天早上以后了，那就是同一天的多次登录了
-	if (pPlayer->getLastOffTime() >= CSceneJob::Inst()->getMorningTime())
+	if (pPlayer->getTimeUnit().getLastOffTime() >= CSceneJob::Inst()->getMorningTime())
 	{
 		return;
 	}

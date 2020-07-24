@@ -112,6 +112,7 @@ BOOL CGameClientDlgDlg::OnInitDialog()
 	mpClient->init();
 	mpClient->setDlg(this);
 	SetTimer(GAME_MAIN_TIMER, 30, NULL);
+	SetTimer(GAME_HEART_BEAT, 6000, NULL);
 	((CEdit*)GetDlgItem(IDC_LOG))->SetReadOnly(TRUE);
 	((CEdit*)GetDlgItem(IDC_LOG))->SetWindowText(_T("我不吃"));
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
@@ -174,6 +175,10 @@ void CGameClientDlgDlg::OnTimer(UINT_PTR nIDEvent)
 	if (nIDEvent == GAME_MAIN_TIMER)
 	{
 		mpClient->run();
+	}
+	else if (nIDEvent == GAME_HEART_BEAT)
+	{
+		mpClient->sendHeartBeatRequest();
 	}
 	CDialogEx::OnTimer(nIDEvent);
 }

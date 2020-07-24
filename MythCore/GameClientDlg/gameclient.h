@@ -34,6 +34,7 @@ public:
 public:
 	void		LoginServer(char *pAccountName, char* pRoleName);
 	void		sendGMCommandRequest(char* pCommandString);
+	void		sendHeartBeatRequest();
 
 private:
 	void		onMessageLoginResponse(Message* pMessage);

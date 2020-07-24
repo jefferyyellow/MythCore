@@ -13,6 +13,7 @@
 #include "dbmodule.h"
 #include "entityplayer.h"
 #include "objpoolimp.h"
+#include "GameLogicConfig.h"
 using namespace Myth;
 CServerResave::CServerResave()
 :mFiveSecTimer(5)
@@ -33,6 +34,12 @@ bool CServerResave::initAll()
 	mpJobManager->initMin();
 
 	bResult = CGameServerConfig::Inst()->loadGameServerConfigFromXml("config/gameserverconfig.xml");
+	if (!bResult)
+	{
+		return bResult;
+	}
+
+	bResult = CGameLogicConfig::Inst()->loadGameLogicConfig("gameserverconfig/gamelogicconfig/gamelogicconfig.xml");
 	if (!bResult)
 	{
 		return bResult;
@@ -234,12 +241,12 @@ void CServerResave::SavePlayerBat()
 			continue;
 		}
 
-		if (tTimeNow - pPlayer->getLastSaveTime() < 30)
+		if (tTimeNow - pPlayer->getTimeUnit().getLastSaveTime() < 30)
 		{
 			continue;
 		}
 
-		pPlayer->setLastSaveTime(CTimeManager::Inst()->getCurrTime());
+		pPlayer->getTimeUnit().setLastSaveTime(CTimeManager::Inst()->getCurrTime());
 		CPropertyModule::Inst()->savePlayer(pPlayer);
 		nCount++ ;
 		if (nCount >= 50)

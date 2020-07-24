@@ -3,6 +3,15 @@
 #include "entityplayer.h"
 #include "errcode.h"
 #include "servercommon.h"
+
+CItemModule::CItemModule()
+{
+	mShopList.reserve(emShopTypeMax);
+}
+CItemModule::~CItemModule()
+{
+
+}
 /// Æô¶¯·þÎñÆ÷
 void CItemModule::onLaunchServer()
 {

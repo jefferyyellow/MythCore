@@ -259,3 +259,9 @@ void CGameClient::sendGMCommandRequest(char* pCommandString)
 	tRequest.set_commandstring(pCommandString);
 	sendMessage(ID_C2S_REQUEST_GM_COMMAND, &tRequest);
 }
+
+void CGameClient::sendHeartBeatRequest()
+{
+	CHeartBeatRequest tRequest;
+	sendMessage(ID_C2S_REQUEST_HEART_BEAT, &tRequest);
+}

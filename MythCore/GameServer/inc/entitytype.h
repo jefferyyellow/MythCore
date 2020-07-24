@@ -17,4 +17,6 @@ enum EmAliveState
 };
 #define MAX_PLAYER_TIMER_NUM	64		// 玩家最大的计时器数目
 #define MAX_NPC_TIMER_NUM		16		// NPC最大的计时器数目
+#define ENTITY_PRO_MASK			0x00FF	// 实体属性掩码
+#define ENTITY_PRO_PER_START	0x0100	// 实体百分比属性开始（和EmProType对应）
 #endif

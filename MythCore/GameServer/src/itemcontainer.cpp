@@ -405,3 +405,140 @@ void CItemBox::setFromPB(PBItemList* pbItemList)
 	mSize = pbItemList->size();
 	CItemList < MAX_CONTAINER_ITEM_NUM >::setFromPB(pbItemList);
 }
+
+/// 得到空格子的数目
+int CItemBox::getBlankSpace()
+{
+	int nCount = 0;
+	for (int i = 0; i < mSize; ++i)
+	{
+		// 格子是空的
+		if (INVALID_OBJ_ID == mItemObjID[i])
+		{
+			++ nCount;
+		}
+	}
+
+	return nCount;
+}
+
+/// 移动道具
+int CItemBox::move(unsigned int nSrcIndex, CItemBox& rDestBox, int nDestIndex, int nNum)
+{
+	if (nNum <= 0)
+	{
+		return ERR_ITEM_MOVE_NUM_INVALID;
+	}
+	if (this == &rDestBox)
+	{
+		if (nSrcIndex == nDestIndex)
+		{
+			return ERR_ITEM_MOVE_SAME_INDEX;
+		}
+	}
+
+	if (!checkIndexInvalid(nSrcIndex) || !rDestBox.checkIndexInvalid(nDestIndex))
+	{
+		return ERR_ITEM_INDEX_INVALID;
+	}
+
+	CItemObject* pSrcItemObject = getItem(nSrcIndex);
+	if (NULL == pSrcItemObject)
+	{
+		return ERR_ITEM_INDEX_OBJ_DATA_NULL;
+	}
+
+	CItemObject* pDestItemObject = rDestBox.getItem(nDestIndex);
+	if (pDestItemObject != NULL)
+	{
+		if (pDestItemObject->GetItemID() == pSrcItemObject->GetItemID())
+		{
+			CTplItem* pTplItem = (CTplItem*)CStaticData::searchTpl(pSrcItemObject->GetItemID());
+			if (NULL == pTplItem)
+			{
+				return ERR_TEMPLATE_INVALID;
+			}
+
+			// 目标是满堆叠状态
+			if (pDestItemObject->GetItemNum() >= pTplItem->mPileLimit)
+			{
+				// 只有把源的都已过去才行
+				if (nNum == pSrcItemObject->GetItemNum())
+				{
+					rDestBox.setItemObjID(nDestIndex, pSrcItemObject->getObjID());
+					rDestBox.setItemID(nDestIndex, pSrcItemObject->GetItemID());
+
+					mItemObjID[nSrcIndex] = pDestItemObject->getObjID();
+					mItemID[nSrcIndex] = pDestItemObject->GetItemID();
+				}
+				else
+				{
+					return ERR_ITEM_MOVE_SRC_NUM_INVALID;
+				}
+			}
+			else
+			{
+				int nPileNum = pTplItem->mPileLimit - pDestItemObject->GetItemNum();
+				uint nMoveNumber = std::min(pSrcItemObject->GetItemNum(), std::min(nPileNum, nNum));
+
+				pDestItemObject->SetItemNum(pDestItemObject->GetItemNum() + nMoveNumber);
+				pSrcItemObject->SetItemNum(pSrcItemObject->GetItemNum() - nMoveNumber);
+				if (pSrcItemObject->GetItemNum() <= 0)
+				{
+					mItemObjID[nSrcIndex] = INVALID_OBJ_ID;
+					mItemID[nSrcIndex] = 0;
+					CItemFactory::destroyItem(pSrcItemObject->getObjID());
+				}
+			}
+		}
+		// 不同的就直接交换
+		else
+		{
+			rDestBox.setItemObjID(nDestIndex, pSrcItemObject->getObjID());
+			rDestBox.setItemID(nDestIndex, pSrcItemObject->GetItemID());
+
+			mItemObjID[nSrcIndex] = pDestItemObject->getObjID();
+			mItemID[nSrcIndex] = pDestItemObject->GetItemID();
+		}
+	}
+	else
+	{
+		// 移动一部分
+		if (nNum < pSrcItemObject->GetItemNum())
+		{
+			CItemObject* pItemObject = CItemFactory::createItem(pSrcItemObject->GetItemID());
+			if (NULL == pItemObject)
+			{
+				return ERR_ITEM_CREATE_ITEM_OBJ_FAILURE;
+			}
+			pItemObject->SetItemNum(nNum);
+
+			rDestBox.setItemObjID(nDestIndex, pItemObject->getObjID());
+			rDestBox.setItemID(nDestIndex, pItemObject->GetItemID());
+
+			pSrcItemObject->SetItemNum(pSrcItemObject->GetItemNum() - nNum);
+		}
+		// 都移过去
+		else
+		{
+			rDestBox.setItemObjID(nDestIndex, pSrcItemObject->getObjID());
+			rDestBox.setItemID(nDestIndex, pSrcItemObject->GetItemID());
+
+			mItemObjID[nSrcIndex] = INVALID_OBJ_ID;
+			mItemID[nSrcIndex] = 0;
+		}
+	}
+
+	return SUCCESS;
+}
+
+/// 检查索引是否非法
+bool CItemBox::checkIndexInvalid(uint nIndex)
+{
+	if (nIndex < (uint)mSize)
+	{
+		return true;
+	}
+
+	return false;
+}

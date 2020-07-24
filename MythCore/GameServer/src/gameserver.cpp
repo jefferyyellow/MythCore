@@ -12,6 +12,7 @@
 #include "perfmanager.h"
 #include "locallogjob.h"
 #include "jobmanager.h"
+#include "GameLogicConfig.h"
 CGameServer::CGameServer()
 	:mMinuteTimer(SECONDS_PER_MIN)
 {
@@ -42,6 +43,11 @@ bool CGameServer::initAll()
 	mpJobManager->init();
 
 	bResult = CGameServerConfig::Inst()->loadGameServerConfigFromXml("config/gameserverconfig.xml");
+	if (!bResult)
+	{
+		return bResult;
+	}
+	bResult = CGameLogicConfig::Inst()->loadGameLogicConfig("gameserverconfig/gamelogicconfig/gamelogicconfig.xml");
 	if (!bResult)
 	{
 		return bResult;
@@ -123,6 +129,7 @@ bool CGameServer::initLogicModule()
 	CMessageFactory::createInst();
 	CInternalMsgPool::createInst();
 	CGameServerConfig::createInst();
+	CGameLogicConfig::createInst();
 	CObjPool::createInst();
 	CTimeManager::createInst();
 	CDirtyWord::createInst();
@@ -249,6 +256,7 @@ void CGameServer::clearLogicModule()
 	CDirtyWord::destroyInst();
 	CTimeManager::destroyInst();
 	CObjPool::destroyInst();
+	CGameLogicConfig::destroyInst();
 	CGameServerConfig::destroyInst();
 	CInternalMsgPool::destroyInst();
 	CMessageFactory::destroyInst();

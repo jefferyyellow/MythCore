@@ -305,7 +305,7 @@ void CItemUnit::onUseItemRequest(Message* pMessage)
 
 	if (emTemplateType_Item != pTplITem->mTemplateType)
 	{
-		sendUseItemResponse(ERR_TEMPLATE_IS_NOT_ITEM);
+		sendUseItemResponse(ERR_ITEM_TEMPLATE_IS_NOT_ITEM);
 		return;
 	}
 
@@ -358,7 +358,7 @@ void CItemUnit::onSellItemRequest(Message* pMessage)
 
 	if (emTemplateType_Item != pTplITem->mTemplateType)
 	{
-		sendSellItemResponse(ERR_TEMPLATE_IS_NOT_ITEM);
+		sendSellItemResponse(ERR_ITEM_TEMPLATE_IS_NOT_ITEM);
 		return;
 	}
 

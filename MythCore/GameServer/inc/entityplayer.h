@@ -8,7 +8,7 @@
 #include "vipunit.h"
 #include "serveractivityunit.h"
 #include "servercommon.h"
-#include "entitytimer.h"
+#include "timeunit.h"
 class PBPlayerSceneInfo;
 
 class CBaseProperty
@@ -41,12 +41,13 @@ class CEntityPlayer : public CEntityCharacter
 {
 public:
 	CEntityPlayer()
-		:mPropertyUnit(*this), 
-		mItemUnit(*this), 
+		:mPropertyUnit(*this),
+		mItemUnit(*this),
 		mTaskUnit(*this),
 		mSkillUnit(*this),
 		mServerActUnit(*this),
-		mVIPUnit(*this)
+		mVIPUnit(*this),
+		mTimeUnit(*this)
 	{
 		init();
 	}
@@ -54,15 +55,11 @@ public:
 
 	void			init()
 	{
-        mName[0] = '\0';
-        mRoleID = 0;
-        mLastOffTime = 0;
-        mOnTime = 0;
-        mLastSaveTime = 0;
-        mPlayerStauts = 0;
-        mSaveStatus = 0;
-        mLoadStatus = 0;
-		mNewDayTime = 0;
+		mName[0] = '\0';
+		mRoleID = 0;
+		mPlayerStauts = 0;
+		mSaveStatus = 0;
+		mLoadStatus = 0;
 	}
 public:
 	/// 刷新基本属性
@@ -83,9 +80,9 @@ public:
 
 public:
 	/// 设置属性
-	int				getPropertyValue(EmPropertyType eType)
+	int				getPropertyValue(EmProType eType)
 	{
-		if (eType <= 0 || eType >= emPropertyTypeMax)
+		if (eType <= emProType_None || eType >= emProTypeMax)
 		{
 			return 0;
 		}
@@ -93,9 +90,9 @@ public:
 		return mBaseProperty[eType].getValue();
 	}
 
-	void			setPropertyValue(EmPropertyType eType, int nValue)
+	void			setPropertyValue(EmProType eType, int nValue)
 	{
-		if (eType <= 0 || eType >= emPropertyTypeMax)
+		if (eType <= emProType_None || eType >= emProTypeMax)
 		{
 			return;
 		}
@@ -104,9 +101,9 @@ public:
 	}
 
 	/// 设置属性脏标记
-	bool			getPropertyDirty(EmPropertyType eType)
+	bool			getPropertyDirty(EmProType eType)
 	{
-		if (eType <= 0 || eType >= emPropertyTypeMax)
+		if (eType <= emProType_None || eType >= emProTypeMax)
 		{
 			return false;
 		}
@@ -114,9 +111,11 @@ public:
 		return mBaseProperty[eType].getDirty();
 	}
 
-	void			setPropertyDirty(EmPropertyType eType, bool bDirty)
+	void			setPropertyDirty(EmProType eType, bool bDirty)
 	{
-		if (eType <= 0 || eType >= emPropertyTypeMax)
+		// 取得基本属性
+		eType = (EmProType)(eType < emProTypeMax ? eType : eType & ENTITY_PRO_MASK);
+		if (eType <= emProType_None || eType >= emProTypeMax)
 		{
 			return;
 		}
@@ -126,24 +125,25 @@ public:
 	void			setSaveStatusBit(byte val){ mSaveStatus |= val; }
 
 	void			setLoadStatusBit(byte val){ mLoadStatus |= val; }
-	byte			getLoadStatusBit(byte val){ return mLoadStatus & val;}
+	byte			getLoadStatusBit(byte val){ return mLoadStatus & val; }
 	// 用mTempID保存职业属性
 	int				getMetier(){ return mTempID; }
 	void			setMetier(int nMetier){ mTempID = nMetier; }
 
 	/// autocode don't edit!!!
-    CExchangeHead& getExchangeHead(){ return mExchangeHead;}
+	CExchangeHead& getExchangeHead(){ return mExchangeHead; }
 
-    CPropertyUnit& getPropertyUnit(){ return mPropertyUnit;}
+	CPropertyUnit& getPropertyUnit(){ return mPropertyUnit; }
 
-    CItemUnit& getItemUnit(){ return mItemUnit;}
+	CItemUnit& getItemUnit(){ return mItemUnit; }
 
-    CTaskUnit& getTaskUnit(){ return mTaskUnit;}
+	CTaskUnit& getTaskUnit(){ return mTaskUnit; }
 
-    CSkillUnit& getSkillUnit(){ return mSkillUnit;}
+	CSkillUnit& getSkillUnit(){ return mSkillUnit; }
 
-    CServerActivityUnit& getServerActUnit(){ return mServerActUnit;}
+	CServerActivityUnit& getServerActUnit(){ return mServerActUnit; }
 
+	CTimeUnit& getTimeUnit(){return mTimeUnit;}
 	CVIPUnit& getVIPUnit(){return mVIPUnit;}
     char* getName(){ return mName;}
     void setName(const char* value)
@@ -158,15 +158,9 @@ public:
     unsigned int getRoleID(){ return mRoleID;}
     void setRoleID(unsigned int value){ mRoleID = value;}
 
-    time_t getLastOffTime(){ return mLastOffTime;}
-    void setLastOffTime(time_t value){ mLastOffTime = value;}
-
-    time_t getOnTime(){ return mOnTime;}
-    void setOnTime(time_t value){ mOnTime = value;}
-
     CBaseProperty* getBaseProperty(int nIndex)
     {
-        if(nIndex < 0 || nIndex >= emPropertyTypeMax)
+        if(nIndex < emProType_None || nIndex >= emProTypeMax)
         {
             return NULL;
         }
@@ -174,15 +168,12 @@ public:
     }
     void setBaseProperty(int nIndex, CBaseProperty& value)
     {
-        if(nIndex < 0 || nIndex >= emPropertyTypeMax)
+        if(nIndex < emProType_None || nIndex >= emProTypeMax)
         {
             return;
         }
         mBaseProperty[nIndex] = value;
     }
-
-    time_t getLastSaveTime(){ return mLastSaveTime;}
-    void setLastSaveTime(time_t value){ mLastSaveTime = value;}
 
     byte getPlayerStauts(){ return mPlayerStauts;}
     void setPlayerStauts(byte value){ mPlayerStauts = value;}
@@ -193,10 +184,6 @@ public:
     byte getLoadStatus(){ return mLoadStatus;}
     void setLoadStatus(byte value){ mLoadStatus = value;}
 
-    CTimerList& getTimerList(){ return mTimerList;}
-
-	time_t getNewDayTime(){return mNewDayTime;}
-	void setNewDayTime(time_t tNewDayTime){mNewDayTime = tNewDayTime;}
 	/// end autocode
 
 	byte getLevel(){return mPropertyUnit.getLevel();}
@@ -216,28 +203,20 @@ private:
 	CServerActivityUnit	mServerActUnit;
 	/// VIP单元
 	CVIPUnit		mVIPUnit;
+	/// 时间单元
+	CTimeUnit		mTimeUnit;
 
 	/// 角色名字
 	char			mName[PLAYER_NAME_LENGTH];
 	/// 角色ID
 	unsigned int	mRoleID;
-	/// 上次下线时间
-	time_t			mLastOffTime;
-	/// 这次上线时间
-	time_t			mOnTime;
 	/// 基础属性
-	CBaseProperty	mBaseProperty[emPropertyTypeMax];
-	/// 上次存盘的时间
-	time_t			mLastSaveTime;
+	CBaseProperty	mBaseProperty[emProTypeMax];
 	/// 玩家状态 EmPlayerStatus
 	byte			mPlayerStauts;
 	/// 玩家存储状态 EmPlayerSaveStatus
 	byte			mSaveStatus;
 	/// 玩家加载状态 EmPlayerLoadStatus
 	byte			mLoadStatus;
-	///	计时器列表
-	CTimerList		mTimerList;
-	/// 新的一天计算时间
-	time_t			mNewDayTime;
 };
 #endif 

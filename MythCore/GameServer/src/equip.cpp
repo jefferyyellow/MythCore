@@ -18,7 +18,7 @@ int CEquipList::equip(CEntityPlayer& rPlayer, CItemBox& rBox, int nBoxIndex, int
 	}
 
 	int nEquipPart = -1;
-	CItemObject* pDstItemObject = NULL;
+	CItemObject* pDestItemObject = NULL;
 	switch (pTplItem->mItemType)
 	{
 		case emItemType_Equip:
@@ -36,7 +36,7 @@ int CEquipList::equip(CEntityPlayer& rPlayer, CItemBox& rBox, int nBoxIndex, int
 			}
 
 			int nDetObjID = getItemObjID(nEquipPart);
-			pDstItemObject = static_cast<CItemObject*>(CObjPool::Inst()->getObj(nDetObjID));
+			pDestItemObject = static_cast<CItemObject*>(CObjPool::Inst()->getObj(nDetObjID));
 			rEquipPart = nEquipPart;
 			break;
 		}
@@ -47,9 +47,14 @@ int CEquipList::equip(CEntityPlayer& rPlayer, CItemBox& rBox, int nBoxIndex, int
 		}
 	}
 
-	if (NULL != pDstItemObject)
+	if (NULL != pDestItemObject)
 	{
-		rBox.setItem(nBoxIndex, pDstItemObject->getObjID(), pDstItemObject->GetItemID());
+		if (emItemType_Equip == pTplItem->mItemType)
+		{
+			CItemEquip* pDestItemEquip = static_cast<CItemEquip*>(pDestItemObject);
+			pDestItemEquip->setPropertyDirty(rPlayer);
+		}
+		rBox.setItem(nBoxIndex, pDestItemObject->getObjID(), pDestItemObject->GetItemID());
 	}
 	else
 	{
@@ -71,8 +76,8 @@ int CEquipList::unequip(CEntityPlayer& rPlayer, int nEquipPart, CItemBox& rBox, 
 	{
 		return ERR_EQUIP_PART_IS_INVALID;
 	}
-	CItemObject* pDstObject = rBox.getItem(nBoxIndex);
-	if (NULL != pDstObject)
+	CItemObject* pDestObject = rBox.getItem(nBoxIndex);
+	if (NULL != pDestObject)
 	{
 		return ERR_EQUIP_DES_INDEX_DATA_NOT_NULL;
 	}

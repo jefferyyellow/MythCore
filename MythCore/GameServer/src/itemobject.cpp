@@ -93,7 +93,7 @@ int	CItemEquip::getProperty(int nPropertyType)
 	int nPropertyValue = 0;
 	for (int i = 0; i < EQUIP_PROPERTY_NUM; ++ i)
 	{
-		if (emPropertyType_None == mPropertyType[i])
+		if (emProType_None == mPropertyType[i])
 		{
 			break;
 		}
@@ -111,11 +111,11 @@ void CItemEquip::setPropertyDirty(CEntityPlayer& rPlayer)
 {
 	for (int i = 0; i < EQUIP_PROPERTY_NUM; ++ i)
 	{
-		if (emPropertyType_None == mPropertyType[i])
+		if (emProType_None == mPropertyType[i])
 		{
 			break;
 		}
-		rPlayer.setPropertyDirty((EmPropertyType)mPropertyType[i], true);
+		rPlayer.setPropertyDirty((EmProType)mPropertyType[i], true);
 	}
 }
 
@@ -130,7 +130,7 @@ void CItemEquip::refreshProperty()
 
 	for (int i = 0; i < EQUIP_PROPERTY_NUM; ++ i)
 	{
-		if (emPropertyType_None == pTplEquip->mProperty[i].mType)
+		if (emProType_None == pTplEquip->mProperty[i].mType)
 		{
 			break;
 		}

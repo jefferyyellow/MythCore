@@ -37,9 +37,15 @@ public:
 	/// 拥有道具的数目
 	int		hasItem(int nItemID);
 	/// 序列化
-	void createToPB(PBItemList* pbItemList);
+	void	createToPB(PBItemList* pbItemList);
 	/// 反序列化
-	void setFromPB(PBItemList* pbItemList);
+	void	setFromPB(PBItemList* pbItemList);
+	/// 得到空格子的数目
+	int		getBlankSpace();
+	/// 移动道具
+	int		move(unsigned int nSrcIndex, CItemBox& rDestBox, int nDestIndex, int nNum);
+	/// 检查索引是否非法
+	bool	checkIndexInvalid(uint nIndex);
 public:
 	/// autocode don't edit!!!
     int getSize(){ return mSize;}

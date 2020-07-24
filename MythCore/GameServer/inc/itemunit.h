@@ -42,6 +42,7 @@ public:
 	/// 删除道具（注意，不处理货币道具）
 	void		removeItemOnly(int nItemID, int nItemNum);
 
+public:
 	/// 插入道具通知(没有特殊属性的道具)
 	void		sendInsertItemNotify(int nItemID, int* pIndex, int* pNumber, int nSize);
 	///  插入道具通知(有特殊属性的道具)

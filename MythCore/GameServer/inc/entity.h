@@ -120,7 +120,7 @@ public:
 	/// autocode don't edit!!!
     int getFightProperty(int nIndex)
     {
-        if(nIndex < 0 || nIndex >= emPropertyTypeMax)
+        if(nIndex < 0 || nIndex >= emProTypeMax)
         {
             return 0;
         }
@@ -128,7 +128,7 @@ public:
     }
     void setFightProperty(int nIndex, int value)
     {
-        if(nIndex < 0 || nIndex >= emPropertyTypeMax)
+        if(nIndex < 0 || nIndex >= emProTypeMax)
         {
             return;
         }
@@ -143,7 +143,7 @@ public:
 	/// end autocode
 protected:
 	/// 战斗属性
-	int					mFightProperty[emPropertyTypeMax];
+	int					mFightProperty[emProTypeMax];
 	/// 当前血值
 	int					mCurHP;
 	/// 当前魔值

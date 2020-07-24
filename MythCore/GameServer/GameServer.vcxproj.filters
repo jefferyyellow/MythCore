@@ -303,6 +303,15 @@
     <ClCompile Include="src\vipunit.cpp">
       <Filter>player</Filter>
     </ClCompile>
+    <ClCompile Include="src\timeunit.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameLogicConfig.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shopconfig.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -640,6 +649,15 @@
     </ClInclude>
     <ClInclude Include="inc\vipunit.h">
       <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\timeunit.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\GameLogicConfig.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\shopconfig.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

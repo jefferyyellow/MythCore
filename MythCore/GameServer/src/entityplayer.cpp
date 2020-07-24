@@ -5,13 +5,18 @@
 /// 刷新基本属性
 void CEntityPlayer::refreshBaseProperty()
 {
-	for (int i = emPropertyType_MaxHp; i < emPropertyTypeMax; ++ i)
+	for (int i = emProType_MaxHp; i < emProTypeMax; ++ i)
 	{
 		if (mBaseProperty[i].getDirty())
 		{
 			/// 刷新对应的属性
 			int nValue = mItemUnit.getEquip().getProperty(i);
+			int nPer = mItemUnit.getEquip().getProperty(i + ENTITY_PRO_PER_START);
+			nValue += (int)((double)nPer * MYTH_MILLIONTH * nValue);
 			mBaseProperty[i].setValue(nValue);
+
+			// 清空脏标记
+			mBaseProperty[i].setDirty(false);
 			refreshFightProperty(i);
 		}
 	}
@@ -20,7 +25,7 @@ void CEntityPlayer::refreshBaseProperty()
 /// 刷新战斗属性
 void CEntityPlayer::refreshFightProperty()
 {
-	for (int i = emPropertyType_MaxHp; i < emPropertyTypeMax; ++i)
+	for (int i = emProType_MaxHp; i < emProTypeMax; ++i)
 	{
 		refreshFightProperty(i);
 	}
@@ -28,13 +33,12 @@ void CEntityPlayer::refreshFightProperty()
 
 void CEntityPlayer::refreshFightProperty(int nPropertyType)
 {
-	if (nPropertyType < emPropertyType_MaxHp || nPropertyType >= emPropertyTypeMax)
+	if (nPropertyType < emProType_MaxHp || nPropertyType >= emProTypeMax)
 	{
 		return;
 	}
 
 	int nPropertyValue = mBaseProperty[nPropertyType].getValue();
-
 	mFightProperty[nPropertyType] = nPropertyValue;
 }
 
@@ -42,7 +46,7 @@ void CEntityPlayer::refreshFightProperty(int nPropertyType)
 void CEntityPlayer::onGetPlayerPropertyRequest(Message* pMessage)
 {
 	CGetPlayerPropertyResponse tResponse;
-	for (int i = emPropertyType_None ; i < emPropertyTypeMax; ++ i)
+	for (int i = emProType_MaxHp ; i < emProTypeMax; ++ i)
 	{
 		tResponse.add_propertyvalue(mBaseProperty[i].getValue());
 	}
@@ -67,9 +71,10 @@ void CEntityPlayer::serializeSceneInfoToPB(PBPlayerSceneInfo* pbPlayerInfo)
 /// 设置毫秒级计时器(不能超过24天)
 int CEntityPlayer::setTimer(int nOwerObjID, int nModule, int nMilliSec, const int* pParam, int nParamNum, int nCallTimes)
 {
-	if (mTimerList.getTimeListSize() >= MAX_PLAYER_TIMER_NUM)
+	CTimerList& rTimeList = mTimeUnit.getTimerList();
+	if (rTimeList.getTimeListSize() >= MAX_PLAYER_TIMER_NUM)
 	{
 		return INVALID_OBJ_ID;
 	}
-	return mTimerList.setTimer(nOwerObjID, nModule, nMilliSec, pParam, nParamNum, nCallTimes);
+	return rTimeList.setTimer(nOwerObjID, nModule, nMilliSec, pParam, nParamNum, nCallTimes);
 }

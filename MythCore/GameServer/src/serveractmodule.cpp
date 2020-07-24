@@ -267,7 +267,8 @@ void CServerActModule::dailyRefresh(CEntityPlayer* pPlayer)
 	}
 
 	// 如果上次下线的时间在今天早上以后了，那就是同一天的多次登录了，并且服务器重启以后，玩家已经登录过了
-	if (pPlayer->getLastOffTime() >= CSceneJob::Inst()->getMorningTime() && pPlayer->getLastOffTime() >= mServerStartTime)
+	if (pPlayer->getTimeUnit().getLastOffTime() >= CSceneJob::Inst()->getMorningTime() 
+		&& pPlayer->getTimeUnit().getLastOffTime() >= mServerStartTime)
 	{
 		return;
 	}

@@ -96,6 +96,7 @@
     <ClCompile Include="src\entityplayer.cpp" />
     <ClCompile Include="src\entitytimer.cpp" />
     <ClCompile Include="src\equip.cpp" />
+    <ClCompile Include="src\GameLogicConfig.cpp" />
     <ClCompile Include="src\gameserver.cpp" />
     <ClCompile Include="src\gameserverconfig.cpp" />
     <ClCompile Include="src\gmcommandmanager.cpp" />
@@ -138,6 +139,7 @@
     <ClCompile Include="src\serveractivityunit.cpp" />
     <ClCompile Include="src\serveractmodule.cpp" />
     <ClCompile Include="src\serverutility.cpp" />
+    <ClCompile Include="src\shopconfig.cpp" />
     <ClCompile Include="src\skillmodule.cpp" />
     <ClCompile Include="src\skillunit.cpp" />
     <ClCompile Include="src\strutility.cpp" />
@@ -148,6 +150,7 @@
     <ClCompile Include="src\teammodule.cpp" />
     <ClCompile Include="src\template.cpp" />
     <ClCompile Include="src\aistrategy.cpp" />
+    <ClCompile Include="src\timeunit.cpp" />
     <ClCompile Include="src\vipunit.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -197,6 +200,7 @@
     <ClInclude Include="inc\entitytype.h" />
     <ClInclude Include="inc\equip.h" />
     <ClInclude Include="inc\errcode.h" />
+    <ClInclude Include="inc\GameLogicConfig.h" />
     <ClInclude Include="inc\gameserver.h" />
     <ClInclude Include="inc\gameserverconfig.h" />
     <ClInclude Include="inc\gmcommandmanager.h" />
@@ -247,6 +251,7 @@
     <ClInclude Include="inc\servercommon.h" />
     <ClInclude Include="inc\serverutility.h" />
     <ClInclude Include="inc\sharelist.h" />
+    <ClInclude Include="inc\shopconfig.h" />
     <ClInclude Include="inc\skillmodule.h" />
     <ClInclude Include="inc\skilltype.h" />
     <ClInclude Include="inc\skillunit.h" />
@@ -262,6 +267,7 @@
     <ClInclude Include="inc\template.h" />
     <ClInclude Include="inc\propertymodule.h" />
     <ClInclude Include="inc\testtype.h" />
+    <ClInclude Include="inc\timeunit.h" />
     <ClInclude Include="inc\vipunit.h" />
   </ItemGroup>
   <ItemGroup>

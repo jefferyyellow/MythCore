@@ -18,6 +18,8 @@ enum PROPERTY_MODULE_MSG_ID
 	ID_S2C_NOTIFY_PLAYER_SKILL_INFO			= 0x040A;		// 玩家技能信息通知
 	ID_C2S_REQUEST_GET_PLAYER_PROPERTY		= 0x040B;		// 得到玩家属性请求
 	ID_S2C_RESPONSE_GET_PLAYER_PROPERTY		= 0x040C;		// 得到玩家属性的回应
+	ID_C2S_REQUEST_HEART_BEAT				= 0x040D;		// 玩家心跳的请求
+	ID_S2C_RESPONSE_HEART_BEAT				= 0x040E;		// 玩家心跳的回应
 }
 
 /// 玩家升级通知 ID_S2C_NOTIYF_LEVEL_UP
@@ -106,4 +108,15 @@ message CGetPlayerPropertyRequest
 message CGetPlayerPropertyResponse
 {
 	repeated uint32		PropertyValue	= 1;	// 属性值
+}
+
+/// 玩家心跳请求 ID_C2S_REQUEST_HEART_BEAT
+message CHeartBeatRequest
+{
+}
+
+/// 玩家心跳回应 ID_S2C_RESPONSE_HEART_BEAT
+message CHeartBeatResponse
+{
+	uint32	ServerTime					= 1;	// 服务器时间
 }

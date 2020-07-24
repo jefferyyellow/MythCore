@@ -85,6 +85,7 @@ private:
 	void		sendPlayerSkillInfoNotify(CEntityPlayer* pPlayer);
 	//// 得到玩家属性请求
 	void		onGetPlayerPropertyRequest(CEntityPlayer* pPlayer, Message* pMessage);
+
 public:
 	CGMCommandManager&		getGMCmdManager(){ return mGMCmdManager; }
 	/// 踢出所以玩家
