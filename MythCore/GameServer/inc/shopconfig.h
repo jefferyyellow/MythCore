@@ -8,23 +8,25 @@ enum EmShopType
 	emShopTypeMax
 };
 
-class CGoods
+class PBShopGoods;
+class CShopGoods
 {
+public:
+	void		createToPB(PBShopGoods* pbGoods); 
+
 public:
 	/// 商品ID
 	int			mGoodsID;
 	/// 商品数量
 	int			mGoodsNum;
 	/// 消耗的货币（道具）ID
-	int			mConsumeItemID;
+	int			mConsumeID;
 	/// 消耗的货币（道具）数量
-	int			mConsumeItemNum;
-	/// 商品库存
-	int			mGoodsStockNum;
+	int			mConsumeNum;
 	/// 标签页
 	int			mTabIndex;
 };
-typedef std::vector<CGoods>			SHOP_GOODS_LIST;
+typedef std::vector<CShopGoods>			SHOP_GOODS_LIST;
 
 class CShopLevelData
 {
@@ -41,9 +43,10 @@ typedef std::vector<CShopLevelData>	SHOP_LEVEL_DATA;
 class CShopConfig
 {
 public:
-	CShopConfig()
+	CShopConfig(EmShopType eType) 
+		:mShopType(eType)
 	{
-		
+		clear();
 	}
 	~CShopConfig()
 	{
@@ -51,13 +54,22 @@ public:
 	}
 	void clear()
 	{
-		mLevelData.clear();
+		mLevelList.clear();
 	}
 
 public:
-	void			loadShopConfig(const char* pFilePath);
+	bool			loadShopConfig(const char* pFilePath);
+	CShopLevelData*	GetLevelData(int nLevel);
+
 public:
-	SHOP_LEVEL_DATA	mLevelData;
+	SHOP_LEVEL_DATA	mLevelList;
+	
+public:
+	EmShopType	GetShopType() const { return mShopType; }
+	void		SetShopType(EmShopType nValue) { mShopType = nValue; }
+
+private:
+	EmShopType		mShopType;
 };
 typedef std::vector<CShopConfig>	SHOP_CONFIG_LIST;
 #endif

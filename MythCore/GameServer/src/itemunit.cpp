@@ -6,7 +6,7 @@
 #include "template.h"
 #include "locallogjob.h"
 #include "entityplayer.h"
-
+#include "itemmodule.h"
 /// 获得货币
 int CItemUnit::obtainCurrency(EmCurrencyType eCurrencyType, int nCurrencyNum)
 {
@@ -374,6 +374,44 @@ void CItemUnit::sendSellItemResponse(int nResult)
 	tSellItemResponse.set_result(nResult);
 
 	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_RESPONSE_SELL_ITEM, &tSellItemResponse);
+}
+
+/// 获得商店道具信息
+void CItemUnit::onGetShopInfoRequest(Message* pMessage)
+{
+	MYTH_ASSERT(NULL != pMessage, return);
+	CGetShopInfoRequest* pRequest = static_cast<CGetShopInfoRequest*>(pMessage);
+	MYTH_ASSERT(NULL != pRequest, return);
+
+	int nShopType = pRequest->shoptype();
+	if (nShopType < emShopType_Common || nShopType >= emShopTypeMax)
+	{
+		return;
+	}
+	SHOP_CONFIG_LIST& rShopList = CItemModule::Inst()->getShopList();
+
+	CShopLevelData* pLevelData = rShopList[nShopType].GetLevelData(mPlayer.getLevel());
+	sendGetShopInfoResponse(SUCCESS, pLevelData);
+}
+
+void CItemUnit::sendGetShopInfoResponse(int nResult, CShopLevelData* pLevelData)
+{
+	CGetShopInfoResponse tResponse;
+	tResponse.set_result(nResult);
+	if (NULL != pLevelData)
+	{
+		for (uint i = 0; i < pLevelData->mGoodsList.size(); ++i)
+		{
+			PBShopGoods* pGoods = tResponse.add_goods();
+			if (NULL == pGoods)
+			{
+				continue;
+			}
+			pLevelData->mGoodsList[i].createToPB(pGoods);
+		}
+	}
+
+	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_RESPONSE_GET_SHOP_INFO, &tResponse);
 }
 
 /// 购买道具

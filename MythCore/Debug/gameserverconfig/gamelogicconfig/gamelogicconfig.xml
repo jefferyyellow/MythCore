@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<GameConfig>
+  <!--心跳节点 Check：是否做心跳检查 Time：心跳时间 CheckTime：检测周期时间 
+  InvalidMax：心跳计数期间心跳过速次数(超过这个表示使用加速外挂)-->
+  <HeartBeat Check="1" Time="6" CheckTime="60" InvalidMax="5"/>
+</GameConfig>

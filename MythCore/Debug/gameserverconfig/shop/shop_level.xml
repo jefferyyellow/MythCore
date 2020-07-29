@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<ShopData>
+  <LevelData MinLevel="1" MaxLevel="10">
+    <Goods ID="10000" Num="1" ConsumeID="100" ConsumeNum="5000" TabIndex="1"/>
+    <Goods ID="10001" Num="1" ConsumeID="101" ConsumeNum="500" TabIndex="2"/>
+  </LevelData>
+  <LevelData MinLevel="11" MaxLevel="30">
+    <Goods ID="10000" Num="1" ConsumeID="100" ConsumeNum="5000" TabIndex="1"/>
+    <Goods ID="10001" Num="1" ConsumeID="101" ConsumeNum="500" TabIndex="2"/>
+  </LevelData>
+</ShopData>

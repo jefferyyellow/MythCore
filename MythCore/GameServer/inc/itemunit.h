@@ -6,6 +6,7 @@
 #include "itemtype.h"
 #include "equip.h"
 class CEntityPlayer;
+class CShopLevelData;
 class CItemUnit : public CPlayerSubUnit
 {
 public:
@@ -55,6 +56,10 @@ public:
 	/// 卖出道具
 	void		onSellItemRequest(Message* pMessage);
 	void		sendSellItemResponse(int nResult);
+
+	/// 获得商店道具信息
+	void		onGetShopInfoRequest(Message* pMessage);
+	void		sendGetShopInfoResponse(int nResult, CShopLevelData* pLevelData);
 
 	/// 购买道具
 	void		onPurchaseItemRequest(Message* pMessage);

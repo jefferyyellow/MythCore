@@ -20,8 +20,11 @@ enum ITEM_MODULE_MSG_ID
 	ID_C2S_REQUEST_UNEQUIP_ITEM				= 0x080D;	// 卸载装备的请求
 	ID_S2C_RESPONSE_UNEQUIP_ITEM			= 0x080E;	// 卸载装备的回应
 	ID_S2C_NOTIYF_EQUIP_CHANGE				= 0x080F;	// 装备改变的通知
-	ID_C2S_REQUEST_PICK_ITEM				= 0x0810;	// 拾取道具的请求
-	ID_S2C_RESPONSE_PICK_ITEM				= 0x0811;	// 拾取道具的回应
+	ID_C2S_REQUEST_GET_SHOP_INFO			= 0x0810;	// 得到商店信息的请求
+	ID_S2C_RESPONSE_GET_SHOP_INFO			= 0x0811;	// 得到商店信息的回应
+	ID_C2S_REQUEST_PICK_ITEM				= 0x0812;	// 拾取道具的请求
+	ID_S2C_RESPONSE_PICK_ITEM				= 0x0813;	// 拾取道具的回应
+
 };
 
 // 玩家货币更新通知 ID_S2C_NOTIYF_CURRENCY_UPDATE
@@ -136,4 +139,25 @@ message CPickItemRequest
 message CPickItemResponse
 {
 	uint32	Result		= 1;		// 结果
+}
+
+// 得到商店信息的请求 ID_C2S_REQUEST_GET_SHOP_INFO
+message CGetShopInfoRequest
+{
+	uint32	ShopType	= 1;		// 商店类型
+}
+
+// 得到商店信息的回应 ID_S2C_RESPONSE_GET_SHOP_INFO
+message PBShopGoods
+{
+	uint32	GoodsID		= 1;		// 商品ID
+	uint32	GoodsNum	= 2;		// 商品数量
+	uint32	ConsumeID	= 3;		// 消耗ID
+	uint32	ConsumeNum	= 4;		// 消耗数量
+	uint32	TabIndex	= 5;		// 标签页
+}
+message CGetShopInfoResponse
+{
+			 uint32			Result	= 1;	// 结果
+	repeated PBShopGoods	Goods	= 2;	// 商品信息列表
 }

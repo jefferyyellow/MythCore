@@ -40,6 +40,8 @@ public:
 	int	getFromDropTable(int nDropTableID, int& rDropItemNum);
 
 public:
+	SHOP_CONFIG_LIST&	getShopList(){return mShopList;}
+public:
 	SHOP_CONFIG_LIST	mShopList;
 };
 #endif

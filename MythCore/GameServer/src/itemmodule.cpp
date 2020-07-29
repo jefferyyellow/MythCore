@@ -6,7 +6,7 @@
 
 CItemModule::CItemModule()
 {
-	mShopList.reserve(emShopTypeMax);
+	
 }
 CItemModule::~CItemModule()
 {
@@ -15,7 +15,13 @@ CItemModule::~CItemModule()
 /// 启动服务器
 void CItemModule::onLaunchServer()
 {
+	CShopConfig tCommonShop(emShopType_Common);
+	tCommonShop.loadShopConfig("gameserverconfig/shop/shop_common.xml");
+	mShopList.push_back(tCommonShop);
 
+	CShopConfig tLevelShop(emShopType_Level);
+	tLevelShop.loadShopConfig("gameserverconfig/shop/shop_level.xml");
+	mShopList.push_back(tLevelShop);
 }
 
 /// 启动完成检查
@@ -97,6 +103,11 @@ void CItemModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageI
 		case ID_C2S_REQUEST_UNEQUIP_ITEM:
 		{
 			pPlayer->getItemUnit().onUnEquipItemRequest(pMessage);
+			break;
+		}
+		case ID_C2S_REQUEST_GET_SHOP_INFO:
+		{
+			pPlayer->getItemUnit().onGetShopInfoRequest(pMessage);
 			break;
 		}
 	}

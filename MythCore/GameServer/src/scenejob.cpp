@@ -335,6 +335,7 @@ bool CSceneJob::initBase(int nDBBuffSize)
 
 	mLogicModuleList.push_back(CLoginModule::createInst());
 	mLogicModuleList.push_back(CPropertyModule::createInst());
+	mLogicModuleList.push_back(CItemModule::createInst());
 	mLogicModuleList.push_back(CMapModule::createInst());
 	mLogicModuleList.push_back(CDBModule::createInst());
 	mLogicModuleList.push_back(CServerActModule::createInst());
@@ -353,6 +354,7 @@ void CSceneJob::clearBase()
 	CServerActModule::destroyInst();
 	CDBModule::destroyInst();
 	CMapModule::destroyInst();
+	CItemModule::destroyInst();
 	CPropertyModule::destroyInst();
 	CLoginModule::destroyInst();
 
