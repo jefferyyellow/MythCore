@@ -21,22 +21,8 @@ public:
 	{
         mTaskID = 0;
         memset(mTaskParam, 0, sizeof(mTaskParam));
-        memset(mCondType, 0, sizeof(mCondType));
 	}
 
-public:
-	int				getParamByCondType(int nType)
-	{
-		for (int i = 0; i < MAX_COMPLETE_CONDITION; ++i)
-		{
-			if (mCondType[i] == nType)
-			{
-				return mTaskParam[i];
-			}
-		}
-
-		return 0;
-	}
 public:
 	/// autocode don't edit!!!
     short getTaskID(){ return mTaskID;}
@@ -58,23 +44,6 @@ public:
         }
         mTaskParam[nIndex] = value;
     }
-
-    int getCondType(int nIndex)
-    {
-        if(nIndex < 0 || nIndex >= MAX_COMPLETE_CONDITION)
-        {
-            return 0;
-        }
-        return mCondType[nIndex];
-    }
-    void setCondType(int nIndex, int value)
-    {
-        if(nIndex < 0 || nIndex >= MAX_COMPLETE_CONDITION)
-        {
-            return;
-        }
-        mCondType[nIndex] = value;
-    }
 	/// end autocode
 
 
@@ -83,8 +52,6 @@ private:
 	short			mTaskID;
 	/// 任务参数
 	int				mTaskParam[MAX_COMPLETE_CONDITION];
-	/// 条件类型
-	int				mCondType[MAX_COMPLETE_CONDITION];
 };
 
 class CEntityPlayer;

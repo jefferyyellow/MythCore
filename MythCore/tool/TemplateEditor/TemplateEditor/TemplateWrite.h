@@ -57,7 +57,8 @@ public:
 	BOOL	VerifyTempPath(string strFieldType, string& strValue);
 	// 将字符串转换成UTF8
 	void	ASCIIToUTF8(const char* pSr, int nSrcLen, char*pDst, int nDstLen);
-
+	// 保存模板名字xml
+	void	SaveTempNameXml(CTemplateManager* pTemplateManager);
 public:
 	BOOL	GetWritingPB(){return m_bWritingPB;}
 	void	SetWritingPB(BOOL bWritingPB){m_bWritingPB = bWritingPB;}

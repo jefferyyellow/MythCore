@@ -9,14 +9,16 @@ void CTimeUnit::onHeartBeatRequest(Message* pMessage)
 {
 	MYTH_ASSERT(NULL != pMessage, return);
 
+	// 如果服务器下线，或者调试的时候，前端发过来心跳包累计在TCP Server和Game Server的通信管道中，
+	// 可能会导致玩家被踢掉下线
 	time_t tNowTime = CTimeManager::Inst()->getCurrTime();
+
 	CHeartBeatResponse tResponse;
 	tResponse.set_servertime((uint)tNowTime);
 	// 是否做心跳检测
 	if (CGameLogicConfig::Inst()->mHeartBeatCheck)
 	{
 		CGameLogicConfig* pLogicConfig = CGameLogicConfig::Inst();
-
 		if (tNowTime - mHeartBeatTime < pLogicConfig->mHeartBeatTime)
 		{
 			++ mHeartBeatErrCount;

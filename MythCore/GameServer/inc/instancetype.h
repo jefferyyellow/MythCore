@@ -17,8 +17,6 @@ enum EmInstanceType
 	emInstance_None			= 0,			// 无
 	// 单人副本部分
 	emInstance_Common		= 1,			// 普通单人副本
-
-
 	// 多人副本部分
 	emInstance_Team			= 32,			// 普通组队副本
 };

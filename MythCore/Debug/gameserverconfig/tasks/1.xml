@@ -4,43 +4,31 @@
     <TaskType Value="1"/>
     <TaskName Value="tkl_1_0"/>
     <AcceptMap Value="1"/>
-    <AcceptNpc Value="6952"/>
-    <SubmitMap Value="2"/>
-    <SubmitNpc Value="6508"/>
+    <AcceptNpc Value="1000"/>
+    <SubmitMap Value="1"/>
+    <SubmitNpc Value="1001"/>
     <Desc Value="tkl_1_1"/>
     <AcceptdDesc Value="tkl_1_2"/>
     <CanAbandon Value="0"/>
-    <InstanceIndex Value="1"/>
-    <AcceptStoryId Value="1"/>
-    <SubmitStoryId Value="2"/>
-    <CompleteStoryId Value="3"/>
-    <AutoPath Value="1"/>
-    <BookId Value="123"/>
-    <ParnterId Value="233"/>
-    <RecommendLevel Value="23"/>
+    <AutoPath Value="0"/>
+    <RecommendLevel Value=""/>
     <AccpetCond>
-        <Cond Type="2" Para0="1" Para1="1"/>
+        <Cond Type="2" Para0="2" Para1="2"/>
     </AccpetCond>
     <CompleteCond>
-        <Cond Type="2" Para0="10901" Para1="25"/>
-        <Cond Type="1" Para0="22302" Para1="10"/>
+        <Cond Type="2" Para0="10000" Para1="1"/>
     </CompleteCond>
     <TaskAward>
-        <Cond Type="1" Para0="11015" Para1="20"/>
-        <Cond Type="1" Para0="10001" Para1="2"/>
+        <Cond Type="1" Para0="10000" Para1="1"/>
     </TaskAward>
     <AccpetDiag>
         <Cond Type="1" Para0="tkl_1_3"/>
         <Cond Type="2" Para0="tkl_1_4"/>
         <Cond Type="1" Para0="tkl_1_5"/>
-        <Cond Type="2" Para0="tkl_1_6"/>
+        <Cond Type="3" Para0="tkl_1_6"/>
+        <Cond Type="4" Para0="tkl_1_7"/>
+        <Cond Type="1" Para0="tkl_1_8"/>
     </AccpetDiag>
-    <ProcessDiag>
-        <Cond Type="1" Para0="tkl_1_7"/>
-        <Cond Type="2" Para0="tkl_1_8"/>
-    </ProcessDiag>
-    <CompleteDiag>
-        <Cond Type="1" Para0="tkl_1_9"/>
-        <Cond Type="2" Para0="tkl_1_10"/>
-    </CompleteDiag>
+    <ProcessDiag/>
+    <CompleteDiag/>
 </TaskData>

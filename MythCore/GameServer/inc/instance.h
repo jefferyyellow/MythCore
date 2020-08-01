@@ -21,8 +21,41 @@ public:
 	int		mMapId[MAX_INSTANCE_MAP_NUM];
 };
 
+/// 单人副本
+class CSingleInstance
+{
+public:
+	/// 初始化
+	void	init();
+	/// 创建
+	void	create();
+	/// 结束
+	void	end();
+	/// 销毁
+	void	destroy();
+	/// 发奖
+	void	givePrize();
+};
+
+/// 多人副本（包括团队本）
+class CMultipleInstance
+{
+public:
+	/// 初始化
+	void	init();
+	/// 创建
+	void	create();
+	/// 结束
+	void	end();
+	/// 销毁
+	void	destroy();
+	/// 发奖
+	void	givePrize();
+};
+
+
 /// 副本类
-class CInstance : CObj
+class CInstance : public CObj
 {
 public:
 	CInstance()
@@ -33,63 +66,59 @@ public:
 
 	void			init()
 	{
-        mConfig = NULL;
-        memset(mMapObjId, 0, sizeof(mMapObjId));
-        mCreateTime = 0;
-        mExpiredTime = 0;
-        mStatus = emInstanceStatus_None;
-        mSingle = false;
+		mConfig = NULL;
+		memset(mMapObjId, 0, sizeof(mMapObjId));
+		mCreateTime = 0;
+		mExpiredTime = 0;
+		mStatus = emInstanceStatus_None;
+		mType = emInstance_None;
 	}
 public:
 	/// 创建
-	virtual void	create();
+	void	create();
 	/// 结束
-	virtual void	end();
+	void	end();
 	/// 销毁
-	virtual void	destroy();
+	void	destroy();
 	/// 发奖
-	virtual void	givePrize();
-	/// 玩家进入
-	virtual	void	playerEnter(CEntityPlayer* pPlayer);
-	/// 玩家离开
-	virtual void	playerLeave(CEntityPlayer* pPlayer);
+	void	givePrize();
 
 public:
 	/// autocode don't edit!!!
-    CInstanceConfig* getConfig(){ return mConfig;}
-    void setConfig(CInstanceConfig* value){ mConfig = value;}
+	CInstanceConfig* getConfig(){ return mConfig; }
+	void setConfig(CInstanceConfig* value){ mConfig = value; }
 
-    int getMapObjId(int nIndex)
-    {
-        if(nIndex < 0 || nIndex >= MAX_INSTANCE_MAP_NUM)
-        {
-            return 0;
-        }
-        return mMapObjId[nIndex];
-    }
-    void setMapObjId(int nIndex, int value)
-    {
-        if(nIndex < 0 || nIndex >= MAX_INSTANCE_MAP_NUM)
-        {
-            return;
-        }
-        mMapObjId[nIndex] = value;
-    }
+	int getMapObjId(int nIndex)
+	{
+		if (nIndex < 0 || nIndex >= MAX_INSTANCE_MAP_NUM)
+		{
+			return 0;
+		}
+		return mMapObjId[nIndex];
+	}
+	void setMapObjId(int nIndex, int value)
+	{
+		if (nIndex < 0 || nIndex >= MAX_INSTANCE_MAP_NUM)
+		{
+			return;
+		}
+		mMapObjId[nIndex] = value;
+	}
 
-    time_t getCreateTime(){ return mCreateTime;}
-    void setCreateTime(time_t value){ mCreateTime = value;}
+	time_t getCreateTime(){ return mCreateTime; }
+	void setCreateTime(time_t value){ mCreateTime = value; }
 
-    time_t getExpiredTime(){ return mExpiredTime;}
-    void setExpiredTime(time_t value){ mExpiredTime = value;}
+	time_t getExpiredTime(){ return mExpiredTime; }
+	void setExpiredTime(time_t value){ mExpiredTime = value; }
 
-    EmInstanceStatus getStatus(){ return mStatus;}
-    void setStatus(EmInstanceStatus value){ mStatus = value;}
+	EmInstanceStatus getStatus(){ return mStatus; }
+	void setStatus(EmInstanceStatus value){ mStatus = value; }
 
-    bool getSingle(){ return mSingle;}
-    void setSingle(bool value){ mSingle = value;}
-
-    EmInstanceType& getType(){ return mType;}
+	EmInstanceType& getType(){ return mType; }
 	/// end autocode
+
+	CSingleInstance& getSingle(){return mSingle;}
+	CMultipleInstance& getMultiple(){return mMultiple;}
 
 private:
 	/// 副本配置
@@ -102,56 +131,14 @@ private:
 	time_t				mExpiredTime;
 	/// 状态 default:emInstanceStatus_None
 	EmInstanceStatus	mStatus;
-	/// 是否是单人副本
-	bool				mSingle;
 	///  副本类型
 	EmInstanceType		mType;
-};
 
-/// 单人副本
-class CSingleInstance : public CInstance
-{
-public:
-	CSingleInstance(){}
-	virtual ~CSingleInstance(){}
-public:
-	/// 创建
-	virtual void	create();
-	/// 结束
-	virtual void	end();
-	/// 销毁
-	virtual void	destroy();
-	/// 发奖
-	virtual void	givePrize();
-	/// 玩家进入
-	virtual	void	playerEnter(CEntityPlayer* pPlayer);
-	/// 玩家离开
-	virtual void	playerLeave(CEntityPlayer* pPlayer);
-
-public:
-	
-};
-
-/// 多人副本（包括团队本）
-class CMultipleInstance : public CInstance
-{
-public:
-	CMultipleInstance(){}
-	virtual ~CMultipleInstance(){}
-
-public:
-	/// 创建
-	virtual void	create();
-	/// 结束
-	virtual void	end();
-	/// 销毁
-	virtual void	destroy();
-	/// 发奖
-	virtual void	givePrize();
-	/// 玩家进入
-	virtual	void	playerEnter(CEntityPlayer* pPlayer);
-	/// 玩家离开
-	virtual void	playerLeave(CEntityPlayer* pPlayer);
+	union
+	{
+		CSingleInstance		mSingle;
+		CMultipleInstance	mMultiple;
+	};
 };
 
 #endif

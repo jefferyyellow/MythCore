@@ -902,15 +902,21 @@ class CPurchaseItemRequest : public ::google::protobuf::Message /* @@protoc_inse
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 Index = 1;
+  // optional uint32 ShopType = 1;
+  void clear_shoptype();
+  static const int kShopTypeFieldNumber = 1;
+  ::google::protobuf::uint32 shoptype() const;
+  void set_shoptype(::google::protobuf::uint32 value);
+
+  // optional uint32 Index = 2;
   void clear_index();
-  static const int kIndexFieldNumber = 1;
+  static const int kIndexFieldNumber = 2;
   ::google::protobuf::uint32 index() const;
   void set_index(::google::protobuf::uint32 value);
 
-  // optional uint32 Num = 2;
+  // optional uint32 Num = 3;
   void clear_num();
-  static const int kNumFieldNumber = 2;
+  static const int kNumFieldNumber = 3;
   ::google::protobuf::uint32 num() const;
   void set_num(::google::protobuf::uint32 value);
 
@@ -918,6 +924,7 @@ class CPurchaseItemRequest : public ::google::protobuf::Message /* @@protoc_inse
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 shoptype_;
   ::google::protobuf::uint32 index_;
   ::google::protobuf::uint32 num_;
   mutable int _cached_size_;
@@ -2262,7 +2269,21 @@ inline const CSellItemResponse* CSellItemResponse::internal_default_instance() {
 
 // CPurchaseItemRequest
 
-// optional uint32 Index = 1;
+// optional uint32 ShopType = 1;
+inline void CPurchaseItemRequest::clear_shoptype() {
+  shoptype_ = 0u;
+}
+inline ::google::protobuf::uint32 CPurchaseItemRequest::shoptype() const {
+  // @@protoc_insertion_point(field_get:CPurchaseItemRequest.ShopType)
+  return shoptype_;
+}
+inline void CPurchaseItemRequest::set_shoptype(::google::protobuf::uint32 value) {
+  
+  shoptype_ = value;
+  // @@protoc_insertion_point(field_set:CPurchaseItemRequest.ShopType)
+}
+
+// optional uint32 Index = 2;
 inline void CPurchaseItemRequest::clear_index() {
   index_ = 0u;
 }
@@ -2276,7 +2297,7 @@ inline void CPurchaseItemRequest::set_index(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:CPurchaseItemRequest.Index)
 }
 
-// optional uint32 Num = 2;
+// optional uint32 Num = 3;
 inline void CPurchaseItemRequest::clear_num() {
   num_ = 0u;
 }

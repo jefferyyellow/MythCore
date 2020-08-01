@@ -43,4 +43,7 @@ public:
 	afx_msg void OnBnClickedEquip();
 	afx_msg void OnBnClickedUnequip();
 	afx_msg void OnBnClickedGetPlayerProperty();
+	afx_msg void OnBnClickedAcceptTask();
+	afx_msg void OnBnClickedCompleteTask();
+	afx_msg void OnBnClickedClearLog();
 };

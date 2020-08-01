@@ -14,7 +14,7 @@ void CTaskUnit::onAcceptTaskRequest(Message* pMessage)
 	MYTH_ASSERT(NULL != pAcceptTaskRequest, return);
 
 	int nTaskID = pAcceptTaskRequest->taskid();
-	int nNpcEntityID = pAcceptTaskRequest->npcentityid();
+	//int nNpcEntityID = pAcceptTaskRequest->npcentityid();
 
 	CTaskConfig* pTaskConfig = CTaskModule::Inst()->getTaskConfig(nTaskID);
 	if (NULL == pTaskConfig)
@@ -23,24 +23,24 @@ void CTaskUnit::onAcceptTaskRequest(Message* pMessage)
 		return;
 	}
 
-	CEntity* pEntity = static_cast<CEntity*>(CObjPool::Inst()->getObj(nNpcEntityID));
-	if (NULL == pEntity)
-	{
-		sendAcceptTaskResponse(ERROR_TASK_NPC_IS_VALID, nTaskID);
-		return;
-	}
+	//CEntity* pEntity = static_cast<CEntity*>(CObjPool::Inst()->getObj(nNpcEntityID));
+	//if (NULL == pEntity)
+	//{
+	//	sendAcceptTaskResponse(ERROR_TASK_NPC_IS_VALID, nTaskID);
+	//	return;
+	//}
 
-	if (pEntity->getEntityType() != emEntityType_FuncNPC)
-	{
-		sendAcceptTaskResponse(ERROR_TASK_NPC_IS_VALID, nTaskID);
-		return;
-	}
+	//if (pEntity->getEntityType() != emEntityType_FuncNPC)
+	//{
+	//	sendAcceptTaskResponse(ERROR_TASK_NPC_IS_VALID, nTaskID);
+	//	return;
+	//}
 
-	if (pEntity->getMapID() != mPlayer.getMapID())
-	{
-		sendAcceptTaskResponse(ERROR_TASK_FAR_FROM_NPC, nTaskID);
-		return;
-	}
+	//if (pEntity->getMapID() != mPlayer.getMapID())
+	//{
+	//	sendAcceptTaskResponse(ERROR_TASK_FAR_FROM_NPC, nTaskID);
+	//	return;
+	//}
 
 	int nResult = checkAcceptTask(nTaskID);
 	if (SUCCESS != nResult)
@@ -115,7 +115,6 @@ void CTaskUnit::onSubmitTaskRequest(Message* pMessage)
 	giveCompleteTaskReward(nTaskID);
 	removeTaskItem(nTaskID, nItemIndex);
 	sendSubmitTaskResponse(SUCCESS, nTaskID);
-
 }
 
 void CTaskUnit::sendSubmitTaskResponse(int nResult, int nTaskID)
@@ -213,10 +212,6 @@ void CTaskUnit::setFromPB(PBTaskList* pbTaskList)
 		{
 			tPlayerTask.setTaskParam(j, pbTask->param(j));
 		}
-		for (int j = 0; j < MAX_COMPLETE_CONDITION && j < pbTask->condtype_size(); ++ j)
-		{
-			tPlayerTask.setCondType(j, pbTask->condtype(j));
-		}
 		mTaskList.push_back(tPlayerTask);
 	}
 }
@@ -244,7 +239,6 @@ void CTaskUnit::createToPB(PBTaskList* pbTaskList)
 		for (int j = 0; j < MAX_COMPLETE_CONDITION; ++j)
 		{
 			pbTask->add_param(mTaskList[i].getTaskParam(j));
-			pbTask->add_condtype(mTaskList[i].getCondType(j));
 		}
 	}
 }
@@ -323,6 +317,7 @@ int CTaskUnit::checkAcceptCondition(EmAcceptCondition eCondition, int nParam1, i
 	{
 		case emAccept_PreTask:
 		{
+			// nParam1是前置任务ID
 			if (!checkTaskComplete(nParam1))
 			{
 				return ERROR_TASK_PRE_TASK_NOT_COMPLETE;
@@ -331,6 +326,7 @@ int CTaskUnit::checkAcceptCondition(EmAcceptCondition eCondition, int nParam1, i
 		}
 		case emAccept_Level:
 		{
+			// nParam1是要求的玩家等级
 			if (mPlayer.getLevel() < nParam1)
 			{
 				return ERROR_TASK_PLAYER_LEVEL_NOT_ENOUGH;
@@ -378,6 +374,7 @@ int CTaskUnit::checkCloseCondition(CTaskCondition& rCondition)
 	{
 		case emClose_Level:
 		{
+			// 已经达到指定等级而关闭
 			if (mPlayer.getLevel() >= rCondition.mParam[0])
 			{
 				return ERROR_TASK_CLOSE_LEVEL;
@@ -386,6 +383,7 @@ int CTaskUnit::checkCloseCondition(CTaskCondition& rCondition)
 		}
 		case emClose_PreTask:
 		{
+			// 完成了只能的任务而关闭
 			if (checkTaskComplete(rCondition.mParam[0]))
 			{
 				return ERROR_TASK_CLOSE_PRE_TASK_COMPLETE;

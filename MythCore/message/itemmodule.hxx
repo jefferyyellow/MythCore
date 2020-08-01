@@ -83,8 +83,9 @@ message CSellItemResponse
 // 购买道具请求 ID_C2S_REQUEST_PURCHASE_ITEM
 message CPurchaseItemRequest
 {
-	uint32 Index		= 1;		// 索引
-	uint32 Num			= 2;		// 数目
+	uint32 ShopType		= 1;		// 商店类型
+	uint32 Index		= 2;		// 索引
+	uint32 Num			= 3;		// 数目
 }
 
 // 购买道具回应 ID_S2C_RESPONSE_PURCHASE_ITEM

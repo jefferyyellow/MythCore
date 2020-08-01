@@ -204,6 +204,7 @@ DWORD WINAPI CMainFrame::GenerateBinThread(LPVOID param)
 	CTemplateWrite::GetSingletonPtr()->SetProcessText(_T("开始进行模板数据转换"));
 	// 开始生成PB文件
 	BOOL bResult = CTemplateWrite::GetSingletonPtr()->WriteToPB(CTemplateManager::GetSingletonPtr());
+	CTemplateWrite::GetSingletonPtr()->SaveTempNameXml(CTemplateManager::GetSingletonPtr());
 	CTemplateWrite::GetSingletonPtr()->SetProcess(0);
 	CTemplateWrite::GetSingletonPtr()->SetProcessText(_T("模块数据转换完成"));
 

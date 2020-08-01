@@ -7,6 +7,7 @@
 #include "propertymodule.hxx.pb.h"
 #include "../GameServer/inc/messagefactory.h"
 #include "GameClientDlgDlg.h"
+#include "taskmodule.hxx.pb.h"
 CGameClient::CGameClient()
 	:mSelectModel(&mTcpSocket, 1)
 {
@@ -264,4 +265,20 @@ void CGameClient::sendHeartBeatRequest()
 {
 	CHeartBeatRequest tRequest;
 	sendMessage(ID_C2S_REQUEST_HEART_BEAT, &tRequest);
+}
+
+void CGameClient::sendAcceptTaskRequest(int nTaskID)
+{
+	CAcceptTaskRequest tRequest;
+	tRequest.set_taskid(nTaskID);
+
+	sendMessage(ID_C2S_REQUEST_ACCEPT_TASK, &tRequest);
+}
+
+void CGameClient::sendSubmitTaskRequest(int nTaskID)
+{
+	CSubmitTaskRequest tRequest;
+	tRequest.set_taskid(nTaskID);
+	tRequest.set_itemindex(-1);
+	sendMessage(ID_C2S_REQUEST_SUBMIT_TASK, &tRequest);
 }

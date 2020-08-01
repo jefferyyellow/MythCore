@@ -661,3 +661,65 @@ BOOL CTemplateWrite::AddPBData(PBTplTemplate* pTplTemplate, CString& strTempName
 	CREATE_DATA_TO_PB("z装备", CTplEquip, pbTplItemSet, equip);
 	return TRUE;
 }
+
+// 保存模板名字xml
+void CTemplateWrite::SaveTempNameXml(CTemplateManager* pTemplateManager)
+{
+	tinyxml2::XMLDocument tXmldoc;
+	XMLDeclaration* pDeclaration = tXmldoc.NewDeclaration("xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"");
+	tXmldoc.LinkEndChild(pDeclaration);
+
+	XMLElement* pRootElem = tXmldoc.NewElement("template_name");
+	char acBuffer[10240] = { 0 };
+	ASCIIToUTF8("Template", strlen("Template"), acBuffer, sizeof(acBuffer));
+
+	pRootElem->SetAttribute("name", acBuffer);
+
+	tXmldoc.LinkEndChild(pRootElem);
+
+	for (size_t l = 0; l < pTemplateManager->GetOriginalTemp().size(); l++)
+	{
+		COriginalTemplate* pOriginalTemplate = pTemplateManager->GetOriginalTemp()[l];
+		if (NULL == pOriginalTemplate)
+		{
+			// 报错吧
+			return;
+		}
+
+		XMLElement* pOriginalTemplateElem = tXmldoc.NewElement("temp_type");
+
+		string strOrginName = ws2s(pOriginalTemplate->m_strOriginName.GetBuffer());
+		ASCIIToUTF8(strOrginName.c_str(), strOrginName.size(), acBuffer, sizeof(acBuffer));
+
+		pOriginalTemplateElem->SetAttribute("name", acBuffer);
+		pRootElem->LinkEndChild(pOriginalTemplateElem);
+
+
+		for (size_t i = 0; i < pOriginalTemplate->m_vecTemplate.size(); i++)
+		{
+			CTemplateInfo* pTemplateInfo = pOriginalTemplate->m_vecTemplate[i];
+			if (NULL == pTemplateInfo)
+			{
+				// 出错了,提示错误吧
+				return;
+			}
+
+			for (size_t j = 0; j < pTemplateInfo->m_vecTemplateFieldData.size(); j++)
+			{
+				CTemplateFieldData* pTemplateData = pTemplateInfo->m_vecTemplateFieldData[j];
+				if (NULL == pTemplateData)
+				{
+					// 出错了,提示错误吧
+					return;
+				}
+				XMLElement* pTempElem = tXmldoc.NewElement("temp");
+				pTempElem->SetAttribute("id", pTemplateData->m_nTemplateID);
+				ASCIIToUTF8(pTemplateData->m_strTemplateName.c_str(), pTemplateData->m_strTemplateName.size(), acBuffer, sizeof(acBuffer));
+				pTempElem->SetAttribute("name", acBuffer);
+				pOriginalTemplateElem->LinkEndChild(pTempElem);
+			}
+		}
+	}
+
+	tXmldoc.SaveFile("template_name.xml");
+}

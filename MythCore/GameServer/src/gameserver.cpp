@@ -27,6 +27,7 @@ void CGameServer::init()
     mExit = false;
     mLastTime = 0;
 	mpJobManager = NULL;
+	mGameTimeOffset = 0;
 }
 
 /// ³õÊ¼»¯
@@ -53,7 +54,7 @@ bool CGameServer::initAll()
 		return bResult;
 	}
 
-	CTimeManager::Inst()->setCurrTime(time(NULL));
+	CTimeManager::Inst()->setCurrTime(time(NULL) + mGameTimeOffset);
 	srand((unsigned int)CTimeManager::Inst()->getCurrTime());
 	mLastTime = CTimeManager::Inst()->getCurrTime();
 	
@@ -165,7 +166,7 @@ void CGameServer::run()
 	static int i = 0;
 	while (true)
 	{
-		CTimeManager::Inst()->setCurrTime(time(NULL));
+		CTimeManager::Inst()->setCurrTime(time(NULL) + mGameTimeOffset);
 
 		//printf("*dddd*");
 		mpJobManager->run();

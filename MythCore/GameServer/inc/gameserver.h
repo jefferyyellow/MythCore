@@ -49,6 +49,9 @@ public:
 	bool		getExit() const { return mExit; }
 	void		setExit(bool nValue) { mExit = nValue; }
 
+	time_t		GetGameTimeOffset() const { return mGameTimeOffset; }
+	void		SetGameTimeOffset(time_t nValue) { mGameTimeOffset = nValue; }
+
 private:
 #ifdef __DEBUG__
 	CLog*					mDefaultLog;
@@ -62,5 +65,7 @@ private:
 	CAutoResetTimer			mMinuteTimer;
 	/// 上次刷新的时间
 	time_t					mLastTime;
+	/// 游戏服务器偏移时间
+	time_t					mGameTimeOffset;
 };
 #endif

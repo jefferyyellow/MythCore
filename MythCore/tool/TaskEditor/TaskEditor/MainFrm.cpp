@@ -196,7 +196,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	ModifyStyle(0, FWS_PREFIXTITLE);
 	// 加载各种配置文件
 	mTaskTemplate.LoadTaskTemplate("TaskTemplate.xml");
-	mTaskTemplate.LoadItemNameFile("TempName.xml");
+	mTaskTemplate.LoadItemNameFile("template_name.xml");
 	mTaskTemplate.LoadItemNameFile("MapName.xml");
 	mTaskEditorConfig.LoadTaskEditorConfig("TaskEditorConfig.xml");
 	m_wndOptionView.FillTempOptionView();

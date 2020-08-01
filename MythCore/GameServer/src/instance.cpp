@@ -1,41 +1,10 @@
 #include "instance.h"
 
-/// 创建
-void CInstance::create()
+/// 初始化
+void CSingleInstance::init()
 {
 
 }
-
-/// 结束
-void CInstance::end()
-{
-
-}
-
-/// 销毁
-void CInstance::destroy()
-{
-
-}
-
-/// 发奖
-void CInstance::givePrize()
-{
-
-}
-
-/// 玩家进入
-void CInstance::playerEnter(CEntityPlayer* pPlayer)
-{
-
-}
-
-/// 玩家离开
-void CInstance::playerLeave(CEntityPlayer* pPlayer)
-{
-
-}
-
 
 /// 创建
 void CSingleInstance::create()
@@ -61,14 +30,8 @@ void CSingleInstance::givePrize()
 
 }
 
-/// 玩家进入
-void CSingleInstance::playerEnter(CEntityPlayer* pPlayer)
-{
-
-}
-
-/// 玩家离开
-void CSingleInstance::playerLeave(CEntityPlayer* pPlayer)
+/// 初始化
+void CMultipleInstance::init()
 {
 
 }
@@ -97,15 +60,76 @@ void CMultipleInstance::givePrize()
 
 }
 
-/// 玩家进入
-void CMultipleInstance::playerEnter(CEntityPlayer* pPlayer)
+/// 创建
+void CInstance::create()
 {
-
+	switch (mType)
+	{
+		case emInstance_Common:
+		{
+			mSingle.init();
+			mSingle.create();
+			break;
+		}
+		case emInstance_Team:
+		{
+			mMultiple.init();
+			mMultiple.create();
+			break;
+		}
+	}
 }
 
-/// 玩家离开
-void CMultipleInstance::playerLeave(CEntityPlayer* pPlayer)
+/// 结束
+void CInstance::end()
 {
-
+	switch (mType)
+	{
+		case emInstance_Common:
+		{
+			mSingle.end();
+			break;
+		}
+		case emInstance_Team:
+		{
+			mMultiple.end();
+			break;
+		}
+	}
 }
 
+/// 销毁
+void CInstance::destroy()
+{
+	switch (mType)
+	{
+		case emInstance_Common:
+		{
+			mSingle.destroy();
+			break;
+		}
+		case emInstance_Team:
+		{
+			mMultiple.destroy();
+			break;
+		}
+	}
+}
+
+/// 发奖
+void CInstance::givePrize()
+{
+	switch (mType)
+	{
+		case emInstance_Common:
+		{
+			mSingle.givePrize();
+			break;
+		}
+		case emInstance_Team:
+		{
+			mMultiple.givePrize();
+			break;
+		}
+	}
+}

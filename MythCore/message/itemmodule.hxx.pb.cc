@@ -209,7 +209,8 @@ void protobuf_AssignDesc_itemmodule_2ehxx() {
       sizeof(CSellItemResponse),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CSellItemResponse, _internal_metadata_));
   CPurchaseItemRequest_descriptor_ = file->message_type(8);
-  static const int CPurchaseItemRequest_offsets_[2] = {
+  static const int CPurchaseItemRequest_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPurchaseItemRequest, shoptype_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPurchaseItemRequest, index_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CPurchaseItemRequest, num_),
   };
@@ -555,42 +556,43 @@ void protobuf_AddDesc_itemmodule_2ehxx_impl() {
     "UseItemRequest\022\r\n\005Index\030\001 \001(\r\022\016\n\006Number\030"
     "\002 \001(\r\"\"\n\020CUseItemResponse\022\016\n\006Result\030\001 \001("
     "\r\"!\n\020CSellItemRequest\022\r\n\005Index\030\001 \001(\r\"#\n\021"
-    "CSellItemResponse\022\016\n\006Result\030\001 \001(\r\"2\n\024CPu"
-    "rchaseItemRequest\022\r\n\005Index\030\001 \001(\r\022\013\n\003Num\030"
-    "\002 \001(\r\"\'\n\025CPurchaseItemResponse\022\016\n\006Result"
-    "\030\001 \001(\r\"&\n\021CEquipItemRequest\022\021\n\tItemIndex"
-    "\030\001 \001(\r\"7\n\022CEquipItemResponse\022\016\n\006Result\030\001"
-    " \001(\r\022\021\n\tItemIndex\030\002 \001(\r\";\n\023CUnEquipItemR"
-    "equest\022\021\n\tEquipPart\030\001 \001(\r\022\021\n\tItemIndex\030\002"
-    " \001(\r\"L\n\024CUnEquipItemResponse\022\016\n\006Result\030\001"
-    " \001(\r\022\021\n\tEquipPart\030\002 \001(\r\022\021\n\tItemIndex\030\003 \001"
-    "(\r\"N\n\022CEquipChangeNotify\022\020\n\010EntityID\030\001 \001"
-    "(\r\022\021\n\tEquipPart\030\002 \001(\r\022\023\n\013EquipItemID\030\003 \001"
-    "(\r\"$\n\020CPickItemRequest\022\020\n\010EntityID\030\001 \001(\r"
-    "\"#\n\021CPickItemResponse\022\016\n\006Result\030\001 \001(\r\"\'\n"
-    "\023CGetShopInfoRequest\022\020\n\010ShopType\030\001 \001(\r\"i"
-    "\n\013PBShopGoods\022\017\n\007GoodsID\030\001 \001(\r\022\020\n\010GoodsN"
-    "um\030\002 \001(\r\022\021\n\tConsumeID\030\003 \001(\r\022\022\n\nConsumeNu"
-    "m\030\004 \001(\r\022\020\n\010TabIndex\030\005 \001(\r\"C\n\024CGetShopInf"
-    "oResponse\022\016\n\006Result\030\001 \001(\r\022\033\n\005Goods\030\002 \003(\013"
-    "2\014.PBShopGoods*\246\005\n\022ITEM_MODULE_MSG_ID\022\030\n"
-    "\024ID_ITEM_MODULE_ERROR\020\000\022\"\n\035ID_S2C_NOTIYF"
-    "_CURRENCY_UPDATE\020\200\020\022\036\n\031ID_S2C_NOTIYF_INS"
-    "ERT_ITEM\020\202\020\022\"\n\035ID_S2C_NOTIYF_INSERT_ITEM"
-    "_OBJ\020\203\020\022\036\n\031ID_S2C_NOTIYF_REMOVE_ITEM\020\204\020\022"
-    "\034\n\027ID_C2S_REQUEST_USE_ITEM\020\205\020\022\035\n\030ID_S2C_"
-    "RESPONSE_USE_ITEM\020\206\020\022\035\n\030ID_C2S_REQUEST_S"
-    "ELL_ITEM\020\207\020\022\036\n\031ID_S2C_RESPONSE_SELL_ITEM"
-    "\020\210\020\022!\n\034ID_C2S_REQUEST_PURCHASE_ITEM\020\211\020\022\""
-    "\n\035ID_S2C_RESPONSE_PURCHASE_ITEM\020\212\020\022\036\n\031ID"
-    "_C2S_REQUEST_EQUIP_ITEM\020\213\020\022\037\n\032ID_S2C_RES"
-    "PONSE_EQUIP_ITEM\020\214\020\022 \n\033ID_C2S_REQUEST_UN"
-    "EQUIP_ITEM\020\215\020\022!\n\034ID_S2C_RESPONSE_UNEQUIP"
-    "_ITEM\020\216\020\022\037\n\032ID_S2C_NOTIYF_EQUIP_CHANGE\020\217"
-    "\020\022!\n\034ID_C2S_REQUEST_GET_SHOP_INFO\020\220\020\022\"\n\035"
-    "ID_S2C_RESPONSE_GET_SHOP_INFO\020\221\020\022\035\n\030ID_C"
-    "2S_REQUEST_PICK_ITEM\020\222\020\022\036\n\031ID_S2C_RESPON"
-    "SE_PICK_ITEM\020\223\020b\006proto3", 1823);
+    "CSellItemResponse\022\016\n\006Result\030\001 \001(\r\"D\n\024CPu"
+    "rchaseItemRequest\022\020\n\010ShopType\030\001 \001(\r\022\r\n\005I"
+    "ndex\030\002 \001(\r\022\013\n\003Num\030\003 \001(\r\"\'\n\025CPurchaseItem"
+    "Response\022\016\n\006Result\030\001 \001(\r\"&\n\021CEquipItemRe"
+    "quest\022\021\n\tItemIndex\030\001 \001(\r\"7\n\022CEquipItemRe"
+    "sponse\022\016\n\006Result\030\001 \001(\r\022\021\n\tItemIndex\030\002 \001("
+    "\r\";\n\023CUnEquipItemRequest\022\021\n\tEquipPart\030\001 "
+    "\001(\r\022\021\n\tItemIndex\030\002 \001(\r\"L\n\024CUnEquipItemRe"
+    "sponse\022\016\n\006Result\030\001 \001(\r\022\021\n\tEquipPart\030\002 \001("
+    "\r\022\021\n\tItemIndex\030\003 \001(\r\"N\n\022CEquipChangeNoti"
+    "fy\022\020\n\010EntityID\030\001 \001(\r\022\021\n\tEquipPart\030\002 \001(\r\022"
+    "\023\n\013EquipItemID\030\003 \001(\r\"$\n\020CPickItemRequest"
+    "\022\020\n\010EntityID\030\001 \001(\r\"#\n\021CPickItemResponse\022"
+    "\016\n\006Result\030\001 \001(\r\"\'\n\023CGetShopInfoRequest\022\020"
+    "\n\010ShopType\030\001 \001(\r\"i\n\013PBShopGoods\022\017\n\007Goods"
+    "ID\030\001 \001(\r\022\020\n\010GoodsNum\030\002 \001(\r\022\021\n\tConsumeID\030"
+    "\003 \001(\r\022\022\n\nConsumeNum\030\004 \001(\r\022\020\n\010TabIndex\030\005 "
+    "\001(\r\"C\n\024CGetShopInfoResponse\022\016\n\006Result\030\001 "
+    "\001(\r\022\033\n\005Goods\030\002 \003(\0132\014.PBShopGoods*\246\005\n\022ITE"
+    "M_MODULE_MSG_ID\022\030\n\024ID_ITEM_MODULE_ERROR\020"
+    "\000\022\"\n\035ID_S2C_NOTIYF_CURRENCY_UPDATE\020\200\020\022\036\n"
+    "\031ID_S2C_NOTIYF_INSERT_ITEM\020\202\020\022\"\n\035ID_S2C_"
+    "NOTIYF_INSERT_ITEM_OBJ\020\203\020\022\036\n\031ID_S2C_NOTI"
+    "YF_REMOVE_ITEM\020\204\020\022\034\n\027ID_C2S_REQUEST_USE_"
+    "ITEM\020\205\020\022\035\n\030ID_S2C_RESPONSE_USE_ITEM\020\206\020\022\035"
+    "\n\030ID_C2S_REQUEST_SELL_ITEM\020\207\020\022\036\n\031ID_S2C_"
+    "RESPONSE_SELL_ITEM\020\210\020\022!\n\034ID_C2S_REQUEST_"
+    "PURCHASE_ITEM\020\211\020\022\"\n\035ID_S2C_RESPONSE_PURC"
+    "HASE_ITEM\020\212\020\022\036\n\031ID_C2S_REQUEST_EQUIP_ITE"
+    "M\020\213\020\022\037\n\032ID_S2C_RESPONSE_EQUIP_ITEM\020\214\020\022 \n"
+    "\033ID_C2S_REQUEST_UNEQUIP_ITEM\020\215\020\022!\n\034ID_S2"
+    "C_RESPONSE_UNEQUIP_ITEM\020\216\020\022\037\n\032ID_S2C_NOT"
+    "IYF_EQUIP_CHANGE\020\217\020\022!\n\034ID_C2S_REQUEST_GE"
+    "T_SHOP_INFO\020\220\020\022\"\n\035ID_S2C_RESPONSE_GET_SH"
+    "OP_INFO\020\221\020\022\035\n\030ID_C2S_REQUEST_PICK_ITEM\020\222"
+    "\020\022\036\n\031ID_S2C_RESPONSE_PICK_ITEM\020\223\020b\006proto"
+    "3", 1841);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "itemmodule.hxx", &protobuf_RegisterTypes);
   ::protobuf_AddDesc_common_2ehxx();
@@ -3044,6 +3046,7 @@ inline const CSellItemResponse* CSellItemResponse::internal_default_instance() {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int CPurchaseItemRequest::kShopTypeFieldNumber;
 const int CPurchaseItemRequest::kIndexFieldNumber;
 const int CPurchaseItemRequest::kNumFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -3067,8 +3070,8 @@ CPurchaseItemRequest::CPurchaseItemRequest(const CPurchaseItemRequest& from)
 }
 
 void CPurchaseItemRequest::SharedCtor() {
-  ::memset(&index_, 0, reinterpret_cast<char*>(&num_) -
-    reinterpret_cast<char*>(&index_) + sizeof(num_));
+  ::memset(&shoptype_, 0, reinterpret_cast<char*>(&num_) -
+    reinterpret_cast<char*>(&shoptype_) + sizeof(num_));
   _cached_size_ = 0;
 }
 
@@ -3123,7 +3126,7 @@ void CPurchaseItemRequest::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(index_, num_);
+  ZR_(shoptype_, num_);
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -3140,9 +3143,24 @@ bool CPurchaseItemRequest::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 Index = 1;
+      // optional uint32 ShopType = 1;
       case 1: {
         if (tag == 8) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &shoptype_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_Index;
+        break;
+      }
+
+      // optional uint32 Index = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_Index:
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -3150,13 +3168,13 @@ bool CPurchaseItemRequest::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_Num;
+        if (input->ExpectTag(24)) goto parse_Num;
         break;
       }
 
-      // optional uint32 Num = 2;
-      case 2: {
-        if (tag == 16) {
+      // optional uint32 Num = 3;
+      case 3: {
+        if (tag == 24) {
          parse_Num:
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -3193,14 +3211,19 @@ failure:
 void CPurchaseItemRequest::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:CPurchaseItemRequest)
-  // optional uint32 Index = 1;
-  if (this->index() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->index(), output);
+  // optional uint32 ShopType = 1;
+  if (this->shoptype() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->shoptype(), output);
   }
 
-  // optional uint32 Num = 2;
+  // optional uint32 Index = 2;
+  if (this->index() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->index(), output);
+  }
+
+  // optional uint32 Num = 3;
   if (this->num() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->num(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->num(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:CPurchaseItemRequest)
@@ -3210,14 +3233,19 @@ void CPurchaseItemRequest::SerializeWithCachedSizes(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:CPurchaseItemRequest)
-  // optional uint32 Index = 1;
-  if (this->index() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->index(), target);
+  // optional uint32 ShopType = 1;
+  if (this->shoptype() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->shoptype(), target);
   }
 
-  // optional uint32 Num = 2;
+  // optional uint32 Index = 2;
+  if (this->index() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->index(), target);
+  }
+
+  // optional uint32 Num = 3;
   if (this->num() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->num(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->num(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:CPurchaseItemRequest)
@@ -3228,14 +3256,21 @@ size_t CPurchaseItemRequest::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:CPurchaseItemRequest)
   size_t total_size = 0;
 
-  // optional uint32 Index = 1;
+  // optional uint32 ShopType = 1;
+  if (this->shoptype() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->shoptype());
+  }
+
+  // optional uint32 Index = 2;
   if (this->index() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->index());
   }
 
-  // optional uint32 Num = 2;
+  // optional uint32 Num = 3;
   if (this->num() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -3275,6 +3310,9 @@ void CPurchaseItemRequest::MergeFrom(const CPurchaseItemRequest& from) {
 
 void CPurchaseItemRequest::UnsafeMergeFrom(const CPurchaseItemRequest& from) {
   GOOGLE_DCHECK(&from != this);
+  if (from.shoptype() != 0) {
+    set_shoptype(from.shoptype());
+  }
   if (from.index() != 0) {
     set_index(from.index());
   }
@@ -3307,6 +3345,7 @@ void CPurchaseItemRequest::Swap(CPurchaseItemRequest* other) {
   InternalSwap(other);
 }
 void CPurchaseItemRequest::InternalSwap(CPurchaseItemRequest* other) {
+  std::swap(shoptype_, other->shoptype_);
   std::swap(index_, other->index_);
   std::swap(num_, other->num_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
@@ -3324,7 +3363,21 @@ void CPurchaseItemRequest::InternalSwap(CPurchaseItemRequest* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // CPurchaseItemRequest
 
-// optional uint32 Index = 1;
+// optional uint32 ShopType = 1;
+void CPurchaseItemRequest::clear_shoptype() {
+  shoptype_ = 0u;
+}
+::google::protobuf::uint32 CPurchaseItemRequest::shoptype() const {
+  // @@protoc_insertion_point(field_get:CPurchaseItemRequest.ShopType)
+  return shoptype_;
+}
+void CPurchaseItemRequest::set_shoptype(::google::protobuf::uint32 value) {
+  
+  shoptype_ = value;
+  // @@protoc_insertion_point(field_set:CPurchaseItemRequest.ShopType)
+}
+
+// optional uint32 Index = 2;
 void CPurchaseItemRequest::clear_index() {
   index_ = 0u;
 }
@@ -3338,7 +3391,7 @@ void CPurchaseItemRequest::set_index(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:CPurchaseItemRequest.Index)
 }
 
-// optional uint32 Num = 2;
+// optional uint32 Num = 3;
 void CPurchaseItemRequest::clear_num() {
   num_ = 0u;
 }

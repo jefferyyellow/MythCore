@@ -227,7 +227,7 @@ void CDailyActModule::loadActivityConfig(const char* pConfigFile)
 		}
 
 
-		if (!bAlreadyLoad[emActType])
+		if (!bAlreadyLoad[emActType] && NULL != pActivity->getConfigFileName())
 		{
 			bAlreadyLoad[emActType] = true;
 			snprintf(acPathFile[emActType], STR_LENGTH_256 - 1, "%s%s", "gameserverconfig/daily_activity/", pActivity->getConfigFileName());
@@ -365,6 +365,7 @@ void CDailyActModule::checkActivityTime()
 			{
 				case emDailyActStatus_Start:
 				{
+					mActivity[nActivityID]->start();
 					onActivityStart(mTimeList[mTimeListIndex].mID);
 					mActivity[nActivityID]->SetStatus(emDailyActStatus_Start);
 					LOG_INFO("Activity Start : %d", mTimeList[mTimeListIndex].mID);
@@ -372,6 +373,7 @@ void CDailyActModule::checkActivityTime()
 				}
 				case emDailyActStatus_End:
 				{
+					mActivity[nActivityID]->end();
 					onActivityEnd(mTimeList[mTimeListIndex].mID);
 					mActivity[nActivityID]->SetStatus(emDailyActStatus_End);
 					LOG_INFO("Activity End : %d", mTimeList[mTimeListIndex].mID);
@@ -379,6 +381,7 @@ void CDailyActModule::checkActivityTime()
 				}
 				case emDailyActStatus_Notice:
 				{
+					mActivity[nActivityID]->notice();
 					onActivityNotice(mTimeList[mTimeListIndex].mID);
 					break;
 				}

@@ -21,16 +21,10 @@
     <Option Name="0,否"/>
     <Option Name="1,是"/>
   </TextNode>
-  <TextNode Name="副本索引" DesName="InstanceIndex"/>
-  <TextNode Name="接任务触发剧情" DesName="AcceptStoryId"/>
-  <TextNode Name="交任务触发剧情" DesName="SubmitStoryId"/>
-  <TextNode Name="完成任务触发剧情" DesName="CompleteStoryId"/>
   <TextNode Name="是否自动寻路" DesName="AutoPath">
     <Option Name="0,否"/>
     <Option Name="1,是"/>
   </TextNode>
-  <TextNode Name="天书ID" DesName="BookId"/>
-  <TextNode Name="伙伴ID" DesName="ParnterId"/>
   <TextNode Name="推荐等级" DesName="RecommendLevel"/>
   
   <!--条件部分-->

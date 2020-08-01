@@ -419,13 +419,42 @@ void CItemUnit::onPurchaseItemRequest(Message* pMessage)
 {
 	MYTH_ASSERT(NULL != pMessage, return);
 	CPurchaseItemRequest* pPurchaseItemRequest = static_cast<CPurchaseItemRequest*>(pMessage);
-
-	int nIndex = pPurchaseItemRequest->index();
+	EmShopType eShopType = (EmShopType)pPurchaseItemRequest->shoptype();
+	uint nIndex = pPurchaseItemRequest->index();
 	int nNum = pPurchaseItemRequest->num();
 
-	// 建议商店还是走xml方式
+	if (eShopType < emShopType_Common || eShopType >= emShopTypeMax)
+	{
+		return;
+	}
 
+	SHOP_CONFIG_LIST& rShopList = CItemModule::Inst()->getShopList();
+	CShopLevelData* pLevelData = rShopList[eShopType].GetLevelData(mPlayer.getLevel());
+	if (NULL == pLevelData)
+	{
+		return;
+	}
 
+	if (nIndex < 0 || nIndex >= pLevelData->mGoodsList.size())
+	{
+		return;
+	}
+
+	CShopGoods& rGoods = pLevelData->mGoodsList[nIndex];
+	// 货币不足
+	if (hasItem(rGoods.mConsumeID) < rGoods.mConsumeNum)
+	{
+		return;
+	}
+
+	// 背包空间不足
+	if (!checkItemSpace(&rGoods.mGoodsID, &rGoods.mGoodsNum, 1))
+	{
+		return;
+	}
+
+	removeItemByID(rGoods.mConsumeID, rGoods.mConsumeNum);
+	insertItem(rGoods.mGoodsID, rGoods.mGoodsNum);
 	sendPurchaseItemResponse(SUCCESS);
 }
 

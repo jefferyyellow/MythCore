@@ -73,6 +73,9 @@ BEGIN_MESSAGE_MAP(CGameClientDlgDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_EQUIP, &CGameClientDlgDlg::OnBnClickedEquip)
 	ON_BN_CLICKED(IDC_UNEQUIP, &CGameClientDlgDlg::OnBnClickedUnequip)
 	ON_BN_CLICKED(IDC_GET_PLAYER_PROPERTY, &CGameClientDlgDlg::OnBnClickedGetPlayerProperty)
+	ON_BN_CLICKED(IDC_ACCEPT_TASK, &CGameClientDlgDlg::OnBnClickedAcceptTask)
+	ON_BN_CLICKED(IDC_COMPLETE_TASK, &CGameClientDlgDlg::OnBnClickedCompleteTask)
+	ON_BN_CLICKED(IDC_CLEAR_LOG, &CGameClientDlgDlg::OnBnClickedClearLog)
 END_MESSAGE_MAP()
 
 
@@ -277,4 +280,34 @@ void CGameClientDlgDlg::OnBnClickedGetPlayerProperty()
 	// TODO:  在此添加控件通知处理程序代码
 	CGetPlayerPropertyRequest tRequest;
 	mpClient->sendMessage(ID_C2S_REQUEST_GET_PLAYER_PROPERTY, &tRequest);
+}
+
+
+void CGameClientDlgDlg::OnBnClickedAcceptTask()
+{
+	// TODO:  在此添加控件通知处理程序代码
+	CString stBuffer;
+	((CEdit*)GetDlgItem(IDC_ACCEPT_TASK_ID))->GetWindowText(stBuffer);
+	int nTaskID = atoi(stBuffer.GetBuffer());
+
+	mpClient->sendAcceptTaskRequest(nTaskID);
+}
+
+void CGameClientDlgDlg::OnBnClickedCompleteTask()
+{
+	// TODO:  在此添加控件通知处理程序代码
+	CString stBuffer;
+	((CEdit*)GetDlgItem(IDC_COMPLETE_TASK_ID))->GetWindowText(stBuffer);
+	int nTaskID = atoi(stBuffer.GetBuffer());
+
+	mpClient->sendSubmitTaskRequest(nTaskID);
+}
+
+
+void CGameClientDlgDlg::OnBnClickedClearLog()
+{
+	// TODO:  在此添加控件通知处理程序代码
+	mStrLog ="";
+	((CEdit*)GetDlgItem(IDC_LOG))->SetWindowText(mStrLog);
+	UpdateData(TRUE);
 }

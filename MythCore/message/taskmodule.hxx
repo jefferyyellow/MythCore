@@ -17,7 +17,6 @@ enum TASK_MODULE_MSG_ID
 message CAcceptTaskRequest
 {
 		uint32	TaskID				= 1;		// 任务ID
-		uint32	NpcEntityID			= 2;		// NPC实体ID
 }
 
 // 接受任务回应 ID_S2C_RESPONSE_ACCEPT_TASK

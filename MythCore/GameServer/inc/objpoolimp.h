@@ -7,6 +7,7 @@
 #include "itemobject.h"
 #include "loginplayer.h"
 #include "entitytimer.h"
+#include "instance.h"
 #define OBJ_ID_RANGE(ObjType) OBJ_ID_START(ObjType),OBJ_ID_END(ObjType)
 
 
@@ -18,6 +19,7 @@
 #define CAPACITY_ITEM_COMMON		CAPACITY_PLAYER * 200
 #define CAPACITY_ITEM_EQUIP			CAPACITY_PLAYER * 200
 #define CAPACITY_ENTITY_TIMER		200000	// 20万的计时器
+#define CAPACITY_INSTANCE			CAPACITY_PLAYER
 
 class CShareObjPoolImp
 {
@@ -41,6 +43,7 @@ public:
 	typedef CObjManager<CEntityFuncNPC, CAPACITY_ENTITY_FUNC_NPC, 30, 30, OBJ_ID_RANGE(emObjType_Entity_FuncNPC)> FuncNPCEntityPool;
 	typedef CObjManager<CEntityItem, CAPACITY_ENTITY_ITEM, 100, 100, OBJ_ID_RANGE(emObjType_Entity_Item)> ItemEntityPool;
 	typedef CObjManager<CEntityTimer, CAPACITY_ENTITY_TIMER, 1000, 1000, OBJ_ID_RANGE(emObjType_Entity_Timer)> EntityTimerPool;
+	typedef CObjManager<CInstance, CAPACITY_INSTANCE, 100, 100, OBJ_ID_RANGE(emObjType_Instance)> InstancePool;
 
 public:
 	LoginPlayerPool			mLoginPlayerPool;			// 登录玩家池
@@ -48,5 +51,6 @@ public:
 	FuncNPCEntityPool		mFuncNPCEntityPool;			// 功能NPC实体池
 	ItemEntityPool			mItemEntityPool;			// 道具实体池
 	EntityTimerPool			mEntityTimerPool;			// 实体计时器池
+	InstancePool			mInstancePool;				// 副本池
 };
 #endif

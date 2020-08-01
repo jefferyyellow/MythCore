@@ -184,18 +184,21 @@ void CTaskTemplate::LoadItemName(COptionNameItem* pParentTempName, XMLElement* p
 	}
 
 	wchar_t acBuffer[4096] = { 0 };
-	Utf8ToUnicode(pParentNodeElem->Attribute("Name"), acBuffer, sizeof(acBuffer) / 2 - 1);
+
+	Utf8ToUnicode(pParentNodeElem->Attribute("name"), acBuffer, sizeof(acBuffer) / 2 - 1);
 	pParentTempName->mName = acBuffer;
-	CString strName = acBuffer;
-	int nPos = strName.Find(',');
-	if (nPos > 0)
+
+	int nID = pParentNodeElem->IntAttribute("id");
+	if (nID > 0)
 	{
-		CString strNum = strName.Left(nPos);
-		int nNum = _ttoi(strNum);
-		if (nNum > 0)
-		{
-			rHashList[nNum]= strName;
-		}
+		wchar_t acNameBuffer[4096] = { 0 };
+		wsprintf(acNameBuffer, _T("%d,%s"), nID, acBuffer);
+		pParentTempName->mName = acNameBuffer;
+		rHashList[nID] = acNameBuffer;
+	}
+	else
+	{
+		pParentTempName->mName = acBuffer;
 	}
 
 	XMLElement* pElement = pParentNodeElem->FirstChildElement();

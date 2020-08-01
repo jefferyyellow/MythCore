@@ -85,6 +85,11 @@ CObj* CObjPool::allocObj(EmObjType eType)
 			pObj = static_cast<CObj*>(mPoolImp->mEntityTimerPool.allocObj());
 			break;
 		}
+		case emObjType_Instance:
+		{
+			pObj = static_cast<CObj*>(mPoolImp->mInstancePool.allocObj());
+			break;
+		}
 		default:
 			break;
 	}
@@ -135,6 +140,11 @@ CObj* CObjPool::getObj(int nObjID)
 		case emObjType_Entity_Timer:
 		{
 			pObj = static_cast<CObj*>(mPoolImp->mEntityTimerPool.getObj(nObjID));
+			break;
+		}
+		case emObjType_Instance:
+		{
+			pObj = static_cast<CObj*>(mPoolImp->mInstancePool.getObj(nObjID));
 			break;
 		}
 		default:
@@ -196,6 +206,11 @@ void CObjPool::free(int nObjID)
 			mPoolImp->mEntityTimerPool.freeByID(nObjID);
 			break;
 		}
+		case emObjType_Instance:
+		{
+			mPoolImp->mInstancePool.freeByID(nObjID);
+			break;
+		}
 		default:
 			break;
 	}
@@ -247,6 +262,11 @@ void CObjPool::logObjNum()
 		"mEntityTimerPool",
 		mPoolImp->mEntityTimerPool.getObjNum(),
 		mPoolImp->mEntityTimerPool.getMaxNum());
+
+	nLen += snprintf(acBuffer + nLen, nMaxLen - nLen, "%20s\t%6d\t%6d\n",
+		"mInstancePool",
+		mPoolImp->mInstancePool.getObjNum(),
+		mPoolImp->mInstancePool.getMaxNum());
 
 	nLen += snprintf(acBuffer + nLen, nMaxLen - nLen, "************************************************");
 

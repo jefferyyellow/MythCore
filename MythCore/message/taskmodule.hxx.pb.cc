@@ -53,9 +53,8 @@ void protobuf_AssignDesc_taskmodule_2ehxx() {
       "taskmodule.hxx");
   GOOGLE_CHECK(file != NULL);
   CAcceptTaskRequest_descriptor_ = file->message_type(0);
-  static const int CAcceptTaskRequest_offsets_[2] = {
+  static const int CAcceptTaskRequest_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CAcceptTaskRequest, taskid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CAcceptTaskRequest, npcentityid_),
   };
   CAcceptTaskRequest_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -235,24 +234,24 @@ void protobuf_AddDesc_taskmodule_2ehxx_impl() {
 
   protobuf_InitDefaults_taskmodule_2ehxx();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\016taskmodule.hxx\"9\n\022CAcceptTaskRequest\022\016"
-    "\n\006TaskID\030\001 \001(\r\022\023\n\013NpcEntityID\030\002 \001(\r\"5\n\023C"
-    "AcceptTaskResponse\022\016\n\006Result\030\001 \001(\r\022\016\n\006Ta"
-    "skID\030\002 \001(\r\"7\n\022CSubmitTaskRequest\022\016\n\006Task"
-    "ID\030\001 \001(\r\022\021\n\tItemIndex\030\002 \001(\r\"5\n\023CSubmitTa"
-    "skResponse\022\016\n\006Result\030\001 \001(\r\022\016\n\006TaskID\030\002 \001"
-    "(\r\"#\n\021CAbortTaskRequest\022\016\n\006TaskID\030\001 \001(\r\""
-    "4\n\022CAbortTaskResponse\022\016\n\006Result\030\001 \001(\r\022\016\n"
-    "\006TaskID\030\002 \001(\r\"L\n\030CUpdateTaskProcessNotif"
-    "y\022\016\n\006TaskID\030\001 \001(\r\022\021\n\tCondIndex\030\002 \001(\r\022\r\n\005"
-    "Param\030\003 \001(\r*\235\002\n\022TASK_MODULE_MSG_ID\022\030\n\024ID"
-    "_TASK_MODULE_ERROR\020\000\022\037\n\032ID_C2S_REQUEST_A"
-    "CCEPT_TASK\020\200 \022 \n\033ID_S2C_RESPONSE_ACCEPT_"
-    "TASK\020\201 \022\037\n\032ID_C2S_REQUEST_SUBMIT_TASK\020\202 "
-    "\022 \n\033ID_S2C_RESPONSE_SUBMIT_TASK\020\203 \022\036\n\031ID"
-    "_C2S_REQUEST_ABORT_TASK\020\204 \022\037\n\032ID_S2C_RES"
-    "PONSE_ABORT_TASK\020\205 \022&\n!ID_S2C_NOTIFY_UPD"
-    "ATE_TASK_PROCESS\020\206 b\006proto3", 707);
+    "\n\016taskmodule.hxx\"$\n\022CAcceptTaskRequest\022\016"
+    "\n\006TaskID\030\001 \001(\r\"5\n\023CAcceptTaskResponse\022\016\n"
+    "\006Result\030\001 \001(\r\022\016\n\006TaskID\030\002 \001(\r\"7\n\022CSubmit"
+    "TaskRequest\022\016\n\006TaskID\030\001 \001(\r\022\021\n\tItemIndex"
+    "\030\002 \001(\r\"5\n\023CSubmitTaskResponse\022\016\n\006Result\030"
+    "\001 \001(\r\022\016\n\006TaskID\030\002 \001(\r\"#\n\021CAbortTaskReque"
+    "st\022\016\n\006TaskID\030\001 \001(\r\"4\n\022CAbortTaskResponse"
+    "\022\016\n\006Result\030\001 \001(\r\022\016\n\006TaskID\030\002 \001(\r\"L\n\030CUpd"
+    "ateTaskProcessNotify\022\016\n\006TaskID\030\001 \001(\r\022\021\n\t"
+    "CondIndex\030\002 \001(\r\022\r\n\005Param\030\003 \001(\r*\235\002\n\022TASK_"
+    "MODULE_MSG_ID\022\030\n\024ID_TASK_MODULE_ERROR\020\000\022"
+    "\037\n\032ID_C2S_REQUEST_ACCEPT_TASK\020\200 \022 \n\033ID_S"
+    "2C_RESPONSE_ACCEPT_TASK\020\201 \022\037\n\032ID_C2S_REQ"
+    "UEST_SUBMIT_TASK\020\202 \022 \n\033ID_S2C_RESPONSE_S"
+    "UBMIT_TASK\020\203 \022\036\n\031ID_C2S_REQUEST_ABORT_TA"
+    "SK\020\204 \022\037\n\032ID_S2C_RESPONSE_ABORT_TASK\020\205 \022&"
+    "\n!ID_S2C_NOTIFY_UPDATE_TASK_PROCESS\020\206 b\006"
+    "proto3", 686);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "taskmodule.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_taskmodule_2ehxx);
@@ -304,7 +303,6 @@ static void MergeFromFail(int line) {
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int CAcceptTaskRequest::kTaskIDFieldNumber;
-const int CAcceptTaskRequest::kNpcEntityIDFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 CAcceptTaskRequest::CAcceptTaskRequest()
@@ -326,8 +324,7 @@ CAcceptTaskRequest::CAcceptTaskRequest(const CAcceptTaskRequest& from)
 }
 
 void CAcceptTaskRequest::SharedCtor() {
-  ::memset(&taskid_, 0, reinterpret_cast<char*>(&npcentityid_) -
-    reinterpret_cast<char*>(&taskid_) + sizeof(npcentityid_));
+  taskid_ = 0u;
   _cached_size_ = 0;
 }
 
@@ -366,27 +363,7 @@ CAcceptTaskRequest* CAcceptTaskRequest::New(::google::protobuf::Arena* arena) co
 
 void CAcceptTaskRequest::Clear() {
 // @@protoc_insertion_point(message_clear_start:CAcceptTaskRequest)
-#if defined(__clang__)
-#define ZR_HELPER_(f) \
-  _Pragma("clang diagnostic push") \
-  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
-  __builtin_offsetof(CAcceptTaskRequest, f) \
-  _Pragma("clang diagnostic pop")
-#else
-#define ZR_HELPER_(f) reinterpret_cast<char*>(\
-  &reinterpret_cast<CAcceptTaskRequest*>(16)->f)
-#endif
-
-#define ZR_(first, last) do {\
-  ::memset(&(first), 0,\
-           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
-} while (0)
-
-  ZR_(taskid_, npcentityid_);
-
-#undef ZR_HELPER_
-#undef ZR_
-
+  taskid_ = 0u;
 }
 
 bool CAcceptTaskRequest::MergePartialFromCodedStream(
@@ -406,21 +383,6 @@ bool CAcceptTaskRequest::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &taskid_)));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(16)) goto parse_NpcEntityID;
-        break;
-      }
-
-      // optional uint32 NpcEntityID = 2;
-      case 2: {
-        if (tag == 16) {
-         parse_NpcEntityID:
-
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &npcentityid_)));
         } else {
           goto handle_unusual;
         }
@@ -457,11 +419,6 @@ void CAcceptTaskRequest::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->taskid(), output);
   }
 
-  // optional uint32 NpcEntityID = 2;
-  if (this->npcentityid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->npcentityid(), output);
-  }
-
   // @@protoc_insertion_point(serialize_end:CAcceptTaskRequest)
 }
 
@@ -472,11 +429,6 @@ void CAcceptTaskRequest::SerializeWithCachedSizes(
   // optional uint32 TaskID = 1;
   if (this->taskid() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->taskid(), target);
-  }
-
-  // optional uint32 NpcEntityID = 2;
-  if (this->npcentityid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->npcentityid(), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:CAcceptTaskRequest)
@@ -492,13 +444,6 @@ size_t CAcceptTaskRequest::ByteSizeLong() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->taskid());
-  }
-
-  // optional uint32 NpcEntityID = 2;
-  if (this->npcentityid() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->npcentityid());
   }
 
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -537,9 +482,6 @@ void CAcceptTaskRequest::UnsafeMergeFrom(const CAcceptTaskRequest& from) {
   if (from.taskid() != 0) {
     set_taskid(from.taskid());
   }
-  if (from.npcentityid() != 0) {
-    set_npcentityid(from.npcentityid());
-  }
 }
 
 void CAcceptTaskRequest::CopyFrom(const ::google::protobuf::Message& from) {
@@ -567,7 +509,6 @@ void CAcceptTaskRequest::Swap(CAcceptTaskRequest* other) {
 }
 void CAcceptTaskRequest::InternalSwap(CAcceptTaskRequest* other) {
   std::swap(taskid_, other->taskid_);
-  std::swap(npcentityid_, other->npcentityid_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -595,20 +536,6 @@ void CAcceptTaskRequest::set_taskid(::google::protobuf::uint32 value) {
   
   taskid_ = value;
   // @@protoc_insertion_point(field_set:CAcceptTaskRequest.TaskID)
-}
-
-// optional uint32 NpcEntityID = 2;
-void CAcceptTaskRequest::clear_npcentityid() {
-  npcentityid_ = 0u;
-}
-::google::protobuf::uint32 CAcceptTaskRequest::npcentityid() const {
-  // @@protoc_insertion_point(field_get:CAcceptTaskRequest.NpcEntityID)
-  return npcentityid_;
-}
-void CAcceptTaskRequest::set_npcentityid(::google::protobuf::uint32 value) {
-  
-  npcentityid_ = value;
-  // @@protoc_insertion_point(field_set:CAcceptTaskRequest.NpcEntityID)
 }
 
 inline const CAcceptTaskRequest* CAcceptTaskRequest::internal_default_instance() {

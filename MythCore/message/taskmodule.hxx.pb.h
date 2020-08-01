@@ -142,18 +142,11 @@ class CAcceptTaskRequest : public ::google::protobuf::Message /* @@protoc_insert
   ::google::protobuf::uint32 taskid() const;
   void set_taskid(::google::protobuf::uint32 value);
 
-  // optional uint32 NpcEntityID = 2;
-  void clear_npcentityid();
-  static const int kNpcEntityIDFieldNumber = 2;
-  ::google::protobuf::uint32 npcentityid() const;
-  void set_npcentityid(::google::protobuf::uint32 value);
-
   // @@protoc_insertion_point(class_scope:CAcceptTaskRequest)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::uint32 taskid_;
-  ::google::protobuf::uint32 npcentityid_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_taskmodule_2ehxx_impl();
   friend void  protobuf_AddDesc_taskmodule_2ehxx_impl();
@@ -742,20 +735,6 @@ inline void CAcceptTaskRequest::set_taskid(::google::protobuf::uint32 value) {
   
   taskid_ = value;
   // @@protoc_insertion_point(field_set:CAcceptTaskRequest.TaskID)
-}
-
-// optional uint32 NpcEntityID = 2;
-inline void CAcceptTaskRequest::clear_npcentityid() {
-  npcentityid_ = 0u;
-}
-inline ::google::protobuf::uint32 CAcceptTaskRequest::npcentityid() const {
-  // @@protoc_insertion_point(field_get:CAcceptTaskRequest.NpcEntityID)
-  return npcentityid_;
-}
-inline void CAcceptTaskRequest::set_npcentityid(::google::protobuf::uint32 value) {
-  
-  npcentityid_ = value;
-  // @@protoc_insertion_point(field_set:CAcceptTaskRequest.NpcEntityID)
 }
 
 inline const CAcceptTaskRequest* CAcceptTaskRequest::internal_default_instance() {
