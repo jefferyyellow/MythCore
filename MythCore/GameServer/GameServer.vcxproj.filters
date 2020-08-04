@@ -312,6 +312,9 @@
     <ClCompile Include="src\shopconfig.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\timemanager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -657,6 +660,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="inc\shopconfig.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\timemanager.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -30,6 +30,10 @@ public:
 	void InitCommand();
 
 public:
+	/// 广播命令影响和结果
+	static void	broadcastCommandResult(CEntityPlayer* pPlayer, char* pResult);
+	/// 通知玩家命令影响和结果
+	static void	sendCommandResult(CEntityPlayer* pPlayer, char* pResult);
 	/// 执行GM命令
 	void		excuteCommand(std::string strCommandName, StrTokens& tTokens, CEntityPlayer* pPlayer);
 
@@ -46,6 +50,8 @@ private:
 	COMMAND_HANDLER_DECL(clearbag);
 	/// 设置玩家等级命令
 	COMMAND_HANDLER_DECL(setlevel);
+	/// 设置时间
+	COMMAND_HANDLER_DECL(settime);
 
 private:
 	/// 得到命令的帮助字符串

@@ -172,5 +172,6 @@ private:
 	time_t					mLastStatisticsTime;		// 写统计信息时间
 	CTcpServerStatistics	mServerStatistics;			// 统计信息
 	time_t					mLastTime;
+	time_t					mCurrTime;					// 当前时间
 };
 #endif

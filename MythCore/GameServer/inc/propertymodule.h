@@ -4,7 +4,7 @@
 #include "logicmodule.h"
 #include "gmcommandmanager.h"
 #include "messagefactory.h"
-#include "timemanager.h"
+#include "timeutility.h"
 
 using namespace Myth;
 class CEntityPlayer;

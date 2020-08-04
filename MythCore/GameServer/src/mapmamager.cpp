@@ -9,7 +9,7 @@
 #include "mapconfigmanager.h"
 #include "template.h"
 #include "entitycreator.h"
-
+#include "timemanager.h"
 CMapCell::ENTITY_ALLOC CMapCell::mEntityAlloc;
 void CMapCell::pushEntity(int nObjID)
 {

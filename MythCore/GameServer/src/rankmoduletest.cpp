@@ -2,7 +2,6 @@
 #include "entityplayer.h"
 #include "rankmodule.h"
 #include "timemanager.h"
-
 TEST(ItemBox, updateRoleSame)
 {
 	CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->allocObj(emObjType_Entity_Player));

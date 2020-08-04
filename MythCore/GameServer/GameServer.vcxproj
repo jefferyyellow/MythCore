@@ -138,6 +138,7 @@
     <ClCompile Include="src\serveractivity.cpp" />
     <ClCompile Include="src\serveractivityunit.cpp" />
     <ClCompile Include="src\serveractmodule.cpp" />
+    <ClCompile Include="src\timemanager.cpp" />
     <ClCompile Include="src\serverutility.cpp" />
     <ClCompile Include="src\shopconfig.cpp" />
     <ClCompile Include="src\skillmodule.cpp" />
@@ -249,6 +250,7 @@
     <ClInclude Include="inc\serveractivityunit.h" />
     <ClInclude Include="inc\serveractmodule.h" />
     <ClInclude Include="inc\servercommon.h" />
+    <ClInclude Include="inc\timemanager.h" />
     <ClInclude Include="inc\serverutility.h" />
     <ClInclude Include="inc\sharelist.h" />
     <ClInclude Include="inc\shopconfig.h" />

@@ -3,7 +3,7 @@
 #include "singleton.h"
 #include "messagefactory.h"
 #include "logicmodule.h"
-#include "timemanager.h"
+#include "timeutility.h"
 
 class CEntity;
 class CEntityPlayer;

@@ -7,6 +7,7 @@
 #include "dbmodule.hxx.pb.h"
 #include "errcode.h"
 #include "scenejob.h"
+#include "timemanager.h"
 CDBJob::CDBJob()
 {
 	init();

@@ -24,6 +24,7 @@
 #include "entitytimer.h"
 #include "curlhandle.h"
 #include "platjob.h"
+#include "timemanager.h"
 CSceneJob::CSceneJob()
 :mMinuteTimer(SECONDS_PER_MIN)
 {
@@ -139,6 +140,15 @@ void CSceneJob::doRun()
 		if(mMinuteTimer.elapse((int)(tTimeNow - mLastTime)))
 		{
 			CObjPool::Inst()->logObjNum();
+
+
+			char acBuffer[STR_LENGTH_128] = { 0 };
+#ifdef MYTH_OS_UNIX
+			asctime_r(&mTmNow, acBuffer);
+#else
+			asctime_s(acBuffer, sizeof(acBuffer) - 1, &mTmNow);
+#endif
+			printf("%s\n",acBuffer);
 		}
 
 		int nDay = mTmNow.tm_yday;

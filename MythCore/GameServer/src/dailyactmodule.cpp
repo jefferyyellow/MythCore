@@ -1,8 +1,8 @@
 #include "dailyactmodule.h"
 #include "scenejob.h"
 #include "locallogjob.h"
-#include "timemanager.h"
 #include "dailyactmodule.hxx.pb.h"
+#include "timemanager.h"
 CDailyActModule::CDailyActModule()
 {
 	init();
@@ -64,17 +64,10 @@ void CDailyActModule::onDestroyPlayer(CEntityPlayer* pPlayer)
 
 void CDailyActModule::onTimer(unsigned int nTickOffset)
 {
-	// 没秒检测一下是否还是同一分钟
+	// 是不是同一秒钟
 	if (mLastTime != CTimeManager::Inst()->getCurrTime())
 	{
-		tm& tmNow = CSceneJob::Inst()->getTmNow();
-		// 每分钟检查一次
-		if (tmNow.tm_min != mLastMinute)
-		{
-			checkActivityTime();
-			mLastMinute = tmNow.tm_min;
-		}
-
+		checkActivityTime();
 		mLastTime = CTimeManager::Inst()->getCurrTime();
 	}
 }
@@ -195,6 +188,8 @@ void CDailyActModule::loadActivityConfig(const char* pConfigFile)
 			LOG_ERROR("create daily activity failure, Type: %d, ID: %d", emActType, nActivityID);
 			continue;
 		}
+
+		mActivity[nActivityID] = pActivity;
 		pActivity->SetStatus(emDailyActStatus_None);
 		pActivity->mID = nActivityID;
 		pActivity->mType = emActType;
@@ -290,6 +285,7 @@ CDailyActivity* CDailyActModule::createDailyActivity(EmDailyActType eType)
 	switch (eType)
 	{
 		case emDailyActType_XXX:
+			pActivity = new CDailyActivity;
 			break;
 		default:
 			break;
@@ -308,7 +304,7 @@ void CDailyActModule::checkPassedActivity()
 			break;
 		}
 
-		// 只处理活动开始
+		// 只处理活动开始,并且对其对应的结束时间进行校验
 		if (mTimeList[mTimeListIndex].mStatus != emDailyActStatus_Start)
 		{
 			continue;
@@ -337,9 +333,7 @@ void CDailyActModule::checkPassedActivity()
 			mActivity[nActivityID]->SetStatus(emDailyActStatus_End);
 			continue;
 		}
-
 		onActivityStart(nActivityID);
-		mActivity[nActivityID]->SetStatus(emDailyActStatus_Start);
 	}
 
 }
@@ -365,23 +359,18 @@ void CDailyActModule::checkActivityTime()
 			{
 				case emDailyActStatus_Start:
 				{
-					mActivity[nActivityID]->start();
 					onActivityStart(mTimeList[mTimeListIndex].mID);
-					mActivity[nActivityID]->SetStatus(emDailyActStatus_Start);
 					LOG_INFO("Activity Start : %d", mTimeList[mTimeListIndex].mID);
 					break;
 				}
 				case emDailyActStatus_End:
 				{
-					mActivity[nActivityID]->end();
 					onActivityEnd(mTimeList[mTimeListIndex].mID);
-					mActivity[nActivityID]->SetStatus(emDailyActStatus_End);
 					LOG_INFO("Activity End : %d", mTimeList[mTimeListIndex].mID);
 					break;
 				}
 				case emDailyActStatus_Notice:
 				{
-					mActivity[nActivityID]->notice();
 					onActivityNotice(mTimeList[mTimeListIndex].mID);
 					break;
 				}
@@ -390,8 +379,6 @@ void CDailyActModule::checkActivityTime()
 					break;
 				}
 			}
-
-			++ mTimeListIndex;
 		}
 		else
 		{
@@ -413,17 +400,48 @@ bool CDailyActModule::checkTimePassed(int nActTime, tm& rTm)
 
 void CDailyActModule::onActivityStart(int nActivityID)
 {
+	if (nActivityID <= 0 || nActivityID >= MAX_DAILY_ACT_ID)
+	{
+		return;
+	}
+	if (NULL == mActivity[nActivityID])
+	{
+		return;
+	}
 
+	mActivity[nActivityID]->start();
+	mActivity[nActivityID]->SetStatus(emDailyActStatus_Start);
 	sendActivityStatusNotify(nActivityID, emDailyActStatus_Start);
 }
 
 void CDailyActModule::onActivityEnd(int nActivityID)
 {
+	if (nActivityID <= 0 || nActivityID >= MAX_DAILY_ACT_ID)
+	{
+		return;
+	}
+	if (NULL == mActivity[nActivityID])
+	{
+		return;
+	}
+
+	mActivity[nActivityID]->end();
+	mActivity[nActivityID]->SetStatus(emDailyActStatus_End);
 	sendActivityStatusNotify(nActivityID, emDailyActStatus_End);
 }
 
 void CDailyActModule::onActivityNotice(int nActivityID)
 {
+	if (nActivityID <= 0 || nActivityID >= MAX_DAILY_ACT_ID)
+	{
+		return;
+	}
+	if (NULL == mActivity[nActivityID])
+	{
+		return;
+	}
+
+	mActivity[nActivityID]->notice();
 	sendActivityStatusNotify(nActivityID, emDailyActStatus_Notice);
 }
 

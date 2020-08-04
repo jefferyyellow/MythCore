@@ -2,11 +2,11 @@
 #include "serveractivity.h"
 #include "locallogjob.h"
 #include "serverutility.h"
-#include "timemanager.h"
 #include "serveractivityunit.h"
 #include "entityplayer.h"
 #include "scenejob.h"
 #include "serveractmodule.hxx.pb.h"
+#include "timemanager.h"
 CServerActModule::CServerActModule()
 {
 	mServerStartTime = unixTimeStamp("2018-2-17 00:00:00");
@@ -90,7 +90,7 @@ void CServerActModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMes
 	{
 		case ID_C2S_REQUEST_GET_SERVER_ACT:
 		{
-				
+			
 			break;
 		}
 	}

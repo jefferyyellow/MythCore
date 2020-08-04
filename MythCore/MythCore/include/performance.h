@@ -1,7 +1,7 @@
 #ifndef __PERFORMANCE_H__
 #define __PERFORMANCE_H__
 #include "commontype.h"
-#include "timemanager.h"
+#include "timeutility.h"
 #include "singleton.h"
 
 namespace Myth

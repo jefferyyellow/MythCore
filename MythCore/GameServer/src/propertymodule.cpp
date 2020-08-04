@@ -10,6 +10,7 @@
 #include "dbmodule.hxx.pb.h"
 #include "entitycreator.h"
 #include "objpoolimp.h"
+#include "timemanager.h"
 CPropertyModule::CPropertyModule()
 :mSavePlayerTimer(1000)
 {

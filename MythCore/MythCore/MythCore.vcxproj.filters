@@ -48,9 +48,6 @@
     <ClCompile Include="src\fileutility.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\timemanager.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\performance.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -103,6 +100,9 @@
       <Filter>头文件\network</Filter>
     </ClCompile>
     <ClCompile Include="src\crc32.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\timeutility.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -164,9 +164,6 @@
     <ClInclude Include="include\log.h">
       <Filter>头文件\log</Filter>
     </ClInclude>
-    <ClInclude Include="include\timemanager.h">
-      <Filter>头文件\time</Filter>
-    </ClInclude>
     <ClInclude Include="include\performance.h">
       <Filter>头文件\time</Filter>
     </ClInclude>
@@ -202,6 +199,9 @@
     </ClInclude>
     <ClInclude Include="include\crc32.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\timeutility.h">
+      <Filter>头文件\time</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

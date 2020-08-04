@@ -1,8 +1,8 @@
 #include "rankmodule.h"
-#include "timemanager.h"
 #include "entityplayer.h"
 #include "rankmodule.hxx.pb.h"
 #include "scenejob.h"
+#include "timemanager.h"
 /*
 	for (int i = 0; i < 1000; ++ i)
 	{

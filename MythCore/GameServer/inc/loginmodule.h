@@ -5,7 +5,7 @@
 #include "servercommon.h"
 #include "logintype.h"
 #include "logicmodule.h"
-#include "timemanager.h"
+#include "timeutility.h"
 #include <map>
 
 using namespace Myth;

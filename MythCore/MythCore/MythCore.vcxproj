@@ -104,7 +104,7 @@
     <ClCompile Include="src\tcpsocket.cpp" />
     <ClCompile Include="src\linuxthread.cpp" />
     <ClCompile Include="src\threadpool.cpp" />
-    <ClCompile Include="src\timemanager.cpp" />
+    <ClCompile Include="src\timeutility.cpp" />
     <ClCompile Include="src\winthread.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -138,7 +138,7 @@
     <ClInclude Include="include\tcpsocket.h" />
     <ClInclude Include="include\threadevent.h" />
     <ClInclude Include="include\threadpool.h" />
-    <ClInclude Include="include\timemanager.h" />
+    <ClInclude Include="include\timeutility.h" />
     <ClInclude Include="include\winthread.h" />
   </ItemGroup>
   <ItemGroup>

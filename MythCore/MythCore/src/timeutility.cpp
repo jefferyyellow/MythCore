@@ -1,4 +1,4 @@
-#include "timemanager.h"
+#include "timeutility.h"
 #include <time.h>
 
 namespace Myth
@@ -35,7 +35,7 @@ namespace Myth
 	sint64 CClockTime::getInterval()
 	{
 	#ifdef MYTH_OS_WINDOWS
-		return (mEndTime - mStartTime) * 1000000 / CTimeManager::Inst()->GetQueryPerformanceFrequency();
+		return (mEndTime - mStartTime) * 1000000 / CTimeUtility::GetQueryPerformanceFrequency();
 	#else
 		return (mEndTime - mStartTime)	;
 	#endif
@@ -57,8 +57,10 @@ namespace Myth
 		return mDeviation;
 	}
 
-
-	int	CTimeManager::Init()
+#ifdef MYTH_OS_WINDOWS
+	sint64 CTimeUtility::mQueryPerformanceFrequency = 0;
+#endif
+	int	CTimeUtility::init()
 	{
 	#ifdef MYTH_OS_WINDOWS
 		LARGE_INTEGER lFrequency;
@@ -72,13 +74,13 @@ namespace Myth
 		return 0;
 	}
 
-	void CTimeManager::Finial()
+	void CTimeUtility::finial()
 	{
 
 	}
 
 	/// get the time in milliseconds.
-	sint64 CTimeManager::GetMSTime()
+	sint64 CTimeUtility::GetMSTime()
 	{
 	#ifdef MYTH_OS_WINDOWS
 		LARGE_INTEGER tCounter;
@@ -98,7 +100,7 @@ namespace Myth
 	}
 
 	/// get the time in microsecond
-	sint64 CTimeManager::GetUSTime()
+	sint64 CTimeUtility::GetUSTime()
 	{
 	#ifdef MYTH_OS_WINDOWS
 		LARGE_INTEGER tCounter;
@@ -123,7 +125,7 @@ namespace Myth
 		*	forth to unix time (aka epoch)
 		*	the seconds different from (01-01-1970 0:0:0 UTC) - (01-01-1601 0:0:0 UTC)
 		*/
-	uint64 CTimeManager::GetWindowsToUnixBaseTimeOffset()
+	uint64 CTimeUtility::GetWindowsToUnixBaseTimeOffset()
 	{
 	#ifdef MYTH_OS_WINDOWS
 		// compute the offset to convert windows base time into unix time (aka epoch)

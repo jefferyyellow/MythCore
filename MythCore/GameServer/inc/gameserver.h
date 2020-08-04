@@ -3,7 +3,7 @@
 
 #include "log.h"
 #include "singleton.h"
-#include "timemanager.h"
+#include "timeutility.h"
 using namespace Myth;
 
 class CJobManager;

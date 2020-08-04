@@ -4,6 +4,7 @@
 #include "locallogjob.h"
 #include "GameLogicConfig.h"
 #include "propertymodule.h"
+#include "timemanager.h"
 /// Íæ¼ÒĞÄÌøÇëÇó
 void CTimeUnit::onHeartBeatRequest(Message* pMessage)
 {

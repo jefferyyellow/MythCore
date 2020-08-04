@@ -3,7 +3,6 @@
 #define PERF_MIN_TIME		1000000	// Perf的时间单位是us，1000000us = 1s
 #include <map>
 #include "singleton.h"
-#include "timemanager.h"
 #include "simplelock.h"
 using namespace Myth;
 

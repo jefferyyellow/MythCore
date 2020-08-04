@@ -1,5 +1,4 @@
 #include "logmanager.h"
-#include "timemanager.h"
 #include <stdio.h>
 #ifdef MYTH_OS_UNIX
 #include <time.h>

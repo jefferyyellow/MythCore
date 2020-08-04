@@ -107,7 +107,7 @@ void CChatModule::onChatRequest(CEntityPlayer* pPlayer, Message* pMessage)
 	{
 		case emChatChannel_World:
 		{
-			CSceneJob::Inst()->send2AllPlayer(ID_S2C_NOTIFY_CHAT, pMessage);
+			CSceneJob::Inst()->send2AllPlayer(ID_S2C_NOTIFY_CHAT, &tChatNotify);
 			break;
 		}
 		case emChatChannel_Team:

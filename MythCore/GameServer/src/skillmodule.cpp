@@ -4,6 +4,7 @@
 #include "skillunit.h"
 #include "entityplayer.h"
 #include "gameserver.h"
+#include "timemanager.h"
 CSkillModule::CSkillModule()
 {
 

@@ -3,6 +3,7 @@
 #include "internalmsgpool.h"
 #include "jobmanager.h"
 #include "scenejob.h"
+#include "timemanager.h"
 void LogLocalLog(EmLogType eLogType, const char* pFile, int nLine, const char* pFunction, const char* pFormat, ...)
 {
 	CIMLocalLogRequest* pLocalLogRequest = static_cast<CIMLocalLogRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_LOCAL_LOG));

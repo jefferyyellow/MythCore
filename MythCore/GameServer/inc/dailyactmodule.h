@@ -21,7 +21,6 @@ private:
 	{
         memset(mActivity, 0, sizeof(mActivity));
         mTimeListIndex = 0;
-        mLastMinute = 0;
         mLastTime = 0;
 	}
 	
@@ -105,9 +104,6 @@ public:
     unsigned int getTimeListIndex(){ return mTimeListIndex;}
     void setTimeListIndex(unsigned int value){ mTimeListIndex = value;}
 
-    int getLastMinute(){ return mLastMinute;}
-    void setLastMinute(int value){ mLastMinute = value;}
-
     time_t getLastTime(){ return mLastTime;}
     void setLastTime(time_t value){ mLastTime = value;}
 	/// autocode,don't edit !!!
@@ -117,8 +113,6 @@ private:
 	DAILY_ACT_TIME_LIST	mTimeList;
 	/// 当前已经处理到的时间列表索引
 	unsigned int		mTimeListIndex;
-	/// 每分钟检测一下
-	int					mLastMinute;
 	/// 每秒检测一下
 	time_t				mLastTime;
 };

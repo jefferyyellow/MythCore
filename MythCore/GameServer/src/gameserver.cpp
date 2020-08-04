@@ -6,13 +6,13 @@
 #include "internalmsgpool.h"
 #include "gameserverconfig.h"
 #include "objpool.h"
-#include "timemanager.h"
 #include "template.h"
 #include "dirtyword.h"
 #include "perfmanager.h"
 #include "locallogjob.h"
 #include "jobmanager.h"
 #include "GameLogicConfig.h"
+#include "timemanager.h"
 CGameServer::CGameServer()
 	:mMinuteTimer(SECONDS_PER_MIN)
 {

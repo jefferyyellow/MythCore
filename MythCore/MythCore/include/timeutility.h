@@ -1,5 +1,5 @@
-#ifndef __TIMEMANAGER_H__
-#define __TIMEMANAGER_H__
+#ifndef __TIMEUTILITY_H__
+#define __TIMEUTILITY_H__
 #include "commontype.h"
 #include "singleton.h"
 #include "logmanager.h"
@@ -107,32 +107,21 @@ namespace Myth
 		time_t mMaxTime;			// 最大的时间(毫秒)
 	};
 
-	class CTimeManager : public CSingleton<CTimeManager>
+	class CTimeUtility
 	{
-		friend class CSingleton < CTimeManager > ;
-	private:
-		CTimeManager()
-		{
-			Init();
-		}
-		~CTimeManager()
-		{
-			Finial();
-		}
-
 	public:
-		int		Init();
-		void	Finial();
+		static	int	init();
+		static	void finial();
 
 	public:
 	#ifdef MYTH_OS_WINDOWS
-		sint64	GetQueryPerformanceFrequency(){return mQueryPerformanceFrequency;}
+		static sint64	GetQueryPerformanceFrequency(){return mQueryPerformanceFrequency;}
 	#endif
 	public:
 		/// get the time in milliseconds.
-		sint64	GetMSTime();
+		static sint64	GetMSTime();
 		/// get the time in microsecond
-		sint64	GetUSTime();
+		static sint64	GetUSTime();
 		/** Return the offset in 10th of micro sec between the windows base time (
 		 *	01-01-1601 0:0:0 UTC) and the unix base time (01-01-1970 0:0:0 UTC).
 		 *	This value is used to convert windows system and file time back and
@@ -140,16 +129,11 @@ namespace Myth
 		 */
 		static uint64 GetWindowsToUnixBaseTimeOffset();
 
-		inline time_t	getCurrTime(){ return mCurrTime; }
-		void			setCurrTime(time_t tTime){mCurrTime = tTime;}
-
 	private:
 		/// cache the time from time(),no need call function time() when we want get the second from 19700101 00:00:00
 	#ifdef MYTH_OS_WINDOWS
-		sint64 mQueryPerformanceFrequency;
+		static sint64 mQueryPerformanceFrequency;
 	#endif
-		/// 当前的时间，多线程的情况下可能出现脏读，对时间要求很高的话不要用这个
-		time_t					mCurrTime;
 	};
 
 }

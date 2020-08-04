@@ -6,6 +6,31 @@
 #include "entityplayer.h"
 #include "scenejob.h"
 #include "itemmodule.hxx.pb.h"
+#include "gameserver.h"
+#include "chatmodule.hxx.pb.h"
+#include "chatmodule.h"
+/// 广播命令影响和结果
+void CGMCommandManager::broadcastCommandResult(CEntityPlayer* pPlayer, char* pResult)
+{
+	CChatNotify tChatNotify;
+	tChatNotify.set_playerid(pPlayer->getRoleID());
+	tChatNotify.set_playername(pPlayer->getName());
+	tChatNotify.set_channel(emChatChannel_World);
+	tChatNotify.set_content(pResult);
+	CSceneJob::Inst()->send2AllPlayer(ID_S2C_NOTIFY_CHAT, &tChatNotify);
+}
+
+/// 通知玩家命令影响和结果
+void CGMCommandManager::sendCommandResult(CEntityPlayer* pPlayer, char* pResult)
+{
+	CChatNotify tChatNotify;
+	tChatNotify.set_playerid(pPlayer->getRoleID());
+	tChatNotify.set_playername(pPlayer->getName());
+	tChatNotify.set_channel(emChatChannel_World);
+	tChatNotify.set_content(pResult);
+
+	CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIFY_CHAT, &tChatNotify);
+}
 
 /// 执行GM命令
 void CGMCommandManager::excuteCommand(std::string strCommandName, StrTokens& tTokens, CEntityPlayer* pPlayer)
@@ -59,6 +84,7 @@ void CGMCommandManager::InitCommand()
 	COMMAND_HANDLER_ADD(removeitem, "删除道具，用法：\\removeitem 道具ID 道具数目，删除对应的道具，包括货币,道具数目为-1表示删除所有道具(货币)。");
 	COMMAND_HANDLER_ADD(clearbag, "清空背包，用法：\\clearbag，清空背包，注意：不包括货币，只清除道具。");
 	COMMAND_HANDLER_ADD(setlevel, "获得道具，用法：\\setlevel 等级，设置玩家等级。");
+	COMMAND_HANDLER_ADD(settime, "设置时间，用法：\\settime [20200803] [11:44:55]，设置当前的服务器时间。");
 }
 
 COMMAND_HANDLER_IMPL(help)
@@ -145,4 +171,103 @@ COMMAND_HANDLER_IMPL(setlevel)
 
 	pPlayer->setLevel(nNewLevel);
 	pPlayer->getPropertyUnit().onLevelUp(nOldPlayer);
+}
+
+// 设置时间
+// 第一种情况：没有参数，将当前的游戏时间设置为系统真实时间
+// 第二种情况：1个参数(如果字符串中有：表示时间，如果没有表示日期)，
+//					1. 20201223 修改当前日期
+//					2. 20:48:34 修改当前的时间
+// 第三种情况：2个参数,第一个参数表示日期，第二个参数表示时间
+// 例子：
+// settime 2：表示把游戏时间的其他都不变，改成本月2号
+// settime 0803：表示游戏时间的其他都不变,改成当年的8月3号
+// settime 20230808：表示游戏时间的其他都不变,改成2023年8月8号
+// settime 14:43：表示游戏时间的其他都不变，改成14点43分
+// settime 14:43:58 表示游戏时间的其他都不变，改成14点43分58秒
+// settime 20230808 14:43:58 改成2023年8月8号14点43分58秒
+COMMAND_HANDLER_IMPL(settime)
+{
+	tm& rTmNow = CSceneJob::Inst()->getTmNow();
+	tm  tTmSetTime = rTmNow;
+
+	StrTokens tTimeTokens;
+	if (tTokens.size() >= 2)
+	{
+		int nDate = atoi(tTokens[0].c_str());
+		int nTmpYear = nDate / 10000;
+		int nTmpMonth = nDate % 10000 / 100;
+		int nTmpDay = nDate % 100;
+		if (nTmpYear != 0)
+		{
+			tTmSetTime.tm_year = nTmpYear - 1900;
+		}
+
+		if (nTmpMonth != 0)
+		{
+			tTmSetTime.tm_mon = nTmpMonth - 1;
+		}
+
+		tTmSetTime.tm_mday = nTmpDay;
+
+		tTimeTokens = strSplit(tTokens[1].c_str(), ":");
+	}
+	else if (tTokens.size() >= 1)
+	{
+		tTimeTokens = strSplit(tTokens[0].c_str(), ":");
+		// 如果不是以冒号分隔的字符串
+		if (tTimeTokens.size() <= 1)
+		{
+			int nDate = atoi(tTokens[0].c_str());
+			int nTmpYear = nDate / 10000;
+			int nTmpMonth = nDate % 10000 / 100;
+			int nTmpDay = nDate % 100;
+			if (nTmpYear != 0)
+			{
+				tTmSetTime.tm_year = nTmpYear - 1900;
+			}
+
+			if (nTmpMonth != 0)
+			{
+				tTmSetTime.tm_mon = nTmpMonth - 1;
+			}
+
+			tTmSetTime.tm_mday = nTmpDay;
+			// 清掉时间
+			tTimeTokens.clear();
+		}
+	}
+	else
+	{
+		time_t tRealTime = time(NULL);
+#ifdef MYTH_OS_WINDOWS
+		localtime_s(&tTmSetTime, &tRealTime);
+#else
+		localtime_r(&tRealTime, &tTmSetTime);
+#endif // MYTH_OS_WINDOWS
+	}
+
+	if (tTimeTokens.size() >= 1)
+	{
+		tTmSetTime.tm_hour = atoi(tTimeTokens[0].c_str());
+	}
+	if (tTimeTokens.size() >= 2)
+	{
+		tTmSetTime.tm_min = atoi(tTimeTokens[1].c_str());
+	}
+	if (tTimeTokens.size() >= 3)
+	{
+		tTmSetTime.tm_sec = atoi(tTimeTokens[2].c_str());
+	}
+
+	time_t tGameTime = mktime(&tTmSetTime);
+	CGameServer::Inst()->SetGameTimeOffset(tGameTime - time(NULL));
+
+	char acBuffer[STR_LENGTH_128] = {0};
+#ifdef MYTH_OS_WINDOWS
+	asctime_s(acBuffer, sizeof(acBuffer) - 1, &tTmSetTime);
+#else
+	asctime_r(&tTmSetTime, acBuffer);
+#endif
+	broadcastCommandResult(pPlayer, acBuffer);
 }

@@ -6,6 +6,7 @@
 #include "mapmodule.hxx.pb.h"
 #include "taskmodule.hxx.pb.h"
 #include "chatmodule.hxx.pb.h"
+#include "dailyactmodule.hxx.pb.h"
 #define CASE_NEW_MSG(msg, msgid)						\
 		case msgid:										\
 		{												\
@@ -89,6 +90,9 @@ Message* CMessageFactory::createClientMessage(unsigned short nMessageID)
 		CASE_NEW_MSG(CChatRequest, ID_C2S_REQUEST_CHAT)
 		CASE_NEW_MSG(CChatResponse, ID_S2C_RESPONSE_CHAT)
 		CASE_NEW_MSG(CChatNotify, ID_S2C_NOTIFY_CHAT)
+
+		// daily module
+		CASE_NEW_MSG(CActivityStatusNotify, ID_S2C_NOTIFY_ACTIVITY_START)
 		default:
 			break;
 	}
