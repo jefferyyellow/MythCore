@@ -54,6 +54,11 @@ void CEntityPlayer::onGetPlayerPropertyRequest(Message* pMessage)
 	CSceneJob::Inst()->send2Player(this, ID_S2C_RESPONSE_GET_PLAYER_PROPERTY, &tResponse);
 }
 
+/// 每日刷新
+void CEntityPlayer::dailyRefresh()
+{
+
+}
 
 /// 序列化场景信息到PB·
 void CEntityPlayer::serializeSceneInfoToPB(PBPlayerSceneInfo* pbPlayerInfo)

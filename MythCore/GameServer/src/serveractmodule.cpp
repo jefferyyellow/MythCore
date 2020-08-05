@@ -9,8 +9,8 @@
 #include "timemanager.h"
 CServerActModule::CServerActModule()
 {
-	mServerStartTime = unixTimeStamp("2018-2-17 00:00:00");
 	init();
+	mServerOpenTime = unixTimeStamp("2020-8-4 00:00:00");
 }
 
 
@@ -61,7 +61,7 @@ void CServerActModule::onNewWeekCome()
 /// 建立实体
 void CServerActModule::onCreatePlayer(CEntityPlayer* pPlayer)
 {
-	dailyRefresh(pPlayer);
+	
 }
 
 /// 销毁实体
@@ -90,7 +90,6 @@ void CServerActModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMes
 	{
 		case ID_C2S_REQUEST_GET_SERVER_ACT:
 		{
-			
 			break;
 		}
 	}
@@ -129,7 +128,6 @@ void CServerActModule::loadServerActivityConfig(const char* pConfigFile)
 	time_t nPrizeTime = 0;
 	time_t nTimeNow = CTimeManager::Inst()->getCurrTime();
 
-
 	bool bAlreadyLoad[emServerActTypeMax] = {false};
 	char acPathFile[emServerActTypeMax][STR_LENGTH_256] = { 0 };
 	XMLElement* pActivityElem = pRootElem->FirstChildElement("Activity");
@@ -139,7 +137,7 @@ void CServerActModule::loadServerActivityConfig(const char* pConfigFile)
 		int nDurationDay = pActivityElem->IntAttribute("DurationDay");
 		if (nStartDay > 0 && nDurationDay > 0)
 		{
-			nStartTime = mServerStartTime + (nStartDay - 1) * SECONDS_PER_DAY;
+			nStartTime = mServerOpenTime + (nStartDay - 1) * SECONDS_PER_DAY;
 			nEndTime = nStartTime + nDurationDay * SECONDS_PER_DAY - 1;
 		}
 		else
@@ -154,11 +152,6 @@ void CServerActModule::loadServerActivityConfig(const char* pConfigFile)
 		{
 			nPrizeTime = nEndTime + tTmpTime * SECONDS_PER_DAY;
 		}
-		// 如果当前时间比开始时间还早，或者当前时间比结束时间还大
-		if (nTimeNow < nStartTime || (nTimeNow >(nPrizeTime > nEndTime ? nPrizeTime : nEndTime)))
-		{
-			continue;
-		}
 
 		int nType = pActivityElem->IntAttribute("Type");
 		CServerActivity* pActivity = createServerActivity((EmServerActType)nType);
@@ -167,15 +160,29 @@ void CServerActModule::loadServerActivityConfig(const char* pConfigFile)
 			LOG_ERROR("Create server activity failure, %d", nType);
 			continue;
 		}
+		int nActivityID = pActivityElem->IntAttribute("ID");
+		if (nActivityID <= 0 || nActivityID >= MAX_SERVER_ACT_NUM)
+		{
+			continue;
+		}
+		mServerActivity[nActivityID] = pActivity;
 
 		pActivity->setType(nType);
 		pActivity->setSubType(pActivityElem->IntAttribute("SubType"));
-		pActivity->setID(pActivityElem->IntAttribute("ID"));
+		pActivity->setID(nActivityID);
 		pActivity->setStartTime(nStartTime);
 		pActivity->setEndTime(nEndTime);
 		pActivity->setPrizeTime(nPrizeTime);
 
-		mServerActList.push_back(pActivity);
+		// 如果不在活动期间类不处理对应的配置文件，只加载概要信息
+		// 如果当前时间比开始时间还早，或者当前时间比结束时间还大
+		if (nTimeNow < nStartTime || (nTimeNow >= (nPrizeTime > nEndTime ? nPrizeTime : nEndTime)))
+		{
+			pActivity->setInvalid(true);
+			continue;
+		}
+		pActivity->setInvalid(false);
+
 		if (!bAlreadyLoad[nType])
 		{
 			bAlreadyLoad[nType] = true;
@@ -211,17 +218,21 @@ void CServerActModule::loadSpecifyActivityConfig(const char* pConfigFile)
 	XMLElement* pActivityElem = pRootElem->FirstChildElement("Activity");
 	for (; NULL != pActivityElem; pActivityElem = pActivityElem->NextSiblingElement("Activity"))
 	{
+		int nID = pActivityElem->IntAttribute("ID");
 		int nType = pActivityElem->IntAttribute("Type");
 		int nSubType = pActivityElem->IntAttribute("SubType");
-		int nID = pActivityElem->IntAttribute("ID");
-
-		CServerActivity* pActivity = getServerActivity(nType, nSubType, nID);
-		if (NULL == pActivity)
+		if (nID <= 0 || nID >= MAX_SERVER_ACT_NUM)
+		{
+			continue;
+		}
+		CServerActivity* pActivity = mServerActivity[nID];
+		if (NULL == pActivity || pActivity->getInvalid())
 		{
 			return;
 		}
 
 		pActivity->loadActivity(pActivityElem);
+		pActivity->start();
 	}
 }
 
@@ -230,11 +241,6 @@ CServerActivity* CServerActModule::createServerActivity(EmServerActType emServer
 	CServerActivity* pActivity = NULL;
 	switch (emServerActType)
 	{
-		case emServerActType_Phase:
-		{
-			pActivity = new CPhaseActivity;
-			break;
-		}
 		default:
 		{
 			break;
@@ -248,73 +254,28 @@ CServerActivity* CServerActModule::createServerActivity(EmServerActType emServer
 void CServerActModule::clearEndedActivity()
 {
 	time_t tTimeNow = CTimeManager::Inst()->getCurrTime();
-	for (unsigned int i = 0; i < mServerActList.size(); ++ i)
+	for (unsigned int i = 0; i < MAX_SERVER_ACT_NUM; ++ i)
 	{
+		if (NULL == mServerActivity[i] || mServerActivity[i]->getInvalid())
+		{
+			continue;
+		}
+
 		// 已经结束
-		if (mServerActList[i]->getEndTime() < tTimeNow)
+		if (mServerActivity[i]->getEndTime() <= tTimeNow)
 		{
-			mServerActList[i]->end();
+			mServerActivity[i]->end();
 		}
 	}
 }
 
-/// 每日刷新
-void CServerActModule::dailyRefresh(CEntityPlayer* pPlayer)
+
+CServerActivity* CServerActModule::getServerActivity(int nActivityID)
 {
-	if (NULL == pPlayer)
+	if (nActivityID <= 0 || nActivityID >= MAX_SERVER_ACT_NUM)
 	{
-		return;
+		return NULL;
 	}
 
-	// 如果上次下线的时间在今天早上以后了，那就是同一天的多次登录了，并且服务器重启以后，玩家已经登录过了
-	if (pPlayer->getTimeUnit().getLastOffTime() >= CSceneJob::Inst()->getMorningTime() 
-		&& pPlayer->getTimeUnit().getLastOffTime() >= mServerStartTime)
-	{
-		return;
-	}
-
-	CServerActivityUnit& rUnit = pPlayer->getServerActUnit();
-	rUnit.checkAllServerAct();
-
-	for (unsigned int i = 0; i < mServerActList.size(); ++ i)
-	{
-		int nUniqueID = MAKE_ACT_UNIQUE_ID(mServerActList[i]->getType(), mServerActList[i]->getSubType(), mServerActList[i]->getID());
-		CServerActData* pActData = rUnit.getServerActData(nUniqueID);
-		if (NULL == pActData)
-		{
-			CServerActData tData;
-			tData.setUniqueID(nUniqueID);
-			tData.setStartTime(mServerActList[i]->getStartTime());
-			rUnit.addServerActData(tData);
-		}
-	}
-}
-
-CServerActivity* CServerActModule::getServerActivity(int nActUniqueID)
-{
-	for (unsigned int i = 0; i < mServerActList.size(); ++ i)
-	{
-		int nUniqueID = MAKE_ACT_UNIQUE_ID(mServerActList[i]->getType(), mServerActList[i]->getSubType(), mServerActList[i]->getID());
-		if (nUniqueID == nActUniqueID)
-		{
-			return mServerActList[i];
-		}
-	}
-
-	return NULL;
-}
-
-CServerActivity* CServerActModule::getServerActivity(int nType, int nSubType, int nID)
-{
-	for (unsigned int i = 0; i < mServerActList.size(); ++i)
-	{
-		if (mServerActList[i]->getType() == nType 
-			&& mServerActList[i]->getSubType() == nSubType 
-			&& mServerActList[i]->getID() == nID)
-		{
-			return mServerActList[i];
-		}
-	}
-
-	return NULL;
+	return mServerActivity[nActivityID];
 }

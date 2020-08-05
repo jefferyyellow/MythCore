@@ -56,7 +56,7 @@ void CPropertyModule::onNewWeekCome()
 /// 建立实体
 void CPropertyModule::onCreatePlayer(CEntityPlayer* pPlayer)
 {
-	dailyRefresh(pPlayer);
+	
 }
 
 /// 销毁实体
@@ -471,22 +471,6 @@ void CPropertyModule::onPlayerLeaveGame(CEntityPlayer* pPlayer)
 
 	CSceneJob::Inst()->onPlayerLeaveGame(pPlayer);
 	CObjPool::Inst()->free(pPlayer->getObjID());
-}
-
-/// 每日刷新
-void CPropertyModule::dailyRefresh(CEntityPlayer* pPlayer)
-{
-	if (NULL == pPlayer)
-	{
-		return;
-	}
-
-	/// 如果上次下线的时间在今天早上以后了，那就是同一天的多次登录了
-	if (pPlayer->getTimeUnit().getLastOffTime() >= CSceneJob::Inst()->getMorningTime())
-	{
-		return;
-	}
-
 }
 
 /// 新玩家处理

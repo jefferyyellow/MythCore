@@ -64,8 +64,6 @@ public:
 	void			playerLeaveGame(CEntityPlayer* pPlayer);
 	/// 玩家离开游戏
 	void			onPlayerLeaveGame(CEntityPlayer* pPlayer);
-	/// 每日刷新
-	void			dailyRefresh(CEntityPlayer* pPlayer);
 	/// 新玩家处理
 	void			setNewPlayerValue(CEntityPlayer* pPlayer);
 	/// 创建实体后的处理

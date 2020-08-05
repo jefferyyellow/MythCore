@@ -71,7 +71,8 @@ public:
 	virtual	void	initEntity(CEntityCreator* pCreator){};
 	//// 得到玩家属性请求
 	void			onGetPlayerPropertyRequest(Message* pMessage);
-
+	/// 每日刷新
+	void			dailyRefresh();
 public:
 	/// 序列化场景信息到PB
 	void			serializeSceneInfoToPB(PBPlayerSceneInfo* pbSceneInfo);

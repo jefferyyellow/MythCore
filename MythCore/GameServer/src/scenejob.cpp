@@ -302,8 +302,7 @@ void CSceneJob::onNewDayCome()
 		{
 			continue;
 		}
-		CPropertyModule::Inst()->dailyRefresh(pPlayer);
-		CServerActModule::Inst()->dailyRefresh(pPlayer);
+		pPlayer->dailyRefresh();
 	}
 }
 

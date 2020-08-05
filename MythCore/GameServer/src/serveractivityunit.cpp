@@ -2,60 +2,38 @@
 #include "locallogjob.h"
 #include "serveractmodule.h"
 #include "serveractivity.h"
-CServerActData* CServerActivityUnit::getServerActData(int nUniqueID)
+
+void CServerActivityUnit::dailyRefresh()
 {
-	for (int i = 0; i < mActivityNum; ++i)
+	// 先把上次身上的数据清理干净,并且设置好当前有效活动的时间
+	for (int i = 0; i < MAX_SERVER_ACT_NUM; ++ i)
 	{
-		if (mActivityData[i].getUniqueID() == nUniqueID)
+		if (0 == mActTime[i])
 		{
-			return &mActivityData[i];
+			continue;
 		}
-	}
 
-	return NULL;
-}
-
-void CServerActivityUnit::addServerActData(CServerActData& rData)
-{
-	if (mActivityNum >= PHASE_ACTIVITY_NUM)
-	{
-		LOG_ERROR("Phase activity num bigger than capacity, PhaseActivityNum: %d, Capacity: %d", mActivityNum, PHASE_ACTIVITY_NUM);
-		return;
-	}
-	mActivityData[mActivityNum] = rData;
-	++mActivityNum;
-}
-
-
-int CServerActivityUnit::removeServerActData(int nPos)
-{
-	if (nPos >= mActivityNum || nPos < 0)
-	{
-		return mActivityNum;
-	}
-
-	if (mActivityNum <= 0)
-	{
-		return mActivityNum;
-	}
-
-	mActivityData[nPos] = mActivityData[mActivityNum - 1];
-	--mActivityNum;
-	return nPos;
-}
-
-void CServerActivityUnit::checkAllServerAct()
-{
-	for (int i = 0; i < mActivityNum; )
-	{
-		CServerActivity* pActivity = CServerActModule::Inst()->getServerActivity(mActivityData[i].getUniqueID());
-		if (NULL == pActivity || pActivity->getStartTime() != mActivityData[i].getStartTime())
+		CServerActivity* pServerActivity = CServerActModule::Inst()->getServerActivity(i);
+		if (NULL == pServerActivity)
 		{
-			i = removeServerActData(i);
+			continue;
 		}
-		else
+
+		if (mActTime[i] == pServerActivity->getStartTime())
 		{
-			++i;
+			continue;
 		}
-	}
+
+		pServerActivity->clearPlayerData(mPlayer);
+		// 清空活动开始时间
+		mActTime[i] = 0;
+		// 如果活动非法，就不管了
+		if (pServerActivity->getInvalid())
+		{
+			continue;
+		}
+
+		// 这个活动重新有效
+		mActTime[i] = pServerActivity->getStartTime();
+	};
 }

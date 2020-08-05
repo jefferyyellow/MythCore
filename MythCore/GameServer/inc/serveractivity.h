@@ -44,6 +44,7 @@ public:
         mEndTime = 0;
         mPrizeTime = 0;
         mState = emServerActState_End;
+		mInvalid = false;
 	}
 
 public:
@@ -68,6 +69,10 @@ public:
 
     EmServerActState getState(){ return mState;}
     void setState(EmServerActState value){ mState = value;}
+
+	bool getInvalid() const { return mInvalid; }
+	void setInvalid(bool nValue) { mInvalid = nValue; }
+
 	// end autocode
 public:
 	/// 加载配置文件
@@ -78,12 +83,8 @@ public:
 	virtual void start()									= 0;
 	/// 活动结束的清理
 	virtual void end()										= 0;
-	/// 刷新玩家数据
-	virtual void refreshPlayerData(CEntityPlayer* pPlayer, int nParam) = 0;
-	/// 清空玩家数据
-	virtual void clearPlayerData(CEntityPlayer* pPlayer)	= 0;
-	virtual	void getActivityPrize(CEntityPlayer* pPlayer, int nParam)	= 0;
-
+	/// 清理玩家数据
+	virtual	void clearPlayerData(CEntityPlayer& rPlayer)	= 0;
 protected:
 	/// 类型
 	byte				mType;
@@ -99,56 +100,8 @@ protected:
 	time_t				mPrizeTime;
 	/// 开服活动状态 default:emServerActState_End
 	EmServerActState	mState;
-};
-
-class CCondPrizeData
-{
-public:
-	CCondPrizeData()
-	{
-		mCondNum = 0;
-	}
-	~CCondPrizeData()
-	{}
-
-	int					mCondNum;
-	CServerActPrize		mPrize[ACTIVITY_PRIZE_NUM];
-};
-
-/// 条件阶段活动
-class CPhaseActivity : public CServerActivity
-{
-public:
-	typedef vector<CCondPrizeData>	VEC_COND_PRIZE_LIST;
-
-public:
-	CPhaseActivity()
-	{
-		
-	}
-	~CPhaseActivity()
-	{
-		
-	}
-
-public:
-	/// 加载配置文件
-	virtual int loadActivity(XMLElement* pActivityElem);
-	/// 得到配置文件的名字
-	virtual const char* getConfigFileName();
-	/// 活动开启
-	virtual void start();
-	/// 活动结束的清理
-	virtual void end();
-	/// 刷新玩家数据
-	virtual void refreshPlayerData(CEntityPlayer* pPlayer, int nParam);
-	/// 清空玩家数据
-	virtual void clearPlayerData(CEntityPlayer* pPlayer);
-	/// 得到活动奖励
-	virtual	void getActivityPrize(CEntityPlayer* pPlayer, int nParam);
-public:
-	/// 条件奖励列表
-	VEC_COND_PRIZE_LIST		mCondPrizeList;
+	/// 是否是有效活动
+	bool				mInvalid;
 };
 
 #endif

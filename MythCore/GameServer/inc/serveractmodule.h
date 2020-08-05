@@ -27,7 +27,6 @@ private:
 	}
 
 public:
-	typedef	vector<CServerActivity*>	SERVER_ACT_LIST;
 	typedef vector<string>				SERVER_LOAD_LIST;
 public:
 	/// 启动服务器
@@ -63,18 +62,15 @@ public:
 	CServerActivity*	createServerActivity(EmServerActType emServerActType);
 	/// 清算结束的活动
 	void				clearEndedActivity();
-	/// 每日刷新
-	void				dailyRefresh(CEntityPlayer* pPlayer);
-	CServerActivity*	getServerActivity(int nActUniqueID);
-	CServerActivity*	getServerActivity(int nType, int nSubType, int nID);
+	/// 得到对应的开服活动
+	CServerActivity*	getServerActivity(int nActivityID);
+
 	/// autocode
     time_t getServerOpenTime(){ return mServerOpenTime;}
     void setServerOpenTime(time_t value){ mServerOpenTime = value;}
 
     time_t getServerStartTime(){ return mServerStartTime;}
     void setServerStartTime(time_t value){ mServerStartTime = value;}
-
-    SERVER_ACT_LIST& getServerActList(){ return mServerActList;}
 	/// end autocode
 
 private:
@@ -82,7 +78,7 @@ private:
 	time_t					mServerOpenTime;
 	/// 服务器启动时间
 	time_t					mServerStartTime;
-	/// 开服活动列表
-	SERVER_ACT_LIST			mServerActList;
+	/// 开服活动
+	CServerActivity*		mServerActivity[MAX_SERVER_ACT_NUM];
 };
 #endif
