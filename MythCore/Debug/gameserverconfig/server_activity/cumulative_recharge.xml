@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ServerActivity>
-  <Activity ID="1" Type="1" SubType="1">
+  <Activity ID="1">
     <Cond Num="100">
       <Prize ItemID ="6251" ItemNum="100"/>
       <Prize ItemID ="6252" ItemNum="200"/>
@@ -14,7 +14,7 @@
       <Prize ItemID ="6252" ItemNum="20000"/>
     </Cond>
   </Activity>
-  <Activity Type="1" SubType="1" ID="2">
+  <Activity ID="2">
     <Cond Num="100">
       <Prize ItemID ="6251" ItemNum="100"/>
       <Prize ItemID ="6252" ItemNum="200"/>

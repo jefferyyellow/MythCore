@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServerActivity>
+  <Activity ID="1">
+    <Rank Min="1" Max="1">
+      <Prize ItemID ="6251" ItemNum="100"/>
+      <Prize ItemID ="6252" ItemNum="200"/>
+    </Rank>
+    <Rank Min="2" Max="2">
+      <Prize ItemID ="6251" ItemNum="100"/>
+      <Prize ItemID ="6252" ItemNum="200"/>
+    </Rank>
+    <Rank Min="3" Max="3">
+      <Prize ItemID ="6251" ItemNum="100"/>
+      <Prize ItemID ="6252" ItemNum="200"/>
+    </Rank>
+    <Rank Min="4" Max="10">
+      <Prize ItemID ="6251" ItemNum="100"/>
+      <Prize ItemID ="6252" ItemNum="200"/>
+    </Rank>
+  </Activity>
+</ServerActivity>

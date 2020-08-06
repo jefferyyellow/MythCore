@@ -3,7 +3,7 @@
 #include "serveractmodule.h"
 #include "serveractivity.h"
 
-void CServerActivityUnit::dailyRefresh()
+void CServerActUnit::dailyRefresh()
 {
 	// 先把上次身上的数据清理干净,并且设置好当前有效活动的时间
 	for (int i = 0; i < MAX_SERVER_ACT_NUM; ++ i)
@@ -28,7 +28,7 @@ void CServerActivityUnit::dailyRefresh()
 		// 清空活动开始时间
 		mActTime[i] = 0;
 		// 如果活动非法，就不管了
-		if (pServerActivity->getInvalid())
+		if (!pServerActivity->getAvail())
 		{
 			continue;
 		}

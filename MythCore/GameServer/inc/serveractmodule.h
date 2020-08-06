@@ -20,11 +20,21 @@ class CServerActModule : public CLogicModule, public CSingleton <CServerActModul
 private:
 	CServerActModule();
 	~CServerActModule();
+
 	void init()
 	{
         mServerOpenTime = 0;
         mServerStartTime = 0;
+		for (int i = 0; i < MAX_SERVER_ACT_NUM; ++i)
+		{
+			mServerActivity[i] = NULL;
+			mAvailActivity[i] = NULL;
+		}
+		mAvailActivityNum = 0;
 	}
+
+	// 清空开服活动
+	void clearServerActivity();
 
 public:
 	typedef vector<string>				SERVER_LOAD_LIST;
@@ -58,13 +68,16 @@ public:
 	void				loadServerActivityConfig(const char* pConfigFile);
 	/// 加载详细活动配置
 	void				loadSpecifyActivityConfig(const char* pConfigFile);
-
-	CServerActivity*	createServerActivity(EmServerActType emServerActType);
+	/// 根据活动类型创建开服活动
+	CServerActivity*	createServerActivity(EmSvrActType emSvrActType);
 	/// 清算结束的活动
 	void				clearEndedActivity();
 	/// 得到对应的开服活动
 	CServerActivity*	getServerActivity(int nActivityID);
+	/// 刷新活动进度
+	void				refreshProcess(EmSvrActType eType, CEntityPlayer& rPlayer, int nParam1, int nParam2);
 
+public:
 	/// autocode
     time_t getServerOpenTime(){ return mServerOpenTime;}
     void setServerOpenTime(time_t value){ mServerOpenTime = value;}
@@ -80,5 +93,9 @@ private:
 	time_t					mServerStartTime;
 	/// 开服活动
 	CServerActivity*		mServerActivity[MAX_SERVER_ACT_NUM];
+	/// 开服活动
+	CServerActivity*		mAvailActivity[MAX_SERVER_ACT_NUM];
+	/// 有效的开服活动数目
+	int						mAvailActivityNum;
 };
 #endif

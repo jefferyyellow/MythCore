@@ -89,4 +89,10 @@ enum ERR_EQUIP
 	ERR_EQUIP_PLAYER_LEVEL_NOT_ENOUGH	= 704,		// 装备等级不足
 	ERR_EQUIP_ITEM_CANNOT_EQUIP			= 705,		// 道具不能装备
 };
+
+// 800 - 999
+enum ERR_SERVER_ACT
+{
+	
+};
 #endif

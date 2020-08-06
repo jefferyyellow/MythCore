@@ -142,7 +142,7 @@ public:
 
 	CSkillUnit& getSkillUnit(){ return mSkillUnit; }
 
-	CServerActivityUnit& getServerActUnit(){ return mServerActUnit; }
+	CServerActUnit& getServerActUnit(){ return mServerActUnit; }
 
 	CTimeUnit& getTimeUnit(){return mTimeUnit;}
 	CVIPUnit& getVIPUnit(){return mVIPUnit;}
@@ -201,7 +201,7 @@ private:
 	/// 技能单元
 	CSkillUnit		mSkillUnit;
 	/// 开服活动单元
-	CServerActivityUnit	mServerActUnit;
+	CServerActUnit	mServerActUnit;
 	/// VIP单元
 	CVIPUnit		mVIPUnit;
 	/// 时间单元

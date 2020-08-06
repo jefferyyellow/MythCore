@@ -16,7 +16,21 @@ CServerActModule::CServerActModule()
 
 CServerActModule::~CServerActModule()
 {
+	clearServerActivity();
+}
 
+void CServerActModule::clearServerActivity()
+{
+	for (int i = 0; i < MAX_SERVER_ACT_NUM; ++i)
+	{
+		if (NULL != mServerActivity[i])
+		{
+			delete mServerActivity[i];
+		}
+		mServerActivity[i] = NULL;
+		mAvailActivity[i] = NULL;
+	}
+	mAvailActivityNum = 0;
 }
 
 /// 启动服务器
@@ -123,6 +137,9 @@ void CServerActModule::loadServerActivityConfig(const char* pConfigFile)
 		return;
 	}
 
+	// 清空
+	clearServerActivity();
+
 	time_t nStartTime = 0;
 	time_t nEndTime = 0;
 	time_t nPrizeTime = 0;
@@ -154,15 +171,23 @@ void CServerActModule::loadServerActivityConfig(const char* pConfigFile)
 		}
 
 		int nType = pActivityElem->IntAttribute("Type");
-		CServerActivity* pActivity = createServerActivity((EmServerActType)nType);
+		CServerActivity* pActivity = createServerActivity((EmSvrActType)nType);
 		if (NULL == pActivity)
 		{
 			LOG_ERROR("Create server activity failure, %d", nType);
 			continue;
 		}
+
 		int nActivityID = pActivityElem->IntAttribute("ID");
 		if (nActivityID <= 0 || nActivityID >= MAX_SERVER_ACT_NUM)
 		{
+			LOG_ERROR("Activity ID is invalid, %d", nActivityID);
+			continue;
+		}
+
+		if (NULL != mServerActivity[nActivityID] )
+		{
+			LOG_ERROR("Activitys have same activity id, %d", nActivityID);
 			continue;
 		}
 		mServerActivity[nActivityID] = pActivity;
@@ -178,10 +203,14 @@ void CServerActModule::loadServerActivityConfig(const char* pConfigFile)
 		// 如果当前时间比开始时间还早，或者当前时间比结束时间还大
 		if (nTimeNow < nStartTime || (nTimeNow >= (nPrizeTime > nEndTime ? nPrizeTime : nEndTime)))
 		{
-			pActivity->setInvalid(true);
+			pActivity->setAvail(false);
 			continue;
 		}
-		pActivity->setInvalid(false);
+		pActivity->setAvail(true);
+
+		// 所以
+		mAvailActivity[mAvailActivityNum] = pActivity;
+		++ mAvailActivityNum;
 
 		if (!bAlreadyLoad[nType])
 		{
@@ -226,7 +255,7 @@ void CServerActModule::loadSpecifyActivityConfig(const char* pConfigFile)
 			continue;
 		}
 		CServerActivity* pActivity = mServerActivity[nID];
-		if (NULL == pActivity || pActivity->getInvalid())
+		if (NULL == pActivity || !pActivity->getAvail())
 		{
 			return;
 		}
@@ -236,11 +265,27 @@ void CServerActModule::loadSpecifyActivityConfig(const char* pConfigFile)
 	}
 }
 
-CServerActivity* CServerActModule::createServerActivity(EmServerActType emServerActType)
+/// 根据活动类型创建开服活动
+CServerActivity* CServerActModule::createServerActivity(EmSvrActType emSvrActType)
 {
 	CServerActivity* pActivity = NULL;
-	switch (emServerActType)
+	switch (emSvrActType)
 	{
+		case emSvrActType_CumRecharge:
+		{
+			pActivity = new CCumulativeRecharge;
+			break;
+		}
+		case emSvrActType_CumConsume:
+		{
+			pActivity = new CCumulativeConsume;
+			break;
+		}
+		case emSvrActType_Rank:
+		{
+			pActivity = new CRankActivity;
+			break;
+		}
 		default:
 		{
 			break;
@@ -256,7 +301,7 @@ void CServerActModule::clearEndedActivity()
 	time_t tTimeNow = CTimeManager::Inst()->getCurrTime();
 	for (unsigned int i = 0; i < MAX_SERVER_ACT_NUM; ++ i)
 	{
-		if (NULL == mServerActivity[i] || mServerActivity[i]->getInvalid())
+		if (NULL == mServerActivity[i] || !mServerActivity[i]->getAvail())
 		{
 			continue;
 		}
@@ -278,4 +323,17 @@ CServerActivity* CServerActModule::getServerActivity(int nActivityID)
 	}
 
 	return mServerActivity[nActivityID];
+}
+
+/// 刷新活动进度
+void CServerActModule::refreshProcess(EmSvrActType eType, CEntityPlayer& rPlayer, int nParam1, int nParam2)
+{
+	for (int i = 0; i < mAvailActivityNum; ++ i)
+	{
+		if (mAvailActivity[i]->getType() != eType)
+		{
+			continue;
+		}
+		mAvailActivity[i]->refreshProcess(rPlayer, nParam1, nParam2);
+	}
 }
