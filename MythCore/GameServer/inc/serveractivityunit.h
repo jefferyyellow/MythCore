@@ -97,6 +97,11 @@ public:
 	{
 		mActBit.setBit(nBitIndex);
 	}
+	
+	void				clearBit(uint nBitIndex)
+	{
+		mActBit.clearBit(nBitIndex);
+	}
 	// autocode
 	// end autocode
 private:

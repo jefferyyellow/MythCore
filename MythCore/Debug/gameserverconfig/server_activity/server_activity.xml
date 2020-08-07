@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ServerActivity>
-  <Activity ID="1" Title="累充1" Type="1" SubType="1" StartDay="1" DurationDay="7" StartTime="" EndTime=""/>
-  <Activity ID="2" Title="累充2" Type="1" SubType="1" StartDay="8" DurationDay="7" StartTime="" EndTime=""/>
-  <Activity ID="3" Title="累消1" Type="2" SubType="1" StartDay="1" DurationDay="7" StartTime="" EndTime=""/>
-  <Activity ID="4" Title="累消2" Type="2" SubType="1" StartDay="8" DurationDay="7" StartTime="" EndTime=""/>
+  <Activity ID="1" Title="累充1" Type="1" SubType="0" StartDay="1" DurationDay="7" StartTime="" EndTime=""/>
+  <Activity ID="2" Title="累充2" Type="1" SubType="0" StartDay="8" DurationDay="7" StartTime="" EndTime=""/>
+  <Activity ID="3" Title="累消1" Type="2" SubType="0" StartDay="1" DurationDay="7" StartTime="" EndTime=""/>
+  <Activity ID="4" Title="累消2" Type="2" SubType="0" StartDay="8" DurationDay="7" StartTime="" EndTime=""/>
+  <Activity ID="5" Title="等级排行" Type="3" SubType="1" StartDay="1" DurationDay="7" StartTime="" EndTime=""/>
 </ServerActivity>

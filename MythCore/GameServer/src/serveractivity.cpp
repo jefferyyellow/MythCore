@@ -212,5 +212,105 @@ const char* CRankActivity::getConfigFileName()
 /// 清理玩家数据
 void CRankActivity::clearPlayerData(CEntityPlayer& rPlayer)
 {
+	CServerActUnit& rServerActUnit = rPlayer.getServerActUnit();
+	switch (mSubType)
+	{
+		case emRankActSubType_Level:
+		{
+			rServerActUnit.clearBit(emActBit_LevelRankPrize);
+			break;
+		}
+		case emRankActSubType_Power:
+		{
+			rServerActUnit.clearBit(emActBit_PowerRankPrize);
+			break;
+		}
+		default:
+		{
+			break;
+		}
+	}
+}
 
+/// 得到活动奖励
+void CRankActivity::getActivityPrize(CEntityPlayer& rPlayer)
+{
+	CServerActUnit& rServerActUnit = rPlayer.getServerActUnit();
+	CRankPrizeData* pRankPrizeData = NULL;
+	int nRank = 0;
+	switch (mSubType)
+	{
+		case emRankActSubType_Level:
+		{
+			// 已经领奖了
+			if (rServerActUnit.getActBit(emActBit_LevelRankPrize))
+			{
+				return;
+			}
+			
+			break;
+		}
+		case emRankActSubType_Power:
+		{
+			// 已经领奖了
+			if (rServerActUnit.getActBit(emActBit_PowerRankPrize))
+			{
+				return;
+			}
+			break;
+		}
+		default:
+		{
+			return;
+		}
+	}
+
+	for (uint i = 0; i < mRankPrizeList.size(); ++ i)
+	{
+		if (nRank >= mRankPrizeList[i].mMinRank && nRank <= mRankPrizeList[i].mMaxRank)
+		{
+			pRankPrizeData = &mRankPrizeList[i];
+			break;
+		}
+	}
+
+	// 不在有奖励的人里面
+	if (NULL == pRankPrizeData)
+	{
+		return;
+	}
+
+	int nItemID[MAX_CONTAINER_ITEM_NUM] = { 0 };
+	int nItemNum[MAX_CONTAINER_ITEM_NUM] = { 0 };
+	int nCount = 0;
+	for (uint i = 0; i < pRankPrizeData->mPrizeList.size(); ++i)
+	{
+		nItemID[nCount] = pRankPrizeData->mPrizeList[i].mItemID;
+		nItemNum[nCount] = pRankPrizeData->mPrizeList[i].mItemNum;
+		++nCount;
+	}
+	if (!rPlayer.getItemUnit().checkItemSpace(nItemID, nItemNum, nCount))
+	{
+		return;
+	}
+	rPlayer.getItemUnit().insertItem(nItemID, nItemNum, nCount);
+
+	// 设置已经领奖的标志
+	switch (mSubType)
+	{
+		case emRankActSubType_Level:
+		{
+			rServerActUnit.setActBit(emActBit_LevelRankPrize);
+			break;
+		}
+		case emRankActSubType_Power:
+		{
+			rServerActUnit.setActBit(emActBit_PowerRankPrize);
+			break;
+		}
+		default:
+		{
+			return;
+		}
+	}
 }

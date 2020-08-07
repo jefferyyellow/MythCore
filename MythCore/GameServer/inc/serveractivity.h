@@ -235,6 +235,8 @@ public:
 	virtual	void clearPlayerData(CEntityPlayer& rPlayer);
 	/// 刷新活动进度
 	virtual void refreshProcess(CEntityPlayer& rPlayer, int nParam1, int nParam2){}
+	/// 得到活动奖励
+	void getActivityPrize(CEntityPlayer& rPlayer);
 
 public:
 	RANK_PRIZE_DATA_LIST			mRankPrizeList;

@@ -26,8 +26,7 @@ public:
 	/// 获得VIP经验
 	void obtainVIPExp(int nVIPExp);
 	/// 处理充值
-	void processRecharge(uint nAccountID, short nChannelID, short nServerID, uint nRoleID, 
-		char* pGoodsID, char* pOrderID, double dRechargeMoney);
+	void processRecharge(char* pGoodsID, char* pOrderID, double dRechargeMoney);
 public:
 	/// autocode, don't edit
 	int getVipExp(){ return mVipExp; }

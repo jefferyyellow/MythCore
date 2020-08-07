@@ -25,6 +25,7 @@
 #include "curlhandle.h"
 #include "platjob.h"
 #include "timemanager.h"
+#include "platmodule.h"
 CSceneJob::CSceneJob()
 :mMinuteTimer(SECONDS_PER_MIN)
 {
@@ -352,11 +353,14 @@ bool CSceneJob::initBase(int nDBBuffSize)
 	mLogicModuleList.push_back(CChatModule::createInst());
 	mLogicModuleList.push_back(CRankModule::createInst());
 	mLogicModuleList.push_back(CTaskModule::createInst());
+	mLogicModuleList.push_back(CPlatModule::createInst());
 	return true;
 }
 
 void CSceneJob::clearBase()
 {
+	CPlatModule::destroyInst();
+	CTaskModule::destroyInst();
 	CRankModule::destroyInst();
 	CChatModule::destroyInst();
 	CDailyActModule::destroyInst();

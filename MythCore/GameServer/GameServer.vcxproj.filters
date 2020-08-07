@@ -64,6 +64,9 @@
     <Filter Include="logicmodule\team">
       <UniqueIdentifier>{f5cb94b7-b1e1-4db6-8c1b-e376f2885cde}</UniqueIdentifier>
     </Filter>
+    <Filter Include="logicmodule\plat">
+      <UniqueIdentifier>{39c87912-47ee-4c10-98bd-a2ed9b56e292}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\message\loginmessage.hxx.pb.cc">
@@ -314,6 +317,9 @@
     </ClCompile>
     <ClCompile Include="src\timemanager.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\platmodule.cpp">
+      <Filter>logicmodule\plat</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -664,6 +670,9 @@
     </ClInclude>
     <ClInclude Include="inc\timemanager.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\platmodule.h">
+      <Filter>logicmodule\plat</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
