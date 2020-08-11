@@ -4,6 +4,7 @@
 #include "singleton.h"
 #include "commontype.h"
 using namespace Myth;
+class CDBResponse;
 class CPlatModule : public CLogicModule, public CSingleton<CPlatModule>
 {
 	friend class CSingleton<CPlatModule>;
@@ -35,11 +36,15 @@ public:
 
 public:
 	/// 处理充值
-	void processRecharge(uint nAccountID, short nChannelID, short nServerID, uint nRoleID,
-		char* pGoodsID, char* pOrderID, double dRechargeMoney);
-	/// 处理离线玩家的充值
-	void processRechargeOffline(uint nAccountID, short nChannelID, short nServerID, uint nRoleID,
-		char* pGoodsID, char* pOrderID, double dRechargeMoney);
+	void processRecharge(char* pOrderID, char* pGoodsID, uint nRoleID,
+		uint nAccountID, short nChannelID, short nServerID, double dRechargeMoney);
 
+	/// 插入充值缓存中
+	void insertRechargeCache(uint nOrderCRC, char* pOrderID, char* pGoodsID, uint nRoleID, 
+		uint nAccountID, short nChannelID, short nServerID, double dRechargeMoney);
+	/// 插入充值缓存中DB回调
+	void onInsertRechargeCache(CDBResponse& rResponse);
+	/// 加载充值缓存的DB回调
+	void onLoadRechargeCache(CDBResponse& rResponse);
 };
 #endif

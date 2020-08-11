@@ -24,7 +24,7 @@ class CDBResponseHeader
 {
 public:
 	int			mPlayerID;				// 玩家ID
-	int			mResult;				// 结果
+	int			mSqlResult;				// SQL执行结果
 	int			mParam1;				// 参数1
 	int			mParam2;				// 参数2
 	short		mSessionType;			// 会话ID
@@ -89,10 +89,20 @@ public:
 		return tInt64;
 	} 
 
+	double	getDouble()
+	{
+		double tDouble = atof((const char*)mpValue);
+		mpValue += (*mpLength + 1);
+		++mpLength;
+		return tDouble;
+	}
+
 	void	getString(char* pDest, unsigned int nSize)
 	{
 		if (nSize <= *mpLength)
 		{
+			strncpy(pDest, (const char*)mpValue, nSize - 1);
+			pDest[nSize - 1] = '\0';
 			mpValue += (*mpLength + 1);
 			++mpLength;
 			return;
@@ -133,6 +143,9 @@ enum EmSessionType
 	emSessionType_SavePlayerBaseProperty= 6,			// 保存玩家基础属性
 	emSessionType_LoadAllocateRoleId	= 7,			// 加载分配角色ID
 	emSessionType_UpdateAllocateRoleId	= 8,			// 更新分配角色ID
+	emSessionType_InsertRechargeCache	= 9,			// 插入充值缓存
+	emSessionType_LoadRechargeCache		= 10,			// 加载充值缓存
+	emSessionType_RechargeSuccess		= 11,			// 充值成功
 };
 
 

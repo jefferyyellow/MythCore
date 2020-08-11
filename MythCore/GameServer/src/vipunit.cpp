@@ -21,7 +21,13 @@ void CVIPUnit::obtainVIPExp(int nVIPExp)
 	}
 }
 
-void CVIPUnit::processRecharge(char* pGoodsID, char* pOrderID, double dRechargeMoney)
+/// ¥¶¿Ì≥‰÷µ
+void CVIPUnit::processRecharge(char* pGoodsID, char* pOrderID, int nRechargeMoney)
 {
+	if (NULL == pGoodsID || NULL == pOrderID)
+	{
+		return;
+	}
+
 
 }

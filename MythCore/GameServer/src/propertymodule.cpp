@@ -11,6 +11,7 @@
 #include "entitycreator.h"
 #include "objpoolimp.h"
 #include "timemanager.h"
+#include "errcode.h"
 CPropertyModule::CPropertyModule()
 :mSavePlayerTimer(1000)
 {
@@ -20,7 +21,7 @@ CPropertyModule::CPropertyModule()
 /// 启动服务器
 void CPropertyModule::onLaunchServer()
 {
-
+	mRechargeConfig.LoadRechargeConfig("gameserverconfig/recharge/recharge.xml");
 }
 
 /// 启动完成检查
@@ -210,6 +211,11 @@ void CPropertyModule::kickAllPlayer()
 /// 加载玩家信息
 void CPropertyModule::onLoadPlayerInfo(CDBResponse& rResponse)
 {
+	if (rResponse.mSqlResult != SUCCESS)
+	{
+		return;
+	}
+
 	if (rResponse.mRowNum <= 0)
 	{
 		LOG_ERROR("load player info failure, has no result return!");
@@ -247,6 +253,10 @@ void CPropertyModule::onLoadPlayerInfo(CDBResponse& rResponse)
 /// 加载玩家基础属性
 void CPropertyModule::onLoadPlayerBaseProperty(CDBResponse& rResponse)
 {
+	if (rResponse.mSqlResult != SUCCESS)
+	{
+		return;
+	}
 	if (rResponse.mRowNum <= 0)
 	{
 		LOG_ERROR("load player base property failure, has no result return!");

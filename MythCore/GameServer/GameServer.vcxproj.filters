@@ -321,6 +321,9 @@
     <ClCompile Include="src\platmodule.cpp">
       <Filter>logicmodule\plat</Filter>
     </ClCompile>
+    <ClCompile Include="src\propertyconfig.cpp">
+      <Filter>logicmodule\property</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -673,6 +676,9 @@
     </ClInclude>
     <ClInclude Include="inc\platmodule.h">
       <Filter>logicmodule\plat</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\propertyconfig.h">
+      <Filter>logicmodule\property</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

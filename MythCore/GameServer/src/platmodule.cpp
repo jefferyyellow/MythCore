@@ -1,6 +1,10 @@
 #include "platmodule.h"
 #include "scenejob.h"
 #include "entityplayer.h"
+#include "crc32.h"
+#include "dbmodule.h"
+#include "timemanager.h"
+#include "errcode.h"
 CPlatModule::CPlatModule()
 {
 
@@ -71,28 +75,79 @@ void CPlatModule::onTimer(unsigned int nTickOffset)
 }
 
 /// 处理充值
-void CPlatModule::processRecharge(uint nAccountID, short nChannelID, short nServerID, uint nRoleID,
-	char* pGoodsID, char* pOrderID, double dRechargeMoney)
+void CPlatModule::processRecharge(char* pOrderID, char* pGoodsID, uint nRoleID,
+	uint nAccountID, short nChannelID, short nServerID, double dRechargeMoney)
 {
 	if (NULL == pGoodsID || NULL == pOrderID)
 	{
 		return;
 	}
 
-	CEntityPlayer* pEntityPlayer = CSceneJob::Inst()->getPlayerByRoleID(nRoleID);
-	// 玩家离线或者不是游戏状态
-	if (NULL == pEntityPlayer || emPlayerStatus_Gameing != pEntityPlayer->getPlayerStauts())
+	uint nOrderCRC = crc32((unsigned char*)pOrderID, strlen(pOrderID));
+	insertRechargeCache(nOrderCRC, pOrderID, pGoodsID, nRoleID, nAccountID, nChannelID, nServerID, dRechargeMoney);
+}
+
+
+/// 插入充值缓存中
+void CPlatModule::insertRechargeCache(uint nOrderCRC, char* pOrderID, char* pGoodsID, uint nRoleID,
+	uint nAccountID, short nChannelID, short nServerID, double dRechargeMoney)
+{
+	CDBModule::Inst()->pushDBTask(nRoleID, emSessionType_InsertRechargeCache, nRoleID, 0, "call InsertRechargeCache(%u, '%s', '%s',%u, %u, %u, %u, %f, %d)",
+		nOrderCRC, pOrderID, pGoodsID, nRoleID, nAccountID, nChannelID, nServerID, dRechargeMoney, CTimeManager::Inst()->getCurrTime());
+
+}
+
+/// 插入充值缓存中DB回调
+void CPlatModule::onInsertRechargeCache(CDBResponse& rResponse)
+{
+	if (SUCCESS != rResponse.mSqlResult)
 	{
-		processRechargeOffline(nAccountID, nChannelID, nServerID, nRoleID, pGoodsID, pOrderID, dRechargeMoney);
 		return;
 	}
 
-	pEntityPlayer->getVIPUnit().processRecharge(pGoodsID, pOrderID, dRechargeMoney);
+	int nResult = rResponse.getInt();
+	if (nResult != 0)
+	{
+		return;
+	}
+
+	CEntityPlayer* pEntityPlayer = CSceneJob::Inst()->getPlayerByRoleID(rResponse.mParam1);
+	// 玩家离线或者不是游戏状态
+	if (NULL == pEntityPlayer || emPlayerStatus_Gameing != pEntityPlayer->getPlayerStauts())
+	{
+		return;
+	}
+	CDBModule::Inst()->pushDBTask(pEntityPlayer->getRoleID(), emSessionType_LoadRechargeCache, 0, 0, "call LoadRechargeCache(%u)", pEntityPlayer->getRoleID());
 }
 
-/// 处理离线玩家的充值
-void CPlatModule::processRechargeOffline(uint nAccountID, short nChannelID, short nServerID, uint nRoleID,
-	char* pGoodsID, char* pOrderID, double dRechargeMoney)
+/// 加载充值缓存的DB回调
+void CPlatModule::onLoadRechargeCache(CDBResponse& rResponse)
 {
+	if (SUCCESS != rResponse.mSqlResult)
+	{
+		return;
+	}
 
+	if (SUCCESS != rResponse.mSqlResult)
+	{
+		return;
+	}
+
+
+	// 表示处理完成
+	if (rResponse.mRowNum <= 0)
+	{
+		return;
+	}
+	char strOrderID[STR_LENGTH_64] = {0};
+	char strGoodsID[STR_LENGTH_64] = {0};
+	int nID = 0;
+	int nRechargeMoney = 0.0;
+	for (int i = 0; i < rResponse.mRowNum; ++ i)
+	{
+		nID = rResponse.getInt();
+		rResponse.getString(strOrderID, sizeof(strOrderID));
+		rResponse.getString(strGoodsID, sizeof(strGoodsID));
+		nRechargeMoney = rResponse.getInt();
+	}
 }

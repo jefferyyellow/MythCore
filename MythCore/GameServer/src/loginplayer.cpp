@@ -83,9 +83,9 @@ int CLoginPlayer::processAccountVerify()
 		LOG_ERROR("processAccountVerify, Account Name: %s, ChannelId: %d, ServerId: %d, DB Session Type: %d", mAccountName, mChannelID, mServerID, mDBSessionType);
 		return -1;
 	}
-	if (SUCCESS != mDBResponse->mResult)
+	if (SUCCESS != mDBResponse->mSqlResult)
 	{
-		LOG_ERROR("processAccountVerify, Account Name: %s, ChannelId: %d, ServerId: %d, DB Result: %d", mAccountName, mChannelID, mServerID, mDBResponse->mResult);
+		LOG_ERROR("processAccountVerify, Account Name: %s, ChannelId: %d, ServerId: %d, DB Result: %d", mAccountName, mChannelID, mServerID, mDBResponse->mSqlResult);
 		return -1;
 	}
 
@@ -230,9 +230,9 @@ int CLoginPlayer::processCreateRoleing()
 		return -1;
 	}
 	
-	if (SUCCESS != mDBResponse->mResult)
+	if (SUCCESS != mDBResponse->mSqlResult)
 	{
-		LOG_ERROR("mysql create role error: %d", mDBResponse->mResult);
+		LOG_ERROR("mysql create role error: %d", mDBResponse->mSqlResult);
 		return -1;
 	}
 	int nResult = mDBResponse->getInt();

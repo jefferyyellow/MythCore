@@ -10,6 +10,7 @@
 #include "scenejob.h"
 #include "propertymodule.h"
 #include "timemanager.h"
+#include "errcode.h"
 CLoginModule::CLoginModule()
 :mLoginCheckTime(1000)
 {
@@ -194,6 +195,11 @@ void CLoginModule::OnDBMessage(CDBResponse* pMsg)
 	{
 		return;
 	}
+	if (pMsg->mSqlResult != SUCCESS)
+	{
+		return;
+	}
+
 	int nLoginPlayerObjID  = pMsg->mParam1;
 	CLoginPlayer* pLoginPlayer = static_cast<CLoginPlayer*>(CObjPool::Inst()->getObj(nLoginPlayerObjID));
 	if (NULL == pLoginPlayer)

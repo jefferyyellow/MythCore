@@ -144,3 +144,53 @@ BEGIN
 END
 ;;
 DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `InsertRechargeCache`;
+DELIMITER ;;
+CREATE PROCEDURE `InsertRechargeCache`(OrderIDCRC int unsigned,
+										 OrderID char(64),
+										 GoodsID char(64),
+										 RoleID int unsigned,
+										 AccountID int unsigned,
+										 ChannelID int unsigned, 
+										 ServerID int unsigned,
+										 RechargeMoney int,
+										 RechargeTime int)
+BEGIN
+	DECLARE tmpOrderIDCRC int unsigned;
+	SELECT order_id_crc INTO OrderIDCRC from RechargeCache where order_id_crc=OrderIDCRC and 'order_id'=OrderID;
+	IF FOUND_ROWS() = 0 THEN
+		SELECT order_id_crc INTO OrderIDCRC from RechargeRecord where order_id_crc=OrderIDCRC and 'order_id'=OrderID;
+		IF FOUND_ROWS() = 0 THEN
+			insert into RechargeCache(order_id_crc,order_id,goods_id,role_id,account_id,channel_id,server_id,recharge_money,recharge_time) \
+			values(OrderIDCRC, OrderID, GoodsID, RoleID, AccountID, ChannelID, ServerID, RechargeMoney, RechargeTime);
+			select 0;
+		ELSE
+			select -1;
+		END IF;
+	ELSE
+			select -2;
+	END IF;
+END
+;;
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `LoadRechargeCache`;
+DELIMITER ;;
+CREATE PROCEDURE `LoadRechargeCache`(RoleID int unsigned)
+BEGIN
+	SELECT id, order_id, goods_id, recharge_money from RechargeCache where order_id=RoleID;
+END
+;;
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `RechargeSuccess`;
+DELIMITER ;;
+CREATE PROCEDURE `RechargeSuccess`(ID int unsigned)
+BEGIN
+	insert into RechargeLog(order_id_crc,order_id,goods_id,role_id,account_id,channel_id,server_id,recharge_money,recharge_time) \
+	select order_id_crc,order_id,goods_id,role_id,account_id,channel_id,server_id,recharge_money,recharge_time from RechargeCache where id=ID;
+	delete from RechargeCache where id=ID;
+END
+;;
+DELIMITER ;

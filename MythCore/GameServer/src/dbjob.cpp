@@ -149,7 +149,7 @@ void CDBJob::checkDBStream()
 		}
 
 		mDBResponse.mPlayerID = mDBRequest.mPlayerID;
-		mDBResponse.mResult = nResult;
+		mDBResponse.mSqlResult = nResult;
 		mDBResponse.mParam1 = mDBRequest.mParam1;
 		mDBResponse.mParam2 = mDBRequest.mParam2;
 		mDBResponse.mSessionType = mDBRequest.mSessionType;

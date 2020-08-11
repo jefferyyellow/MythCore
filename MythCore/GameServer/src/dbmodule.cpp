@@ -4,6 +4,7 @@
 #include "objpool.h"
 #include "entityplayer.h"
 #include "jobmanager.h"
+#include "platmodule.h"
 /// Æô¶¯·þÎñÆ÷
 void CDBModule::onLaunchServer()
 {
@@ -116,7 +117,7 @@ void CDBModule::onDBSession()
 		}
 		case emSessionType_SavePlayerInfo:
 		{
-			if (mDBResponse.mResult != 0)
+			if (mDBResponse.mSqlResult != 0)
 			{
 				// ´æÅÌÊ§°Ü
 				break;
@@ -132,7 +133,7 @@ void CDBModule::onDBSession()
 		}
 		case emSessionType_SavePlayerBaseProperty:
 		{
-			if (mDBResponse.mResult != 0)
+			if (mDBResponse.mSqlResult != 0)
 			{
 				// ´æÅÌÊ§°Ü
 				break;
@@ -149,6 +150,20 @@ void CDBModule::onDBSession()
 		case emSessionType_LoadAllocateRoleId:
 		{
 			CLoginModule::Inst()->onLoadAllocateRoleId(mDBResponse);
+			break;
+		}
+		case emSessionType_InsertRechargeCache:
+		{
+			CPlatModule::Inst()->onInsertRechargeCache(mDBResponse);
+			break;
+		}
+		case emSessionType_LoadRechargeCache:
+		{
+			CPlatModule::Inst()->onLoadRechargeCache(mDBResponse);
+			break;
+		}
+		case emSessionType_RechargeSuccess:
+		{
 			break;
 		}
 	}

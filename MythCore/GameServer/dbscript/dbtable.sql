@@ -73,3 +73,35 @@ CREATE TABLE `AllocateRoleId` (
   `max_role_id`				int(11) UNSIGNED			NOT NULL,
   PRIMARY KEY  (`server_id`)
 ) ENGINE=INNODB;
+
+
+DROP TABLE IF EXISTS `RechargeCache`;
+CREATE TABLE `RechargeCache` (
+  `id`						int(11) UNSIGNED			NOT NULL	AUTO_INCREMENT,
+  `order_id_crc`			int(11) UNSIGNED			NOT NULL,
+  `order_id`				char(64)					NOT NULL,
+  `goods_id`				char(64)					NOT NULL,
+  `role_id`					int(11) UNSIGNED			NOT NULL,
+  `account_id`				int(11) UNSIGNED			NOT NULL,
+  `channel_id`				smallint(11) UNSIGNED		NOT NULL,
+  `server_id`				smallint(11) UNSIGNED		NOT NULL,
+  `recharge_money`			int(11) UNSIGNED			NOT NULL,
+  `recharge_time`			int(11) UNSIGNED			NOT NULL,
+  PRIMARY KEY  (`id)
+  UNIQUE KEY `IDX_ORDER_ID` (`order_id_crc,order_id`)
+) ENGINE=INNODB;
+
+DROP TABLE IF EXISTS `RechargeLog`;
+CREATE TABLE `RechargeLog` (
+  `order_id_crc`			int(11) UNSIGNED			NOT NULL,
+  `order_id`				char(64)					NOT NULL,
+  `goods_id`				char(64)					NOT NULL,
+  `role_id`					int(11) UNSIGNED			NOT NULL,
+  `account_id`				int(11) UNSIGNED			NOT NULL,
+  `channel_id`				smallint(11) UNSIGNED		NOT NULL,
+  `server_id`				smallint(11) UNSIGNED		NOT NULL,
+  `recharge_money`			int(11) UNSIGNED			NOT NULL,
+  `recharge_time`			int(11) UNSIGNED			NOT NULL,
+  PRIMARY KEY  (`order_id_crc,order_id`)
+  KEY `IDX_ROLE_ID` (`role_id`),
+) ENGINE=INNODB;
