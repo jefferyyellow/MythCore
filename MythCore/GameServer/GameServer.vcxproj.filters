@@ -321,8 +321,8 @@
     <ClCompile Include="src\platmodule.cpp">
       <Filter>logicmodule\plat</Filter>
     </ClCompile>
-    <ClCompile Include="src\propertyconfig.cpp">
-      <Filter>logicmodule\property</Filter>
+    <ClCompile Include="src\platconfig.cpp">
+      <Filter>logicmodule\plat</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -677,8 +677,8 @@
     <ClInclude Include="inc\platmodule.h">
       <Filter>logicmodule\plat</Filter>
     </ClInclude>
-    <ClInclude Include="inc\propertyconfig.h">
-      <Filter>logicmodule\property</Filter>
+    <ClInclude Include="inc\platconfig.h">
+      <Filter>logicmodule\plat</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

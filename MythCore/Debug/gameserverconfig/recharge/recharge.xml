@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!--
+CheckChannelName: 是否区分渠道标识, 数字：0表示不区分, 1表示区分
+GoodsID：商品ID, 字符串
+Title：商品标题，字符串
+Type为物品类型, 1为钻石，数字
+GameCoin: 游戏货币数量，数字
+CoinNum：货币数量, 数字
+CoinType：货币类型,为字符串（人民币，还是美元，英镑）
+VIPExp：充值得到的VIP经验,数字
+ChannelName: CheckChannelName:为1且ChannelName不为空时,根据渠道标识过滤发给前端的商品
+ActivityCoin：活动货币数量
+-->
+<RechargeConfig CheckChannelName="1">
+	<Item GoodsID="mxw01" Title="187" Type="1" GameCoin="187" CoinNum="3.29" CoinType="USD" VIPExp="187" ChannelName="txwyios" ActivityCoin="3700"/>
+	<Item GoodsID="mxw02" Title="633" Type="1" GameCoin="633" CoinNum="10.99" CoinType="USD" VIPExp="633" ChannelName="txwyios" ActivityCoin="12100"/>
+	<Item GoodsID="mxw03" Title="1890" Type="1" GameCoin="1890" CoinNum="32.99" CoinType="USD" VIPExp="1890" ChannelName="txwyios" ActivityCoin="36300"/>
+	<Item GoodsID="mxw04" Title="3245" Type="1" GameCoin="3245" CoinNum="54.99" CoinType="USD" VIPExp="3245" ChannelName="txwyios" ActivityCoin="60500"/>
+	<Item GoodsID="mxw05" Title="6578" Type="1" GameCoin="6578" CoinNum="109.99" CoinType="USD" VIPExp="6578" ChannelName="txwyios" ActivityCoin="121000"/>
+	<Item GoodsID="mxwyk" Title="월간카드" Type="2" GameCoin="0" CoinNum="5.49" CoinType="USD" VIPExp="300" ChannelName="txwyios" ActivityCoin="6100"/>
+</RechargeConfig>

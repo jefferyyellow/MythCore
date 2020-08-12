@@ -21,7 +21,6 @@ CPropertyModule::CPropertyModule()
 /// 启动服务器
 void CPropertyModule::onLaunchServer()
 {
-	mRechargeConfig.LoadRechargeConfig("gameserverconfig/recharge/recharge.xml");
 }
 
 /// 启动完成检查

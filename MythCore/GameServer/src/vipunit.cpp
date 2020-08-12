@@ -1,6 +1,9 @@
 #include "vipunit.h"
 #include "template.h"
-
+#include "entityplayer.h"
+#include "platconfig.h"
+#include "itemunit.h"
+#include "errcode.h"
 /// 获得VIP经验
 void CVIPUnit::obtainVIPExp(int nVIPExp)
 {
@@ -22,12 +25,21 @@ void CVIPUnit::obtainVIPExp(int nVIPExp)
 }
 
 /// 处理充值
-void CVIPUnit::processRecharge(char* pGoodsID, char* pOrderID, int nRechargeMoney)
+int CVIPUnit::processRecharge(CRechargeGoods* pRechargeGoods, int nRechargeMoney)
 {
-	if (NULL == pGoodsID || NULL == pOrderID)
+	if (NULL == pRechargeGoods)
 	{
-		return;
+		return ERR_UNKNOWN;
 	}
 
+	switch (pRechargeGoods->mType)
+	{
+		case emRechargeType_Diamond:
+		{
+			mPlayer.getItemUnit().obtainCurrency(emCurrency_Diamond, pRechargeGoods->mGameCoin);
+			break;
+		}
+	}
 
+	return SUCCESS;
 }

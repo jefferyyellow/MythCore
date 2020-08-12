@@ -3,6 +3,7 @@
 #include "logicmodule.h"
 #include "singleton.h"
 #include "commontype.h"
+#include "platconfig.h"
 using namespace Myth;
 class CDBResponse;
 class CPlatModule : public CLogicModule, public CSingleton<CPlatModule>
@@ -46,5 +47,9 @@ public:
 	void onInsertRechargeCache(CDBResponse& rResponse);
 	/// 加载充值缓存的DB回调
 	void onLoadRechargeCache(CDBResponse& rResponse);
+	/// 充值成功的DB回调
+	void onRechargeSuccess(CDBResponse& rResponse);
+private:
+	CRechargeConfig			mRechargeConfig;
 };
 #endif

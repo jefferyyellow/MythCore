@@ -23,7 +23,7 @@ void CPlatModule::init()
 /// 启动服务器
 void CPlatModule::onLaunchServer()
 {
-
+	mRechargeConfig.LoadRechargeConfig("gameserverconfig/recharge/recharge.xml");
 }
 
 /// 启动完成检查
@@ -117,7 +117,7 @@ void CPlatModule::onInsertRechargeCache(CDBResponse& rResponse)
 	{
 		return;
 	}
-	CDBModule::Inst()->pushDBTask(pEntityPlayer->getRoleID(), emSessionType_LoadRechargeCache, 0, 0, "call LoadRechargeCache(%u)", pEntityPlayer->getRoleID());
+	CDBModule::Inst()->pushDBTask(pEntityPlayer->getRoleID(), emSessionType_LoadRechargeCache, rResponse.mParam1, 0, "call LoadRechargeCache(%u)", pEntityPlayer->getRoleID());
 }
 
 /// 加载充值缓存的DB回调
@@ -128,26 +128,54 @@ void CPlatModule::onLoadRechargeCache(CDBResponse& rResponse)
 		return;
 	}
 
-	if (SUCCESS != rResponse.mSqlResult)
+	uint nRoleID = rResponse.mParam1;
+	CEntityPlayer* pEntityPlayer = CSceneJob::Inst()->getPlayerByRoleID(nRoleID);
+	// 玩家离线或者不是游戏状态
+	if (NULL == pEntityPlayer || emPlayerStatus_Gameing != pEntityPlayer->getPlayerStauts())
 	{
 		return;
 	}
-
 
 	// 表示处理完成
 	if (rResponse.mRowNum <= 0)
 	{
 		return;
 	}
+	uint nID = 0;
+	uint nIDCRC = 0;
+
 	char strOrderID[STR_LENGTH_64] = {0};
 	char strGoodsID[STR_LENGTH_64] = {0};
-	int nID = 0;
-	int nRechargeMoney = 0.0;
+	int nRechargeMoney = 0;
+
+	int nResult = SUCCESS;
 	for (int i = 0; i < rResponse.mRowNum; ++ i)
 	{
-		nID = rResponse.getInt();
+		nID = rResponse.getUInt();
+		nIDCRC = rResponse.getUInt();
 		rResponse.getString(strOrderID, sizeof(strOrderID));
 		rResponse.getString(strGoodsID, sizeof(strGoodsID));
-		nRechargeMoney = rResponse.getInt();
+		nRechargeMoney = rResponse.getUInt();
+
+		CRechargeGoods* pGoods = mRechargeConfig.getGoods(nIDCRC, strGoodsID);
+		if (NULL == pGoods)
+		{
+			LOG_ERROR("Recharge Goods is not exist, RoleID: %u, GoodsID: %s", nRoleID, strGoodsID);
+			continue;
+		}
+		nResult = pEntityPlayer->getVIPUnit().processRecharge(pGoods, nRechargeMoney);
+		if (SUCCESS == nResult)
+		{
+			CDBModule::Inst()->pushDBTask(pEntityPlayer->getRoleID(), emSessionType_RechargeSuccess, nRoleID, 0, "call RechargeSuccess(%u)", nID);
+		}
+	}
+}
+
+/// 充值成功的DB回调
+void CPlatModule::onRechargeSuccess(CDBResponse& rResponse)
+{
+	if (SUCCESS != rResponse.mSqlResult)
+	{
+		return;
 	}
 }

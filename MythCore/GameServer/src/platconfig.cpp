@@ -1,6 +1,7 @@
-#include "propertyconfig.h"
+#include "platconfig.h"
 #include "tinyxml2.h"
 #include "locallogjob.h"
+#include "crc32.h"
 bool CRechargeConfig::LoadRechargeConfig(const char* pFilePath)
 {
 	if (NULL == pFilePath)
@@ -31,10 +32,11 @@ bool CRechargeConfig::LoadRechargeConfig(const char* pFilePath)
 	{
 		CRechargeGoods tGoods;
 		tGoods.mGoodsID = pItemElem->Attribute("GoodsID");
+		tGoods.mGoodsIDCRC = crc32((unsigned char*)tGoods.mGoodsID.c_str(), tGoods.mGoodsID.size());
 		tGoods.mTitle = pItemElem->Attribute("Title");
 		tGoods.mType = (byte)pItemElem->IntAttribute("Type");
 		tGoods.mGameCoin = pItemElem->IntAttribute("GameCoin");
-		tGoods.mCoinNum = pItemElem->DoubleAttribute("CoinNum") * 100 + 0.5;
+		tGoods.mCoinNum = (int)(pItemElem->DoubleAttribute("CoinNum") * 100 + 0.5);
 		tGoods.mCoinType = pItemElem->Attribute("CoinType");
 		tGoods.mVIPExp = pItemElem->IntAttribute("VIPExp");
 		tGoods.mChannelName = pItemElem->Attribute("ChannelName");
@@ -44,4 +46,16 @@ bool CRechargeConfig::LoadRechargeConfig(const char* pFilePath)
 	}
 
 	return true;
+}
+
+CRechargeGoods* CRechargeConfig::getGoods(uint nCRC32, const char* pGoodsID)
+{
+	for (uint i = 0; i < mGoodsList.size(); ++ i)
+	{
+		if (mGoodsList[i].mGoodsIDCRC == nCRC32 && mGoodsList[i].mGoodsID == pGoodsID)
+		{
+			return &mGoodsList[i];
+		}
+	}
+	return NULL;
 }

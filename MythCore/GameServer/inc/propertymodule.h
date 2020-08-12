@@ -5,7 +5,6 @@
 #include "gmcommandmanager.h"
 #include "messagefactory.h"
 #include "timeutility.h"
-#include "propertyconfig.h"
 using namespace Myth;
 class CEntityPlayer;
 class CEntity;
@@ -92,6 +91,5 @@ public:
 private:
 	CGMCommandManager		mGMCmdManager;
 	CAutoResetTimer			mSavePlayerTimer;
-	CRechargeConfig			mRechargeConfig;
 };
 #endif

@@ -3,6 +3,7 @@
 #include "playersubunit.h"
 #include "servercommon.h"
 class CEntityPlayer;
+class CRechargeGoods;
 class CVIPUnit : public CPlayerSubUnit
 {
 public:
@@ -26,7 +27,7 @@ public:
 	/// 获得VIP经验
 	void obtainVIPExp(int nVIPExp);
 	/// 处理充值
-	void processRecharge(char* pGoodsID, char* pOrderID, int nRechargeMoney);
+	int processRecharge(CRechargeGoods* pRechargeGoods, int nRechargeMoney);
 public:
 	/// autocode, don't edit
 	int getVipExp(){ return mVipExp; }

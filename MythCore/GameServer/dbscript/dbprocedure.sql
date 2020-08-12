@@ -179,7 +179,7 @@ DROP PROCEDURE IF EXISTS `LoadRechargeCache`;
 DELIMITER ;;
 CREATE PROCEDURE `LoadRechargeCache`(RoleID int unsigned)
 BEGIN
-	SELECT id, order_id, goods_id, recharge_money from RechargeCache where order_id=RoleID;
+	SELECT id, order_id_crc, order_id, goods_id, recharge_money from RechargeCache where order_id=RoleID;
 END
 ;;
 DELIMITER ;
@@ -188,9 +188,11 @@ DROP PROCEDURE IF EXISTS `RechargeSuccess`;
 DELIMITER ;;
 CREATE PROCEDURE `RechargeSuccess`(ID int unsigned)
 BEGIN
+	START TRANSACTION;
 	insert into RechargeLog(order_id_crc,order_id,goods_id,role_id,account_id,channel_id,server_id,recharge_money,recharge_time) \
 	select order_id_crc,order_id,goods_id,role_id,account_id,channel_id,server_id,recharge_money,recharge_time from RechargeCache where id=ID;
 	delete from RechargeCache where id=ID;
+	COMMIT;
 END
 ;;
 DELIMITER ;

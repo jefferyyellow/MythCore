@@ -130,7 +130,7 @@
     <ClCompile Include="src\platjob.cpp" />
     <ClCompile Include="src\platlog.cpp" />
     <ClCompile Include="src\platmodule.cpp" />
-    <ClCompile Include="src\propertyconfig.cpp" />
+    <ClCompile Include="src\platconfig.cpp" />
     <ClCompile Include="src\propertymodule.cpp" />
     <ClCompile Include="src\propertyunit.cpp" />
     <ClCompile Include="src\rankmodule.cpp" />
@@ -242,7 +242,7 @@
     <ClInclude Include="inc\platmodule.h" />
     <ClInclude Include="inc\playersubunit.h" />
     <ClInclude Include="inc\geometrytype.h" />
-    <ClInclude Include="inc\propertyconfig.h" />
+    <ClInclude Include="inc\platconfig.h" />
     <ClInclude Include="inc\propertyunit.h" />
     <ClInclude Include="inc\rank.h" />
     <ClInclude Include="inc\rankmodule.h" />
