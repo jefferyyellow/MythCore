@@ -367,37 +367,37 @@ namespace lua_tinker
    template<typename RVal, typename T1 = void, typename T2 = void, typename T3 = void, typename T4 = void, typename T5 = void>
    struct functor
    {
-      static int invoke ( lua_State *L ) { push ( L, upvalue_<RVal ( *)( T1, T2, T3, T4, T5 )> ( L )( read<T1> ( L, 1 ), read<T2> ( L, 2 ), read<T3> ( L, 3 ), read<T4> ( L, 4 ), read<T5> ( L, 5 ) ) ); return 1; }
+      static int invoke ( lua_State *L ) { push<RVal> ( L, upvalue_<RVal ( *)( T1, T2, T3, T4, T5 )> ( L )( read<T1> ( L, 1 ), read<T2> ( L, 2 ), read<T3> ( L, 3 ), read<T4> ( L, 4 ), read<T5> ( L, 5 ) ) ); return 1; }
    };
 
    template<typename RVal, typename T1, typename T2, typename T3, typename T4>
    struct functor < RVal, T1, T2, T3, T4 >
    {
-      static int invoke ( lua_State *L ) { push ( L, upvalue_<RVal ( *)( T1, T2, T3, T4 )> ( L )( read<T1> ( L, 1 ), read<T2> ( L, 2 ), read<T3> ( L, 3 ), read<T4> ( L, 4 ) ) ); return 1; }
+      static int invoke ( lua_State *L ) { push<RVal> ( L, upvalue_<RVal ( *)( T1, T2, T3, T4 )> ( L )( read<T1> ( L, 1 ), read<T2> ( L, 2 ), read<T3> ( L, 3 ), read<T4> ( L, 4 ) ) ); return 1; }
    };
 
    template<typename RVal, typename T1, typename T2, typename T3>
    struct functor < RVal, T1, T2, T3 >
    {
-      static int invoke ( lua_State *L ) { push ( L, upvalue_<RVal ( *)( T1, T2, T3 )> ( L )( read<T1> ( L, 1 ), read<T2> ( L, 2 ), read<T3> ( L, 3 ) ) ); return 1; }
+      static int invoke ( lua_State *L ) { push<RVal> ( L, upvalue_<RVal ( *)( T1, T2, T3 )> ( L )( read<T1> ( L, 1 ), read<T2> ( L, 2 ), read<T3> ( L, 3 ) ) ); return 1; }
    };
 
    template<typename RVal, typename T1, typename T2>
    struct functor < RVal, T1, T2 >
    {
-      static int invoke ( lua_State *L ) { push ( L, upvalue_<RVal ( *)( T1, T2 )> ( L )( read<T1> ( L, 1 ), read<T2> ( L, 2 ) ) ); return 1; }
+      static int invoke ( lua_State *L ) { push<RVal> ( L, upvalue_<RVal ( *)( T1, T2 )> ( L )( read<T1> ( L, 1 ), read<T2> ( L, 2 ) ) ); return 1; }
    };
 
    template<typename RVal, typename T1>
    struct functor < RVal, T1 >
    {
-      static int invoke ( lua_State *L ) { push ( L, upvalue_<RVal ( *)( T1 )> ( L )( read<T1> ( L, 1 ) ) ); return 1; }
+      static int invoke ( lua_State *L ) { push<RVal> ( L, upvalue_<RVal ( *)( T1 )> ( L )( read<T1> ( L, 1 ) ) ); return 1; }
    };
 
    template<typename RVal>
    struct functor < RVal >
    {
-      static int invoke ( lua_State *L ) { push ( L, upvalue_<RVal ( *)( )> ( L )( ) ); return 1; }
+      static int invoke ( lua_State *L ) { push<RVal> ( L, upvalue_<RVal ( *)( )> ( L )( ) ); return 1; }
    };
 
    // functor (without return value)
@@ -519,37 +519,37 @@ namespace lua_tinker
    template<typename RVal, typename T, typename T1 = void, typename T2 = void, typename T3 = void, typename T4 = void, typename T5 = void>
    struct mem_functor
    {
-      static int invoke ( lua_State *L ) { push ( L, ( read<T*> ( L, 1 )->*upvalue_<RVal ( T::* )( T1, T2, T3, T4, T5 )> ( L ) )( read<T1> ( L, 2 ), read<T2> ( L, 3 ), read<T3> ( L, 4 ), read<T4> ( L, 5 ), read<T5> ( L, 6 ) ) );; return 1; }
+      static int invoke ( lua_State *L ) { push<RVal> ( L, ( read<T*> ( L, 1 )->*upvalue_<RVal ( T::* )( T1, T2, T3, T4, T5 )> ( L ) )( read<T1> ( L, 2 ), read<T2> ( L, 3 ), read<T3> ( L, 4 ), read<T4> ( L, 5 ), read<T5> ( L, 6 ) ) );; return 1; }
    };
 
    template<typename RVal, typename T, typename T1, typename T2, typename T3, typename T4>
    struct mem_functor < RVal, T, T1, T2, T3, T4 >
    {
-      static int invoke ( lua_State *L ) { push ( L, ( read<T*> ( L, 1 )->*upvalue_<RVal ( T::* )( T1, T2, T3, T4 )> ( L ) )( read<T1> ( L, 2 ), read<T2> ( L, 3 ), read<T3> ( L, 4 ), read<T4> ( L, 5 ) ) ); return 1; }
+      static int invoke ( lua_State *L ) { push<RVal> ( L, ( read<T*> ( L, 1 )->*upvalue_<RVal ( T::* )( T1, T2, T3, T4 )> ( L ) )( read<T1> ( L, 2 ), read<T2> ( L, 3 ), read<T3> ( L, 4 ), read<T4> ( L, 5 ) ) ); return 1; }
    };
 
    template<typename RVal, typename T, typename T1, typename T2, typename T3>
    struct mem_functor < RVal, T, T1, T2, T3 >
    {
-      static int invoke ( lua_State *L ) { push ( L, ( read<T*> ( L, 1 )->*upvalue_<RVal ( T::* )( T1, T2, T3 )> ( L ) )( read<T1> ( L, 2 ), read<T2> ( L, 3 ), read<T3> ( L, 4 ) ) ); return 1; }
+      static int invoke ( lua_State *L ) { push<RVal> ( L, ( read<T*> ( L, 1 )->*upvalue_<RVal ( T::* )( T1, T2, T3 )> ( L ) )( read<T1> ( L, 2 ), read<T2> ( L, 3 ), read<T3> ( L, 4 ) ) ); return 1; }
    };
 
    template<typename RVal, typename T, typename T1, typename T2>
    struct mem_functor < RVal, T, T1, T2 >
    {
-      static int invoke ( lua_State *L ) { push ( L, ( read<T*> ( L, 1 )->*upvalue_<RVal ( T::* )( T1, T2 )> ( L ) )( read<T1> ( L, 2 ), read<T2> ( L, 3 ) ) ); return 1; }
+      static int invoke ( lua_State *L ) { push<RVal> ( L, ( read<T*> ( L, 1 )->*upvalue_<RVal ( T::* )( T1, T2 )> ( L ) )( read<T1> ( L, 2 ), read<T2> ( L, 3 ) ) ); return 1; }
    };
 
    template<typename RVal, typename T, typename T1>
    struct mem_functor < RVal, T, T1 >
    {
-      static int invoke ( lua_State *L ) { push ( L, ( read<T*> ( L, 1 )->*upvalue_<RVal ( T::* )( T1 )> ( L ) )( read<T1> ( L, 2 ) ) ); return 1; }
+      static int invoke ( lua_State *L ) { push<RVal> ( L, ( read<T*> ( L, 1 )->*upvalue_<RVal ( T::* )( T1 )> ( L ) )( read<T1> ( L, 2 ) ) ); return 1; }
    };
 
    template<typename RVal, typename T>
    struct mem_functor < RVal, T >
    {
-      static int invoke ( lua_State *L ) { push ( L, ( read<T*> ( L, 1 )->*upvalue_<RVal ( T::* )( )> ( L ) )( ) ); return 1; }
+      static int invoke ( lua_State *L ) { push<RVal> ( L, ( read<T*> ( L, 1 )->*upvalue_<RVal ( T::* )( )> ( L ) )( ) ); return 1; }
    };
 
    // class member functor (without return value)
