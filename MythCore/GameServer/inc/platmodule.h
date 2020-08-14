@@ -37,18 +37,22 @@ public:
 
 public:
 	/// 处理充值
-	void processRecharge(char* pOrderID, char* pGoodsID, uint nRoleID,
+	void processRecharge(const char* pOrderID, const char* pGoodsID, uint nRoleID,
 		uint nAccountID, short nChannelID, short nServerID, double dRechargeMoney);
 
-	/// 插入充值缓存中
-	void insertRechargeCache(uint nOrderCRC, char* pOrderID, char* pGoodsID, uint nRoleID, 
-		uint nAccountID, short nChannelID, short nServerID, double dRechargeMoney);
 	/// 插入充值缓存中DB回调
 	void onInsertRechargeCache(CDBResponse& rResponse);
+	/// 加载充值缓存
+	void loadRechargeCache(CEntityPlayer* pPlayer);
 	/// 加载充值缓存的DB回调
 	void onLoadRechargeCache(CDBResponse& rResponse);
 	/// 充值成功的DB回调
 	void onRechargeSuccess(CDBResponse& rResponse);
+
+
+public:
+	CRechargeConfig&		getRechargeConfig(){return mRechargeConfig;}
+
 private:
 	CRechargeConfig			mRechargeConfig;
 };

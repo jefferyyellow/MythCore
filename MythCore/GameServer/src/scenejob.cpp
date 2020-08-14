@@ -26,6 +26,16 @@
 #include "platjob.h"
 #include "timemanager.h"
 #include "platmodule.h"
+#include "errcode.h"
+#include "ServerActLuaReg.h"
+#include "playerluareg.h"
+extern "C"
+{
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
+};
+
 CSceneJob::CSceneJob()
 :mMinuteTimer(SECONDS_PER_MIN)
 {
@@ -79,6 +89,7 @@ void CSceneJob::doing(int uParam)
 
 void CSceneJob::doInit()
 {
+	initLua();
 	launchServer();
 	printf("Begin Launch Server\n");
 	mServerState = emServerStateLaunch;
@@ -189,6 +200,7 @@ void CSceneJob::doExit()
 		printf("All Player Kick Out\n");
 		setExited(true);
 	}
+	lua_close(mLuaState);
 }
 
 void CSceneJob::launchServer()
@@ -469,6 +481,22 @@ void CSceneJob::checkDBStream()
 
 		CDBModule::Inst()->onDBSession();
 	}
+}
+
+/// ≥ı ºªØlua
+int CSceneJob::initLua()
+{
+	mLuaState = luaL_newstate();
+	if (NULL == mLuaState)
+	{
+		printf("bad luaL_newstate");
+		return -1;
+	}
+	luaL_openlibs(mLuaState);
+
+	CServerActLuaReg::reglua();
+	CPlayerLuaReg::reglua();
+	return SUCCESS;
 }
 
 

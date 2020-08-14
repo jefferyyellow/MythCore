@@ -9,6 +9,9 @@
 #include "gameserver.h"
 #include "chatmodule.hxx.pb.h"
 #include "chatmodule.h"
+#include "platconfig.h"
+#include "platmodule.h"
+#include "crc32.h"
 /// 广播命令影响和结果
 void CGMCommandManager::broadcastCommandResult(CEntityPlayer* pPlayer, char* pResult)
 {
@@ -85,6 +88,7 @@ void CGMCommandManager::InitCommand()
 	COMMAND_HANDLER_ADD(clearbag, "清空背包，用法：\\clearbag，清空背包，注意：不包括货币，只清除道具。");
 	COMMAND_HANDLER_ADD(setlevel, "获得道具，用法：\\setlevel 等级，设置玩家等级。");
 	COMMAND_HANDLER_ADD(settime, "设置时间，用法：\\settime [20200803] [11:44:55]，设置当前的服务器时间。");
+	COMMAND_HANDLER_ADD(recharge, "充值，用法：\\recharge 商品ID [订单号]，设置当前的服务器时间。");
 }
 
 COMMAND_HANDLER_IMPL(help)
@@ -270,4 +274,35 @@ COMMAND_HANDLER_IMPL(settime)
 	asctime_r(&tTmSetTime, acBuffer);
 #endif
 	broadcastCommandResult(pPlayer, acBuffer);
+}
+
+COMMAND_HANDLER_IMPL(recharge)
+{
+	MYTH_ASSERT_INFO(tTokens.size() >= 1, return,
+		"recharge command parameter number invalid, %d", tTokens.size());
+
+	uint nIDCRC = crc32((unsigned char*)tTokens[0].c_str(), tTokens[0].size());
+	char acOrderID[STR_LENGTH_128] = { 0 };
+	if (tTokens.size() >= 2)
+	{
+		strncpy(acOrderID, tTokens[1].c_str(), sizeof(acOrderID) - 1);
+	}
+	else
+	{
+		tm& rTmNow = CSceneJob::Inst()->getTmNow();
+#ifdef MYTH_OS_WINDOWS
+		asctime_s(acOrderID, sizeof(acOrderID) - 1, &rTmNow);
+#else
+		asctime_r(&rTmNow, acOrderID);
+#endif
+	}
+
+	CRechargeGoods* pGoods = CPlatModule::Inst()->getRechargeConfig().getGoods(nIDCRC, tTokens[0].c_str());
+	if (NULL == pGoods)
+	{
+		return;
+	}
+
+	CPlatModule::Inst()->processRecharge(acOrderID, tTokens[0].c_str(), pPlayer->getRoleID(), 
+		pPlayer->GetAccountID(), pPlayer->getChannelID(), pPlayer->getServerID(), pGoods->mCoinNum);
 }

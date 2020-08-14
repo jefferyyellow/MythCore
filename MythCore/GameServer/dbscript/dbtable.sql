@@ -87,8 +87,8 @@ CREATE TABLE `RechargeCache` (
   `server_id`				smallint(11) UNSIGNED		NOT NULL,
   `recharge_money`			int(11) UNSIGNED			NOT NULL,
   `recharge_time`			int(11) UNSIGNED			NOT NULL,
-  PRIMARY KEY  (`id)
-  UNIQUE KEY `IDX_ORDER_ID` (`order_id_crc,order_id`)
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `IDX_ORDER_ID` (`order_id_crc`,`order_id`)
 ) ENGINE=INNODB;
 
 DROP TABLE IF EXISTS `RechargeLog`;
@@ -102,6 +102,6 @@ CREATE TABLE `RechargeLog` (
   `server_id`				smallint(11) UNSIGNED		NOT NULL,
   `recharge_money`			int(11) UNSIGNED			NOT NULL,
   `recharge_time`			int(11) UNSIGNED			NOT NULL,
-  PRIMARY KEY  (`order_id_crc,order_id`)
-  KEY `IDX_ROLE_ID` (`role_id`),
+  PRIMARY KEY  (`order_id_crc`,`order_id`),
+  KEY `IDX_ROLE_ID` (`role_id`)
 ) ENGINE=INNODB;

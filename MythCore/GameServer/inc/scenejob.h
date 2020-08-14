@@ -28,6 +28,7 @@ class CLogicModule;
 class CEntity;
 class CLoginPlayer;
 class CEntityTimer;
+struct lua_State;
 class CSceneJob : public CJob < 100, 100 >, public CSingleton<CSceneJob>
 {
 public:
@@ -64,6 +65,8 @@ public:
 	void		popUpDBData(byte* pData, int &rLength);
 	/// 检查DB流
 	void		checkDBStream();
+	/// 初始化lua
+	int			initLua();
 
 public:
 	virtual void doing(int uParam);
@@ -138,6 +141,9 @@ public:
 	}
 public:
 	/// autocode don't edit
+	lua_State* getLuaState() const { return mLuaState; }
+	void setLuaState(lua_State* nValue) { mLuaState = nValue; }
+
     CShareMemory* getShareMemory(){ return mShareMemory;}
     void setShareMemory(CShareMemory* value){ mShareMemory = value;}
 
@@ -175,6 +181,7 @@ public:
     CAutoResetTimer& getMinuteTimer(){ return mMinuteTimer;}
 	/// end autocode
 private:
+	lua_State*				mLuaState; 
 	CShareMemory*			mShareMemory;
 	CSocketStream*			mTcp2ServerMemory;
 	CSocketStream*			mServer2TcpMemory;

@@ -21,17 +21,7 @@ private:
 	CServerActModule();
 	~CServerActModule();
 
-	void init()
-	{
-        mServerOpenTime = 0;
-        mServerStartTime = 0;
-		for (int i = 0; i < MAX_SERVER_ACT_NUM; ++i)
-		{
-			mServerActivity[i] = NULL;
-			mAvailActivity[i] = NULL;
-		}
-		mAvailActivityNum = 0;
-	}
+	void init();
 
 	// 清空开服活动
 	void clearServerActivity();
@@ -66,17 +56,14 @@ public:
 public:
 	/// 加载开放活动配置
 	void				loadServerActivityConfig(const char* pConfigFile);
-	/// 加载详细活动配置
-	void				loadSpecifyActivityConfig(const char* pConfigFile);
-	/// 根据活动类型创建开服活动
-	CServerActivity*	createServerActivity(EmSvrActType emSvrActType);
 	/// 清算结束的活动
 	void				clearEndedActivity();
 	/// 得到对应的开服活动
 	CServerActivity*	getServerActivity(int nActivityID);
 	/// 刷新活动进度
 	void				refreshProcess(EmSvrActType eType, CEntityPlayer& rPlayer, int nParam1, int nParam2);
-
+	/// 初始化类型函数
+	void				initActivityTypeFunc(int nType, int nFuncType, const char* pFuncName);
 public:
 	/// autocode
     time_t getServerOpenTime(){ return mServerOpenTime;}

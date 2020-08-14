@@ -164,6 +164,7 @@ void CDBModule::onDBSession()
 		}
 		case emSessionType_RechargeSuccess:
 		{
+			CPlatModule::Inst()->onRechargeSuccess(mDBResponse);
 			break;
 		}
 	}

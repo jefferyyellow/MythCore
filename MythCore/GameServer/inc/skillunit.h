@@ -43,7 +43,7 @@ private:
 
 class CSkillUnit : public CPlayerSubUnit
 {
-	typedef CArray<CPlayerSkill, MAX_PLAYER_SKILL_NUM> PLAYER_SKILL_LIST;
+	//typedef CArray<CPlayerSkill, MAX_PLAYER_SKILL_NUM> PLAYER_SKILL_LIST;
 public:
 	CSkillUnit(CEntityPlayer& rPlayer)
 		: CPlayerSubUnit(rPlayer)
@@ -56,36 +56,36 @@ public:
 		
 	}
 
-	void				pushbackSkill(int nSkillID, int nSkillLevel)
-	{
-		if (mSkillList.size() >= mSkillList.capacity())
-		{
-			LOG_ERROR("Push back skill error, Skill list siz:%d capacity: %d", mSkillList.size(), mSkillList.capacity());
-			return;
-		}
-		CPlayerSkill tPlayerSkill;
-		tPlayerSkill.setSkillId(nSkillID);
-		tPlayerSkill.setSkillLevel(nSkillLevel);
-		mSkillList.push_back(tPlayerSkill);
-	}
+	//void				pushbackSkill(int nSkillID, int nSkillLevel)
+	//{
+	//	if (mSkillList.size() >= mSkillList.capacity())
+	//	{
+	//		LOG_ERROR("Push back skill error, Skill list siz:%d capacity: %d", mSkillList.size(), mSkillList.capacity());
+	//		return;
+	//	}
+	//	CPlayerSkill tPlayerSkill;
+	//	tPlayerSkill.setSkillId(nSkillID);
+	//	tPlayerSkill.setSkillLevel(nSkillLevel);
+	//	mSkillList.push_back(tPlayerSkill);
+	//}
 
-	CPlayerSkill*		getPlayerSkill(unsigned int nIndex)
-	{
-		if (nIndex >= mSkillList.size())
-		{
-			LOG_ERROR("Get player skill error, Skill list siz:%d capacity: %d", mSkillList.size(), mSkillList.capacity());
-			return NULL;
-		}
+	//CPlayerSkill*		getPlayerSkill(unsigned int nIndex)
+	//{
+	//	if (nIndex >= mSkillList.size())
+	//	{
+	//		LOG_ERROR("Get player skill error, Skill list siz:%d capacity: %d", mSkillList.size(), mSkillList.capacity());
+	//		return NULL;
+	//	}
 
-		return &mSkillList[nIndex];
-	}
+	//	return &mSkillList[nIndex];
+	//}
 
-public:
-	/// autocode don't edit!!!
-    PLAYER_SKILL_LIST& getSkillList(){ return mSkillList;}
-	/// end autocode
-
-private:
-	PLAYER_SKILL_LIST	mSkillList;
+//public:
+//	/// autocode don't edit!!!
+//    PLAYER_SKILL_LIST& getSkillList(){ return mSkillList;}
+//	/// end autocode
+//
+//private:
+//	PLAYER_SKILL_LIST	mSkillList;
 };
 #endif

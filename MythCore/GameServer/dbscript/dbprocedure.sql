@@ -160,7 +160,7 @@ BEGIN
 	DECLARE tmpOrderIDCRC int unsigned;
 	SELECT order_id_crc INTO OrderIDCRC from RechargeCache where order_id_crc=OrderIDCRC and 'order_id'=OrderID;
 	IF FOUND_ROWS() = 0 THEN
-		SELECT order_id_crc INTO OrderIDCRC from RechargeRecord where order_id_crc=OrderIDCRC and 'order_id'=OrderID;
+		SELECT order_id_crc INTO OrderIDCRC from RechargeLog where order_id_crc=OrderIDCRC and 'order_id'=OrderID;
 		IF FOUND_ROWS() = 0 THEN
 			insert into RechargeCache(order_id_crc,order_id,goods_id,role_id,account_id,channel_id,server_id,recharge_money,recharge_time) \
 			values(OrderIDCRC, OrderID, GoodsID, RoleID, AccountID, ChannelID, ServerID, RechargeMoney, RechargeTime);
@@ -179,19 +179,19 @@ DROP PROCEDURE IF EXISTS `LoadRechargeCache`;
 DELIMITER ;;
 CREATE PROCEDURE `LoadRechargeCache`(RoleID int unsigned)
 BEGIN
-	SELECT id, order_id_crc, order_id, goods_id, recharge_money from RechargeCache where order_id=RoleID;
+	SELECT id, order_id, goods_id, recharge_money from RechargeCache where role_id=RoleID;
 END
 ;;
 DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `RechargeSuccess`;
 DELIMITER ;;
-CREATE PROCEDURE `RechargeSuccess`(ID int unsigned)
+CREATE PROCEDURE `RechargeSuccess`(RechargeID int unsigned)
 BEGIN
 	START TRANSACTION;
 	insert into RechargeLog(order_id_crc,order_id,goods_id,role_id,account_id,channel_id,server_id,recharge_money,recharge_time) \
-	select order_id_crc,order_id,goods_id,role_id,account_id,channel_id,server_id,recharge_money,recharge_time from RechargeCache where id=ID;
-	delete from RechargeCache where id=ID;
+	select order_id_crc,order_id,goods_id,role_id,account_id,channel_id,server_id,recharge_money,recharge_time from RechargeCache where id=RechargeID;
+	delete from RechargeCache where id=RechargeID;
 	COMMIT;
 END
 ;;

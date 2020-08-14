@@ -328,6 +328,7 @@ void CPropertyModule::onLoadComplete(CEntityPlayer* pPlayer)
 
 	CSceneJob::Inst()->createPlayer(pPlayer);
 
+
 	pPlayer->refreshBaseProperty();
 	pPlayer->refreshFightProperty();
 	printf("%s%d%s\n", "*****************Load Complete:", pPlayer->getRoleID(), "*****************");

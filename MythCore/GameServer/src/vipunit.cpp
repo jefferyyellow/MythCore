@@ -4,6 +4,7 @@
 #include "platconfig.h"
 #include "itemunit.h"
 #include "errcode.h"
+#include "serveractmodule.h"
 /// 获得VIP经验
 void CVIPUnit::obtainVIPExp(int nVIPExp)
 {
@@ -41,5 +42,6 @@ int CVIPUnit::processRecharge(CRechargeGoods* pRechargeGoods, int nRechargeMoney
 		}
 	}
 
+	CServerActModule::Inst()->refreshProcess(emSvrActType_CumRecharge, mPlayer, pRechargeGoods->mActivityCoin, 0);
 	return SUCCESS;
 }

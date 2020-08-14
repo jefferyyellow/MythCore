@@ -57,9 +57,13 @@ public:
 	{
 		mName[0] = '\0';
 		mRoleID = 0;
+		mAccountID = 0;
+		mChannelID = 0;
+		mServerID = 0;
 		mPlayerStauts = 0;
 		mSaveStatus = 0;
 		mLoadStatus = 0;
+
 	}
 public:
 	/// 刷新基本属性
@@ -159,6 +163,15 @@ public:
     unsigned int getRoleID(){ return mRoleID;}
     void setRoleID(unsigned int value){ mRoleID = value;}
 
+	uint GetAccountID() const { return mAccountID; }
+	void SetAccountID(uint nValue) { mAccountID = nValue; }
+
+	short getChannelID() const { return mChannelID; }
+	void setChannelID(short nValue) { mChannelID = nValue; }
+	
+	short getServerID() const { return mServerID; }
+	void setServerID(short nValue) { mServerID = nValue; }
+
     CBaseProperty* getBaseProperty(int nIndex)
     {
         if(nIndex < emProType_None || nIndex >= emProTypeMax)
@@ -211,6 +224,12 @@ private:
 	char			mName[PLAYER_NAME_LENGTH];
 	/// 角色ID
 	unsigned int	mRoleID;
+	/// 账号
+	uint			mAccountID;	
+	/// 渠道
+	short			mChannelID;
+	/// 服务器ID
+	short			mServerID;
 	/// 基础属性
 	CBaseProperty	mBaseProperty[emProTypeMax];
 	/// 玩家状态 EmPlayerStatus

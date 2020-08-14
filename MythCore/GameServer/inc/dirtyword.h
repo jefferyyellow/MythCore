@@ -11,7 +11,9 @@ private:
 	CDirtyWord()
 	{}
 	~CDirtyWord()
-	{}
+	{
+		clear();
+	}
 
 public:
 	void	clear();

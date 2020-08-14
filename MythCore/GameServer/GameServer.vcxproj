@@ -45,14 +45,14 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>MYTH_OS_WINDOWS;_CRT_SECURE_NO_WARNINGS;__DEBUG__;NOMINMAX;__USE_PERF_FUNC__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../MythCore/include;../dep/protobuffer;../message;../dep/mysql/include;./inc;../dep/tinyxml;../dep;../dep/libcurl/include;../dep/hiredis/windows/include;../dep/jsoncpp/;../dep/libevent/windows/include;../dep/gtest/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../MythCore/include;../dep/protobuffer;../message;../dep/mysql/include;./inc;../dep/tinyxml;../dep;../dep/libcurl/include;../dep/hiredis/windows/include;../dep/jsoncpp/;../dep/libevent/windows/include;../dep/gtest/include;../dep/luacode5_3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>MythCore.lib;libprotobufd.lib;libcurl.lib;hiredis.lib;lib_json.lib;libevent_core.lib;gtestd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>MythCore.lib;libprotobufd.lib;libcurl.lib;hiredis.lib;lib_json.lib;libevent_core.lib;gtestd.lib;luacode5_3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../Debug;../dep/protobuffer/lib;../dep/gtest/lib;../dep/libcurl/lib;../dep/hiredis/windows/lib;../dep/jsoncpp/lib;../dep/libevent/windows/lib</AdditionalLibraryDirectories>
-      <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>libcmt.lib;libcmtd.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -115,6 +115,7 @@
     <ClCompile Include="src\locallogjob.cpp" />
     <ClCompile Include="src\loginmodule.cpp" />
     <ClCompile Include="src\loginplayer.cpp" />
+    <ClCompile Include="src\lua_tinker.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\mapmamager.cpp" />
     <ClCompile Include="src\mapconfigmanager.cpp" />
@@ -131,6 +132,7 @@
     <ClCompile Include="src\platlog.cpp" />
     <ClCompile Include="src\platmodule.cpp" />
     <ClCompile Include="src\platconfig.cpp" />
+    <ClCompile Include="src\playerluareg.cpp" />
     <ClCompile Include="src\propertymodule.cpp" />
     <ClCompile Include="src\propertyunit.cpp" />
     <ClCompile Include="src\rankmodule.cpp" />
@@ -140,6 +142,7 @@
     <ClCompile Include="src\serveractivity.cpp" />
     <ClCompile Include="src\serveractivityunit.cpp" />
     <ClCompile Include="src\serveractmodule.cpp" />
+    <ClCompile Include="src\ServerActLuaReg.cpp" />
     <ClCompile Include="src\timemanager.cpp" />
     <ClCompile Include="src\serverutility.cpp" />
     <ClCompile Include="src\shopconfig.cpp" />
@@ -225,6 +228,7 @@
     <ClInclude Include="inc\loginmodule.h" />
     <ClInclude Include="inc\loginplayer.h" />
     <ClInclude Include="inc\logintype.h" />
+    <ClInclude Include="inc\lua_tinker.h" />
     <ClInclude Include="inc\mapmamager.h" />
     <ClInclude Include="inc\mapconfigmanager.h" />
     <ClInclude Include="inc\mapmodule.h" />
@@ -240,6 +244,7 @@
     <ClInclude Include="inc\platjob.h" />
     <ClInclude Include="inc\platlog.h" />
     <ClInclude Include="inc\platmodule.h" />
+    <ClInclude Include="inc\playerluareg.h" />
     <ClInclude Include="inc\playersubunit.h" />
     <ClInclude Include="inc\geometrytype.h" />
     <ClInclude Include="inc\platconfig.h" />
@@ -254,6 +259,7 @@
     <ClInclude Include="inc\serveractivityunit.h" />
     <ClInclude Include="inc\serveractmodule.h" />
     <ClInclude Include="inc\servercommon.h" />
+    <ClInclude Include="inc\ServerActLuaReg.h" />
     <ClInclude Include="inc\timemanager.h" />
     <ClInclude Include="inc\serverutility.h" />
     <ClInclude Include="inc\sharelist.h" />

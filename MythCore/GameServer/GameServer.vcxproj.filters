@@ -324,6 +324,15 @@
     <ClCompile Include="src\platconfig.cpp">
       <Filter>logicmodule\plat</Filter>
     </ClCompile>
+    <ClCompile Include="src\lua_tinker.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\playerluareg.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ServerActLuaReg.cpp">
+      <Filter>logicmodule\serveractivity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -679,6 +688,15 @@
     </ClInclude>
     <ClInclude Include="inc\platconfig.h">
       <Filter>logicmodule\plat</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\lua_tinker.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\playerluareg.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\ServerActLuaReg.h">
+      <Filter>logicmodule\serveractivity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -92,7 +92,7 @@ void CSkillModule::onUseSkillRequest(CEntityPlayer* pPlayer, Message* pMessage)
 	MYTH_ASSERT(NULL != pUseSkillRequest, return);
 
 	int nSkillIndex = pUseSkillRequest->skillindex();
-	CPlayerSkill* pPlayerSkill = pPlayer->getSkillUnit().getPlayerSkill(nSkillIndex);
+	CPlayerSkill* pPlayerSkill = NULL;//pPlayer->getSkillUnit().getPlayerSkill(nSkillIndex);
 	if (NULL == pPlayerSkill)
 	{
 		return;

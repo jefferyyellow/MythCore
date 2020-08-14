@@ -52,6 +52,8 @@ private:
 	COMMAND_HANDLER_DECL(setlevel);
 	/// 设置时间
 	COMMAND_HANDLER_DECL(settime);
+	/// 充值
+	COMMAND_HANDLER_DECL(recharge);
 
 private:
 	/// 得到命令的帮助字符串
