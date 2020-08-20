@@ -13,7 +13,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameServer", "GameServer\GameServer.vcxproj", "{3B97FED0-2C11-41D2-B1A4-9E9502CD98C5}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E5884C80-3425-4699-A336-9A08CF368C8C} = {E5884C80-3425-4699-A336-9A08CF368C8C}
-		{980170AE-D9C5-454F-8808-79874D39141C} = {980170AE-D9C5-454F-8808-79874D39141C}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TcpServer", "TcpServer\TcpServer.vcxproj", "{9F942F43-5911-4C14-84E5-95C30776F547}"
@@ -32,7 +31,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ServerCrashResave", "Server
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameClientDlg", "GameClientDlg\GameClientDlg.vcxproj", "{7BEEEDD4-0BDC-4A7B-BF53-83EDB67E5221}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "luacode5_3", "dep\luacode5_3\luacode5_3.vcxproj", "{980170AE-D9C5-454F-8808-79874D39141C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lua53", "dep\lua53\lua53.vcxproj", "{2DE29E53-12A8-4406-B126-91E7D34FD86C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,10 +71,10 @@ Global
 		{7BEEEDD4-0BDC-4A7B-BF53-83EDB67E5221}.Debug|Win32.Build.0 = Debug|Win32
 		{7BEEEDD4-0BDC-4A7B-BF53-83EDB67E5221}.Release|Win32.ActiveCfg = Release|Win32
 		{7BEEEDD4-0BDC-4A7B-BF53-83EDB67E5221}.Release|Win32.Build.0 = Release|Win32
-		{980170AE-D9C5-454F-8808-79874D39141C}.Debug|Win32.ActiveCfg = Debug|Win32
-		{980170AE-D9C5-454F-8808-79874D39141C}.Debug|Win32.Build.0 = Debug|Win32
-		{980170AE-D9C5-454F-8808-79874D39141C}.Release|Win32.ActiveCfg = Release|Win32
-		{980170AE-D9C5-454F-8808-79874D39141C}.Release|Win32.Build.0 = Release|Win32
+		{2DE29E53-12A8-4406-B126-91E7D34FD86C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2DE29E53-12A8-4406-B126-91E7D34FD86C}.Debug|Win32.Build.0 = Debug|Win32
+		{2DE29E53-12A8-4406-B126-91E7D34FD86C}.Release|Win32.ActiveCfg = Release|Win32
+		{2DE29E53-12A8-4406-B126-91E7D34FD86C}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

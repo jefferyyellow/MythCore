@@ -29,12 +29,15 @@
 #include "errcode.h"
 #include "ServerActLuaReg.h"
 #include "playerluareg.h"
+#include "globalluareg.h"
+#include "itemluareg.h"
 extern "C"
 {
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
 };
+#include "lua_tinker.h"
 
 CSceneJob::CSceneJob()
 :mMinuteTimer(SECONDS_PER_MIN)
@@ -315,7 +318,11 @@ void CSceneJob::onNewDayCome()
 		{
 			continue;
 		}
-		pPlayer->dailyRefresh();
+		if (emPlayerStatus_Gameing != pPlayer->getPlayerStauts())
+		{
+			continue;
+		}
+		pPlayer->dailyRefresh(false);
 	}
 }
 
@@ -494,6 +501,8 @@ int CSceneJob::initLua()
 	}
 	luaL_openlibs(mLuaState);
 
+	CGlobalLuaReg::regLua();
+	CItemLuaReg::regLua();
 	CServerActLuaReg::reglua();
 	CPlayerLuaReg::reglua();
 	return SUCCESS;
@@ -589,6 +598,29 @@ void CSceneJob::processClientMessage()
 				dispatchClientMessage(pPlayer, nMessageID, pMessage);
 			}
 		}
+		else
+		{
+			// 还没有登录玩家，发其他的消息没有意义
+			PLAYER_SOCKET_LIST::iterator it = mPlayerSocketList.find(pExchangeHead->mSocketIndex);
+			if (it == mPlayerSocketList.end())
+			{
+				return;
+			}
+			/// 玩家没有登录或者已经下线
+			CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
+			if (NULL == pPlayer)
+			{
+				return;
+			}
+
+			// 只有在游戏状态下才接受正常的消息，避免数据的不一致
+			if (emPlayerStatus_Gameing != pPlayer->getPlayerStauts())
+			{
+				return;
+			}
+			pTemp[nMessageLen] = '\0';
+			dispatchClientLuaMsg(pPlayer, nMessageID, pTemp);
+		}
 	}
 }
 
@@ -651,6 +683,39 @@ void CSceneJob::send2Player(CEntityPlayer* pPlayer, unsigned short nMessageID, M
 	send2Player(pPlayer->getExchangeHead(), nMessageID, pMessage);
 }
 
+/// 发现前端消息(lua)
+void CSceneJob::send2PlayerLua(CEntityPlayer& rPlayer, unsigned short nMessageID, const char* pMsgBuff, int nBuffLen)
+{
+	if (NULL == pMsgBuff)
+	{
+		return;
+	}
+
+	CExchangeHead& rExchangeHead = rPlayer.getExchangeHead();
+	if (rExchangeHead.mSocketIndex < 0)
+	{
+		return;
+	}
+	char* pTemp = mBuffer;
+	memcpy(pTemp, &rExchangeHead, sizeof(rExchangeHead));
+	pTemp += sizeof(rExchangeHead);
+
+	unsigned short nMessageLen = nBuffLen + sizeof(unsigned short) * 2;
+	memcpy(pTemp, &nMessageLen, sizeof(nMessageLen));
+
+	pTemp += sizeof(nMessageLen);
+
+	memcpy(pTemp, &nMessageID, sizeof(nMessageID));
+	pTemp += sizeof(nMessageID);
+
+	int nLeftLen = sizeof(mBuffer) - sizeof(rExchangeHead) - sizeof(unsigned short) * 2;
+	memcpy(pTemp, pMsgBuff, nBuffLen > nLeftLen ? nLeftLen : nBuffLen);
+	//pMessage->SerializeToArray(pTemp, sizeof(mBuffer) - sizeof(rExchangeHead) - sizeof(unsigned short) * 2);
+	//printf("PushPacket nMessageID: %d\n", nMessageID);
+	mServer2TcpMemory->PushPacket((byte*)mBuffer, nBuffLen + sizeof(rExchangeHead) + sizeof(unsigned short) * 2);
+}
+
+
 /// 发生给所有的玩家消息
 void CSceneJob::send2AllPlayer(unsigned short nMessageID, Message* pMessage)
 {
@@ -660,6 +725,10 @@ void CSceneJob::send2AllPlayer(unsigned short nMessageID, Message* pMessage)
 	{
 		pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
 		if (NULL == pPlayer)
+		{
+			continue;
+		}
+		if (emPlayerStatus_Gameing != pPlayer->getPlayerStauts())
 		{
 			continue;
 		}
@@ -737,6 +806,27 @@ void CSceneJob::dispatchClientMessage(CEntityPlayer* pPlayer, unsigned short nMe
 			break;
 	}
 }
+
+/// 分发前端消息进行lua处理
+void CSceneJob::dispatchClientLuaMsg(CEntityPlayer* pPlayer, unsigned short nMessageID, char* pMsgData)
+{
+	if (NULL == pPlayer || NULL == pMsgData)
+	{
+		return;
+	}
+	lua_State* L = CSceneJob::Inst()->getLuaState();
+	int nModule = nMessageID & MESSAGE_MODULE_MASK;
+	switch (nModule)
+	{
+		case MESSAGE_MODULE_SERVER_ACT:
+		{
+			lua_tinker::call<int>(L, "ServerActivity_onClientMessage",
+				pPlayer, nMessageID, pMsgData);
+			break;
+		}
+	}
+}
+
 
 void CSceneJob::timeOutCallFunc(CEntityTimer* pTimer)
 {

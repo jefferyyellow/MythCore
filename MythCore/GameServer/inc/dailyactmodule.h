@@ -19,13 +19,17 @@ private:
 
 	void init()
 	{
-        memset(mActivity, 0, sizeof(mActivity));
+		for (int i = 0; i < MAX_DAILY_ACT_ID; ++i)
+		{
+			mActivity[i] = NULL;
+		}
         mTimeListIndex = 0;
         mLastTime = 0;
 	}
 	
 	void clear()
 	{
+		mLastTime = 0;
 		mTimeListIndex = 0;
 		mTimeList.clear();
 		for (int i = 0; i < MAX_DAILY_ACT_ID; ++i)
@@ -66,10 +70,6 @@ public:
 	void onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
 	/// 加载活动配置
 	void loadActivityConfig(const char* pConfigFile);
-	/// 加载详细活动配置
-	void				loadSpecifyActivityConfig(const char* pConfigFile);
-	/// 创建活动
-	CDailyActivity* createDailyActivity(EmDailyActType eType);
 	/// 检测已经开启/过时的活动
 	void checkPassedActivity();
 	/// 检测活动时间

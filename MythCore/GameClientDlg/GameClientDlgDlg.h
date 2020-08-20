@@ -46,4 +46,5 @@ public:
 	afx_msg void OnBnClickedAcceptTask();
 	afx_msg void OnBnClickedCompleteTask();
 	afx_msg void OnBnClickedClearLog();
+	afx_msg void OnBnClickedGetCumulPrize();
 };

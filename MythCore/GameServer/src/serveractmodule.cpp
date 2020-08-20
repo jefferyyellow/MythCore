@@ -17,7 +17,7 @@ extern "C"
 CServerActModule::CServerActModule()
 {
 	init();
-	mServerOpenTime = unixTimeStamp("2020-8-4 00:00:00");
+	mServerOpenTime = unixTimeStamp("2020-8-15 00:00:00");
 }
 
 void CServerActModule::init()
@@ -166,7 +166,6 @@ void CServerActModule::loadServerActivityConfig(const char* pConfigFile)
 	time_t nPrizeTime = 0;
 	time_t nTimeNow = CTimeManager::Inst()->getCurrTime();
 
-	bool bAlreadyLoad[emServerActTypeMax] = { false };
 	XMLElement* pActivityElem = pRootElem->FirstChildElement("Activity");
 	for (; NULL != pActivityElem; pActivityElem = pActivityElem->NextSiblingElement("Activity"))
 	{
@@ -235,18 +234,7 @@ void CServerActModule::loadServerActivityConfig(const char* pConfigFile)
 		// 所以
 		mAvailActivity[mAvailActivityNum] = pActivity;
 		++ mAvailActivityNum;
-		bAlreadyLoad[nType] = true;
 	}
-
-	lua_State* L = CSceneJob::Inst()->getLuaState();
-	for (int i = 0; i < emServerActTypeMax; ++ i)
-	{
-		if (bAlreadyLoad[i])
-		{
-			lua_tinker::call<int>(L, "ServerActivity_initFunc", i);
-		}
-	}
-
 }
 
 /// 清算结束的活动
@@ -261,10 +249,13 @@ void CServerActModule::clearEndedActivity()
 			continue;
 		}
 
+		time_t nEndTime = mServerActivity[i]->getPrizeTime() > mServerActivity[i]->getEndTime() ?
+			mServerActivity[i]->getPrizeTime() : mServerActivity[i]->getEndTime();
+
 		// 已经结束
-		if (mServerActivity[i]->getEndTime() <= tTimeNow)
+		if (nEndTime <= tTimeNow)
 		{
-			lua_tinker::call<int>(L, mServerActivity[i]->getEndFunc());
+			lua_tinker::call<int>(L, "ServerActivity_EndFunc", mServerActivity[i]->getType(), mServerActivity[i]->getID());
 		}
 	}
 }
@@ -290,42 +281,85 @@ void CServerActModule::refreshProcess(EmSvrActType eType, CEntityPlayer& rPlayer
 		{
 			continue;
 		}
-		lua_tinker::call<int>(L, mAvailActivity[i]->getRefreshProcess(), 
+		lua_tinker::call<int>(L, "ServerActivity_RefreshFunc", mAvailActivity[i]->getType(),
 			mAvailActivity[i]->getID(), &rPlayer, nParam1, nParam2);
 	}
 }
 
-/// 初始化类型函数
-void CServerActModule::initActivityTypeFunc(int nType, int nFuncType, const char* pFuncName)
+/// 是否在活动期间
+bool CServerActModule::checkActOpen(int nActivityID)
 {
-	if (NULL == pFuncName)
+	if (nActivityID <= 0 || nActivityID >= MAX_SERVER_ACT_NUM)
 	{
-		return;
+		return false;
 	}
-	for (int i = 0; i < mAvailActivityNum; ++i)
+	if (NULL == mAvailActivity[nActivityID])
 	{
-		if (mAvailActivity[i]->getType() != nType)
+		return false;
+	}
+
+	time_t tNowTime = CTimeManager::Inst()->getCurrTime();
+	if (tNowTime < mAvailActivity[nActivityID]->getStartTime()
+		|| tNowTime >= mAvailActivity[nActivityID]->getEndTime())
+	{
+		return false;
+	}
+
+	return true;
+}
+
+/// 是否在可以领奖的期间,如果领奖时间大于0，表示是否在活动结束到领奖期间
+/// 如果领奖时间小于等于0，表示是否在活动开始到结束期间都能领奖
+bool CServerActModule::checkActPrizeTime(int nActivityID)
+{
+	if (nActivityID <= 0 || nActivityID >= MAX_SERVER_ACT_NUM)
+	{
+		return false;
+	}
+
+	if (NULL == mAvailActivity[nActivityID])
+	{
+		return false;
+	}
+	time_t tNowTime = CTimeManager::Inst()->getCurrTime();
+	if (mAvailActivity[nActivityID]->getPrizeTime() > 0)
+	{
+		if (tNowTime < mAvailActivity[nActivityID]->getEndTime()
+			|| tNowTime >= mAvailActivity[nActivityID]->getPrizeTime())
+		{
+			return false;
+		}
+
+		return true;
+	}
+	else
+	{
+		if (tNowTime < mAvailActivity[nActivityID]->getStartTime()
+			|| tNowTime >= mAvailActivity[nActivityID]->getEndTime())
+		{
+			return false;
+		}
+		return true;
+	}
+}
+
+/// 每日刷新所以的玩家
+void CServerActModule::dailyRefreshAllPlayer()
+{
+	CEntityPlayer* pPlayer = NULL;
+	CSceneJob::PLAYER_LIST& rPlayerList = CSceneJob::Inst()->getPlayerList();
+	CSceneJob::PLAYER_LIST::iterator it = rPlayerList.begin();
+	for (; it != rPlayerList.end(); ++it)
+	{
+		pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
+		if (NULL == pPlayer)
 		{
 			continue;
 		}
-		switch (nFuncType)
+		if (emPlayerStatus_Gameing != pPlayer->getPlayerStauts())
 		{
-			case emFuncType_End:
-			{
-				mAvailActivity[i]->setEndFunc(pFuncName);
-				break;
-			}
-			case emFuncType_ClearPlayerData:
-			{
-				mAvailActivity[i]->setClearPlayerData(pFuncName);
-				break;
-			}
-			case emFuncType_RefreshProcess:
-			{
-				mAvailActivity[i]->setRefreshProcess(pFuncName);
-				break;
-			}
+			continue;
 		}
+		pPlayer->getServerActUnit().dailyRefresh();
 	}
-
 }

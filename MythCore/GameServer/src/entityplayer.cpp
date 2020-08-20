@@ -2,6 +2,7 @@
 #include "mapmodule.hxx.pb.h"
 #include "propertymodule.hxx.pb.h"
 #include "scenejob.h"
+#include "timemanager.h"
 /// 刷新基本属性
 void CEntityPlayer::refreshBaseProperty()
 {
@@ -55,9 +56,25 @@ void CEntityPlayer::onGetPlayerPropertyRequest(Message* pMessage)
 }
 
 /// 每日刷新
-void CEntityPlayer::dailyRefresh()
+void CEntityPlayer::dailyRefresh(bool bLogin)
 {
+	// 上传刷新的时候和这次刷新的时间是不是同一天
+	time_t tNewDayTime = mTimeUnit.getNewDayTime();
+	time_t tNowTime = CTimeManager::Inst()->getCurrTime();
 
+	// 如果是同一天
+	if (CTimeManager::Inst()->checkSameDay(tNewDayTime, tNowTime))
+	{
+		return;
+	}
+
+	// 每日刷新的话，不刷新开服活动模块，需要等到开服活动模块的配置加载完成以后再刷新
+	if (bLogin)
+	{
+		mServerActUnit.dailyRefresh();
+	}
+
+	mTimeUnit.setNewDayTime(tNowTime);
 }
 
 /// 序列化场景信息到PB·

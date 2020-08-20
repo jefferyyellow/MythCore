@@ -30,7 +30,7 @@ time_t CTimeManager::date2TimeStamp(int nDate)
 }
 
 /// 是否是同一天
-bool CTimeManager::isSameDay(time_t nOldTime, time_t nNewTime)
+bool CTimeManager::checkSameDay(time_t nOldTime, time_t nNewTime)
 {
 	tm	tTmOld;
 	tm	tTmNew;
@@ -42,7 +42,7 @@ bool CTimeManager::isSameDay(time_t nOldTime, time_t nNewTime)
 	localtime_r(&nNewTime, &tTmNew);
 #endif // MYTH_OS_WINDOWS
 
-	if (tTmNew.tm_yday != tTmOld.tm_yday)
+	if (tTmNew.tm_yday == tTmOld.tm_yday)
 	{
 		return true;
 	}

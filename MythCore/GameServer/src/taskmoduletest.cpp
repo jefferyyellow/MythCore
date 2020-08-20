@@ -183,11 +183,11 @@ TEST(TaskModule, checkCommitCondition)
 	CItemUnit& rItemUnit = tEntityPlayer.getItemUnit();
 	int nTaskItemID = ITEM_ID_PILE;
 	int nTaskItemNum = 24;
-	rItemUnit.insertItem(&nTaskItemID, &nTaskItemNum, 1);
+	rItemUnit.insertAllItem(&nTaskItemID, &nTaskItemNum, 1);
 	// 检查玩家身上没有足够的道具
 	EXPECT_EQ(ERROR_TASK_ITEM_NUM_NOT_ENOUGH, rTaskUnit.checkCommitTask(1, -1));
 	nTaskItemNum = 1;
-	rItemUnit.insertItem(&nTaskItemID, &nTaskItemNum, 1);
+	rItemUnit.insertAllItem(&nTaskItemID, &nTaskItemNum, 1);
 	// 检查没有刷够怪
 	EXPECT_EQ(ERROR_TASK_KILL_OGRE_NOT_ENOUGH, rTaskUnit.checkCommitTask(1, -1));
 

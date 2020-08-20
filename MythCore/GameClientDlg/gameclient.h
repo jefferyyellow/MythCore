@@ -37,6 +37,7 @@ public:
 	void		sendHeartBeatRequest();
 	void		sendAcceptTaskRequest(int nTaskID);
 	void		sendSubmitTaskRequest(int nTaskID);
+	void		sendGetCumulRechargePrizeRequest(int nActID, int nIndex);
 
 private:
 	void		onMessageLoginResponse(Message* pMessage);

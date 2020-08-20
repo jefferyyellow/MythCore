@@ -10,6 +10,7 @@ enum EmActBitType
 	emActBit_None					= 0,	// 无
 	emActBit_LevelRankPrize			= 1,	// 等级排行榜领奖
 	emActBit_PowerRankPrize			= 2,	// 战力排行榜领奖
+	// 注意同步server_activity_type.lua中的类型
 	emActBitMax
 };
 
@@ -20,6 +21,7 @@ enum EmActDataType
 	emActData_CumRechargePrize		= 2,	// 累计充值领奖记录
 	emActData_CumConsumeValue		= 3,	// 累计消费值
 	emActData_CumConsumePrize		= 4,	// 累计消费领奖记录
+	// 注意同步server_activity_type.lua中的类型
 	emActDataMax
 };
 /// 活动单元

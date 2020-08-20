@@ -7,6 +7,7 @@
 #include "taskmodule.hxx.pb.h"
 #include "chatmodule.hxx.pb.h"
 #include "dailyactmodule.hxx.pb.h"
+#include "serveractmodule.hxx.pb.h"
 #define CASE_NEW_MSG(msg, msgid)						\
 		case msgid:										\
 		{												\
@@ -93,6 +94,11 @@ Message* CMessageFactory::createClientMessage(unsigned short nMessageID)
 
 		// daily module
 		CASE_NEW_MSG(CActivityStatusNotify, ID_S2C_NOTIFY_ACTIVITY_START)
+
+		// ≤‚ ‘”√
+		CASE_NEW_MSG(CGetCumulRechargePrizeResponse, ID_S2C_RESPONSE_GET_CUMUL_RECHARGE_PRIZE)
+
+
 		default:
 			break;
 	}

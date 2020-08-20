@@ -92,10 +92,9 @@ void protobuf_AssignDesc_common_2ehxx() {
       sizeof(PBItemEquip),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBItemEquip, _internal_metadata_));
   PBTask_descriptor_ = file->message_type(3);
-  static const int PBTask_offsets_[3] = {
+  static const int PBTask_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTask, taskid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTask, param_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTask, condtype_),
   };
   PBTask_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -193,10 +192,10 @@ void protobuf_AddDesc_common_2ehxx_impl() {
     "BItemObject\022\016\n\006ItemID\030\001 \001(\r\022\016\n\006Number\030\002 "
     "\001(\r\022\r\n\005Index\030\003 \001(\r\022\037\n\tItemEquip\030\004 \001(\0132\014."
     "PBItemEquip\"\034\n\013PBItemEquip\022\r\n\005Level\030\004 \001("
-    "\r\"9\n\006PBTask\022\016\n\006TaskID\030\001 \001(\r\022\r\n\005Param\030\002 \003"
-    "(\r\022\020\n\010CondType\030\003 \003(\r\"Y\n\nPBTaskList\022\031\n\021Ma"
-    "xCompleteTaskID\030\001 \001(\r\022\025\n\rCompleteTasks\030\002"
-    " \003(\007\022\031\n\010TaskList\030\003 \003(\0132\007.PBTaskb\006proto3", 359);
+    "\r\"\'\n\006PBTask\022\016\n\006TaskID\030\001 \001(\r\022\r\n\005Param\030\002 \003"
+    "(\r\"Y\n\nPBTaskList\022\031\n\021MaxCompleteTaskID\030\001 "
+    "\001(\r\022\025\n\rCompleteTasks\030\002 \003(\007\022\031\n\010TaskList\030\003"
+    " \003(\0132\007.PBTaskb\006proto3", 341);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "common.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_common_2ehxx);
@@ -1244,7 +1243,6 @@ inline const PBItemEquip* PBItemEquip::internal_default_instance() {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int PBTask::kTaskIDFieldNumber;
 const int PBTask::kParamFieldNumber;
-const int PBTask::kCondTypeFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 PBTask::PBTask()
@@ -1307,7 +1305,6 @@ void PBTask::Clear() {
 // @@protoc_insertion_point(message_clear_start:PBTask)
   taskid_ = 0u;
   param_.Clear();
-  condtype_.Clear();
 }
 
 bool PBTask::MergePartialFromCodedStream(
@@ -1345,24 +1342,6 @@ bool PBTask::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  1, 18, input, this->mutable_param())));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(26)) goto parse_CondType;
-        break;
-      }
-
-      // repeated uint32 CondType = 3;
-      case 3: {
-        if (tag == 26) {
-         parse_CondType:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, this->mutable_condtype())));
-        } else if (tag == 24) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 1, 26, input, this->mutable_condtype())));
         } else {
           goto handle_unusual;
         }
@@ -1409,16 +1388,6 @@ void PBTask::SerializeWithCachedSizes(
       this->param(i), output);
   }
 
-  // repeated uint32 CondType = 3;
-  if (this->condtype_size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteTag(3, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
-    output->WriteVarint32(_condtype_cached_byte_size_);
-  }
-  for (int i = 0; i < this->condtype_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32NoTag(
-      this->condtype(i), output);
-  }
-
   // @@protoc_insertion_point(serialize_end:PBTask)
 }
 
@@ -1443,20 +1412,6 @@ void PBTask::SerializeWithCachedSizes(
   for (int i = 0; i < this->param_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteUInt32NoTagToArray(this->param(i), target);
-  }
-
-  // repeated uint32 CondType = 3;
-  if (this->condtype_size() > 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteTagToArray(
-      3,
-      ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED,
-      target);
-    target = ::google::protobuf::io::CodedOutputStream::WriteVarint32ToArray(
-      _condtype_cached_byte_size_, target);
-  }
-  for (int i = 0; i < this->condtype_size(); i++) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteUInt32NoTagToArray(this->condtype(i), target);
   }
 
   // @@protoc_insertion_point(serialize_to_array_end:PBTask)
@@ -1489,25 +1444,6 @@ size_t PBTask::ByteSizeLong() const {
     int cached_size = ::google::protobuf::internal::ToCachedSize(data_size);
     GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
     _param_cached_byte_size_ = cached_size;
-    GOOGLE_SAFE_CONCURRENT_WRITES_END();
-    total_size += data_size;
-  }
-
-  // repeated uint32 CondType = 3;
-  {
-    size_t data_size = 0;
-    unsigned int count = this->condtype_size();
-    for (unsigned int i = 0; i < count; i++) {
-      data_size += ::google::protobuf::internal::WireFormatLite::
-        UInt32Size(this->condtype(i));
-    }
-    if (data_size > 0) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);
-    }
-    int cached_size = ::google::protobuf::internal::ToCachedSize(data_size);
-    GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-    _condtype_cached_byte_size_ = cached_size;
     GOOGLE_SAFE_CONCURRENT_WRITES_END();
     total_size += data_size;
   }
@@ -1546,7 +1482,6 @@ void PBTask::MergeFrom(const PBTask& from) {
 void PBTask::UnsafeMergeFrom(const PBTask& from) {
   GOOGLE_DCHECK(&from != this);
   param_.UnsafeMergeFrom(from.param_);
-  condtype_.UnsafeMergeFrom(from.condtype_);
   if (from.taskid() != 0) {
     set_taskid(from.taskid());
   }
@@ -1578,7 +1513,6 @@ void PBTask::Swap(PBTask* other) {
 void PBTask::InternalSwap(PBTask* other) {
   std::swap(taskid_, other->taskid_);
   param_.UnsafeArenaSwap(&other->param_);
-  condtype_.UnsafeArenaSwap(&other->condtype_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -1636,36 +1570,6 @@ PBTask::param() const {
 PBTask::mutable_param() {
   // @@protoc_insertion_point(field_mutable_list:PBTask.Param)
   return &param_;
-}
-
-// repeated uint32 CondType = 3;
-int PBTask::condtype_size() const {
-  return condtype_.size();
-}
-void PBTask::clear_condtype() {
-  condtype_.Clear();
-}
-::google::protobuf::uint32 PBTask::condtype(int index) const {
-  // @@protoc_insertion_point(field_get:PBTask.CondType)
-  return condtype_.Get(index);
-}
-void PBTask::set_condtype(int index, ::google::protobuf::uint32 value) {
-  condtype_.Set(index, value);
-  // @@protoc_insertion_point(field_set:PBTask.CondType)
-}
-void PBTask::add_condtype(::google::protobuf::uint32 value) {
-  condtype_.Add(value);
-  // @@protoc_insertion_point(field_add:PBTask.CondType)
-}
-const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-PBTask::condtype() const {
-  // @@protoc_insertion_point(field_list:PBTask.CondType)
-  return condtype_;
-}
-::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-PBTask::mutable_condtype() {
-  // @@protoc_insertion_point(field_mutable_list:PBTask.CondType)
-  return &condtype_;
 }
 
 inline const PBTask* PBTask::internal_default_instance() {

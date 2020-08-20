@@ -1,4 +1,4 @@
-CumulativeRecharge=
+CumulativeRechargeConfig=
 {
 	[1]=
 	{
@@ -8,8 +8,8 @@ CumulativeRecharge=
 				Num=100,
 				Prize=
 				{
-					{ItemID=6251, ItemNum=100},
-					{ItemID=6252, ItemNum=200}
+					{ItemID=100, ItemNum=100},
+					{ItemID=101, ItemNum=200}
 				}
 			},
 			
@@ -17,8 +17,8 @@ CumulativeRecharge=
 				Num=200,
 				Prize=
 				{
-					{ItemID=6251, ItemNum=1000},
-					{ItemID=6252, ItemNum=2000}
+					{ItemID=100, ItemNum=1000},
+					{ItemID=101, ItemNum=2000}
 				}
 			},
 			
@@ -26,13 +26,13 @@ CumulativeRecharge=
 				Num=400,
 				Prize=
 				{
-					{ItemID=6251, ItemNum=10000},
-					{ItemID=6252, ItemNum=20000}
+					{ItemID=100, ItemNum=10000},
+					{ItemID=101, ItemNum=20000}
 				}
 			}			
 		}
-	}
-	
+	},
+
 	[2]=
 	{
 		Cond=
@@ -62,7 +62,7 @@ CumulativeRecharge=
 					{ItemID=6251, ItemNum=10000},
 					{ItemID=6252, ItemNum=20000}
 				}
-			}
+			}			
 		}
 	}
 }

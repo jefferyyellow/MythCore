@@ -76,7 +76,7 @@ public:
 	//// 得到玩家属性请求
 	void			onGetPlayerPropertyRequest(Message* pMessage);
 	/// 每日刷新
-	void			dailyRefresh();
+	void			dailyRefresh(bool bLogin);
 public:
 	/// 序列化场景信息到PB
 	void			serializeSceneInfoToPB(PBPlayerSceneInfo* pbSceneInfo);

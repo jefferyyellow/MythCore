@@ -53,36 +53,6 @@ public:
 
 	bool getAvail() const { return mAvail; }
 	void setAvail(bool nValue) { mAvail = nValue; }
-
-	const char* getEndFunc(){return mEndFunc;}
-	void setEndFunc(const char* pEndFunc)
-	{
-		if (NULL == pEndFunc)
-		{
-			return;
-		}
-		strncpy(mEndFunc, pEndFunc, sizeof(mEndFunc) - 1);
-	}
-
-	const char* getClearPlayerData(){ return mEndFunc; }
-	void setClearPlayerData(const char* pClearPlayerData)
-	{
-		if (NULL == pClearPlayerData)
-		{
-			return;
-		}
-		strncpy(mClearPlayerData, pClearPlayerData, sizeof(mClearPlayerData) - 1);
-	}
-
-	const char* getRefreshProcess(){ return mRefreshProcess; }
-	void setRefreshProcess(const char* pRefreshProcess)
-	{
-		if (NULL == pRefreshProcess)
-		{
-			return;
-		}
-		strncpy(mRefreshProcess, pRefreshProcess, sizeof(mRefreshProcess) - 1);
-	}
 	// end autocode
 
 protected:
@@ -99,15 +69,9 @@ protected:
 	/// 领奖时间
 	time_t				mPrizeTime;
 	/// 开服活动状态 default:emServerActState_End
-	EmSvrActState	mState;
-	/// 是否是有效活动
+	EmSvrActState		mState;
+	/// 是否是有效的活动(包括发奖期间)
 	bool				mAvail;
-	/// 结束函数		
-	char				mEndFunc[STR_LENGTH_128];
-	/// 清理玩家数据函数
-	char				mClearPlayerData[STR_LENGTH_128];
-	/// 刷新活动进度
-	char				mRefreshProcess[STR_LENGTH_128];
 };
 
 

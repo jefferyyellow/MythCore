@@ -333,6 +333,12 @@
     <ClCompile Include="src\ServerActLuaReg.cpp">
       <Filter>logicmodule\serveractivity</Filter>
     </ClCompile>
+    <ClCompile Include="src\itemluareg.cpp">
+      <Filter>logicmodule\item</Filter>
+    </ClCompile>
+    <ClCompile Include="src\globalluareg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -539,9 +545,6 @@
     <ClInclude Include="inc\skillunit.h">
       <Filter>logicmodule\skill</Filter>
     </ClInclude>
-    <ClInclude Include="inc\skilltype.h">
-      <Filter>logicmodule\task</Filter>
-    </ClInclude>
     <ClInclude Include="..\message\skillmodule.hxx">
       <Filter>message</Filter>
     </ClInclude>
@@ -697,6 +700,15 @@
     </ClInclude>
     <ClInclude Include="inc\ServerActLuaReg.h">
       <Filter>logicmodule\serveractivity</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\itemluareg.h">
+      <Filter>logicmodule\item</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\globalluareg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\skilltype.h">
+      <Filter>logicmodule\skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

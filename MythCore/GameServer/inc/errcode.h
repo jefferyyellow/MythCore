@@ -90,7 +90,7 @@ enum ERR_EQUIP
 	ERR_EQUIP_ITEM_CANNOT_EQUIP			= 705,		// 道具不能装备
 };
 
-// 800 - 999
+// 800 - 1099
 enum ERR_SERVER_ACT
 {
 	

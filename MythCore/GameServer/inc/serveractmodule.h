@@ -62,8 +62,13 @@ public:
 	CServerActivity*	getServerActivity(int nActivityID);
 	/// 刷新活动进度
 	void				refreshProcess(EmSvrActType eType, CEntityPlayer& rPlayer, int nParam1, int nParam2);
-	/// 初始化类型函数
-	void				initActivityTypeFunc(int nType, int nFuncType, const char* pFuncName);
+	
+	/// 是否在活动期间
+	bool				checkActOpen(int nActivityID);
+	/// 是否在可以领奖的期间(包括有效期间和发奖期间)
+	bool				checkActPrizeTime(int nActivityID);
+	/// 每日刷新所以的玩家
+	void				dailyRefreshAllPlayer();
 public:
 	/// autocode
     time_t getServerOpenTime(){ return mServerOpenTime;}

@@ -3,6 +3,13 @@
 #include "locallogjob.h"
 #include "dailyactmodule.hxx.pb.h"
 #include "timemanager.h"
+extern "C"
+{
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
+};
+#include "lua_tinker.h"
 CDailyActModule::CDailyActModule()
 {
 	init();
@@ -16,6 +23,9 @@ CDailyActModule::~CDailyActModule()
 /// 启动服务器
 void CDailyActModule::onLaunchServer()
 {
+	lua_State* L = CSceneJob::Inst()->getLuaState();
+	lua_tinker::dofile(L, "gameserverconfig/script/daily_activity/daily_activity.lua");
+
 	loadActivityConfig("gameserverconfig/daily_activity/daily_activity.xml");
 	checkPassedActivity();
 }
@@ -114,9 +124,6 @@ void CDailyActModule::loadActivityConfig(const char* pConfigFile)
 	}
 
 	tm tTempTm = CSceneJob::Inst()->getTmNow();
-	bool bAlreadyLoad[emDailyActTypeMax] = { false };
-	char acPathFile[emDailyActTypeMax][STR_LENGTH_256] = { 0 };
-
 	XMLElement* pActivityElem = pRootElem->FirstChildElement("Activity");
 	for (; NULL != pActivityElem; pActivityElem = pActivityElem->NextSiblingElement("Activity"))
 	{
@@ -181,18 +188,18 @@ void CDailyActModule::loadActivityConfig(const char* pConfigFile)
 			LOG_ERROR("activity id is valid, %d", nActivityID);
 			continue;
 		}
-		EmDailyActType emActType = (EmDailyActType)pActivityElem->IntAttribute("Type");
-		CDailyActivity* pActivity = createDailyActivity(emActType);
+
+		CDailyActivity* pActivity = new CDailyActivity;
 		if (NULL == pActivity)
 		{
-			LOG_ERROR("create daily activity failure, Type: %d, ID: %d", emActType, nActivityID);
+			LOG_ERROR("create daily activity failure, ID: %d", nActivityID);
 			continue;
 		}
 
 		mActivity[nActivityID] = pActivity;
 		pActivity->SetStatus(emDailyActStatus_None);
 		pActivity->mID = nActivityID;
-		pActivity->mType = emActType;
+		pActivity->mType = (EmDailyActType)pActivityElem->IntAttribute("Type");
 		pActivity->mMinLevel = pActivityElem->IntAttribute("LevelMin");
 		pActivity->mMaxLevel = pActivityElem->IntAttribute("LevelMax");
 
@@ -220,78 +227,9 @@ void CDailyActModule::loadActivityConfig(const char* pConfigFile)
 			mTimeList.push_back(tActivityTime);
 			++ nCount;
 		}
-
-
-		if (!bAlreadyLoad[emActType] && NULL != pActivity->getConfigFileName())
-		{
-			bAlreadyLoad[emActType] = true;
-			snprintf(acPathFile[emActType], STR_LENGTH_256 - 1, "%s%s", "gameserverconfig/daily_activity/", pActivity->getConfigFileName());
-		}
 	}
 
 	std::sort(mTimeList.begin(), mTimeList.end());
-	for (int nActType = 0; nActType < emDailyActTypeMax; ++ nActType)
-	{
-		if (bAlreadyLoad[nActType])
-		{
-			loadSpecifyActivityConfig(acPathFile[nActType]);
-		}
-	}
-}
-
-/// 加载详细活动配置
-void CDailyActModule::loadSpecifyActivityConfig(const char* pConfigFile)
-{
-	if (NULL == pConfigFile)
-	{
-		return;
-	}
-
-	tinyxml2::XMLDocument tDocument;
-	if (XML_SUCCESS != tDocument.LoadFile(pConfigFile))
-	{
-		LOG_ERROR("Load special server activity config file failure, %s", pConfigFile);
-		return;
-	}
-
-	XMLElement* pRootElem = tDocument.RootElement();
-	if (NULL == pRootElem)
-	{
-		LOG_ERROR("Don't find special server activity config root element, %s", pConfigFile);
-		return;
-	}
-
-	XMLElement* pActivityElem = pRootElem->FirstChildElement("Activity");
-	for (; NULL != pActivityElem; pActivityElem = pActivityElem->NextSiblingElement("Activity"))
-	{
-		int nID = pActivityElem->IntAttribute("ID");
-		if (nID < 0  || nID >= MAX_DAILY_ACT_ID)
-		{
-			continue;
-		}
-		if (NULL == mActivity[nID])
-		{
-			continue;
-		}
-		
-		mActivity[nID]->loadActivity(pActivityElem);
-	}
-}
-
-/// 创建活动
-CDailyActivity* CDailyActModule::createDailyActivity(EmDailyActType eType)
-{
-	CDailyActivity* pActivity = NULL;
-	switch (eType)
-	{
-		case emDailyActType_XXX:
-			pActivity = new CDailyActivity;
-			break;
-		default:
-			break;
-	}
-
-	return pActivity;
 }
 
 /// 检测已经开启/过时的活动
@@ -391,7 +329,7 @@ void CDailyActModule::checkActivityTime()
 bool CDailyActModule::checkTimePassed(int nActTime, tm& rTm)
 {
 	int nTime = rTm.tm_hour * 100 + rTm.tm_min;
-	if (nTime > nActTime)
+	if (nTime >= nActTime)
 	{
 		return true;
 	}

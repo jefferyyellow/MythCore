@@ -5,7 +5,7 @@
 enum EmDailyActType
 {
 	emDailyActType_None			= 0,
-	emDailyActType_XXX			= 1,
+	emDailyActType_WorldBoss	= 1,
 	emDailyActType_Time			= 2,
 	emDailyActTypeMax
 };

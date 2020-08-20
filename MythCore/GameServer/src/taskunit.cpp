@@ -632,7 +632,7 @@ void CTaskUnit::giveTaskReward(CTaskConfig::TASK_PRIZE_LIST& rPrizeList)
 		{
 			case emTaskPrize_Item:
 			{
-				mPlayer.getItemUnit().insertItem(&rReward.mParam[0], &rReward.mParam[1], 1);
+				mPlayer.getItemUnit().insertAllItem(&rReward.mParam[0], &rReward.mParam[1], 1);
 				break;
 			}
 			default:

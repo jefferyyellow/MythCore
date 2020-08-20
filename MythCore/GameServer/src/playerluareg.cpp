@@ -27,6 +27,9 @@ void CPlayerLuaReg::reglua()
 	lua_tinker::class_add<CPlayerSubUnit>(L, "CPlayerSubUnit");
 	lua_tinker::class_def<CPlayerSubUnit>(L, "getPlayer", &CPlayerSubUnit::getPlayer);
 
+	// 道具的查看itemluareg.cpp
+
+
 	// 开服活动单元
 	lua_tinker::class_add<CServerActUnit>(L, "CServerActUnit");
 	lua_tinker::class_inh<CServerActUnit, CPlayerSubUnit>(L);

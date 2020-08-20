@@ -6,6 +6,8 @@ enum SERVER_ACT_MODULE_MSG_ID
 	ID_SERVER_ACT_MODULE_ERROR				= 0x0;
 	ID_C2S_REQUEST_GET_SERVER_ACT			= 0x1C00;	// 得到开服活动的请求
 	ID_S2C_RESPONSE_GET_SERVER_ACT			= 0x1C01;	// 得到开服活动的回应
+	ID_C2S_REQUEST_GET_CUMUL_RECHARGE_PRIZE	= 0x1C02;	// 领取累计充值奖励的请求
+	ID_S2C_RESPONSE_GET_CUMUL_RECHARGE_PRIZE= 0x1C03;	// 领取累计充值奖励的回应
 };
 
 // 玩家聊天请求 ID_C2S_REQUEST_GET_SERVER_ACT
@@ -19,3 +21,15 @@ message CGetServerActResponse
 
 }
 
+// 领取累计充值奖励 ID_C2S_REQUEST_GET_CUMUL_RECHARGE_PRIZE
+message CGetCumulRechargePrizeRequest
+{
+	uint32		ActivityID		= 1;		// 活动ID
+	uint32		Index			= 2;		// 奖励索引
+}
+
+// 领取累计充值奖励的回应 ID_S2C_RESPONSE_GET_CUMUL_RECHARGE_PRIZE
+message CGetCumulRechargePrizeResponse
+{
+	uint32		Result			= 1;		// 结果
+}

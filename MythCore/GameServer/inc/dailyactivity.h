@@ -46,16 +46,12 @@ public:
 	void SetStatus(EmDailyActStatus nValue) { mStatus = nValue; }
 
 public:
-	/// 加载配置文件
-	virtual int loadActivity(XMLElement* pActivityElem);
-	/// 得到配置文件的名字
-	virtual const char* getConfigFileName();
 	/// 活动开启
-	virtual void start();
+	void start();
 	/// 活动结束的清理
-	virtual void end();
+	void end();
 	/// 通知
-	virtual void notice();
+	void notice();
 
 public:
 	/// autocode, don't edit!!!

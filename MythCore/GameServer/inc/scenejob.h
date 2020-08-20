@@ -14,7 +14,7 @@
 using namespace Myth;
 
 #define PIPE_SIZE					((int)0x1000000)	/*内存管道的大小*/
-#define MAX_SOCKET_BUFF_SIZE		4096				// Socket缓冲区大小
+#define MAX_SOCKET_BUFF_SIZE		8192				// Socket缓冲区大小
 enum EmServerState
 {
 	emServerStateInit		= 0,	// 初始状态
@@ -94,6 +94,8 @@ public:
 public:
 	void		send2Player(CLoginPlayer* pLoginPlayer, unsigned short nMessageID, Message* pMessage);
 	void		send2Player(CEntityPlayer* pPlayer, unsigned short nMessageID, Message* pMessage);
+	/// 发现前端消息(lua)
+	void		send2PlayerLua(CEntityPlayer& rPlayer, unsigned short nMessageID, const char* pMsgBuff, int nBuffLen);
 	/// 发生给所有的玩家消息
 	void		send2AllPlayer(unsigned short nMessageID, Message* pMessage);
 	/// 断开玩家的连接
@@ -123,6 +125,8 @@ private:
 	void		processClientMessage();
 	/// 分发前端消息
 	void		dispatchClientMessage(CEntityPlayer* pPlayer, unsigned short nMessageID, Message* pMessage);
+	/// 分发前端消息进行lua处理
+	void		dispatchClientLuaMsg(CEntityPlayer* pPlayer, unsigned short nMessageID, char* pMsgData);
 	/// 初始化共享内存
 	bool		initShareMemory();
 

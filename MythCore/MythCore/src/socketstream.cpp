@@ -168,6 +168,13 @@ namespace Myth
 			return -4;
 		}
 
+		// 外面的BUFF不够大，放不下
+		if (usLength >= rLength)
+		{
+			rLength = 0;
+			SetCriticalData(nEnd, -1);
+			return -5;
+		}
 		rLength = usLength;
 
 		//						   ｜头  ｜尾

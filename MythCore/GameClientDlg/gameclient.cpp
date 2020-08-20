@@ -8,6 +8,7 @@
 #include "../GameServer/inc/messagefactory.h"
 #include "GameClientDlgDlg.h"
 #include "taskmodule.hxx.pb.h"
+#include "serveractmodule.hxx.pb.h"
 CGameClient::CGameClient()
 	:mSelectModel(&mTcpSocket, 1)
 {
@@ -281,4 +282,13 @@ void CGameClient::sendSubmitTaskRequest(int nTaskID)
 	tRequest.set_taskid(nTaskID);
 	tRequest.set_itemindex(-1);
 	sendMessage(ID_C2S_REQUEST_SUBMIT_TASK, &tRequest);
+}
+
+void CGameClient::sendGetCumulRechargePrizeRequest(int nActID, int nIndex)
+{
+	CGetCumulRechargePrizeRequest tRequest;
+	tRequest.set_activityid(nActID);
+	tRequest.set_index(nIndex);
+
+	sendMessage(ID_C2S_REQUEST_GET_CUMUL_RECHARGE_PRIZE, &tRequest);
 }

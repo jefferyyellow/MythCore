@@ -36,6 +36,8 @@ void protobuf_InitDefaults_serveractmodule_2ehxx();
 void protobuf_AssignDesc_serveractmodule_2ehxx();
 void protobuf_ShutdownFile_serveractmodule_2ehxx();
 
+class CGetCumulRechargePrizeRequest;
+class CGetCumulRechargePrizeResponse;
 class CGetServerActRequest;
 class CGetServerActResponse;
 
@@ -43,12 +45,14 @@ enum SERVER_ACT_MODULE_MSG_ID {
   ID_SERVER_ACT_MODULE_ERROR = 0,
   ID_C2S_REQUEST_GET_SERVER_ACT = 7168,
   ID_S2C_RESPONSE_GET_SERVER_ACT = 7169,
+  ID_C2S_REQUEST_GET_CUMUL_RECHARGE_PRIZE = 7170,
+  ID_S2C_RESPONSE_GET_CUMUL_RECHARGE_PRIZE = 7171,
   SERVER_ACT_MODULE_MSG_ID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   SERVER_ACT_MODULE_MSG_ID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool SERVER_ACT_MODULE_MSG_ID_IsValid(int value);
 const SERVER_ACT_MODULE_MSG_ID SERVER_ACT_MODULE_MSG_ID_MIN = ID_SERVER_ACT_MODULE_ERROR;
-const SERVER_ACT_MODULE_MSG_ID SERVER_ACT_MODULE_MSG_ID_MAX = ID_S2C_RESPONSE_GET_SERVER_ACT;
+const SERVER_ACT_MODULE_MSG_ID SERVER_ACT_MODULE_MSG_ID_MAX = ID_S2C_RESPONSE_GET_CUMUL_RECHARGE_PRIZE;
 const int SERVER_ACT_MODULE_MSG_ID_ARRAYSIZE = SERVER_ACT_MODULE_MSG_ID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* SERVER_ACT_MODULE_MSG_ID_descriptor();
@@ -219,6 +223,185 @@ class CGetServerActResponse : public ::google::protobuf::Message /* @@protoc_ins
 };
 extern ::google::protobuf::internal::ExplicitlyConstructed<CGetServerActResponse> CGetServerActResponse_default_instance_;
 
+// -------------------------------------------------------------------
+
+class CGetCumulRechargePrizeRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CGetCumulRechargePrizeRequest) */ {
+ public:
+  CGetCumulRechargePrizeRequest();
+  virtual ~CGetCumulRechargePrizeRequest();
+
+  CGetCumulRechargePrizeRequest(const CGetCumulRechargePrizeRequest& from);
+
+  inline CGetCumulRechargePrizeRequest& operator=(const CGetCumulRechargePrizeRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CGetCumulRechargePrizeRequest& default_instance();
+
+  static const CGetCumulRechargePrizeRequest* internal_default_instance();
+
+  void Swap(CGetCumulRechargePrizeRequest* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CGetCumulRechargePrizeRequest* New() const { return New(NULL); }
+
+  CGetCumulRechargePrizeRequest* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CGetCumulRechargePrizeRequest& from);
+  void MergeFrom(const CGetCumulRechargePrizeRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CGetCumulRechargePrizeRequest* other);
+  void UnsafeMergeFrom(const CGetCumulRechargePrizeRequest& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 ActivityID = 1;
+  void clear_activityid();
+  static const int kActivityIDFieldNumber = 1;
+  ::google::protobuf::uint32 activityid() const;
+  void set_activityid(::google::protobuf::uint32 value);
+
+  // optional uint32 Index = 2;
+  void clear_index();
+  static const int kIndexFieldNumber = 2;
+  ::google::protobuf::uint32 index() const;
+  void set_index(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:CGetCumulRechargePrizeRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 activityid_;
+  ::google::protobuf::uint32 index_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_serveractmodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_serveractmodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_serveractmodule_2ehxx();
+  friend void protobuf_ShutdownFile_serveractmodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CGetCumulRechargePrizeRequest> CGetCumulRechargePrizeRequest_default_instance_;
+
+// -------------------------------------------------------------------
+
+class CGetCumulRechargePrizeResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CGetCumulRechargePrizeResponse) */ {
+ public:
+  CGetCumulRechargePrizeResponse();
+  virtual ~CGetCumulRechargePrizeResponse();
+
+  CGetCumulRechargePrizeResponse(const CGetCumulRechargePrizeResponse& from);
+
+  inline CGetCumulRechargePrizeResponse& operator=(const CGetCumulRechargePrizeResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CGetCumulRechargePrizeResponse& default_instance();
+
+  static const CGetCumulRechargePrizeResponse* internal_default_instance();
+
+  void Swap(CGetCumulRechargePrizeResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CGetCumulRechargePrizeResponse* New() const { return New(NULL); }
+
+  CGetCumulRechargePrizeResponse* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CGetCumulRechargePrizeResponse& from);
+  void MergeFrom(const CGetCumulRechargePrizeResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CGetCumulRechargePrizeResponse* other);
+  void UnsafeMergeFrom(const CGetCumulRechargePrizeResponse& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 Result = 1;
+  void clear_result();
+  static const int kResultFieldNumber = 1;
+  ::google::protobuf::uint32 result() const;
+  void set_result(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:CGetCumulRechargePrizeResponse)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 result_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_serveractmodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_serveractmodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_serveractmodule_2ehxx();
+  friend void protobuf_ShutdownFile_serveractmodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CGetCumulRechargePrizeResponse> CGetCumulRechargePrizeResponse_default_instance_;
+
 // ===================================================================
 
 
@@ -237,7 +420,67 @@ inline const CGetServerActRequest* CGetServerActRequest::internal_default_instan
 inline const CGetServerActResponse* CGetServerActResponse::internal_default_instance() {
   return &CGetServerActResponse_default_instance_.get();
 }
+// -------------------------------------------------------------------
+
+// CGetCumulRechargePrizeRequest
+
+// optional uint32 ActivityID = 1;
+inline void CGetCumulRechargePrizeRequest::clear_activityid() {
+  activityid_ = 0u;
+}
+inline ::google::protobuf::uint32 CGetCumulRechargePrizeRequest::activityid() const {
+  // @@protoc_insertion_point(field_get:CGetCumulRechargePrizeRequest.ActivityID)
+  return activityid_;
+}
+inline void CGetCumulRechargePrizeRequest::set_activityid(::google::protobuf::uint32 value) {
+  
+  activityid_ = value;
+  // @@protoc_insertion_point(field_set:CGetCumulRechargePrizeRequest.ActivityID)
+}
+
+// optional uint32 Index = 2;
+inline void CGetCumulRechargePrizeRequest::clear_index() {
+  index_ = 0u;
+}
+inline ::google::protobuf::uint32 CGetCumulRechargePrizeRequest::index() const {
+  // @@protoc_insertion_point(field_get:CGetCumulRechargePrizeRequest.Index)
+  return index_;
+}
+inline void CGetCumulRechargePrizeRequest::set_index(::google::protobuf::uint32 value) {
+  
+  index_ = value;
+  // @@protoc_insertion_point(field_set:CGetCumulRechargePrizeRequest.Index)
+}
+
+inline const CGetCumulRechargePrizeRequest* CGetCumulRechargePrizeRequest::internal_default_instance() {
+  return &CGetCumulRechargePrizeRequest_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
+// CGetCumulRechargePrizeResponse
+
+// optional uint32 Result = 1;
+inline void CGetCumulRechargePrizeResponse::clear_result() {
+  result_ = 0u;
+}
+inline ::google::protobuf::uint32 CGetCumulRechargePrizeResponse::result() const {
+  // @@protoc_insertion_point(field_get:CGetCumulRechargePrizeResponse.Result)
+  return result_;
+}
+inline void CGetCumulRechargePrizeResponse::set_result(::google::protobuf::uint32 value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:CGetCumulRechargePrizeResponse.Result)
+}
+
+inline const CGetCumulRechargePrizeResponse* CGetCumulRechargePrizeResponse::internal_default_instance() {
+  return &CGetCumulRechargePrizeResponse_default_instance_.get();
+}
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 

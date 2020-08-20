@@ -7,6 +7,18 @@
 #include "locallogjob.h"
 #include "entityplayer.h"
 #include "itemmodule.h"
+void CItemArrange::addItem(int nID, int nNum)
+{
+	if (mCount >= BASE_BAG_CAPACITY)
+	{
+		return;
+	}
+
+	mID[mCount] = nID;
+	mNum[mCount] = nNum;
+	++mCount;
+}
+
 /// 获得货币
 int CItemUnit::obtainCurrency(EmCurrencyType eCurrencyType, int nCurrencyNum)
 {
@@ -93,7 +105,7 @@ bool CItemUnit::checkItemSpace(int* pItemID, int* pItemNum, int nSize)
 }
 
 /// 插入道具
-int CItemUnit::insertItem(int* pItemID, int* pItemNum, int nSize)
+int CItemUnit::insertAllItem(int* pItemID, int* pItemNum, int nSize)
 {
 	if (NULL == pItemID || NULL == pItemNum)
 	{
@@ -240,6 +252,13 @@ void CItemUnit::removeItemOnly(int nItemID, int nItemNum)
 		CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_NOTIYF_REMOVE_ITEM, &tRemoveItemNotify);
 	}
 }
+
+/// 道具是否适合玩家
+bool CItemUnit::checkMatchItem(int nItemID, int nMetier)
+{
+	return true;
+}
+
 
 // 发送插入道具通知
 void CItemUnit::sendInsertItemNotify(int nItemID, int* pIndex, int* pNumber, int nSize)
@@ -573,7 +592,7 @@ void CItemUnit::onPickItemRequest(Message* pMessage)
 		return ;
 	}
 
-	insertItem(&nItemID, &nItemNum, 1);
+	insertAllItem(&nItemID, &nItemNum, 1);
 	sendPickItemResponse(SUCCESS);
 }
 

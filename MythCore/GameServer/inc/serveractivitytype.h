@@ -29,12 +29,4 @@ enum EmRankActSubType
 	emRankActSubType_Power		= 2,		// 战力排行榜活动
 };
 
-/// 活动函数类型
-enum EmFuncType
-{
-	emFuncType_None				= 0,		// 无类型
-	emFuncType_End				= 1,		// 活动结束函数
-	emFuncType_ClearPlayerData	= 2,		// 清理玩家数据函数
-	emFuncType_RefreshProcess	= 3,		// 刷新活动进度
-};
 #endif

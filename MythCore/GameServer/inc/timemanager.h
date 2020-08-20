@@ -23,7 +23,7 @@ public:
 	/// 将日期转化为时间戳,20200804转化成2020年8月4日凌晨0点0分0秒的时间戳
 	time_t			date2TimeStamp(int nTime);
 	/// 是否是同一天
-	bool			isSameDay(time_t nOldTime, time_t nNewTime);
+	bool			checkSameDay(time_t nOldTime, time_t nNewTime);
 
 public:
 	inline time_t	getCurrTime(){ return mCurrTime; }

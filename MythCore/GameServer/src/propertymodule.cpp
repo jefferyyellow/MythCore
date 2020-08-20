@@ -323,7 +323,8 @@ void CPropertyModule::onLoadComplete(CEntityPlayer* pPlayer)
 	// 老玩家
 	else
 	{
-
+		// 日常刷新
+		pPlayer->dailyRefresh(true);
 	}
 
 	CSceneJob::Inst()->createPlayer(pPlayer);
@@ -497,7 +498,7 @@ void CPropertyModule::setNewPlayerValue(CEntityPlayer* pPlayer)
 		return;
 	}
 
-	pPlayer->getItemUnit().insertItem(pTplConfig->mItemID, pTplConfig->mItemNum, MAX_NEW_PLAYER_ITEM);
+	pPlayer->getItemUnit().insertAllItem(pTplConfig->mItemID, pTplConfig->mItemNum, MAX_NEW_PLAYER_ITEM);
 	pPlayer->getPropertyUnit().setLevel(pTplConfig->mLevel);
 	pPlayer->getVIPUnit().setVipLevel(pTplConfig->mVipLevel);
 }

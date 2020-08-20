@@ -45,14 +45,14 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>MYTH_OS_WINDOWS;_CRT_SECURE_NO_WARNINGS;__DEBUG__;NOMINMAX;__USE_PERF_FUNC__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../MythCore/include;../dep/protobuffer;../message;../dep/mysql/include;./inc;../dep/tinyxml;../dep;../dep/libcurl/include;../dep/hiredis/windows/include;../dep/jsoncpp/;../dep/libevent/windows/include;../dep/gtest/include;../dep/luacode5_3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../MythCore/include;../dep/protobuffer;../message;../dep/mysql/include;./inc;../dep/tinyxml;../dep;../dep/libcurl/include;../dep/hiredis/windows/include;../dep/jsoncpp/;../dep/libevent/windows/include;../dep/gtest/include;../dep/lua53;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>MythCore.lib;libprotobufd.lib;libcurl.lib;hiredis.lib;lib_json.lib;libevent_core.lib;gtestd.lib;luacode5_3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>MythCore.lib;libprotobufd.lib;libcurl.lib;hiredis.lib;lib_json.lib;libevent_core.lib;gtestd.lib;lua53.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../Debug;../dep/protobuffer/lib;../dep/gtest/lib;../dep/libcurl/lib;../dep/hiredis/windows/lib;../dep/jsoncpp/lib;../dep/libevent/windows/lib</AdditionalLibraryDirectories>
-      <IgnoreSpecificDefaultLibraries>libcmt.lib;libcmtd.lib</IgnoreSpecificDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -99,6 +99,7 @@
     <ClCompile Include="src\GameLogicConfig.cpp" />
     <ClCompile Include="src\gameserver.cpp" />
     <ClCompile Include="src\gameserverconfig.cpp" />
+    <ClCompile Include="src\globalluareg.cpp" />
     <ClCompile Include="src\gmcommandmanager.cpp" />
     <ClCompile Include="src\gtest.cpp" />
     <ClCompile Include="src\instance.cpp" />
@@ -106,6 +107,7 @@
     <ClCompile Include="src\internalmsg.cpp" />
     <ClCompile Include="src\internalmsgpool.cpp" />
     <ClCompile Include="src\itemcontainer.cpp" />
+    <ClCompile Include="src\itemluareg.cpp" />
     <ClCompile Include="src\itemmodule.cpp" />
     <ClCompile Include="src\itemobject.cpp" />
     <ClCompile Include="src\itemmoduletest.cpp" />
@@ -209,6 +211,7 @@
     <ClInclude Include="inc\GameLogicConfig.h" />
     <ClInclude Include="inc\gameserver.h" />
     <ClInclude Include="inc\gameserverconfig.h" />
+    <ClInclude Include="inc\globalluareg.h" />
     <ClInclude Include="inc\gmcommandmanager.h" />
     <ClInclude Include="inc\instance.h" />
     <ClInclude Include="inc\instancemodule.h" />
@@ -217,6 +220,7 @@
     <ClInclude Include="inc\internalmsgpool.h" />
     <ClInclude Include="inc\itemcontainer.h" />
     <ClInclude Include="inc\itemlist.h" />
+    <ClInclude Include="inc\itemluareg.h" />
     <ClInclude Include="inc\itemmodule.h" />
     <ClInclude Include="inc\itemobject.h" />
     <ClInclude Include="inc\itemtype.h" />

@@ -125,7 +125,7 @@ COMMAND_HANDLER_IMPL(ii)
 
 	int nItemID = atoi(tTokens[0].c_str());
 	int nItemNum = atoi(tTokens[1].c_str());
-	pPlayer->getItemUnit().insertItem(&nItemID, &nItemNum, 1);
+	pPlayer->getItemUnit().insertAllItem(&nItemID, &nItemNum, 1);
 }
 
 COMMAND_HANDLER_IMPL(removeitem)
