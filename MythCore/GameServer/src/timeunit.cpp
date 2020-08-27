@@ -28,7 +28,7 @@ void CTimeUnit::onHeartBeatRequest(Message* pMessage)
 		if (mHeartBeatErrCount >= pLogicConfig->mHeartBeatInvalidMax)
 		{
 			// 将玩家踢下线
-			CPropertyModule::Inst()->playerLeaveGame(&mPlayer);
+			CPropertyModule::Inst()->playerLeaveGame(&mPlayer, EmLeaveReason_HeartBeatQuick);
 			return;
 		}
 		// 如果达到或者超过一个心跳检查周期，重置

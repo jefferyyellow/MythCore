@@ -54,6 +54,10 @@ private:
 	COMMAND_HANDLER_DECL(settime);
 	/// 充值
 	COMMAND_HANDLER_DECL(recharge);
+	/// 发送邮件
+	COMMAND_HANDLER_DECL(sendmail);
+	/// 发送全局邮件
+	COMMAND_HANDLER_DECL(globalmail);
 
 private:
 	/// 得到命令的帮助字符串

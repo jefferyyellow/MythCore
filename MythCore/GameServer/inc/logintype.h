@@ -46,7 +46,7 @@ enum EmPlayerLoadStatus
 };
 
 #define	MAX_SERVER_ID			10000			// 最大的服务器ID
-#define MAX_ROLE_PER_SERVER		200000			// 每个服务器最多20万角色
+#define MAX_ROLE_PER_SERVER		400000			// 每个服务器最多40万角色
 #define BAT_LOAD_ROLE_ID_NUM	2000			// 批量加载分配角色ID数量
 
 enum EmPlayerSex
@@ -54,5 +54,14 @@ enum EmPlayerSex
 	EmPlayerSex_Male			= 0,		// 男性
 	EmPlayerSex_Female			= 1,		// 女性
 	EmPlayerSex_None			= 2,		// 无性别
+};
+
+enum EmLeaveReason
+{
+	EmLeaveReason_Disconnection	= 0,		// Sokect断开连接
+	EmLeaveReason_ServerShutDown= 1,		// 服务器关机
+	EmLeaveReason_LoadTimeOut	= 2,		// 加载超时
+	EmLeaveReason_PlayerRequest	= 3,		// 玩家请求
+	EmLeaveReason_HeartBeatQuick= 4,		// 心跳过速
 };
 #endif

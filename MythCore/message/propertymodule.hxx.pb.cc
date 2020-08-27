@@ -64,6 +64,30 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* CHeartBeatResponse_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   CHeartBeatResponse_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CGetMailListRequest_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CGetMailListRequest_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CGetMailListResponse_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CGetMailListResponse_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CReadMailRequest_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CReadMailRequest_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CReadMailResponse_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CReadMailResponse_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CGetMailAttachmentRequest_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CGetMailAttachmentRequest_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CGetMailAttachmentResponse_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CGetMailAttachmentResponse_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CDeleteMailRequest_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CDeleteMailRequest_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CDeleteMailResponse_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CDeleteMailResponse_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* PROPERTY_MODULE_MSG_ID_descriptor_ = NULL;
 
 }  // namespace
@@ -291,6 +315,118 @@ void protobuf_AssignDesc_propertymodule_2ehxx() {
       -1,
       sizeof(CHeartBeatResponse),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CHeartBeatResponse, _internal_metadata_));
+  CGetMailListRequest_descriptor_ = file->message_type(15);
+  static const int CGetMailListRequest_offsets_[1] = {
+  };
+  CGetMailListRequest_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      CGetMailListRequest_descriptor_,
+      CGetMailListRequest::internal_default_instance(),
+      CGetMailListRequest_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(CGetMailListRequest),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetMailListRequest, _internal_metadata_));
+  CGetMailListResponse_descriptor_ = file->message_type(16);
+  static const int CGetMailListResponse_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetMailListResponse, mail_),
+  };
+  CGetMailListResponse_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      CGetMailListResponse_descriptor_,
+      CGetMailListResponse::internal_default_instance(),
+      CGetMailListResponse_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(CGetMailListResponse),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetMailListResponse, _internal_metadata_));
+  CReadMailRequest_descriptor_ = file->message_type(17);
+  static const int CReadMailRequest_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CReadMailRequest, mailid_),
+  };
+  CReadMailRequest_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      CReadMailRequest_descriptor_,
+      CReadMailRequest::internal_default_instance(),
+      CReadMailRequest_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(CReadMailRequest),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CReadMailRequest, _internal_metadata_));
+  CReadMailResponse_descriptor_ = file->message_type(18);
+  static const int CReadMailResponse_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CReadMailResponse, result_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CReadMailResponse, status_),
+  };
+  CReadMailResponse_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      CReadMailResponse_descriptor_,
+      CReadMailResponse::internal_default_instance(),
+      CReadMailResponse_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(CReadMailResponse),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CReadMailResponse, _internal_metadata_));
+  CGetMailAttachmentRequest_descriptor_ = file->message_type(19);
+  static const int CGetMailAttachmentRequest_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetMailAttachmentRequest, mailid_),
+  };
+  CGetMailAttachmentRequest_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      CGetMailAttachmentRequest_descriptor_,
+      CGetMailAttachmentRequest::internal_default_instance(),
+      CGetMailAttachmentRequest_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(CGetMailAttachmentRequest),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetMailAttachmentRequest, _internal_metadata_));
+  CGetMailAttachmentResponse_descriptor_ = file->message_type(20);
+  static const int CGetMailAttachmentResponse_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetMailAttachmentResponse, result_),
+  };
+  CGetMailAttachmentResponse_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      CGetMailAttachmentResponse_descriptor_,
+      CGetMailAttachmentResponse::internal_default_instance(),
+      CGetMailAttachmentResponse_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(CGetMailAttachmentResponse),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetMailAttachmentResponse, _internal_metadata_));
+  CDeleteMailRequest_descriptor_ = file->message_type(21);
+  static const int CDeleteMailRequest_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CDeleteMailRequest, mailid_),
+  };
+  CDeleteMailRequest_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      CDeleteMailRequest_descriptor_,
+      CDeleteMailRequest::internal_default_instance(),
+      CDeleteMailRequest_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(CDeleteMailRequest),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CDeleteMailRequest, _internal_metadata_));
+  CDeleteMailResponse_descriptor_ = file->message_type(22);
+  static const int CDeleteMailResponse_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CDeleteMailResponse, result_),
+  };
+  CDeleteMailResponse_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      CDeleteMailResponse_descriptor_,
+      CDeleteMailResponse::internal_default_instance(),
+      CDeleteMailResponse_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(CDeleteMailResponse),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CDeleteMailResponse, _internal_metadata_));
   PROPERTY_MODULE_MSG_ID_descriptor_ = file->enum_type(0);
 }
 
@@ -335,6 +471,22 @@ void protobuf_RegisterTypes(const ::std::string&) {
       CHeartBeatRequest_descriptor_, CHeartBeatRequest::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       CHeartBeatResponse_descriptor_, CHeartBeatResponse::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      CGetMailListRequest_descriptor_, CGetMailListRequest::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      CGetMailListResponse_descriptor_, CGetMailListResponse::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      CReadMailRequest_descriptor_, CReadMailRequest::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      CReadMailResponse_descriptor_, CReadMailResponse::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      CGetMailAttachmentRequest_descriptor_, CGetMailAttachmentRequest::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      CGetMailAttachmentResponse_descriptor_, CGetMailAttachmentResponse::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      CDeleteMailRequest_descriptor_, CDeleteMailRequest::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      CDeleteMailResponse_descriptor_, CDeleteMailResponse::internal_default_instance());
 }
 
 }  // namespace
@@ -370,6 +522,22 @@ void protobuf_ShutdownFile_propertymodule_2ehxx() {
   delete CHeartBeatRequest_reflection_;
   CHeartBeatResponse_default_instance_.Shutdown();
   delete CHeartBeatResponse_reflection_;
+  CGetMailListRequest_default_instance_.Shutdown();
+  delete CGetMailListRequest_reflection_;
+  CGetMailListResponse_default_instance_.Shutdown();
+  delete CGetMailListResponse_reflection_;
+  CReadMailRequest_default_instance_.Shutdown();
+  delete CReadMailRequest_reflection_;
+  CReadMailResponse_default_instance_.Shutdown();
+  delete CReadMailResponse_reflection_;
+  CGetMailAttachmentRequest_default_instance_.Shutdown();
+  delete CGetMailAttachmentRequest_reflection_;
+  CGetMailAttachmentResponse_default_instance_.Shutdown();
+  delete CGetMailAttachmentResponse_reflection_;
+  CDeleteMailRequest_default_instance_.Shutdown();
+  delete CDeleteMailRequest_reflection_;
+  CDeleteMailResponse_default_instance_.Shutdown();
+  delete CDeleteMailResponse_reflection_;
 }
 
 void protobuf_InitDefaults_propertymodule_2ehxx_impl() {
@@ -392,6 +560,14 @@ void protobuf_InitDefaults_propertymodule_2ehxx_impl() {
   CGetPlayerPropertyResponse_default_instance_.DefaultConstruct();
   CHeartBeatRequest_default_instance_.DefaultConstruct();
   CHeartBeatResponse_default_instance_.DefaultConstruct();
+  CGetMailListRequest_default_instance_.DefaultConstruct();
+  CGetMailListResponse_default_instance_.DefaultConstruct();
+  CReadMailRequest_default_instance_.DefaultConstruct();
+  CReadMailResponse_default_instance_.DefaultConstruct();
+  CGetMailAttachmentRequest_default_instance_.DefaultConstruct();
+  CGetMailAttachmentResponse_default_instance_.DefaultConstruct();
+  CDeleteMailRequest_default_instance_.DefaultConstruct();
+  CDeleteMailResponse_default_instance_.DefaultConstruct();
   CLevelUpNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
   CGMCommandRequest_default_instance_.get_mutable()->InitAsDefaultInstance();
   CGMCommandResponse_default_instance_.get_mutable()->InitAsDefaultInstance();
@@ -407,6 +583,14 @@ void protobuf_InitDefaults_propertymodule_2ehxx_impl() {
   CGetPlayerPropertyResponse_default_instance_.get_mutable()->InitAsDefaultInstance();
   CHeartBeatRequest_default_instance_.get_mutable()->InitAsDefaultInstance();
   CHeartBeatResponse_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CGetMailListRequest_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CGetMailListResponse_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CReadMailRequest_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CReadMailResponse_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CGetMailAttachmentRequest_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CGetMailAttachmentResponse_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CDeleteMailRequest_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CDeleteMailResponse_default_instance_.get_mutable()->InitAsDefaultInstance();
 }
 
 GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_InitDefaults_propertymodule_2ehxx_once_);
@@ -437,22 +621,37 @@ void protobuf_AddDesc_propertymodule_2ehxx_impl() {
     "etPlayerPropertyRequest\"3\n\032CGetPlayerPro"
     "pertyResponse\022\025\n\rPropertyValue\030\001 \003(\r\"\023\n\021"
     "CHeartBeatRequest\"(\n\022CHeartBeatResponse\022"
-    "\022\n\nServerTime\030\001 \001(\r*\300\004\n\026PROPERTY_MODULE_"
-    "MSG_ID\022\034\n\030ID_PROPERTY_MODULE_ERROR\020\000\022\033\n\026"
-    "ID_S2C_NOTIYF_LEVEL_UP\020\200\010\022\036\n\031ID_C2S_REQU"
-    "EST_GM_COMMAND\020\201\010\022\037\n\032ID_S2C_RESPONSE_GM_"
-    "COMMAND\020\202\010\022\035\n\030ID_S2C_NOTIFY_OBTAIN_EXP\020\203"
-    "\010\022!\n\034ID_S2C_NOTIFY_OBTAIN_VIP_EXP\020\204\010\022\036\n\031"
-    "ID_C2S_REQUEST_LEAVE_GAME\020\205\010\022\037\n\032ID_S2C_R"
-    "ESPONSE_LEAVE_GAME\020\206\010\022#\n\036ID_S2C_NOTIFY_P"
-    "LAYER_BASE_INFO\020\207\010\022#\n\036ID_S2C_NOTIFY_PLAY"
-    "ER_ITEM_INFO\020\210\010\022#\n\036ID_S2C_NOTIFY_PLAYER_"
-    "TASK_INFO\020\211\010\022$\n\037ID_S2C_NOTIFY_PLAYER_SKI"
-    "LL_INFO\020\212\010\022\'\n\"ID_C2S_REQUEST_GET_PLAYER_"
-    "PROPERTY\020\213\010\022(\n#ID_S2C_RESPONSE_GET_PLAYE"
-    "R_PROPERTY\020\214\010\022\036\n\031ID_C2S_REQUEST_HEART_BE"
-    "AT\020\215\010\022\037\n\032ID_S2C_RESPONSE_HEART_BEAT\020\216\010b\006"
-    "proto3", 1326);
+    "\022\n\nServerTime\030\001 \001(\r\"\025\n\023CGetMailListReque"
+    "st\"-\n\024CGetMailListResponse\022\025\n\004Mail\030\001 \003(\013"
+    "2\007.PBMail\"\"\n\020CReadMailRequest\022\016\n\006MailID\030"
+    "\001 \001(\r\"3\n\021CReadMailResponse\022\016\n\006Result\030\001 \001"
+    "(\r\022\016\n\006Status\030\002 \001(\r\"+\n\031CGetMailAttachment"
+    "Request\022\016\n\006MailID\030\001 \001(\r\",\n\032CGetMailAttac"
+    "hmentResponse\022\016\n\006Result\030\001 \001(\r\"$\n\022CDelete"
+    "MailRequest\022\016\n\006MailID\030\001 \001(\r\"%\n\023CDeleteMa"
+    "ilResponse\022\016\n\006Result\030\001 \001(\r*\334\006\n\026PROPERTY_"
+    "MODULE_MSG_ID\022\034\n\030ID_PROPERTY_MODULE_ERRO"
+    "R\020\000\022\033\n\026ID_S2C_NOTIYF_LEVEL_UP\020\200\010\022\036\n\031ID_C"
+    "2S_REQUEST_GM_COMMAND\020\201\010\022\037\n\032ID_S2C_RESPO"
+    "NSE_GM_COMMAND\020\202\010\022\035\n\030ID_S2C_NOTIFY_OBTAI"
+    "N_EXP\020\203\010\022!\n\034ID_S2C_NOTIFY_OBTAIN_VIP_EXP"
+    "\020\204\010\022\036\n\031ID_C2S_REQUEST_LEAVE_GAME\020\205\010\022\037\n\032I"
+    "D_S2C_RESPONSE_LEAVE_GAME\020\206\010\022#\n\036ID_S2C_N"
+    "OTIFY_PLAYER_BASE_INFO\020\207\010\022#\n\036ID_S2C_NOTI"
+    "FY_PLAYER_ITEM_INFO\020\210\010\022#\n\036ID_S2C_NOTIFY_"
+    "PLAYER_TASK_INFO\020\211\010\022$\n\037ID_S2C_NOTIFY_PLA"
+    "YER_SKILL_INFO\020\212\010\022\'\n\"ID_C2S_REQUEST_GET_"
+    "PLAYER_PROPERTY\020\213\010\022(\n#ID_S2C_RESPONSE_GE"
+    "T_PLAYER_PROPERTY\020\214\010\022\036\n\031ID_C2S_REQUEST_H"
+    "EART_BEAT\020\215\010\022\037\n\032ID_S2C_RESPONSE_HEART_BE"
+    "AT\020\216\010\022!\n\034ID_C2S_REQUEST_GET_MAIL_LIST\020\217\010"
+    "\022\"\n\035ID_S2C_RESPONSE_GET_MAIL_LIST\020\220\010\022\035\n\030"
+    "ID_C2S_REQUEST_READ_MAIL\020\221\010\022\036\n\031ID_S2C_RE"
+    "SPONSE_READ_MAIL\020\222\010\022\'\n\"ID_C2S_REQUEST_GE"
+    "T_MAIL_ATTACHMENT\020\223\010\022(\n#ID_S2C_RESPONSE_"
+    "GET_MAIL_ATTACHMENT\020\224\010\022\037\n\032ID_C2S_REQUEST"
+    "_DELETE_MAIL\020\225\010\022 \n\033ID_S2C_RESPONSE_DELET"
+    "E_MAIL\020\226\010b\006proto3", 1937);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "propertymodule.hxx", &protobuf_RegisterTypes);
   ::protobuf_AddDesc_common_2ehxx();
@@ -492,6 +691,14 @@ bool PROPERTY_MODULE_MSG_ID_IsValid(int value) {
     case 1036:
     case 1037:
     case 1038:
+    case 1039:
+    case 1040:
+    case 1041:
+    case 1042:
+    case 1043:
+    case 1044:
+    case 1045:
+    case 1046:
       return true;
     default:
       return false;
@@ -4564,6 +4771,1995 @@ void CHeartBeatResponse::set_servertime(::google::protobuf::uint32 value) {
 
 inline const CHeartBeatResponse* CHeartBeatResponse::internal_default_instance() {
   return &CHeartBeatResponse_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+CGetMailListRequest::CGetMailListRequest()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_propertymodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CGetMailListRequest)
+}
+
+void CGetMailListRequest::InitAsDefaultInstance() {
+}
+
+CGetMailListRequest::CGetMailListRequest(const CGetMailListRequest& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:CGetMailListRequest)
+}
+
+void CGetMailListRequest::SharedCtor() {
+  _cached_size_ = 0;
+}
+
+CGetMailListRequest::~CGetMailListRequest() {
+  // @@protoc_insertion_point(destructor:CGetMailListRequest)
+  SharedDtor();
+}
+
+void CGetMailListRequest::SharedDtor() {
+}
+
+void CGetMailListRequest::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CGetMailListRequest::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CGetMailListRequest_descriptor_;
+}
+
+const CGetMailListRequest& CGetMailListRequest::default_instance() {
+  protobuf_InitDefaults_propertymodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<CGetMailListRequest> CGetMailListRequest_default_instance_;
+
+CGetMailListRequest* CGetMailListRequest::New(::google::protobuf::Arena* arena) const {
+  CGetMailListRequest* n = new CGetMailListRequest;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void CGetMailListRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:CGetMailListRequest)
+}
+
+bool CGetMailListRequest::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:CGetMailListRequest)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+  handle_unusual:
+    if (tag == 0 ||
+        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+      goto success;
+    }
+    DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+  }
+success:
+  // @@protoc_insertion_point(parse_success:CGetMailListRequest)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:CGetMailListRequest)
+  return false;
+#undef DO_
+}
+
+void CGetMailListRequest::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:CGetMailListRequest)
+  // @@protoc_insertion_point(serialize_end:CGetMailListRequest)
+}
+
+::google::protobuf::uint8* CGetMailListRequest::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:CGetMailListRequest)
+  // @@protoc_insertion_point(serialize_to_array_end:CGetMailListRequest)
+  return target;
+}
+
+size_t CGetMailListRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CGetMailListRequest)
+  size_t total_size = 0;
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CGetMailListRequest::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CGetMailListRequest)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const CGetMailListRequest* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CGetMailListRequest>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CGetMailListRequest)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CGetMailListRequest)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void CGetMailListRequest::MergeFrom(const CGetMailListRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CGetMailListRequest)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void CGetMailListRequest::UnsafeMergeFrom(const CGetMailListRequest& from) {
+  GOOGLE_DCHECK(&from != this);
+}
+
+void CGetMailListRequest::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CGetMailListRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CGetMailListRequest::CopyFrom(const CGetMailListRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CGetMailListRequest)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool CGetMailListRequest::IsInitialized() const {
+
+  return true;
+}
+
+void CGetMailListRequest::Swap(CGetMailListRequest* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void CGetMailListRequest::InternalSwap(CGetMailListRequest* other) {
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata CGetMailListRequest::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CGetMailListRequest_descriptor_;
+  metadata.reflection = CGetMailListRequest_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// CGetMailListRequest
+
+inline const CGetMailListRequest* CGetMailListRequest::internal_default_instance() {
+  return &CGetMailListRequest_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int CGetMailListResponse::kMailFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+CGetMailListResponse::CGetMailListResponse()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_propertymodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CGetMailListResponse)
+}
+
+void CGetMailListResponse::InitAsDefaultInstance() {
+}
+
+CGetMailListResponse::CGetMailListResponse(const CGetMailListResponse& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:CGetMailListResponse)
+}
+
+void CGetMailListResponse::SharedCtor() {
+  _cached_size_ = 0;
+}
+
+CGetMailListResponse::~CGetMailListResponse() {
+  // @@protoc_insertion_point(destructor:CGetMailListResponse)
+  SharedDtor();
+}
+
+void CGetMailListResponse::SharedDtor() {
+}
+
+void CGetMailListResponse::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CGetMailListResponse::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CGetMailListResponse_descriptor_;
+}
+
+const CGetMailListResponse& CGetMailListResponse::default_instance() {
+  protobuf_InitDefaults_propertymodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<CGetMailListResponse> CGetMailListResponse_default_instance_;
+
+CGetMailListResponse* CGetMailListResponse::New(::google::protobuf::Arena* arena) const {
+  CGetMailListResponse* n = new CGetMailListResponse;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void CGetMailListResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:CGetMailListResponse)
+  mail_.Clear();
+}
+
+bool CGetMailListResponse::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:CGetMailListResponse)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // repeated .PBMail Mail = 1;
+      case 1: {
+        if (tag == 10) {
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_Mail:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+                input, add_mail()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(10)) goto parse_loop_Mail;
+        input->UnsafeDecrementRecursionDepth();
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:CGetMailListResponse)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:CGetMailListResponse)
+  return false;
+#undef DO_
+}
+
+void CGetMailListResponse::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:CGetMailListResponse)
+  // repeated .PBMail Mail = 1;
+  for (unsigned int i = 0, n = this->mail_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->mail(i), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:CGetMailListResponse)
+}
+
+::google::protobuf::uint8* CGetMailListResponse::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:CGetMailListResponse)
+  // repeated .PBMail Mail = 1;
+  for (unsigned int i = 0, n = this->mail_size(); i < n; i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageNoVirtualToArray(
+        1, this->mail(i), false, target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:CGetMailListResponse)
+  return target;
+}
+
+size_t CGetMailListResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CGetMailListResponse)
+  size_t total_size = 0;
+
+  // repeated .PBMail Mail = 1;
+  {
+    unsigned int count = this->mail_size();
+    total_size += 1UL * count;
+    for (unsigned int i = 0; i < count; i++) {
+      total_size +=
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->mail(i));
+    }
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CGetMailListResponse::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CGetMailListResponse)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const CGetMailListResponse* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CGetMailListResponse>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CGetMailListResponse)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CGetMailListResponse)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void CGetMailListResponse::MergeFrom(const CGetMailListResponse& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CGetMailListResponse)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void CGetMailListResponse::UnsafeMergeFrom(const CGetMailListResponse& from) {
+  GOOGLE_DCHECK(&from != this);
+  mail_.MergeFrom(from.mail_);
+}
+
+void CGetMailListResponse::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CGetMailListResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CGetMailListResponse::CopyFrom(const CGetMailListResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CGetMailListResponse)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool CGetMailListResponse::IsInitialized() const {
+
+  return true;
+}
+
+void CGetMailListResponse::Swap(CGetMailListResponse* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void CGetMailListResponse::InternalSwap(CGetMailListResponse* other) {
+  mail_.UnsafeArenaSwap(&other->mail_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata CGetMailListResponse::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CGetMailListResponse_descriptor_;
+  metadata.reflection = CGetMailListResponse_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// CGetMailListResponse
+
+// repeated .PBMail Mail = 1;
+int CGetMailListResponse::mail_size() const {
+  return mail_.size();
+}
+void CGetMailListResponse::clear_mail() {
+  mail_.Clear();
+}
+const ::PBMail& CGetMailListResponse::mail(int index) const {
+  // @@protoc_insertion_point(field_get:CGetMailListResponse.Mail)
+  return mail_.Get(index);
+}
+::PBMail* CGetMailListResponse::mutable_mail(int index) {
+  // @@protoc_insertion_point(field_mutable:CGetMailListResponse.Mail)
+  return mail_.Mutable(index);
+}
+::PBMail* CGetMailListResponse::add_mail() {
+  // @@protoc_insertion_point(field_add:CGetMailListResponse.Mail)
+  return mail_.Add();
+}
+::google::protobuf::RepeatedPtrField< ::PBMail >*
+CGetMailListResponse::mutable_mail() {
+  // @@protoc_insertion_point(field_mutable_list:CGetMailListResponse.Mail)
+  return &mail_;
+}
+const ::google::protobuf::RepeatedPtrField< ::PBMail >&
+CGetMailListResponse::mail() const {
+  // @@protoc_insertion_point(field_list:CGetMailListResponse.Mail)
+  return mail_;
+}
+
+inline const CGetMailListResponse* CGetMailListResponse::internal_default_instance() {
+  return &CGetMailListResponse_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int CReadMailRequest::kMailIDFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+CReadMailRequest::CReadMailRequest()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_propertymodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CReadMailRequest)
+}
+
+void CReadMailRequest::InitAsDefaultInstance() {
+}
+
+CReadMailRequest::CReadMailRequest(const CReadMailRequest& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:CReadMailRequest)
+}
+
+void CReadMailRequest::SharedCtor() {
+  mailid_ = 0u;
+  _cached_size_ = 0;
+}
+
+CReadMailRequest::~CReadMailRequest() {
+  // @@protoc_insertion_point(destructor:CReadMailRequest)
+  SharedDtor();
+}
+
+void CReadMailRequest::SharedDtor() {
+}
+
+void CReadMailRequest::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CReadMailRequest::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CReadMailRequest_descriptor_;
+}
+
+const CReadMailRequest& CReadMailRequest::default_instance() {
+  protobuf_InitDefaults_propertymodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<CReadMailRequest> CReadMailRequest_default_instance_;
+
+CReadMailRequest* CReadMailRequest::New(::google::protobuf::Arena* arena) const {
+  CReadMailRequest* n = new CReadMailRequest;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void CReadMailRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:CReadMailRequest)
+  mailid_ = 0u;
+}
+
+bool CReadMailRequest::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:CReadMailRequest)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 MailID = 1;
+      case 1: {
+        if (tag == 8) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &mailid_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:CReadMailRequest)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:CReadMailRequest)
+  return false;
+#undef DO_
+}
+
+void CReadMailRequest::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:CReadMailRequest)
+  // optional uint32 MailID = 1;
+  if (this->mailid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mailid(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:CReadMailRequest)
+}
+
+::google::protobuf::uint8* CReadMailRequest::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:CReadMailRequest)
+  // optional uint32 MailID = 1;
+  if (this->mailid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->mailid(), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:CReadMailRequest)
+  return target;
+}
+
+size_t CReadMailRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CReadMailRequest)
+  size_t total_size = 0;
+
+  // optional uint32 MailID = 1;
+  if (this->mailid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->mailid());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CReadMailRequest::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CReadMailRequest)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const CReadMailRequest* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CReadMailRequest>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CReadMailRequest)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CReadMailRequest)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void CReadMailRequest::MergeFrom(const CReadMailRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CReadMailRequest)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void CReadMailRequest::UnsafeMergeFrom(const CReadMailRequest& from) {
+  GOOGLE_DCHECK(&from != this);
+  if (from.mailid() != 0) {
+    set_mailid(from.mailid());
+  }
+}
+
+void CReadMailRequest::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CReadMailRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CReadMailRequest::CopyFrom(const CReadMailRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CReadMailRequest)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool CReadMailRequest::IsInitialized() const {
+
+  return true;
+}
+
+void CReadMailRequest::Swap(CReadMailRequest* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void CReadMailRequest::InternalSwap(CReadMailRequest* other) {
+  std::swap(mailid_, other->mailid_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata CReadMailRequest::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CReadMailRequest_descriptor_;
+  metadata.reflection = CReadMailRequest_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// CReadMailRequest
+
+// optional uint32 MailID = 1;
+void CReadMailRequest::clear_mailid() {
+  mailid_ = 0u;
+}
+::google::protobuf::uint32 CReadMailRequest::mailid() const {
+  // @@protoc_insertion_point(field_get:CReadMailRequest.MailID)
+  return mailid_;
+}
+void CReadMailRequest::set_mailid(::google::protobuf::uint32 value) {
+  
+  mailid_ = value;
+  // @@protoc_insertion_point(field_set:CReadMailRequest.MailID)
+}
+
+inline const CReadMailRequest* CReadMailRequest::internal_default_instance() {
+  return &CReadMailRequest_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int CReadMailResponse::kResultFieldNumber;
+const int CReadMailResponse::kStatusFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+CReadMailResponse::CReadMailResponse()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_propertymodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CReadMailResponse)
+}
+
+void CReadMailResponse::InitAsDefaultInstance() {
+}
+
+CReadMailResponse::CReadMailResponse(const CReadMailResponse& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:CReadMailResponse)
+}
+
+void CReadMailResponse::SharedCtor() {
+  ::memset(&result_, 0, reinterpret_cast<char*>(&status_) -
+    reinterpret_cast<char*>(&result_) + sizeof(status_));
+  _cached_size_ = 0;
+}
+
+CReadMailResponse::~CReadMailResponse() {
+  // @@protoc_insertion_point(destructor:CReadMailResponse)
+  SharedDtor();
+}
+
+void CReadMailResponse::SharedDtor() {
+}
+
+void CReadMailResponse::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CReadMailResponse::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CReadMailResponse_descriptor_;
+}
+
+const CReadMailResponse& CReadMailResponse::default_instance() {
+  protobuf_InitDefaults_propertymodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<CReadMailResponse> CReadMailResponse_default_instance_;
+
+CReadMailResponse* CReadMailResponse::New(::google::protobuf::Arena* arena) const {
+  CReadMailResponse* n = new CReadMailResponse;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void CReadMailResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:CReadMailResponse)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(CReadMailResponse, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<CReadMailResponse*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&(first), 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(result_, status_);
+
+#undef ZR_HELPER_
+#undef ZR_
+
+}
+
+bool CReadMailResponse::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:CReadMailResponse)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 Result = 1;
+      case 1: {
+        if (tag == 8) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &result_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_Status;
+        break;
+      }
+
+      // optional uint32 Status = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_Status:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &status_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:CReadMailResponse)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:CReadMailResponse)
+  return false;
+#undef DO_
+}
+
+void CReadMailResponse::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:CReadMailResponse)
+  // optional uint32 Result = 1;
+  if (this->result() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->result(), output);
+  }
+
+  // optional uint32 Status = 2;
+  if (this->status() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->status(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:CReadMailResponse)
+}
+
+::google::protobuf::uint8* CReadMailResponse::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:CReadMailResponse)
+  // optional uint32 Result = 1;
+  if (this->result() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->result(), target);
+  }
+
+  // optional uint32 Status = 2;
+  if (this->status() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->status(), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:CReadMailResponse)
+  return target;
+}
+
+size_t CReadMailResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CReadMailResponse)
+  size_t total_size = 0;
+
+  // optional uint32 Result = 1;
+  if (this->result() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->result());
+  }
+
+  // optional uint32 Status = 2;
+  if (this->status() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->status());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CReadMailResponse::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CReadMailResponse)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const CReadMailResponse* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CReadMailResponse>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CReadMailResponse)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CReadMailResponse)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void CReadMailResponse::MergeFrom(const CReadMailResponse& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CReadMailResponse)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void CReadMailResponse::UnsafeMergeFrom(const CReadMailResponse& from) {
+  GOOGLE_DCHECK(&from != this);
+  if (from.result() != 0) {
+    set_result(from.result());
+  }
+  if (from.status() != 0) {
+    set_status(from.status());
+  }
+}
+
+void CReadMailResponse::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CReadMailResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CReadMailResponse::CopyFrom(const CReadMailResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CReadMailResponse)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool CReadMailResponse::IsInitialized() const {
+
+  return true;
+}
+
+void CReadMailResponse::Swap(CReadMailResponse* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void CReadMailResponse::InternalSwap(CReadMailResponse* other) {
+  std::swap(result_, other->result_);
+  std::swap(status_, other->status_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata CReadMailResponse::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CReadMailResponse_descriptor_;
+  metadata.reflection = CReadMailResponse_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// CReadMailResponse
+
+// optional uint32 Result = 1;
+void CReadMailResponse::clear_result() {
+  result_ = 0u;
+}
+::google::protobuf::uint32 CReadMailResponse::result() const {
+  // @@protoc_insertion_point(field_get:CReadMailResponse.Result)
+  return result_;
+}
+void CReadMailResponse::set_result(::google::protobuf::uint32 value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:CReadMailResponse.Result)
+}
+
+// optional uint32 Status = 2;
+void CReadMailResponse::clear_status() {
+  status_ = 0u;
+}
+::google::protobuf::uint32 CReadMailResponse::status() const {
+  // @@protoc_insertion_point(field_get:CReadMailResponse.Status)
+  return status_;
+}
+void CReadMailResponse::set_status(::google::protobuf::uint32 value) {
+  
+  status_ = value;
+  // @@protoc_insertion_point(field_set:CReadMailResponse.Status)
+}
+
+inline const CReadMailResponse* CReadMailResponse::internal_default_instance() {
+  return &CReadMailResponse_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int CGetMailAttachmentRequest::kMailIDFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+CGetMailAttachmentRequest::CGetMailAttachmentRequest()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_propertymodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CGetMailAttachmentRequest)
+}
+
+void CGetMailAttachmentRequest::InitAsDefaultInstance() {
+}
+
+CGetMailAttachmentRequest::CGetMailAttachmentRequest(const CGetMailAttachmentRequest& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:CGetMailAttachmentRequest)
+}
+
+void CGetMailAttachmentRequest::SharedCtor() {
+  mailid_ = 0u;
+  _cached_size_ = 0;
+}
+
+CGetMailAttachmentRequest::~CGetMailAttachmentRequest() {
+  // @@protoc_insertion_point(destructor:CGetMailAttachmentRequest)
+  SharedDtor();
+}
+
+void CGetMailAttachmentRequest::SharedDtor() {
+}
+
+void CGetMailAttachmentRequest::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CGetMailAttachmentRequest::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CGetMailAttachmentRequest_descriptor_;
+}
+
+const CGetMailAttachmentRequest& CGetMailAttachmentRequest::default_instance() {
+  protobuf_InitDefaults_propertymodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<CGetMailAttachmentRequest> CGetMailAttachmentRequest_default_instance_;
+
+CGetMailAttachmentRequest* CGetMailAttachmentRequest::New(::google::protobuf::Arena* arena) const {
+  CGetMailAttachmentRequest* n = new CGetMailAttachmentRequest;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void CGetMailAttachmentRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:CGetMailAttachmentRequest)
+  mailid_ = 0u;
+}
+
+bool CGetMailAttachmentRequest::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:CGetMailAttachmentRequest)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 MailID = 1;
+      case 1: {
+        if (tag == 8) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &mailid_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:CGetMailAttachmentRequest)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:CGetMailAttachmentRequest)
+  return false;
+#undef DO_
+}
+
+void CGetMailAttachmentRequest::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:CGetMailAttachmentRequest)
+  // optional uint32 MailID = 1;
+  if (this->mailid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mailid(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:CGetMailAttachmentRequest)
+}
+
+::google::protobuf::uint8* CGetMailAttachmentRequest::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:CGetMailAttachmentRequest)
+  // optional uint32 MailID = 1;
+  if (this->mailid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->mailid(), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:CGetMailAttachmentRequest)
+  return target;
+}
+
+size_t CGetMailAttachmentRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CGetMailAttachmentRequest)
+  size_t total_size = 0;
+
+  // optional uint32 MailID = 1;
+  if (this->mailid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->mailid());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CGetMailAttachmentRequest::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CGetMailAttachmentRequest)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const CGetMailAttachmentRequest* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CGetMailAttachmentRequest>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CGetMailAttachmentRequest)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CGetMailAttachmentRequest)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void CGetMailAttachmentRequest::MergeFrom(const CGetMailAttachmentRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CGetMailAttachmentRequest)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void CGetMailAttachmentRequest::UnsafeMergeFrom(const CGetMailAttachmentRequest& from) {
+  GOOGLE_DCHECK(&from != this);
+  if (from.mailid() != 0) {
+    set_mailid(from.mailid());
+  }
+}
+
+void CGetMailAttachmentRequest::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CGetMailAttachmentRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CGetMailAttachmentRequest::CopyFrom(const CGetMailAttachmentRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CGetMailAttachmentRequest)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool CGetMailAttachmentRequest::IsInitialized() const {
+
+  return true;
+}
+
+void CGetMailAttachmentRequest::Swap(CGetMailAttachmentRequest* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void CGetMailAttachmentRequest::InternalSwap(CGetMailAttachmentRequest* other) {
+  std::swap(mailid_, other->mailid_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata CGetMailAttachmentRequest::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CGetMailAttachmentRequest_descriptor_;
+  metadata.reflection = CGetMailAttachmentRequest_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// CGetMailAttachmentRequest
+
+// optional uint32 MailID = 1;
+void CGetMailAttachmentRequest::clear_mailid() {
+  mailid_ = 0u;
+}
+::google::protobuf::uint32 CGetMailAttachmentRequest::mailid() const {
+  // @@protoc_insertion_point(field_get:CGetMailAttachmentRequest.MailID)
+  return mailid_;
+}
+void CGetMailAttachmentRequest::set_mailid(::google::protobuf::uint32 value) {
+  
+  mailid_ = value;
+  // @@protoc_insertion_point(field_set:CGetMailAttachmentRequest.MailID)
+}
+
+inline const CGetMailAttachmentRequest* CGetMailAttachmentRequest::internal_default_instance() {
+  return &CGetMailAttachmentRequest_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int CGetMailAttachmentResponse::kResultFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+CGetMailAttachmentResponse::CGetMailAttachmentResponse()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_propertymodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CGetMailAttachmentResponse)
+}
+
+void CGetMailAttachmentResponse::InitAsDefaultInstance() {
+}
+
+CGetMailAttachmentResponse::CGetMailAttachmentResponse(const CGetMailAttachmentResponse& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:CGetMailAttachmentResponse)
+}
+
+void CGetMailAttachmentResponse::SharedCtor() {
+  result_ = 0u;
+  _cached_size_ = 0;
+}
+
+CGetMailAttachmentResponse::~CGetMailAttachmentResponse() {
+  // @@protoc_insertion_point(destructor:CGetMailAttachmentResponse)
+  SharedDtor();
+}
+
+void CGetMailAttachmentResponse::SharedDtor() {
+}
+
+void CGetMailAttachmentResponse::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CGetMailAttachmentResponse::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CGetMailAttachmentResponse_descriptor_;
+}
+
+const CGetMailAttachmentResponse& CGetMailAttachmentResponse::default_instance() {
+  protobuf_InitDefaults_propertymodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<CGetMailAttachmentResponse> CGetMailAttachmentResponse_default_instance_;
+
+CGetMailAttachmentResponse* CGetMailAttachmentResponse::New(::google::protobuf::Arena* arena) const {
+  CGetMailAttachmentResponse* n = new CGetMailAttachmentResponse;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void CGetMailAttachmentResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:CGetMailAttachmentResponse)
+  result_ = 0u;
+}
+
+bool CGetMailAttachmentResponse::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:CGetMailAttachmentResponse)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 Result = 1;
+      case 1: {
+        if (tag == 8) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &result_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:CGetMailAttachmentResponse)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:CGetMailAttachmentResponse)
+  return false;
+#undef DO_
+}
+
+void CGetMailAttachmentResponse::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:CGetMailAttachmentResponse)
+  // optional uint32 Result = 1;
+  if (this->result() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->result(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:CGetMailAttachmentResponse)
+}
+
+::google::protobuf::uint8* CGetMailAttachmentResponse::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:CGetMailAttachmentResponse)
+  // optional uint32 Result = 1;
+  if (this->result() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->result(), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:CGetMailAttachmentResponse)
+  return target;
+}
+
+size_t CGetMailAttachmentResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CGetMailAttachmentResponse)
+  size_t total_size = 0;
+
+  // optional uint32 Result = 1;
+  if (this->result() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->result());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CGetMailAttachmentResponse::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CGetMailAttachmentResponse)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const CGetMailAttachmentResponse* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CGetMailAttachmentResponse>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CGetMailAttachmentResponse)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CGetMailAttachmentResponse)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void CGetMailAttachmentResponse::MergeFrom(const CGetMailAttachmentResponse& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CGetMailAttachmentResponse)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void CGetMailAttachmentResponse::UnsafeMergeFrom(const CGetMailAttachmentResponse& from) {
+  GOOGLE_DCHECK(&from != this);
+  if (from.result() != 0) {
+    set_result(from.result());
+  }
+}
+
+void CGetMailAttachmentResponse::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CGetMailAttachmentResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CGetMailAttachmentResponse::CopyFrom(const CGetMailAttachmentResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CGetMailAttachmentResponse)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool CGetMailAttachmentResponse::IsInitialized() const {
+
+  return true;
+}
+
+void CGetMailAttachmentResponse::Swap(CGetMailAttachmentResponse* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void CGetMailAttachmentResponse::InternalSwap(CGetMailAttachmentResponse* other) {
+  std::swap(result_, other->result_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata CGetMailAttachmentResponse::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CGetMailAttachmentResponse_descriptor_;
+  metadata.reflection = CGetMailAttachmentResponse_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// CGetMailAttachmentResponse
+
+// optional uint32 Result = 1;
+void CGetMailAttachmentResponse::clear_result() {
+  result_ = 0u;
+}
+::google::protobuf::uint32 CGetMailAttachmentResponse::result() const {
+  // @@protoc_insertion_point(field_get:CGetMailAttachmentResponse.Result)
+  return result_;
+}
+void CGetMailAttachmentResponse::set_result(::google::protobuf::uint32 value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:CGetMailAttachmentResponse.Result)
+}
+
+inline const CGetMailAttachmentResponse* CGetMailAttachmentResponse::internal_default_instance() {
+  return &CGetMailAttachmentResponse_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int CDeleteMailRequest::kMailIDFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+CDeleteMailRequest::CDeleteMailRequest()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_propertymodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CDeleteMailRequest)
+}
+
+void CDeleteMailRequest::InitAsDefaultInstance() {
+}
+
+CDeleteMailRequest::CDeleteMailRequest(const CDeleteMailRequest& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:CDeleteMailRequest)
+}
+
+void CDeleteMailRequest::SharedCtor() {
+  mailid_ = 0u;
+  _cached_size_ = 0;
+}
+
+CDeleteMailRequest::~CDeleteMailRequest() {
+  // @@protoc_insertion_point(destructor:CDeleteMailRequest)
+  SharedDtor();
+}
+
+void CDeleteMailRequest::SharedDtor() {
+}
+
+void CDeleteMailRequest::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CDeleteMailRequest::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CDeleteMailRequest_descriptor_;
+}
+
+const CDeleteMailRequest& CDeleteMailRequest::default_instance() {
+  protobuf_InitDefaults_propertymodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<CDeleteMailRequest> CDeleteMailRequest_default_instance_;
+
+CDeleteMailRequest* CDeleteMailRequest::New(::google::protobuf::Arena* arena) const {
+  CDeleteMailRequest* n = new CDeleteMailRequest;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void CDeleteMailRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:CDeleteMailRequest)
+  mailid_ = 0u;
+}
+
+bool CDeleteMailRequest::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:CDeleteMailRequest)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 MailID = 1;
+      case 1: {
+        if (tag == 8) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &mailid_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:CDeleteMailRequest)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:CDeleteMailRequest)
+  return false;
+#undef DO_
+}
+
+void CDeleteMailRequest::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:CDeleteMailRequest)
+  // optional uint32 MailID = 1;
+  if (this->mailid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mailid(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:CDeleteMailRequest)
+}
+
+::google::protobuf::uint8* CDeleteMailRequest::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:CDeleteMailRequest)
+  // optional uint32 MailID = 1;
+  if (this->mailid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->mailid(), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:CDeleteMailRequest)
+  return target;
+}
+
+size_t CDeleteMailRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CDeleteMailRequest)
+  size_t total_size = 0;
+
+  // optional uint32 MailID = 1;
+  if (this->mailid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->mailid());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CDeleteMailRequest::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CDeleteMailRequest)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const CDeleteMailRequest* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CDeleteMailRequest>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CDeleteMailRequest)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CDeleteMailRequest)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void CDeleteMailRequest::MergeFrom(const CDeleteMailRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CDeleteMailRequest)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void CDeleteMailRequest::UnsafeMergeFrom(const CDeleteMailRequest& from) {
+  GOOGLE_DCHECK(&from != this);
+  if (from.mailid() != 0) {
+    set_mailid(from.mailid());
+  }
+}
+
+void CDeleteMailRequest::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CDeleteMailRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CDeleteMailRequest::CopyFrom(const CDeleteMailRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CDeleteMailRequest)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool CDeleteMailRequest::IsInitialized() const {
+
+  return true;
+}
+
+void CDeleteMailRequest::Swap(CDeleteMailRequest* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void CDeleteMailRequest::InternalSwap(CDeleteMailRequest* other) {
+  std::swap(mailid_, other->mailid_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata CDeleteMailRequest::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CDeleteMailRequest_descriptor_;
+  metadata.reflection = CDeleteMailRequest_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// CDeleteMailRequest
+
+// optional uint32 MailID = 1;
+void CDeleteMailRequest::clear_mailid() {
+  mailid_ = 0u;
+}
+::google::protobuf::uint32 CDeleteMailRequest::mailid() const {
+  // @@protoc_insertion_point(field_get:CDeleteMailRequest.MailID)
+  return mailid_;
+}
+void CDeleteMailRequest::set_mailid(::google::protobuf::uint32 value) {
+  
+  mailid_ = value;
+  // @@protoc_insertion_point(field_set:CDeleteMailRequest.MailID)
+}
+
+inline const CDeleteMailRequest* CDeleteMailRequest::internal_default_instance() {
+  return &CDeleteMailRequest_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int CDeleteMailResponse::kResultFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+CDeleteMailResponse::CDeleteMailResponse()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_propertymodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CDeleteMailResponse)
+}
+
+void CDeleteMailResponse::InitAsDefaultInstance() {
+}
+
+CDeleteMailResponse::CDeleteMailResponse(const CDeleteMailResponse& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:CDeleteMailResponse)
+}
+
+void CDeleteMailResponse::SharedCtor() {
+  result_ = 0u;
+  _cached_size_ = 0;
+}
+
+CDeleteMailResponse::~CDeleteMailResponse() {
+  // @@protoc_insertion_point(destructor:CDeleteMailResponse)
+  SharedDtor();
+}
+
+void CDeleteMailResponse::SharedDtor() {
+}
+
+void CDeleteMailResponse::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CDeleteMailResponse::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CDeleteMailResponse_descriptor_;
+}
+
+const CDeleteMailResponse& CDeleteMailResponse::default_instance() {
+  protobuf_InitDefaults_propertymodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<CDeleteMailResponse> CDeleteMailResponse_default_instance_;
+
+CDeleteMailResponse* CDeleteMailResponse::New(::google::protobuf::Arena* arena) const {
+  CDeleteMailResponse* n = new CDeleteMailResponse;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void CDeleteMailResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:CDeleteMailResponse)
+  result_ = 0u;
+}
+
+bool CDeleteMailResponse::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:CDeleteMailResponse)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 Result = 1;
+      case 1: {
+        if (tag == 8) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &result_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:CDeleteMailResponse)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:CDeleteMailResponse)
+  return false;
+#undef DO_
+}
+
+void CDeleteMailResponse::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:CDeleteMailResponse)
+  // optional uint32 Result = 1;
+  if (this->result() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->result(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:CDeleteMailResponse)
+}
+
+::google::protobuf::uint8* CDeleteMailResponse::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:CDeleteMailResponse)
+  // optional uint32 Result = 1;
+  if (this->result() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->result(), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:CDeleteMailResponse)
+  return target;
+}
+
+size_t CDeleteMailResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CDeleteMailResponse)
+  size_t total_size = 0;
+
+  // optional uint32 Result = 1;
+  if (this->result() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->result());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CDeleteMailResponse::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CDeleteMailResponse)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const CDeleteMailResponse* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CDeleteMailResponse>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CDeleteMailResponse)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CDeleteMailResponse)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void CDeleteMailResponse::MergeFrom(const CDeleteMailResponse& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CDeleteMailResponse)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void CDeleteMailResponse::UnsafeMergeFrom(const CDeleteMailResponse& from) {
+  GOOGLE_DCHECK(&from != this);
+  if (from.result() != 0) {
+    set_result(from.result());
+  }
+}
+
+void CDeleteMailResponse::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CDeleteMailResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CDeleteMailResponse::CopyFrom(const CDeleteMailResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CDeleteMailResponse)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool CDeleteMailResponse::IsInitialized() const {
+
+  return true;
+}
+
+void CDeleteMailResponse::Swap(CDeleteMailResponse* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void CDeleteMailResponse::InternalSwap(CDeleteMailResponse* other) {
+  std::swap(result_, other->result_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata CDeleteMailResponse::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CDeleteMailResponse_descriptor_;
+  metadata.reflection = CDeleteMailResponse_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// CDeleteMailResponse
+
+// optional uint32 Result = 1;
+void CDeleteMailResponse::clear_result() {
+  result_ = 0u;
+}
+::google::protobuf::uint32 CDeleteMailResponse::result() const {
+  // @@protoc_insertion_point(field_get:CDeleteMailResponse.Result)
+  return result_;
+}
+void CDeleteMailResponse::set_result(::google::protobuf::uint32 value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:CDeleteMailResponse.Result)
+}
+
+inline const CDeleteMailResponse* CDeleteMailResponse::internal_default_instance() {
+  return &CDeleteMailResponse_default_instance_.get();
 }
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 

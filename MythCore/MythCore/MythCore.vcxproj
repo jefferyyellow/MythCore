@@ -118,6 +118,9 @@
     <ClInclude Include="include\fileutility.h" />
     <ClInclude Include="include\fixblockmemory.h" />
     <ClInclude Include="include\i18n.h" />
+    <ClInclude Include="include\indexarray.h" />
+    <ClInclude Include="include\iterator.h" />
+    <ClInclude Include="include\mythlist.h" />
     <ClInclude Include="include\log.h" />
     <ClInclude Include="include\logdisplayer.h" />
     <ClInclude Include="include\logmanager.h" />

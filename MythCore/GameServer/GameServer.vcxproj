@@ -101,9 +101,11 @@
     <ClCompile Include="src\gameserverconfig.cpp" />
     <ClCompile Include="src\globalluareg.cpp" />
     <ClCompile Include="src\gmcommandmanager.cpp" />
+    <ClCompile Include="src\gmlog.cpp" />
     <ClCompile Include="src\gtest.cpp" />
     <ClCompile Include="src\instance.cpp" />
     <ClCompile Include="src\instancemodule.cpp" />
+    <ClCompile Include="src\interactiveunit.cpp" />
     <ClCompile Include="src\internalmsg.cpp" />
     <ClCompile Include="src\internalmsgpool.cpp" />
     <ClCompile Include="src\itemcontainer.cpp" />
@@ -118,6 +120,8 @@
     <ClCompile Include="src\loginmodule.cpp" />
     <ClCompile Include="src\loginplayer.cpp" />
     <ClCompile Include="src\lua_tinker.cpp" />
+    <ClCompile Include="src\mail.cpp" />
+    <ClCompile Include="src\mailmodule.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\mapmamager.cpp" />
     <ClCompile Include="src\mapconfigmanager.cpp" />
@@ -213,9 +217,11 @@
     <ClInclude Include="inc\gameserverconfig.h" />
     <ClInclude Include="inc\globalluareg.h" />
     <ClInclude Include="inc\gmcommandmanager.h" />
+    <ClInclude Include="inc\gmlog.h" />
     <ClInclude Include="inc\instance.h" />
     <ClInclude Include="inc\instancemodule.h" />
     <ClInclude Include="inc\instancetype.h" />
+    <ClInclude Include="inc\interactiveunit.h" />
     <ClInclude Include="inc\internalmsg.h" />
     <ClInclude Include="inc\internalmsgpool.h" />
     <ClInclude Include="inc\itemcontainer.h" />
@@ -233,6 +239,8 @@
     <ClInclude Include="inc\loginplayer.h" />
     <ClInclude Include="inc\logintype.h" />
     <ClInclude Include="inc\lua_tinker.h" />
+    <ClInclude Include="inc\mail.h" />
+    <ClInclude Include="inc\mailmodule.h" />
     <ClInclude Include="inc\mapmamager.h" />
     <ClInclude Include="inc\mapconfigmanager.h" />
     <ClInclude Include="inc\mapmodule.h" />

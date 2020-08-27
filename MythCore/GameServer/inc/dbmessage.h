@@ -146,6 +146,14 @@ enum EmSessionType
 	emSessionType_InsertRechargeCache	= 9,			// 插入充值缓存
 	emSessionType_LoadRechargeCache		= 10,			// 加载充值缓存
 	emSessionType_RechargeSuccess		= 11,			// 充值成功
+	emSessionType_SavePlayerMail		= 12,			// 保存玩家邮件
+	emSessionType_LoadPlayerMail		= 13,			// 加载玩家邮件
+	emSessionType_LoadMaxMailID			= 14,			// 加载最大的邮件ID
+	emSessionType_DeleteExpireMail		= 15,			// 删除过期邮件
+	emSessionType_SaveGlobalMail		= 16,			// 保存全局邮件
+	emSessionType_LoadGlobalMail		= 17,			// 加载全局邮件
+	emSessionType_DeleteGlobalMail		= 18,			// 删除全局邮件
+	emSessionType_LoadMaxGlobalMailID	= 19,			// 加载最大的全局邮件ID
 };
 
 

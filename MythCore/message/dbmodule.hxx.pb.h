@@ -36,6 +36,7 @@ void protobuf_InitDefaults_dbmodule_2ehxx();
 void protobuf_AssignDesc_dbmodule_2ehxx();
 void protobuf_ShutdownFile_dbmodule_2ehxx();
 
+class PBGlobalMail;
 class PBSavePlayer;
 
 // ===================================================================
@@ -146,6 +147,140 @@ class PBSavePlayer : public ::google::protobuf::Message /* @@protoc_insertion_po
   void InitAsDefaultInstance();
 };
 extern ::google::protobuf::internal::ExplicitlyConstructed<PBSavePlayer> PBSavePlayer_default_instance_;
+
+// -------------------------------------------------------------------
+
+class PBGlobalMail : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PBGlobalMail) */ {
+ public:
+  PBGlobalMail();
+  virtual ~PBGlobalMail();
+
+  PBGlobalMail(const PBGlobalMail& from);
+
+  inline PBGlobalMail& operator=(const PBGlobalMail& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBGlobalMail& default_instance();
+
+  static const PBGlobalMail* internal_default_instance();
+
+  void Swap(PBGlobalMail* other);
+
+  // implements Message ----------------------------------------------
+
+  inline PBGlobalMail* New() const { return New(NULL); }
+
+  PBGlobalMail* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PBGlobalMail& from);
+  void MergeFrom(const PBGlobalMail& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(PBGlobalMail* other);
+  void UnsafeMergeFrom(const PBGlobalMail& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 mail_id = 1;
+  void clear_mail_id();
+  static const int kMailIdFieldNumber = 1;
+  ::google::protobuf::uint32 mail_id() const;
+  void set_mail_id(::google::protobuf::uint32 value);
+
+  // optional uint32 mail_type = 2;
+  void clear_mail_type();
+  static const int kMailTypeFieldNumber = 2;
+  ::google::protobuf::uint32 mail_type() const;
+  void set_mail_type(::google::protobuf::uint32 value);
+
+  // optional uint32 create_time = 3;
+  void clear_create_time();
+  static const int kCreateTimeFieldNumber = 3;
+  ::google::protobuf::uint32 create_time() const;
+  void set_create_time(::google::protobuf::uint32 value);
+
+  // optional string mail_title = 4;
+  void clear_mail_title();
+  static const int kMailTitleFieldNumber = 4;
+  const ::std::string& mail_title() const;
+  void set_mail_title(const ::std::string& value);
+  void set_mail_title(const char* value);
+  void set_mail_title(const char* value, size_t size);
+  ::std::string* mutable_mail_title();
+  ::std::string* release_mail_title();
+  void set_allocated_mail_title(::std::string* mail_title);
+
+  // optional string mail_body = 5;
+  void clear_mail_body();
+  static const int kMailBodyFieldNumber = 5;
+  const ::std::string& mail_body() const;
+  void set_mail_body(const ::std::string& value);
+  void set_mail_body(const char* value);
+  void set_mail_body(const char* value, size_t size);
+  ::std::string* mutable_mail_body();
+  ::std::string* release_mail_body();
+  void set_allocated_mail_body(::std::string* mail_body);
+
+  // optional .PBMailItemList mail_item = 6;
+  bool has_mail_item() const;
+  void clear_mail_item();
+  static const int kMailItemFieldNumber = 6;
+  const ::PBMailItemList& mail_item() const;
+  ::PBMailItemList* mutable_mail_item();
+  ::PBMailItemList* release_mail_item();
+  void set_allocated_mail_item(::PBMailItemList* mail_item);
+
+  // @@protoc_insertion_point(class_scope:PBGlobalMail)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr mail_title_;
+  ::google::protobuf::internal::ArenaStringPtr mail_body_;
+  ::PBMailItemList* mail_item_;
+  ::google::protobuf::uint32 mail_id_;
+  ::google::protobuf::uint32 mail_type_;
+  ::google::protobuf::uint32 create_time_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_dbmodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_dbmodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_dbmodule_2ehxx();
+  friend void protobuf_ShutdownFile_dbmodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<PBGlobalMail> PBGlobalMail_default_instance_;
 
 // ===================================================================
 
@@ -275,7 +410,185 @@ inline void PBSavePlayer::set_allocated_task(::PBTaskList* task) {
 inline const PBSavePlayer* PBSavePlayer::internal_default_instance() {
   return &PBSavePlayer_default_instance_.get();
 }
+// -------------------------------------------------------------------
+
+// PBGlobalMail
+
+// optional uint32 mail_id = 1;
+inline void PBGlobalMail::clear_mail_id() {
+  mail_id_ = 0u;
+}
+inline ::google::protobuf::uint32 PBGlobalMail::mail_id() const {
+  // @@protoc_insertion_point(field_get:PBGlobalMail.mail_id)
+  return mail_id_;
+}
+inline void PBGlobalMail::set_mail_id(::google::protobuf::uint32 value) {
+  
+  mail_id_ = value;
+  // @@protoc_insertion_point(field_set:PBGlobalMail.mail_id)
+}
+
+// optional uint32 mail_type = 2;
+inline void PBGlobalMail::clear_mail_type() {
+  mail_type_ = 0u;
+}
+inline ::google::protobuf::uint32 PBGlobalMail::mail_type() const {
+  // @@protoc_insertion_point(field_get:PBGlobalMail.mail_type)
+  return mail_type_;
+}
+inline void PBGlobalMail::set_mail_type(::google::protobuf::uint32 value) {
+  
+  mail_type_ = value;
+  // @@protoc_insertion_point(field_set:PBGlobalMail.mail_type)
+}
+
+// optional uint32 create_time = 3;
+inline void PBGlobalMail::clear_create_time() {
+  create_time_ = 0u;
+}
+inline ::google::protobuf::uint32 PBGlobalMail::create_time() const {
+  // @@protoc_insertion_point(field_get:PBGlobalMail.create_time)
+  return create_time_;
+}
+inline void PBGlobalMail::set_create_time(::google::protobuf::uint32 value) {
+  
+  create_time_ = value;
+  // @@protoc_insertion_point(field_set:PBGlobalMail.create_time)
+}
+
+// optional string mail_title = 4;
+inline void PBGlobalMail::clear_mail_title() {
+  mail_title_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& PBGlobalMail::mail_title() const {
+  // @@protoc_insertion_point(field_get:PBGlobalMail.mail_title)
+  return mail_title_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void PBGlobalMail::set_mail_title(const ::std::string& value) {
+  
+  mail_title_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:PBGlobalMail.mail_title)
+}
+inline void PBGlobalMail::set_mail_title(const char* value) {
+  
+  mail_title_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:PBGlobalMail.mail_title)
+}
+inline void PBGlobalMail::set_mail_title(const char* value, size_t size) {
+  
+  mail_title_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:PBGlobalMail.mail_title)
+}
+inline ::std::string* PBGlobalMail::mutable_mail_title() {
+  
+  // @@protoc_insertion_point(field_mutable:PBGlobalMail.mail_title)
+  return mail_title_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* PBGlobalMail::release_mail_title() {
+  // @@protoc_insertion_point(field_release:PBGlobalMail.mail_title)
+  
+  return mail_title_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void PBGlobalMail::set_allocated_mail_title(::std::string* mail_title) {
+  if (mail_title != NULL) {
+    
+  } else {
+    
+  }
+  mail_title_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), mail_title);
+  // @@protoc_insertion_point(field_set_allocated:PBGlobalMail.mail_title)
+}
+
+// optional string mail_body = 5;
+inline void PBGlobalMail::clear_mail_body() {
+  mail_body_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& PBGlobalMail::mail_body() const {
+  // @@protoc_insertion_point(field_get:PBGlobalMail.mail_body)
+  return mail_body_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void PBGlobalMail::set_mail_body(const ::std::string& value) {
+  
+  mail_body_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:PBGlobalMail.mail_body)
+}
+inline void PBGlobalMail::set_mail_body(const char* value) {
+  
+  mail_body_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:PBGlobalMail.mail_body)
+}
+inline void PBGlobalMail::set_mail_body(const char* value, size_t size) {
+  
+  mail_body_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:PBGlobalMail.mail_body)
+}
+inline ::std::string* PBGlobalMail::mutable_mail_body() {
+  
+  // @@protoc_insertion_point(field_mutable:PBGlobalMail.mail_body)
+  return mail_body_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* PBGlobalMail::release_mail_body() {
+  // @@protoc_insertion_point(field_release:PBGlobalMail.mail_body)
+  
+  return mail_body_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void PBGlobalMail::set_allocated_mail_body(::std::string* mail_body) {
+  if (mail_body != NULL) {
+    
+  } else {
+    
+  }
+  mail_body_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), mail_body);
+  // @@protoc_insertion_point(field_set_allocated:PBGlobalMail.mail_body)
+}
+
+// optional .PBMailItemList mail_item = 6;
+inline bool PBGlobalMail::has_mail_item() const {
+  return this != internal_default_instance() && mail_item_ != NULL;
+}
+inline void PBGlobalMail::clear_mail_item() {
+  if (GetArenaNoVirtual() == NULL && mail_item_ != NULL) delete mail_item_;
+  mail_item_ = NULL;
+}
+inline const ::PBMailItemList& PBGlobalMail::mail_item() const {
+  // @@protoc_insertion_point(field_get:PBGlobalMail.mail_item)
+  return mail_item_ != NULL ? *mail_item_
+                         : *::PBMailItemList::internal_default_instance();
+}
+inline ::PBMailItemList* PBGlobalMail::mutable_mail_item() {
+  
+  if (mail_item_ == NULL) {
+    mail_item_ = new ::PBMailItemList;
+  }
+  // @@protoc_insertion_point(field_mutable:PBGlobalMail.mail_item)
+  return mail_item_;
+}
+inline ::PBMailItemList* PBGlobalMail::release_mail_item() {
+  // @@protoc_insertion_point(field_release:PBGlobalMail.mail_item)
+  
+  ::PBMailItemList* temp = mail_item_;
+  mail_item_ = NULL;
+  return temp;
+}
+inline void PBGlobalMail::set_allocated_mail_item(::PBMailItemList* mail_item) {
+  delete mail_item_;
+  mail_item_ = mail_item;
+  if (mail_item) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:PBGlobalMail.mail_item)
+}
+
+inline const PBGlobalMail* PBGlobalMail::internal_default_instance() {
+  return &PBGlobalMail_default_instance_.get();
+}
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
 
 // @@protoc_insertion_point(namespace_scope)
 

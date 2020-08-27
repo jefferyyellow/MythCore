@@ -38,7 +38,7 @@ extern "C"
 #include "lauxlib.h"
 };
 #include "lua_tinker.h"
-
+#include "mailmodule.h"
 CSceneJob::CSceneJob()
 :mMinuteTimer(SECONDS_PER_MIN)
 {
@@ -373,11 +373,13 @@ bool CSceneJob::initBase(int nDBBuffSize)
 	mLogicModuleList.push_back(CRankModule::createInst());
 	mLogicModuleList.push_back(CTaskModule::createInst());
 	mLogicModuleList.push_back(CPlatModule::createInst());
+	mLogicModuleList.push_back(CMailModule::createInst());
 	return true;
 }
 
 void CSceneJob::clearBase()
 {
+	CMailModule::destroyInst();
 	CPlatModule::destroyInst();
 	CTaskModule::destroyInst();
 	CRankModule::destroyInst();
@@ -895,7 +897,7 @@ bool CSceneJob::onPlayerLogin(CEntityPlayer* pNewPlayer)
 }
 
 /// 离开了一个玩家
-void CSceneJob::onPlayerLeaveGame(CEntityPlayer* pPlayer)
+void CSceneJob::destroyPlayerObject(CEntityPlayer* pPlayer)
 {
 	//mPlayerSocketList.erase(pPlayer->getExchangeHead().mSocketIndex);
 	mPlayerList.erase(pPlayer->getRoleID());
@@ -916,7 +918,7 @@ void CSceneJob::onSocketDisconnect(int nSocketIndex)
 		{
 			pPlayer->getExchangeHead().mSocketIndex = -1;
 			// 将玩家置为下线状态
-			CPropertyModule::Inst()->playerLeaveGame(pPlayer);
+			CPropertyModule::Inst()->playerLeaveGame(pPlayer, EmLeaveReason_Disconnection);
 		}
 		mPlayerSocketList.erase(it);
 	}

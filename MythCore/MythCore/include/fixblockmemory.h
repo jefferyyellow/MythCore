@@ -108,5 +108,73 @@ namespace Myth
 		int			mFreeIndex[MaxCount];
 		int			mFreeCount;
 	};
+
+	template<typename T, int Capacity>
+	class CFixMemoryPool
+	{
+	public:
+		CFixMemoryPool()
+		{
+			init();
+		}
+		~CFixMemoryPool()
+		{
+			mFreeCount = 0;
+		}
+
+		void		init()
+		{
+			mFreeCount = Capacity;
+			int nIndex = 0;
+			for (int i = Capacity - 1; i >= 0; --i)
+			{
+				mFreeIndex[i] = nIndex;
+				++nIndex;
+			}
+		}
+
+		T*			allocate(int &nMemIndex)
+		{
+			if (0 >= mFreeCount)
+			{
+				return NULL;
+			}
+
+			int nIndex = mFreeIndex[mFreeCount - 1];
+			if (nIndex < 0 || nIndex >= Capacity)
+			{
+				nMemIndex = -1;
+				return NULL;
+			}
+
+			nMemIndex = nIndex;
+			--mFreeCount;
+			return &mBlockMemory[nIndex];
+		}
+
+		T*			get(int nMemIndex)
+		{
+			if (nMemIndex < 0 || nMemIndex >= Capacity)
+			{
+				return NULL;
+			}
+			return &mBlockMemory[nMemIndex];
+		}
+
+		void		free(int nMemIndex)
+		{
+			if (nMemIndex < 0 || nMemIndex >= Capacity)
+			{
+				return;
+			}
+			mFreeIndex[mFreeCount] = nMemIndex;
+			++mFreeCount;
+		}
+
+	private:
+		T		mBlockMemory[Capacity];
+		int		mFreeIndex[Capacity];
+		int		mFreeCount;
+	};
 }
 #endif

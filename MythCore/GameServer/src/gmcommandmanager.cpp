@@ -12,6 +12,10 @@
 #include "platconfig.h"
 #include "platmodule.h"
 #include "crc32.h"
+#include "mailmodule.h"
+#include "gmlog.h"
+#include "mail.h"
+#include "timemanager.h"
 /// 广播命令影响和结果
 void CGMCommandManager::broadcastCommandResult(CEntityPlayer* pPlayer, char* pResult)
 {
@@ -89,6 +93,8 @@ void CGMCommandManager::InitCommand()
 	COMMAND_HANDLER_ADD(setlevel, "获得道具，用法：\\setlevel 等级，设置玩家等级。");
 	COMMAND_HANDLER_ADD(settime, "设置时间，用法：\\settime [20200803] [11:44:55]，设置当前的服务器时间。");
 	COMMAND_HANDLER_ADD(recharge, "充值，用法：\\recharge 商品ID [订单号]，设置当前的服务器时间。");
+	COMMAND_HANDLER_ADD(sendmail, "发送邮件，用法：\\sendmail 邮件类型 邮件标题 [邮件内容]，发送邮件。");
+	COMMAND_HANDLER_ADD(globalmail, "全局邮件，用法：\\globalmail 邮件类型 邮件标题 [邮件内容]，发送邮件。");
 }
 
 COMMAND_HANDLER_IMPL(help)
@@ -305,4 +311,42 @@ COMMAND_HANDLER_IMPL(recharge)
 
 	CPlatModule::Inst()->processRecharge(acOrderID, tTokens[0].c_str(), pPlayer->getRoleID(), 
 		pPlayer->GetAccountID(), pPlayer->getChannelID(), pPlayer->getServerID(), pGoods->mCoinNum);
+}
+
+COMMAND_HANDLER_IMPL(sendmail)
+{
+	MYTH_ASSERT_INFO(tTokens.size() >= 2, return,
+		"send mail command parameter number invalid, %d", tTokens.size());
+
+	EmMailType eType = (EmMailType)atoi(tTokens[0].c_str());
+
+	CMail tMail;
+	tMail.setMailType(eType);
+	tMail.setItemLog(emItemLog_Debug);
+	tMail.setCreateTime(CTimeManager::Inst()->getCurrTime());
+	tMail.setMailTitle(tTokens[1].c_str());
+	if (tTokens.size() >= 3)
+	{
+		tMail.setMailBody(tTokens[2].c_str());
+	}
+	CMailModule::Inst()->sendPlayerMail(pPlayer->getRoleID(), tMail);
+}
+
+
+COMMAND_HANDLER_IMPL(globalmail)
+{
+	MYTH_ASSERT_INFO(tTokens.size() >= 2, return,
+		"global mail command parameter number invalid, %d", tTokens.size());
+
+	EmMailType eType = (EmMailType)atoi(tTokens[0].c_str());
+
+	CMail tMail;
+	tMail.setMailType(eType);
+	tMail.setCreateTime(CTimeManager::Inst()->getCurrTime());
+	tMail.setMailTitle(tTokens[1].c_str());
+	if (tTokens.size() >= 3)
+	{
+		tMail.setMailBody(tTokens[2].c_str());
+	}
+	CMailModule::Inst()->sendGlobalMail(tMail);
 }

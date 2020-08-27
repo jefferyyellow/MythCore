@@ -203,6 +203,15 @@
     <ClInclude Include="include\timeutility.h">
       <Filter>头文件\time</Filter>
     </ClInclude>
+    <ClInclude Include="include\iterator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mythlist.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\indexarray.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="include\bit_set.inl">

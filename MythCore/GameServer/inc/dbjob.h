@@ -31,13 +31,16 @@ public:
 	int		checkJobDataEmpty();
 	/// 处理DB流里的数据
 	void	checkDBStream();
-	/// 处理保存玩家基本属性
-	int		onSavePlayerBaseProperty(int nLength);
 	/// 分析PB结构，组成update的sql语句
 	int		parsePBForSql(const Message& rMessage);
 	/// 分析PB结构，组成调用precedure语句
 	int		parsePBForPrecedure(const Message& rMessage);
-
+	/// 处理保存玩家基本属性
+	int		onSavePlayerBaseProperty(int nLength);
+	/// 处理保存玩家邮件
+	int		onSaveMail(int nLength);
+	/// 处理保存全局邮件
+	int		onSaveGlobalMail(int nLength);
 private:
 	CMysqlDataBase	mDataBase;
 	CByteStream		mJobStream;

@@ -132,6 +132,15 @@ void CDBJob::checkDBStream()
 				nResult = onSavePlayerBaseProperty(nLength);
 				break;
 			}
+			case emSessionType_SavePlayerMail:
+			{
+				nResult = onSaveMail(nLength);
+				break;
+			}
+			case emSessionType_SaveGlobalMail:
+			{
+				nResult = onSaveGlobalMail(nLength);
+			}
 			default:
 			{
 				break;
@@ -160,43 +169,6 @@ void CDBJob::checkDBStream()
 	}
 }
 
-/// 处理保存玩家基本属性
-int CDBJob::onSavePlayerBaseProperty(int nLength)
-{
-	PBSavePlayer tSavePlayer;
-	if (!tSavePlayer.ParseFromArray(mDBRequest.mSqlBuffer, nLength))
-	{
-		LOG_ERROR("Player Base Property Parse From Array Error, PlayerID: %d", mDBRequest.mPlayerID);
-		return -1;
-	}
-	//mSqlLength = 0;
-	//int tLen = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
-	//	"update PlayerBaseProperty set ");
-	//mSqlLength += tLen;
-	//int nResult = parsePBForSql(tSavePlayer);
-	//if (SUCCESS != nResult)
-	//{
-	//	return nResult;
-	//}
-
-	//tLen = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
-	//	" where role_id=%d", mDBRequest.mPlayerID);
-
-	mSqlLength = 0;
-	int tLen = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer),
-		"call UpdatePlayerBaseProperty(%d,", mDBRequest.mPlayerID);
-	mSqlLength += tLen;
-	int nResult = parsePBForPrecedure(tSavePlayer);
-	if (SUCCESS != nResult)
-	{
-		return nResult;
-	}
-
-	snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
-		")");
-	return SUCCESS;
-}
-
 /// 分析PB结构，组成sql语句
 int CDBJob::parsePBForSql(const Message& rMessage)
 {
@@ -216,8 +188,10 @@ int CDBJob::parsePBForSql(const Message& rMessage)
 		{
 			continue;
 		}
-		// 消息里没有这个字段
-		if (!pRef->HasField(rMessage, pFieldDescriptor))
+
+		// 消息里没有这个字段，只有消息类型才能分清，数值类型和字符串如果是默认值的话，HasField也会返回false，无法区分是设置了值还是本身就是默认值
+		if (::google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE == pFieldDescriptor->cpp_type()
+			&& !pRef->HasField(rMessage, pFieldDescriptor))
 		{
 			continue;
 		}
@@ -342,8 +316,9 @@ int CDBJob::parsePBForPrecedure(const Message& rMessage)
 		{
 			continue;
 		}
-		// 消息里没有这个字段
-		if (!pRef->HasField(rMessage, pFieldDescriptor))
+		// 消息里没有这个字段，只有消息类型才能分清，数值类型和字符串如果是默认值的话，HasField也会返回false，无法区分是设置了值还是本身就是默认值
+		if (::google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE == pFieldDescriptor->cpp_type()
+			&& !pRef->HasField(rMessage, pFieldDescriptor))
 		{
 			continue;
 		}
@@ -361,49 +336,49 @@ int CDBJob::parsePBForPrecedure(const Message& rMessage)
 			case ::google::protobuf::FieldDescriptor::CPPTYPE_INT32:
 			{
 				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
-					"%d", pFieldDescriptor->name().c_str(), pRef->GetInt32(rMessage, pFieldDescriptor));
+					"%d", pRef->GetInt32(rMessage, pFieldDescriptor));
 				mSqlLength += nLength;
 				break;
 			}
 			case ::google::protobuf::FieldDescriptor::CPPTYPE_INT64:
 			{
 				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
-					"%lld", pFieldDescriptor->name().c_str(), pRef->GetInt64(rMessage, pFieldDescriptor));
+					"%lld", pRef->GetInt64(rMessage, pFieldDescriptor));
 				mSqlLength += nLength;
 				break;
 			}
 			case ::google::protobuf::FieldDescriptor::CPPTYPE_UINT32:
 			{
 				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
-					"%u", pFieldDescriptor->name().c_str(), pRef->GetUInt32(rMessage, pFieldDescriptor));
+					"%u", pRef->GetUInt32(rMessage, pFieldDescriptor));
 				mSqlLength += nLength;
 				break;
 			}
 			case ::google::protobuf::FieldDescriptor::CPPTYPE_UINT64:
 			{
 				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
-					"%llu", pFieldDescriptor->name().c_str(), pRef->GetUInt64(rMessage, pFieldDescriptor));
+					"%llu", pRef->GetUInt64(rMessage, pFieldDescriptor));
 				mSqlLength += nLength;
 				break;
 			}
 			case ::google::protobuf::FieldDescriptor::CPPTYPE_DOUBLE:
 			{
 				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
-					"%lf", pFieldDescriptor->name().c_str(), pRef->GetDouble(rMessage, pFieldDescriptor));
+					"%lf", pRef->GetDouble(rMessage, pFieldDescriptor));
 				mSqlLength += nLength;
 				break;
 			}
 			case ::google::protobuf::FieldDescriptor::CPPTYPE_FLOAT:
 			{
 				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
-					"%f", pFieldDescriptor->name().c_str(), pRef->GetFloat(rMessage, pFieldDescriptor));
+					"%lf", pRef->GetFloat(rMessage, pFieldDescriptor));
 				mSqlLength += nLength;
 				break;
 			}
 			case ::google::protobuf::FieldDescriptor::CPPTYPE_STRING:
 			{
 				nLength = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
-					"'%s'", pFieldDescriptor->name().c_str(), pRef->GetString(rMessage, pFieldDescriptor).c_str());
+					"'%s'", pRef->GetString(rMessage, pFieldDescriptor).c_str());
 				mSqlLength += nLength;
 				break;
 			}
@@ -444,5 +419,94 @@ int CDBJob::parsePBForPrecedure(const Message& rMessage)
 				break;
 		}
 	}
+	return SUCCESS;
+}
+
+/// 处理保存玩家基本属性
+int CDBJob::onSavePlayerBaseProperty(int nLength)
+{
+	PBSavePlayer tSavePlayer;
+	if (!tSavePlayer.ParseFromArray(mDBRequest.mSqlBuffer, nLength))
+	{
+		LOG_ERROR("Player Base Property Parse From Array Error, PlayerID: %d", mDBRequest.mPlayerID);
+		return -1;
+	}
+	//mSqlLength = 0;
+	//int tLen = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+	//	"update PlayerBaseProperty set ");
+	//mSqlLength += tLen;
+	//int nResult = parsePBForSql(tSavePlayer);
+	//if (SUCCESS != nResult)
+	//{
+	//	return nResult;
+	//}
+
+	//tLen = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+	//	" where role_id=%d", mDBRequest.mPlayerID);
+
+	mSqlLength = 0;
+	int tLen = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer),
+		"call UpdatePlayerBaseProperty(%d,", mDBRequest.mPlayerID);
+	mSqlLength += tLen;
+	int nResult = parsePBForPrecedure(tSavePlayer);
+	if (SUCCESS != nResult)
+	{
+		return nResult;
+	}
+
+	snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+		")");
+	return SUCCESS;
+}
+
+/// 处理保存玩家邮件
+int CDBJob::onSaveMail(int nLength)
+{
+	PBMail pbMail;
+	if (!pbMail.ParseFromArray(mDBRequest.mSqlBuffer, nLength))
+	{
+		LOG_ERROR("Player Mail Parse From Array Error, PlayerID: %d", mDBRequest.mPlayerID);
+		return -1;
+	}
+
+	mSqlLength = 0;
+	int tLen = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer),
+			"call SaveMail(");
+
+	mSqlLength += tLen;
+	int nResult = parsePBForPrecedure(pbMail);
+	if (SUCCESS != nResult)
+	{
+		return nResult;
+	}
+
+	snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+		")");
+	return SUCCESS;
+}
+
+/// 处理保存全局邮件
+int CDBJob::onSaveGlobalMail(int nLength)
+{
+	PBGlobalMail pbGlobalMail;
+	if (!pbGlobalMail.ParseFromArray(mDBRequest.mSqlBuffer, nLength))
+	{
+		LOG_ERROR("Player Mail Parse From Array Error, PlayerID: %d", mDBRequest.mPlayerID);
+		return -1;
+	}
+
+	mSqlLength = 0;
+	int tLen = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer),
+		"call SaveGlobalMail(");
+
+	mSqlLength += tLen;
+	int nResult = parsePBForPrecedure(pbGlobalMail);
+	if (SUCCESS != nResult)
+	{
+		return nResult;
+	}
+
+	snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
+		")");
 	return SUCCESS;
 }

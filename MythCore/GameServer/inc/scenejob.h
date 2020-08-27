@@ -104,7 +104,7 @@ public:
 	/// 登录了一个玩家（只是登录校验完成，数据还没有加载完成）
 	bool		onPlayerLogin(CEntityPlayer* pNewPlayer);
 	/// 离开了一个玩家
-	void		onPlayerLeaveGame(CEntityPlayer* pPlayer);
+	void		destroyPlayerObject(CEntityPlayer* pPlayer);
 	/// 一个Socket断开
 	void		onSocketDisconnect(int nSocketIndex);
 	/// 通过角色ID得到玩家

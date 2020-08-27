@@ -107,7 +107,7 @@ void CLoginModule::onTimer(unsigned int nTickOffset)
 					CEntityPlayer* pPlayer = CSceneJob::Inst()->getPlayerBySocketIndex(pLoginPlayer->getExchangeHead().mSocketIndex);
 					if (NULL != pPlayer)
 					{
-						CPropertyModule::Inst()->playerLeaveGame(pPlayer);
+						CPropertyModule::Inst()->playerLeaveGame(pPlayer, EmLeaveReason_LoadTimeOut);
 					}
 				}
 				printf("delete login player, State: %d, DelState: %d, OverTime: %d", pLoginPlayer->getLoginState(), pLoginPlayer->getDelState(), bOverTime);
@@ -306,13 +306,13 @@ void CLoginModule::onLoadAllocateRoleId(CDBResponse& rResponse)
 
 unsigned int CLoginModule::allocateRoleID(int nServerId)
 {
-	int nMaxRoleId = getAllocateRoleId(nServerId);
+	uint nMaxRoleId = getAllocateRoleId(nServerId);
 	if(0 == nMaxRoleId)
 	{
 		return 0;
 	}
 
-	if (nMaxRoleId >= MAX_SERVER_ID * nServerId)
+	if (nMaxRoleId >= MAX_SERVER_ID * (uint)nServerId)
 	{
 		return 0;
 	}

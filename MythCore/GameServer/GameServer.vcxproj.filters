@@ -67,6 +67,9 @@
     <Filter Include="logicmodule\plat">
       <UniqueIdentifier>{39c87912-47ee-4c10-98bd-a2ed9b56e292}</UniqueIdentifier>
     </Filter>
+    <Filter Include="logicmodule\mail">
+      <UniqueIdentifier>{a57b9a72-7de6-4067-aa95-e21d9fdca2db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\message\loginmessage.hxx.pb.cc">
@@ -338,6 +341,18 @@
     </ClCompile>
     <ClCompile Include="src\globalluareg.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mailmodule.cpp">
+      <Filter>logicmodule\mail</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mail.cpp">
+      <Filter>logicmodule\mail</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gmlog.cpp">
+      <Filter>logicmodule\plat</Filter>
+    </ClCompile>
+    <ClCompile Include="src\interactiveunit.cpp">
+      <Filter>player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -709,6 +724,18 @@
     </ClInclude>
     <ClInclude Include="inc\skilltype.h">
       <Filter>logicmodule\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\mailmodule.h">
+      <Filter>logicmodule\mail</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\mail.h">
+      <Filter>logicmodule\mail</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gmlog.h">
+      <Filter>logicmodule\plat</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\interactiveunit.h">
+      <Filter>player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

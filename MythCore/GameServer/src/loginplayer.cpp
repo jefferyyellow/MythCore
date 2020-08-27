@@ -10,6 +10,7 @@
 #include "dirtyword.h"
 #include "i18n.h"
 #include "crc32.h"
+#include "propertymodule.h"
 void CLoginPlayer::init()
 {
     mAccountID = 0;
@@ -300,51 +301,65 @@ int CLoginPlayer::processLoginComplete()
 			CSceneJob::Inst()->disconnectPlayer(getExchangeHead());
 			return -1;
 		}
-		// 改成正常的游戏状态
-		pPlayer->setPlayerStauts(emPlayerStatus_Gameing);
-		// 将原来的玩家下线
-		CSceneJob::Inst()->disconnectPlayer(pPlayer);
+		// 玩家都在游戏中活着退出过程中，表示玩家数据是完整的，可以直接用
+		if (pPlayer->getPlayerStauts() == emPlayerStatus_Gameing || pPlayer->getPlayerStauts() == emPlayerStatus_Exiting)
+		{
+			pPlayer->setPlayerStauts(emPlayerStatus_Gameing);
 
-		// 换成新的玩家socket信息
-		pPlayer->getExchangeHead() = getExchangeHead();
-		CEnterSceneResponse tEnterSceneResponse;
-		tEnterSceneResponse.set_result(0);
-		CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
-		setDelState(emLoginDelState_Complete);
-		return emLoginState_None;
+			// 将原来的玩家下线
+			CSceneJob::Inst()->disconnectPlayer(pPlayer);
+
+			// 换成新的玩家socket信息
+			pPlayer->getExchangeHead() = getExchangeHead();
+			CEnterSceneResponse tEnterSceneResponse;
+			tEnterSceneResponse.set_result(0);
+			CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
+			setDelState(emLoginDelState_Complete);
+			return emLoginState_None;
+		}
+		else
+		{
+			// 将玩家销毁
+			CPropertyModule::Inst()->destroyPlayer(pPlayer);
+			return createPlayerAndLoad();
+		}
 	}
 	else
 	{
-		printf("new player login: %d\n", pEnterSceneRequest->roleid());
-		CEntityPlayer* pNewPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->allocObj(emObjType_Entity_Player));
-		if (NULL == pNewPlayer)
-		{
-			return -1;
-		}
-
-		pNewPlayer->setPlayerStauts(emPlayerStatus_Loading);
-		pNewPlayer->setRoleID(pEnterSceneRequest->roleid());
-		pNewPlayer->getExchangeHead() = getExchangeHead();
-
-
-		bool bResult = CSceneJob::Inst()->onPlayerLogin(pNewPlayer);
-		if (!bResult)
-		{
-			CObjPool::Inst()->free(pNewPlayer->getObjID());
-			return -1;
-		}
-		printf("******processWaitEnterGame: %d\n", pNewPlayer->getObjID());
-
-		pNewPlayer->setLoadStatus(0);
-		CDBModule::Inst()->pushDBTask(getRoleID(), emSessionType_LoadPlayerInfo, pNewPlayer->getObjID(), 0, "call LoadPlayerInfo(%u)", getRoleID());
-		CDBModule::Inst()->pushDBTask(getRoleID(), emSessionType_LoadPlayerBaseProperty, pNewPlayer->getObjID(), 0, "call LoadPlayerBaseProperty(%u)", getRoleID());
-
-		CEnterSceneResponse tEnterSceneResponse;
-		tEnterSceneResponse.set_result(0);
-		CSceneJob::Inst()->send2Player(pNewPlayer, ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
-		// 进入角色加载状态，如果超时没有加载完成，删除的时候会把CEntityPlayer也删除
-		return emLoginState_RoleLoading;
+		return createPlayerAndLoad();
 	}
+}
+
+// 创建玩家实体并加载
+int CLoginPlayer::createPlayerAndLoad()
+{
+	printf("new player login: %d\n", getRoleID());
+	CEntityPlayer* pNewPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->allocObj(emObjType_Entity_Player));
+	if (NULL == pNewPlayer)
+	{
+		return -1;
+	}
+
+	pNewPlayer->setPlayerStauts(emPlayerStatus_Loading);
+	pNewPlayer->setRoleID(getRoleID());
+	pNewPlayer->getExchangeHead() = getExchangeHead();
+
+	bool bResult = CSceneJob::Inst()->onPlayerLogin(pNewPlayer);
+	if (!bResult)
+	{
+		CObjPool::Inst()->free(pNewPlayer->getObjID());
+		return -1;
+	}
+	printf("******processWaitEnterGame: %d\n", pNewPlayer->getObjID());
+
+	pNewPlayer->setLoadStatus(0);
+	CDBModule::Inst()->pushDBTask(getRoleID(), emSessionType_LoadPlayerInfo, pNewPlayer->getObjID(), 0, "call LoadPlayerInfo(%u)", getRoleID());
+	CDBModule::Inst()->pushDBTask(getRoleID(), emSessionType_LoadPlayerBaseProperty, pNewPlayer->getObjID(), 0, "call LoadPlayerBaseProperty(%u)", getRoleID());
+
+	CEnterSceneResponse tEnterSceneResponse;
+	tEnterSceneResponse.set_result(0);
+	CSceneJob::Inst()->send2Player(pNewPlayer, ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
+	return emLoginState_RoleLoading;
 }
 
 int CLoginPlayer::processRoleLoading()

@@ -5,6 +5,7 @@
 #include "entityplayer.h"
 #include "jobmanager.h"
 #include "platmodule.h"
+#include "mailmodule.h"
 /// Æô¶¯·þÎñÆ÷
 void CDBModule::onLaunchServer()
 {
@@ -165,6 +166,26 @@ void CDBModule::onDBSession()
 		case emSessionType_RechargeSuccess:
 		{
 			CPlatModule::Inst()->onRechargeSuccess(mDBResponse);
+			break;
+		}
+		case emSessionType_LoadPlayerMail:
+		{
+			CMailModule::Inst()->onLoadPlayerMail(mDBResponse);
+			break;
+		}
+		case emSessionType_LoadMaxMailID:
+		{
+			CMailModule::Inst()->onLoadMaxMailID(mDBResponse);
+			break;
+		}
+		case emSessionType_LoadGlobalMail:
+		{
+			CMailModule::Inst()->onLoadGlobalMail(mDBResponse);
+			break;
+		}
+		case emSessionType_LoadMaxGlobalMailID:
+		{
+			CMailModule::Inst()->onLoadMaxGlobalMailID(mDBResponse);
 			break;
 		}
 	}

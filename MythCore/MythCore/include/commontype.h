@@ -50,4 +50,11 @@ typedef unsigned int			uint;
 
 #define	MAX_NUM_LOG_DISPLAYER	4		/// max displayer per log
 #define MAX_NUM_DEBUG_LOG	16			/// max debug log
+
+#define CHAR_BIT_NUM		8			// char的位数目
+#define INT_BIT_NUM			32			// (sizeof(int) * 8) int的位数目
+// 32 = 2^5  ->   INT_BIT_NUM = 2 ^ INT_BIT_LEN_SHIFT
+#define	INT_BIT_LEN_SHIFT	5			// int需要的位移数目
+#define BIT_SET_LEN(length) ((length+INT_BIT_NUM-1)/INT_BIT_NUM)	// 计算length长度的bit需要多少个int
+#define INT_ALL_BIT_SET		0xFFFFFFFF	// int所有的位都是置位状态
 #endif

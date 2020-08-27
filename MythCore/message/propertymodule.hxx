@@ -20,6 +20,14 @@ enum PROPERTY_MODULE_MSG_ID
 	ID_S2C_RESPONSE_GET_PLAYER_PROPERTY		= 0x040C;		// 得到玩家属性的回应
 	ID_C2S_REQUEST_HEART_BEAT				= 0x040D;		// 玩家心跳的请求
 	ID_S2C_RESPONSE_HEART_BEAT				= 0x040E;		// 玩家心跳的回应
+	ID_C2S_REQUEST_GET_MAIL_LIST			= 0x040F;		// 获取邮件列表的请求
+	ID_S2C_RESPONSE_GET_MAIL_LIST			= 0x0410;		// 获取邮件列表的回复
+	ID_C2S_REQUEST_READ_MAIL				= 0x0411;		// 查看邮件的请求
+	ID_S2C_RESPONSE_READ_MAIL				= 0x0412;		// 查看邮件的回应
+	ID_C2S_REQUEST_GET_MAIL_ATTACHMENT		= 0x0413;		// 获取邮件附件的请求
+	ID_S2C_RESPONSE_GET_MAIL_ATTACHMENT		= 0x0414;		// 获取邮件附件的回应
+	ID_C2S_REQUEST_DELETE_MAIL				= 0x0415;		// 删除邮件的请求
+	ID_S2C_RESPONSE_DELETE_MAIL				= 0x0416;		// 删除邮件的回应
 }
 
 /// 玩家升级通知 ID_S2C_NOTIYF_LEVEL_UP
@@ -119,4 +127,52 @@ message CHeartBeatRequest
 message CHeartBeatResponse
 {
 	uint32	ServerTime					= 1;	// 服务器时间
+}
+
+/// 获取邮件列表的请求 ID_C2S_REQUEST_GET_MAIL_LIST
+message CGetMailListRequest
+{
+	
+}
+/// 获取邮件列表的回复 ID_S2C_RESPONSE_GET_MAIL_LIST
+message CGetMailListResponse
+{
+	repeated	PBMail	Mail			= 1;	// 邮件列表
+}
+
+/// 查看邮件的请求 ID_C2S_REQUEST_READ_MAIL
+message CReadMailRequest
+{
+	uint32		MailID					= 1;	// 邮件ID
+}
+
+/// 查看邮件的回应 ID_S2C_RESPONSE_READ_MAIL
+message CReadMailResponse
+{
+	uint32		Result					= 1;	// 结果
+	uint32		Status					= 2;	// 状态
+}
+
+/// 获取邮件附件的请求 ID_C2S_REQUEST_GET_MAIL_ATTACHMENT
+message CGetMailAttachmentRequest
+{
+	uint32		MailID					= 1;	// 邮件ID
+}
+
+/// 获取邮件附件的回应 ID_S2C_RESPONSE_GET_MAIL_ATTACHMENT
+message CGetMailAttachmentResponse
+{
+	uint32		Result					= 1;	// 结果
+}
+
+/// 删除邮件的请求 ID_C2S_REQUEST_DELETE_MAIL
+message CDeleteMailRequest
+{
+	uint32		MailID					= 1;	// 邮件ID
+}
+
+/// 删除邮件的回应 ID_S2C_RESPONSE_DELETE_MAIL
+message CDeleteMailResponse
+{
+	uint32		Result					= 1;	// 结果
 }

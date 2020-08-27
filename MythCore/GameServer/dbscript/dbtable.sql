@@ -105,3 +105,30 @@ CREATE TABLE `RechargeLog` (
   PRIMARY KEY  (`order_id_crc`,`order_id`),
   KEY `IDX_ROLE_ID` (`role_id`)
 ) ENGINE=INNODB;
+
+DROP TABLE IF EXISTS `Mail`;
+CREATE TABLE `Mail` (
+  `mail_id`					int(11) UNSIGNED			NOT NULL	AUTO_INCREMENT,
+  `mail_status`				tinyint(11) UNSIGNED		NOT NULL,
+  `role_id`					int(11) UNSIGNED			NOT NULL,
+  `mail_type`				tinyint(11) UNSIGNED		NOT NULL,
+  `item_log`				smallint(11) UNSIGNED		NOT NULL,
+  `create_time`				int(11) UNSIGNED			NOT NULL,
+  `mail_title`				varchar(64),
+  `mail_body`				varchar(300),
+  `mail_item`				blob						DEFAULT NULL,
+  PRIMARY KEY  (`mail_id`),
+  KEY `IDX_ROLE_ID` (`role_id`)
+) ENGINE=INNODB;
+
+
+DROP TABLE IF EXISTS `GlobalMail`;
+CREATE TABLE `GlobalMail` (
+  `mail_id`					int(11) UNSIGNED			NOT NULL	AUTO_INCREMENT,
+  `mail_type`				tinyint(11) UNSIGNED		NOT NULL,
+  `create_time`				int(11) UNSIGNED			NOT NULL,
+  `mail_title`				varchar(64),
+  `mail_body`				varchar(300),
+  `mail_item`				blob						DEFAULT NULL,
+  PRIMARY KEY  (`mail_id`)
+) ENGINE=INNODB;

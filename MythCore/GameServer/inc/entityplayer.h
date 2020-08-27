@@ -9,6 +9,7 @@
 #include "serveractivityunit.h"
 #include "servercommon.h"
 #include "timeunit.h"
+#include "interactiveunit.h"
 class PBPlayerSceneInfo;
 
 class CBaseProperty
@@ -47,7 +48,8 @@ public:
 		mSkillUnit(*this),
 		mServerActUnit(*this),
 		mVIPUnit(*this),
-		mTimeUnit(*this)
+		mTimeUnit(*this),
+		mInteractiveUnit(*this)
 	{
 		init();
 	}
@@ -150,6 +152,9 @@ public:
 
 	CTimeUnit& getTimeUnit(){return mTimeUnit;}
 	CVIPUnit& getVIPUnit(){return mVIPUnit;}
+	
+	CInteractiveUnit& getInteractiveUnit(){return mInteractiveUnit;}
+
     char* getName(){ return mName;}
     void setName(const char* value)
     {
@@ -219,6 +224,8 @@ private:
 	CVIPUnit		mVIPUnit;
 	/// 时间单元
 	CTimeUnit		mTimeUnit;
+	/// 交换单元
+	CInteractiveUnit mInteractiveUnit;
 
 	/// 角色名字
 	char			mName[PLAYER_NAME_LENGTH];

@@ -12,6 +12,7 @@
 #include "objpoolimp.h"
 #include "timemanager.h"
 #include "errcode.h"
+#include "mailmodule.h"
 CPropertyModule::CPropertyModule()
 :mSavePlayerTimer(1000)
 {
@@ -117,6 +118,8 @@ void CPropertyModule::onTimer(unsigned int nTickOffset)
 
 void CPropertyModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)
 {
+	MYTH_ASSERT(NULL != pPlayer, return);
+
 	switch (nMessageID)
 	{
 		case ID_C2S_REQUEST_GM_COMMAND:
@@ -131,14 +134,29 @@ void CPropertyModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMess
 		}
 		case ID_C2S_REQUEST_GET_PLAYER_PROPERTY:
 		{
-			MYTH_ASSERT(NULL != pPlayer, return);
 			pPlayer->onGetPlayerPropertyRequest(pMessage);
 			break;
 		}
 		case ID_C2S_REQUEST_HEART_BEAT:
 		{
-			MYTH_ASSERT(NULL != pPlayer, return);
 			pPlayer->getTimeUnit().onHeartBeatRequest(pMessage);
+			break;
+		}
+		case ID_C2S_REQUEST_GET_MAIL_LIST:
+		{
+			pPlayer->getInteractiveUnit().onGetMailListRequest(pMessage);
+			break;
+		}
+		case ID_C2S_REQUEST_READ_MAIL:
+		{
+			break;
+		}
+		case ID_C2S_REQUEST_GET_MAIL_ATTACHMENT:
+		{
+			break;
+		}
+		case ID_C2S_REQUEST_DELETE_MAIL:
+		{
 			break;
 		}
 		default:
@@ -176,7 +194,7 @@ void CPropertyModule::onLeaveGameRequest(CEntityPlayer* pPlayer, Message* pMessa
 {
 	MYTH_ASSERT(NULL != pPlayer && NULL != pMessage, return);
 	// 将玩家置为下线状态
-	playerLeaveGame(pPlayer);
+	playerLeaveGame(pPlayer, EmLeaveReason_PlayerRequest);
 }
 
 /// 踢出所以玩家
@@ -197,7 +215,7 @@ void CPropertyModule::kickAllPlayer()
 			continue;
 		}
 
-		playerLeaveGame(pPlayer);
+		playerLeaveGame(pPlayer, EmLeaveReason_ServerShutDown);
 		++ nCount;
 		// 每次30个
 		if (nCount >= 30)
@@ -222,6 +240,12 @@ void CPropertyModule::onLoadPlayerInfo(CDBResponse& rResponse)
 	}
 	CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(rResponse.mParam1));
 	if (NULL == pPlayer)
+	{
+		return;
+	}
+
+	// 加载回来的时候，当时的玩家已经下线，内存已经被重用
+	if (pPlayer->getRoleID() != rResponse.mPlayerID)
 	{
 		return;
 	}
@@ -264,6 +288,12 @@ void CPropertyModule::onLoadPlayerBaseProperty(CDBResponse& rResponse)
 
 	CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(rResponse.mParam1));
 	if (NULL == pPlayer)
+	{
+		return;
+	}
+
+	// 加载回来的时候，当时的玩家已经下线，内存已经被重用
+	if (pPlayer->getRoleID() != rResponse.mPlayerID)
 	{
 		return;
 	}
@@ -336,6 +366,9 @@ void CPropertyModule::onLoadComplete(CEntityPlayer* pPlayer)
 	LOG_INFO("Player load complete, %d", pPlayer->getRoleID());
 	// 将玩家放入地图
 	// 往客户端推送数据
+
+	// 加载玩家邮件
+	CMailModule::Inst()->loadPlayerMail(pPlayer->getRoleID());
 }
 
 /// 发送玩家基本信息通知
@@ -390,7 +423,6 @@ void CPropertyModule::savePlayer(CEntityPlayer* pPlayer)
 		return;
 	}
 
-
 	pPlayer->setSaveStatus(0);
 	savePlayerInfo(pPlayer);
 	savePlayerBaseProperty(pPlayer);
@@ -435,12 +467,12 @@ void CPropertyModule::onSavePlayerComplete(CEntityPlayer* pPlayer)
 	// 退出状态
 	if (pPlayer->getPlayerStauts() == emPlayerStatus_Exiting)
 	{
-		onPlayerLeaveGame(pPlayer);
+		destroyPlayer(pPlayer);
 	}
 }
 
 /// 玩家离开游戏
-void CPropertyModule::playerLeaveGame(CEntityPlayer* pPlayer)
+void CPropertyModule::playerLeaveGame(CEntityPlayer* pPlayer, EmLeaveReason eReason)
 {
 	if (NULL == pPlayer)
 	{
@@ -450,6 +482,8 @@ void CPropertyModule::playerLeaveGame(CEntityPlayer* pPlayer)
 	{
 		return;
 	}
+
+	LOG_INFO("player leave game, player status: %d, reason: %d", pPlayer->getPlayerStauts(), eReason);
 
 	byte bPlayerStatus = pPlayer->getPlayerStauts();
 	// 将玩家置为下线状态
@@ -466,21 +500,21 @@ void CPropertyModule::playerLeaveGame(CEntityPlayer* pPlayer)
 		case emPlayerStatus_Loading:
 		{
 			// 直接离开游戏，不保存
-			onPlayerLeaveGame(pPlayer);
+			destroyPlayer(pPlayer);
 			break;
 		}
 	}
 }
 
 /// 玩家离开游戏
-void CPropertyModule::onPlayerLeaveGame(CEntityPlayer* pPlayer)
+void CPropertyModule::destroyPlayer(CEntityPlayer* pPlayer)
 {
 	if (NULL == pPlayer)
 	{
 		return;
 	}
 
-	CSceneJob::Inst()->onPlayerLeaveGame(pPlayer);
+	CSceneJob::Inst()->destroyPlayerObject(pPlayer);
 	CObjPool::Inst()->free(pPlayer->getObjID());
 }
 

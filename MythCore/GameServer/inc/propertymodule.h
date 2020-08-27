@@ -5,6 +5,7 @@
 #include "gmcommandmanager.h"
 #include "messagefactory.h"
 #include "timeutility.h"
+#include "logintype.h"
 using namespace Myth;
 class CEntityPlayer;
 class CEntity;
@@ -51,6 +52,7 @@ public:
 	void			onLoadPlayerBaseProperty(CDBResponse& rResponse);
 	/// 玩家属性加载完成
 	void			onLoadComplete(CEntityPlayer* pPlayer);
+public:
 	/// 玩家存盘
 	void			savePlayer(CEntityPlayer* pPlayer);
 	/// 保存玩家信息
@@ -59,10 +61,12 @@ public:
 	void			savePlayerBaseProperty(CEntityPlayer* pPlayer);
 	/// 玩家存盘完成
 	void			onSavePlayerComplete(CEntityPlayer* pPlayer);
+
+public:
 	/// 玩家离开游戏
-	void			playerLeaveGame(CEntityPlayer* pPlayer);
-	/// 玩家离开游戏
-	void			onPlayerLeaveGame(CEntityPlayer* pPlayer);
+	void			playerLeaveGame(CEntityPlayer* pPlayer, EmLeaveReason eReason);
+	/// 删除玩家实例
+	void			destroyPlayer(CEntityPlayer* pPlayer);
 	/// 新玩家处理
 	void			setNewPlayerValue(CEntityPlayer* pPlayer);
 	/// 创建实体后的处理

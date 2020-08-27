@@ -53,6 +53,8 @@ public:
 	void		setCurStateTime(int nTime);
 	EmLoginState getLoginState(){return (EmLoginState)mStateMachine.getCurState();}
 	void		setLoginState(int nState){mStateMachine.switchState(nState);}
+	// 创建玩家实体并加载
+	int			createPlayerAndLoad();
 
 public:
 	/// autocode don't edit!!!

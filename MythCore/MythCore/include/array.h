@@ -24,9 +24,23 @@ namespace Myth
 		{
 			mSize = 0;
 		}
-		CArray(int nSize, T t=T())
+		CArray(int nSize, T& t)
 		{
-			std::fill(begin().base(), (begin() + nSize).base(), t);
+			if (nSize > Capacity)
+			{
+				nSize = Capacity;
+			}
+			std::fill(begin(), begin() + nSize, t);
+			mSize = nSize;
+		}
+		CArray(int nSize)
+		{
+			if (nSize > Capacity)
+			{
+				nSize = Capacity;
+			}
+			T t = T();
+			std::fill(begin(), begin() + nSize, t);
 			mSize = nSize;
 		}
 
@@ -38,6 +52,10 @@ namespace Myth
 			{
 				return;
 			}
+			if (nSize > Capacity)
+			{
+				nSize = Capacity;
+			}
 			iterator cur = begin();
 			for (int i = 0; i < nSize; ++ i)
 			{
@@ -48,14 +66,14 @@ namespace Myth
 
 		CArray(CArray& rArray)
 		{
-			std::copy(rArray.begin().base(), rArray.end().base(), begin().base());
+			std::copy(rArray.begin(), rArray.end(), begin());
 			mSize = rArray.mSize;
 		}
 		~CArray(){}
 
 		CArray& operator=(CArray& rArray)
 		{
-			std::copy(rArray.begin().base(), rArray.end().base(), begin().base());
+			std::copy(rArray.begin(), rArray.end(), begin());
 			mSize = rArray.mSize;
 		}
 
@@ -156,7 +174,7 @@ namespace Myth
 				return;
 			}
 
-			std::fill(begin().base(), (begin() + n).base(), val);
+			std::fill(begin(), (begin() + n), val);
 			mSize = n;
 		}
 
@@ -197,30 +215,30 @@ namespace Myth
 				return end();
 			}
 
-			std::copy_backward(position.base(), end().base(), (end() + 1).base());
+			std::copy_backward(position, end(), (end() + 1));
 			*position = val;
 			++ mSize;
 			return position;
 		}
 		void insert (iterator position, size_type n, const value_type& val)
 		{
-			if (mSize + n >= Capacity)
+			if (mSize + n > Capacity)
 			{
 				return;
 			}
-			std::copy_backward(position.base(), end().base(), (begin() + mSize + n).base());
-			std::fill(position.base(), (position + n).base(), val);
+			std::copy_backward(position, end(), (begin() + mSize + n));
+			std::fill(position, (position + n), val);
 			mSize += n;
 		}
 		void insert (iterator position, iterator first, iterator last)
 		{
 			int nSize = last - first;
-			if (mSize + nSize >= Capacity)
+			if (mSize + nSize > Capacity)
 			{
 				return ;
 			}
-			std::copy_backward(position.base(), end().base(), (begin() + mSize + nSize).base());
-			std::copy(first.base(), last.base(), position.base());
+			std::copy_backward(position, end(), (begin() + mSize + nSize));
+			std::copy(first, last, position);
 
 			mSize += nSize;
 		}
@@ -230,7 +248,7 @@ namespace Myth
 		{
 			if (position + 1 != end())
 			{
-				std::copy((position + 1).base(), end().base(), position.base());
+				std::copy((position + 1), end(), position);
 			}
 			-- mSize;
 			return position;
@@ -240,7 +258,7 @@ namespace Myth
 		{
 			if (last != end())
 			{
-				std::copy(last.base(), end().base(), first.base());
+				std::copy(last, end(), first);
 			}
 			mSize -= (last - first);
 			return first;

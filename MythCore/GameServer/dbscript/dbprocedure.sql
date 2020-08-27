@@ -196,3 +196,36 @@ BEGIN
 END
 ;;
 DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `SaveMail`;
+DELIMITER ;;
+CREATE PROCEDURE `SaveMail`(MailID int unsigned,
+							MailStatus tinyint unsigned,
+							RoleID int unsigned,
+							MailType tinyint unsigned,
+							ItemLog smallint unsigned,
+							CreateTime int unsigned,
+							MailTitle varchar(64),
+							MailBody varchar(300), 
+							MailItem blob)
+BEGIN
+	insert into Mail(mail_id, mail_status, role_id, mail_type, item_log, create_time, mail_title, mail_body, mail_item)
+	values(MailID, MailStatus, RoleID, MailType, ItemLog, CreateTime, MailTitle, MailBody, MailItem);
+END
+;;
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `SaveGlobalMail`;
+DELIMITER ;;
+CREATE PROCEDURE `SaveGlobalMail`(MailID int unsigned,
+							MailType tinyint unsigned,
+							CreateTime int unsigned,
+							MailTitle varchar(64),
+							MailBody varchar(300), 
+							MailItem blob)
+BEGIN
+	insert into GlobalMail(mail_id, mail_type, create_time, mail_title, mail_body, mail_item)
+	values(MailID, MailType, CreateTime, MailTitle, MailBody, MailItem);
+END
+;;
+DELIMITER ;
