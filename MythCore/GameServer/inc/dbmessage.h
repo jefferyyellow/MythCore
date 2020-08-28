@@ -154,6 +154,8 @@ enum EmSessionType
 	emSessionType_LoadGlobalMail		= 17,			// 加载全局邮件
 	emSessionType_DeleteGlobalMail		= 18,			// 删除全局邮件
 	emSessionType_LoadMaxGlobalMailID	= 19,			// 加载最大的全局邮件ID
+	emSessionType_DeleteMail			= 20,			// 删除邮件
+	emSessionType_UpdateMailStatus		= 21,			// 更新邮件状态
 };
 
 

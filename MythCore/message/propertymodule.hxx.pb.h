@@ -43,6 +43,8 @@ class CGMCommandRequest;
 class CGMCommandResponse;
 class CGetMailAttachmentRequest;
 class CGetMailAttachmentResponse;
+class CGetMailDetailRequest;
+class CGetMailDetailResponse;
 class CGetMailListRequest;
 class CGetMailListResponse;
 class CGetPlayerPropertyRequest;
@@ -86,12 +88,14 @@ enum PROPERTY_MODULE_MSG_ID {
   ID_S2C_RESPONSE_GET_MAIL_ATTACHMENT = 1044,
   ID_C2S_REQUEST_DELETE_MAIL = 1045,
   ID_S2C_RESPONSE_DELETE_MAIL = 1046,
+  ID_C2S_REQUEST_GET_MAIL_DETAIL = 1047,
+  ID_S2C_RESPONSE_GET_MAIL_DETAIL = 1048,
   PROPERTY_MODULE_MSG_ID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   PROPERTY_MODULE_MSG_ID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool PROPERTY_MODULE_MSG_ID_IsValid(int value);
 const PROPERTY_MODULE_MSG_ID PROPERTY_MODULE_MSG_ID_MIN = ID_PROPERTY_MODULE_ERROR;
-const PROPERTY_MODULE_MSG_ID PROPERTY_MODULE_MSG_ID_MAX = ID_S2C_RESPONSE_DELETE_MAIL;
+const PROPERTY_MODULE_MSG_ID PROPERTY_MODULE_MSG_ID_MAX = ID_S2C_RESPONSE_GET_MAIL_DETAIL;
 const int PROPERTY_MODULE_MSG_ID_ARRAYSIZE = PROPERTY_MODULE_MSG_ID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* PROPERTY_MODULE_MSG_ID_descriptor();
@@ -1954,11 +1958,18 @@ class CGetMailAttachmentResponse : public ::google::protobuf::Message /* @@proto
   ::google::protobuf::uint32 result() const;
   void set_result(::google::protobuf::uint32 value);
 
+  // optional uint32 Status = 2;
+  void clear_status();
+  static const int kStatusFieldNumber = 2;
+  ::google::protobuf::uint32 status() const;
+  void set_status(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:CGetMailAttachmentResponse)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::uint32 result_;
+  ::google::protobuf::uint32 status_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_propertymodule_2ehxx_impl();
   friend void  protobuf_AddDesc_propertymodule_2ehxx_impl();
@@ -2034,17 +2045,24 @@ class CDeleteMailRequest : public ::google::protobuf::Message /* @@protoc_insert
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 MailID = 1;
+  // repeated uint32 MailID = 1;
+  int mailid_size() const;
   void clear_mailid();
   static const int kMailIDFieldNumber = 1;
-  ::google::protobuf::uint32 mailid() const;
-  void set_mailid(::google::protobuf::uint32 value);
+  ::google::protobuf::uint32 mailid(int index) const;
+  void set_mailid(int index, ::google::protobuf::uint32 value);
+  void add_mailid(::google::protobuf::uint32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+      mailid() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+      mutable_mailid();
 
   // @@protoc_insertion_point(class_scope:CDeleteMailRequest)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::uint32 mailid_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > mailid_;
+  mutable int _mailid_cached_byte_size_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_propertymodule_2ehxx_impl();
   friend void  protobuf_AddDesc_propertymodule_2ehxx_impl();
@@ -2140,6 +2158,188 @@ class CDeleteMailResponse : public ::google::protobuf::Message /* @@protoc_inser
   void InitAsDefaultInstance();
 };
 extern ::google::protobuf::internal::ExplicitlyConstructed<CDeleteMailResponse> CDeleteMailResponse_default_instance_;
+
+// -------------------------------------------------------------------
+
+class CGetMailDetailRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CGetMailDetailRequest) */ {
+ public:
+  CGetMailDetailRequest();
+  virtual ~CGetMailDetailRequest();
+
+  CGetMailDetailRequest(const CGetMailDetailRequest& from);
+
+  inline CGetMailDetailRequest& operator=(const CGetMailDetailRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CGetMailDetailRequest& default_instance();
+
+  static const CGetMailDetailRequest* internal_default_instance();
+
+  void Swap(CGetMailDetailRequest* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CGetMailDetailRequest* New() const { return New(NULL); }
+
+  CGetMailDetailRequest* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CGetMailDetailRequest& from);
+  void MergeFrom(const CGetMailDetailRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CGetMailDetailRequest* other);
+  void UnsafeMergeFrom(const CGetMailDetailRequest& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 MailID = 1;
+  void clear_mailid();
+  static const int kMailIDFieldNumber = 1;
+  ::google::protobuf::uint32 mailid() const;
+  void set_mailid(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:CGetMailDetailRequest)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 mailid_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_propertymodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_propertymodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_propertymodule_2ehxx();
+  friend void protobuf_ShutdownFile_propertymodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CGetMailDetailRequest> CGetMailDetailRequest_default_instance_;
+
+// -------------------------------------------------------------------
+
+class CGetMailDetailResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CGetMailDetailResponse) */ {
+ public:
+  CGetMailDetailResponse();
+  virtual ~CGetMailDetailResponse();
+
+  CGetMailDetailResponse(const CGetMailDetailResponse& from);
+
+  inline CGetMailDetailResponse& operator=(const CGetMailDetailResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CGetMailDetailResponse& default_instance();
+
+  static const CGetMailDetailResponse* internal_default_instance();
+
+  void Swap(CGetMailDetailResponse* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CGetMailDetailResponse* New() const { return New(NULL); }
+
+  CGetMailDetailResponse* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CGetMailDetailResponse& from);
+  void MergeFrom(const CGetMailDetailResponse& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CGetMailDetailResponse* other);
+  void UnsafeMergeFrom(const CGetMailDetailResponse& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 Result = 1;
+  void clear_result();
+  static const int kResultFieldNumber = 1;
+  ::google::protobuf::uint32 result() const;
+  void set_result(::google::protobuf::uint32 value);
+
+  // optional .PBMail Mail = 2;
+  bool has_mail() const;
+  void clear_mail();
+  static const int kMailFieldNumber = 2;
+  const ::PBMail& mail() const;
+  ::PBMail* mutable_mail();
+  ::PBMail* release_mail();
+  void set_allocated_mail(::PBMail* mail);
+
+  // @@protoc_insertion_point(class_scope:CGetMailDetailResponse)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PBMail* mail_;
+  ::google::protobuf::uint32 result_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_propertymodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_propertymodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_propertymodule_2ehxx();
+  friend void protobuf_ShutdownFile_propertymodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CGetMailDetailResponse> CGetMailDetailResponse_default_instance_;
 
 // ===================================================================
 
@@ -2765,6 +2965,20 @@ inline void CGetMailAttachmentResponse::set_result(::google::protobuf::uint32 va
   // @@protoc_insertion_point(field_set:CGetMailAttachmentResponse.Result)
 }
 
+// optional uint32 Status = 2;
+inline void CGetMailAttachmentResponse::clear_status() {
+  status_ = 0u;
+}
+inline ::google::protobuf::uint32 CGetMailAttachmentResponse::status() const {
+  // @@protoc_insertion_point(field_get:CGetMailAttachmentResponse.Status)
+  return status_;
+}
+inline void CGetMailAttachmentResponse::set_status(::google::protobuf::uint32 value) {
+  
+  status_ = value;
+  // @@protoc_insertion_point(field_set:CGetMailAttachmentResponse.Status)
+}
+
 inline const CGetMailAttachmentResponse* CGetMailAttachmentResponse::internal_default_instance() {
   return &CGetMailAttachmentResponse_default_instance_.get();
 }
@@ -2772,18 +2986,34 @@ inline const CGetMailAttachmentResponse* CGetMailAttachmentResponse::internal_de
 
 // CDeleteMailRequest
 
-// optional uint32 MailID = 1;
-inline void CDeleteMailRequest::clear_mailid() {
-  mailid_ = 0u;
+// repeated uint32 MailID = 1;
+inline int CDeleteMailRequest::mailid_size() const {
+  return mailid_.size();
 }
-inline ::google::protobuf::uint32 CDeleteMailRequest::mailid() const {
+inline void CDeleteMailRequest::clear_mailid() {
+  mailid_.Clear();
+}
+inline ::google::protobuf::uint32 CDeleteMailRequest::mailid(int index) const {
   // @@protoc_insertion_point(field_get:CDeleteMailRequest.MailID)
+  return mailid_.Get(index);
+}
+inline void CDeleteMailRequest::set_mailid(int index, ::google::protobuf::uint32 value) {
+  mailid_.Set(index, value);
+  // @@protoc_insertion_point(field_set:CDeleteMailRequest.MailID)
+}
+inline void CDeleteMailRequest::add_mailid(::google::protobuf::uint32 value) {
+  mailid_.Add(value);
+  // @@protoc_insertion_point(field_add:CDeleteMailRequest.MailID)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+CDeleteMailRequest::mailid() const {
+  // @@protoc_insertion_point(field_list:CDeleteMailRequest.MailID)
   return mailid_;
 }
-inline void CDeleteMailRequest::set_mailid(::google::protobuf::uint32 value) {
-  
-  mailid_ = value;
-  // @@protoc_insertion_point(field_set:CDeleteMailRequest.MailID)
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+CDeleteMailRequest::mutable_mailid() {
+  // @@protoc_insertion_point(field_mutable_list:CDeleteMailRequest.MailID)
+  return &mailid_;
 }
 
 inline const CDeleteMailRequest* CDeleteMailRequest::internal_default_instance() {
@@ -2810,7 +3040,92 @@ inline void CDeleteMailResponse::set_result(::google::protobuf::uint32 value) {
 inline const CDeleteMailResponse* CDeleteMailResponse::internal_default_instance() {
   return &CDeleteMailResponse_default_instance_.get();
 }
+// -------------------------------------------------------------------
+
+// CGetMailDetailRequest
+
+// optional uint32 MailID = 1;
+inline void CGetMailDetailRequest::clear_mailid() {
+  mailid_ = 0u;
+}
+inline ::google::protobuf::uint32 CGetMailDetailRequest::mailid() const {
+  // @@protoc_insertion_point(field_get:CGetMailDetailRequest.MailID)
+  return mailid_;
+}
+inline void CGetMailDetailRequest::set_mailid(::google::protobuf::uint32 value) {
+  
+  mailid_ = value;
+  // @@protoc_insertion_point(field_set:CGetMailDetailRequest.MailID)
+}
+
+inline const CGetMailDetailRequest* CGetMailDetailRequest::internal_default_instance() {
+  return &CGetMailDetailRequest_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
+// CGetMailDetailResponse
+
+// optional uint32 Result = 1;
+inline void CGetMailDetailResponse::clear_result() {
+  result_ = 0u;
+}
+inline ::google::protobuf::uint32 CGetMailDetailResponse::result() const {
+  // @@protoc_insertion_point(field_get:CGetMailDetailResponse.Result)
+  return result_;
+}
+inline void CGetMailDetailResponse::set_result(::google::protobuf::uint32 value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:CGetMailDetailResponse.Result)
+}
+
+// optional .PBMail Mail = 2;
+inline bool CGetMailDetailResponse::has_mail() const {
+  return this != internal_default_instance() && mail_ != NULL;
+}
+inline void CGetMailDetailResponse::clear_mail() {
+  if (GetArenaNoVirtual() == NULL && mail_ != NULL) delete mail_;
+  mail_ = NULL;
+}
+inline const ::PBMail& CGetMailDetailResponse::mail() const {
+  // @@protoc_insertion_point(field_get:CGetMailDetailResponse.Mail)
+  return mail_ != NULL ? *mail_
+                         : *::PBMail::internal_default_instance();
+}
+inline ::PBMail* CGetMailDetailResponse::mutable_mail() {
+  
+  if (mail_ == NULL) {
+    mail_ = new ::PBMail;
+  }
+  // @@protoc_insertion_point(field_mutable:CGetMailDetailResponse.Mail)
+  return mail_;
+}
+inline ::PBMail* CGetMailDetailResponse::release_mail() {
+  // @@protoc_insertion_point(field_release:CGetMailDetailResponse.Mail)
+  
+  ::PBMail* temp = mail_;
+  mail_ = NULL;
+  return temp;
+}
+inline void CGetMailDetailResponse::set_allocated_mail(::PBMail* mail) {
+  delete mail_;
+  mail_ = mail;
+  if (mail) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:CGetMailDetailResponse.Mail)
+}
+
+inline const CGetMailDetailResponse* CGetMailDetailResponse::internal_default_instance() {
+  return &CGetMailDetailResponse_default_instance_.get();
+}
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

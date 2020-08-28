@@ -1424,7 +1424,7 @@ int main(int argc, char** argv)
 	CLogManager::Inst()->GetInfoLog().AddDisplayer(pInfoFileDisplayer);
 
 
-	for (int i = 0; i < gServerList.size(); ++ i)
+	for (uint i = 0; i < gServerList.size(); ++ i)
 	{
 		CServerInfo& rInfo = gServerList[i];
 

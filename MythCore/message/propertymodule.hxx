@@ -28,6 +28,8 @@ enum PROPERTY_MODULE_MSG_ID
 	ID_S2C_RESPONSE_GET_MAIL_ATTACHMENT		= 0x0414;		// 获取邮件附件的回应
 	ID_C2S_REQUEST_DELETE_MAIL				= 0x0415;		// 删除邮件的请求
 	ID_S2C_RESPONSE_DELETE_MAIL				= 0x0416;		// 删除邮件的回应
+	ID_C2S_REQUEST_GET_MAIL_DETAIL			= 0x0417;		// 得到邮件的详细信息请求
+	ID_S2C_RESPONSE_GET_MAIL_DETAIL			= 0x0418;		// 得到邮件的详细信息
 }
 
 /// 玩家升级通知 ID_S2C_NOTIYF_LEVEL_UP
@@ -163,16 +165,30 @@ message CGetMailAttachmentRequest
 message CGetMailAttachmentResponse
 {
 	uint32		Result					= 1;	// 结果
+	uint32		Status					= 2;	// 状态
 }
 
 /// 删除邮件的请求 ID_C2S_REQUEST_DELETE_MAIL
 message CDeleteMailRequest
 {
-	uint32		MailID					= 1;	// 邮件ID
+	repeated uint32		MailID			= 1;	// 邮件ID
 }
 
 /// 删除邮件的回应 ID_S2C_RESPONSE_DELETE_MAIL
 message CDeleteMailResponse
 {
 	uint32		Result					= 1;	// 结果
+}
+
+/// 得到邮件的详细信息请求 ID_C2S_REQUEST_GET_MAIL_DETAIL
+message CGetMailDetailRequest
+{
+	uint32		MailID					= 1;	// 邮件ID
+}
+
+/// 得到邮件的详细信息 ID_S2C_RESPONSE_GET_MAIL_DETAIL
+message CGetMailDetailResponse
+{
+	uint32		Result					= 1;	// 结果
+	PBMail		Mail					= 2;	// 邮件详情
 }

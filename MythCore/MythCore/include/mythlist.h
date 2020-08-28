@@ -190,7 +190,7 @@ namespace Myth
 		const _List_const_iterator<_Val>& __y)
 	{ return __x._M_node != __y._M_node; }
 
-	template<typename T, uint BaseCount, uint Increment>
+	template<typename T, int Capacity>
 	class CMythList
 	{
 	public:
@@ -207,23 +207,23 @@ namespace Myth
 		typedef ptrdiff_t                                  difference_type;
 
 	public:
-		CList()
+		CMythList()
 		{
 			mBaseNode.mpNext = &mBaseNode;
 			mBaseNode.mpPrev = &mBaseNode;
 		}
 
-		CList(int nSize, const value_type& value = value_type())
+		CMythList(int nSize, const value_type& value = value_type())
 		{
 			initWithInitialValue((size_type)nSize, value);
 		}
 
-		CList(size_type nSize, const value_type& value = value_type())
+		CMythList(size_type nSize, const value_type& value = value_type())
 		{
 			initWithInitialValue(nSize, value);
 		}
 
-		CList(const CList& list)
+		CMythList(const CMythList& list)
 		{
 			if (this == &list)
 			{
@@ -240,7 +240,7 @@ namespace Myth
 		}
 
 		template<typename _InputIterator>
-		CList(_InputIterator __first, _InputIterator __last)
+		CMythList(_InputIterator __first, _InputIterator __last)
 		{ 
 			mBaseNode.mpNext = &mBaseNode;
 			mBaseNode.mpPrev = &mBaseNode;
@@ -250,7 +250,7 @@ namespace Myth
 			}
 		}
 
-		CList& operator=(const CList& __x)
+		CMythList& operator=(const CMythList& __x)
 		{
 			if (this == &list)
 			{
@@ -266,12 +266,12 @@ namespace Myth
 			return *this;
 		}
 
-		~CList()
+		~CMythList()
 		{
 			clear();
 		}
 
-		void assign(sint nSize, const value_type& rVal)
+		void assign(int nSize, const value_type& rVal)
 		{
 			assign(size_type(nSize), rVal);
 		}
@@ -332,8 +332,8 @@ namespace Myth
 		iterator end(){ return iterator(&mBaseNode); }
 		const_iterator end() const{ return const_iterator(&mBaseNode); }
 
-		reverse_iterator rbegin(){ return reverse_iterator(end()); }
-		reverse_iterator rend(){ return reverse_iterator(begin()); }
+		reverse_iterator rbegin(){ return reverse_iterator(mBaseNode.mpPrev); }
+		reverse_iterator rend(){ return reverse_iterator(&mBaseNode); }
 
 		bool empty() const{ return mBaseNode.mpNext == &mBaseNode; }
 
@@ -352,6 +352,11 @@ namespace Myth
 			const_iterator tmp = end();
 			--tmp;
 			return *tmp;
+		}
+
+		bool isfull()
+		{
+			return mAlloc.isfull();
 		}
 
 		void push_back(const value_type& value)
@@ -421,7 +426,7 @@ namespace Myth
 			return iterator(pNode);
 		}
 
-		void insert(iterator position, sint n, const value_type& value)
+		void insert(iterator position, int n, const value_type& value)
 		{
 			insert(position, (size_type)n, value);
 		}
@@ -562,7 +567,7 @@ namespace Myth
 
 	private:
 		CListNodeBase			mBaseNode;
-		CBlockMemory<CListNode<T>, BaseCount, Increment>	mAlloc;
+		CBlockMemoryPool<CListNode<T>, Capacity>	mAlloc;
 	};
 }
 #endif

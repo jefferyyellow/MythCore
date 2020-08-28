@@ -149,14 +149,22 @@ void CPropertyModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMess
 		}
 		case ID_C2S_REQUEST_READ_MAIL:
 		{
+			pPlayer->getInteractiveUnit().onReadMailRequest(pMessage);
 			break;
 		}
 		case ID_C2S_REQUEST_GET_MAIL_ATTACHMENT:
 		{
+			pPlayer->getInteractiveUnit().onGetMailAttachmentRequest(pMessage);
 			break;
 		}
 		case ID_C2S_REQUEST_DELETE_MAIL:
 		{
+			pPlayer->getInteractiveUnit().onDeleteMailRequest(pMessage);
+			break;
+		}
+		case ID_C2S_REQUEST_GET_MAIL_DETAIL:
+		{
+			pPlayer->getInteractiveUnit().onGetMailDetailRequest(pMessage);
 			break;
 		}
 		default:

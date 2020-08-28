@@ -249,6 +249,164 @@ namespace Myth
 		/// alread allocate memory node count
 		int					mAllocCount;
 	};
+
+
+	template<typename T, int Capacity>
+	class CBlockMemoryPool
+	{
+	private:
+		struct CMemoryNode
+		{
+			/// mpNode:		idle mode
+			/// byte		mBuff[sizeof(T)]: allocate mode
+			union BuffNode
+			{
+				byte		mBuff[sizeof(T)];
+				CMemoryNode	*mpNextNode;
+			};
+
+#ifdef __DEBUG__
+			int			mHeadIdent;
+#endif
+			BuffNode	mBuffNode;
+#ifdef __DEBUG__
+			int			mTailIdent;
+#endif
+		};
+		struct CBlockListNode
+		{
+			CMemoryNode*	mBlockPoint;
+			CBlockListNode*	mNextNode;
+		};
+	public:
+		CBlockMemoryPool()
+		{
+			init();
+		}
+		~CBlockMemoryPool()
+		{
+			final();
+		}
+
+		/// init member variables
+		void init()
+		{
+			mAllocCount = 0;
+			
+			// make all memory node as a chain
+			for (int i = 0; i < Capacity - 1; ++i)
+			{
+				mMemoryNode[i].mBuffNode.mpNextNode = &mMemoryNode[i + 1];
+#ifdef __DEBUG__
+				mMemoryNode[i].mHeadIdent = CheckDeletedIdent;
+				mMemoryNode[i].mTailIdent = CheckDeletedIdent;
+#endif
+			}
+			mpIdleList = &mMemoryNode[0];
+		}
+
+		/// delete all memory allocate from system 
+		void final()
+		{
+			mAllocCount = 0;
+		}
+
+	public:
+		/// allocate an element
+		T*			allocate()
+		{
+			if (NULL == mpIdleList)
+			{
+				return NULL;
+			}
+
+			// check all idle memory node used up
+			T* pAllocNode = reinterpret_cast<T*>(mpIdleList->mBuffNode.mBuff);
+#ifdef __DEBUG__
+			// check the ident
+			if (CheckDeletedIdent != mpIdleList->mHeadIdent)
+			{
+				printf("CheckDeletedIdent");
+			}
+
+			if (CheckDeletedIdent != mpIdleList->mTailIdent)
+			{
+				printf("CheckDeletedIdent");
+			}
+			// mark the elemt as allocate
+			mpIdleList->mHeadIdent = CheckAllocatedIdent;
+			mpIdleList->mTailIdent = CheckAllocatedIdent;
+#endif
+			mpIdleList = mpIdleList->mBuffNode.mpNextNode;
+			new (pAllocNode)T();
+			++mAllocCount;
+			return pAllocNode;
+		}
+
+		/// free an element
+		void		free(T* pFree)
+		{
+			if (NULL == pFree)
+			{
+				return;
+			}
+#ifdef __DEBUG__
+			byte *pTemp = (byte*)pFree;
+			CMemoryNode* pFreeNode = reinterpret_cast<CMemoryNode*>(pTemp - CLASS_MEM_OFFSET(CMemoryNode, mBuffNode));
+			// check the ident
+			if (CheckAllocatedIdent != pFreeNode->mHeadIdent)
+			{
+				printf("CheckAllocatedIdent");
+			}
+
+			if (CheckAllocatedIdent != pFreeNode->mTailIdent)
+			{
+				printf("CheckAllocatedIdent");
+			}
+			// mark the elemt as free
+			pFreeNode->mHeadIdent = CheckDeletedIdent;
+			pFreeNode->mTailIdent = CheckDeletedIdent;
+#else
+			pFree->~T();
+			CMemoryNode* pFreeNode = reinterpret_cast<CMemoryNode*>(pFree);;
+#endif
+			pFreeNode->mBuffNode.mpNextNode = mpIdleList;
+			mpIdleList = pFreeNode;
+			--mAllocCount;
+		}
+
+		/// check memory leak when recover all memory
+		bool		checkMemoryLeak()
+		{
+			if (0 != mAllocCount)
+			{
+				return true;
+			}
+
+			return false;
+		}
+		bool isfull()
+		{
+			if (NULL == mpIdleList)
+			{
+				return true;
+			}
+
+			return false;
+		}
+
+	private:
+		/// For debug only, check ident.
+		enum  EmCheckIdent	{ CheckAllocatedIdent = 0x01234567, CheckDeletedIdent = 0x89ABCDEF };
+
+	private:
+		/// idle memory node list head
+		CMemoryNode*		mpIdleList;
+		/// ÄÚ´æ³Ø
+		CMemoryNode			mMemoryNode[Capacity];
+		/// alread allocate memory node count
+		int					mAllocCount;
+	};
 }
 
 #endif

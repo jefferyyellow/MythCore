@@ -3,7 +3,7 @@
 #include "singleton.h"
 #include "logicmodule.h"
 #include "commontype.h"
-#include "indexarray.h"
+#include "mythlist.h"
 #include "mail.h"
 using namespace Myth;
 class CEntityPlayer;
@@ -13,6 +13,8 @@ class PBMailItemList;
 class CMailModule : public CLogicModule, public CSingleton<CMailModule>
 {
 	friend class CSingleton<CMailModule>;
+public:
+	typedef CMythList<CMail, MAX_PLAYER_MAIL>	MAIL_LIST;
 
 private:
 	CMailModule()
@@ -61,6 +63,8 @@ public:
 	void		sendGlobalMail(CMail& rMail);
 	/// 给玩家发送邮件
 	void		sendPlayerMail(uint nRoleID, CMail& rMail);
+	/// 给玩家发送邮件
+	void		sendPlayerMail(CEntityPlayer& rPlayer, CMail& rMail);
 	/// 保存邮件到数据库
 	void		saveMail2DB(uint nRoleID, CMail& rMail);
 	/// 保存全局邮件到数据库
@@ -79,6 +83,10 @@ public:
 	void		saveMailItemList(CMail& rMail, PBMailItemList* pbMailItemList);
 	/// 删除全局邮件
 	void		deleteGlobalMail2DB(uint nMailID);
+	/// 给玩家发全局邮件
+	void		giveAllGlobalMail(CEntityPlayer& rPlayer);
+	/// 给所以的玩家发全局邮件
+	void		giveAllPlayerGlobalMail(CMail& rMail);
 private:
 	/// 玩家邮件ID生成器
 	uint		mPlayerMailID;
@@ -87,6 +95,6 @@ private:
 	/// 是否是否加载全局邮件完成
 	bool		mGlobalLoadComplete;
 	/// 全局邮件列表
-	CIndexArray<CMail, MAX_GLOBAL_MAIL>	mGlobalList;
+	MAIL_LIST	mGlobalList;
 };
 #endif

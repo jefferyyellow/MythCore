@@ -16,7 +16,6 @@ namespace Myth
 		typedef const value_type*	const_pointer;
 		typedef const value_type&	const_reference;
 
-
 	public:
 		CIndexArray()
 		{
@@ -174,11 +173,11 @@ namespace Myth
 			return *mMemoryPool.get(mDataIndex[n]);
 		}
 
-
 		void assign(int n, const value_type& val)
 		{
 			assign(size_type(n), val);
 		}
+
 		void assign(size_type n, const value_type& val)
 		{
 			if (n > Capacity)
@@ -248,6 +247,7 @@ namespace Myth
 			}
 			--mSize;
 		}
+
 		void insert(size_type pos, size_type n, const value_type& val)
 		{
 			if (mSize + n > Capacity)
@@ -271,6 +271,7 @@ namespace Myth
 			}
 
 		}
+
 		void insert(size_type pos, const value_type& val)
 		{
 			if (mSize >= Capacity)
@@ -319,7 +320,7 @@ namespace Myth
 	private:
 		size_type	mDataIndex[Capacity];
 		size_type	mSize;
-		CFixMemoryPool<T, Capacity>	mMemoryPool;
+		CIndexMemoryPool<T, Capacity>	mMemoryPool;
 	};
 }
 

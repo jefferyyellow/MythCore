@@ -110,14 +110,14 @@ namespace Myth
 	};
 
 	template<typename T, int Capacity>
-	class CFixMemoryPool
+	class CIndexMemoryPool
 	{
 	public:
-		CFixMemoryPool()
+		CIndexMemoryPool()
 		{
 			init();
 		}
-		~CFixMemoryPool()
+		~CIndexMemoryPool()
 		{
 			mFreeCount = 0;
 		}

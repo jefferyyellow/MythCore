@@ -25,6 +25,7 @@ enum EmMailStatus
 	emMailStatus_Attatch	= 2,	// 奖励已经领取
 };
 
+// 邮件道具
 class CMailItem
 {
 public:
@@ -45,6 +46,7 @@ private:
 	int			mItemNum;
 };
 
+// 邮件
 class CMail
 {
 public:

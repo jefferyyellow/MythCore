@@ -123,15 +123,19 @@ void CMailModule::deleteExpireMail()
 void CMailModule::deleteExpireGlobalMail()
 {
 	time_t nExpireTime = CTimeManager::Inst()->getCurrTime() - MAX_MAIL_DURATION_TIME;
-	for (uint i = 0; i < mGlobalList.size(); )
+	MAIL_LIST::iterator end = mGlobalList.end();
+	for (MAIL_LIST::iterator it = mGlobalList.begin(); it != end; )
 	{
-		if (nExpireTime >= mGlobalList[i].getCreateTime())
+		if (nExpireTime >= it->getCreateTime())
 		{
-			deleteGlobalMail2DB(mGlobalList[i].getMailID());
-			mGlobalList.erase(i);
+			deleteGlobalMail2DB(it->getMailID());
+			it = mGlobalList.erase(it);
 			continue;
 		}
-		++ i;
+		else
+		{
+			++ it;
+		}
 	}
 }
 
@@ -141,13 +145,16 @@ void CMailModule::sendGlobalMail(CMail& rMail)
 	// 创建邮件ID
 	rMail.setMailID(mGlobalMailID++);
 
-	if (mGlobalList.size() >= mGlobalList.capacity())
+	if (mGlobalList.isfull())
 	{
-		deleteGlobalMail2DB(mGlobalList[0].getMailID());
-		mGlobalList.erase(0);
+		deleteGlobalMail2DB(mGlobalList.back().getMailID());
+		mGlobalList.pop_back();
 	}
-	mGlobalList.push_back(rMail);
+	mGlobalList.push_front(rMail);
 	saveGlobalMail2DB(rMail);
+
+	// 给线上的玩家发全局邮件
+	giveAllPlayerGlobalMail(rMail);
 }
 
 /// 给玩家发送邮件
@@ -163,6 +170,16 @@ void CMailModule::sendPlayerMail(uint nRoleID, CMail& rMail)
 		pPlayer->getInteractiveUnit().addMail(rMail);
 	}
 	saveMail2DB(nRoleID, rMail);
+}
+
+/// 给玩家发送邮件
+void CMailModule::sendPlayerMail(CEntityPlayer& rPlayer, CMail& rMail)
+{
+	// 创建邮件ID
+	rMail.setMailID(mPlayerMailID++);
+	rPlayer.getInteractiveUnit().addMail(rMail);
+	saveMail2DB(rPlayer.getRoleID(), rMail);
+
 }
 
 /// 保存邮件到数据库
@@ -245,13 +262,15 @@ void CMailModule::onLoadPlayerMail(CDBResponse& rResponse)
 
 		pPlayer->getInteractiveUnit().addMail(tMail);
 	}
+
+	giveAllGlobalMail(*pPlayer);
 }
 
 /// 加载全局邮件
 void CMailModule::loadGlobalMail()
 {
 	CDBModule::Inst()->pushDBTask(0, emSessionType_LoadGlobalMail, 0, 0,
-		"select mail_id, mail_type, create_time, mail_title, mail_body, mail_item from GlobalMail");
+		"select mail_id, mail_type, create_time, mail_title, mail_body, mail_item from GlobalMail order by mail_id asc");
 }
 
 /// 加载全局邮件回调
@@ -281,7 +300,7 @@ void CMailModule::onLoadGlobalMail(CDBResponse& rResponse)
 		rResponse.next();
 		loadMailItemList(tMail, pbMailItemList);
 
-		mGlobalList.push_back(tMail);
+		mGlobalList.push_front(tMail);
 	}
 
 	mGlobalLoadComplete = true;
@@ -342,4 +361,55 @@ void CMailModule::deleteGlobalMail2DB(uint nMailID)
 {
 	CDBModule::Inst()->pushDBTask(0, emSessionType_DeleteGlobalMail, 0, 0,
 		"delete from GlobalMail where mail_id=%d", nMailID);
+}
+
+/// 给玩家发全局邮件
+void CMailModule::giveAllGlobalMail(CEntityPlayer& rPlayer)
+{
+	if (mGlobalList.empty())
+	{
+		return;
+	}
+	uint nGlobalMailTime = rPlayer.getInteractiveUnit().getGlobalMailTime();
+	// 如果玩家身上的最大ID
+	if (nGlobalMailTime >= mGlobalList.begin()->getCreateTime())
+	{
+		return;
+	}
+	MAIL_LIST::iterator end = mGlobalList.end();
+	
+	for (MAIL_LIST::iterator it = mGlobalList.begin(); it != end; ++it)
+	{
+		if (it->getCreateTime() <= nGlobalMailTime)
+		{
+			break;
+		}
+		
+		CMail& rMail = *it;
+		sendPlayerMail(rPlayer, rMail);
+	}
+
+	rPlayer.getInteractiveUnit().setGlobalMailTime((uint)mGlobalList.begin()->getCreateTime());
+}
+
+/// 给所以的玩家发全局邮件
+void CMailModule::giveAllPlayerGlobalMail(CMail& rMail)
+{
+	CEntityPlayer* pPlayer = NULL;
+	CSceneJob::PLAYER_LIST& rPlayerList = CSceneJob::Inst()->getPlayerList();
+	CSceneJob::PLAYER_LIST::iterator it = rPlayerList.begin();
+	for (; it != rPlayerList.end(); ++it)
+	{
+		pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
+		if (NULL == pPlayer)
+		{
+			continue;
+		}
+		if (emPlayerStatus_Gameing != pPlayer->getPlayerStauts())
+		{
+			continue;
+		}
+		sendPlayerMail(*pPlayer, rMail);
+		pPlayer->getInteractiveUnit().setGlobalMailTime((uint)rMail.getCreateTime());
+	}
 }
