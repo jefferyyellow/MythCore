@@ -25,6 +25,12 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* PBGlobalMail_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   PBGlobalMail_reflection_ = NULL;
+const ::google::protobuf::Descriptor* PBGameEventParam_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  PBGameEventParam_reflection_ = NULL;
+const ::google::protobuf::Descriptor* PBGameEvent_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  PBGameEvent_reflection_ = NULL;
 
 }  // namespace
 
@@ -71,6 +77,39 @@ void protobuf_AssignDesc_dbmodule_2ehxx() {
       -1,
       sizeof(PBGlobalMail),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBGlobalMail, _internal_metadata_));
+  PBGameEventParam_descriptor_ = file->message_type(2);
+  static const int PBGameEventParam_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBGameEventParam, param_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBGameEventParam, strparam_),
+  };
+  PBGameEventParam_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      PBGameEventParam_descriptor_,
+      PBGameEventParam::internal_default_instance(),
+      PBGameEventParam_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(PBGameEventParam),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBGameEventParam, _internal_metadata_));
+  PBGameEvent_descriptor_ = file->message_type(3);
+  static const int PBGameEvent_offsets_[5] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBGameEvent, event_id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBGameEvent, event_type_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBGameEvent, role_id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBGameEvent, create_time_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBGameEvent, event_param_),
+  };
+  PBGameEvent_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      PBGameEvent_descriptor_,
+      PBGameEvent::internal_default_instance(),
+      PBGameEvent_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(PBGameEvent),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBGameEvent, _internal_metadata_));
 }
 
 namespace {
@@ -88,6 +127,10 @@ void protobuf_RegisterTypes(const ::std::string&) {
       PBSavePlayer_descriptor_, PBSavePlayer::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       PBGlobalMail_descriptor_, PBGlobalMail::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      PBGameEventParam_descriptor_, PBGameEventParam::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      PBGameEvent_descriptor_, PBGameEvent::internal_default_instance());
 }
 
 }  // namespace
@@ -97,6 +140,10 @@ void protobuf_ShutdownFile_dbmodule_2ehxx() {
   delete PBSavePlayer_reflection_;
   PBGlobalMail_default_instance_.Shutdown();
   delete PBGlobalMail_reflection_;
+  PBGameEventParam_default_instance_.Shutdown();
+  delete PBGameEventParam_reflection_;
+  PBGameEvent_default_instance_.Shutdown();
+  delete PBGameEvent_reflection_;
 }
 
 void protobuf_InitDefaults_dbmodule_2ehxx_impl() {
@@ -106,8 +153,13 @@ void protobuf_InitDefaults_dbmodule_2ehxx_impl() {
   PBSavePlayer_default_instance_.DefaultConstruct();
   ::google::protobuf::internal::GetEmptyString();
   PBGlobalMail_default_instance_.DefaultConstruct();
+  ::google::protobuf::internal::GetEmptyString();
+  PBGameEventParam_default_instance_.DefaultConstruct();
+  PBGameEvent_default_instance_.DefaultConstruct();
   PBSavePlayer_default_instance_.get_mutable()->InitAsDefaultInstance();
   PBGlobalMail_default_instance_.get_mutable()->InitAsDefaultInstance();
+  PBGameEventParam_default_instance_.get_mutable()->InitAsDefaultInstance();
+  PBGameEvent_default_instance_.get_mutable()->InitAsDefaultInstance();
 }
 
 GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_InitDefaults_dbmodule_2ehxx_once_);
@@ -126,7 +178,12 @@ void protobuf_AddDesc_dbmodule_2ehxx_impl() {
     "ist\"\222\001\n\014PBGlobalMail\022\017\n\007mail_id\030\001 \001(\r\022\021\n"
     "\tmail_type\030\002 \001(\r\022\023\n\013create_time\030\003 \001(\r\022\022\n"
     "\nmail_title\030\004 \001(\t\022\021\n\tmail_body\030\005 \001(\t\022\"\n\t"
-    "mail_item\030\006 \001(\0132\017.PBMailItemListb\006proto3", 280);
+    "mail_item\030\006 \001(\0132\017.PBMailItemList\"3\n\020PBGa"
+    "meEventParam\022\r\n\005Param\030\001 \003(\r\022\020\n\010StrParam\030"
+    "\002 \003(\t\"\201\001\n\013PBGameEvent\022\020\n\010event_id\030\001 \001(\r\022"
+    "\022\n\nevent_type\030\002 \001(\r\022\017\n\007role_id\030\003 \001(\r\022\023\n\013"
+    "create_time\030\004 \001(\r\022&\n\013event_param\030\005 \001(\0132\021"
+    ".PBGameEventParamb\006proto3", 465);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "dbmodule.hxx", &protobuf_RegisterTypes);
   ::protobuf_AddDesc_common_2ehxx();
@@ -1242,6 +1299,901 @@ void PBGlobalMail::set_allocated_mail_item(::PBMailItemList* mail_item) {
 
 inline const PBGlobalMail* PBGlobalMail::internal_default_instance() {
   return &PBGlobalMail_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int PBGameEventParam::kParamFieldNumber;
+const int PBGameEventParam::kStrParamFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+PBGameEventParam::PBGameEventParam()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_dbmodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:PBGameEventParam)
+}
+
+void PBGameEventParam::InitAsDefaultInstance() {
+}
+
+PBGameEventParam::PBGameEventParam(const PBGameEventParam& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:PBGameEventParam)
+}
+
+void PBGameEventParam::SharedCtor() {
+  _cached_size_ = 0;
+}
+
+PBGameEventParam::~PBGameEventParam() {
+  // @@protoc_insertion_point(destructor:PBGameEventParam)
+  SharedDtor();
+}
+
+void PBGameEventParam::SharedDtor() {
+}
+
+void PBGameEventParam::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* PBGameEventParam::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return PBGameEventParam_descriptor_;
+}
+
+const PBGameEventParam& PBGameEventParam::default_instance() {
+  protobuf_InitDefaults_dbmodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<PBGameEventParam> PBGameEventParam_default_instance_;
+
+PBGameEventParam* PBGameEventParam::New(::google::protobuf::Arena* arena) const {
+  PBGameEventParam* n = new PBGameEventParam;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void PBGameEventParam::Clear() {
+// @@protoc_insertion_point(message_clear_start:PBGameEventParam)
+  param_.Clear();
+  strparam_.Clear();
+}
+
+bool PBGameEventParam::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:PBGameEventParam)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // repeated uint32 Param = 1;
+      case 1: {
+        if (tag == 10) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, this->mutable_param())));
+        } else if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 1, 10, input, this->mutable_param())));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_StrParam;
+        break;
+      }
+
+      // repeated string StrParam = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_StrParam:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->add_strparam()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->strparam(this->strparam_size() - 1).data(),
+            this->strparam(this->strparam_size() - 1).length(),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "PBGameEventParam.StrParam"));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_StrParam;
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:PBGameEventParam)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:PBGameEventParam)
+  return false;
+#undef DO_
+}
+
+void PBGameEventParam::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:PBGameEventParam)
+  // repeated uint32 Param = 1;
+  if (this->param_size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteTag(1, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    output->WriteVarint32(_param_cached_byte_size_);
+  }
+  for (int i = 0; i < this->param_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32NoTag(
+      this->param(i), output);
+  }
+
+  // repeated string StrParam = 2;
+  for (int i = 0; i < this->strparam_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->strparam(i).data(), this->strparam(i).length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "PBGameEventParam.StrParam");
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      2, this->strparam(i), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:PBGameEventParam)
+}
+
+::google::protobuf::uint8* PBGameEventParam::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:PBGameEventParam)
+  // repeated uint32 Param = 1;
+  if (this->param_size() > 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteTagToArray(
+      1,
+      ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED,
+      target);
+    target = ::google::protobuf::io::CodedOutputStream::WriteVarint32ToArray(
+      _param_cached_byte_size_, target);
+  }
+  for (int i = 0; i < this->param_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteUInt32NoTagToArray(this->param(i), target);
+  }
+
+  // repeated string StrParam = 2;
+  for (int i = 0; i < this->strparam_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->strparam(i).data(), this->strparam(i).length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "PBGameEventParam.StrParam");
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteStringToArray(2, this->strparam(i), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:PBGameEventParam)
+  return target;
+}
+
+size_t PBGameEventParam::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:PBGameEventParam)
+  size_t total_size = 0;
+
+  // repeated uint32 Param = 1;
+  {
+    size_t data_size = 0;
+    unsigned int count = this->param_size();
+    for (unsigned int i = 0; i < count; i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::
+        UInt32Size(this->param(i));
+    }
+    if (data_size > 0) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);
+    }
+    int cached_size = ::google::protobuf::internal::ToCachedSize(data_size);
+    GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+    _param_cached_byte_size_ = cached_size;
+    GOOGLE_SAFE_CONCURRENT_WRITES_END();
+    total_size += data_size;
+  }
+
+  // repeated string StrParam = 2;
+  total_size += 1 *
+      ::google::protobuf::internal::FromIntSize(this->strparam_size());
+  for (int i = 0; i < this->strparam_size(); i++) {
+    total_size += ::google::protobuf::internal::WireFormatLite::StringSize(
+      this->strparam(i));
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void PBGameEventParam::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:PBGameEventParam)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const PBGameEventParam* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const PBGameEventParam>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:PBGameEventParam)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:PBGameEventParam)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void PBGameEventParam::MergeFrom(const PBGameEventParam& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:PBGameEventParam)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void PBGameEventParam::UnsafeMergeFrom(const PBGameEventParam& from) {
+  GOOGLE_DCHECK(&from != this);
+  param_.UnsafeMergeFrom(from.param_);
+  strparam_.UnsafeMergeFrom(from.strparam_);
+}
+
+void PBGameEventParam::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:PBGameEventParam)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void PBGameEventParam::CopyFrom(const PBGameEventParam& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:PBGameEventParam)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool PBGameEventParam::IsInitialized() const {
+
+  return true;
+}
+
+void PBGameEventParam::Swap(PBGameEventParam* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void PBGameEventParam::InternalSwap(PBGameEventParam* other) {
+  param_.UnsafeArenaSwap(&other->param_);
+  strparam_.UnsafeArenaSwap(&other->strparam_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata PBGameEventParam::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = PBGameEventParam_descriptor_;
+  metadata.reflection = PBGameEventParam_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// PBGameEventParam
+
+// repeated uint32 Param = 1;
+int PBGameEventParam::param_size() const {
+  return param_.size();
+}
+void PBGameEventParam::clear_param() {
+  param_.Clear();
+}
+::google::protobuf::uint32 PBGameEventParam::param(int index) const {
+  // @@protoc_insertion_point(field_get:PBGameEventParam.Param)
+  return param_.Get(index);
+}
+void PBGameEventParam::set_param(int index, ::google::protobuf::uint32 value) {
+  param_.Set(index, value);
+  // @@protoc_insertion_point(field_set:PBGameEventParam.Param)
+}
+void PBGameEventParam::add_param(::google::protobuf::uint32 value) {
+  param_.Add(value);
+  // @@protoc_insertion_point(field_add:PBGameEventParam.Param)
+}
+const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+PBGameEventParam::param() const {
+  // @@protoc_insertion_point(field_list:PBGameEventParam.Param)
+  return param_;
+}
+::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+PBGameEventParam::mutable_param() {
+  // @@protoc_insertion_point(field_mutable_list:PBGameEventParam.Param)
+  return &param_;
+}
+
+// repeated string StrParam = 2;
+int PBGameEventParam::strparam_size() const {
+  return strparam_.size();
+}
+void PBGameEventParam::clear_strparam() {
+  strparam_.Clear();
+}
+const ::std::string& PBGameEventParam::strparam(int index) const {
+  // @@protoc_insertion_point(field_get:PBGameEventParam.StrParam)
+  return strparam_.Get(index);
+}
+::std::string* PBGameEventParam::mutable_strparam(int index) {
+  // @@protoc_insertion_point(field_mutable:PBGameEventParam.StrParam)
+  return strparam_.Mutable(index);
+}
+void PBGameEventParam::set_strparam(int index, const ::std::string& value) {
+  // @@protoc_insertion_point(field_set:PBGameEventParam.StrParam)
+  strparam_.Mutable(index)->assign(value);
+}
+void PBGameEventParam::set_strparam(int index, const char* value) {
+  strparam_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:PBGameEventParam.StrParam)
+}
+void PBGameEventParam::set_strparam(int index, const char* value, size_t size) {
+  strparam_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:PBGameEventParam.StrParam)
+}
+::std::string* PBGameEventParam::add_strparam() {
+  // @@protoc_insertion_point(field_add_mutable:PBGameEventParam.StrParam)
+  return strparam_.Add();
+}
+void PBGameEventParam::add_strparam(const ::std::string& value) {
+  strparam_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:PBGameEventParam.StrParam)
+}
+void PBGameEventParam::add_strparam(const char* value) {
+  strparam_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:PBGameEventParam.StrParam)
+}
+void PBGameEventParam::add_strparam(const char* value, size_t size) {
+  strparam_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:PBGameEventParam.StrParam)
+}
+const ::google::protobuf::RepeatedPtrField< ::std::string>&
+PBGameEventParam::strparam() const {
+  // @@protoc_insertion_point(field_list:PBGameEventParam.StrParam)
+  return strparam_;
+}
+::google::protobuf::RepeatedPtrField< ::std::string>*
+PBGameEventParam::mutable_strparam() {
+  // @@protoc_insertion_point(field_mutable_list:PBGameEventParam.StrParam)
+  return &strparam_;
+}
+
+inline const PBGameEventParam* PBGameEventParam::internal_default_instance() {
+  return &PBGameEventParam_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int PBGameEvent::kEventIdFieldNumber;
+const int PBGameEvent::kEventTypeFieldNumber;
+const int PBGameEvent::kRoleIdFieldNumber;
+const int PBGameEvent::kCreateTimeFieldNumber;
+const int PBGameEvent::kEventParamFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+PBGameEvent::PBGameEvent()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_dbmodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:PBGameEvent)
+}
+
+void PBGameEvent::InitAsDefaultInstance() {
+  event_param_ = const_cast< ::PBGameEventParam*>(
+      ::PBGameEventParam::internal_default_instance());
+}
+
+PBGameEvent::PBGameEvent(const PBGameEvent& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:PBGameEvent)
+}
+
+void PBGameEvent::SharedCtor() {
+  event_param_ = NULL;
+  ::memset(&event_id_, 0, reinterpret_cast<char*>(&create_time_) -
+    reinterpret_cast<char*>(&event_id_) + sizeof(create_time_));
+  _cached_size_ = 0;
+}
+
+PBGameEvent::~PBGameEvent() {
+  // @@protoc_insertion_point(destructor:PBGameEvent)
+  SharedDtor();
+}
+
+void PBGameEvent::SharedDtor() {
+  if (this != &PBGameEvent_default_instance_.get()) {
+    delete event_param_;
+  }
+}
+
+void PBGameEvent::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* PBGameEvent::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return PBGameEvent_descriptor_;
+}
+
+const PBGameEvent& PBGameEvent::default_instance() {
+  protobuf_InitDefaults_dbmodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<PBGameEvent> PBGameEvent_default_instance_;
+
+PBGameEvent* PBGameEvent::New(::google::protobuf::Arena* arena) const {
+  PBGameEvent* n = new PBGameEvent;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void PBGameEvent::Clear() {
+// @@protoc_insertion_point(message_clear_start:PBGameEvent)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(PBGameEvent, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<PBGameEvent*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&(first), 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(event_id_, create_time_);
+  if (GetArenaNoVirtual() == NULL && event_param_ != NULL) delete event_param_;
+  event_param_ = NULL;
+
+#undef ZR_HELPER_
+#undef ZR_
+
+}
+
+bool PBGameEvent::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:PBGameEvent)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 event_id = 1;
+      case 1: {
+        if (tag == 8) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &event_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_event_type;
+        break;
+      }
+
+      // optional uint32 event_type = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_event_type:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &event_type_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_role_id;
+        break;
+      }
+
+      // optional uint32 role_id = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_role_id:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &role_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(32)) goto parse_create_time;
+        break;
+      }
+
+      // optional uint32 create_time = 4;
+      case 4: {
+        if (tag == 32) {
+         parse_create_time:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &create_time_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(42)) goto parse_event_param;
+        break;
+      }
+
+      // optional .PBGameEventParam event_param = 5;
+      case 5: {
+        if (tag == 42) {
+         parse_event_param:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_event_param()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:PBGameEvent)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:PBGameEvent)
+  return false;
+#undef DO_
+}
+
+void PBGameEvent::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:PBGameEvent)
+  // optional uint32 event_id = 1;
+  if (this->event_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->event_id(), output);
+  }
+
+  // optional uint32 event_type = 2;
+  if (this->event_type() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->event_type(), output);
+  }
+
+  // optional uint32 role_id = 3;
+  if (this->role_id() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->role_id(), output);
+  }
+
+  // optional uint32 create_time = 4;
+  if (this->create_time() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->create_time(), output);
+  }
+
+  // optional .PBGameEventParam event_param = 5;
+  if (this->has_event_param()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      5, *this->event_param_, output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:PBGameEvent)
+}
+
+::google::protobuf::uint8* PBGameEvent::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:PBGameEvent)
+  // optional uint32 event_id = 1;
+  if (this->event_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->event_id(), target);
+  }
+
+  // optional uint32 event_type = 2;
+  if (this->event_type() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->event_type(), target);
+  }
+
+  // optional uint32 role_id = 3;
+  if (this->role_id() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->role_id(), target);
+  }
+
+  // optional uint32 create_time = 4;
+  if (this->create_time() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->create_time(), target);
+  }
+
+  // optional .PBGameEventParam event_param = 5;
+  if (this->has_event_param()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageNoVirtualToArray(
+        5, *this->event_param_, false, target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:PBGameEvent)
+  return target;
+}
+
+size_t PBGameEvent::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:PBGameEvent)
+  size_t total_size = 0;
+
+  // optional uint32 event_id = 1;
+  if (this->event_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->event_id());
+  }
+
+  // optional uint32 event_type = 2;
+  if (this->event_type() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->event_type());
+  }
+
+  // optional uint32 role_id = 3;
+  if (this->role_id() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->role_id());
+  }
+
+  // optional uint32 create_time = 4;
+  if (this->create_time() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->create_time());
+  }
+
+  // optional .PBGameEventParam event_param = 5;
+  if (this->has_event_param()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->event_param_);
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void PBGameEvent::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:PBGameEvent)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const PBGameEvent* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const PBGameEvent>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:PBGameEvent)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:PBGameEvent)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void PBGameEvent::MergeFrom(const PBGameEvent& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:PBGameEvent)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void PBGameEvent::UnsafeMergeFrom(const PBGameEvent& from) {
+  GOOGLE_DCHECK(&from != this);
+  if (from.event_id() != 0) {
+    set_event_id(from.event_id());
+  }
+  if (from.event_type() != 0) {
+    set_event_type(from.event_type());
+  }
+  if (from.role_id() != 0) {
+    set_role_id(from.role_id());
+  }
+  if (from.create_time() != 0) {
+    set_create_time(from.create_time());
+  }
+  if (from.has_event_param()) {
+    mutable_event_param()->::PBGameEventParam::MergeFrom(from.event_param());
+  }
+}
+
+void PBGameEvent::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:PBGameEvent)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void PBGameEvent::CopyFrom(const PBGameEvent& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:PBGameEvent)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool PBGameEvent::IsInitialized() const {
+
+  return true;
+}
+
+void PBGameEvent::Swap(PBGameEvent* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void PBGameEvent::InternalSwap(PBGameEvent* other) {
+  std::swap(event_id_, other->event_id_);
+  std::swap(event_type_, other->event_type_);
+  std::swap(role_id_, other->role_id_);
+  std::swap(create_time_, other->create_time_);
+  std::swap(event_param_, other->event_param_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata PBGameEvent::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = PBGameEvent_descriptor_;
+  metadata.reflection = PBGameEvent_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// PBGameEvent
+
+// optional uint32 event_id = 1;
+void PBGameEvent::clear_event_id() {
+  event_id_ = 0u;
+}
+::google::protobuf::uint32 PBGameEvent::event_id() const {
+  // @@protoc_insertion_point(field_get:PBGameEvent.event_id)
+  return event_id_;
+}
+void PBGameEvent::set_event_id(::google::protobuf::uint32 value) {
+  
+  event_id_ = value;
+  // @@protoc_insertion_point(field_set:PBGameEvent.event_id)
+}
+
+// optional uint32 event_type = 2;
+void PBGameEvent::clear_event_type() {
+  event_type_ = 0u;
+}
+::google::protobuf::uint32 PBGameEvent::event_type() const {
+  // @@protoc_insertion_point(field_get:PBGameEvent.event_type)
+  return event_type_;
+}
+void PBGameEvent::set_event_type(::google::protobuf::uint32 value) {
+  
+  event_type_ = value;
+  // @@protoc_insertion_point(field_set:PBGameEvent.event_type)
+}
+
+// optional uint32 role_id = 3;
+void PBGameEvent::clear_role_id() {
+  role_id_ = 0u;
+}
+::google::protobuf::uint32 PBGameEvent::role_id() const {
+  // @@protoc_insertion_point(field_get:PBGameEvent.role_id)
+  return role_id_;
+}
+void PBGameEvent::set_role_id(::google::protobuf::uint32 value) {
+  
+  role_id_ = value;
+  // @@protoc_insertion_point(field_set:PBGameEvent.role_id)
+}
+
+// optional uint32 create_time = 4;
+void PBGameEvent::clear_create_time() {
+  create_time_ = 0u;
+}
+::google::protobuf::uint32 PBGameEvent::create_time() const {
+  // @@protoc_insertion_point(field_get:PBGameEvent.create_time)
+  return create_time_;
+}
+void PBGameEvent::set_create_time(::google::protobuf::uint32 value) {
+  
+  create_time_ = value;
+  // @@protoc_insertion_point(field_set:PBGameEvent.create_time)
+}
+
+// optional .PBGameEventParam event_param = 5;
+bool PBGameEvent::has_event_param() const {
+  return this != internal_default_instance() && event_param_ != NULL;
+}
+void PBGameEvent::clear_event_param() {
+  if (GetArenaNoVirtual() == NULL && event_param_ != NULL) delete event_param_;
+  event_param_ = NULL;
+}
+const ::PBGameEventParam& PBGameEvent::event_param() const {
+  // @@protoc_insertion_point(field_get:PBGameEvent.event_param)
+  return event_param_ != NULL ? *event_param_
+                         : *::PBGameEventParam::internal_default_instance();
+}
+::PBGameEventParam* PBGameEvent::mutable_event_param() {
+  
+  if (event_param_ == NULL) {
+    event_param_ = new ::PBGameEventParam;
+  }
+  // @@protoc_insertion_point(field_mutable:PBGameEvent.event_param)
+  return event_param_;
+}
+::PBGameEventParam* PBGameEvent::release_event_param() {
+  // @@protoc_insertion_point(field_release:PBGameEvent.event_param)
+  
+  ::PBGameEventParam* temp = event_param_;
+  event_param_ = NULL;
+  return temp;
+}
+void PBGameEvent::set_allocated_event_param(::PBGameEventParam* event_param) {
+  delete event_param_;
+  event_param_ = event_param;
+  if (event_param) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:PBGameEvent.event_param)
+}
+
+inline const PBGameEvent* PBGameEvent::internal_default_instance() {
+  return &PBGameEvent_default_instance_.get();
 }
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 

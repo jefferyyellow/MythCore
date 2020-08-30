@@ -229,3 +229,16 @@ BEGIN
 END
 ;;
 DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `SaveGameEvent`;
+DELIMITER ;;
+CREATE PROCEDURE `SaveGameEvent`(EventType tinyint unsigned,
+							RoleID int unsigned,
+							CreateTime int unsigned,
+							EventParam blob)
+BEGIN
+	insert into GlobalMail(role_id, event_type, create_time, event_param)
+	values(RoleID, EventType, CreateTime, EventParam);
+END
+;;
+DELIMITER ;

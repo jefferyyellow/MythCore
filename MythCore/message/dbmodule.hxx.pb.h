@@ -36,6 +36,8 @@ void protobuf_InitDefaults_dbmodule_2ehxx();
 void protobuf_AssignDesc_dbmodule_2ehxx();
 void protobuf_ShutdownFile_dbmodule_2ehxx();
 
+class PBGameEvent;
+class PBGameEventParam;
 class PBGlobalMail;
 class PBSavePlayer;
 
@@ -281,6 +283,233 @@ class PBGlobalMail : public ::google::protobuf::Message /* @@protoc_insertion_po
   void InitAsDefaultInstance();
 };
 extern ::google::protobuf::internal::ExplicitlyConstructed<PBGlobalMail> PBGlobalMail_default_instance_;
+
+// -------------------------------------------------------------------
+
+class PBGameEventParam : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PBGameEventParam) */ {
+ public:
+  PBGameEventParam();
+  virtual ~PBGameEventParam();
+
+  PBGameEventParam(const PBGameEventParam& from);
+
+  inline PBGameEventParam& operator=(const PBGameEventParam& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBGameEventParam& default_instance();
+
+  static const PBGameEventParam* internal_default_instance();
+
+  void Swap(PBGameEventParam* other);
+
+  // implements Message ----------------------------------------------
+
+  inline PBGameEventParam* New() const { return New(NULL); }
+
+  PBGameEventParam* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PBGameEventParam& from);
+  void MergeFrom(const PBGameEventParam& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(PBGameEventParam* other);
+  void UnsafeMergeFrom(const PBGameEventParam& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated uint32 Param = 1;
+  int param_size() const;
+  void clear_param();
+  static const int kParamFieldNumber = 1;
+  ::google::protobuf::uint32 param(int index) const;
+  void set_param(int index, ::google::protobuf::uint32 value);
+  void add_param(::google::protobuf::uint32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+      param() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+      mutable_param();
+
+  // repeated string StrParam = 2;
+  int strparam_size() const;
+  void clear_strparam();
+  static const int kStrParamFieldNumber = 2;
+  const ::std::string& strparam(int index) const;
+  ::std::string* mutable_strparam(int index);
+  void set_strparam(int index, const ::std::string& value);
+  void set_strparam(int index, const char* value);
+  void set_strparam(int index, const char* value, size_t size);
+  ::std::string* add_strparam();
+  void add_strparam(const ::std::string& value);
+  void add_strparam(const char* value);
+  void add_strparam(const char* value, size_t size);
+  const ::google::protobuf::RepeatedPtrField< ::std::string>& strparam() const;
+  ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_strparam();
+
+  // @@protoc_insertion_point(class_scope:PBGameEventParam)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > param_;
+  mutable int _param_cached_byte_size_;
+  ::google::protobuf::RepeatedPtrField< ::std::string> strparam_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_dbmodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_dbmodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_dbmodule_2ehxx();
+  friend void protobuf_ShutdownFile_dbmodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<PBGameEventParam> PBGameEventParam_default_instance_;
+
+// -------------------------------------------------------------------
+
+class PBGameEvent : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PBGameEvent) */ {
+ public:
+  PBGameEvent();
+  virtual ~PBGameEvent();
+
+  PBGameEvent(const PBGameEvent& from);
+
+  inline PBGameEvent& operator=(const PBGameEvent& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBGameEvent& default_instance();
+
+  static const PBGameEvent* internal_default_instance();
+
+  void Swap(PBGameEvent* other);
+
+  // implements Message ----------------------------------------------
+
+  inline PBGameEvent* New() const { return New(NULL); }
+
+  PBGameEvent* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PBGameEvent& from);
+  void MergeFrom(const PBGameEvent& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(PBGameEvent* other);
+  void UnsafeMergeFrom(const PBGameEvent& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 event_id = 1;
+  void clear_event_id();
+  static const int kEventIdFieldNumber = 1;
+  ::google::protobuf::uint32 event_id() const;
+  void set_event_id(::google::protobuf::uint32 value);
+
+  // optional uint32 event_type = 2;
+  void clear_event_type();
+  static const int kEventTypeFieldNumber = 2;
+  ::google::protobuf::uint32 event_type() const;
+  void set_event_type(::google::protobuf::uint32 value);
+
+  // optional uint32 role_id = 3;
+  void clear_role_id();
+  static const int kRoleIdFieldNumber = 3;
+  ::google::protobuf::uint32 role_id() const;
+  void set_role_id(::google::protobuf::uint32 value);
+
+  // optional uint32 create_time = 4;
+  void clear_create_time();
+  static const int kCreateTimeFieldNumber = 4;
+  ::google::protobuf::uint32 create_time() const;
+  void set_create_time(::google::protobuf::uint32 value);
+
+  // optional .PBGameEventParam event_param = 5;
+  bool has_event_param() const;
+  void clear_event_param();
+  static const int kEventParamFieldNumber = 5;
+  const ::PBGameEventParam& event_param() const;
+  ::PBGameEventParam* mutable_event_param();
+  ::PBGameEventParam* release_event_param();
+  void set_allocated_event_param(::PBGameEventParam* event_param);
+
+  // @@protoc_insertion_point(class_scope:PBGameEvent)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PBGameEventParam* event_param_;
+  ::google::protobuf::uint32 event_id_;
+  ::google::protobuf::uint32 event_type_;
+  ::google::protobuf::uint32 role_id_;
+  ::google::protobuf::uint32 create_time_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_dbmodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_dbmodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_dbmodule_2ehxx();
+  friend void protobuf_ShutdownFile_dbmodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<PBGameEvent> PBGameEvent_default_instance_;
 
 // ===================================================================
 
@@ -586,7 +815,205 @@ inline void PBGlobalMail::set_allocated_mail_item(::PBMailItemList* mail_item) {
 inline const PBGlobalMail* PBGlobalMail::internal_default_instance() {
   return &PBGlobalMail_default_instance_.get();
 }
+// -------------------------------------------------------------------
+
+// PBGameEventParam
+
+// repeated uint32 Param = 1;
+inline int PBGameEventParam::param_size() const {
+  return param_.size();
+}
+inline void PBGameEventParam::clear_param() {
+  param_.Clear();
+}
+inline ::google::protobuf::uint32 PBGameEventParam::param(int index) const {
+  // @@protoc_insertion_point(field_get:PBGameEventParam.Param)
+  return param_.Get(index);
+}
+inline void PBGameEventParam::set_param(int index, ::google::protobuf::uint32 value) {
+  param_.Set(index, value);
+  // @@protoc_insertion_point(field_set:PBGameEventParam.Param)
+}
+inline void PBGameEventParam::add_param(::google::protobuf::uint32 value) {
+  param_.Add(value);
+  // @@protoc_insertion_point(field_add:PBGameEventParam.Param)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+PBGameEventParam::param() const {
+  // @@protoc_insertion_point(field_list:PBGameEventParam.Param)
+  return param_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+PBGameEventParam::mutable_param() {
+  // @@protoc_insertion_point(field_mutable_list:PBGameEventParam.Param)
+  return &param_;
+}
+
+// repeated string StrParam = 2;
+inline int PBGameEventParam::strparam_size() const {
+  return strparam_.size();
+}
+inline void PBGameEventParam::clear_strparam() {
+  strparam_.Clear();
+}
+inline const ::std::string& PBGameEventParam::strparam(int index) const {
+  // @@protoc_insertion_point(field_get:PBGameEventParam.StrParam)
+  return strparam_.Get(index);
+}
+inline ::std::string* PBGameEventParam::mutable_strparam(int index) {
+  // @@protoc_insertion_point(field_mutable:PBGameEventParam.StrParam)
+  return strparam_.Mutable(index);
+}
+inline void PBGameEventParam::set_strparam(int index, const ::std::string& value) {
+  // @@protoc_insertion_point(field_set:PBGameEventParam.StrParam)
+  strparam_.Mutable(index)->assign(value);
+}
+inline void PBGameEventParam::set_strparam(int index, const char* value) {
+  strparam_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:PBGameEventParam.StrParam)
+}
+inline void PBGameEventParam::set_strparam(int index, const char* value, size_t size) {
+  strparam_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:PBGameEventParam.StrParam)
+}
+inline ::std::string* PBGameEventParam::add_strparam() {
+  // @@protoc_insertion_point(field_add_mutable:PBGameEventParam.StrParam)
+  return strparam_.Add();
+}
+inline void PBGameEventParam::add_strparam(const ::std::string& value) {
+  strparam_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:PBGameEventParam.StrParam)
+}
+inline void PBGameEventParam::add_strparam(const char* value) {
+  strparam_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:PBGameEventParam.StrParam)
+}
+inline void PBGameEventParam::add_strparam(const char* value, size_t size) {
+  strparam_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:PBGameEventParam.StrParam)
+}
+inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
+PBGameEventParam::strparam() const {
+  // @@protoc_insertion_point(field_list:PBGameEventParam.StrParam)
+  return strparam_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::std::string>*
+PBGameEventParam::mutable_strparam() {
+  // @@protoc_insertion_point(field_mutable_list:PBGameEventParam.StrParam)
+  return &strparam_;
+}
+
+inline const PBGameEventParam* PBGameEventParam::internal_default_instance() {
+  return &PBGameEventParam_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
+// PBGameEvent
+
+// optional uint32 event_id = 1;
+inline void PBGameEvent::clear_event_id() {
+  event_id_ = 0u;
+}
+inline ::google::protobuf::uint32 PBGameEvent::event_id() const {
+  // @@protoc_insertion_point(field_get:PBGameEvent.event_id)
+  return event_id_;
+}
+inline void PBGameEvent::set_event_id(::google::protobuf::uint32 value) {
+  
+  event_id_ = value;
+  // @@protoc_insertion_point(field_set:PBGameEvent.event_id)
+}
+
+// optional uint32 event_type = 2;
+inline void PBGameEvent::clear_event_type() {
+  event_type_ = 0u;
+}
+inline ::google::protobuf::uint32 PBGameEvent::event_type() const {
+  // @@protoc_insertion_point(field_get:PBGameEvent.event_type)
+  return event_type_;
+}
+inline void PBGameEvent::set_event_type(::google::protobuf::uint32 value) {
+  
+  event_type_ = value;
+  // @@protoc_insertion_point(field_set:PBGameEvent.event_type)
+}
+
+// optional uint32 role_id = 3;
+inline void PBGameEvent::clear_role_id() {
+  role_id_ = 0u;
+}
+inline ::google::protobuf::uint32 PBGameEvent::role_id() const {
+  // @@protoc_insertion_point(field_get:PBGameEvent.role_id)
+  return role_id_;
+}
+inline void PBGameEvent::set_role_id(::google::protobuf::uint32 value) {
+  
+  role_id_ = value;
+  // @@protoc_insertion_point(field_set:PBGameEvent.role_id)
+}
+
+// optional uint32 create_time = 4;
+inline void PBGameEvent::clear_create_time() {
+  create_time_ = 0u;
+}
+inline ::google::protobuf::uint32 PBGameEvent::create_time() const {
+  // @@protoc_insertion_point(field_get:PBGameEvent.create_time)
+  return create_time_;
+}
+inline void PBGameEvent::set_create_time(::google::protobuf::uint32 value) {
+  
+  create_time_ = value;
+  // @@protoc_insertion_point(field_set:PBGameEvent.create_time)
+}
+
+// optional .PBGameEventParam event_param = 5;
+inline bool PBGameEvent::has_event_param() const {
+  return this != internal_default_instance() && event_param_ != NULL;
+}
+inline void PBGameEvent::clear_event_param() {
+  if (GetArenaNoVirtual() == NULL && event_param_ != NULL) delete event_param_;
+  event_param_ = NULL;
+}
+inline const ::PBGameEventParam& PBGameEvent::event_param() const {
+  // @@protoc_insertion_point(field_get:PBGameEvent.event_param)
+  return event_param_ != NULL ? *event_param_
+                         : *::PBGameEventParam::internal_default_instance();
+}
+inline ::PBGameEventParam* PBGameEvent::mutable_event_param() {
+  
+  if (event_param_ == NULL) {
+    event_param_ = new ::PBGameEventParam;
+  }
+  // @@protoc_insertion_point(field_mutable:PBGameEvent.event_param)
+  return event_param_;
+}
+inline ::PBGameEventParam* PBGameEvent::release_event_param() {
+  // @@protoc_insertion_point(field_release:PBGameEvent.event_param)
+  
+  ::PBGameEventParam* temp = event_param_;
+  event_param_ = NULL;
+  return temp;
+}
+inline void PBGameEvent::set_allocated_event_param(::PBGameEventParam* event_param) {
+  delete event_param_;
+  event_param_ = event_param;
+  if (event_param) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:PBGameEvent.event_param)
+}
+
+inline const PBGameEvent* PBGameEvent::internal_default_instance() {
+  return &PBGameEvent_default_instance_.get();
+}
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 

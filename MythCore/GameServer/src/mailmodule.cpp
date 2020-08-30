@@ -413,3 +413,76 @@ void CMailModule::giveAllPlayerGlobalMail(CMail& rMail)
 		pPlayer->getInteractiveUnit().setGlobalMailTime((uint)rMail.getCreateTime());
 	}
 }
+
+void CMailModule::gameEvent(uint nRoleID, EmGameEventType eType, PBGameEvent& rGameEvent)
+{
+	rGameEvent.set_role_id(nRoleID);
+	rGameEvent.set_event_type(eType);
+	rGameEvent.set_create_time((google::protobuf::uint32)CTimeManager::Inst()->getCurrTime());
+
+	CDBModule::Inst()->pushDBTask(nRoleID, emSessionType_SaveGameEvent, nRoleID, 0, &rGameEvent);
+}
+
+void CMailModule::loadGameEvent(uint nRoleID, uint nMaxEventID)
+{
+	// 如果事件过多一次性加载不完的话，一次性加载500，平均每条event_id有130多个字节左右
+	char* pSql = "select event_id, event_type, event_param from GameEvent where role_id=%d and event_id > %d ordery by event_id asc limit %d";
+	CDBModule::Inst()->pushDBTask(nRoleID, emSessionType_LoadGameEvent, nRoleID, 0, pSql, nRoleID, nMaxEventID, MAX_GAME_EVENT_LOAD);
+}
+
+void CMailModule::onLoadGameEvent(CDBResponse& rResponse)
+{
+	if (SUCCESS != rResponse.mSqlResult)
+	{
+		return;
+	}
+
+	uint nMaxEventID = 0;
+	uint nEventID = 0;
+	uint nRoleID = 0;
+	EmGameEventType eType = emGameEvent_None;
+	PBGameEventParam tParam;
+	for (int i = 0; i < rResponse.mRowNum; ++ i)
+	{
+		nEventID = rResponse.getUInt();
+		nRoleID = rResponse.getUInt();
+		eType = (EmGameEventType)rResponse.getByte();
+
+		tParam.ParseFromArray(rResponse.getValue(), rResponse.getLength());
+		rResponse.next();
+		processGameEvent(nEventID, nRoleID, eType, tParam);
+		if (nMaxEventID < nEventID)
+		{
+			nMaxEventID = nEventID;
+		}
+	}
+
+	// 如果有一次性的加载条数，说明可能还有
+	if (MAX_GAME_EVENT_LOAD == rResponse.mRowNum)
+	{
+		loadGameEvent(nRoleID, nMaxEventID);
+	}
+	else
+	{
+		// 加载完成
+	}
+}
+
+void CMailModule::processGameEvent(uint nEventID, uint nRoleID, EmGameEventType eType, PBGameEventParam& rParam)
+{
+	switch (eType)
+	{
+		case emGameEvent_None:
+		{
+			deleteGameEvent(nEventID, nRoleID);
+			break;
+		}
+	}
+}
+
+void CMailModule::deleteGameEvent(uint nEventID, uint nRoleID)
+{
+	char* pSql = "delete from GameEvent where event_id=%d";
+	CDBModule::Inst()->pushDBTask(nRoleID, emSessionType_DeleteGameEvent, 0, 0, pSql, nEventID);
+
+}

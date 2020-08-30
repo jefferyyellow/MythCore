@@ -136,8 +136,8 @@ CREATE TABLE `GlobalMail` (
 DROP TABLE IF EXISTS `GameEvent`;
 CREATE TABLE `GameEvent` (
   `event_id`				int(11) UNSIGNED			NOT NULL	AUTO_INCREMENT,
-  `event_type`				tinyint(11) UNSIGNED		NOT NULL,
   `role_id`					int(11) UNSIGNED			NOT NULL,
+  `event_type`				tinyint(11) UNSIGNED		NOT NULL,
   `create_time`				int(11) UNSIGNED			NOT NULL,
   `event_param`				blob						DEFAULT NULL,
   PRIMARY KEY  (`event_id`)

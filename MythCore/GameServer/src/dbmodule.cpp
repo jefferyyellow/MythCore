@@ -188,6 +188,11 @@ void CDBModule::onDBSession()
 			CMailModule::Inst()->onLoadMaxGlobalMailID(mDBResponse);
 			break;
 		}
+		case emSessionType_LoadGameEvent:
+		{
+			CMailModule::Inst()->onLoadGameEvent(mDBResponse);
+			break;
+		}
 	}
 }
 

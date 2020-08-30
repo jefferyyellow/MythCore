@@ -10,6 +10,8 @@ class CEntityPlayer;
 class CMail;
 class CDBResponse;
 class PBMailItemList;
+class PBGameEvent;
+class PBGameEventParam;
 class CMailModule : public CLogicModule, public CSingleton<CMailModule>
 {
 	friend class CSingleton<CMailModule>;
@@ -46,6 +48,7 @@ public:
 	virtual	void onTimer(unsigned int nTickOffset);
 
 public:
+	/// --- 邮件 ---
 	/// 加载最大的邮件ID
 	void		loadMaxMailID();
 	/// 加载最大的邮件ID回调
@@ -85,8 +88,19 @@ public:
 	void		deleteGlobalMail2DB(uint nMailID);
 	/// 给玩家发全局邮件
 	void		giveAllGlobalMail(CEntityPlayer& rPlayer);
-	/// 给所以的玩家发全局邮件
+	/// 给所有的玩家发全局邮件
 	void		giveAllPlayerGlobalMail(CMail& rMail);
+	/// --- 邮件 ---
+	
+
+	/// --- 离线事件 ---
+	// 给某个玩家一个离线事件
+	void		gameEvent(uint nRoleID, EmGameEventType eType, PBGameEvent& rGameEvent);
+	void		loadGameEvent(uint nRoleID, uint nMaxEventID);
+	void		onLoadGameEvent(CDBResponse& rResponse);
+	void		processGameEvent(uint nEventID, uint nRoleID, EmGameEventType eType, PBGameEventParam& rParam);
+	void		deleteGameEvent(uint nEventID, uint nRoleID);
+	/// --- 离线事件 ---
 private:
 	/// 玩家邮件ID生成器
 	uint		mPlayerMailID;

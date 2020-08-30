@@ -9,6 +9,7 @@
 #define MAX_MAIL_TITLE		64			// 邮件标题长度
 #define MAX_MAIL_BODY		300			// 邮件内容长度
 #define MAX_MAIL_ITEM		4			// 邮件道具数量
+#define MAX_GAME_EVENT_LOAD	500			// 每次加载的GameEvent数量
 
 enum EmMailType
 {
@@ -138,5 +139,11 @@ private:
 	char			mMailBody[MAX_MAIL_BODY];
 	/// 邮件道具
 	CMailItem		mMailItem[MAX_MAIL_ITEM];
+};
+
+
+enum EmGameEventType
+{
+	emGameEvent_None			= 0,		// 无类型
 };
 #endif
