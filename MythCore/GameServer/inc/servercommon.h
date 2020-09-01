@@ -30,4 +30,6 @@ using namespace tinyxml2;
 #define PLAT_LOG_CONTENT_LEN		1024					// 平台日志的内容长度
 #define WEB_URL_LEN					128						// Web URL长度
 #define WEB_POST_DATA_LEN			256						// Web Post数据的长度
+#define RETURN_DATA_LENGTH			1024					// Web请求返回数据长度
+
 

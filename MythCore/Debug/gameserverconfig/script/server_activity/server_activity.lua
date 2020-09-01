@@ -16,6 +16,11 @@ ServerActivity_GlobalClearPlayerDataFunc = {
 	[EmSvrActType.CumRecharge] = CumulativeRecharge_clearPlayerData
 }
 
+-- 得到对应活动类型的配置文件，按类型
+ServerActivity_GlobalGetConfigFunc = {
+	[EmSvrActType.CumRecharge] = CumulativeRecharge_getConfigName
+}
+
 -- 消息出现函数注册表，按ID
 GlobalSvrActMsgFunc = {
 	[0x1C02] = CumulativeRecharge_onMsgGetCumulRechargePrizeRequest
@@ -46,6 +51,16 @@ function ServerActivity_ClearPlayerData(nActivityType, nActivityID, rPlayer)
 	end
 
 	ServerActivity_GlobalClearPlayerDataFunc[nActivityType](nActivityID, rPlayer)
+end
+
+
+-- 按类型调用得到活动配置文件的函数
+function ServerActivity_GetConfig(nActivityType)
+	if nil == ServerActivity_GlobalGetConfigFunc[nActivityType] then
+		return ""
+	end
+
+	return ServerActivity_GlobalGetConfigFunc[nActivityType]()
 end
 
 -- 按消息ID调用消息处理函数

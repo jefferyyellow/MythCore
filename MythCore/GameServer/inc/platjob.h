@@ -53,6 +53,8 @@ public:
 	static		void RedisConnectHandle(const struct redisAsyncContext*, int status);
 	static		void RedisDisconnectHandle(const struct redisAsyncContext*, int status);
 	static		void CommandCallBack(redisAsyncContext*, void *reply, void *privdata);
+	/// Web处理的回调函数
+	static void	onURLCompleteCallBack(CURLSession* pURLSession);
 
 private:
 	CSelectModel*	mSelectModel;	// Select模型

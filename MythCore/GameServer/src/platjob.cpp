@@ -6,7 +6,7 @@
 #include "jobmanager.h"
 #include "scenejob.h"
 #include "timemanager.h"
-void	sendPlatWebRequest(const char* pURL, const char* pData, EmHttpType eHttpType, bool bNeedBack)
+void sendPlatWebRequest(const char* pURL, const char* pData, EmHttpType eHttpType, bool bNeedBack)
 {
 	CIMPlatWebRequest* pPlatWebRequest = static_cast<CIMPlatWebRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_PLAT_WEB));
 	if (NULL == pPlatWebRequest)
@@ -14,15 +14,21 @@ void	sendPlatWebRequest(const char* pURL, const char* pData, EmHttpType eHttpTyp
 		return;
 	}
 
-	strncpy(pPlatWebRequest->mURL, pURL, sizeof(pPlatWebRequest->mURL) - 1);
+	snprintf(pPlatWebRequest->mURL, MAX_URL_LENGTH - 1, "%s%s", "http://106.13.146.178/", pURL);
 	if (NULL == pData)
 	{
 		strncpy(pPlatWebRequest->mPostData, "", sizeof(pPlatWebRequest->mPostData) - 1);
-
 	}
 	else
 	{
-		strncpy(pPlatWebRequest->mPostData, pData, sizeof(pPlatWebRequest->mPostData) - 1);
+		if (eHttpType & emHttpTypeFile)
+		{
+			snprintf(pPlatWebRequest->mPostData, WEB_POST_DATA_LEN - 1, "%s%s", "./platfile/", pData);
+		}
+		else
+		{
+			strncpy(pPlatWebRequest->mPostData, pData, sizeof(pPlatWebRequest->mPostData) - 1);
+		}
 	}
 	pPlatWebRequest->mHttpType = eHttpType;
 	pPlatWebRequest->mNeedCallBack = bNeedBack;
@@ -37,6 +43,8 @@ bool CPlatJob::initAll(const char* pRedisIP, int nRedisPort, int nSocketNum, int
 	{
 		return false;
 	}
+	mURLHandle->setCompleteCallBack(onURLCompleteCallBack);
+
 	bool bResult = mURLHandle->initCURL(100);
 	if (!bResult)
 	{
@@ -120,7 +128,7 @@ void CPlatJob::doing(int uParam)
 		{
 			case IM_REQUEST_PLAT_LOG:
 			{
-				onPlatLogRequest(pIMMsg);
+				//onPlatLogRequest(pIMMsg);
 				break;
 			}
 			case IM_REQUEST_PLAT_WEB:
@@ -357,4 +365,21 @@ void CPlatJob::RedisDisconnectHandle(const struct redisAsyncContext*, int status
 void CPlatJob::CommandCallBack(redisAsyncContext*, void *reply, void *privdata)
 {
 
+}
+
+/// Web处理的回调函数
+void CPlatJob::onURLCompleteCallBack(CURLSession* pURLSession)
+{
+	if (NULL == pURLSession)
+	{
+		return;
+	}
+	CIMPlatWebResponse* pPlatWebResponse = static_cast<CIMPlatWebResponse*>(CInternalMsgPool::Inst()->allocMsg(IM_RESPONSE_PLAT_WEB));
+	if (NULL == pPlatWebResponse)
+	{
+		return;
+	}
+	pPlatWebResponse->mHttpType = pURLSession->getHttpType();
+	strncpy(pPlatWebResponse->mReturnData, pURLSession->getReturnData(), WEB_POST_DATA_LEN - 1);
+	CJobManager::Inst()->pushTask(emJobTaskType_Scene, pPlatWebResponse);
 }

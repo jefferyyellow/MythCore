@@ -21,6 +21,7 @@ private:
 	CBlockMemory<CIMLocalLogRequest, 100, 100>			mLocalLogRequestPool;
 	CBlockMemory<CIMPlatLogRequest, 100, 100>			mPlatLogRequestPool;
 	CBlockMemory<CIMPlatWebRequest, 100, 100>			mPlatWebRequestPool;
+	CBlockMemory<CIMPlatWebResponse, 100, 100>			mPlatWebResponsePool;
 
 	Myth::CSimpleLock								mLock;
 };

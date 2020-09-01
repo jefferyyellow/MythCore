@@ -3,10 +3,10 @@
 #include "curl.h"
 #include <vector>
 #define MAX_URL_LENGTH 256
-#define RETURN_DATA_LENGTH 1024
 
 enum EmHttpType
 { 
+	emHttpTypePost	= 0,		// 默认为post请求
 	emHttpTypeGet	= (1 << 0),	// 使用get方式
 	emHttpTypeFile	= (1 << 1),	// 获取文件
 	emHttpTypeSSL	= (1 << 2),	// SSL访问方式（https)
@@ -54,7 +54,7 @@ public:
 
 
 	char*			getReturnData(){return mReturnData;}
-	void			setReturnData(char* pReturnData)
+	void			setReturnData(const char* pReturnData)
 	{
 		if (NULL == mReturnData)
 		{

@@ -9,8 +9,10 @@ enum EmInternalMsgID
 	IM_REQUEST_LOCAL_LOG				= 1,			// 玩家本地日志请求
 	IM_REQUEST_PLAT_LOG					= 2,			// 平台日志请求
 	IM_REQUEST_PLAT_WEB					= 3,			// 平台Web请求
+	IM_RESPONSE_PLAT_WEB				= 4,			// 平台web回应
 };
 
+#define RETURN_DATA_LENGTH 1024
 
 // 为了和服务器与服务器之间，服务器与客户端之间的消息相区分
 // 内部消息都已CIM开头
@@ -46,13 +48,22 @@ public:
 	char		mContent[PLAT_LOG_CONTENT_LEN];			// 日志内容
 };
 
+
 // 平台Web请求
 class CIMPlatWebRequest : public CInternalMsg
 {
 public:
+	int			mHttpType;								// Http类型
 	char		mURL[WEB_URL_LEN];						// URL
 	char		mPostData[WEB_POST_DATA_LEN];			// Post数据的长度
 	bool		mNeedCallBack;							// 是否需要回调
+};
+
+// 平台web请求回应
+class CIMPlatWebResponse : public CInternalMsg
+{
+public:
 	int			mHttpType;								// Http类型
+	char		mReturnData[RETURN_DATA_LENGTH];		// Post数据的长度
 };
 #endif

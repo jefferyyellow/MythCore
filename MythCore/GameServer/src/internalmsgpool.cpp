@@ -22,6 +22,11 @@ CInternalMsg* CInternalMsgPool::allocMsg(int nMessageID)
 			pMsg = static_cast<CInternalMsg*>(mPlatWebRequestPool.allocate());
 			break;
 		}
+		case IM_RESPONSE_PLAT_WEB:
+		{
+			pMsg = static_cast<CInternalMsg*>(mPlatWebResponsePool.allocate());
+			break;
+		}
 		default:
 		{
 			break;
@@ -54,6 +59,11 @@ void CInternalMsgPool::freeMsg(CInternalMsg* pMsg)
 		case IM_REQUEST_PLAT_WEB:
 		{
 			mPlatWebRequestPool.free((CIMPlatWebRequest*)pMsg);
+			break;
+		}
+		case IM_RESPONSE_PLAT_WEB:
+		{
+			mPlatWebResponsePool.free((CIMPlatWebResponse*)pMsg);
 			break;
 		}
 		default:

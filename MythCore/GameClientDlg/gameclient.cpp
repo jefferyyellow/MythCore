@@ -55,13 +55,13 @@ bool CGameClient::initLog()
 #endif
 
 	// 默认的debug日志
-	CRollFileDisplayer* pDefaultFileDisplayer = new CRollFileDisplayer(const_cast<char*>("../log/clientdefault.log"), 1024000, 10);
+	CRollFileDisplayer* pDefaultFileDisplayer = new CRollFileDisplayer(const_cast<char*>("log/clientdefault.log"), 1024000, 10);
 	// 为默认的debug日志加文件displayer
 	mDefaultLog->AddDisplayer(pDefaultFileDisplayer);
 	CLogManager::Inst()->AddDebugLog(mDefaultLog, "default");
 
 	// 错误日志加文件displayer
-	CRollFileDisplayer* pErrorFileDisplayer = new CRollFileDisplayer(const_cast<char*>("../log/clienterror.log"), 1024000, 10);
+	CRollFileDisplayer* pErrorFileDisplayer = new CRollFileDisplayer(const_cast<char*>("log/clienterror.log"), 1024000, 10);
 	CLogManager::Inst()->GetErrorLog().AddDisplayer(pErrorFileDisplayer);
 
 	// 错误日志加std displayer
@@ -69,11 +69,11 @@ bool CGameClient::initLog()
 	CLogManager::Inst()->GetErrorLog().AddDisplayer(pDisplayer);
 
 	// 给信息日志加文件displayer
-	CRollFileDisplayer* pInfoFileDisplayer = new CRollFileDisplayer(const_cast<char*>("../log/clientinfo.log"), 1024000, 10);
+	CRollFileDisplayer* pInfoFileDisplayer = new CRollFileDisplayer(const_cast<char*>("log/clientinfo.log"), 1024000, 10);
 	CLogManager::Inst()->GetInfoLog().AddDisplayer(pInfoFileDisplayer);
 
 	// 给警告日志加文件displayer
-	CRollFileDisplayer* pWarnFileDisplayer = new CRollFileDisplayer(const_cast<char*>("../log/clientwarn.log"), 1024000, 10);
+	CRollFileDisplayer* pWarnFileDisplayer = new CRollFileDisplayer(const_cast<char*>("log/clientwarn.log"), 1024000, 10);
 	CLogManager::Inst()->GetInfoLog().AddDisplayer(pWarnFileDisplayer);
 	return true;
 }

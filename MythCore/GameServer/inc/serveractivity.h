@@ -29,6 +29,12 @@ public:
 	}
 
 public:
+	void	end();
+	void	refreshProcess(CEntityPlayer& rPlayer, int nParam1, int nParam2);
+	void	clearPlayerData(CEntityPlayer& rPlayer);
+	const char* getConfigName();
+
+public:
 	/// autocode don't edit
     byte getType(){ return mType;}
     void setType(byte value){ mType = value;}

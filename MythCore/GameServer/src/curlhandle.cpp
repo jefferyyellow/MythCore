@@ -166,6 +166,8 @@ void CURLHandle::sendRequest(const char* pHttpURL, const char* pPostData, EmHttp
 		// 打开文件句柄
 		FILE* pFile = fopen(tFilePath, "w+");
 		pURLSession->setFile(pFile);
+		pURLSession->setReturnData(pPostData);
+		pURLSession->setReturnSize(strlen(pPostData));
 	}
 
 	if (eHttpType & emHttpTypeGet)

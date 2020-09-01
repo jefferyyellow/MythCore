@@ -10,13 +10,15 @@ using namespace Myth;
 
 class CEntityPlayer;
 class CServerActivity;
-
+class CIMPlatWebResponse;
 /// 玩家的开服活动的模块数据每天一刷新，如果有重启服务器，就会额外刷新
 /// 所以会记录服务器启动时间
 /// 开服活动模块
 class CServerActModule : public CLogicModule, public CSingleton <CServerActModule>
 {
 	friend class CSingleton <CServerActModule> ;
+public:
+	typedef std::set<string> CONFIG_FILE_LIST;
 private:
 	CServerActModule();
 	~CServerActModule();
@@ -69,6 +71,8 @@ public:
 	bool				checkActPrizeTime(int nActivityID);
 	/// 每日刷新所以的玩家
 	void				dailyRefreshAllPlayer();
+	/// 加载平台配置文件回调
+	void				onLoadPlatFile(CIMPlatWebResponse* pResponse);
 public:
 	/// autocode
     time_t getServerOpenTime(){ return mServerOpenTime;}
@@ -87,7 +91,13 @@ private:
 	CServerActivity*		mServerActivity[MAX_SERVER_ACT_NUM];
 	/// 开服活动
 	CServerActivity*		mAvailActivity[MAX_SERVER_ACT_NUM];
+	// 有效开放活动加载配置文件
+	bool					mAvailLoadConfig[emServerActTypeMax];
 	/// 有效的开服活动数目
 	int						mAvailActivityNum;
+	/// 加载的配置文件列表
+	CONFIG_FILE_LIST		mConfigFileList;
+	/// 配置文件加载完成
+	bool					mConfigFileLoadComplete;
 };
 #endif

@@ -120,7 +120,7 @@ void CSceneJob::doLaunch()
 		mServerState = emServerStateRun;
 		
 		LogServerStartComplete();
-		sendPlatWebRequest("http://127.0.0.1:8080/aaa.xml", "aa.xml", EmHttpType(emHttpTypeGet | emHttpTypeFile), false);
+		//sendPlatWebRequest("http://127.0.0.1:8080/aaa.xml", "aa.xml", EmHttpType(emHttpTypeGet | emHttpTypeFile), false);
 	}
 }
 
@@ -332,11 +332,30 @@ void CSceneJob::onTask(CInternalMsg* pMsg)
 	{
 		return;
 	}
-	//switch (pMsg->getMsgID())
-	//{
-	//	default:
-	//		break;
-	//}
+	switch (pMsg->getMsgID())
+	{
+		case IM_RESPONSE_PLAT_WEB:
+		{
+			onPlatWebResponse(pMsg);
+			break;
+		}
+		default:
+			break;
+	}
+}
+
+/// 处理平台日志
+void CSceneJob::onPlatWebResponse(CInternalMsg* pIMMsg)
+{
+	if (NULL == pIMMsg)
+	{
+		return;
+	}
+	CIMPlatWebResponse* pResponse = (CIMPlatWebResponse*)pIMMsg;
+	if (pResponse->mHttpType & emHttpTypeFile)
+	{
+		CServerActModule::Inst()->onLoadPlatFile(pResponse);
+	}
 }
 
 bool CSceneJob::initBase(int nDBBuffSize)

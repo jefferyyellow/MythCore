@@ -21,8 +21,8 @@ public:
 	int		mMapId[MAX_INSTANCE_MAP_NUM];
 };
 
-/// 单人副本
-class CSingleInstance
+/// 单人副本(用于union)
+struct CSingleInstance
 {
 public:
 	/// 初始化
@@ -37,8 +37,8 @@ public:
 	void	givePrize();
 };
 
-/// 多人副本（包括团队本）
-class CMultipleInstance
+/// 多人副本（包括团队本）(用于union)
+struct CMultipleInstance
 {
 public:
 	/// 初始化
@@ -134,6 +134,7 @@ private:
 	///  副本类型
 	EmInstanceType		mType;
 
+	// 不同的副本类型，不同的数据
 	union
 	{
 		CSingleInstance		mSingle;

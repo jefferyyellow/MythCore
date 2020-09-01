@@ -121,6 +121,8 @@ private:
 	/// 发送前端消息
 	void		send2Player(CExchangeHead& rExchangeHead, unsigned short nMessageID, Message* pMessage);
 	void		onTask(CInternalMsg* pMsg);
+	/// 处理平台日志
+	void		onPlatWebResponse(CInternalMsg* pIMMsg);
 	/// 处理前端消息
 	void		processClientMessage();
 	/// 分发前端消息

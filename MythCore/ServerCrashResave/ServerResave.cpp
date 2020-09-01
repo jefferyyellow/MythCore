@@ -99,7 +99,7 @@ bool CServerResave::initLog()
 
 
 	// 错误日志加文件displayer
-	CRollFileDisplayer* pErrorFileDisplayer = new CRollFileDisplayer(const_cast<char*>("../log/gameerror.log"), 1024000, 10);
+	CRollFileDisplayer* pErrorFileDisplayer = new CRollFileDisplayer(const_cast<char*>("log/resaveerror.log"), 1024000, 10);
 	CLogManager::Inst()->GetErrorLog().AddDisplayer(pErrorFileDisplayer);
 
 	// 错误日志加std displayer
@@ -107,11 +107,11 @@ bool CServerResave::initLog()
 	CLogManager::Inst()->GetErrorLog().AddDisplayer(pDisplayer);
 
 	// 给信息日志加文件displayer
-	CRollFileDisplayer* pInfoFileDisplayer = new CRollFileDisplayer(const_cast<char*>("../log/gameinfo.log"), 1024000, 10);
+	CRollFileDisplayer* pInfoFileDisplayer = new CRollFileDisplayer(const_cast<char*>("log/resaveinfo.log"), 1024000, 10);
 	CLogManager::Inst()->GetInfoLog().AddDisplayer(pInfoFileDisplayer);
 
 	// 给警告日志加文件displayer
-	CRollFileDisplayer* pWarnFileDisplayer = new CRollFileDisplayer(const_cast<char*>("../log/gamewarn.log"), 1024000, 10);
+	CRollFileDisplayer* pWarnFileDisplayer = new CRollFileDisplayer(const_cast<char*>("log/resavewarn.log"), 1024000, 10);
 	CLogManager::Inst()->GetWarnLog().AddDisplayer(pWarnFileDisplayer);
 	return true;
 }

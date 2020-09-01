@@ -14,10 +14,14 @@ extern "C"
 #include "lauxlib.h"
 };
 #include "lua_tinker.h"
+#include "curlhandle.h"
+#include "platjob.h"
+#include "internalmsg.h"
+#include "fileutility.h"
 CServerActModule::CServerActModule()
 {
 	init();
-	mServerOpenTime = unixTimeStamp("2020-8-15 00:00:00");
+	mServerOpenTime = unixTimeStamp("2020-09-01 00:00:00");
 }
 
 void CServerActModule::init()
@@ -30,6 +34,7 @@ void CServerActModule::init()
 		mAvailActivity[i] = NULL;
 	}
 	mAvailActivityNum = 0;
+	mConfigFileLoadComplete = false;
 }
 
 
@@ -57,13 +62,15 @@ void CServerActModule::onLaunchServer()
 {
 	lua_State* L = CSceneJob::Inst()->getLuaState();
 	lua_tinker::dofile(L, "gameserverconfig/script/server_activity/server_activity.lua");
-	loadServerActivityConfig("gameserverconfig/server_activity/server_activity.xml");
+
+	sendPlatWebRequest("server_activity.xml", "server_activity.xml", EmHttpType(emHttpTypeGet|emHttpTypeFile), true);
+	// loadServerActivityConfig("gameserverconfig/server_activity/server_activity.xml");
 }
 
 /// 启动完成检查
 bool CServerActModule::onCheckLaunch()
 {
-	return true;
+	return mConfigFileLoadComplete;
 }
 
 /// 服务器启动成功
@@ -231,16 +238,26 @@ void CServerActModule::loadServerActivityConfig(const char* pConfigFile)
 		}
 		pActivity->setAvail(true);
 
-		// 所以
+		// 
 		mAvailActivity[mAvailActivityNum] = pActivity;
 		++ mAvailActivityNum;
+	}
+
+	for (int i = 0; i < mAvailActivityNum; ++ i)
+	{
+		const char* pFileName = mAvailActivity[i]->getConfigName();
+		if (pFileName[0] == '\0')
+		{
+			continue;
+		}
+		mConfigFileList.insert(pFileName);
+		sendPlatWebRequest(pFileName, pFileName, EmHttpType(emHttpTypeGet | emHttpTypeFile), true);
 	}
 }
 
 /// 清算结束的活动
 void CServerActModule::clearEndedActivity()
 {
-	lua_State* L = CSceneJob::Inst()->getLuaState();
 	time_t tTimeNow = CTimeManager::Inst()->getCurrTime();
 	for (unsigned int i = 0; i < MAX_SERVER_ACT_NUM; ++ i)
 	{
@@ -255,7 +272,7 @@ void CServerActModule::clearEndedActivity()
 		// 已经结束
 		if (nEndTime <= tTimeNow)
 		{
-			lua_tinker::call<int>(L, "ServerActivity_EndFunc", mServerActivity[i]->getType(), mServerActivity[i]->getID());
+			mServerActivity[i]->end();
 		}
 	}
 }
@@ -281,8 +298,7 @@ void CServerActModule::refreshProcess(EmSvrActType eType, CEntityPlayer& rPlayer
 		{
 			continue;
 		}
-		lua_tinker::call<int>(L, "ServerActivity_RefreshFunc", mAvailActivity[i]->getType(),
-			mAvailActivity[i]->getID(), &rPlayer, nParam1, nParam2);
+		mAvailActivity[i]->refreshProcess(rPlayer, nParam1, nParam2);
 	}
 }
 
@@ -361,5 +377,48 @@ void CServerActModule::dailyRefreshAllPlayer()
 			continue;
 		}
 		pPlayer->getServerActUnit().dailyRefresh();
+	}
+}
+
+/// 加载平台配置文件回调
+void CServerActModule::onLoadPlatFile(CIMPlatWebResponse* pResponse)
+{
+	if (NULL == pResponse)
+	{
+		return;
+	}
+	char acFileName[STR_LENGTH_128];
+	CFileUtility::GetFileName(pResponse->mReturnData, acFileName, STR_LENGTH_128 - 1);
+
+	char acExtension[STR_LENGTH_16];
+	CFileUtility::GetExtension(acFileName, acExtension, STR_LENGTH_16 - 1);
+
+	bool bConfigFileList = true;
+	if (strncmp("server_activity.xml", acFileName, RETURN_DATA_LENGTH) == 0)
+	{
+		CServerActModule::Inst()->loadServerActivityConfig(pResponse->mReturnData);
+		bConfigFileList = false;
+	}
+
+	if (!bConfigFileList)
+	{
+		return;
+	}
+
+	lua_State* L = CSceneJob::Inst()->getLuaState();
+	if (strncmp("lua", acExtension, sizeof(acExtension) - 1) == 0)
+	{
+		if (luaL_dofile(L, pResponse->mReturnData) != LUA_OK)
+		{
+			LOG_ERROR("lua format error, File Name: %s", acFileName);
+			return;
+		}
+	}
+
+	mConfigFileList.erase(acFileName);
+	if (mConfigFileList.size() <= 0)
+	{
+		// 加载完成
+		mConfigFileLoadComplete = true;
 	}
 }

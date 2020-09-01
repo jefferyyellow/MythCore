@@ -1,7 +1,11 @@
 local pb = require "pb"
 assert(pb.loadfile "gameserverconfig/script/server_activity/serveractmodule.pb") 
 require("gameserverconfig/script/server_activity/server_activity_type")
-require("gameserverconfig/server_activity/cumulative_recharge_config")
+--require("platfile/cumulative_recharge_config")
+
+function CumulativeRecharge_getConfigName()
+	return "cumulative_recharge_config.lua"
+end
 
 function CumulativeRecharge_end()
 	
