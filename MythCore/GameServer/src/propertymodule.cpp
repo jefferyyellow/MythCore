@@ -116,6 +116,12 @@ void CPropertyModule::onTimer(unsigned int nTickOffset)
 	}
 }
 
+/// ╪стьеДжцнд╪Ч
+void CPropertyModule::onLoadConfig()
+{
+
+}
+
 void CPropertyModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)
 {
 	MYTH_ASSERT(NULL != pPlayer, return);

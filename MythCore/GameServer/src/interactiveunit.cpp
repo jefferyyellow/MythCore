@@ -66,7 +66,7 @@ void CInteractiveUnit::onGetMailListRequest(Message* pMessage)
 		pbMail->set_create_time((google::protobuf::uint32)rMail.getCreateTime());
 		pbMail->set_mail_title(rMail.getMailTitle());
 	}
-	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_RESPONSE_GET_MAIL_LIST, &tResponse);
+	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_GET_MAIL_LIST, &tResponse);
 }
 
 /// 查看邮件的请求
@@ -101,7 +101,7 @@ void CInteractiveUnit::sendReadMailResponse(int nResult, EmMailStatus eStatus)
 	tResponse.set_result(nResult);
 	tResponse.set_status(eStatus);
 
-	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_RESPONSE_READ_MAIL, &tResponse);
+	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_READ_MAIL, &tResponse);
 }
 
 /// 获取邮件附件的请求
@@ -155,7 +155,7 @@ void CInteractiveUnit::sendGetMailAttachmentResponse(int nResult, int nStatus)
 	tResponse.set_result(nResult);
 	tResponse.set_status(nStatus);
 
-	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_RESPONSE_GET_MAIL_ATTACHMENT, &tResponse);
+	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_GET_MAIL_ATTACHMENT, &tResponse);
 }
 
 /// 删除邮件的请求
@@ -187,7 +187,7 @@ void CInteractiveUnit::sendDeleteMailResponse(int nResult)
 	CDeleteMailResponse tResponse;
 	tResponse.set_result(nResult);
 
-	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_RESPONSE_DELETE_MAIL, &tResponse);
+	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_DELETE_MAIL, &tResponse);
 }
 
 /// 得到邮件的详细信息请求
@@ -224,5 +224,5 @@ void CInteractiveUnit::sendGetMailDetailResponse(int nResult, CMail& rMail)
 		CMailModule::Inst()->saveMailItemList(rMail, pbItemList);
 	}
 
-	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_RESPONSE_GET_MAIL_DETAIL, &tResponse);
+	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_GET_MAIL_DETAIL, &tResponse);
 }

@@ -15,13 +15,6 @@ CItemModule::~CItemModule()
 /// 启动服务器
 void CItemModule::onLaunchServer()
 {
-	CShopConfig tCommonShop(emShopType_Common);
-	tCommonShop.loadShopConfig("gameserverconfig/shop/shop_common.xml");
-	mShopList.push_back(tCommonShop);
-
-	CShopConfig tLevelShop(emShopType_Level);
-	tLevelShop.loadShopConfig("gameserverconfig/shop/shop_level.xml");
-	mShopList.push_back(tLevelShop);
 }
 
 /// 启动完成检查
@@ -69,6 +62,18 @@ void CItemModule::onDestroyPlayer(CEntityPlayer* pPlayer)
 void CItemModule::onTimer(unsigned int nTickOffset)
 {
 
+}
+
+/// 加载配置文件
+void CItemModule::onLoadConfig()
+{
+	CShopConfig tCommonShop(emShopType_Common);
+	tCommonShop.loadShopConfig("gameserverconfig/shop/shop_common.xml");
+	mShopList.push_back(tCommonShop);
+
+	CShopConfig tLevelShop(emShopType_Level);
+	tLevelShop.loadShopConfig("gameserverconfig/shop/shop_level.xml");
+	mShopList.push_back(tLevelShop);
 }
 
 void CItemModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)

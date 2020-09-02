@@ -20,7 +20,6 @@ CMapModule::CMapModule()
 /// 启动服务器
 void CMapModule::onLaunchServer()
 {
-	CMapConfigManager::Inst()->loadMapConfig("gameserverconfig/map/maplist.xml");
 }
 
 /// 启动完成检查
@@ -98,6 +97,12 @@ void CMapModule::onTimer(unsigned int nTickOffset)
 	{
 		CMapManager::Inst()->checkAutoDestoryMap();
 	}
+}
+
+/// 加载配置文件
+void CMapModule::onLoadConfig()
+{
+	CMapConfigManager::Inst()->loadMapConfig("gameserverconfig/map/maplist.xml");
 }
 
 void CMapModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)

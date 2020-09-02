@@ -20,6 +20,7 @@ public:
 	CPlatJob()
 	{
 		init();
+		setJobID(emJobID_Plat);
 	}
 	~CPlatJob()
 	{

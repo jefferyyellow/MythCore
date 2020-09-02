@@ -52,6 +52,12 @@ void CInstanceModule::onTimer(unsigned int nTickOffset)
 
 }
 
+/// ¼ÓÔØÅäÖÃÎÄ¼ş
+void CInstanceModule::onLoadConfig()
+{
+
+}
+
 void CInstanceModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)
 {
 	 

@@ -9,6 +9,8 @@
 #include "GameClientDlgDlg.h"
 #include "taskmodule.hxx.pb.h"
 #include "serveractmodule.hxx.pb.h"
+#include "chatmodule.hxx.pb.h"
+#include "i18n.h"
 CGameClient::CGameClient()
 	:mSelectModel(&mTcpSocket, 1)
 {
@@ -173,6 +175,11 @@ void CGameClient::onServerMessage(CTcpSocket* pTcpSocket)
 				onCreateRoleResponse(pMessage);
 				break;
 			}
+			case ID_S2C_NOTIFY_CHAT:
+			{
+				onChatNotify(pMessage);
+				break;
+			}
 			default:
 				const ::google::protobuf::Descriptor* pDescriptor = pMessage->GetDescriptor();
 				printf("---- Receive from server Msg[ %s ][id: 0x%04x/%d] ---", pDescriptor->name().c_str(), nMessageID, nMessageID);
@@ -248,8 +255,16 @@ void CGameClient::onCreateRoleResponse(Message* pMessage)
 	tEnterSceneRequest.set_channelid(mChannelID);
 	tEnterSceneRequest.set_serverid(mServerID);
 	sendMessage(ID_C2S_REQUEST_ENTER_SCENE, &tEnterSceneRequest);
-
 }
+
+void CGameClient::onChatNotify(Message* pMessage)
+{
+	CChatNotify* pChatNotify = (CChatNotify*)pMessage;
+	char acBuffer[STR_LENGTH_128] = {0};
+	CI18N::AnsiToUtf8(pChatNotify->content().c_str(), acBuffer, STR_LENGTH_128 - 1);
+	mDlg->DisplayLog(const_cast<char*>(pChatNotify->content().c_str()));
+}
+
 
 void CGameClient::sendGMCommandRequest(char* pCommandString)
 {

@@ -29,5 +29,9 @@ public:
 	virtual void onDestroyPlayer(CEntityPlayer* pPlayer) = 0;
 	/// 时间函数
 	virtual	void onTimer(unsigned int nTickOffset) = 0;
+	/// 加载配置文件
+	virtual	void onLoadConfig() = 0;
+	/// 重新加载配置文件
+	virtual	void onReloadConfig(){};
 };
 #endif // !__LOGICMODULE_H__

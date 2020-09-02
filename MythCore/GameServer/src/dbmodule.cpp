@@ -59,6 +59,12 @@ void CDBModule::onTimer(unsigned int nTickOffset)
 
 }
 
+/// 加载配置文件
+void CDBModule::onLoadConfig()
+{
+
+}
+
 /// 压入DB任务
 void CDBModule::pushDBTask(int nPlayerID, int nSessionType, int nParam1, int nParam2, const char* pSql, ...)
 {

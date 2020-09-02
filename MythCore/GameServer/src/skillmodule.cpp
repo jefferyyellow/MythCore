@@ -68,6 +68,13 @@ void CSkillModule::onTimer(unsigned int nTickOffset)
 
 }
 
+/// ╪стьеДжцнд╪Ч
+void CSkillModule::onLoadConfig()
+{
+
+}
+
+
 void CSkillModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)
 {
 	if (NULL == pPlayer)

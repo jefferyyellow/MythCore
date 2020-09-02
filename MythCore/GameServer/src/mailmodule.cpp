@@ -62,6 +62,12 @@ void CMailModule::onTimer(unsigned int nTickOffset)
 
 }
 
+/// ¼ÓÔØÅäÖÃÎÄ¼þ
+void CMailModule::onLoadConfig()
+{
+
+}
+
 void CMailModule::loadMaxMailID()
 {
 	CDBModule::Inst()->pushDBTask(0, emSessionType_LoadMaxMailID, 0, 0,

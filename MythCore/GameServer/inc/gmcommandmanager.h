@@ -17,6 +17,7 @@ public:
 	typedef void(*COMMANDHANDLER)(std::string strCommandName, StrTokens& tTokens, CEntityPlayer* pPlayer);
 	typedef std::map<std::string, COMMANDHANDLER > CommandHash;
 	typedef std::map<std::string, std::string> CommandHelpHash;
+	typedef std::map<int, std::string> ErrorCodeHash;
 
 public:
 	CGMCommandManager()
@@ -30,16 +31,22 @@ public:
 	void InitCommand();
 
 public:
+	// 加载错误码
+	void LoadErrCode(const char* pErrCodePath);
+	/// 加载lua文件里面的错误码
+	void LoadLuaErrCode(const char* pErrCodePath);
 	/// 广播命令影响和结果
 	static void	broadcastCommandResult(CEntityPlayer* pPlayer, char* pResult);
 	/// 通知玩家命令影响和结果
-	static void	sendCommandResult(CEntityPlayer* pPlayer, char* pResult);
+	static void	sendCommandResult(CEntityPlayer* pPlayer, const char* pResult);
 	/// 执行GM命令
 	void		excuteCommand(std::string strCommandName, StrTokens& tTokens, CEntityPlayer* pPlayer);
 
 private:
 	/// 帮助命令
 	COMMAND_HANDLER_DECL(help);
+	/// 错误码
+	COMMAND_HANDLER_DECL(error);
 	/// 获得经验命令
 	COMMAND_HANDLER_DECL(exp);
 	/// 插入道具命令
@@ -58,15 +65,19 @@ private:
 	COMMAND_HANDLER_DECL(sendmail);
 	/// 发送全局邮件
 	COMMAND_HANDLER_DECL(globalmail);
+	/// 重新加载配置文件
+	COMMAND_HANDLER_DECL(reloadconfig);
+
 
 private:
 	/// 得到命令的帮助字符串
 	std::string getCommnadHelpString(std::string strCommandName);
 	/// 得到以strName开头的所以命令
 	std::string getAllCommnadWith(std::string strName);
-
+	ErrorCodeHash& getErrorCodeHash(){return mErrorCodeHash;}
 private:
 	CommandHash		mCommandHash;			// GM命令
 	CommandHelpHash	mCommandHelpHash;		// GM命令帮助
+	ErrorCodeHash	mErrorCodeHash;
 };
 #endif

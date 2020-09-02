@@ -53,3 +53,10 @@ void CTeamModule::onTimer(unsigned int nTickOffset)
 {
 
 }
+
+
+/// ╪стьеДжцнд╪Ч
+void CTeamModule::onLoadConfig()
+{
+
+}

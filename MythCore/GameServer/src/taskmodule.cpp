@@ -18,7 +18,6 @@ void CTaskModule::clear()
 /// 启动服务器
 void CTaskModule::onLaunchServer()
 {
-	loadAllTaskConfig("gameserverconfig/tasks/*.xml");
 }
 
 /// 启动完成检查
@@ -66,6 +65,12 @@ void CTaskModule::onDestroyPlayer(CEntityPlayer* pPlayer)
 void CTaskModule::onTimer(unsigned int nTickOffset)
 {
 
+}
+
+/// 加载配置文件
+void CTaskModule::onLoadConfig()
+{
+	loadAllTaskConfig("gameserverconfig/tasks/*.xml");
 }
 
 void CTaskModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)

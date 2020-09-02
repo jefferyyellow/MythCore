@@ -49,6 +49,10 @@ public:
 	virtual void onDestroyPlayer(CEntityPlayer* pPlayer);
 	/// 时间函数
 	virtual	void onTimer(unsigned int nTickOffset);
+	/// 加载配置文件
+	virtual	void onLoadConfig();
+	/// 重新加载配置文件
+	virtual	void onReloadConfig();
 
 public:
 	void				onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);

@@ -23,7 +23,7 @@ void sendPlatWebRequest(const char* pURL, const char* pData, EmHttpType eHttpTyp
 	{
 		if (eHttpType & emHttpTypeFile)
 		{
-			snprintf(pPlatWebRequest->mPostData, WEB_POST_DATA_LEN - 1, "%s%s", "./platfile/", pData);
+			snprintf(pPlatWebRequest->mPostData, WEB_POST_DATA_LEN - 1, "%s%s", "platfile\\", pData);
 		}
 		else
 		{

@@ -60,11 +60,6 @@ void CServerActModule::clearServerActivity()
 /// 启动服务器
 void CServerActModule::onLaunchServer()
 {
-	lua_State* L = CSceneJob::Inst()->getLuaState();
-	lua_tinker::dofile(L, "gameserverconfig/script/server_activity/server_activity.lua");
-
-	sendPlatWebRequest("server_activity.xml", "server_activity.xml", EmHttpType(emHttpTypeGet|emHttpTypeFile), true);
-	// loadServerActivityConfig("gameserverconfig/server_activity/server_activity.xml");
 }
 
 /// 启动完成检查
@@ -120,6 +115,22 @@ void CServerActModule::onDestroyPlayer(CEntityPlayer* pPlayer)
 void CServerActModule::onTimer(unsigned int nTickOffset)
 {
 
+}
+
+/// 加载配置文件
+void CServerActModule::onLoadConfig()
+{
+	lua_State* L = CSceneJob::Inst()->getLuaState();
+	lua_tinker::dofile(L, "gameserverconfig/script/server_activity/server_activity.lua");
+
+	sendPlatWebRequest("server_activity.xml", "server_activity.xml", EmHttpType(emHttpTypeGet | emHttpTypeFile), true);
+	// loadServerActivityConfig("gameserverconfig/server_activity/server_activity.xml");
+}
+
+/// 重新加载配置文件
+void CServerActModule::onReloadConfig()
+{
+	sendPlatWebRequest("server_activity.xml", "server_activity.xml", EmHttpType(emHttpTypeGet | emHttpTypeFile), true);
 }
 
 void CServerActModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)
@@ -408,11 +419,14 @@ void CServerActModule::onLoadPlatFile(CIMPlatWebResponse* pResponse)
 	lua_State* L = CSceneJob::Inst()->getLuaState();
 	if (strncmp("lua", acExtension, sizeof(acExtension) - 1) == 0)
 	{
-		if (luaL_dofile(L, pResponse->mReturnData) != LUA_OK)
+		if (luaL_loadfile(L, pResponse->mReturnData) != LUA_OK)
 		{
 			LOG_ERROR("lua format error, File Name: %s", acFileName);
 			return;
 		}
+		char acPathFileName[STR_LENGTH_128];
+		CFileUtility::GetFilePathWithoutExtension(pResponse->mReturnData, acPathFileName, STR_LENGTH_128 - 1);
+		lua_tinker::call<int>(L, "Global_reloadFile", acPathFileName);
 	}
 
 	mConfigFileList.erase(acFileName);

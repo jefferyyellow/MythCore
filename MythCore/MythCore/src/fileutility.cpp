@@ -62,6 +62,7 @@ namespace Myth
 				nBufferSize = nSize - 1;
 			}
 			strncpy(pPathName, pFilePath, (size_t)nBufferSize);
+			pPathName[nBufferSize] = '\0';
 		}
 
 		return pPathName;
@@ -101,9 +102,37 @@ namespace Myth
 				nBufferSize = nSize - 1;
 			}
 			strncpy(pNewFileName, tBuffer, size_t(nBufferSize));
+			pNewFileName[nBufferSize] = '\0';
 		}
 		return pNewFileName;
 	}
+
+	char* CFileUtility::GetFilePathWithoutExtension(const char* pFilePath, char* pNewFilePath, int nSize)
+	{
+		if (NULL == pFilePath || NULL == pNewFilePath)
+		{
+			return NULL;
+		}
+
+		const char* pFind = strrchr(pFilePath, '.');
+		if (NULL == pFind)
+		{
+			strncpy(pNewFilePath, pFilePath, size_t(nSize - 1));
+		}
+		else
+		{
+			int nBufferSize = pFind - pFilePath;
+			if (nBufferSize >= nSize)
+			{
+				nBufferSize = nSize - 1;
+			}
+			strncpy(pNewFilePath, pFilePath, (size_t)nBufferSize);
+			pNewFilePath[nBufferSize] = '\0';
+		}
+
+		return pNewFilePath;
+	}
+
 
 	bool CFileUtility::CheckFileExist(const char* pFilePath)
 	{

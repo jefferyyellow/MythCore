@@ -29,6 +29,8 @@ public:
 	virtual void onDestroyPlayer(CEntityPlayer* pPlayer);
 	/// 时间
 	virtual void onTimer(unsigned int nTickOffset);
+	/// 加载配置文件
+	virtual	void onLoadConfig();
 
 public:
 	/// 压入DB任务

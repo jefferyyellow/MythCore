@@ -11,7 +11,7 @@ enum ERR_COMMON
 {
 	ERR_UNKNOWN							= 300,				// 未知错误
 	ERR_PARAMETER_INVALID				= 301,				// 参数非法
-	ERR_CURRENCY_NOT_ENOUGH				= 302,				// 币不足
+	ERR_CURRENCY_NOT_ENOUGH				= 302,				// 货币不足
 	ERR_TEMPLATE_INVALID				= 303,				// 模板非法
 	ERR_BAGGAGE_IS_FULL					= 304,				// 包裹已满
 };

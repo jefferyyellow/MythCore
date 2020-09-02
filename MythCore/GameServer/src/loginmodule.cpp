@@ -131,6 +131,12 @@ void CLoginModule::onTimer(unsigned int nTickOffset)
 	}
 }
 
+/// ¼ÓÔØÅäÖÃÎÄ¼ş
+void CLoginModule::onLoadConfig()
+{
+
+}
+
 void CLoginModule::onClientMessage(CExchangeHead& rExchangeHead, unsigned int nMessageID, Message* pMessage)
 {
 	if (NULL == pMessage)

@@ -23,11 +23,7 @@ CDailyActModule::~CDailyActModule()
 /// 启动服务器
 void CDailyActModule::onLaunchServer()
 {
-	lua_State* L = CSceneJob::Inst()->getLuaState();
-	lua_tinker::dofile(L, "gameserverconfig/script/daily_activity/daily_activity.lua");
 
-	loadActivityConfig("gameserverconfig/daily_activity/daily_activity.xml");
-	checkPassedActivity();
 }
 
 /// 启动完成检查
@@ -80,6 +76,22 @@ void CDailyActModule::onTimer(unsigned int nTickOffset)
 		checkActivityTime();
 		mLastTime = CTimeManager::Inst()->getCurrTime();
 	}
+}
+
+/// 加载配置文件
+void CDailyActModule::onLoadConfig()
+{
+	lua_State* L = CSceneJob::Inst()->getLuaState();
+	lua_tinker::dofile(L, "gameserverconfig/script/daily_activity/daily_activity.lua");
+
+	loadActivityConfig("gameserverconfig/daily_activity/daily_activity.xml");
+	checkPassedActivity();
+}
+
+/// 重新加载配置文件
+void CDailyActModule::onReloadConfig()
+{
+	loadActivityConfig("gameserverconfig/daily_activity/daily_activity.xml");
 }
 
 void CDailyActModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)

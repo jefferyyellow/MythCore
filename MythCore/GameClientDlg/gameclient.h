@@ -42,7 +42,7 @@ public:
 private:
 	void		onMessageLoginResponse(Message* pMessage);
 	void		onCreateRoleResponse(Message* pMessage);
-
+	void		onChatNotify(Message* pMessage);
 public:
 	CGameClientDlgDlg* getDlg() const { return mDlg; }
 	void setDlg(CGameClientDlgDlg* val) { mDlg = val; }

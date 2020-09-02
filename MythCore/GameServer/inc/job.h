@@ -8,6 +8,7 @@ enum EmJobID
 	emJobID_Scene	= 1,
 	emJobID_DB		= 2,
 	emJobID_Log		= 3,
+	emJobID_Plat	= 4,
 };
 
 template<int BaseCount, int Increment>

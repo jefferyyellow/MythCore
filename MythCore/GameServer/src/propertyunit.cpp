@@ -47,5 +47,5 @@ void CPropertyUnit::onLevelUp(int nOldLevel)
 
 	CLevelUpNotify tLevelUpNotify;
 	tLevelUpNotify.set_level(mLevel);
-	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_NOTIYF_LEVEL_UP, &tLevelUpNotify);
+	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_NOTIYF_LEVEL_UP, &tLevelUpNotify);
 }

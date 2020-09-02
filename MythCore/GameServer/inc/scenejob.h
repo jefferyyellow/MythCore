@@ -86,6 +86,8 @@ public:
 	void		createPlayer(CEntityPlayer* pPlayer);
 	void		destroyPlayer(CEntityPlayer* pPlayer);
 	void		timer(unsigned int nTickOffset);
+	void		loadConfig();
+	void		reloadConfig();
 
 public:
 	void		checkNewDayCome();
@@ -94,6 +96,7 @@ public:
 public:
 	void		send2Player(CLoginPlayer* pLoginPlayer, unsigned short nMessageID, Message* pMessage);
 	void		send2Player(CEntityPlayer* pPlayer, unsigned short nMessageID, Message* pMessage);
+	void		send2Player(CEntityPlayer& rPlayer, unsigned short nMessageID, Message* pMessage);
 	/// 发现前端消息(lua)
 	void		send2PlayerLua(CEntityPlayer& rPlayer, unsigned short nMessageID, const char* pMsgBuff, int nBuffLen);
 	/// 发生给所有的玩家消息

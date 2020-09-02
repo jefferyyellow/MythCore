@@ -39,5 +39,5 @@ void CTimeUnit::onHeartBeatRequest(Message* pMessage)
 		}
 	}
 
-	CSceneJob::Inst()->send2Player(&mPlayer, ID_S2C_RESPONSE_HEART_BEAT, &tResponse);
+	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_HEART_BEAT, &tResponse);
 }

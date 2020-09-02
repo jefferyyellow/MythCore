@@ -16,6 +16,104 @@
 #include "gmlog.h"
 #include "mail.h"
 #include "timemanager.h"
+#include <fstream>
+#include <iostream>  
+
+// 加载错误码
+void CGMCommandManager::LoadErrCode(const char* pErrCodePath)
+{
+	if (NULL == pErrCodePath)
+	{
+		return;
+	}
+	std::fstream fstm;
+	fstm.open(pErrCodePath, std::ios::in);
+	if (fstm.is_open() == false)
+	{
+		return;
+	}
+
+	std::string strBuffer;
+	std::string strNum;
+	std::string strNote;
+	size_t nBeginPos = std::string::npos;
+	size_t nEndPos = std::string::npos;
+	while (getline(fstm, strBuffer))
+	{
+		nBeginPos = strBuffer.find("=");
+		if (nBeginPos == std::string::npos)
+		{
+			continue;
+		}
+		nEndPos = strBuffer.find(",");
+
+		strNum = strBuffer.substr(nBeginPos + 1, nEndPos - nBeginPos - 1);
+
+		nBeginPos = strBuffer.find("//");
+		strNote = strBuffer.substr(nBeginPos + 2);
+
+		size_t nFind = strNum.find(' ');
+		while (nFind != std::string::npos)
+		{
+			strNum.erase(nFind, 1);
+			nFind = strNum.find(' ', nFind);
+		}
+		mErrorCodeHash.insert(ErrorCodeHash::value_type(atoi(strNum.c_str()), strNote));
+	}
+
+	fstm.close();
+}
+
+
+// 加载错误码
+void CGMCommandManager::LoadLuaErrCode(const char* pErrCodePath)
+{
+	if (NULL == pErrCodePath)
+	{
+		return;
+	}
+	std::fstream fstm;
+	fstm.open(pErrCodePath, std::ios::in);
+	if (fstm.is_open() == false)
+	{
+		return;
+	}
+
+	std::string strBuffer;
+	std::string strNum;
+	std::string strNote;
+	size_t nBeginPos = std::string::npos;
+	size_t nEndPos = std::string::npos;
+	while (getline(fstm, strBuffer))
+	{
+		nBeginPos = strBuffer.find("=");
+		if (nBeginPos == std::string::npos)
+		{
+			continue;
+		}
+		nEndPos = strBuffer.find(",");
+
+		strNum = strBuffer.substr(nBeginPos + 1, nEndPos - nBeginPos - 1);
+
+		nBeginPos = strBuffer.find("--");
+		if (nBeginPos == std::string::npos)
+		{
+			continue;
+		}
+		strNote = strBuffer.substr(nBeginPos + 2);
+
+		size_t nFind = strNum.find(' ');
+		while (nFind != std::string::npos)
+		{
+			strNum.erase(nFind, 1);
+			nFind = strNum.find(' ', nFind);
+		}
+		mErrorCodeHash.insert(ErrorCodeHash::value_type(atoi(strNum.c_str()), strNote));
+	}
+
+	fstm.close();
+}
+
 /// 广播命令影响和结果
 void CGMCommandManager::broadcastCommandResult(CEntityPlayer* pPlayer, char* pResult)
 {
@@ -28,7 +126,7 @@ void CGMCommandManager::broadcastCommandResult(CEntityPlayer* pPlayer, char* pRe
 }
 
 /// 通知玩家命令影响和结果
-void CGMCommandManager::sendCommandResult(CEntityPlayer* pPlayer, char* pResult)
+void CGMCommandManager::sendCommandResult(CEntityPlayer* pPlayer, const char* pResult)
 {
 	CChatNotify tChatNotify;
 	tChatNotify.set_playerid(pPlayer->getRoleID());
@@ -85,7 +183,10 @@ std::string CGMCommandManager::getAllCommnadWith(std::string strName)
 
 void CGMCommandManager::InitCommand()
 {
+	LoadErrCode("../GameServer/inc/errcode.h");
+	LoadLuaErrCode("gameserverconfig/script/error_code.lua");
 	COMMAND_HANDLER_ADD(help, "帮助命令，用法：\\help 完整命令名字。\ab,如果没有名字为ab的GM命令，就会列出所有已ab开头的命令");
+	COMMAND_HANDLER_ADD(error, "得到错误码的解释，用法：\\error 错误码, 得到错误码对应的解释。");
 	COMMAND_HANDLER_ADD(exp, "获得经验，用法：\\exp 获得经验数。");
 	COMMAND_HANDLER_ADD(ii, "获得道具，用法：\\ii 道具ID 道具数目，获得对应的道具，包括货币。");
 	COMMAND_HANDLER_ADD(removeitem, "删除道具，用法：\\removeitem 道具ID 道具数目，删除对应的道具，包括货币,道具数目为-1表示删除所有道具(货币)。");
@@ -95,6 +196,7 @@ void CGMCommandManager::InitCommand()
 	COMMAND_HANDLER_ADD(recharge, "充值，用法：\\recharge 商品ID [订单号]，设置当前的服务器时间。");
 	COMMAND_HANDLER_ADD(sendmail, "发送邮件，用法：\\sendmail 邮件类型 邮件标题 [邮件内容]，发送邮件。");
 	COMMAND_HANDLER_ADD(globalmail, "全局邮件，用法：\\globalmail 邮件类型 邮件标题 [邮件内容]，发送邮件。");
+	COMMAND_HANDLER_ADD(reloadconfig, "重新加载配置文件，用法：\\reloadconfig，重新加载配置文件。");
 }
 
 COMMAND_HANDLER_IMPL(help)
@@ -114,6 +216,28 @@ COMMAND_HANDLER_IMPL(help)
 	std::string str(cCharName);
 	//SendDebugMsg2ChatDlg(pPlayer, str);
 }
+
+COMMAND_HANDLER_IMPL(error)
+{
+	MYTH_ASSERT_INFO(tTokens.size() >= 1, return,
+		"error command parameter number invalid, %d", tTokens.size());
+
+	int nErrCode = atoi(tTokens[0].c_str());
+
+	CGMCommandManager& rCmdManager = CPropertyModule::Inst()->getGMCmdManager();
+	ErrorCodeHash& rErrorCodeHash = rCmdManager.getErrorCodeHash();
+
+	ErrorCodeHash::iterator it = rErrorCodeHash.find(nErrCode);
+	if (it == rErrorCodeHash.end())
+	{
+		return;
+	}
+
+	char acBuffer[STR_LENGTH_128];
+	strncpy(acBuffer,  it->second.c_str(), sizeof(acBuffer));
+	sendCommandResult(pPlayer, it->second.c_str());
+}
+
 
 COMMAND_HANDLER_IMPL(exp)
 {
@@ -349,4 +473,9 @@ COMMAND_HANDLER_IMPL(globalmail)
 		tMail.setMailBody(tTokens[2].c_str());
 	}
 	CMailModule::Inst()->sendGlobalMail(tMail);
+}
+
+COMMAND_HANDLER_IMPL(reloadconfig)
+{
+	CSceneJob::Inst()->reloadConfig();
 }

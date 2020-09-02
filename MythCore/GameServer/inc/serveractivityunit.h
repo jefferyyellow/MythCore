@@ -32,6 +32,7 @@ public:
 		:CPlayerSubUnit(rPlayer)
 	{
 		memset(mActTime, 0, sizeof(mActTime));
+		memset(mActData, 0, sizeof(mActData));
 	}
 	~CServerActUnit()
 	{

@@ -1,3 +1,5 @@
+require("gameserverconfig/script/error_code")
+
 EmActDataType =
 {
 	EmActDataNone			= 0,	-- 无
@@ -31,16 +33,3 @@ EmSvrActMsg =
 	ID_C2S_REQUEST_GET_CUMUL_RECHARGE_PRIZE	= 0x1C02,	-- 领取累计充值奖励的请求
 	ID_S2C_RESPONSE_GET_CUMUL_RECHARGE_PRIZE= 0x1C03,	-- 领取累计充值奖励的回应
 }
-
--- 800 - 1099
- ERR_SERVER_ACT = 
- {
-	-- C++ 已经定义的
-	SUCCESS										= 0,		-- 成功
-	ERR_BAGGAGE_IS_FULL							= 304,		-- 背包已满
-	-- Lua新定义的
-	ACTIVITY_IS_NOT_AVAIL						= 800,		-- 活动没有开启
-	ACTIVITY_PRIZE_ALREAD_GET					= 801,		-- 活动奖励已经领取
-	ACTIVITY_CONFIG_IS_NOT_EXIST				= 802,		-- 活动配置不存在
-	CUMULATIVE_RECHARGE_VALUE_NOT_ENOUGH		= 803,		-- 累计充值不够
- }

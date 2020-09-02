@@ -85,6 +85,13 @@ void CRankModule::onTimer(unsigned int nTickOffset)
 
 }
 
+/// ¼ÓÔØÅäÖÃÎÄ¼ş
+void CRankModule::onLoadConfig()
+{
+
+}
+
+
 void CRankModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)
 {
 	switch (nMessageID)

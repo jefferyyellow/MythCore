@@ -25,6 +25,8 @@ namespace Myth
 		static char* 		GetExtension(const char* pFilePath, char* pExtension, int nSize);
 		/// get file name exclude extension from file path
 		static char*		GetFileNameWithoutExtension(const char* pFilePath, char* pNewFilePath, int nSize);
+		static char*		GetFilePathWithoutExtension(const char* pFilePath, char* pNewFilePath, int nSize);
+
 		/// 
 		static bool			CheckFileExist(const char* pFilePath);
 		static bool			IsDirectory(const char* pFilePath);

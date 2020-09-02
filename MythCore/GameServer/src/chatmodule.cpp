@@ -70,6 +70,12 @@ void CChatModule::onTimer(unsigned int nTickOffset)
 
 }
 
+/// ╪стьеДжцнд╪Ч
+void CChatModule::onLoadConfig()
+{
+
+}
+
 void CChatModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)
 {
 	if (NULL == pPlayer)

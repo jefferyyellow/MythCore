@@ -93,7 +93,10 @@ void CSceneJob::doing(int uParam)
 void CSceneJob::doInit()
 {
 	initLua();
+	// 启动服务器
 	launchServer();
+	// 加载配置
+	loadConfig();
 	printf("Begin Launch Server\n");
 	mServerState = emServerStateLaunch;
 }
@@ -295,11 +298,31 @@ void CSceneJob::timer(unsigned int nTickOffset)
 	}
 }
 
+void CSceneJob::loadConfig()
+{
+	LOGIC_MODULE_LIST::iterator it = mLogicModuleList.begin();
+	for (; it != mLogicModuleList.end(); ++it)
+	{
+		(*it)->onLoadConfig();
+	}
+}
+
+void CSceneJob::reloadConfig()
+{
+	LOGIC_MODULE_LIST::iterator it = mLogicModuleList.begin();
+	for (; it != mLogicModuleList.end(); ++it)
+	{
+		(*it)->onReloadConfig();
+	}
+}
+
 void CSceneJob::checkNewDayCome()
 {
 	struct tm& tmNow = getTmNow();
 	newDayCome();
 	onNewDayCome();
+	// 重新加载配置文件
+	reloadConfig();
 	// 0表示星期天，1表示星期一
 	if (1 == tmNow.tm_wday)
 	{
@@ -521,6 +544,7 @@ int CSceneJob::initLua()
 		return -1;
 	}
 	luaL_openlibs(mLuaState);
+	lua_tinker::dofile(mLuaState, "gameserverconfig/script/lua_global.lua");
 
 	CGlobalLuaReg::regLua();
 	CItemLuaReg::regLua();
@@ -702,6 +726,17 @@ void CSceneJob::send2Player(CEntityPlayer* pPlayer, unsigned short nMessageID, M
 	LOG_DEBUG("default", "[%s]", pMessage->ShortDebugString().c_str());
 	
 	send2Player(pPlayer->getExchangeHead(), nMessageID, pMessage);
+}
+
+void CSceneJob::send2Player(CEntityPlayer& rPlayer, unsigned short nMessageID, Message* pMessage)
+{
+	const ::google::protobuf::Descriptor* pDescriptor = pMessage->GetDescriptor();
+	LOG_DEBUG("default", "---- Send to client(Obj Id:%d|Role:%d|Name:%s) Msg[ %s ][id: 0x%04x/%d] ---",
+		rPlayer.getObjID(), rPlayer.getRoleID(), rPlayer.getName(),
+		pDescriptor->name().c_str(), nMessageID, nMessageID);
+	LOG_DEBUG("default", "[%s]", pMessage->ShortDebugString().c_str());
+
+	send2Player(rPlayer.getExchangeHead(), nMessageID, pMessage);
 }
 
 /// 发现前端消息(lua)

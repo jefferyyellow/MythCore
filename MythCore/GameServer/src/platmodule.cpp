@@ -23,7 +23,6 @@ void CPlatModule::init()
 /// 启动服务器
 void CPlatModule::onLaunchServer()
 {
-	mRechargeConfig.LoadRechargeConfig("gameserverconfig/recharge/recharge.xml");
 }
 
 /// 启动完成检查
@@ -72,6 +71,12 @@ void CPlatModule::onDestroyPlayer(CEntityPlayer* pPlayer)
 void CPlatModule::onTimer(unsigned int nTickOffset)
 {
 
+}
+
+/// 加载配置文件
+void CPlatModule::onLoadConfig()
+{
+	mRechargeConfig.LoadRechargeConfig("gameserverconfig/recharge/recharge.xml");
 }
 
 /// 处理充值
