@@ -18,11 +18,14 @@ public:
 	void			freeMsg(CInternalMsg* pMsg);
 
 private:
+	Myth::CSimpleLock									mLock;
+
+private:
 	CBlockMemory<CIMLocalLogRequest, 100, 100>			mLocalLogRequestPool;
 	CBlockMemory<CIMPlatLogRequest, 100, 100>			mPlatLogRequestPool;
 	CBlockMemory<CIMPlatWebRequest, 100, 100>			mPlatWebRequestPool;
 	CBlockMemory<CIMPlatWebResponse, 100, 100>			mPlatWebResponsePool;
-
-	Myth::CSimpleLock								mLock;
+	CBlockMemory<CIMUpdateRankRequest, 100, 100>		mUpdateRankRequestPool;
+	CBlockMemory<CIMUpdateRankResponse, 100, 100>		mUpdateRankResponsePool;
 };
 #endif

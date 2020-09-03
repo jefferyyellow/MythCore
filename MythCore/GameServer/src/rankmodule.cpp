@@ -3,6 +3,7 @@
 #include "rankmodule.hxx.pb.h"
 #include "scenejob.h"
 #include "timemanager.h"
+#include "internalmsgpool.h"
 /*
 	for (int i = 0; i < 1000; ++ i)
 	{
@@ -120,65 +121,41 @@ void CRankModule::sendGetRankInfoResponse(CEntityPlayer* pPlayer, EmRankType eTy
 	CGetRankInfoResponse tResponse;
 	tResponse.set_ranktype(eType);
 
-	int nRoldId[MAX_RANK_SHOW_NUM] = {0};
-	int nRankValue[MAX_RANK_SHOW_NUM] = {0};
+	//int nRoldId[MAX_RANK_SHOW_NUM] = {0};
+	//int nRankValue[MAX_RANK_SHOW_NUM] = {0};
 
-	for (int i = 0; i < MAX_RANK_SHOW_NUM; ++ i)
-	{
-		CRankList::CRankValueType* pRankValueType = mRankList[eType].getRankValueByIndex(i);
-		if (NULL == pRankValueType)
-		{
-			continue;
-		}
+	//for (int i = 0; i < MAX_RANK_SHOW_NUM; ++ i)
+	//{
+	//	CRankList::CRankValueType* pRankValueType = mRankList[eType].getRankValueByIndex(i);
+	//	if (NULL == pRankValueType)
+	//	{
+	//		continue;
+	//	}
 
-		PBRankRoleInfo* pRankRoleInfo = tResponse.add_roleinfo();
-		if (NULL == pRankRoleInfo)
-		{
-			continue;
-		}
-		pRankRoleInfo->set_roleid(pRankValueType->mRankKey);
-		pRankRoleInfo->set_rankvalue(pRankValueType->mRankValue);
-	}
+	//	PBRankRoleInfo* pRankRoleInfo = tResponse.add_roleinfo();
+	//	if (NULL == pRankRoleInfo)
+	//	{
+	//		continue;
+	//	}
+	//	pRankRoleInfo->set_roleid(pRankValueType->mRankKey);
+	//	pRankRoleInfo->set_rankvalue(pRankValueType->mRankValue);
+	//}
 
 	CSceneJob::Inst()->send2Player(pPlayer, ID_C2S_REQUEST_GET_RANK_INFO, &tResponse);
 }
 
-// 更新玩家的排行榜，暂时这么做吧，如果需要缓存再说
-void CRankModule::updateRoleRank(EmRankType eType, CEntityPlayer* pPlayer, int nValue)
+// 更新玩家的排行榜
+void CRankModule::updateRoleRank(EmRankType eType, uint nRoleID, int nValue)
 {
-	if (eType <= emRankType_None || eType >= emRankTypeMax)
+	CIMUpdateRankRequest* pUpdateRankRequest = (CIMUpdateRankRequest*)CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_UPDATE_RANK);
+	if (NULL == pUpdateRankRequest)
 	{
 		return;
 	}
 
-	CRankValue tRankValue;
-	tRankValue.mRankValue = nValue;
-	tRankValue.mRankTime = (int)CTimeManager::Inst()->getCurrTime();
-	tRankValue.mRankKey = pPlayer->getRoleID();
-
-	int nIndex = mRankList[eType].refreshRankValue(tRankValue);
-	if (nIndex >= 1)
-	{
-		// 如果出现排行榜的值和排行榜时间都相等的情况，手动将当前的排行榜的值加1
-		CRankList::CRankValueType* pPreValueType = mRankList[eType].getRankValueByIndex(nIndex - 1);
-		CRankList::CRankValueType* pValueType = mRankList[eType].getRankValueByIndex(nIndex);
-		if (NULL != pValueType && NULL != pPreValueType 
-			&& pValueType->mRankValue == pPreValueType->mRankValue
-			&& pValueType->mRankTime == pPreValueType->mRankTime)
-		{
-			pValueType->mRankTime += 1;
-		}
-	}
-}
-
-
-// 获得玩家的排名
-int CRankModule::getRoleRank(EmRankType eType, int nRoleID)
-{
-	if (eType <= emRankType_None || eType >= emRankTypeMax)
-	{
-		return -1;
-	}
-
-	return mRankList[eType].getRankIndexByKey(nRoleID);
+	pUpdateRankRequest->mRankType = eType;
+	pUpdateRankRequest->mRoleID = nRoleID;
+	pUpdateRankRequest->mValue = nValue;
+	pUpdateRankRequest->mTime = CTimeManager::Inst()->getCurrTime();
+	
 }

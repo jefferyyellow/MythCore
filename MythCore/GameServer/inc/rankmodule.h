@@ -2,12 +2,11 @@
 #define __RANKMODULE_H__
 #include "logicmodule.h"
 #include "singleton.h"
-#include "ranktype.h"
-#include "rank.h"
 #include "messagefactory.h"
+#include "ranktype.h"
+#include "commontype.h"
 using namespace Myth;
 
-typedef CRank<MAX_RANK_NUM> CRankList;
 class CEntityPlayer;
 class CRankModule : public CLogicModule, public CSingleton<CRankModule>
 {
@@ -45,10 +44,6 @@ public:
 
 public:
 	// 更新玩家的排行榜
-	void updateRoleRank(EmRankType eType, CEntityPlayer* pPlayer, int nValue);
-	// 获得玩家的排名
-	int getRoleRank(EmRankType eType, int nRoleID);
-private:
-	CRankList		mRankList[emRankTypeMax];
+	void updateRoleRank(EmRankType eType, uint nRoleID, int nValue);
 };
 #endif

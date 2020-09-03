@@ -10,6 +10,8 @@ enum EmInternalMsgID
 	IM_REQUEST_PLAT_LOG					= 2,			// 平台日志请求
 	IM_REQUEST_PLAT_WEB					= 3,			// 平台Web请求
 	IM_RESPONSE_PLAT_WEB				= 4,			// 平台web回应
+	IM_REQUEST_UPDATE_RANK				= 5,			// 更新排行榜请求
+	IM_RESPONSE_UPDATE_RANK				= 6,			// 更新排行榜回应
 };
 
 #define RETURN_DATA_LENGTH 1024
@@ -66,4 +68,23 @@ public:
 	int			mHttpType;								// Http类型
 	char		mReturnData[RETURN_DATA_LENGTH];		// Post数据的长度
 };
+
+// 更新排行榜请求
+class CIMUpdateRankRequest : public CInternalMsg
+{
+public:
+	int			mRankType;							// 排行榜类型
+	uint		mRoleID;							// 玩家角色ID
+	int			mValue;								// 排行榜值
+	time_t		mTime;								// 时间
+};
+
+// 更新排行榜回应
+class CIMUpdateRankResponse : public CInternalMsg
+{
+public:
+	int			mRankType;							// 排行榜类型
+	uint		mRoleID;							// 玩家角色ID
+};
+
 #endif

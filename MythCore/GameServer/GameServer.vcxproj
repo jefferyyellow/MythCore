@@ -141,6 +141,7 @@
     <ClCompile Include="src\playerluareg.cpp" />
     <ClCompile Include="src\propertymodule.cpp" />
     <ClCompile Include="src\propertyunit.cpp" />
+    <ClCompile Include="src\rankjob.cpp" />
     <ClCompile Include="src\rankmodule.cpp" />
     <ClCompile Include="src\rankmoduletest.cpp" />
     <ClCompile Include="src\redis.cpp" />
@@ -262,6 +263,7 @@
     <ClInclude Include="inc\platconfig.h" />
     <ClInclude Include="inc\propertyunit.h" />
     <ClInclude Include="inc\rank.h" />
+    <ClInclude Include="inc\rankjob.h" />
     <ClInclude Include="inc\rankmodule.h" />
     <ClInclude Include="inc\ranktype.h" />
     <ClInclude Include="inc\redis.h" />

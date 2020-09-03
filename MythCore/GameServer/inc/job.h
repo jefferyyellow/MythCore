@@ -5,10 +5,11 @@
 enum EmJobID
 {
 	emJobID_None	= 0,
-	emJobID_Scene	= 1,
-	emJobID_DB		= 2,
-	emJobID_Log		= 3,
-	emJobID_Plat	= 4,
+	emJobID_Scene	= 1,		// 场景job
+	emJobID_DB		= 2,		// 数据库job
+	emJobID_Log		= 3,		// 本地日志job
+	emJobID_Plat	= 4,		// 平台job
+	emJobID_Rank	= 5,		// 排行榜job
 };
 
 template<int BaseCount, int Increment>
