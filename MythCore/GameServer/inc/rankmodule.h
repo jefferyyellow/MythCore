@@ -8,6 +8,7 @@
 using namespace Myth;
 
 class CEntityPlayer;
+class CInternalMsg;
 class CRankModule : public CLogicModule, public CSingleton<CRankModule>
 {
 	friend class CSingleton<CRankModule>;
@@ -38,9 +39,11 @@ public:
 	virtual	void onLoadConfig();
 
 public:
-	void onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
-	void onGetRankInfoRequest(CEntityPlayer* pPlayer, Message* pMessage);
-	void sendGetRankInfoResponse(CEntityPlayer* pPlayer, EmRankType eType);
+	void onClientMessage(CEntityPlayer& rPlayer, unsigned int nMessageID, Message* pMessage);
+	void onGetRankInfoRequest(CEntityPlayer& rPlayer, Message* pMessage);
+
+public:
+	void onIMGetRankInfoResponse(CInternalMsg* pIMMsg);
 
 public:
 	// 更新玩家的排行榜

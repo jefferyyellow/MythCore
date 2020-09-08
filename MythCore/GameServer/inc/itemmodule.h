@@ -36,7 +36,7 @@ public:
 	virtual	void onLoadConfig();
 
 public:
-	void onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
+	void onClientMessage(CEntityPlayer& rPlayer, unsigned int nMessageID, Message* pMessage);
 
 public:
 	int	getFromDropTable(int nDropTableID, int& rDropItemNum);

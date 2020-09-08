@@ -19,9 +19,17 @@ public:
 	{
 
 	}
+	
+public:
+	void	init(){}
+	void	clear(){}
 
 public:
 	virtual void doing(int uParam);
+
+public:
+	void	onIMUpdateRankRequest(CInternalMsg* pIMMsg);
+	void	onIMGetRankInfoRequest(CInternalMsg* pIMMsg);
 
 public:
 	// 更新玩家的排行榜

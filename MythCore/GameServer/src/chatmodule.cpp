@@ -3,6 +3,7 @@
 #include "locallogjob.h"
 #include "entityplayer.h"
 #include "scenejob.h"
+#include "timemanager.h"
 CChatModule::CChatModule()
 {
 	init();
@@ -76,43 +77,62 @@ void CChatModule::onLoadConfig()
 
 }
 
-void CChatModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)
+void CChatModule::onClientMessage(CEntityPlayer& rPlayer, unsigned int nMessageID, Message* pMessage)
 {
-	if (NULL == pPlayer)
-	{
-		return;
-	}
 	switch(nMessageID)
 	{
 		case ID_C2S_REQUEST_CHAT:
 		{
-			onChatRequest(pPlayer, pMessage);
+			onChatRequest(rPlayer, pMessage);
 			break;
 		}
 	}
 }
 
-void CChatModule::onChatRequest(CEntityPlayer* pPlayer, Message* pMessage)
+void CChatModule::onChatRequest(CEntityPlayer& rPlayer, Message* pMessage)
 {
-	MYTH_ASSERT(NULL != pPlayer && NULL != pMessage, return);
+	MYTH_ASSERT(NULL != pMessage, return);
 	CChatRequest* pChatRequest = static_cast<CChatRequest*>(pMessage);
-
+	CTplChatConfig* pTplChatConfig = CTplChatConfig::spChatConfig;
+	if (NULL == pTplChatConfig)
+	{
+		return;
+	}
 	int nChannel = pChatRequest->channel();
-	if(pChatRequest->content().length() > MAX_CHAT_CONTENT_LENG)
+	// 已经禁言
+	if (rPlayer.getAccountStatus(emAccountStatus_Mute))
 	{
 		return;
 	}
 
 	CChatNotify tChatNotify;
-	tChatNotify.set_playerid(pPlayer->getRoleID());
-	tChatNotify.set_playername(pPlayer->getName());
+	tChatNotify.set_playerid(rPlayer.getRoleID());
+	tChatNotify.set_playername(rPlayer.getName());
 	tChatNotify.set_channel(nChannel);
 	tChatNotify.set_content(pChatRequest->content());
 
+
+	time_t tNowTime = CTimeManager::Inst()->getCurrTime();
 	switch(nChannel)
 	{
 		case emChatChannel_World:
 		{
+			CTplChatConfig::CChatChannelLimit& rLimit = pTplChatConfig->mWorldLimit;
+			if (pChatRequest->content().length() > (uint)rLimit.mWordNum * 3)
+			{
+				return;
+			}
+
+			if (rPlayer.getLevel() < rLimit.mPlayerLevel)
+			{
+				return;
+			}
+
+			if (tNowTime - rPlayer.getInteractiveUnit().getChatTime(emChatChannel_World) < rLimit.mInterval)
+			{
+				return;
+			}
+
 			CSceneJob::Inst()->send2AllPlayer(ID_S2C_NOTIFY_CHAT, &tChatNotify);
 			break;
 		}
@@ -125,4 +145,36 @@ void CChatModule::onChatRequest(CEntityPlayer* pPlayer, Message* pMessage)
 			break;
 		}
 	}
+}
+
+/// 发送世界新闻
+void CChatModule::sendWorldNews(CEntityPlayer& rPlayer, EmWorldNewsType eNewsType, PBNewsParam& rNewParam)
+{
+	CWorldNewsNotify tNotify;
+	tNotify.set_type(eNewsType);
+	createPBNewsRole(rPlayer, tNotify.mutable_role());
+	tNotify.mutable_newsparam()->CopyFrom(rNewParam);
+	
+	CSceneJob::Inst()->send2AllPlayer(ID_S2C_NOTIFY_WORLD_NEWS, &tNotify);
+}
+
+/// 发送世界新闻
+void CChatModule::sendWorldNews(EmWorldNewsType eNewsType, PBNewsParam& rNewParam)
+{
+	CWorldNewsNotify tNotify;
+	tNotify.set_type(eNewsType);
+	tNotify.mutable_newsparam()->CopyFrom(rNewParam);
+	CSceneJob::Inst()->send2AllPlayer(ID_S2C_NOTIFY_WORLD_NEWS, &tNotify);
+}
+
+/// 创建世界传闻的玩家信息
+void CChatModule::createPBNewsRole(CEntityPlayer& rPlayer, PBNewsRole* pbNewRole)
+{
+	if (NULL == pbNewRole)
+	{
+		return;
+	}
+
+	pbNewRole->set_playerid(rPlayer.getRoleID());
+	pbNewRole->set_playername(rPlayer.getName());
 }

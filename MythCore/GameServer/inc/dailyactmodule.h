@@ -71,7 +71,7 @@ public:
 	void onActivityNotice(int nActivityID);
 
 public:
-	void onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
+	void onClientMessage(CEntityPlayer& rPlayer, unsigned int nMessageID, Message* pMessage);
 	/// 加载活动配置
 	void loadActivityConfig(const char* pConfigFile);
 	/// 检测已经开启/过时的活动

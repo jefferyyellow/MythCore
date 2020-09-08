@@ -28,6 +28,15 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* CChatNotify_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   CChatNotify_reflection_ = NULL;
+const ::google::protobuf::Descriptor* PBNewsRole_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  PBNewsRole_reflection_ = NULL;
+const ::google::protobuf::Descriptor* PBNewsParam_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  PBNewsParam_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CWorldNewsNotify_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  CWorldNewsNotify_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* CHAT_MODULE_MSG_ID_descriptor_ = NULL;
 
 }  // namespace
@@ -86,6 +95,53 @@ void protobuf_AssignDesc_chatmodule_2ehxx() {
       -1,
       sizeof(CChatNotify),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CChatNotify, _internal_metadata_));
+  PBNewsRole_descriptor_ = file->message_type(3);
+  static const int PBNewsRole_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBNewsRole, playerid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBNewsRole, playername_),
+  };
+  PBNewsRole_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      PBNewsRole_descriptor_,
+      PBNewsRole::internal_default_instance(),
+      PBNewsRole_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(PBNewsRole),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBNewsRole, _internal_metadata_));
+  PBNewsParam_descriptor_ = file->message_type(4);
+  static const int PBNewsParam_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBNewsParam, param_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBNewsParam, strparam_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBNewsParam, role_),
+  };
+  PBNewsParam_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      PBNewsParam_descriptor_,
+      PBNewsParam::internal_default_instance(),
+      PBNewsParam_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(PBNewsParam),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBNewsParam, _internal_metadata_));
+  CWorldNewsNotify_descriptor_ = file->message_type(5);
+  static const int CWorldNewsNotify_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CWorldNewsNotify, type_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CWorldNewsNotify, role_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CWorldNewsNotify, newsparam_),
+  };
+  CWorldNewsNotify_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      CWorldNewsNotify_descriptor_,
+      CWorldNewsNotify::internal_default_instance(),
+      CWorldNewsNotify_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(CWorldNewsNotify),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CWorldNewsNotify, _internal_metadata_));
   CHAT_MODULE_MSG_ID_descriptor_ = file->enum_type(0);
 }
 
@@ -106,6 +162,12 @@ void protobuf_RegisterTypes(const ::std::string&) {
       CChatResponse_descriptor_, CChatResponse::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       CChatNotify_descriptor_, CChatNotify::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      PBNewsRole_descriptor_, PBNewsRole::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      PBNewsParam_descriptor_, PBNewsParam::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      CWorldNewsNotify_descriptor_, CWorldNewsNotify::internal_default_instance());
 }
 
 }  // namespace
@@ -117,6 +179,12 @@ void protobuf_ShutdownFile_chatmodule_2ehxx() {
   delete CChatResponse_reflection_;
   CChatNotify_default_instance_.Shutdown();
   delete CChatNotify_reflection_;
+  PBNewsRole_default_instance_.Shutdown();
+  delete PBNewsRole_reflection_;
+  PBNewsParam_default_instance_.Shutdown();
+  delete PBNewsParam_reflection_;
+  CWorldNewsNotify_default_instance_.Shutdown();
+  delete CWorldNewsNotify_reflection_;
 }
 
 void protobuf_InitDefaults_chatmodule_2ehxx_impl() {
@@ -127,9 +195,17 @@ void protobuf_InitDefaults_chatmodule_2ehxx_impl() {
   CChatResponse_default_instance_.DefaultConstruct();
   ::google::protobuf::internal::GetEmptyString();
   CChatNotify_default_instance_.DefaultConstruct();
+  ::google::protobuf::internal::GetEmptyString();
+  PBNewsRole_default_instance_.DefaultConstruct();
+  ::google::protobuf::internal::GetEmptyString();
+  PBNewsParam_default_instance_.DefaultConstruct();
+  CWorldNewsNotify_default_instance_.DefaultConstruct();
   CChatRequest_default_instance_.get_mutable()->InitAsDefaultInstance();
   CChatResponse_default_instance_.get_mutable()->InitAsDefaultInstance();
   CChatNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
+  PBNewsRole_default_instance_.get_mutable()->InitAsDefaultInstance();
+  PBNewsParam_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CWorldNewsNotify_default_instance_.get_mutable()->InitAsDefaultInstance();
 }
 
 GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_InitDefaults_chatmodule_2ehxx_once_);
@@ -146,10 +222,17 @@ void protobuf_AddDesc_chatmodule_2ehxx_impl() {
     "nel\030\001 \001(\r\022\017\n\007Content\030\002 \001(\t\"\037\n\rCChatRespo"
     "nse\022\016\n\006Result\030\001 \001(\r\"U\n\013CChatNotify\022\020\n\010Pl"
     "ayerID\030\001 \001(\r\022\022\n\nPlayerName\030\002 \001(\t\022\017\n\007Chan"
-    "nel\030\003 \001(\r\022\017\n\007Content\030\004 \001(\t*|\n\022CHAT_MODUL"
-    "E_MSG_ID\022\030\n\024ID_CHAT_MODULE_ERROR\020\000\022\030\n\023ID"
-    "_C2S_REQUEST_CHAT\020\2000\022\031\n\024ID_S2C_RESPONSE_"
-    "CHAT\020\2010\022\027\n\022ID_S2C_NOTIFY_CHAT\020\2020b\006proto3", 320);
+    "nel\030\003 \001(\r\022\017\n\007Content\030\004 \001(\t\"2\n\nPBNewsRole"
+    "\022\020\n\010PlayerID\030\001 \001(\r\022\022\n\nPlayerName\030\002 \001(\t\"I"
+    "\n\013PBNewsParam\022\r\n\005Param\030\001 \003(\r\022\020\n\010StrParam"
+    "\030\002 \003(\t\022\031\n\004Role\030\003 \003(\0132\013.PBNewsRole\"\\\n\020CWo"
+    "rldNewsNotify\022\014\n\004Type\030\001 \001(\r\022\031\n\004Role\030\002 \001("
+    "\0132\013.PBNewsRole\022\037\n\tNewsParam\030\003 \001(\0132\014.PBNe"
+    "wsParam*\233\001\n\022CHAT_MODULE_MSG_ID\022\030\n\024ID_CHA"
+    "T_MODULE_ERROR\020\000\022\030\n\023ID_C2S_REQUEST_CHAT\020"
+    "\2000\022\031\n\024ID_S2C_RESPONSE_CHAT\020\2010\022\027\n\022ID_S2C_"
+    "NOTIFY_CHAT\020\2020\022\035\n\030ID_S2C_NOTIFY_WORLD_NE"
+    "WS\020\2030b\006proto3", 573);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "chatmodule.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_chatmodule_2ehxx);
@@ -176,6 +259,7 @@ bool CHAT_MODULE_MSG_ID_IsValid(int value) {
     case 6144:
     case 6145:
     case 6146:
+    case 6147:
       return true;
     default:
       return false;
@@ -1288,6 +1372,1227 @@ void CChatNotify::set_allocated_content(::std::string* content) {
 
 inline const CChatNotify* CChatNotify::internal_default_instance() {
   return &CChatNotify_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int PBNewsRole::kPlayerIDFieldNumber;
+const int PBNewsRole::kPlayerNameFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+PBNewsRole::PBNewsRole()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_chatmodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:PBNewsRole)
+}
+
+void PBNewsRole::InitAsDefaultInstance() {
+}
+
+PBNewsRole::PBNewsRole(const PBNewsRole& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:PBNewsRole)
+}
+
+void PBNewsRole::SharedCtor() {
+  playername_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  playerid_ = 0u;
+  _cached_size_ = 0;
+}
+
+PBNewsRole::~PBNewsRole() {
+  // @@protoc_insertion_point(destructor:PBNewsRole)
+  SharedDtor();
+}
+
+void PBNewsRole::SharedDtor() {
+  playername_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+void PBNewsRole::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* PBNewsRole::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return PBNewsRole_descriptor_;
+}
+
+const PBNewsRole& PBNewsRole::default_instance() {
+  protobuf_InitDefaults_chatmodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<PBNewsRole> PBNewsRole_default_instance_;
+
+PBNewsRole* PBNewsRole::New(::google::protobuf::Arena* arena) const {
+  PBNewsRole* n = new PBNewsRole;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void PBNewsRole::Clear() {
+// @@protoc_insertion_point(message_clear_start:PBNewsRole)
+  playerid_ = 0u;
+  playername_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+bool PBNewsRole::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:PBNewsRole)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 PlayerID = 1;
+      case 1: {
+        if (tag == 8) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &playerid_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_PlayerName;
+        break;
+      }
+
+      // optional string PlayerName = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_PlayerName:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_playername()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->playername().data(), this->playername().length(),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "PBNewsRole.PlayerName"));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:PBNewsRole)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:PBNewsRole)
+  return false;
+#undef DO_
+}
+
+void PBNewsRole::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:PBNewsRole)
+  // optional uint32 PlayerID = 1;
+  if (this->playerid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->playerid(), output);
+  }
+
+  // optional string PlayerName = 2;
+  if (this->playername().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->playername().data(), this->playername().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "PBNewsRole.PlayerName");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->playername(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:PBNewsRole)
+}
+
+::google::protobuf::uint8* PBNewsRole::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:PBNewsRole)
+  // optional uint32 PlayerID = 1;
+  if (this->playerid() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->playerid(), target);
+  }
+
+  // optional string PlayerName = 2;
+  if (this->playername().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->playername().data(), this->playername().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "PBNewsRole.PlayerName");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->playername(), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:PBNewsRole)
+  return target;
+}
+
+size_t PBNewsRole::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:PBNewsRole)
+  size_t total_size = 0;
+
+  // optional uint32 PlayerID = 1;
+  if (this->playerid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->playerid());
+  }
+
+  // optional string PlayerName = 2;
+  if (this->playername().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->playername());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void PBNewsRole::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:PBNewsRole)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const PBNewsRole* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const PBNewsRole>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:PBNewsRole)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:PBNewsRole)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void PBNewsRole::MergeFrom(const PBNewsRole& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:PBNewsRole)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void PBNewsRole::UnsafeMergeFrom(const PBNewsRole& from) {
+  GOOGLE_DCHECK(&from != this);
+  if (from.playerid() != 0) {
+    set_playerid(from.playerid());
+  }
+  if (from.playername().size() > 0) {
+
+    playername_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.playername_);
+  }
+}
+
+void PBNewsRole::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:PBNewsRole)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void PBNewsRole::CopyFrom(const PBNewsRole& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:PBNewsRole)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool PBNewsRole::IsInitialized() const {
+
+  return true;
+}
+
+void PBNewsRole::Swap(PBNewsRole* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void PBNewsRole::InternalSwap(PBNewsRole* other) {
+  std::swap(playerid_, other->playerid_);
+  playername_.Swap(&other->playername_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata PBNewsRole::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = PBNewsRole_descriptor_;
+  metadata.reflection = PBNewsRole_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// PBNewsRole
+
+// optional uint32 PlayerID = 1;
+void PBNewsRole::clear_playerid() {
+  playerid_ = 0u;
+}
+::google::protobuf::uint32 PBNewsRole::playerid() const {
+  // @@protoc_insertion_point(field_get:PBNewsRole.PlayerID)
+  return playerid_;
+}
+void PBNewsRole::set_playerid(::google::protobuf::uint32 value) {
+  
+  playerid_ = value;
+  // @@protoc_insertion_point(field_set:PBNewsRole.PlayerID)
+}
+
+// optional string PlayerName = 2;
+void PBNewsRole::clear_playername() {
+  playername_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+const ::std::string& PBNewsRole::playername() const {
+  // @@protoc_insertion_point(field_get:PBNewsRole.PlayerName)
+  return playername_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+void PBNewsRole::set_playername(const ::std::string& value) {
+  
+  playername_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:PBNewsRole.PlayerName)
+}
+void PBNewsRole::set_playername(const char* value) {
+  
+  playername_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:PBNewsRole.PlayerName)
+}
+void PBNewsRole::set_playername(const char* value, size_t size) {
+  
+  playername_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:PBNewsRole.PlayerName)
+}
+::std::string* PBNewsRole::mutable_playername() {
+  
+  // @@protoc_insertion_point(field_mutable:PBNewsRole.PlayerName)
+  return playername_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+::std::string* PBNewsRole::release_playername() {
+  // @@protoc_insertion_point(field_release:PBNewsRole.PlayerName)
+  
+  return playername_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+void PBNewsRole::set_allocated_playername(::std::string* playername) {
+  if (playername != NULL) {
+    
+  } else {
+    
+  }
+  playername_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), playername);
+  // @@protoc_insertion_point(field_set_allocated:PBNewsRole.PlayerName)
+}
+
+inline const PBNewsRole* PBNewsRole::internal_default_instance() {
+  return &PBNewsRole_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int PBNewsParam::kParamFieldNumber;
+const int PBNewsParam::kStrParamFieldNumber;
+const int PBNewsParam::kRoleFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+PBNewsParam::PBNewsParam()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_chatmodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:PBNewsParam)
+}
+
+void PBNewsParam::InitAsDefaultInstance() {
+}
+
+PBNewsParam::PBNewsParam(const PBNewsParam& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:PBNewsParam)
+}
+
+void PBNewsParam::SharedCtor() {
+  _cached_size_ = 0;
+}
+
+PBNewsParam::~PBNewsParam() {
+  // @@protoc_insertion_point(destructor:PBNewsParam)
+  SharedDtor();
+}
+
+void PBNewsParam::SharedDtor() {
+}
+
+void PBNewsParam::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* PBNewsParam::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return PBNewsParam_descriptor_;
+}
+
+const PBNewsParam& PBNewsParam::default_instance() {
+  protobuf_InitDefaults_chatmodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<PBNewsParam> PBNewsParam_default_instance_;
+
+PBNewsParam* PBNewsParam::New(::google::protobuf::Arena* arena) const {
+  PBNewsParam* n = new PBNewsParam;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void PBNewsParam::Clear() {
+// @@protoc_insertion_point(message_clear_start:PBNewsParam)
+  param_.Clear();
+  strparam_.Clear();
+  role_.Clear();
+}
+
+bool PBNewsParam::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:PBNewsParam)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // repeated uint32 Param = 1;
+      case 1: {
+        if (tag == 10) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, this->mutable_param())));
+        } else if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 1, 10, input, this->mutable_param())));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_StrParam;
+        break;
+      }
+
+      // repeated string StrParam = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_StrParam:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->add_strparam()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->strparam(this->strparam_size() - 1).data(),
+            this->strparam(this->strparam_size() - 1).length(),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "PBNewsParam.StrParam"));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_StrParam;
+        if (input->ExpectTag(26)) goto parse_Role;
+        break;
+      }
+
+      // repeated .PBNewsRole Role = 3;
+      case 3: {
+        if (tag == 26) {
+         parse_Role:
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_Role:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+                input, add_role()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_loop_Role;
+        input->UnsafeDecrementRecursionDepth();
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:PBNewsParam)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:PBNewsParam)
+  return false;
+#undef DO_
+}
+
+void PBNewsParam::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:PBNewsParam)
+  // repeated uint32 Param = 1;
+  if (this->param_size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteTag(1, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    output->WriteVarint32(_param_cached_byte_size_);
+  }
+  for (int i = 0; i < this->param_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32NoTag(
+      this->param(i), output);
+  }
+
+  // repeated string StrParam = 2;
+  for (int i = 0; i < this->strparam_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->strparam(i).data(), this->strparam(i).length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "PBNewsParam.StrParam");
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      2, this->strparam(i), output);
+  }
+
+  // repeated .PBNewsRole Role = 3;
+  for (unsigned int i = 0, n = this->role_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      3, this->role(i), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:PBNewsParam)
+}
+
+::google::protobuf::uint8* PBNewsParam::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:PBNewsParam)
+  // repeated uint32 Param = 1;
+  if (this->param_size() > 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteTagToArray(
+      1,
+      ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED,
+      target);
+    target = ::google::protobuf::io::CodedOutputStream::WriteVarint32ToArray(
+      _param_cached_byte_size_, target);
+  }
+  for (int i = 0; i < this->param_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteUInt32NoTagToArray(this->param(i), target);
+  }
+
+  // repeated string StrParam = 2;
+  for (int i = 0; i < this->strparam_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->strparam(i).data(), this->strparam(i).length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "PBNewsParam.StrParam");
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteStringToArray(2, this->strparam(i), target);
+  }
+
+  // repeated .PBNewsRole Role = 3;
+  for (unsigned int i = 0, n = this->role_size(); i < n; i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageNoVirtualToArray(
+        3, this->role(i), false, target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:PBNewsParam)
+  return target;
+}
+
+size_t PBNewsParam::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:PBNewsParam)
+  size_t total_size = 0;
+
+  // repeated uint32 Param = 1;
+  {
+    size_t data_size = 0;
+    unsigned int count = this->param_size();
+    for (unsigned int i = 0; i < count; i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::
+        UInt32Size(this->param(i));
+    }
+    if (data_size > 0) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);
+    }
+    int cached_size = ::google::protobuf::internal::ToCachedSize(data_size);
+    GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+    _param_cached_byte_size_ = cached_size;
+    GOOGLE_SAFE_CONCURRENT_WRITES_END();
+    total_size += data_size;
+  }
+
+  // repeated string StrParam = 2;
+  total_size += 1 *
+      ::google::protobuf::internal::FromIntSize(this->strparam_size());
+  for (int i = 0; i < this->strparam_size(); i++) {
+    total_size += ::google::protobuf::internal::WireFormatLite::StringSize(
+      this->strparam(i));
+  }
+
+  // repeated .PBNewsRole Role = 3;
+  {
+    unsigned int count = this->role_size();
+    total_size += 1UL * count;
+    for (unsigned int i = 0; i < count; i++) {
+      total_size +=
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->role(i));
+    }
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void PBNewsParam::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:PBNewsParam)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const PBNewsParam* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const PBNewsParam>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:PBNewsParam)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:PBNewsParam)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void PBNewsParam::MergeFrom(const PBNewsParam& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:PBNewsParam)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void PBNewsParam::UnsafeMergeFrom(const PBNewsParam& from) {
+  GOOGLE_DCHECK(&from != this);
+  param_.UnsafeMergeFrom(from.param_);
+  strparam_.UnsafeMergeFrom(from.strparam_);
+  role_.MergeFrom(from.role_);
+}
+
+void PBNewsParam::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:PBNewsParam)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void PBNewsParam::CopyFrom(const PBNewsParam& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:PBNewsParam)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool PBNewsParam::IsInitialized() const {
+
+  return true;
+}
+
+void PBNewsParam::Swap(PBNewsParam* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void PBNewsParam::InternalSwap(PBNewsParam* other) {
+  param_.UnsafeArenaSwap(&other->param_);
+  strparam_.UnsafeArenaSwap(&other->strparam_);
+  role_.UnsafeArenaSwap(&other->role_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata PBNewsParam::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = PBNewsParam_descriptor_;
+  metadata.reflection = PBNewsParam_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// PBNewsParam
+
+// repeated uint32 Param = 1;
+int PBNewsParam::param_size() const {
+  return param_.size();
+}
+void PBNewsParam::clear_param() {
+  param_.Clear();
+}
+::google::protobuf::uint32 PBNewsParam::param(int index) const {
+  // @@protoc_insertion_point(field_get:PBNewsParam.Param)
+  return param_.Get(index);
+}
+void PBNewsParam::set_param(int index, ::google::protobuf::uint32 value) {
+  param_.Set(index, value);
+  // @@protoc_insertion_point(field_set:PBNewsParam.Param)
+}
+void PBNewsParam::add_param(::google::protobuf::uint32 value) {
+  param_.Add(value);
+  // @@protoc_insertion_point(field_add:PBNewsParam.Param)
+}
+const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+PBNewsParam::param() const {
+  // @@protoc_insertion_point(field_list:PBNewsParam.Param)
+  return param_;
+}
+::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+PBNewsParam::mutable_param() {
+  // @@protoc_insertion_point(field_mutable_list:PBNewsParam.Param)
+  return &param_;
+}
+
+// repeated string StrParam = 2;
+int PBNewsParam::strparam_size() const {
+  return strparam_.size();
+}
+void PBNewsParam::clear_strparam() {
+  strparam_.Clear();
+}
+const ::std::string& PBNewsParam::strparam(int index) const {
+  // @@protoc_insertion_point(field_get:PBNewsParam.StrParam)
+  return strparam_.Get(index);
+}
+::std::string* PBNewsParam::mutable_strparam(int index) {
+  // @@protoc_insertion_point(field_mutable:PBNewsParam.StrParam)
+  return strparam_.Mutable(index);
+}
+void PBNewsParam::set_strparam(int index, const ::std::string& value) {
+  // @@protoc_insertion_point(field_set:PBNewsParam.StrParam)
+  strparam_.Mutable(index)->assign(value);
+}
+void PBNewsParam::set_strparam(int index, const char* value) {
+  strparam_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:PBNewsParam.StrParam)
+}
+void PBNewsParam::set_strparam(int index, const char* value, size_t size) {
+  strparam_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:PBNewsParam.StrParam)
+}
+::std::string* PBNewsParam::add_strparam() {
+  // @@protoc_insertion_point(field_add_mutable:PBNewsParam.StrParam)
+  return strparam_.Add();
+}
+void PBNewsParam::add_strparam(const ::std::string& value) {
+  strparam_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:PBNewsParam.StrParam)
+}
+void PBNewsParam::add_strparam(const char* value) {
+  strparam_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:PBNewsParam.StrParam)
+}
+void PBNewsParam::add_strparam(const char* value, size_t size) {
+  strparam_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:PBNewsParam.StrParam)
+}
+const ::google::protobuf::RepeatedPtrField< ::std::string>&
+PBNewsParam::strparam() const {
+  // @@protoc_insertion_point(field_list:PBNewsParam.StrParam)
+  return strparam_;
+}
+::google::protobuf::RepeatedPtrField< ::std::string>*
+PBNewsParam::mutable_strparam() {
+  // @@protoc_insertion_point(field_mutable_list:PBNewsParam.StrParam)
+  return &strparam_;
+}
+
+// repeated .PBNewsRole Role = 3;
+int PBNewsParam::role_size() const {
+  return role_.size();
+}
+void PBNewsParam::clear_role() {
+  role_.Clear();
+}
+const ::PBNewsRole& PBNewsParam::role(int index) const {
+  // @@protoc_insertion_point(field_get:PBNewsParam.Role)
+  return role_.Get(index);
+}
+::PBNewsRole* PBNewsParam::mutable_role(int index) {
+  // @@protoc_insertion_point(field_mutable:PBNewsParam.Role)
+  return role_.Mutable(index);
+}
+::PBNewsRole* PBNewsParam::add_role() {
+  // @@protoc_insertion_point(field_add:PBNewsParam.Role)
+  return role_.Add();
+}
+::google::protobuf::RepeatedPtrField< ::PBNewsRole >*
+PBNewsParam::mutable_role() {
+  // @@protoc_insertion_point(field_mutable_list:PBNewsParam.Role)
+  return &role_;
+}
+const ::google::protobuf::RepeatedPtrField< ::PBNewsRole >&
+PBNewsParam::role() const {
+  // @@protoc_insertion_point(field_list:PBNewsParam.Role)
+  return role_;
+}
+
+inline const PBNewsParam* PBNewsParam::internal_default_instance() {
+  return &PBNewsParam_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int CWorldNewsNotify::kTypeFieldNumber;
+const int CWorldNewsNotify::kRoleFieldNumber;
+const int CWorldNewsNotify::kNewsParamFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+CWorldNewsNotify::CWorldNewsNotify()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_chatmodule_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CWorldNewsNotify)
+}
+
+void CWorldNewsNotify::InitAsDefaultInstance() {
+  role_ = const_cast< ::PBNewsRole*>(
+      ::PBNewsRole::internal_default_instance());
+  newsparam_ = const_cast< ::PBNewsParam*>(
+      ::PBNewsParam::internal_default_instance());
+}
+
+CWorldNewsNotify::CWorldNewsNotify(const CWorldNewsNotify& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:CWorldNewsNotify)
+}
+
+void CWorldNewsNotify::SharedCtor() {
+  role_ = NULL;
+  newsparam_ = NULL;
+  type_ = 0u;
+  _cached_size_ = 0;
+}
+
+CWorldNewsNotify::~CWorldNewsNotify() {
+  // @@protoc_insertion_point(destructor:CWorldNewsNotify)
+  SharedDtor();
+}
+
+void CWorldNewsNotify::SharedDtor() {
+  if (this != &CWorldNewsNotify_default_instance_.get()) {
+    delete role_;
+    delete newsparam_;
+  }
+}
+
+void CWorldNewsNotify::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* CWorldNewsNotify::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return CWorldNewsNotify_descriptor_;
+}
+
+const CWorldNewsNotify& CWorldNewsNotify::default_instance() {
+  protobuf_InitDefaults_chatmodule_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<CWorldNewsNotify> CWorldNewsNotify_default_instance_;
+
+CWorldNewsNotify* CWorldNewsNotify::New(::google::protobuf::Arena* arena) const {
+  CWorldNewsNotify* n = new CWorldNewsNotify;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void CWorldNewsNotify::Clear() {
+// @@protoc_insertion_point(message_clear_start:CWorldNewsNotify)
+  type_ = 0u;
+  if (GetArenaNoVirtual() == NULL && role_ != NULL) delete role_;
+  role_ = NULL;
+  if (GetArenaNoVirtual() == NULL && newsparam_ != NULL) delete newsparam_;
+  newsparam_ = NULL;
+}
+
+bool CWorldNewsNotify::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:CWorldNewsNotify)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 Type = 1;
+      case 1: {
+        if (tag == 8) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &type_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_Role;
+        break;
+      }
+
+      // optional .PBNewsRole Role = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_Role:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_role()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_NewsParam;
+        break;
+      }
+
+      // optional .PBNewsParam NewsParam = 3;
+      case 3: {
+        if (tag == 26) {
+         parse_NewsParam:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_newsparam()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:CWorldNewsNotify)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:CWorldNewsNotify)
+  return false;
+#undef DO_
+}
+
+void CWorldNewsNotify::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:CWorldNewsNotify)
+  // optional uint32 Type = 1;
+  if (this->type() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->type(), output);
+  }
+
+  // optional .PBNewsRole Role = 2;
+  if (this->has_role()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      2, *this->role_, output);
+  }
+
+  // optional .PBNewsParam NewsParam = 3;
+  if (this->has_newsparam()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      3, *this->newsparam_, output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:CWorldNewsNotify)
+}
+
+::google::protobuf::uint8* CWorldNewsNotify::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:CWorldNewsNotify)
+  // optional uint32 Type = 1;
+  if (this->type() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->type(), target);
+  }
+
+  // optional .PBNewsRole Role = 2;
+  if (this->has_role()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageNoVirtualToArray(
+        2, *this->role_, false, target);
+  }
+
+  // optional .PBNewsParam NewsParam = 3;
+  if (this->has_newsparam()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageNoVirtualToArray(
+        3, *this->newsparam_, false, target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:CWorldNewsNotify)
+  return target;
+}
+
+size_t CWorldNewsNotify::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CWorldNewsNotify)
+  size_t total_size = 0;
+
+  // optional uint32 Type = 1;
+  if (this->type() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->type());
+  }
+
+  // optional .PBNewsRole Role = 2;
+  if (this->has_role()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->role_);
+  }
+
+  // optional .PBNewsParam NewsParam = 3;
+  if (this->has_newsparam()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->newsparam_);
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void CWorldNewsNotify::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CWorldNewsNotify)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const CWorldNewsNotify* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CWorldNewsNotify>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CWorldNewsNotify)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CWorldNewsNotify)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void CWorldNewsNotify::MergeFrom(const CWorldNewsNotify& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CWorldNewsNotify)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void CWorldNewsNotify::UnsafeMergeFrom(const CWorldNewsNotify& from) {
+  GOOGLE_DCHECK(&from != this);
+  if (from.type() != 0) {
+    set_type(from.type());
+  }
+  if (from.has_role()) {
+    mutable_role()->::PBNewsRole::MergeFrom(from.role());
+  }
+  if (from.has_newsparam()) {
+    mutable_newsparam()->::PBNewsParam::MergeFrom(from.newsparam());
+  }
+}
+
+void CWorldNewsNotify::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CWorldNewsNotify)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CWorldNewsNotify::CopyFrom(const CWorldNewsNotify& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CWorldNewsNotify)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool CWorldNewsNotify::IsInitialized() const {
+
+  return true;
+}
+
+void CWorldNewsNotify::Swap(CWorldNewsNotify* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void CWorldNewsNotify::InternalSwap(CWorldNewsNotify* other) {
+  std::swap(type_, other->type_);
+  std::swap(role_, other->role_);
+  std::swap(newsparam_, other->newsparam_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata CWorldNewsNotify::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = CWorldNewsNotify_descriptor_;
+  metadata.reflection = CWorldNewsNotify_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// CWorldNewsNotify
+
+// optional uint32 Type = 1;
+void CWorldNewsNotify::clear_type() {
+  type_ = 0u;
+}
+::google::protobuf::uint32 CWorldNewsNotify::type() const {
+  // @@protoc_insertion_point(field_get:CWorldNewsNotify.Type)
+  return type_;
+}
+void CWorldNewsNotify::set_type(::google::protobuf::uint32 value) {
+  
+  type_ = value;
+  // @@protoc_insertion_point(field_set:CWorldNewsNotify.Type)
+}
+
+// optional .PBNewsRole Role = 2;
+bool CWorldNewsNotify::has_role() const {
+  return this != internal_default_instance() && role_ != NULL;
+}
+void CWorldNewsNotify::clear_role() {
+  if (GetArenaNoVirtual() == NULL && role_ != NULL) delete role_;
+  role_ = NULL;
+}
+const ::PBNewsRole& CWorldNewsNotify::role() const {
+  // @@protoc_insertion_point(field_get:CWorldNewsNotify.Role)
+  return role_ != NULL ? *role_
+                         : *::PBNewsRole::internal_default_instance();
+}
+::PBNewsRole* CWorldNewsNotify::mutable_role() {
+  
+  if (role_ == NULL) {
+    role_ = new ::PBNewsRole;
+  }
+  // @@protoc_insertion_point(field_mutable:CWorldNewsNotify.Role)
+  return role_;
+}
+::PBNewsRole* CWorldNewsNotify::release_role() {
+  // @@protoc_insertion_point(field_release:CWorldNewsNotify.Role)
+  
+  ::PBNewsRole* temp = role_;
+  role_ = NULL;
+  return temp;
+}
+void CWorldNewsNotify::set_allocated_role(::PBNewsRole* role) {
+  delete role_;
+  role_ = role;
+  if (role) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:CWorldNewsNotify.Role)
+}
+
+// optional .PBNewsParam NewsParam = 3;
+bool CWorldNewsNotify::has_newsparam() const {
+  return this != internal_default_instance() && newsparam_ != NULL;
+}
+void CWorldNewsNotify::clear_newsparam() {
+  if (GetArenaNoVirtual() == NULL && newsparam_ != NULL) delete newsparam_;
+  newsparam_ = NULL;
+}
+const ::PBNewsParam& CWorldNewsNotify::newsparam() const {
+  // @@protoc_insertion_point(field_get:CWorldNewsNotify.NewsParam)
+  return newsparam_ != NULL ? *newsparam_
+                         : *::PBNewsParam::internal_default_instance();
+}
+::PBNewsParam* CWorldNewsNotify::mutable_newsparam() {
+  
+  if (newsparam_ == NULL) {
+    newsparam_ = new ::PBNewsParam;
+  }
+  // @@protoc_insertion_point(field_mutable:CWorldNewsNotify.NewsParam)
+  return newsparam_;
+}
+::PBNewsParam* CWorldNewsNotify::release_newsparam() {
+  // @@protoc_insertion_point(field_release:CWorldNewsNotify.NewsParam)
+  
+  ::PBNewsParam* temp = newsparam_;
+  newsparam_ = NULL;
+  return temp;
+}
+void CWorldNewsNotify::set_allocated_newsparam(::PBNewsParam* newsparam) {
+  delete newsparam_;
+  newsparam_ = newsparam;
+  if (newsparam) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:CWorldNewsNotify.NewsParam)
+}
+
+inline const CWorldNewsNotify* CWorldNewsNotify::internal_default_instance() {
+  return &CWorldNewsNotify_default_instance_.get();
 }
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 

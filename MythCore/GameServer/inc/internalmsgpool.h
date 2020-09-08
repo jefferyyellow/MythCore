@@ -27,5 +27,7 @@ private:
 	CBlockMemory<CIMPlatWebResponse, 100, 100>			mPlatWebResponsePool;
 	CBlockMemory<CIMUpdateRankRequest, 100, 100>		mUpdateRankRequestPool;
 	CBlockMemory<CIMUpdateRankResponse, 100, 100>		mUpdateRankResponsePool;
+	CBlockMemory<CIMGetRankInfoRequest, 100, 100>		mGetRankInfoRequestPool;
+	CBlockMemory<CIMGetRankInfoResponse, 100, 100>		mGetRankInfoResponsePool;
 };
 #endif

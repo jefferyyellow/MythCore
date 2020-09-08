@@ -1,6 +1,7 @@
 #include "rankjob.h"
 #include "internalmsgpool.h"
 #include "scenejob.h"
+#include "jobmanager.h"
 void CRankJob::doing(int uParam)
 {
 	int nCount = 0;
@@ -15,12 +16,21 @@ void CRankJob::doing(int uParam)
 
 		switch (pIMMsg->getMsgID())
 		{
-			
+			case IM_REQUEST_UPDATE_RANK:
+			{
+				onIMUpdateRankRequest(pIMMsg);
+				break;
+			}
+			case IM_REQUEST_GET_RANK_INFO:
+			{
+				onIMGetRankInfoRequest(pIMMsg);
+				break;
+			}
 		}
 
 		CInternalMsgPool::Inst()->freeMsg(pIMMsg);
 		++nCount;
-		if (nCount > 1000)
+		if (nCount > 100)
 		{
 			break;
 		}
@@ -38,6 +48,75 @@ void CRankJob::doing(int uParam)
 	}
 }
 
+void CRankJob::onIMUpdateRankRequest(CInternalMsg* pIMMsg)
+{
+	if (NULL == pIMMsg)
+	{
+		return;
+	}
+	CIMUpdateRankRequest* pUpdateRankRequest = (CIMUpdateRankRequest*)pIMMsg;
+	EmRankType eType = (EmRankType)(pUpdateRankRequest->mRankType);
+	uint nRoleID = pUpdateRankRequest->mRoleID;
+	int nValue = pUpdateRankRequest->mValue;
+	time_t tTime = pUpdateRankRequest->mTime;
+
+	updateRoleRank(eType, nRoleID, nValue, tTime);
+}
+
+void CRankJob::onIMGetRankInfoRequest(CInternalMsg* pIMMsg)
+{
+	if (NULL == pIMMsg)
+	{
+		return;
+	}
+	CIMGetRankInfoRequest* pGetRankInfoRequest = (CIMGetRankInfoRequest*)pIMMsg;
+	
+	EmRankType eRankType = (EmRankType)(pGetRankInfoRequest->mRankType);
+	int nStartPlace = pGetRankInfoRequest->mStartPlace;
+	int nEndPlace = pGetRankInfoRequest->mEndPlace;
+	uint nSelfRoleID = pGetRankInfoRequest->mSelfRoleID;
+	int nSelfObjID = pGetRankInfoRequest->mSelfObjID;
+	
+	CIMGetRankInfoResponse* pResponse = (CIMGetRankInfoResponse*)CInternalMsgPool::Inst()->allocMsg(IM_RESPONSE_GET_RANK_INFO);
+	if (NULL == pResponse)
+	{
+		return;
+	}
+	pResponse->mRankType = (byte)eRankType;
+	int nCount = 0;
+	for (int i = nStartPlace; i <= nEndPlace; ++ i)
+	{
+		CRankList::CRankValueType* pRankValueType = mRankList[eRankType].getRankValueByIndex(i);
+		if (NULL == pRankValueType)
+		{
+			continue;
+		}
+
+		pResponse->mRankRoleID[nCount] = pRankValueType->mRankKey;
+		pResponse->mRankValue[nCount]  = pRankValueType->mRankValue;
+		++ nCount;
+		if (nCount >= MAX_RANK_SHOW_NUM)
+		{
+			break;
+		}
+	}
+	pResponse->mSelfRoleID = pGetRankInfoRequest->mSelfRoleID;
+	pResponse->mSelfObjID = pGetRankInfoRequest->mSelfObjID;
+
+	CRankList::CRankValueType* pRankValueType = mRankList[eRankType].getRankValueByKey(nSelfRoleID);
+	if (NULL != pRankValueType)
+	{
+		pResponse->mSelfRankPlace = pRankValueType->mRankIndex;
+		pResponse->mSelfRankValue = pRankValueType->mRankValue;
+	}
+	else
+	{
+		pResponse->mSelfRankPlace = -1;
+		pResponse->mSelfRankValue = 0;
+	}
+
+	CJobManager::Inst()->pushTask(emJobTaskType_Scene, pResponse);
+}
 
 // 更新玩家的排行榜，暂时这么做吧，如果需要缓存再说
 void CRankJob::updateRoleRank(EmRankType eType, uint nRoleID, int nValue, time_t nTime)
@@ -52,19 +131,7 @@ void CRankJob::updateRoleRank(EmRankType eType, uint nRoleID, int nValue, time_t
 	tRankValue.mRankTime = nTime;
 	tRankValue.mRankKey = nRoleID;
 
-	int nIndex = mRankList[eType].refreshRankValue(tRankValue);
-	if (nIndex >= 1)
-	{
-		// 如果出现排行榜的值和排行榜时间都相等的情况，手动将当前的排行榜的值加1
-		CRankList::CRankValueType* pPreValueType = mRankList[eType].getRankValueByIndex(nIndex - 1);
-		CRankList::CRankValueType* pValueType = mRankList[eType].getRankValueByIndex(nIndex);
-		if (NULL != pValueType && NULL != pPreValueType
-			&& pValueType->mRankValue == pPreValueType->mRankValue
-			&& pValueType->mRankTime == pPreValueType->mRankTime)
-		{
-			pValueType->mRankTime += 1;
-		}
-	}
+	mRankList[eType].refreshRankValue(tRankValue);
 }
 
 

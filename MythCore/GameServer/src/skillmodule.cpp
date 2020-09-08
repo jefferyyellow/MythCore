@@ -75,26 +75,21 @@ void CSkillModule::onLoadConfig()
 }
 
 
-void CSkillModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)
+void CSkillModule::onClientMessage(CEntityPlayer& rPlayer, unsigned int nMessageID, Message* pMessage)
 {
-	if (NULL == pPlayer)
-	{
-		return;
-	}
-
 	switch(nMessageID)
 	{
 		case ID_C2S_REQUEST_USE_SKILL:
 		{
-			onUseSkillRequest(pPlayer, pMessage);
+			onUseSkillRequest(rPlayer, pMessage);
 			break;
 		}
 	}
 }
 
-void CSkillModule::onUseSkillRequest(CEntityPlayer* pPlayer, Message* pMessage)
+void CSkillModule::onUseSkillRequest(CEntityPlayer& rPlayer, Message* pMessage)
 {
-	MYTH_ASSERT(NULL != pMessage && NULL != pPlayer, return);
+	MYTH_ASSERT(NULL != pMessage, return);
 	CUseSkillRequest* pUseSkillRequest = static_cast<CUseSkillRequest*>(pMessage);
 	MYTH_ASSERT(NULL != pUseSkillRequest, return);
 
@@ -139,8 +134,8 @@ void CSkillModule::onUseSkillRequest(CEntityPlayer* pPlayer, Message* pMessage)
 
 	for (int i = 0; i < nTargetCount; ++ i)
 	{
-		int nSkillDamage = getSkillDamage(pPlayer, pTplSkill, pPlayerSkill->getSkillLevel(), pSkillTarget[i]);
-		pSkillTarget[i]->reduceHp(pPlayer, nSkillDamage);
+		int nSkillDamage = getSkillDamage(&rPlayer, pTplSkill, pPlayerSkill->getSkillLevel(), pSkillTarget[i]);
+		pSkillTarget[i]->reduceHp(&rPlayer, nSkillDamage);
 	}
 }
 

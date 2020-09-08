@@ -103,11 +103,11 @@ public:
 	void		send2AllPlayer(unsigned short nMessageID, Message* pMessage);
 	/// 断开玩家的连接
 	void		disconnectPlayer(CExchangeHead& rExchangeHead);
-	void		disconnectPlayer(CEntityPlayer* pPlayer);
+	void		disconnectPlayer(CEntityPlayer& rPlayer);
 	/// 登录了一个玩家（只是登录校验完成，数据还没有加载完成）
 	bool		onPlayerLogin(CEntityPlayer* pNewPlayer);
 	/// 离开了一个玩家
-	void		destroyPlayerObject(CEntityPlayer* pPlayer);
+	void		destroyPlayerObject(CEntityPlayer& rPlayer);
 	/// 一个Socket断开
 	void		onSocketDisconnect(int nSocketIndex);
 	/// 通过角色ID得到玩家
@@ -129,7 +129,7 @@ private:
 	/// 处理前端消息
 	void		processClientMessage();
 	/// 分发前端消息
-	void		dispatchClientMessage(CEntityPlayer* pPlayer, unsigned short nMessageID, Message* pMessage);
+	void		dispatchClientMessage(CEntityPlayer& rPlayer, unsigned short nMessageID, Message* pMessage);
 	/// 分发前端消息进行lua处理
 	void		dispatchClientLuaMsg(CEntityPlayer* pPlayer, unsigned short nMessageID, char* pMsgData);
 	/// 初始化共享内存

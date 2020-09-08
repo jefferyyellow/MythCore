@@ -55,7 +55,7 @@ public:
 	virtual	void onReloadConfig();
 
 public:
-	void				onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
+	void				onClientMessage(CEntityPlayer& rPlayer, unsigned int nMessageID, Message* pMessage);
 	void				onGetServerActRequest(CEntityPlayer* pPlayer, Message* pMessage);
 	void				sendGetServerActResponse(CEntityPlayer* pPlayer);
 

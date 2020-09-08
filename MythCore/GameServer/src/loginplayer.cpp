@@ -307,7 +307,7 @@ int CLoginPlayer::processLoginComplete()
 			pPlayer->setPlayerStauts(emPlayerStatus_Gameing);
 
 			// 将原来的玩家下线
-			CSceneJob::Inst()->disconnectPlayer(pPlayer);
+			CSceneJob::Inst()->disconnectPlayer(*pPlayer);
 
 			// 换成新的玩家socket信息
 			pPlayer->getExchangeHead() = getExchangeHead();
@@ -320,7 +320,7 @@ int CLoginPlayer::processLoginComplete()
 		else
 		{
 			// 将玩家销毁
-			CPropertyModule::Inst()->destroyPlayer(pPlayer);
+			CPropertyModule::Inst()->destroyPlayer(*pPlayer);
 			return createPlayerAndLoad();
 		}
 	}

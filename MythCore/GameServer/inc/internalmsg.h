@@ -3,6 +3,7 @@
 #include "servercommon.h"
 #include "logmanager.h"
 #include "logintype.h"
+#include "ranktype.h"
 // IM表示内部消息（internal message的简写)
 enum EmInternalMsgID
 {
@@ -12,6 +13,8 @@ enum EmInternalMsgID
 	IM_RESPONSE_PLAT_WEB				= 4,			// 平台web回应
 	IM_REQUEST_UPDATE_RANK				= 5,			// 更新排行榜请求
 	IM_RESPONSE_UPDATE_RANK				= 6,			// 更新排行榜回应
+	IM_REQUEST_GET_RANK_INFO			= 7,			// 得到排行信息请求
+	IM_RESPONSE_GET_RANK_INFO			= 8,			// 得到排行信息的回应
 };
 
 #define RETURN_DATA_LENGTH 1024
@@ -73,7 +76,7 @@ public:
 class CIMUpdateRankRequest : public CInternalMsg
 {
 public:
-	int			mRankType;							// 排行榜类型
+	byte		mRankType;							// 排行榜类型
 	uint		mRoleID;							// 玩家角色ID
 	int			mValue;								// 排行榜值
 	time_t		mTime;								// 时间
@@ -83,8 +86,33 @@ public:
 class CIMUpdateRankResponse : public CInternalMsg
 {
 public:
-	int			mRankType;							// 排行榜类型
+	byte		mRankType;							// 排行榜类型
 	uint		mRoleID;							// 玩家角色ID
+};
+
+// 得到排行榜的请求
+class CIMGetRankInfoRequest : public CInternalMsg
+{
+public:
+	byte		mRankType;							// 排行榜类型
+	byte		mStartPlace;						// 开始名次
+	byte		mEndPlace;							// 结束名次
+	uint		mSelfRoleID;						// 自己的角色ID,如果mRoleID大于0，表示某个玩家取排行信息，如果mRoleID为0表示系统取排行信息
+	uint		mSelfObjID;							// 自己的Obj ID
+};
+
+class CIMGetRankInfoResponse : public CInternalMsg
+{
+public:
+	byte	mRankType;							// 排行榜类型
+	uint	mRankRoleID[MAX_RANK_SHOW_NUM];		// 排行的角色ID
+	int		mRankValue[MAX_RANK_SHOW_NUM];		// 排行值
+	int		mCount;								// 排行数量
+	
+	uint	mSelfRoleID;						// 自己的角色ID,如果mRoleID大于0，表示某个玩家取排行信息，如果mRoleID为0表示系统取排行信息
+	uint	mSelfObjID;							// 自己的Obj ID
+	short	mSelfRankPlace;						// 排行名次
+	int		mSelfRankValue;						// 排行值
 };
 
 #endif

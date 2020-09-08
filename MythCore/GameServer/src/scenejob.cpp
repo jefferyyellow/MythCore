@@ -362,6 +362,11 @@ void CSceneJob::onTask(CInternalMsg* pMsg)
 			onPlatWebResponse(pMsg);
 			break;
 		}
+		case IM_RESPONSE_GET_RANK_INFO:
+		{
+			CRankModule::Inst()->onIMGetRankInfoResponse(pMsg);
+			break;
+		}
 		default:
 			break;
 	}
@@ -640,7 +645,7 @@ void CSceneJob::processClientMessage()
 									 pPlayer->getObjID(), pPlayer->getRoleID(), pPlayer->getName(),
 									 pDescriptor->name().c_str(), nMessageID, nMessageID);
 				LOG_DEBUG("default", "[%s]", pMessage->ShortDebugString().c_str());
-				dispatchClientMessage(pPlayer, nMessageID, pMessage);
+				dispatchClientMessage(*pPlayer, nMessageID, pMessage);
 			}
 		}
 		else
@@ -801,61 +806,57 @@ void CSceneJob::disconnectPlayer(CExchangeHead& rExchangeHead)
 	mServer2TcpMemory->PushPacket((byte*)mBuffer, sizeof(rExchangeHead));
 }
 
-void CSceneJob::disconnectPlayer(CEntityPlayer* pPlayer)
+void CSceneJob::disconnectPlayer(CEntityPlayer& rPlayer)
 {
-	if (NULL == pPlayer)
-	{
-		return;
-	}
 	// 端口连接的时候，将玩家的socket信息清除
-	removePlayerSocketIndex(pPlayer->getExchangeHead().mSocketIndex);
-	disconnectPlayer(pPlayer->getExchangeHead());
+	removePlayerSocketIndex(rPlayer.getExchangeHead().mSocketIndex);
+	disconnectPlayer(rPlayer.getExchangeHead());
 }
 
 /// 分发前端消息
-void CSceneJob::dispatchClientMessage(CEntityPlayer* pPlayer, unsigned short nMessageID, Message* pMessage)
+void CSceneJob::dispatchClientMessage(CEntityPlayer& rPlayer, unsigned short nMessageID, Message* pMessage)
 {
 	int nModule = nMessageID & MESSAGE_MODULE_MASK;
 	switch (nModule)
 	{
 		case MESSAGE_MODULE_PROPERTY:
 		{
-			CPropertyModule::Inst()->onClientMessage(pPlayer, nMessageID, pMessage);
+			CPropertyModule::Inst()->onClientMessage(rPlayer, nMessageID, pMessage);
 			break;
 		}
 		case MESSAGE_MODULE_ITEM:
 		{
-			CItemModule::Inst()->onClientMessage(pPlayer, nMessageID, pMessage);
+			CItemModule::Inst()->onClientMessage(rPlayer, nMessageID, pMessage);
 			break;
 		}
 		case MESSAGE_MODULE_MAP:
 		{
-			CMapModule::Inst()->onClientMessage(pPlayer, nMessageID, pMessage);
+			CMapModule::Inst()->onClientMessage(rPlayer, nMessageID, pMessage);
 			break;
 		}
 		case MESSAGE_MODULE_TASK:
 		{
-			CTaskModule::Inst()->onClientMessage(pPlayer, nMessageID, pMessage);
+			CTaskModule::Inst()->onClientMessage(rPlayer, nMessageID, pMessage);
 			break;
 		}
 		case MESSAGE_MODULE_SKILL:
 		{
-			CSkillModule::Inst()->onClientMessage(pPlayer, nMessageID, pMessage);
+			CSkillModule::Inst()->onClientMessage(rPlayer, nMessageID, pMessage);
 			break;
 		}
 		case MESSAGE_MODULE_CHAT:
 		{
-			CChatModule::Inst()->onClientMessage(pPlayer, nMessageID, pMessage);
+			CChatModule::Inst()->onClientMessage(rPlayer, nMessageID, pMessage);
 			break;
 		}
 		case MESSAGE_MODULE_SERVER_ACT:
 		{
-			CServerActModule::Inst()->onClientMessage(pPlayer, nMessageID, pMessage);
+			CServerActModule::Inst()->onClientMessage(rPlayer, nMessageID, pMessage);
 			break;
 		}
 		case MESSAGE_MODULE_DAILY_ACT:
 		{
-			CDailyActModule::Inst()->onClientMessage(pPlayer, nMessageID, pMessage);
+			CDailyActModule::Inst()->onClientMessage(rPlayer, nMessageID, pMessage);
 			break;
 		}
 		default:
@@ -951,11 +952,11 @@ bool CSceneJob::onPlayerLogin(CEntityPlayer* pNewPlayer)
 }
 
 /// 离开了一个玩家
-void CSceneJob::destroyPlayerObject(CEntityPlayer* pPlayer)
+void CSceneJob::destroyPlayerObject(CEntityPlayer& rPlayer)
 {
 	//mPlayerSocketList.erase(pPlayer->getExchangeHead().mSocketIndex);
-	mPlayerList.erase(pPlayer->getRoleID());
-	disconnectPlayer(pPlayer);
+	mPlayerList.erase(rPlayer.getRoleID());
+	disconnectPlayer(rPlayer);
 }
 
 /// 一个Socket断开
@@ -972,7 +973,7 @@ void CSceneJob::onSocketDisconnect(int nSocketIndex)
 		{
 			pPlayer->getExchangeHead().mSocketIndex = -1;
 			// 将玩家置为下线状态
-			CPropertyModule::Inst()->playerLeaveGame(pPlayer, EmLeaveReason_Disconnection);
+			CPropertyModule::Inst()->playerLeaveGame(*pPlayer, EmLeaveReason_Disconnection);
 		}
 		mPlayerSocketList.erase(it);
 	}

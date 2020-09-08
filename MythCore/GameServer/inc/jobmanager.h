@@ -12,12 +12,14 @@ enum EmJobTaskType
 	emJobTaskType_LocalLog		= 2,			// 本地日志
 	emJobTaskType_Scene			= 3,			// 场景
 	emJobTaskType_Plat			= 4,			// 平台
+	emJobTaskType_Rank			= 5,			// 排行榜
 };
 
 class CDBJob;
 class CLocalLogJob;
 class CSceneJob;
 class CPlatJob;
+class CRankJob;
 class CInternalMsg;
 class CJobManager : public CSingleton<CJobManager>
 {
@@ -50,6 +52,7 @@ private:
 
 	CSceneJob*				mpSceneJob;
 	CPlatJob*				mpPlatJob;
+	CRankJob*				mpRankJob;
 
 	// 线程池
 	Myth::CThreadPool		mThreadPool;

@@ -115,35 +115,35 @@ void CGMCommandManager::LoadLuaErrCode(const char* pErrCodePath)
 }
 
 /// 广播命令影响和结果
-void CGMCommandManager::broadcastCommandResult(CEntityPlayer* pPlayer, char* pResult)
+void CGMCommandManager::broadcastCommandResult(CEntityPlayer& rPlayer, char* pResult)
 {
 	CChatNotify tChatNotify;
-	tChatNotify.set_playerid(pPlayer->getRoleID());
-	tChatNotify.set_playername(pPlayer->getName());
+	tChatNotify.set_playerid(rPlayer.getRoleID());
+	tChatNotify.set_playername(rPlayer.getName());
 	tChatNotify.set_channel(emChatChannel_World);
 	tChatNotify.set_content(pResult);
 	CSceneJob::Inst()->send2AllPlayer(ID_S2C_NOTIFY_CHAT, &tChatNotify);
 }
 
 /// 通知玩家命令影响和结果
-void CGMCommandManager::sendCommandResult(CEntityPlayer* pPlayer, const char* pResult)
+void CGMCommandManager::sendCommandResult(CEntityPlayer& rPlayer, const char* pResult)
 {
 	CChatNotify tChatNotify;
-	tChatNotify.set_playerid(pPlayer->getRoleID());
-	tChatNotify.set_playername(pPlayer->getName());
+	tChatNotify.set_playerid(rPlayer.getRoleID());
+	tChatNotify.set_playername(rPlayer.getName());
 	tChatNotify.set_channel(emChatChannel_World);
 	tChatNotify.set_content(pResult);
 
-	CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIFY_CHAT, &tChatNotify);
+	CSceneJob::Inst()->send2Player(rPlayer, ID_S2C_NOTIFY_CHAT, &tChatNotify);
 }
 
 /// 执行GM命令
-void CGMCommandManager::excuteCommand(std::string strCommandName, StrTokens& tTokens, CEntityPlayer* pPlayer)
+void CGMCommandManager::excuteCommand(std::string strCommandName, StrTokens& tTokens, CEntityPlayer& rPlayer)
 {
 	CommandHash::iterator it = mCommandHash.find(strCommandName);
 	if (it != mCommandHash.end())
 	{
-		it->second(strCommandName, tTokens, pPlayer);
+		it->second(strCommandName, tTokens, rPlayer);
 	}
 	else
 	{
@@ -235,7 +235,7 @@ COMMAND_HANDLER_IMPL(error)
 
 	char acBuffer[STR_LENGTH_128];
 	strncpy(acBuffer,  it->second.c_str(), sizeof(acBuffer));
-	sendCommandResult(pPlayer, it->second.c_str());
+	sendCommandResult(rPlayer, it->second.c_str());
 }
 
 
@@ -245,7 +245,7 @@ COMMAND_HANDLER_IMPL(exp)
 		"exp command parameter number invalid, %d", tTokens.size());
 
 	int nExp = atoi(tTokens[0].c_str());
-	pPlayer->getPropertyUnit().obtainExp(nExp);
+	rPlayer.getPropertyUnit().obtainExp(nExp);
 }
 
 COMMAND_HANDLER_IMPL(ii)
@@ -255,7 +255,7 @@ COMMAND_HANDLER_IMPL(ii)
 
 	int nItemID = atoi(tTokens[0].c_str());
 	int nItemNum = atoi(tTokens[1].c_str());
-	pPlayer->getItemUnit().insertAllItem(&nItemID, &nItemNum, 1);
+	rPlayer.getItemUnit().insertAllItem(&nItemID, &nItemNum, 1);
 }
 
 COMMAND_HANDLER_IMPL(removeitem)
@@ -266,18 +266,18 @@ COMMAND_HANDLER_IMPL(removeitem)
 	int nItemNum = atoi(tTokens[1].c_str());
 	if (nItemNum < 0)
 	{
-		int nAllItemNum = pPlayer->getItemUnit().hasItem(nItemID);
-		pPlayer->getItemUnit().removeItemByID(nItemID, nAllItemNum);
+		int nAllItemNum = rPlayer.getItemUnit().hasItem(nItemID);
+		rPlayer.getItemUnit().removeItemByID(nItemID, nAllItemNum);
 	}
 	else
 	{
-		pPlayer->getItemUnit().removeItem(nItemID, nItemNum);
+		rPlayer.getItemUnit().removeItem(nItemID, nItemNum);
 	}
 }
 
 COMMAND_HANDLER_IMPL(clearbag)
 {
-	CItemBox& rBag = pPlayer->getItemUnit().getBag();
+	CItemBox& rBag = rPlayer.getItemUnit().getBag();
 	for (int i = 0; rBag.getSize(); ++ i)
 	{
 		CItemObject* pItemObject = rBag.getItem(i);
@@ -289,7 +289,7 @@ COMMAND_HANDLER_IMPL(clearbag)
 		CRemoveItemNotify tRemoveItemNotify;
 		tRemoveItemNotify.set_index(i);
 		tRemoveItemNotify.set_number(pItemObject->GetItemNum());
-		CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIYF_REMOVE_ITEM, &tRemoveItemNotify);
+		CSceneJob::Inst()->send2Player(rPlayer, ID_S2C_NOTIYF_REMOVE_ITEM, &tRemoveItemNotify);
 	}
 
 	rBag.clear();
@@ -300,11 +300,11 @@ COMMAND_HANDLER_IMPL(setlevel)
 	MYTH_ASSERT_INFO(tTokens.size() >= 1, return,
 		"setlevel command parameter number invalid, %d", tTokens.size());
 
-	int nOldPlayer = pPlayer->getLevel();
+	int nOldPlayer = rPlayer.getLevel();
 	int nNewLevel = atoi(tTokens[0].c_str());
 
-	pPlayer->setLevel(nNewLevel);
-	pPlayer->getPropertyUnit().onLevelUp(nOldPlayer);
+	rPlayer.setLevel(nNewLevel);
+	rPlayer.getPropertyUnit().onLevelUp(nOldPlayer);
 }
 
 // 设置时间
@@ -403,7 +403,7 @@ COMMAND_HANDLER_IMPL(settime)
 #else
 	asctime_r(&tTmSetTime, acBuffer);
 #endif
-	broadcastCommandResult(pPlayer, acBuffer);
+	broadcastCommandResult(rPlayer, acBuffer);
 }
 
 COMMAND_HANDLER_IMPL(recharge)
@@ -433,8 +433,8 @@ COMMAND_HANDLER_IMPL(recharge)
 		return;
 	}
 
-	CPlatModule::Inst()->processRecharge(acOrderID, tTokens[0].c_str(), pPlayer->getRoleID(), 
-		pPlayer->GetAccountID(), pPlayer->getChannelID(), pPlayer->getServerID(), pGoods->mCoinNum);
+	CPlatModule::Inst()->processRecharge(acOrderID, tTokens[0].c_str(), rPlayer.getRoleID(), 
+		rPlayer.GetAccountID(), rPlayer.getChannelID(), rPlayer.getServerID(), pGoods->mCoinNum);
 }
 
 COMMAND_HANDLER_IMPL(sendmail)
@@ -453,7 +453,7 @@ COMMAND_HANDLER_IMPL(sendmail)
 	{
 		tMail.setMailBody(tTokens[2].c_str());
 	}
-	CMailModule::Inst()->sendPlayerMail(pPlayer->getRoleID(), tMail);
+	CMailModule::Inst()->sendPlayerMail(rPlayer.getRoleID(), tMail);
 }
 
 

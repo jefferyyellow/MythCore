@@ -2,6 +2,8 @@
 #include "template.h"
 #include "propertymodule.hxx.pb.h"
 #include "scenejob.h"
+#include "rankmodule.h"
+#include "entityplayer.h"
 /// 获得经验
 void CPropertyUnit::obtainExp(int nExp)
 {
@@ -48,4 +50,6 @@ void CPropertyUnit::onLevelUp(int nOldLevel)
 	CLevelUpNotify tLevelUpNotify;
 	tLevelUpNotify.set_level(mLevel);
 	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_NOTIYF_LEVEL_UP, &tLevelUpNotify);
+
+	CRankModule::Inst()->updateRoleRank(emRankType_Level, mPlayer.getRoleID(), mLevel);
 }

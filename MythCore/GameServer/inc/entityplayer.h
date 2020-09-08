@@ -41,6 +41,9 @@ private:
 class CEntityPlayer : public CEntityCharacter
 {
 public:
+	typedef CBitSet<emAccountStatus> ACCOUNT_STATUS;
+
+public:
 	CEntityPlayer()
 		:mPropertyUnit(*this),
 		mItemUnit(*this),
@@ -207,6 +210,11 @@ public:
 
 	byte getLevel(){return mPropertyUnit.getLevel();}
 	void setLevel(byte value){mPropertyUnit.setLevel(value);}
+
+	void setAccountStatus(EmAccountStatus eStatus){mAccountStatus.setBit(eStatus);}
+	bool getAccountStatus(EmAccountStatus eStatus){return mAccountStatus.getBit(eStatus);}
+	void clearAccountStatus(EmAccountStatus eStatus){mAccountStatus.clearBit(eStatus);}
+
 private:
 	/// socket连接信息
 	CExchangeHead	mExchangeHead;
@@ -245,5 +253,7 @@ private:
 	byte			mSaveStatus;
 	/// 玩家加载状态 EmPlayerLoadStatus
 	byte			mLoadStatus;
+	/// 账号状态
+	ACCOUNT_STATUS	mAccountStatus;
 };
 #endif 

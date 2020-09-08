@@ -26,5 +26,7 @@ message CGetRankInfoResponse
 {
 	uint32		RankType					= 1;	// 排行类型
 	repeated	PBRankRoleInfo	RoleInfo	= 2;	// 排行榜角色信息
+	uint32		SelfPlace					= 3;	// 自己的排名
+	uint32		SelfRankValue				= 4;	// 自己的排名值
 }
 

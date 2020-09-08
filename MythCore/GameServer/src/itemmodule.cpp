@@ -76,43 +76,38 @@ void CItemModule::onLoadConfig()
 	mShopList.push_back(tLevelShop);
 }
 
-void CItemModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)
+void CItemModule::onClientMessage(CEntityPlayer& rPlayer, unsigned int nMessageID, Message* pMessage)
 {
-	if (NULL == pPlayer)
-	{
-		return;
-	}
-
 	switch(nMessageID)
 	{
 		case ID_C2S_REQUEST_USE_ITEM:
 		{
-			pPlayer->getItemUnit().onUseItemRequest(pMessage);
+			rPlayer.getItemUnit().onUseItemRequest(pMessage);
 			break;
 		}
 		case ID_C2S_REQUEST_SELL_ITEM:
 		{
-			pPlayer->getItemUnit().onSellItemRequest(pMessage);
+			rPlayer.getItemUnit().onSellItemRequest(pMessage);
 			break;
 		}
 		case ID_C2S_REQUEST_PURCHASE_ITEM:
 		{
-			pPlayer->getItemUnit().onPurchaseItemRequest(pMessage);
+			rPlayer.getItemUnit().onPurchaseItemRequest(pMessage);
 			break;
 		}
 		case ID_C2S_REQUEST_EQUIP_ITEM:
 		{
-			pPlayer->getItemUnit().onEquipItemRequest(pMessage);
+			rPlayer.getItemUnit().onEquipItemRequest(pMessage);
 			break;
 		}
 		case ID_C2S_REQUEST_UNEQUIP_ITEM:
 		{
-			pPlayer->getItemUnit().onUnEquipItemRequest(pMessage);
+			rPlayer.getItemUnit().onUnEquipItemRequest(pMessage);
 			break;
 		}
 		case ID_C2S_REQUEST_GET_SHOP_INFO:
 		{
-			pPlayer->getItemUnit().onGetShopInfoRequest(pMessage);
+			rPlayer.getItemUnit().onGetShopInfoRequest(pMessage);
 			break;
 		}
 	}

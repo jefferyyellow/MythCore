@@ -35,6 +35,8 @@ public:
 	void	destroy();
 	/// 发奖
 	void	givePrize();
+	/// 玩家进入
+	void	playerEnter(CEntityPlayer& rPlayer);
 };
 
 /// 多人副本（包括团队本）(用于union)
@@ -51,6 +53,8 @@ public:
 	void	destroy();
 	/// 发奖
 	void	givePrize();
+	/// 玩家进入
+	void	playerEnter(CEntityPlayer& rPlayer);
 };
 
 
@@ -82,6 +86,8 @@ public:
 	void	destroy();
 	/// 发奖
 	void	givePrize();
+	/// 玩家进入
+	void	playerEnter(CEntityPlayer& rPlayer);
 
 public:
 	/// autocode don't edit!!!
@@ -114,7 +120,11 @@ public:
 	EmInstanceStatus getStatus(){ return mStatus; }
 	void setStatus(EmInstanceStatus value){ mStatus = value; }
 
-	EmInstanceType& getType(){ return mType; }
+	EmInstanceType getType(){ return mType; }
+	void setType(EmInstanceType eType){mType = eType;}
+
+	uint getInstanceID() const { return mInstanceID; }
+	void setInstanceID(uint nValue) { mInstanceID = nValue; }
 	/// end autocode
 
 	CSingleInstance& getSingle(){return mSingle;}
@@ -133,6 +143,8 @@ private:
 	EmInstanceStatus	mStatus;
 	///  副本类型
 	EmInstanceType		mType;
+	///  副本ID
+	uint				mInstanceID;
 
 	// 不同的副本类型，不同的数据
 	union

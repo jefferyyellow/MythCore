@@ -37,10 +37,10 @@ public:
 	virtual	void onLoadConfig();
 
 public:
-	void		onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
+	void		onClientMessage(CEntityPlayer& rPlayer, unsigned int nMessageID, Message* pMessage);
 
 public:
-	void		onUseSkillRequest(CEntityPlayer* pPlayer, Message* pMessage);
+	void		onUseSkillRequest(CEntityPlayer& rPlayer, Message* pMessage);
 
 	int			getSkillDamage(CEntityCharacter* pSrcEntity, CTplSkill* pTplSkill, int nSkillLevel, CEntityCharacter* pTargetEntity);
 };

@@ -201,9 +201,18 @@ bool CRank< MaxRankNum, T >::CompareRankValue(CRankValueType *pSrcValue, CRankVa
 	if (pSrcValue->mRankValue == pDesValue->mRankValue)
 	{
 		// 时间小的优先
-		if (pSrcValue->mRankTime <= pDesValue->mRankTime)
+		if (pSrcValue->mRankTime < pDesValue->mRankTime)
 		{
 			return true;
+		}
+		// 时间相等
+		else if (pSrcValue->mRankTime == pDesValue->mRankTime)
+		{
+			// 键值小的，在前面
+			if (pSrcValue->mRankKey < pDesValue->mRankKey)
+			{
+				return true;
+			}
 		}
 	}
 	return false;

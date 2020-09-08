@@ -553,6 +553,75 @@ public:
 // ********************************************************************** //
 // ENDMAKE
 // ********************************************************************** //
+
+// ********************************************************************** //
+// BEGINMAKE
+// virtual	= false						## 
+// name		= l聊天配置表				## 模版名称
+// path		= 社交/l聊天配置表				## 路径
+// parent	=							## 父亲模版
+// ********************************************************************** //
+#define MAX_CHAT_CHANNEL_NUM	3		// 最大的聊天频道
+class PBTplChatConfig;
+class PBChatChannelLimit;
+class CTplChatConfig : public CTemplate
+{
+public:
+	class CChatChannelLimit
+	{
+	public:
+		void setFromPB(PBChatChannelLimit* pbLimit);
+		void createToPB(PBChatChannelLimit* pbLimit);
+
+	public:
+		// FieldName: 频道字数限制
+		// FieldType: INT4
+		// Type:	  EDITNUMBER(1,10000)
+		int		mWordNum;
+
+		// FieldName: 频道发言等级
+		// FieldType: INT4
+		// Type:	  EDITNUMBER(1,10000)
+		int		mPlayerLevel;
+
+		// FieldName: 频道时间间隔
+		// FieldType: INT4
+		// Type:	  EDITNUMBER(1,10000)
+		int		mInterval;
+	};
+
+public:
+	// FieldName: 世界
+	// FieldType: CLASS
+	// Type:	  CLASS
+	CChatChannelLimit	mWorldLimit;
+
+	// FieldName: 组队
+	// FieldType: CLASS
+	// Type:	  CLASS
+	CChatChannelLimit	mTeamLimit;
+
+	// FieldName: 公会
+	// FieldType: CLASS
+	// Type:	  CLASS
+	CChatChannelLimit	mFactionLimit;
+
+public:
+	static CTplChatConfig* spChatConfig;
+
+public:
+	CTplChatConfig()
+	{
+		spChatConfig = this;
+	};
+	~CTplChatConfig(){};
+	void setFromPB(PBTplChatConfig* pbConfig);
+	void createToPB(PBTplChatConfig* pbConfig);
+};
+// ********************************************************************** //
+// ENDMAKE
+// ********************************************************************** //
+
 #ifdef TEMPEDIT
 #pragma pack(pop)
 #endif

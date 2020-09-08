@@ -43,7 +43,7 @@ public:
 	virtual		void onLoadConfig();
 
 public:
-	void		onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
+	void		onClientMessage(CEntityPlayer& rPlayer, unsigned int nMessageID, Message* pMessage);
 
 public:
 	void			checkSavePlayerTimer();
@@ -56,28 +56,28 @@ public:
 	void			onLoadComplete(CEntityPlayer* pPlayer);
 public:
 	/// 玩家存盘
-	void			savePlayer(CEntityPlayer* pPlayer);
+	void			savePlayer(CEntityPlayer& rPlayer);
 	/// 保存玩家信息
-	void			savePlayerInfo(CEntityPlayer* pPlayer);
+	void			savePlayerInfo(CEntityPlayer& rPlayer);
 	/// 保存玩家基本属性
-	void			savePlayerBaseProperty(CEntityPlayer* pPlayer);
+	void			savePlayerBaseProperty(CEntityPlayer& rPlayer);
 	/// 玩家存盘完成
-	void			onSavePlayerComplete(CEntityPlayer* pPlayer);
+	void			onSavePlayerComplete(CEntityPlayer& rPlayer);
 
 public:
 	/// 玩家离开游戏
-	void			playerLeaveGame(CEntityPlayer* pPlayer, EmLeaveReason eReason);
+	void			playerLeaveGame(CEntityPlayer& rPlayer, EmLeaveReason eReason);
 	/// 删除玩家实例
-	void			destroyPlayer(CEntityPlayer* pPlayer);
+	void			destroyPlayer(CEntityPlayer& rPlayer);
 	/// 新玩家处理
 	void			setNewPlayerValue(CEntityPlayer* pPlayer);
 	/// 创建实体后的处理
 	void			onCreateEntity(CEntityCreator* pCreator, CEntity* pEntity);
 private:
 	/// GM命令请求
-	void		onGMCommandRequest(CEntityPlayer* pPlayer, Message* pMessage);
+	void		onGMCommandRequest(CEntityPlayer& rPlayer, Message* pMessage);
 	/// 玩家离开游戏的请求
-	void		onLeaveGameRequest(CEntityPlayer* pPlayer, Message* pMessage);
+	void		onLeaveGameRequest(CEntityPlayer& rPlayer, Message* pMessage);
 	/// 发送玩家基本信息通知
 	void		sendPlayerBaseInfoNotify(CEntityPlayer* pPlayer);
 	/// 发送玩家道具信息通知

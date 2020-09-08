@@ -39,18 +39,22 @@ void protobuf_ShutdownFile_chatmodule_2ehxx();
 class CChatNotify;
 class CChatRequest;
 class CChatResponse;
+class CWorldNewsNotify;
+class PBNewsParam;
+class PBNewsRole;
 
 enum CHAT_MODULE_MSG_ID {
   ID_CHAT_MODULE_ERROR = 0,
   ID_C2S_REQUEST_CHAT = 6144,
   ID_S2C_RESPONSE_CHAT = 6145,
   ID_S2C_NOTIFY_CHAT = 6146,
+  ID_S2C_NOTIFY_WORLD_NEWS = 6147,
   CHAT_MODULE_MSG_ID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   CHAT_MODULE_MSG_ID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool CHAT_MODULE_MSG_ID_IsValid(int value);
 const CHAT_MODULE_MSG_ID CHAT_MODULE_MSG_ID_MIN = ID_CHAT_MODULE_ERROR;
-const CHAT_MODULE_MSG_ID CHAT_MODULE_MSG_ID_MAX = ID_S2C_NOTIFY_CHAT;
+const CHAT_MODULE_MSG_ID CHAT_MODULE_MSG_ID_MAX = ID_S2C_NOTIFY_WORLD_NEWS;
 const int CHAT_MODULE_MSG_ID_ARRAYSIZE = CHAT_MODULE_MSG_ID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* CHAT_MODULE_MSG_ID_descriptor();
@@ -364,6 +368,333 @@ class CChatNotify : public ::google::protobuf::Message /* @@protoc_insertion_poi
 };
 extern ::google::protobuf::internal::ExplicitlyConstructed<CChatNotify> CChatNotify_default_instance_;
 
+// -------------------------------------------------------------------
+
+class PBNewsRole : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PBNewsRole) */ {
+ public:
+  PBNewsRole();
+  virtual ~PBNewsRole();
+
+  PBNewsRole(const PBNewsRole& from);
+
+  inline PBNewsRole& operator=(const PBNewsRole& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBNewsRole& default_instance();
+
+  static const PBNewsRole* internal_default_instance();
+
+  void Swap(PBNewsRole* other);
+
+  // implements Message ----------------------------------------------
+
+  inline PBNewsRole* New() const { return New(NULL); }
+
+  PBNewsRole* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PBNewsRole& from);
+  void MergeFrom(const PBNewsRole& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(PBNewsRole* other);
+  void UnsafeMergeFrom(const PBNewsRole& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 PlayerID = 1;
+  void clear_playerid();
+  static const int kPlayerIDFieldNumber = 1;
+  ::google::protobuf::uint32 playerid() const;
+  void set_playerid(::google::protobuf::uint32 value);
+
+  // optional string PlayerName = 2;
+  void clear_playername();
+  static const int kPlayerNameFieldNumber = 2;
+  const ::std::string& playername() const;
+  void set_playername(const ::std::string& value);
+  void set_playername(const char* value);
+  void set_playername(const char* value, size_t size);
+  ::std::string* mutable_playername();
+  ::std::string* release_playername();
+  void set_allocated_playername(::std::string* playername);
+
+  // @@protoc_insertion_point(class_scope:PBNewsRole)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::ArenaStringPtr playername_;
+  ::google::protobuf::uint32 playerid_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_chatmodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_chatmodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_chatmodule_2ehxx();
+  friend void protobuf_ShutdownFile_chatmodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<PBNewsRole> PBNewsRole_default_instance_;
+
+// -------------------------------------------------------------------
+
+class PBNewsParam : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PBNewsParam) */ {
+ public:
+  PBNewsParam();
+  virtual ~PBNewsParam();
+
+  PBNewsParam(const PBNewsParam& from);
+
+  inline PBNewsParam& operator=(const PBNewsParam& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBNewsParam& default_instance();
+
+  static const PBNewsParam* internal_default_instance();
+
+  void Swap(PBNewsParam* other);
+
+  // implements Message ----------------------------------------------
+
+  inline PBNewsParam* New() const { return New(NULL); }
+
+  PBNewsParam* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PBNewsParam& from);
+  void MergeFrom(const PBNewsParam& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(PBNewsParam* other);
+  void UnsafeMergeFrom(const PBNewsParam& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated uint32 Param = 1;
+  int param_size() const;
+  void clear_param();
+  static const int kParamFieldNumber = 1;
+  ::google::protobuf::uint32 param(int index) const;
+  void set_param(int index, ::google::protobuf::uint32 value);
+  void add_param(::google::protobuf::uint32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+      param() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+      mutable_param();
+
+  // repeated string StrParam = 2;
+  int strparam_size() const;
+  void clear_strparam();
+  static const int kStrParamFieldNumber = 2;
+  const ::std::string& strparam(int index) const;
+  ::std::string* mutable_strparam(int index);
+  void set_strparam(int index, const ::std::string& value);
+  void set_strparam(int index, const char* value);
+  void set_strparam(int index, const char* value, size_t size);
+  ::std::string* add_strparam();
+  void add_strparam(const ::std::string& value);
+  void add_strparam(const char* value);
+  void add_strparam(const char* value, size_t size);
+  const ::google::protobuf::RepeatedPtrField< ::std::string>& strparam() const;
+  ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_strparam();
+
+  // repeated .PBNewsRole Role = 3;
+  int role_size() const;
+  void clear_role();
+  static const int kRoleFieldNumber = 3;
+  const ::PBNewsRole& role(int index) const;
+  ::PBNewsRole* mutable_role(int index);
+  ::PBNewsRole* add_role();
+  ::google::protobuf::RepeatedPtrField< ::PBNewsRole >*
+      mutable_role();
+  const ::google::protobuf::RepeatedPtrField< ::PBNewsRole >&
+      role() const;
+
+  // @@protoc_insertion_point(class_scope:PBNewsParam)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > param_;
+  mutable int _param_cached_byte_size_;
+  ::google::protobuf::RepeatedPtrField< ::std::string> strparam_;
+  ::google::protobuf::RepeatedPtrField< ::PBNewsRole > role_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_chatmodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_chatmodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_chatmodule_2ehxx();
+  friend void protobuf_ShutdownFile_chatmodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<PBNewsParam> PBNewsParam_default_instance_;
+
+// -------------------------------------------------------------------
+
+class CWorldNewsNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CWorldNewsNotify) */ {
+ public:
+  CWorldNewsNotify();
+  virtual ~CWorldNewsNotify();
+
+  CWorldNewsNotify(const CWorldNewsNotify& from);
+
+  inline CWorldNewsNotify& operator=(const CWorldNewsNotify& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const CWorldNewsNotify& default_instance();
+
+  static const CWorldNewsNotify* internal_default_instance();
+
+  void Swap(CWorldNewsNotify* other);
+
+  // implements Message ----------------------------------------------
+
+  inline CWorldNewsNotify* New() const { return New(NULL); }
+
+  CWorldNewsNotify* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const CWorldNewsNotify& from);
+  void MergeFrom(const CWorldNewsNotify& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(CWorldNewsNotify* other);
+  void UnsafeMergeFrom(const CWorldNewsNotify& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 Type = 1;
+  void clear_type();
+  static const int kTypeFieldNumber = 1;
+  ::google::protobuf::uint32 type() const;
+  void set_type(::google::protobuf::uint32 value);
+
+  // optional .PBNewsRole Role = 2;
+  bool has_role() const;
+  void clear_role();
+  static const int kRoleFieldNumber = 2;
+  const ::PBNewsRole& role() const;
+  ::PBNewsRole* mutable_role();
+  ::PBNewsRole* release_role();
+  void set_allocated_role(::PBNewsRole* role);
+
+  // optional .PBNewsParam NewsParam = 3;
+  bool has_newsparam() const;
+  void clear_newsparam();
+  static const int kNewsParamFieldNumber = 3;
+  const ::PBNewsParam& newsparam() const;
+  ::PBNewsParam* mutable_newsparam();
+  ::PBNewsParam* release_newsparam();
+  void set_allocated_newsparam(::PBNewsParam* newsparam);
+
+  // @@protoc_insertion_point(class_scope:CWorldNewsNotify)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PBNewsRole* role_;
+  ::PBNewsParam* newsparam_;
+  ::google::protobuf::uint32 type_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_chatmodule_2ehxx_impl();
+  friend void  protobuf_AddDesc_chatmodule_2ehxx_impl();
+  friend void protobuf_AssignDesc_chatmodule_2ehxx();
+  friend void protobuf_ShutdownFile_chatmodule_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<CWorldNewsNotify> CWorldNewsNotify_default_instance_;
+
 // ===================================================================
 
 
@@ -577,7 +908,299 @@ inline void CChatNotify::set_allocated_content(::std::string* content) {
 inline const CChatNotify* CChatNotify::internal_default_instance() {
   return &CChatNotify_default_instance_.get();
 }
+// -------------------------------------------------------------------
+
+// PBNewsRole
+
+// optional uint32 PlayerID = 1;
+inline void PBNewsRole::clear_playerid() {
+  playerid_ = 0u;
+}
+inline ::google::protobuf::uint32 PBNewsRole::playerid() const {
+  // @@protoc_insertion_point(field_get:PBNewsRole.PlayerID)
+  return playerid_;
+}
+inline void PBNewsRole::set_playerid(::google::protobuf::uint32 value) {
+  
+  playerid_ = value;
+  // @@protoc_insertion_point(field_set:PBNewsRole.PlayerID)
+}
+
+// optional string PlayerName = 2;
+inline void PBNewsRole::clear_playername() {
+  playername_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& PBNewsRole::playername() const {
+  // @@protoc_insertion_point(field_get:PBNewsRole.PlayerName)
+  return playername_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void PBNewsRole::set_playername(const ::std::string& value) {
+  
+  playername_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:PBNewsRole.PlayerName)
+}
+inline void PBNewsRole::set_playername(const char* value) {
+  
+  playername_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:PBNewsRole.PlayerName)
+}
+inline void PBNewsRole::set_playername(const char* value, size_t size) {
+  
+  playername_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:PBNewsRole.PlayerName)
+}
+inline ::std::string* PBNewsRole::mutable_playername() {
+  
+  // @@protoc_insertion_point(field_mutable:PBNewsRole.PlayerName)
+  return playername_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* PBNewsRole::release_playername() {
+  // @@protoc_insertion_point(field_release:PBNewsRole.PlayerName)
+  
+  return playername_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void PBNewsRole::set_allocated_playername(::std::string* playername) {
+  if (playername != NULL) {
+    
+  } else {
+    
+  }
+  playername_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), playername);
+  // @@protoc_insertion_point(field_set_allocated:PBNewsRole.PlayerName)
+}
+
+inline const PBNewsRole* PBNewsRole::internal_default_instance() {
+  return &PBNewsRole_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
+// PBNewsParam
+
+// repeated uint32 Param = 1;
+inline int PBNewsParam::param_size() const {
+  return param_.size();
+}
+inline void PBNewsParam::clear_param() {
+  param_.Clear();
+}
+inline ::google::protobuf::uint32 PBNewsParam::param(int index) const {
+  // @@protoc_insertion_point(field_get:PBNewsParam.Param)
+  return param_.Get(index);
+}
+inline void PBNewsParam::set_param(int index, ::google::protobuf::uint32 value) {
+  param_.Set(index, value);
+  // @@protoc_insertion_point(field_set:PBNewsParam.Param)
+}
+inline void PBNewsParam::add_param(::google::protobuf::uint32 value) {
+  param_.Add(value);
+  // @@protoc_insertion_point(field_add:PBNewsParam.Param)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+PBNewsParam::param() const {
+  // @@protoc_insertion_point(field_list:PBNewsParam.Param)
+  return param_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+PBNewsParam::mutable_param() {
+  // @@protoc_insertion_point(field_mutable_list:PBNewsParam.Param)
+  return &param_;
+}
+
+// repeated string StrParam = 2;
+inline int PBNewsParam::strparam_size() const {
+  return strparam_.size();
+}
+inline void PBNewsParam::clear_strparam() {
+  strparam_.Clear();
+}
+inline const ::std::string& PBNewsParam::strparam(int index) const {
+  // @@protoc_insertion_point(field_get:PBNewsParam.StrParam)
+  return strparam_.Get(index);
+}
+inline ::std::string* PBNewsParam::mutable_strparam(int index) {
+  // @@protoc_insertion_point(field_mutable:PBNewsParam.StrParam)
+  return strparam_.Mutable(index);
+}
+inline void PBNewsParam::set_strparam(int index, const ::std::string& value) {
+  // @@protoc_insertion_point(field_set:PBNewsParam.StrParam)
+  strparam_.Mutable(index)->assign(value);
+}
+inline void PBNewsParam::set_strparam(int index, const char* value) {
+  strparam_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:PBNewsParam.StrParam)
+}
+inline void PBNewsParam::set_strparam(int index, const char* value, size_t size) {
+  strparam_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:PBNewsParam.StrParam)
+}
+inline ::std::string* PBNewsParam::add_strparam() {
+  // @@protoc_insertion_point(field_add_mutable:PBNewsParam.StrParam)
+  return strparam_.Add();
+}
+inline void PBNewsParam::add_strparam(const ::std::string& value) {
+  strparam_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:PBNewsParam.StrParam)
+}
+inline void PBNewsParam::add_strparam(const char* value) {
+  strparam_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:PBNewsParam.StrParam)
+}
+inline void PBNewsParam::add_strparam(const char* value, size_t size) {
+  strparam_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:PBNewsParam.StrParam)
+}
+inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
+PBNewsParam::strparam() const {
+  // @@protoc_insertion_point(field_list:PBNewsParam.StrParam)
+  return strparam_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::std::string>*
+PBNewsParam::mutable_strparam() {
+  // @@protoc_insertion_point(field_mutable_list:PBNewsParam.StrParam)
+  return &strparam_;
+}
+
+// repeated .PBNewsRole Role = 3;
+inline int PBNewsParam::role_size() const {
+  return role_.size();
+}
+inline void PBNewsParam::clear_role() {
+  role_.Clear();
+}
+inline const ::PBNewsRole& PBNewsParam::role(int index) const {
+  // @@protoc_insertion_point(field_get:PBNewsParam.Role)
+  return role_.Get(index);
+}
+inline ::PBNewsRole* PBNewsParam::mutable_role(int index) {
+  // @@protoc_insertion_point(field_mutable:PBNewsParam.Role)
+  return role_.Mutable(index);
+}
+inline ::PBNewsRole* PBNewsParam::add_role() {
+  // @@protoc_insertion_point(field_add:PBNewsParam.Role)
+  return role_.Add();
+}
+inline ::google::protobuf::RepeatedPtrField< ::PBNewsRole >*
+PBNewsParam::mutable_role() {
+  // @@protoc_insertion_point(field_mutable_list:PBNewsParam.Role)
+  return &role_;
+}
+inline const ::google::protobuf::RepeatedPtrField< ::PBNewsRole >&
+PBNewsParam::role() const {
+  // @@protoc_insertion_point(field_list:PBNewsParam.Role)
+  return role_;
+}
+
+inline const PBNewsParam* PBNewsParam::internal_default_instance() {
+  return &PBNewsParam_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
+// CWorldNewsNotify
+
+// optional uint32 Type = 1;
+inline void CWorldNewsNotify::clear_type() {
+  type_ = 0u;
+}
+inline ::google::protobuf::uint32 CWorldNewsNotify::type() const {
+  // @@protoc_insertion_point(field_get:CWorldNewsNotify.Type)
+  return type_;
+}
+inline void CWorldNewsNotify::set_type(::google::protobuf::uint32 value) {
+  
+  type_ = value;
+  // @@protoc_insertion_point(field_set:CWorldNewsNotify.Type)
+}
+
+// optional .PBNewsRole Role = 2;
+inline bool CWorldNewsNotify::has_role() const {
+  return this != internal_default_instance() && role_ != NULL;
+}
+inline void CWorldNewsNotify::clear_role() {
+  if (GetArenaNoVirtual() == NULL && role_ != NULL) delete role_;
+  role_ = NULL;
+}
+inline const ::PBNewsRole& CWorldNewsNotify::role() const {
+  // @@protoc_insertion_point(field_get:CWorldNewsNotify.Role)
+  return role_ != NULL ? *role_
+                         : *::PBNewsRole::internal_default_instance();
+}
+inline ::PBNewsRole* CWorldNewsNotify::mutable_role() {
+  
+  if (role_ == NULL) {
+    role_ = new ::PBNewsRole;
+  }
+  // @@protoc_insertion_point(field_mutable:CWorldNewsNotify.Role)
+  return role_;
+}
+inline ::PBNewsRole* CWorldNewsNotify::release_role() {
+  // @@protoc_insertion_point(field_release:CWorldNewsNotify.Role)
+  
+  ::PBNewsRole* temp = role_;
+  role_ = NULL;
+  return temp;
+}
+inline void CWorldNewsNotify::set_allocated_role(::PBNewsRole* role) {
+  delete role_;
+  role_ = role;
+  if (role) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:CWorldNewsNotify.Role)
+}
+
+// optional .PBNewsParam NewsParam = 3;
+inline bool CWorldNewsNotify::has_newsparam() const {
+  return this != internal_default_instance() && newsparam_ != NULL;
+}
+inline void CWorldNewsNotify::clear_newsparam() {
+  if (GetArenaNoVirtual() == NULL && newsparam_ != NULL) delete newsparam_;
+  newsparam_ = NULL;
+}
+inline const ::PBNewsParam& CWorldNewsNotify::newsparam() const {
+  // @@protoc_insertion_point(field_get:CWorldNewsNotify.NewsParam)
+  return newsparam_ != NULL ? *newsparam_
+                         : *::PBNewsParam::internal_default_instance();
+}
+inline ::PBNewsParam* CWorldNewsNotify::mutable_newsparam() {
+  
+  if (newsparam_ == NULL) {
+    newsparam_ = new ::PBNewsParam;
+  }
+  // @@protoc_insertion_point(field_mutable:CWorldNewsNotify.NewsParam)
+  return newsparam_;
+}
+inline ::PBNewsParam* CWorldNewsNotify::release_newsparam() {
+  // @@protoc_insertion_point(field_release:CWorldNewsNotify.NewsParam)
+  
+  ::PBNewsParam* temp = newsparam_;
+  newsparam_ = NULL;
+  return temp;
+}
+inline void CWorldNewsNotify::set_allocated_newsparam(::PBNewsParam* newsparam) {
+  delete newsparam_;
+  newsparam_ = newsparam;
+  if (newsparam) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:CWorldNewsNotify.NewsParam)
+}
+
+inline const CWorldNewsNotify* CWorldNewsNotify::internal_default_instance() {
+  return &CWorldNewsNotify_default_instance_.get();
+}
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

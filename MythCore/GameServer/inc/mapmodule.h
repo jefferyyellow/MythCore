@@ -45,7 +45,7 @@ public:
 	virtual	void onLoadConfig();
 
 public:
-	void		onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
+	void		onClientMessage(CEntityPlayer& rPlayer, unsigned int nMessageID, Message* pMessage);
 public:
 	int			teleportEntity(CEntity* pEntity, unsigned short nMapID, CMythPoint& rPos);
 	/// 创建实体

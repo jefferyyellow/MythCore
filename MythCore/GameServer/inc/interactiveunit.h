@@ -4,6 +4,7 @@
 #include "mail.h"
 #include "messagefactory.h"
 #include "mythlist.h"
+#include "chatmodule.h"
 using namespace Myth;
 class CEntityPlayer;
 /// 交互单元,包括邮件，聊天，好友相关
@@ -24,7 +25,8 @@ public:
 	}
 	void init()
 	{
-		
+		mGlobalMailTime = 0;
+		memset(mChatTime, 0, sizeof(mChatTime));
 	}
 
 public:
@@ -64,10 +66,29 @@ public:
 	/// 邮件列表
 	MAIL_LIST&	getMailList(){return mMailList;}
 
+	time_t getChatTime(uint nChannelID) const 
+	{ 
+		if (nChannelID >= emChatChannelMax)
+		{
+			return 0;
+		}
+		return mChatTime[nChannelID]; 
+	}
+	void setChatTime(uint nChannelID, time_t nValue) 
+	{ 
+		if (nChannelID >= emChatChannelMax)
+		{
+			return;
+		}
+		mChatTime[nChannelID] = nValue; 
+	}
+
 private:
 	/// 邮件列表
 	MAIL_LIST	mMailList;
 	/// 收过的最新的全局邮件时间，注意不能用全局邮件ID，因为涉及到合服
 	uint		mGlobalMailTime;
+	/// 世界聊天最后的时间
+	time_t		mChatTime[emChatChannelMax];
 };
 #endif

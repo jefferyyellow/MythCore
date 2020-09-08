@@ -105,7 +105,7 @@ void CMapModule::onLoadConfig()
 	CMapConfigManager::Inst()->loadMapConfig("gameserverconfig/map/maplist.xml");
 }
 
-void CMapModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)
+void CMapModule::onClientMessage(CEntityPlayer& rPlayer, unsigned int nMessageID, Message* pMessage)
 {
 	
 }

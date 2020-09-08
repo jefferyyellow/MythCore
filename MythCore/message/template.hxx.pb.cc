@@ -70,6 +70,12 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* PBTplDropTable_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   PBTplDropTable_reflection_ = NULL;
+const ::google::protobuf::Descriptor* PBChatChannelLimit_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  PBChatChannelLimit_reflection_ = NULL;
+const ::google::protobuf::Descriptor* PBTplChatConfig_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  PBTplChatConfig_reflection_ = NULL;
 
 }  // namespace
 
@@ -351,6 +357,38 @@ void protobuf_AssignDesc_template_2ehxx() {
       -1,
       sizeof(PBTplDropTable),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplDropTable, _internal_metadata_));
+  PBChatChannelLimit_descriptor_ = file->message_type(17);
+  static const int PBChatChannelLimit_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBChatChannelLimit, wordnum_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBChatChannelLimit, playerlevel_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBChatChannelLimit, interval_),
+  };
+  PBChatChannelLimit_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      PBChatChannelLimit_descriptor_,
+      PBChatChannelLimit::internal_default_instance(),
+      PBChatChannelLimit_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(PBChatChannelLimit),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBChatChannelLimit, _internal_metadata_));
+  PBTplChatConfig_descriptor_ = file->message_type(18);
+  static const int PBTplChatConfig_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplChatConfig, worldlimit_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplChatConfig, teamlimit_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplChatConfig, factionlimit_),
+  };
+  PBTplChatConfig_reflection_ =
+    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+      PBTplChatConfig_descriptor_,
+      PBTplChatConfig::internal_default_instance(),
+      PBTplChatConfig_offsets_,
+      -1,
+      -1,
+      -1,
+      sizeof(PBTplChatConfig),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBTplChatConfig, _internal_metadata_));
 }
 
 namespace {
@@ -398,6 +436,10 @@ void protobuf_RegisterTypes(const ::std::string&) {
       PBTplDropItem_descriptor_, PBTplDropItem::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       PBTplDropTable_descriptor_, PBTplDropTable::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      PBChatChannelLimit_descriptor_, PBChatChannelLimit::internal_default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+      PBTplChatConfig_descriptor_, PBTplChatConfig::internal_default_instance());
 }
 
 }  // namespace
@@ -437,6 +479,10 @@ void protobuf_ShutdownFile_template_2ehxx() {
   delete PBTplDropItem_reflection_;
   PBTplDropTable_default_instance_.Shutdown();
   delete PBTplDropTable_reflection_;
+  PBChatChannelLimit_default_instance_.Shutdown();
+  delete PBChatChannelLimit_reflection_;
+  PBTplChatConfig_default_instance_.Shutdown();
+  delete PBTplChatConfig_reflection_;
 }
 
 void protobuf_InitDefaults_template_2ehxx_impl() {
@@ -463,6 +509,8 @@ void protobuf_InitDefaults_template_2ehxx_impl() {
   PBTplSkill_default_instance_.DefaultConstruct();
   PBTplDropItem_default_instance_.DefaultConstruct();
   PBTplDropTable_default_instance_.DefaultConstruct();
+  PBChatChannelLimit_default_instance_.DefaultConstruct();
+  PBTplChatConfig_default_instance_.DefaultConstruct();
   PBTplTemplate_default_instance_.get_mutable()->InitAsDefaultInstance();
   PBTplItemSet_default_instance_.get_mutable()->InitAsDefaultInstance();
   PBTplConfigSet_default_instance_.get_mutable()->InitAsDefaultInstance();
@@ -480,6 +528,8 @@ void protobuf_InitDefaults_template_2ehxx_impl() {
   PBTplSkill_default_instance_.get_mutable()->InitAsDefaultInstance();
   PBTplDropItem_default_instance_.get_mutable()->InitAsDefaultInstance();
   PBTplDropTable_default_instance_.get_mutable()->InitAsDefaultInstance();
+  PBChatChannelLimit_default_instance_.get_mutable()->InitAsDefaultInstance();
+  PBTplChatConfig_default_instance_.get_mutable()->InitAsDefaultInstance();
 }
 
 GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_InitDefaults_template_2ehxx_once_);
@@ -526,8 +576,13 @@ void protobuf_AddDesc_template_2ehxx_impl() {
     "\r\022\021\n\tAddDamage\030\005 \001(\r\"E\n\rPBTplDropItem\022\016\n"
     "\006ItemID\030\001 \001(\r\022\017\n\007ItemNum\030\002 \001(\r\022\023\n\013Probab"
     "ility\030\003 \001(\r\"B\n\016PBTplDropTable\022\016\n\006TempID\030"
-    "\001 \001(\r\022 \n\010DropItem\030\002 \003(\0132\016.PBTplDropItemb"
-    "\006proto3", 1407);
+    "\001 \001(\r\022 \n\010DropItem\030\002 \003(\0132\016.PBTplDropItem\""
+    "L\n\022PBChatChannelLimit\022\017\n\007WordNum\030\001 \001(\r\022\023"
+    "\n\013PlayerLevel\030\002 \001(\r\022\020\n\010Interval\030\003 \001(\r\"\215\001"
+    "\n\017PBTplChatConfig\022\'\n\nWorldLimit\030\001 \001(\0132\023."
+    "PBChatChannelLimit\022&\n\tTeamLimit\030\002 \001(\0132\023."
+    "PBChatChannelLimit\022)\n\014FactionLimit\030\003 \001(\013"
+    "2\023.PBChatChannelLimitb\006proto3", 1629);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "template.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_template_2ehxx);
@@ -7416,6 +7471,815 @@ PBTplDropTable::dropitem() const {
 
 inline const PBTplDropTable* PBTplDropTable::internal_default_instance() {
   return &PBTplDropTable_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int PBChatChannelLimit::kWordNumFieldNumber;
+const int PBChatChannelLimit::kPlayerLevelFieldNumber;
+const int PBChatChannelLimit::kIntervalFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+PBChatChannelLimit::PBChatChannelLimit()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_template_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:PBChatChannelLimit)
+}
+
+void PBChatChannelLimit::InitAsDefaultInstance() {
+}
+
+PBChatChannelLimit::PBChatChannelLimit(const PBChatChannelLimit& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:PBChatChannelLimit)
+}
+
+void PBChatChannelLimit::SharedCtor() {
+  ::memset(&wordnum_, 0, reinterpret_cast<char*>(&interval_) -
+    reinterpret_cast<char*>(&wordnum_) + sizeof(interval_));
+  _cached_size_ = 0;
+}
+
+PBChatChannelLimit::~PBChatChannelLimit() {
+  // @@protoc_insertion_point(destructor:PBChatChannelLimit)
+  SharedDtor();
+}
+
+void PBChatChannelLimit::SharedDtor() {
+}
+
+void PBChatChannelLimit::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* PBChatChannelLimit::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return PBChatChannelLimit_descriptor_;
+}
+
+const PBChatChannelLimit& PBChatChannelLimit::default_instance() {
+  protobuf_InitDefaults_template_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<PBChatChannelLimit> PBChatChannelLimit_default_instance_;
+
+PBChatChannelLimit* PBChatChannelLimit::New(::google::protobuf::Arena* arena) const {
+  PBChatChannelLimit* n = new PBChatChannelLimit;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void PBChatChannelLimit::Clear() {
+// @@protoc_insertion_point(message_clear_start:PBChatChannelLimit)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(PBChatChannelLimit, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<PBChatChannelLimit*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&(first), 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(wordnum_, interval_);
+
+#undef ZR_HELPER_
+#undef ZR_
+
+}
+
+bool PBChatChannelLimit::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:PBChatChannelLimit)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional uint32 WordNum = 1;
+      case 1: {
+        if (tag == 8) {
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &wordnum_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_PlayerLevel;
+        break;
+      }
+
+      // optional uint32 PlayerLevel = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_PlayerLevel:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &playerlevel_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_Interval;
+        break;
+      }
+
+      // optional uint32 Interval = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_Interval:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &interval_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:PBChatChannelLimit)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:PBChatChannelLimit)
+  return false;
+#undef DO_
+}
+
+void PBChatChannelLimit::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:PBChatChannelLimit)
+  // optional uint32 WordNum = 1;
+  if (this->wordnum() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->wordnum(), output);
+  }
+
+  // optional uint32 PlayerLevel = 2;
+  if (this->playerlevel() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->playerlevel(), output);
+  }
+
+  // optional uint32 Interval = 3;
+  if (this->interval() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->interval(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:PBChatChannelLimit)
+}
+
+::google::protobuf::uint8* PBChatChannelLimit::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:PBChatChannelLimit)
+  // optional uint32 WordNum = 1;
+  if (this->wordnum() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->wordnum(), target);
+  }
+
+  // optional uint32 PlayerLevel = 2;
+  if (this->playerlevel() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->playerlevel(), target);
+  }
+
+  // optional uint32 Interval = 3;
+  if (this->interval() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->interval(), target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:PBChatChannelLimit)
+  return target;
+}
+
+size_t PBChatChannelLimit::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:PBChatChannelLimit)
+  size_t total_size = 0;
+
+  // optional uint32 WordNum = 1;
+  if (this->wordnum() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->wordnum());
+  }
+
+  // optional uint32 PlayerLevel = 2;
+  if (this->playerlevel() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->playerlevel());
+  }
+
+  // optional uint32 Interval = 3;
+  if (this->interval() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->interval());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void PBChatChannelLimit::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:PBChatChannelLimit)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const PBChatChannelLimit* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const PBChatChannelLimit>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:PBChatChannelLimit)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:PBChatChannelLimit)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void PBChatChannelLimit::MergeFrom(const PBChatChannelLimit& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:PBChatChannelLimit)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void PBChatChannelLimit::UnsafeMergeFrom(const PBChatChannelLimit& from) {
+  GOOGLE_DCHECK(&from != this);
+  if (from.wordnum() != 0) {
+    set_wordnum(from.wordnum());
+  }
+  if (from.playerlevel() != 0) {
+    set_playerlevel(from.playerlevel());
+  }
+  if (from.interval() != 0) {
+    set_interval(from.interval());
+  }
+}
+
+void PBChatChannelLimit::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:PBChatChannelLimit)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void PBChatChannelLimit::CopyFrom(const PBChatChannelLimit& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:PBChatChannelLimit)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool PBChatChannelLimit::IsInitialized() const {
+
+  return true;
+}
+
+void PBChatChannelLimit::Swap(PBChatChannelLimit* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void PBChatChannelLimit::InternalSwap(PBChatChannelLimit* other) {
+  std::swap(wordnum_, other->wordnum_);
+  std::swap(playerlevel_, other->playerlevel_);
+  std::swap(interval_, other->interval_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata PBChatChannelLimit::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = PBChatChannelLimit_descriptor_;
+  metadata.reflection = PBChatChannelLimit_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// PBChatChannelLimit
+
+// optional uint32 WordNum = 1;
+void PBChatChannelLimit::clear_wordnum() {
+  wordnum_ = 0u;
+}
+::google::protobuf::uint32 PBChatChannelLimit::wordnum() const {
+  // @@protoc_insertion_point(field_get:PBChatChannelLimit.WordNum)
+  return wordnum_;
+}
+void PBChatChannelLimit::set_wordnum(::google::protobuf::uint32 value) {
+  
+  wordnum_ = value;
+  // @@protoc_insertion_point(field_set:PBChatChannelLimit.WordNum)
+}
+
+// optional uint32 PlayerLevel = 2;
+void PBChatChannelLimit::clear_playerlevel() {
+  playerlevel_ = 0u;
+}
+::google::protobuf::uint32 PBChatChannelLimit::playerlevel() const {
+  // @@protoc_insertion_point(field_get:PBChatChannelLimit.PlayerLevel)
+  return playerlevel_;
+}
+void PBChatChannelLimit::set_playerlevel(::google::protobuf::uint32 value) {
+  
+  playerlevel_ = value;
+  // @@protoc_insertion_point(field_set:PBChatChannelLimit.PlayerLevel)
+}
+
+// optional uint32 Interval = 3;
+void PBChatChannelLimit::clear_interval() {
+  interval_ = 0u;
+}
+::google::protobuf::uint32 PBChatChannelLimit::interval() const {
+  // @@protoc_insertion_point(field_get:PBChatChannelLimit.Interval)
+  return interval_;
+}
+void PBChatChannelLimit::set_interval(::google::protobuf::uint32 value) {
+  
+  interval_ = value;
+  // @@protoc_insertion_point(field_set:PBChatChannelLimit.Interval)
+}
+
+inline const PBChatChannelLimit* PBChatChannelLimit::internal_default_instance() {
+  return &PBChatChannelLimit_default_instance_.get();
+}
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int PBTplChatConfig::kWorldLimitFieldNumber;
+const int PBTplChatConfig::kTeamLimitFieldNumber;
+const int PBTplChatConfig::kFactionLimitFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+PBTplChatConfig::PBTplChatConfig()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (this != internal_default_instance()) protobuf_InitDefaults_template_2ehxx();
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:PBTplChatConfig)
+}
+
+void PBTplChatConfig::InitAsDefaultInstance() {
+  worldlimit_ = const_cast< ::PBChatChannelLimit*>(
+      ::PBChatChannelLimit::internal_default_instance());
+  teamlimit_ = const_cast< ::PBChatChannelLimit*>(
+      ::PBChatChannelLimit::internal_default_instance());
+  factionlimit_ = const_cast< ::PBChatChannelLimit*>(
+      ::PBChatChannelLimit::internal_default_instance());
+}
+
+PBTplChatConfig::PBTplChatConfig(const PBTplChatConfig& from)
+  : ::google::protobuf::Message(),
+    _internal_metadata_(NULL) {
+  SharedCtor();
+  UnsafeMergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:PBTplChatConfig)
+}
+
+void PBTplChatConfig::SharedCtor() {
+  worldlimit_ = NULL;
+  teamlimit_ = NULL;
+  factionlimit_ = NULL;
+  _cached_size_ = 0;
+}
+
+PBTplChatConfig::~PBTplChatConfig() {
+  // @@protoc_insertion_point(destructor:PBTplChatConfig)
+  SharedDtor();
+}
+
+void PBTplChatConfig::SharedDtor() {
+  if (this != &PBTplChatConfig_default_instance_.get()) {
+    delete worldlimit_;
+    delete teamlimit_;
+    delete factionlimit_;
+  }
+}
+
+void PBTplChatConfig::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* PBTplChatConfig::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return PBTplChatConfig_descriptor_;
+}
+
+const PBTplChatConfig& PBTplChatConfig::default_instance() {
+  protobuf_InitDefaults_template_2ehxx();
+  return *internal_default_instance();
+}
+
+::google::protobuf::internal::ExplicitlyConstructed<PBTplChatConfig> PBTplChatConfig_default_instance_;
+
+PBTplChatConfig* PBTplChatConfig::New(::google::protobuf::Arena* arena) const {
+  PBTplChatConfig* n = new PBTplChatConfig;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void PBTplChatConfig::Clear() {
+// @@protoc_insertion_point(message_clear_start:PBTplChatConfig)
+  if (GetArenaNoVirtual() == NULL && worldlimit_ != NULL) delete worldlimit_;
+  worldlimit_ = NULL;
+  if (GetArenaNoVirtual() == NULL && teamlimit_ != NULL) delete teamlimit_;
+  teamlimit_ = NULL;
+  if (GetArenaNoVirtual() == NULL && factionlimit_ != NULL) delete factionlimit_;
+  factionlimit_ = NULL;
+}
+
+bool PBTplChatConfig::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:PBTplChatConfig)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional .PBChatChannelLimit WorldLimit = 1;
+      case 1: {
+        if (tag == 10) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_worldlimit()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_TeamLimit;
+        break;
+      }
+
+      // optional .PBChatChannelLimit TeamLimit = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_TeamLimit:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_teamlimit()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_FactionLimit;
+        break;
+      }
+
+      // optional .PBChatChannelLimit FactionLimit = 3;
+      case 3: {
+        if (tag == 26) {
+         parse_FactionLimit:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_factionlimit()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:PBTplChatConfig)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:PBTplChatConfig)
+  return false;
+#undef DO_
+}
+
+void PBTplChatConfig::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:PBTplChatConfig)
+  // optional .PBChatChannelLimit WorldLimit = 1;
+  if (this->has_worldlimit()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, *this->worldlimit_, output);
+  }
+
+  // optional .PBChatChannelLimit TeamLimit = 2;
+  if (this->has_teamlimit()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      2, *this->teamlimit_, output);
+  }
+
+  // optional .PBChatChannelLimit FactionLimit = 3;
+  if (this->has_factionlimit()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      3, *this->factionlimit_, output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:PBTplChatConfig)
+}
+
+::google::protobuf::uint8* PBTplChatConfig::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:PBTplChatConfig)
+  // optional .PBChatChannelLimit WorldLimit = 1;
+  if (this->has_worldlimit()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageNoVirtualToArray(
+        1, *this->worldlimit_, false, target);
+  }
+
+  // optional .PBChatChannelLimit TeamLimit = 2;
+  if (this->has_teamlimit()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageNoVirtualToArray(
+        2, *this->teamlimit_, false, target);
+  }
+
+  // optional .PBChatChannelLimit FactionLimit = 3;
+  if (this->has_factionlimit()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageNoVirtualToArray(
+        3, *this->factionlimit_, false, target);
+  }
+
+  // @@protoc_insertion_point(serialize_to_array_end:PBTplChatConfig)
+  return target;
+}
+
+size_t PBTplChatConfig::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:PBTplChatConfig)
+  size_t total_size = 0;
+
+  // optional .PBChatChannelLimit WorldLimit = 1;
+  if (this->has_worldlimit()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->worldlimit_);
+  }
+
+  // optional .PBChatChannelLimit TeamLimit = 2;
+  if (this->has_teamlimit()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->teamlimit_);
+  }
+
+  // optional .PBChatChannelLimit FactionLimit = 3;
+  if (this->has_factionlimit()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->factionlimit_);
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void PBTplChatConfig::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:PBTplChatConfig)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  const PBTplChatConfig* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const PBTplChatConfig>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:PBTplChatConfig)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:PBTplChatConfig)
+    UnsafeMergeFrom(*source);
+  }
+}
+
+void PBTplChatConfig::MergeFrom(const PBTplChatConfig& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:PBTplChatConfig)
+  if (GOOGLE_PREDICT_TRUE(&from != this)) {
+    UnsafeMergeFrom(from);
+  } else {
+    MergeFromFail(__LINE__);
+  }
+}
+
+void PBTplChatConfig::UnsafeMergeFrom(const PBTplChatConfig& from) {
+  GOOGLE_DCHECK(&from != this);
+  if (from.has_worldlimit()) {
+    mutable_worldlimit()->::PBChatChannelLimit::MergeFrom(from.worldlimit());
+  }
+  if (from.has_teamlimit()) {
+    mutable_teamlimit()->::PBChatChannelLimit::MergeFrom(from.teamlimit());
+  }
+  if (from.has_factionlimit()) {
+    mutable_factionlimit()->::PBChatChannelLimit::MergeFrom(from.factionlimit());
+  }
+}
+
+void PBTplChatConfig::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:PBTplChatConfig)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void PBTplChatConfig::CopyFrom(const PBTplChatConfig& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:PBTplChatConfig)
+  if (&from == this) return;
+  Clear();
+  UnsafeMergeFrom(from);
+}
+
+bool PBTplChatConfig::IsInitialized() const {
+
+  return true;
+}
+
+void PBTplChatConfig::Swap(PBTplChatConfig* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void PBTplChatConfig::InternalSwap(PBTplChatConfig* other) {
+  std::swap(worldlimit_, other->worldlimit_);
+  std::swap(teamlimit_, other->teamlimit_);
+  std::swap(factionlimit_, other->factionlimit_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata PBTplChatConfig::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = PBTplChatConfig_descriptor_;
+  metadata.reflection = PBTplChatConfig_reflection_;
+  return metadata;
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// PBTplChatConfig
+
+// optional .PBChatChannelLimit WorldLimit = 1;
+bool PBTplChatConfig::has_worldlimit() const {
+  return this != internal_default_instance() && worldlimit_ != NULL;
+}
+void PBTplChatConfig::clear_worldlimit() {
+  if (GetArenaNoVirtual() == NULL && worldlimit_ != NULL) delete worldlimit_;
+  worldlimit_ = NULL;
+}
+const ::PBChatChannelLimit& PBTplChatConfig::worldlimit() const {
+  // @@protoc_insertion_point(field_get:PBTplChatConfig.WorldLimit)
+  return worldlimit_ != NULL ? *worldlimit_
+                         : *::PBChatChannelLimit::internal_default_instance();
+}
+::PBChatChannelLimit* PBTplChatConfig::mutable_worldlimit() {
+  
+  if (worldlimit_ == NULL) {
+    worldlimit_ = new ::PBChatChannelLimit;
+  }
+  // @@protoc_insertion_point(field_mutable:PBTplChatConfig.WorldLimit)
+  return worldlimit_;
+}
+::PBChatChannelLimit* PBTplChatConfig::release_worldlimit() {
+  // @@protoc_insertion_point(field_release:PBTplChatConfig.WorldLimit)
+  
+  ::PBChatChannelLimit* temp = worldlimit_;
+  worldlimit_ = NULL;
+  return temp;
+}
+void PBTplChatConfig::set_allocated_worldlimit(::PBChatChannelLimit* worldlimit) {
+  delete worldlimit_;
+  worldlimit_ = worldlimit;
+  if (worldlimit) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:PBTplChatConfig.WorldLimit)
+}
+
+// optional .PBChatChannelLimit TeamLimit = 2;
+bool PBTplChatConfig::has_teamlimit() const {
+  return this != internal_default_instance() && teamlimit_ != NULL;
+}
+void PBTplChatConfig::clear_teamlimit() {
+  if (GetArenaNoVirtual() == NULL && teamlimit_ != NULL) delete teamlimit_;
+  teamlimit_ = NULL;
+}
+const ::PBChatChannelLimit& PBTplChatConfig::teamlimit() const {
+  // @@protoc_insertion_point(field_get:PBTplChatConfig.TeamLimit)
+  return teamlimit_ != NULL ? *teamlimit_
+                         : *::PBChatChannelLimit::internal_default_instance();
+}
+::PBChatChannelLimit* PBTplChatConfig::mutable_teamlimit() {
+  
+  if (teamlimit_ == NULL) {
+    teamlimit_ = new ::PBChatChannelLimit;
+  }
+  // @@protoc_insertion_point(field_mutable:PBTplChatConfig.TeamLimit)
+  return teamlimit_;
+}
+::PBChatChannelLimit* PBTplChatConfig::release_teamlimit() {
+  // @@protoc_insertion_point(field_release:PBTplChatConfig.TeamLimit)
+  
+  ::PBChatChannelLimit* temp = teamlimit_;
+  teamlimit_ = NULL;
+  return temp;
+}
+void PBTplChatConfig::set_allocated_teamlimit(::PBChatChannelLimit* teamlimit) {
+  delete teamlimit_;
+  teamlimit_ = teamlimit;
+  if (teamlimit) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:PBTplChatConfig.TeamLimit)
+}
+
+// optional .PBChatChannelLimit FactionLimit = 3;
+bool PBTplChatConfig::has_factionlimit() const {
+  return this != internal_default_instance() && factionlimit_ != NULL;
+}
+void PBTplChatConfig::clear_factionlimit() {
+  if (GetArenaNoVirtual() == NULL && factionlimit_ != NULL) delete factionlimit_;
+  factionlimit_ = NULL;
+}
+const ::PBChatChannelLimit& PBTplChatConfig::factionlimit() const {
+  // @@protoc_insertion_point(field_get:PBTplChatConfig.FactionLimit)
+  return factionlimit_ != NULL ? *factionlimit_
+                         : *::PBChatChannelLimit::internal_default_instance();
+}
+::PBChatChannelLimit* PBTplChatConfig::mutable_factionlimit() {
+  
+  if (factionlimit_ == NULL) {
+    factionlimit_ = new ::PBChatChannelLimit;
+  }
+  // @@protoc_insertion_point(field_mutable:PBTplChatConfig.FactionLimit)
+  return factionlimit_;
+}
+::PBChatChannelLimit* PBTplChatConfig::release_factionlimit() {
+  // @@protoc_insertion_point(field_release:PBTplChatConfig.FactionLimit)
+  
+  ::PBChatChannelLimit* temp = factionlimit_;
+  factionlimit_ = NULL;
+  return temp;
+}
+void PBTplChatConfig::set_allocated_factionlimit(::PBChatChannelLimit* factionlimit) {
+  delete factionlimit_;
+  factionlimit_ = factionlimit;
+  if (factionlimit) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:PBTplChatConfig.FactionLimit)
+}
+
+inline const PBTplChatConfig* PBTplChatConfig::internal_default_instance() {
+  return &PBTplChatConfig_default_instance_.get();
 }
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 

@@ -3,6 +3,7 @@
 #include "singleton.h"
 #include "logicmodule.h"
 #include "messagefactory.h"
+#include "instancetype.h"
 using namespace Myth;
 class CInstance;
 class CInstanceModule : public CLogicModule, public CSingleton < CInstanceModule >
@@ -35,9 +36,9 @@ public:
 	virtual	void onLoadConfig();
 
 public:
-	void onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
+	void onClientMessage(CEntityPlayer& rPlayer, unsigned int nMessageID, Message* pMessage);
 
 public:
-	CInstance* createInstance(int nInstance);
+	CInstance* createInstance(EmInstanceType eType, int nInstanceID);
 };
 #endif

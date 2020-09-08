@@ -324,12 +324,26 @@ class CGetRankInfoResponse : public ::google::protobuf::Message /* @@protoc_inse
   const ::google::protobuf::RepeatedPtrField< ::PBRankRoleInfo >&
       roleinfo() const;
 
+  // optional uint32 SelfPlace = 3;
+  void clear_selfplace();
+  static const int kSelfPlaceFieldNumber = 3;
+  ::google::protobuf::uint32 selfplace() const;
+  void set_selfplace(::google::protobuf::uint32 value);
+
+  // optional uint32 SelfRankValue = 4;
+  void clear_selfrankvalue();
+  static const int kSelfRankValueFieldNumber = 4;
+  ::google::protobuf::uint32 selfrankvalue() const;
+  void set_selfrankvalue(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:CGetRankInfoResponse)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::RepeatedPtrField< ::PBRankRoleInfo > roleinfo_;
   ::google::protobuf::uint32 ranktype_;
+  ::google::protobuf::uint32 selfplace_;
+  ::google::protobuf::uint32 selfrankvalue_;
   mutable int _cached_size_;
   friend void  protobuf_InitDefaults_rankmodule_2ehxx_impl();
   friend void  protobuf_AddDesc_rankmodule_2ehxx_impl();
@@ -446,6 +460,34 @@ inline const ::google::protobuf::RepeatedPtrField< ::PBRankRoleInfo >&
 CGetRankInfoResponse::roleinfo() const {
   // @@protoc_insertion_point(field_list:CGetRankInfoResponse.RoleInfo)
   return roleinfo_;
+}
+
+// optional uint32 SelfPlace = 3;
+inline void CGetRankInfoResponse::clear_selfplace() {
+  selfplace_ = 0u;
+}
+inline ::google::protobuf::uint32 CGetRankInfoResponse::selfplace() const {
+  // @@protoc_insertion_point(field_get:CGetRankInfoResponse.SelfPlace)
+  return selfplace_;
+}
+inline void CGetRankInfoResponse::set_selfplace(::google::protobuf::uint32 value) {
+  
+  selfplace_ = value;
+  // @@protoc_insertion_point(field_set:CGetRankInfoResponse.SelfPlace)
+}
+
+// optional uint32 SelfRankValue = 4;
+inline void CGetRankInfoResponse::clear_selfrankvalue() {
+  selfrankvalue_ = 0u;
+}
+inline ::google::protobuf::uint32 CGetRankInfoResponse::selfrankvalue() const {
+  // @@protoc_insertion_point(field_get:CGetRankInfoResponse.SelfRankValue)
+  return selfrankvalue_;
+}
+inline void CGetRankInfoResponse::set_selfrankvalue(::google::protobuf::uint32 value) {
+  
+  selfrankvalue_ = value;
+  // @@protoc_insertion_point(field_set:CGetRankInfoResponse.SelfRankValue)
 }
 
 inline const CGetRankInfoResponse* CGetRankInfoResponse::internal_default_instance() {

@@ -5,6 +5,7 @@
 #include "scenejob.h"
 #include "gameserverconfig.h"
 #include "internalmsg.h"
+#include "rankjob.h"
 
 CJobManager::CJobManager()
 {
@@ -15,6 +16,7 @@ CJobManager::CJobManager()
 	mpLocalLogJob = NULL;
 	mpSceneJob = NULL;
 	mpPlatJob = NULL;
+	mpRankJob = NULL;
 }
 
 // 
@@ -35,6 +37,12 @@ bool CJobManager::init()
 	// ³õÊ¼»¯SceneJob
 	mpSceneJob = CSceneJob::createInst();
 	if (NULL == mpSceneJob)
+	{
+		return false;
+	}
+
+	mpRankJob = new CRankJob;
+	if (NULL != mpRankJob)
 	{
 		return false;
 	}
@@ -111,6 +119,10 @@ bool CJobManager::initThread()
 	{
 		mThreadPool.pushBackJob(mpPlatJob);
 	}
+	if (NULL != mpRankJob)
+	{
+		mThreadPool.pushBackJob(mpRankJob);
+	}
 	return true;
 }
 
@@ -145,6 +157,12 @@ void CJobManager::clearThread()
 	{
 		mpSceneJob->clearBase();
 	}
+
+	if (NULL != mpRankJob)
+	{
+		mpRankJob->clear();
+	}
+
 	if (NULL != mpPlatJob)
 	{
 		mpPlatJob->clear();
@@ -172,6 +190,14 @@ bool CJobManager::checkOtherJobExit()
 	if (NULL != mpSceneJob)
 	{
 		if (!mpSceneJob->getExited())
+		{
+			return false;
+		}
+	}
+
+	if (NULL != mpRankJob)
+	{
+		if (!mpRankJob->getExited())
 		{
 			return false;
 		}
@@ -220,25 +246,30 @@ void CJobManager::pushTask(EmJobTaskType eTaskType, CInternalMsg* pMsg)
 {
 	switch (eTaskType)
 	{
-	case emJobTaskType_LocalLog:
-	{
-		mpLocalLogJob->pushTask(pMsg);
-		break;
-	}
-	case emJobTaskType_Scene:
-	{
-		mpSceneJob->pushTask(pMsg);
-		break;
-	}
-	case emJobTaskType_Plat:
-	{
-		mpPlatJob->pushTask(pMsg);
-		break;
-	}
-	default:
-	{
-		break;
-	}
+		case emJobTaskType_LocalLog:
+		{
+			mpLocalLogJob->pushTask(pMsg);
+			break;
+		}
+		case emJobTaskType_Scene:
+		{
+			mpSceneJob->pushTask(pMsg);
+			break;
+		}
+		case emJobTaskType_Plat:
+		{
+			mpPlatJob->pushTask(pMsg);
+			break;
+		}
+		case emJobTaskType_Rank:
+		{
+			mpRankJob->pushTask(pMsg);
+			break;
+		}
+		default:
+		{
+			break;
+		}
 	}
 }
 

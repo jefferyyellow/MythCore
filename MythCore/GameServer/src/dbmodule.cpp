@@ -133,7 +133,7 @@ void CDBModule::onDBSession()
 			if (NULL != pPlayer)
 			{
 				pPlayer->setSaveStatusBit(emSaveStatus_Info);
-				CPropertyModule::Inst()->onSavePlayerComplete(pPlayer);
+				CPropertyModule::Inst()->onSavePlayerComplete(*pPlayer);
 				printf("SavePlayerInfo complete\n");
 			}
 			break;
@@ -149,7 +149,7 @@ void CDBModule::onDBSession()
 			if (NULL != pPlayer)
 			{
 				pPlayer->setSaveStatusBit(emSaveStatus_BaseProperty);
-				CPropertyModule::Inst()->onSavePlayerComplete(pPlayer);
+				CPropertyModule::Inst()->onSavePlayerComplete(*pPlayer);
 				printf("SavePlayerBaseProperty complete\n");
 			}
 			break;

@@ -1,5 +1,5 @@
 #include "instance.h"
-
+/// ------------------- CSingleInstance -----------------------
 /// 初始化
 void CSingleInstance::init()
 {
@@ -30,6 +30,15 @@ void CSingleInstance::givePrize()
 
 }
 
+
+/// 玩家进入
+void CSingleInstance::playerEnter(CEntityPlayer& rPlayer)
+{
+
+}
+
+
+/// ------------------- CMultipleInstance -----------------------
 /// 初始化
 void CMultipleInstance::init()
 {
@@ -60,6 +69,14 @@ void CMultipleInstance::givePrize()
 
 }
 
+/// 玩家进入
+void CMultipleInstance::playerEnter(CEntityPlayer& rPlayer)
+{
+
+}
+
+
+/// ------------------- CInstance -----------------------
 /// 创建
 void CInstance::create()
 {
@@ -129,6 +146,24 @@ void CInstance::givePrize()
 		case emInstance_Team:
 		{
 			mMultiple.givePrize();
+			break;
+		}
+	}
+}
+
+/// 玩家进入
+void CInstance::playerEnter(CEntityPlayer& rPlayer)
+{
+	switch (mType)
+	{
+		case emInstance_Common:
+		{
+			mSingle.playerEnter(rPlayer);
+			break;
+		}
+		case emInstance_Team:
+		{
+			mMultiple.playerEnter(rPlayer);
 			break;
 		}
 	}

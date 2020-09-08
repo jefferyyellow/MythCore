@@ -133,12 +133,8 @@ void CServerActModule::onReloadConfig()
 	sendPlatWebRequest("server_activity.xml", "server_activity.xml", EmHttpType(emHttpTypeGet | emHttpTypeFile), true);
 }
 
-void CServerActModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)
+void CServerActModule::onClientMessage(CEntityPlayer& rPlayer, unsigned int nMessageID, Message* pMessage)
 {
-	if (NULL == pPlayer)
-	{
-		return;
-	}
 	switch (nMessageID)
 	{
 		case ID_C2S_REQUEST_GET_SERVER_ACT:

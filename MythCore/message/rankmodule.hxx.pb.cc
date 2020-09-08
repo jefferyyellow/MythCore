@@ -70,9 +70,11 @@ void protobuf_AssignDesc_rankmodule_2ehxx() {
       sizeof(PBRankRoleInfo),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PBRankRoleInfo, _internal_metadata_));
   CGetRankInfoResponse_descriptor_ = file->message_type(2);
-  static const int CGetRankInfoResponse_offsets_[2] = {
+  static const int CGetRankInfoResponse_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetRankInfoResponse, ranktype_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetRankInfoResponse, roleinfo_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetRankInfoResponse, selfplace_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetRankInfoResponse, selfrankvalue_),
   };
   CGetRankInfoResponse_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
@@ -140,12 +142,13 @@ void protobuf_AddDesc_rankmodule_2ehxx_impl() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\016rankmodule.hxx\"\'\n\023CGetRankInfoRequest\022"
     "\020\n\010RankType\030\001 \001(\r\"3\n\016PBRankRoleInfo\022\016\n\006R"
-    "oleID\030\001 \001(\r\022\021\n\tRankValue\030\002 \001(\r\"K\n\024CGetRa"
+    "oleID\030\001 \001(\r\022\021\n\tRankValue\030\002 \001(\r\"u\n\024CGetRa"
     "nkInfoResponse\022\020\n\010RankType\030\001 \001(\r\022!\n\010Role"
-    "Info\030\002 \003(\0132\017.PBRankRoleInfo*u\n\022RANK_MODU"
-    "LE_MSG_ID\022\030\n\024ID_RANK_MODULE_ERROR\020\000\022!\n\034I"
-    "D_C2S_REQUEST_GET_RANK_INFO\020\200H\022\"\n\035ID_S2C"
-    "_RESPONSE_GET_RANK_INFO\020\201Hb\006proto3", 314);
+    "Info\030\002 \003(\0132\017.PBRankRoleInfo\022\021\n\tSelfPlace"
+    "\030\003 \001(\r\022\025\n\rSelfRankValue\030\004 \001(\r*u\n\022RANK_MO"
+    "DULE_MSG_ID\022\030\n\024ID_RANK_MODULE_ERROR\020\000\022!\n"
+    "\034ID_C2S_REQUEST_GET_RANK_INFO\020\200H\022\"\n\035ID_S"
+    "2C_RESPONSE_GET_RANK_INFO\020\201Hb\006proto3", 356);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "rankmodule.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_rankmodule_2ehxx);
@@ -753,6 +756,8 @@ inline const PBRankRoleInfo* PBRankRoleInfo::internal_default_instance() {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int CGetRankInfoResponse::kRankTypeFieldNumber;
 const int CGetRankInfoResponse::kRoleInfoFieldNumber;
+const int CGetRankInfoResponse::kSelfPlaceFieldNumber;
+const int CGetRankInfoResponse::kSelfRankValueFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 CGetRankInfoResponse::CGetRankInfoResponse()
@@ -774,7 +779,8 @@ CGetRankInfoResponse::CGetRankInfoResponse(const CGetRankInfoResponse& from)
 }
 
 void CGetRankInfoResponse::SharedCtor() {
-  ranktype_ = 0u;
+  ::memset(&ranktype_, 0, reinterpret_cast<char*>(&selfrankvalue_) -
+    reinterpret_cast<char*>(&ranktype_) + sizeof(selfrankvalue_));
   _cached_size_ = 0;
 }
 
@@ -813,7 +819,27 @@ CGetRankInfoResponse* CGetRankInfoResponse::New(::google::protobuf::Arena* arena
 
 void CGetRankInfoResponse::Clear() {
 // @@protoc_insertion_point(message_clear_start:CGetRankInfoResponse)
-  ranktype_ = 0u;
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(CGetRankInfoResponse, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<CGetRankInfoResponse*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&(first), 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(ranktype_, selfrankvalue_);
+
+#undef ZR_HELPER_
+#undef ZR_
+
   roleinfo_.Clear();
 }
 
@@ -854,6 +880,36 @@ bool CGetRankInfoResponse::MergePartialFromCodedStream(
         }
         if (input->ExpectTag(18)) goto parse_loop_RoleInfo;
         input->UnsafeDecrementRecursionDepth();
+        if (input->ExpectTag(24)) goto parse_SelfPlace;
+        break;
+      }
+
+      // optional uint32 SelfPlace = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_SelfPlace:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &selfplace_)));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(32)) goto parse_SelfRankValue;
+        break;
+      }
+
+      // optional uint32 SelfRankValue = 4;
+      case 4: {
+        if (tag == 32) {
+         parse_SelfRankValue:
+
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &selfrankvalue_)));
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -893,6 +949,16 @@ void CGetRankInfoResponse::SerializeWithCachedSizes(
       2, this->roleinfo(i), output);
   }
 
+  // optional uint32 SelfPlace = 3;
+  if (this->selfplace() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->selfplace(), output);
+  }
+
+  // optional uint32 SelfRankValue = 4;
+  if (this->selfrankvalue() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->selfrankvalue(), output);
+  }
+
   // @@protoc_insertion_point(serialize_end:CGetRankInfoResponse)
 }
 
@@ -912,6 +978,16 @@ void CGetRankInfoResponse::SerializeWithCachedSizes(
         2, this->roleinfo(i), false, target);
   }
 
+  // optional uint32 SelfPlace = 3;
+  if (this->selfplace() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->selfplace(), target);
+  }
+
+  // optional uint32 SelfRankValue = 4;
+  if (this->selfrankvalue() != 0) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(4, this->selfrankvalue(), target);
+  }
+
   // @@protoc_insertion_point(serialize_to_array_end:CGetRankInfoResponse)
   return target;
 }
@@ -925,6 +1001,20 @@ size_t CGetRankInfoResponse::ByteSizeLong() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->ranktype());
+  }
+
+  // optional uint32 SelfPlace = 3;
+  if (this->selfplace() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->selfplace());
+  }
+
+  // optional uint32 SelfRankValue = 4;
+  if (this->selfrankvalue() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->selfrankvalue());
   }
 
   // repeated .PBRankRoleInfo RoleInfo = 2;
@@ -975,6 +1065,12 @@ void CGetRankInfoResponse::UnsafeMergeFrom(const CGetRankInfoResponse& from) {
   if (from.ranktype() != 0) {
     set_ranktype(from.ranktype());
   }
+  if (from.selfplace() != 0) {
+    set_selfplace(from.selfplace());
+  }
+  if (from.selfrankvalue() != 0) {
+    set_selfrankvalue(from.selfrankvalue());
+  }
 }
 
 void CGetRankInfoResponse::CopyFrom(const ::google::protobuf::Message& from) {
@@ -1003,6 +1099,8 @@ void CGetRankInfoResponse::Swap(CGetRankInfoResponse* other) {
 void CGetRankInfoResponse::InternalSwap(CGetRankInfoResponse* other) {
   std::swap(ranktype_, other->ranktype_);
   roleinfo_.UnsafeArenaSwap(&other->roleinfo_);
+  std::swap(selfplace_, other->selfplace_);
+  std::swap(selfrankvalue_, other->selfrankvalue_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -1060,6 +1158,34 @@ const ::google::protobuf::RepeatedPtrField< ::PBRankRoleInfo >&
 CGetRankInfoResponse::roleinfo() const {
   // @@protoc_insertion_point(field_list:CGetRankInfoResponse.RoleInfo)
   return roleinfo_;
+}
+
+// optional uint32 SelfPlace = 3;
+void CGetRankInfoResponse::clear_selfplace() {
+  selfplace_ = 0u;
+}
+::google::protobuf::uint32 CGetRankInfoResponse::selfplace() const {
+  // @@protoc_insertion_point(field_get:CGetRankInfoResponse.SelfPlace)
+  return selfplace_;
+}
+void CGetRankInfoResponse::set_selfplace(::google::protobuf::uint32 value) {
+  
+  selfplace_ = value;
+  // @@protoc_insertion_point(field_set:CGetRankInfoResponse.SelfPlace)
+}
+
+// optional uint32 SelfRankValue = 4;
+void CGetRankInfoResponse::clear_selfrankvalue() {
+  selfrankvalue_ = 0u;
+}
+::google::protobuf::uint32 CGetRankInfoResponse::selfrankvalue() const {
+  // @@protoc_insertion_point(field_get:CGetRankInfoResponse.SelfRankValue)
+  return selfrankvalue_;
+}
+void CGetRankInfoResponse::set_selfrankvalue(::google::protobuf::uint32 value) {
+  
+  selfrankvalue_ = value;
+  // @@protoc_insertion_point(field_set:CGetRankInfoResponse.SelfRankValue)
 }
 
 inline const CGetRankInfoResponse* CGetRankInfoResponse::internal_default_instance() {

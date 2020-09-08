@@ -64,4 +64,12 @@ enum EmLeaveReason
 	EmLeaveReason_PlayerRequest	= 3,		// 玩家请求
 	EmLeaveReason_HeartBeatQuick= 4,		// 心跳过速
 };
+
+enum EmAccountStatus
+{
+	emAccountStatus_None		= 0,		// 无状态
+	emAccountStatus_Disable		= 1,		// 账号禁用状态
+	emAccountStatus_Mute		= 2,		// 禁言状态
+	emAccountStatus		
+};
 #endif

@@ -107,7 +107,7 @@ void CLoginModule::onTimer(unsigned int nTickOffset)
 					CEntityPlayer* pPlayer = CSceneJob::Inst()->getPlayerBySocketIndex(pLoginPlayer->getExchangeHead().mSocketIndex);
 					if (NULL != pPlayer)
 					{
-						CPropertyModule::Inst()->playerLeaveGame(pPlayer, EmLeaveReason_LoadTimeOut);
+						CPropertyModule::Inst()->playerLeaveGame(*pPlayer, EmLeaveReason_LoadTimeOut);
 					}
 				}
 				printf("delete login player, State: %d, DelState: %d, OverTime: %d", pLoginPlayer->getLoginState(), pLoginPlayer->getDelState(), bOverTime);

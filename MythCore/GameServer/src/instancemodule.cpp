@@ -1,4 +1,6 @@
 #include "instancemodule.h"
+#include "instance.h"
+#include "objpool.h"
 /// Æô¶¯·þÎñÆ÷
 void CInstanceModule::onLaunchServer()
 {
@@ -58,13 +60,20 @@ void CInstanceModule::onLoadConfig()
 
 }
 
-void CInstanceModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)
+void CInstanceModule::onClientMessage(CEntityPlayer& rPlayer, unsigned int nMessageID, Message* pMessage)
 {
 	 
 }
 
-CInstance* CInstanceModule::createInstance(int nInstance)
+CInstance* CInstanceModule::createInstance(EmInstanceType eType, int nInstanceID)
 {
+	CInstance* pInstance = (CInstance*)CObjPool::Inst()->allocObj(emObjType_Instance);
+	if (NULL == pInstance)
+	{
+		return NULL;
+	}
+
+	pInstance->setType(eType);
 	
 	return NULL;
 }

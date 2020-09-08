@@ -6,15 +6,24 @@
 class CEntityPlayer;
 using namespace Myth;
 
-#define MAX_CHAT_CONTENT_LENG	96		// 32 * 3,utf8中文是3个字符
+// 聊天频道
 enum EmChatChannel
 {
 	emChatChannel_None		= 0,		// 无
 	emChatChannel_World		= 1,		// 世界聊天
 	emChatChannel_Team		= 2,		// 组队聊天
 	emChatChannel_Faction	= 3,		// 工会聊天
+	emChatChannelMax					// 注意同步MAX_CHAT_CHANNEL_NUM
 };
 
+// 世界通知类型
+enum EmWorldNewsType
+{
+	emWorldNewsType_None	= 0,		// 无
+};
+
+class PBNewsParam;
+class PBNewsRole;
 class CChatModule : public CLogicModule, public CSingleton<CChatModule>
 {
 	friend class CSingleton<CChatModule>;
@@ -48,9 +57,17 @@ public:
 	virtual	void onLoadConfig();
 
 public:
-	void onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
+	void onClientMessage(CEntityPlayer& rPlayer, unsigned int nMessageID, Message* pMessage);
 
 public:
-	void onChatRequest(CEntityPlayer* pPlayer, Message* pMessage);
+	void onChatRequest(CEntityPlayer& rPlayer, Message* pMessage);
+
+public:
+	/// 发送世界新闻
+	void sendWorldNews(CEntityPlayer& rPlayer, EmWorldNewsType eNewsType, PBNewsParam& rNewParam);
+	/// 发送世界新闻
+	void sendWorldNews(EmWorldNewsType eNewsType, PBNewsParam& rNewParam);
+	/// 创建世界传闻的玩家信息
+	void createPBNewsRole(CEntityPlayer& rPlayer, PBNewsRole* pbNewRole);
 };
 #endif

@@ -103,23 +103,37 @@ message PBTplOgre
 
 message PBTplSkill
 {
-	uint32	TempID = 1;
-	string	Name = 2;
-	string	Description = 3;
-	uint32	SkillCD = 4;
-	uint32	AddDamage = 5;
+	uint32				TempID			= 1;
+	string				Name			= 2;
+	string				Description		= 3;
+	uint32				SkillCD			= 4;
+	uint32				AddDamage		= 5;
 }
 
 
 message PBTplDropItem
 {
-	uint32	ItemID = 1;
-	uint32	ItemNum = 2;
-	uint32	Probability = 3;
+	uint32					ItemID		= 1;		// 掉落道具ID
+	uint32					ItemNum		= 2;		// 掉落道具数量
+	uint32					Probability = 3;		// 掉落道具概率
 }
 
 message PBTplDropTable
 {
-	uint32	TempID = 1;
-	repeated	PBTplDropItem	DropItem = 2;
+	uint32					TempID		= 1;		// 掉落表ID
+	repeated PBTplDropItem	DropItem	= 2;		// 掉落道具
+}
+
+message PBChatChannelLimit
+{
+	uint32					WordNum		= 1;		// 频道字数限制
+	uint32					PlayerLevel	= 2;		// 频道发言等级
+	uint32					Interval	= 3;		// 频道时间间隔
+}
+
+message PBTplChatConfig
+{
+	PBChatChannelLimit		WorldLimit	= 1;		// 世界频道
+	PBChatChannelLimit		TeamLimit	= 2;		// 组队频道
+	PBChatChannelLimit		FactionLimit= 3;		// 公会频道
 }

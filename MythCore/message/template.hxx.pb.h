@@ -35,7 +35,9 @@ void protobuf_InitDefaults_template_2ehxx();
 void protobuf_AssignDesc_template_2ehxx();
 void protobuf_ShutdownFile_template_2ehxx();
 
+class PBChatChannelLimit;
 class PBItem;
+class PBTplChatConfig;
 class PBTplConfigSet;
 class PBTplDropItem;
 class PBTplDropTable;
@@ -1885,6 +1887,215 @@ class PBTplDropTable : public ::google::protobuf::Message /* @@protoc_insertion_
 };
 extern ::google::protobuf::internal::ExplicitlyConstructed<PBTplDropTable> PBTplDropTable_default_instance_;
 
+// -------------------------------------------------------------------
+
+class PBChatChannelLimit : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PBChatChannelLimit) */ {
+ public:
+  PBChatChannelLimit();
+  virtual ~PBChatChannelLimit();
+
+  PBChatChannelLimit(const PBChatChannelLimit& from);
+
+  inline PBChatChannelLimit& operator=(const PBChatChannelLimit& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBChatChannelLimit& default_instance();
+
+  static const PBChatChannelLimit* internal_default_instance();
+
+  void Swap(PBChatChannelLimit* other);
+
+  // implements Message ----------------------------------------------
+
+  inline PBChatChannelLimit* New() const { return New(NULL); }
+
+  PBChatChannelLimit* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PBChatChannelLimit& from);
+  void MergeFrom(const PBChatChannelLimit& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(PBChatChannelLimit* other);
+  void UnsafeMergeFrom(const PBChatChannelLimit& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional uint32 WordNum = 1;
+  void clear_wordnum();
+  static const int kWordNumFieldNumber = 1;
+  ::google::protobuf::uint32 wordnum() const;
+  void set_wordnum(::google::protobuf::uint32 value);
+
+  // optional uint32 PlayerLevel = 2;
+  void clear_playerlevel();
+  static const int kPlayerLevelFieldNumber = 2;
+  ::google::protobuf::uint32 playerlevel() const;
+  void set_playerlevel(::google::protobuf::uint32 value);
+
+  // optional uint32 Interval = 3;
+  void clear_interval();
+  static const int kIntervalFieldNumber = 3;
+  ::google::protobuf::uint32 interval() const;
+  void set_interval(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:PBChatChannelLimit)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::uint32 wordnum_;
+  ::google::protobuf::uint32 playerlevel_;
+  ::google::protobuf::uint32 interval_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_template_2ehxx_impl();
+  friend void  protobuf_AddDesc_template_2ehxx_impl();
+  friend void protobuf_AssignDesc_template_2ehxx();
+  friend void protobuf_ShutdownFile_template_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<PBChatChannelLimit> PBChatChannelLimit_default_instance_;
+
+// -------------------------------------------------------------------
+
+class PBTplChatConfig : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PBTplChatConfig) */ {
+ public:
+  PBTplChatConfig();
+  virtual ~PBTplChatConfig();
+
+  PBTplChatConfig(const PBTplChatConfig& from);
+
+  inline PBTplChatConfig& operator=(const PBTplChatConfig& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PBTplChatConfig& default_instance();
+
+  static const PBTplChatConfig* internal_default_instance();
+
+  void Swap(PBTplChatConfig* other);
+
+  // implements Message ----------------------------------------------
+
+  inline PBTplChatConfig* New() const { return New(NULL); }
+
+  PBTplChatConfig* New(::google::protobuf::Arena* arena) const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PBTplChatConfig& from);
+  void MergeFrom(const PBTplChatConfig& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  size_t ByteSizeLong() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
+    return InternalSerializeWithCachedSizesToArray(false, output);
+  }
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(PBTplChatConfig* other);
+  void UnsafeMergeFrom(const PBTplChatConfig& from);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _internal_metadata_.arena();
+  }
+  inline void* MaybeArenaPtr() const {
+    return _internal_metadata_.raw_arena_ptr();
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .PBChatChannelLimit WorldLimit = 1;
+  bool has_worldlimit() const;
+  void clear_worldlimit();
+  static const int kWorldLimitFieldNumber = 1;
+  const ::PBChatChannelLimit& worldlimit() const;
+  ::PBChatChannelLimit* mutable_worldlimit();
+  ::PBChatChannelLimit* release_worldlimit();
+  void set_allocated_worldlimit(::PBChatChannelLimit* worldlimit);
+
+  // optional .PBChatChannelLimit TeamLimit = 2;
+  bool has_teamlimit() const;
+  void clear_teamlimit();
+  static const int kTeamLimitFieldNumber = 2;
+  const ::PBChatChannelLimit& teamlimit() const;
+  ::PBChatChannelLimit* mutable_teamlimit();
+  ::PBChatChannelLimit* release_teamlimit();
+  void set_allocated_teamlimit(::PBChatChannelLimit* teamlimit);
+
+  // optional .PBChatChannelLimit FactionLimit = 3;
+  bool has_factionlimit() const;
+  void clear_factionlimit();
+  static const int kFactionLimitFieldNumber = 3;
+  const ::PBChatChannelLimit& factionlimit() const;
+  ::PBChatChannelLimit* mutable_factionlimit();
+  ::PBChatChannelLimit* release_factionlimit();
+  void set_allocated_factionlimit(::PBChatChannelLimit* factionlimit);
+
+  // @@protoc_insertion_point(class_scope:PBTplChatConfig)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PBChatChannelLimit* worldlimit_;
+  ::PBChatChannelLimit* teamlimit_;
+  ::PBChatChannelLimit* factionlimit_;
+  mutable int _cached_size_;
+  friend void  protobuf_InitDefaults_template_2ehxx_impl();
+  friend void  protobuf_AddDesc_template_2ehxx_impl();
+  friend void protobuf_AssignDesc_template_2ehxx();
+  friend void protobuf_ShutdownFile_template_2ehxx();
+
+  void InitAsDefaultInstance();
+};
+extern ::google::protobuf::internal::ExplicitlyConstructed<PBTplChatConfig> PBTplChatConfig_default_instance_;
+
 // ===================================================================
 
 
@@ -3289,7 +3500,184 @@ PBTplDropTable::dropitem() const {
 inline const PBTplDropTable* PBTplDropTable::internal_default_instance() {
   return &PBTplDropTable_default_instance_.get();
 }
+// -------------------------------------------------------------------
+
+// PBChatChannelLimit
+
+// optional uint32 WordNum = 1;
+inline void PBChatChannelLimit::clear_wordnum() {
+  wordnum_ = 0u;
+}
+inline ::google::protobuf::uint32 PBChatChannelLimit::wordnum() const {
+  // @@protoc_insertion_point(field_get:PBChatChannelLimit.WordNum)
+  return wordnum_;
+}
+inline void PBChatChannelLimit::set_wordnum(::google::protobuf::uint32 value) {
+  
+  wordnum_ = value;
+  // @@protoc_insertion_point(field_set:PBChatChannelLimit.WordNum)
+}
+
+// optional uint32 PlayerLevel = 2;
+inline void PBChatChannelLimit::clear_playerlevel() {
+  playerlevel_ = 0u;
+}
+inline ::google::protobuf::uint32 PBChatChannelLimit::playerlevel() const {
+  // @@protoc_insertion_point(field_get:PBChatChannelLimit.PlayerLevel)
+  return playerlevel_;
+}
+inline void PBChatChannelLimit::set_playerlevel(::google::protobuf::uint32 value) {
+  
+  playerlevel_ = value;
+  // @@protoc_insertion_point(field_set:PBChatChannelLimit.PlayerLevel)
+}
+
+// optional uint32 Interval = 3;
+inline void PBChatChannelLimit::clear_interval() {
+  interval_ = 0u;
+}
+inline ::google::protobuf::uint32 PBChatChannelLimit::interval() const {
+  // @@protoc_insertion_point(field_get:PBChatChannelLimit.Interval)
+  return interval_;
+}
+inline void PBChatChannelLimit::set_interval(::google::protobuf::uint32 value) {
+  
+  interval_ = value;
+  // @@protoc_insertion_point(field_set:PBChatChannelLimit.Interval)
+}
+
+inline const PBChatChannelLimit* PBChatChannelLimit::internal_default_instance() {
+  return &PBChatChannelLimit_default_instance_.get();
+}
+// -------------------------------------------------------------------
+
+// PBTplChatConfig
+
+// optional .PBChatChannelLimit WorldLimit = 1;
+inline bool PBTplChatConfig::has_worldlimit() const {
+  return this != internal_default_instance() && worldlimit_ != NULL;
+}
+inline void PBTplChatConfig::clear_worldlimit() {
+  if (GetArenaNoVirtual() == NULL && worldlimit_ != NULL) delete worldlimit_;
+  worldlimit_ = NULL;
+}
+inline const ::PBChatChannelLimit& PBTplChatConfig::worldlimit() const {
+  // @@protoc_insertion_point(field_get:PBTplChatConfig.WorldLimit)
+  return worldlimit_ != NULL ? *worldlimit_
+                         : *::PBChatChannelLimit::internal_default_instance();
+}
+inline ::PBChatChannelLimit* PBTplChatConfig::mutable_worldlimit() {
+  
+  if (worldlimit_ == NULL) {
+    worldlimit_ = new ::PBChatChannelLimit;
+  }
+  // @@protoc_insertion_point(field_mutable:PBTplChatConfig.WorldLimit)
+  return worldlimit_;
+}
+inline ::PBChatChannelLimit* PBTplChatConfig::release_worldlimit() {
+  // @@protoc_insertion_point(field_release:PBTplChatConfig.WorldLimit)
+  
+  ::PBChatChannelLimit* temp = worldlimit_;
+  worldlimit_ = NULL;
+  return temp;
+}
+inline void PBTplChatConfig::set_allocated_worldlimit(::PBChatChannelLimit* worldlimit) {
+  delete worldlimit_;
+  worldlimit_ = worldlimit;
+  if (worldlimit) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:PBTplChatConfig.WorldLimit)
+}
+
+// optional .PBChatChannelLimit TeamLimit = 2;
+inline bool PBTplChatConfig::has_teamlimit() const {
+  return this != internal_default_instance() && teamlimit_ != NULL;
+}
+inline void PBTplChatConfig::clear_teamlimit() {
+  if (GetArenaNoVirtual() == NULL && teamlimit_ != NULL) delete teamlimit_;
+  teamlimit_ = NULL;
+}
+inline const ::PBChatChannelLimit& PBTplChatConfig::teamlimit() const {
+  // @@protoc_insertion_point(field_get:PBTplChatConfig.TeamLimit)
+  return teamlimit_ != NULL ? *teamlimit_
+                         : *::PBChatChannelLimit::internal_default_instance();
+}
+inline ::PBChatChannelLimit* PBTplChatConfig::mutable_teamlimit() {
+  
+  if (teamlimit_ == NULL) {
+    teamlimit_ = new ::PBChatChannelLimit;
+  }
+  // @@protoc_insertion_point(field_mutable:PBTplChatConfig.TeamLimit)
+  return teamlimit_;
+}
+inline ::PBChatChannelLimit* PBTplChatConfig::release_teamlimit() {
+  // @@protoc_insertion_point(field_release:PBTplChatConfig.TeamLimit)
+  
+  ::PBChatChannelLimit* temp = teamlimit_;
+  teamlimit_ = NULL;
+  return temp;
+}
+inline void PBTplChatConfig::set_allocated_teamlimit(::PBChatChannelLimit* teamlimit) {
+  delete teamlimit_;
+  teamlimit_ = teamlimit;
+  if (teamlimit) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:PBTplChatConfig.TeamLimit)
+}
+
+// optional .PBChatChannelLimit FactionLimit = 3;
+inline bool PBTplChatConfig::has_factionlimit() const {
+  return this != internal_default_instance() && factionlimit_ != NULL;
+}
+inline void PBTplChatConfig::clear_factionlimit() {
+  if (GetArenaNoVirtual() == NULL && factionlimit_ != NULL) delete factionlimit_;
+  factionlimit_ = NULL;
+}
+inline const ::PBChatChannelLimit& PBTplChatConfig::factionlimit() const {
+  // @@protoc_insertion_point(field_get:PBTplChatConfig.FactionLimit)
+  return factionlimit_ != NULL ? *factionlimit_
+                         : *::PBChatChannelLimit::internal_default_instance();
+}
+inline ::PBChatChannelLimit* PBTplChatConfig::mutable_factionlimit() {
+  
+  if (factionlimit_ == NULL) {
+    factionlimit_ = new ::PBChatChannelLimit;
+  }
+  // @@protoc_insertion_point(field_mutable:PBTplChatConfig.FactionLimit)
+  return factionlimit_;
+}
+inline ::PBChatChannelLimit* PBTplChatConfig::release_factionlimit() {
+  // @@protoc_insertion_point(field_release:PBTplChatConfig.FactionLimit)
+  
+  ::PBChatChannelLimit* temp = factionlimit_;
+  factionlimit_ = NULL;
+  return temp;
+}
+inline void PBTplChatConfig::set_allocated_factionlimit(::PBChatChannelLimit* factionlimit) {
+  delete factionlimit_;
+  factionlimit_ = factionlimit;
+  if (factionlimit) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:PBTplChatConfig.FactionLimit)
+}
+
+inline const PBTplChatConfig* PBTplChatConfig::internal_default_instance() {
+  return &PBTplChatConfig_default_instance_.get();
+}
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

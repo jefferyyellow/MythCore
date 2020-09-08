@@ -37,6 +37,16 @@ CInternalMsg* CInternalMsgPool::allocMsg(int nMessageID)
 			pMsg = static_cast<CInternalMsg*>(mUpdateRankResponsePool.allocate());
 			break;
 		}
+		case IM_REQUEST_GET_RANK_INFO:
+		{
+			pMsg = static_cast<CInternalMsg*>(mGetRankInfoRequestPool.allocate());
+			break;
+		}
+		case IM_RESPONSE_GET_RANK_INFO:
+		{
+			pMsg = static_cast<CInternalMsg*>(mGetRankInfoResponsePool.allocate());
+			break;
+		}
 		default:
 		{
 			break;
@@ -84,6 +94,16 @@ void CInternalMsgPool::freeMsg(CInternalMsg* pMsg)
 		case IM_RESPONSE_UPDATE_RANK:
 		{
 			mUpdateRankResponsePool.free((CIMUpdateRankResponse*)pMsg);
+			break;
+		}
+		case IM_REQUEST_GET_RANK_INFO:
+		{
+			mGetRankInfoRequestPool.free((CIMGetRankInfoRequest*)pMsg);
+			break;
+		}
+		case IM_RESPONSE_GET_RANK_INFO:
+		{
+			mGetRankInfoResponsePool.free((CIMGetRankInfoResponse*)pMsg);
 			break;
 		}
 		default:

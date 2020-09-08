@@ -5,8 +5,8 @@
 #include "strutility.h"
 
 class CEntityPlayer;
-#define COMMAND_HANDLER_DECL(Commandname)	static void Commandname##Handler(std::string strCommandName, StrTokens& tTokens, CEntityPlayer* pPlayer)
-#define COMMAND_HANDLER_IMPL(Commandname)	void CGMCommandManager::Commandname##Handler(std::string strCommandName, StrTokens& tTokens, CEntityPlayer* pPlayer)
+#define COMMAND_HANDLER_DECL(Commandname)	static void Commandname##Handler(std::string strCommandName, StrTokens& tTokens, CEntityPlayer& rPlayer)
+#define COMMAND_HANDLER_IMPL(Commandname)	void CGMCommandManager::Commandname##Handler(std::string strCommandName, StrTokens& tTokens, CEntityPlayer& rPlayer)
 #define COMMAND_HANDLER_ADD(Commandname, HelpString) \
 	mCommandHash.insert( CommandHash::value_type(#Commandname, Commandname##Handler)); \
 	mCommandHelpHash.insert(CommandHelpHash::value_type(#Commandname, HelpString))
@@ -14,7 +14,7 @@ class CEntityPlayer;
 class CGMCommandManager
 {
 public:
-	typedef void(*COMMANDHANDLER)(std::string strCommandName, StrTokens& tTokens, CEntityPlayer* pPlayer);
+	typedef void(*COMMANDHANDLER)(std::string strCommandName, StrTokens& tTokens, CEntityPlayer& rPlayer);
 	typedef std::map<std::string, COMMANDHANDLER > CommandHash;
 	typedef std::map<std::string, std::string> CommandHelpHash;
 	typedef std::map<int, std::string> ErrorCodeHash;
@@ -36,11 +36,11 @@ public:
 	/// 加载lua文件里面的错误码
 	void LoadLuaErrCode(const char* pErrCodePath);
 	/// 广播命令影响和结果
-	static void	broadcastCommandResult(CEntityPlayer* pPlayer, char* pResult);
+	static void	broadcastCommandResult(CEntityPlayer& rPlayer, char* pResult);
 	/// 通知玩家命令影响和结果
-	static void	sendCommandResult(CEntityPlayer* pPlayer, const char* pResult);
+	static void	sendCommandResult(CEntityPlayer& rPlayer, const char* pResult);
 	/// 执行GM命令
-	void		excuteCommand(std::string strCommandName, StrTokens& tTokens, CEntityPlayer* pPlayer);
+	void		excuteCommand(std::string strCommandName, StrTokens& tTokens, CEntityPlayer& rPlayer);
 
 private:
 	/// 帮助命令

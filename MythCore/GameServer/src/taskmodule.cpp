@@ -73,27 +73,23 @@ void CTaskModule::onLoadConfig()
 	loadAllTaskConfig("gameserverconfig/tasks/*.xml");
 }
 
-void CTaskModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)
+void CTaskModule::onClientMessage(CEntityPlayer& rPlayer, unsigned int nMessageID, Message* pMessage)
 {
-	if (NULL == pPlayer)
-	{
-		return;
-	}
 	switch (nMessageID)
 	{
 		case ID_C2S_REQUEST_ACCEPT_TASK:
 		{
-			pPlayer->getTaskUnit().onAcceptTaskRequest(pMessage);
+			rPlayer.getTaskUnit().onAcceptTaskRequest(pMessage);
 			break;
 		}
 		case ID_C2S_REQUEST_SUBMIT_TASK:
 		{
-			pPlayer->getTaskUnit().onSubmitTaskRequest(pMessage);
+			rPlayer.getTaskUnit().onSubmitTaskRequest(pMessage);
 			break;
 		}
 		case ID_C2S_REQUEST_ABORT_TASK:
 		{
-			pPlayer->getTaskUnit().onAbortTaskRequest(pMessage);
+			rPlayer.getTaskUnit().onAbortTaskRequest(pMessage);
 			break;
 		}
 		default:

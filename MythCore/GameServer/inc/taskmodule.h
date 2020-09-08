@@ -76,7 +76,7 @@ public:
 	}
 
 public:
-	void	onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage);
+	void	onClientMessage(CEntityPlayer& rPlayer, unsigned int nMessageID, Message* pMessage);
 
 private:
 	CTaskConfig*			mTaskConfig[MAX_TASK_ID];	// ÈÎÎñÅäÖÃ

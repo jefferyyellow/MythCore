@@ -105,7 +105,7 @@ void CPropertyModule::onTimer(unsigned int nTickOffset)
 				continue;
 			}
 
-			savePlayer(tArrayPlayer[i]);
+			savePlayer(*tArrayPlayer[i]);
 			tArrayPlayer[i]->getTimeUnit().setLastSaveTime(tTimeNow);
 			++nSavePlayerCount;
 			if (nSavePlayerCount >= 50)
@@ -122,55 +122,53 @@ void CPropertyModule::onLoadConfig()
 
 }
 
-void CPropertyModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)
+void CPropertyModule::onClientMessage(CEntityPlayer& rPlayer, unsigned int nMessageID, Message* pMessage)
 {
-	MYTH_ASSERT(NULL != pPlayer, return);
-
 	switch (nMessageID)
 	{
 		case ID_C2S_REQUEST_GM_COMMAND:
 		{
-			onGMCommandRequest(pPlayer, pMessage);
+			onGMCommandRequest(rPlayer, pMessage);
 			break;
 		}
 		case ID_C2S_REQUEST_LEAVE_GAME:
 		{
-			onLeaveGameRequest(pPlayer, pMessage);
+			onLeaveGameRequest(rPlayer, pMessage);
 			break;
 		}
 		case ID_C2S_REQUEST_GET_PLAYER_PROPERTY:
 		{
-			pPlayer->onGetPlayerPropertyRequest(pMessage);
+			rPlayer.onGetPlayerPropertyRequest(pMessage);
 			break;
 		}
 		case ID_C2S_REQUEST_HEART_BEAT:
 		{
-			pPlayer->getTimeUnit().onHeartBeatRequest(pMessage);
+			rPlayer.getTimeUnit().onHeartBeatRequest(pMessage);
 			break;
 		}
 		case ID_C2S_REQUEST_GET_MAIL_LIST:
 		{
-			pPlayer->getInteractiveUnit().onGetMailListRequest(pMessage);
+			rPlayer.getInteractiveUnit().onGetMailListRequest(pMessage);
 			break;
 		}
 		case ID_C2S_REQUEST_READ_MAIL:
 		{
-			pPlayer->getInteractiveUnit().onReadMailRequest(pMessage);
+			rPlayer.getInteractiveUnit().onReadMailRequest(pMessage);
 			break;
 		}
 		case ID_C2S_REQUEST_GET_MAIL_ATTACHMENT:
 		{
-			pPlayer->getInteractiveUnit().onGetMailAttachmentRequest(pMessage);
+			rPlayer.getInteractiveUnit().onGetMailAttachmentRequest(pMessage);
 			break;
 		}
 		case ID_C2S_REQUEST_DELETE_MAIL:
 		{
-			pPlayer->getInteractiveUnit().onDeleteMailRequest(pMessage);
+			rPlayer.getInteractiveUnit().onDeleteMailRequest(pMessage);
 			break;
 		}
 		case ID_C2S_REQUEST_GET_MAIL_DETAIL:
 		{
-			pPlayer->getInteractiveUnit().onGetMailDetailRequest(pMessage);
+			rPlayer.getInteractiveUnit().onGetMailDetailRequest(pMessage);
 			break;
 		}
 		default:
@@ -180,9 +178,9 @@ void CPropertyModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMess
 
 
 // GM命令请求
-void CPropertyModule::onGMCommandRequest(CEntityPlayer* pPlayer, Message* pMessage)
+void CPropertyModule::onGMCommandRequest(CEntityPlayer& rPlayer, Message* pMessage)
 {
-	MYTH_ASSERT(NULL != pPlayer && NULL != pMessage, return);
+	MYTH_ASSERT(NULL != pMessage, return);
 
 	CGMCommandRequest* pGMCommandRequest = static_cast<CGMCommandRequest*>(pMessage);
 	if (NULL == pGMCommandRequest)
@@ -200,15 +198,15 @@ void CPropertyModule::onGMCommandRequest(CEntityPlayer* pPlayer, Message* pMessa
 	acCommandName[sizeof(acCommandName) - 1] = '\0';
 
 	tTokens.erase(tTokens.begin());
-	mGMCmdManager.excuteCommand(acCommandName, tTokens, pPlayer);
+	mGMCmdManager.excuteCommand(acCommandName, tTokens, rPlayer);
 }
 
 /// 玩家离开游戏的请求
-void CPropertyModule::onLeaveGameRequest(CEntityPlayer* pPlayer, Message* pMessage)
+void CPropertyModule::onLeaveGameRequest(CEntityPlayer& rPlayer, Message* pMessage)
 {
-	MYTH_ASSERT(NULL != pPlayer && NULL != pMessage, return);
+	MYTH_ASSERT(NULL != pMessage, return);
 	// 将玩家置为下线状态
-	playerLeaveGame(pPlayer, EmLeaveReason_PlayerRequest);
+	playerLeaveGame(rPlayer, EmLeaveReason_PlayerRequest);
 }
 
 /// 踢出所以玩家
@@ -229,7 +227,7 @@ void CPropertyModule::kickAllPlayer()
 			continue;
 		}
 
-		playerLeaveGame(pPlayer, EmLeaveReason_ServerShutDown);
+		playerLeaveGame(*pPlayer, EmLeaveReason_ServerShutDown);
 		++ nCount;
 		// 每次30个
 		if (nCount >= 30)
@@ -430,106 +428,83 @@ void CPropertyModule::sendPlayerSkillInfoNotify(CEntityPlayer* pPlayer)
 }
 
 /// 玩家存盘
-void CPropertyModule::savePlayer(CEntityPlayer* pPlayer)
+void CPropertyModule::savePlayer(CEntityPlayer& rPlayer)
 {
-	if (NULL == pPlayer)
-	{
-		return;
-	}
-
-	pPlayer->setSaveStatus(0);
-	savePlayerInfo(pPlayer);
-	savePlayerBaseProperty(pPlayer);
+	rPlayer.setSaveStatus(0);
+	savePlayerInfo(rPlayer);
+	savePlayerBaseProperty(rPlayer);
 }
 
-void CPropertyModule::savePlayerInfo(CEntityPlayer* pPlayer)
+void CPropertyModule::savePlayerInfo(CEntityPlayer& rPlayer)
 {
-	if (NULL == pPlayer)
-	{
-		return;
-	}
-
 	time_t tCurrTime = CTimeManager::Inst()->getCurrTime();
-	CDBModule::Inst()->pushDBTask(pPlayer->getRoleID(), emSessionType_SavePlayerInfo, pPlayer->getObjID(), 0,
-		"call UpdatePlayerInfo(%d, %d,%lld,%d,%d,%d,%d,%d)", pPlayer->getRoleID(),
-		pPlayer->getPropertyUnit().getLevel(), pPlayer->getPropertyUnit().getExp(),
-		pPlayer->getVIPUnit().getVipLevel(), pPlayer->getVIPUnit().getVipExp(),
-		pPlayer->getItemUnit().getMoney(), pPlayer->getItemUnit().getDiamond(), tCurrTime);
+	CDBModule::Inst()->pushDBTask(rPlayer.getRoleID(), emSessionType_SavePlayerInfo, rPlayer.getObjID(), 0,
+		"call UpdatePlayerInfo(%d, %d,%lld,%d,%d,%d,%d,%d)", rPlayer.getRoleID(),
+		rPlayer.getPropertyUnit().getLevel(), rPlayer.getPropertyUnit().getExp(),
+		rPlayer.getVIPUnit().getVipLevel(), rPlayer.getVIPUnit().getVipExp(),
+		rPlayer.getItemUnit().getMoney(), rPlayer.getItemUnit().getDiamond(), tCurrTime);
 }
 
-void CPropertyModule::savePlayerBaseProperty(CEntityPlayer* pPlayer)
+void CPropertyModule::savePlayerBaseProperty(CEntityPlayer& rPlayer)
 {
-	if (NULL == pPlayer)
-	{
-		return;
-	}
 	PBSavePlayer tSavePlayer;
-	pPlayer->getItemUnit().getBag().createToPB(tSavePlayer.mutable_bag());
-	pPlayer->getItemUnit().getEquip().createToPB(tSavePlayer.mutable_equip());
-	pPlayer->getTaskUnit().createToPB(tSavePlayer.mutable_task());
+	rPlayer.getItemUnit().getBag().createToPB(tSavePlayer.mutable_bag());
+	rPlayer.getItemUnit().getEquip().createToPB(tSavePlayer.mutable_equip());
+	rPlayer.getTaskUnit().createToPB(tSavePlayer.mutable_task());
 	
-	CDBModule::Inst()->pushDBTask(pPlayer->getRoleID(), emSessionType_SavePlayerBaseProperty, pPlayer->getObjID(), 0, &tSavePlayer);
+	CDBModule::Inst()->pushDBTask(rPlayer.getRoleID(), emSessionType_SavePlayerBaseProperty, rPlayer.getObjID(), 0, &tSavePlayer);
 }
 /// 玩家存盘完成
-void CPropertyModule::onSavePlayerComplete(CEntityPlayer* pPlayer)
+void CPropertyModule::onSavePlayerComplete(CEntityPlayer& rPlayer)
 {
 	// 没完全存盘就直接返回
-	if (emSaveStatusAll !=pPlayer->getSaveStatus())
+	if (emSaveStatusAll != rPlayer.getSaveStatus())
 	{
 		return;
 	}
 	// 退出状态
-	if (pPlayer->getPlayerStauts() == emPlayerStatus_Exiting)
+	if (rPlayer.getPlayerStauts() == emPlayerStatus_Exiting)
 	{
-		destroyPlayer(pPlayer);
+		destroyPlayer(rPlayer);
 	}
 }
 
 /// 玩家离开游戏
-void CPropertyModule::playerLeaveGame(CEntityPlayer* pPlayer, EmLeaveReason eReason)
+void CPropertyModule::playerLeaveGame(CEntityPlayer& rPlayer, EmLeaveReason eReason)
 {
-	if (NULL == pPlayer)
-	{
-		return;
-	}
-	if (emPlayerStatus_Exiting == pPlayer->getPlayerStauts())
+	if (emPlayerStatus_Exiting == rPlayer.getPlayerStauts())
 	{
 		return;
 	}
 
-	LOG_INFO("player leave game, player status: %d, reason: %d", pPlayer->getPlayerStauts(), eReason);
+	LOG_INFO("player leave game, player status: %d, reason: %d", rPlayer.getPlayerStauts(), eReason);
 
-	byte bPlayerStatus = pPlayer->getPlayerStauts();
+	byte bPlayerStatus = rPlayer.getPlayerStauts();
 	// 将玩家置为下线状态
-	pPlayer->setPlayerStauts(emPlayerStatus_Exiting);
+	rPlayer.setPlayerStauts(emPlayerStatus_Exiting);
 
 	switch (bPlayerStatus)
 	{
 		case emPlayerStatus_Gameing:
 		{
 			// 玩家是在游戏状态，先保存
-			savePlayer(pPlayer);
+			savePlayer(rPlayer);
 			break;
 		}
 		case emPlayerStatus_Loading:
 		{
 			// 直接离开游戏，不保存
-			destroyPlayer(pPlayer);
+			destroyPlayer(rPlayer);
 			break;
 		}
 	}
 }
 
 /// 玩家离开游戏
-void CPropertyModule::destroyPlayer(CEntityPlayer* pPlayer)
+void CPropertyModule::destroyPlayer(CEntityPlayer& rPlayer)
 {
-	if (NULL == pPlayer)
-	{
-		return;
-	}
-
-	CSceneJob::Inst()->destroyPlayerObject(pPlayer);
-	CObjPool::Inst()->free(pPlayer->getObjID());
+	CSceneJob::Inst()->destroyPlayerObject(rPlayer);
+	CObjPool::Inst()->free(rPlayer.getObjID());
 }
 
 /// 新玩家处理

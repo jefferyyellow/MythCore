@@ -399,3 +399,33 @@ void CTplDropTable::CDropItem::createToPB(PBTplDropItem* pbData)
 	pbData->set_itemnum(mItemNum);
 	pbData->set_probability(mProbability);
 }
+
+CTplChatConfig* CTplChatConfig::spChatConfig = NULL;
+void CTplChatConfig::CChatChannelLimit::setFromPB(PBChatChannelLimit* pbLimit)
+{
+	mWordNum = pbLimit->wordnum();
+	mPlayerLevel = pbLimit->playerlevel();
+	mInterval = pbLimit->interval();
+}
+
+
+void CTplChatConfig::CChatChannelLimit::createToPB(PBChatChannelLimit* pbLimit)
+{
+	pbLimit->set_wordnum(mWordNum);
+	pbLimit->set_playerlevel(mPlayerLevel);
+	pbLimit->set_interval(mInterval);
+}
+
+void CTplChatConfig::setFromPB(PBTplChatConfig* pbConfig)
+{
+	mWorldLimit.setFromPB(pbConfig->mutable_worldlimit());
+	mTeamLimit.setFromPB(pbConfig->mutable_teamlimit());
+	mFactionLimit.setFromPB(pbConfig->mutable_factionlimit());
+}
+
+void CTplChatConfig::createToPB(PBTplChatConfig* pbConfig)
+{
+	mWorldLimit.createToPB(pbConfig->mutable_worldlimit());
+	mTeamLimit.createToPB(pbConfig->mutable_teamlimit());
+	mFactionLimit.createToPB(pbConfig->mutable_factionlimit());
+}

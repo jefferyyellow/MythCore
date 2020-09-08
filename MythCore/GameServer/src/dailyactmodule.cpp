@@ -94,12 +94,8 @@ void CDailyActModule::onReloadConfig()
 	loadActivityConfig("gameserverconfig/daily_activity/daily_activity.xml");
 }
 
-void CDailyActModule::onClientMessage(CEntityPlayer* pPlayer, unsigned int nMessageID, Message* pMessage)
+void CDailyActModule::onClientMessage(CEntityPlayer& rPlayer, unsigned int nMessageID, Message* pMessage)
 {
-	if (NULL == pPlayer)
-	{
-		return;
-	}
 	switch (nMessageID)
 	{
 
