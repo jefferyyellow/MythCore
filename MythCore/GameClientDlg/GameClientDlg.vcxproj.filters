@@ -126,6 +126,12 @@
     <ClInclude Include="..\message\template.hxx.pb.h">
       <Filter>message</Filter>
     </ClInclude>
+    <ClInclude Include="..\message\instancemodule.hxx">
+      <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="..\message\instancemodule.hxx.pb.h">
+      <Filter>message</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameClientDlg.cpp">
@@ -184,6 +190,9 @@
     </ClCompile>
     <ClCompile Include="..\GameServer\src\messagefactory.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\message\instancemodule.hxx.pb.cc">
+      <Filter>message</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

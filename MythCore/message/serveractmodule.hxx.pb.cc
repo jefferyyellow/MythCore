@@ -25,12 +25,12 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* CGetServerActResponse_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   CGetServerActResponse_reflection_ = NULL;
-const ::google::protobuf::Descriptor* CGetCumulRechargePrizeRequest_descriptor_ = NULL;
+const ::google::protobuf::Descriptor* CGetPhaseActPrizeRequest_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  CGetCumulRechargePrizeRequest_reflection_ = NULL;
-const ::google::protobuf::Descriptor* CGetCumulRechargePrizeResponse_descriptor_ = NULL;
+  CGetPhaseActPrizeRequest_reflection_ = NULL;
+const ::google::protobuf::Descriptor* CGetPhaseActPrizeResponse_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  CGetCumulRechargePrizeResponse_reflection_ = NULL;
+  CGetPhaseActPrizeResponse_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* SERVER_ACT_MODULE_MSG_ID_descriptor_ = NULL;
 
 }  // namespace
@@ -69,35 +69,35 @@ void protobuf_AssignDesc_serveractmodule_2ehxx() {
       -1,
       sizeof(CGetServerActResponse),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetServerActResponse, _internal_metadata_));
-  CGetCumulRechargePrizeRequest_descriptor_ = file->message_type(2);
-  static const int CGetCumulRechargePrizeRequest_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetCumulRechargePrizeRequest, activityid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetCumulRechargePrizeRequest, index_),
+  CGetPhaseActPrizeRequest_descriptor_ = file->message_type(2);
+  static const int CGetPhaseActPrizeRequest_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetPhaseActPrizeRequest, activityid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetPhaseActPrizeRequest, index_),
   };
-  CGetCumulRechargePrizeRequest_reflection_ =
+  CGetPhaseActPrizeRequest_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      CGetCumulRechargePrizeRequest_descriptor_,
-      CGetCumulRechargePrizeRequest::internal_default_instance(),
-      CGetCumulRechargePrizeRequest_offsets_,
+      CGetPhaseActPrizeRequest_descriptor_,
+      CGetPhaseActPrizeRequest::internal_default_instance(),
+      CGetPhaseActPrizeRequest_offsets_,
       -1,
       -1,
       -1,
-      sizeof(CGetCumulRechargePrizeRequest),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetCumulRechargePrizeRequest, _internal_metadata_));
-  CGetCumulRechargePrizeResponse_descriptor_ = file->message_type(3);
-  static const int CGetCumulRechargePrizeResponse_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetCumulRechargePrizeResponse, result_),
+      sizeof(CGetPhaseActPrizeRequest),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetPhaseActPrizeRequest, _internal_metadata_));
+  CGetPhaseActPrizeResponse_descriptor_ = file->message_type(3);
+  static const int CGetPhaseActPrizeResponse_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetPhaseActPrizeResponse, result_),
   };
-  CGetCumulRechargePrizeResponse_reflection_ =
+  CGetPhaseActPrizeResponse_reflection_ =
     ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      CGetCumulRechargePrizeResponse_descriptor_,
-      CGetCumulRechargePrizeResponse::internal_default_instance(),
-      CGetCumulRechargePrizeResponse_offsets_,
+      CGetPhaseActPrizeResponse_descriptor_,
+      CGetPhaseActPrizeResponse::internal_default_instance(),
+      CGetPhaseActPrizeResponse_offsets_,
       -1,
       -1,
       -1,
-      sizeof(CGetCumulRechargePrizeResponse),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetCumulRechargePrizeResponse, _internal_metadata_));
+      sizeof(CGetPhaseActPrizeResponse),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(CGetPhaseActPrizeResponse, _internal_metadata_));
   SERVER_ACT_MODULE_MSG_ID_descriptor_ = file->enum_type(0);
 }
 
@@ -117,9 +117,9 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
       CGetServerActResponse_descriptor_, CGetServerActResponse::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      CGetCumulRechargePrizeRequest_descriptor_, CGetCumulRechargePrizeRequest::internal_default_instance());
+      CGetPhaseActPrizeRequest_descriptor_, CGetPhaseActPrizeRequest::internal_default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      CGetCumulRechargePrizeResponse_descriptor_, CGetCumulRechargePrizeResponse::internal_default_instance());
+      CGetPhaseActPrizeResponse_descriptor_, CGetPhaseActPrizeResponse::internal_default_instance());
 }
 
 }  // namespace
@@ -129,10 +129,10 @@ void protobuf_ShutdownFile_serveractmodule_2ehxx() {
   delete CGetServerActRequest_reflection_;
   CGetServerActResponse_default_instance_.Shutdown();
   delete CGetServerActResponse_reflection_;
-  CGetCumulRechargePrizeRequest_default_instance_.Shutdown();
-  delete CGetCumulRechargePrizeRequest_reflection_;
-  CGetCumulRechargePrizeResponse_default_instance_.Shutdown();
-  delete CGetCumulRechargePrizeResponse_reflection_;
+  CGetPhaseActPrizeRequest_default_instance_.Shutdown();
+  delete CGetPhaseActPrizeRequest_reflection_;
+  CGetPhaseActPrizeResponse_default_instance_.Shutdown();
+  delete CGetPhaseActPrizeResponse_reflection_;
 }
 
 void protobuf_InitDefaults_serveractmodule_2ehxx_impl() {
@@ -140,12 +140,12 @@ void protobuf_InitDefaults_serveractmodule_2ehxx_impl() {
 
   CGetServerActRequest_default_instance_.DefaultConstruct();
   CGetServerActResponse_default_instance_.DefaultConstruct();
-  CGetCumulRechargePrizeRequest_default_instance_.DefaultConstruct();
-  CGetCumulRechargePrizeResponse_default_instance_.DefaultConstruct();
+  CGetPhaseActPrizeRequest_default_instance_.DefaultConstruct();
+  CGetPhaseActPrizeResponse_default_instance_.DefaultConstruct();
   CGetServerActRequest_default_instance_.get_mutable()->InitAsDefaultInstance();
   CGetServerActResponse_default_instance_.get_mutable()->InitAsDefaultInstance();
-  CGetCumulRechargePrizeRequest_default_instance_.get_mutable()->InitAsDefaultInstance();
-  CGetCumulRechargePrizeResponse_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CGetPhaseActPrizeRequest_default_instance_.get_mutable()->InitAsDefaultInstance();
+  CGetPhaseActPrizeResponse_default_instance_.get_mutable()->InitAsDefaultInstance();
 }
 
 GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_InitDefaults_serveractmodule_2ehxx_once_);
@@ -159,16 +159,16 @@ void protobuf_AddDesc_serveractmodule_2ehxx_impl() {
   protobuf_InitDefaults_serveractmodule_2ehxx();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\023serveractmodule.hxx\"\026\n\024CGetServerActRe"
-    "quest\"\027\n\025CGetServerActResponse\"B\n\035CGetCu"
-    "mulRechargePrizeRequest\022\022\n\nActivityID\030\001 "
-    "\001(\r\022\r\n\005Index\030\002 \001(\r\"0\n\036CGetCumulRechargeP"
-    "rizeResponse\022\016\n\006Result\030\001 \001(\r*\340\001\n\030SERVER_"
-    "ACT_MODULE_MSG_ID\022\036\n\032ID_SERVER_ACT_MODUL"
-    "E_ERROR\020\000\022\"\n\035ID_C2S_REQUEST_GET_SERVER_A"
-    "CT\020\2008\022#\n\036ID_S2C_RESPONSE_GET_SERVER_ACT\020"
-    "\2018\022,\n\'ID_C2S_REQUEST_GET_CUMUL_RECHARGE_"
-    "PRIZE\020\2028\022-\n(ID_S2C_RESPONSE_GET_CUMUL_RE"
-    "CHARGE_PRIZE\020\2038b\006proto3", 423);
+    "quest\"\027\n\025CGetServerActResponse\"=\n\030CGetPh"
+    "aseActPrizeRequest\022\022\n\nActivityID\030\001 \001(\r\022\r"
+    "\n\005Index\030\002 \001(\r\"+\n\031CGetPhaseActPrizeRespon"
+    "se\022\016\n\006Result\030\001 \001(\r*\326\001\n\030SERVER_ACT_MODULE"
+    "_MSG_ID\022\036\n\032ID_SERVER_ACT_MODULE_ERROR\020\000\022"
+    "\"\n\035ID_C2S_REQUEST_GET_SERVER_ACT\020\2008\022#\n\036I"
+    "D_S2C_RESPONSE_GET_SERVER_ACT\020\2018\022\'\n\"ID_C"
+    "2S_REQUEST_GET_PHASE_ACT_PRIZE\020\2028\022(\n#ID_"
+    "S2C_RESPONSE_GET_PHASE_ACT_PRIZE\020\2038b\006pro"
+    "to3", 403);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "serveractmodule.hxx", &protobuf_RegisterTypes);
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_serveractmodule_2ehxx);
@@ -590,78 +590,78 @@ inline const CGetServerActResponse* CGetServerActResponse::internal_default_inst
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int CGetCumulRechargePrizeRequest::kActivityIDFieldNumber;
-const int CGetCumulRechargePrizeRequest::kIndexFieldNumber;
+const int CGetPhaseActPrizeRequest::kActivityIDFieldNumber;
+const int CGetPhaseActPrizeRequest::kIndexFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-CGetCumulRechargePrizeRequest::CGetCumulRechargePrizeRequest()
+CGetPhaseActPrizeRequest::CGetPhaseActPrizeRequest()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   if (this != internal_default_instance()) protobuf_InitDefaults_serveractmodule_2ehxx();
   SharedCtor();
-  // @@protoc_insertion_point(constructor:CGetCumulRechargePrizeRequest)
+  // @@protoc_insertion_point(constructor:CGetPhaseActPrizeRequest)
 }
 
-void CGetCumulRechargePrizeRequest::InitAsDefaultInstance() {
+void CGetPhaseActPrizeRequest::InitAsDefaultInstance() {
 }
 
-CGetCumulRechargePrizeRequest::CGetCumulRechargePrizeRequest(const CGetCumulRechargePrizeRequest& from)
+CGetPhaseActPrizeRequest::CGetPhaseActPrizeRequest(const CGetPhaseActPrizeRequest& from)
   : ::google::protobuf::Message(),
     _internal_metadata_(NULL) {
   SharedCtor();
   UnsafeMergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:CGetCumulRechargePrizeRequest)
+  // @@protoc_insertion_point(copy_constructor:CGetPhaseActPrizeRequest)
 }
 
-void CGetCumulRechargePrizeRequest::SharedCtor() {
+void CGetPhaseActPrizeRequest::SharedCtor() {
   ::memset(&activityid_, 0, reinterpret_cast<char*>(&index_) -
     reinterpret_cast<char*>(&activityid_) + sizeof(index_));
   _cached_size_ = 0;
 }
 
-CGetCumulRechargePrizeRequest::~CGetCumulRechargePrizeRequest() {
-  // @@protoc_insertion_point(destructor:CGetCumulRechargePrizeRequest)
+CGetPhaseActPrizeRequest::~CGetPhaseActPrizeRequest() {
+  // @@protoc_insertion_point(destructor:CGetPhaseActPrizeRequest)
   SharedDtor();
 }
 
-void CGetCumulRechargePrizeRequest::SharedDtor() {
+void CGetPhaseActPrizeRequest::SharedDtor() {
 }
 
-void CGetCumulRechargePrizeRequest::SetCachedSize(int size) const {
+void CGetPhaseActPrizeRequest::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* CGetCumulRechargePrizeRequest::descriptor() {
+const ::google::protobuf::Descriptor* CGetPhaseActPrizeRequest::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return CGetCumulRechargePrizeRequest_descriptor_;
+  return CGetPhaseActPrizeRequest_descriptor_;
 }
 
-const CGetCumulRechargePrizeRequest& CGetCumulRechargePrizeRequest::default_instance() {
+const CGetPhaseActPrizeRequest& CGetPhaseActPrizeRequest::default_instance() {
   protobuf_InitDefaults_serveractmodule_2ehxx();
   return *internal_default_instance();
 }
 
-::google::protobuf::internal::ExplicitlyConstructed<CGetCumulRechargePrizeRequest> CGetCumulRechargePrizeRequest_default_instance_;
+::google::protobuf::internal::ExplicitlyConstructed<CGetPhaseActPrizeRequest> CGetPhaseActPrizeRequest_default_instance_;
 
-CGetCumulRechargePrizeRequest* CGetCumulRechargePrizeRequest::New(::google::protobuf::Arena* arena) const {
-  CGetCumulRechargePrizeRequest* n = new CGetCumulRechargePrizeRequest;
+CGetPhaseActPrizeRequest* CGetPhaseActPrizeRequest::New(::google::protobuf::Arena* arena) const {
+  CGetPhaseActPrizeRequest* n = new CGetPhaseActPrizeRequest;
   if (arena != NULL) {
     arena->Own(n);
   }
   return n;
 }
 
-void CGetCumulRechargePrizeRequest::Clear() {
-// @@protoc_insertion_point(message_clear_start:CGetCumulRechargePrizeRequest)
+void CGetPhaseActPrizeRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:CGetPhaseActPrizeRequest)
 #if defined(__clang__)
 #define ZR_HELPER_(f) \
   _Pragma("clang diagnostic push") \
   _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
-  __builtin_offsetof(CGetCumulRechargePrizeRequest, f) \
+  __builtin_offsetof(CGetPhaseActPrizeRequest, f) \
   _Pragma("clang diagnostic pop")
 #else
 #define ZR_HELPER_(f) reinterpret_cast<char*>(\
-  &reinterpret_cast<CGetCumulRechargePrizeRequest*>(16)->f)
+  &reinterpret_cast<CGetPhaseActPrizeRequest*>(16)->f)
 #endif
 
 #define ZR_(first, last) do {\
@@ -676,11 +676,11 @@ void CGetCumulRechargePrizeRequest::Clear() {
 
 }
 
-bool CGetCumulRechargePrizeRequest::MergePartialFromCodedStream(
+bool CGetPhaseActPrizeRequest::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:CGetCumulRechargePrizeRequest)
+  // @@protoc_insertion_point(parse_start:CGetPhaseActPrizeRequest)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -728,17 +728,17 @@ bool CGetCumulRechargePrizeRequest::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:CGetCumulRechargePrizeRequest)
+  // @@protoc_insertion_point(parse_success:CGetPhaseActPrizeRequest)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:CGetCumulRechargePrizeRequest)
+  // @@protoc_insertion_point(parse_failure:CGetPhaseActPrizeRequest)
   return false;
 #undef DO_
 }
 
-void CGetCumulRechargePrizeRequest::SerializeWithCachedSizes(
+void CGetPhaseActPrizeRequest::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:CGetCumulRechargePrizeRequest)
+  // @@protoc_insertion_point(serialize_start:CGetPhaseActPrizeRequest)
   // optional uint32 ActivityID = 1;
   if (this->activityid() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->activityid(), output);
@@ -749,13 +749,13 @@ void CGetCumulRechargePrizeRequest::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->index(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:CGetCumulRechargePrizeRequest)
+  // @@protoc_insertion_point(serialize_end:CGetPhaseActPrizeRequest)
 }
 
-::google::protobuf::uint8* CGetCumulRechargePrizeRequest::InternalSerializeWithCachedSizesToArray(
+::google::protobuf::uint8* CGetPhaseActPrizeRequest::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:CGetCumulRechargePrizeRequest)
+  // @@protoc_insertion_point(serialize_to_array_start:CGetPhaseActPrizeRequest)
   // optional uint32 ActivityID = 1;
   if (this->activityid() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->activityid(), target);
@@ -766,12 +766,12 @@ void CGetCumulRechargePrizeRequest::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->index(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:CGetCumulRechargePrizeRequest)
+  // @@protoc_insertion_point(serialize_to_array_end:CGetPhaseActPrizeRequest)
   return target;
 }
 
-size_t CGetCumulRechargePrizeRequest::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:CGetCumulRechargePrizeRequest)
+size_t CGetPhaseActPrizeRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CGetPhaseActPrizeRequest)
   size_t total_size = 0;
 
   // optional uint32 ActivityID = 1;
@@ -795,23 +795,23 @@ size_t CGetCumulRechargePrizeRequest::ByteSizeLong() const {
   return total_size;
 }
 
-void CGetCumulRechargePrizeRequest::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:CGetCumulRechargePrizeRequest)
+void CGetPhaseActPrizeRequest::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CGetPhaseActPrizeRequest)
   if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const CGetCumulRechargePrizeRequest* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const CGetCumulRechargePrizeRequest>(
+  const CGetPhaseActPrizeRequest* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CGetPhaseActPrizeRequest>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CGetCumulRechargePrizeRequest)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CGetPhaseActPrizeRequest)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:CGetCumulRechargePrizeRequest)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CGetPhaseActPrizeRequest)
     UnsafeMergeFrom(*source);
   }
 }
 
-void CGetCumulRechargePrizeRequest::MergeFrom(const CGetCumulRechargePrizeRequest& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:CGetCumulRechargePrizeRequest)
+void CGetPhaseActPrizeRequest::MergeFrom(const CGetPhaseActPrizeRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CGetPhaseActPrizeRequest)
   if (GOOGLE_PREDICT_TRUE(&from != this)) {
     UnsafeMergeFrom(from);
   } else {
@@ -819,7 +819,7 @@ void CGetCumulRechargePrizeRequest::MergeFrom(const CGetCumulRechargePrizeReques
   }
 }
 
-void CGetCumulRechargePrizeRequest::UnsafeMergeFrom(const CGetCumulRechargePrizeRequest& from) {
+void CGetPhaseActPrizeRequest::UnsafeMergeFrom(const CGetPhaseActPrizeRequest& from) {
   GOOGLE_DCHECK(&from != this);
   if (from.activityid() != 0) {
     set_activityid(from.activityid());
@@ -829,152 +829,152 @@ void CGetCumulRechargePrizeRequest::UnsafeMergeFrom(const CGetCumulRechargePrize
   }
 }
 
-void CGetCumulRechargePrizeRequest::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:CGetCumulRechargePrizeRequest)
+void CGetPhaseActPrizeRequest::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CGetPhaseActPrizeRequest)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void CGetCumulRechargePrizeRequest::CopyFrom(const CGetCumulRechargePrizeRequest& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:CGetCumulRechargePrizeRequest)
+void CGetPhaseActPrizeRequest::CopyFrom(const CGetPhaseActPrizeRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CGetPhaseActPrizeRequest)
   if (&from == this) return;
   Clear();
   UnsafeMergeFrom(from);
 }
 
-bool CGetCumulRechargePrizeRequest::IsInitialized() const {
+bool CGetPhaseActPrizeRequest::IsInitialized() const {
 
   return true;
 }
 
-void CGetCumulRechargePrizeRequest::Swap(CGetCumulRechargePrizeRequest* other) {
+void CGetPhaseActPrizeRequest::Swap(CGetPhaseActPrizeRequest* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void CGetCumulRechargePrizeRequest::InternalSwap(CGetCumulRechargePrizeRequest* other) {
+void CGetPhaseActPrizeRequest::InternalSwap(CGetPhaseActPrizeRequest* other) {
   std::swap(activityid_, other->activityid_);
   std::swap(index_, other->index_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
 
-::google::protobuf::Metadata CGetCumulRechargePrizeRequest::GetMetadata() const {
+::google::protobuf::Metadata CGetPhaseActPrizeRequest::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = CGetCumulRechargePrizeRequest_descriptor_;
-  metadata.reflection = CGetCumulRechargePrizeRequest_reflection_;
+  metadata.descriptor = CGetPhaseActPrizeRequest_descriptor_;
+  metadata.reflection = CGetPhaseActPrizeRequest_reflection_;
   return metadata;
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
-// CGetCumulRechargePrizeRequest
+// CGetPhaseActPrizeRequest
 
 // optional uint32 ActivityID = 1;
-void CGetCumulRechargePrizeRequest::clear_activityid() {
+void CGetPhaseActPrizeRequest::clear_activityid() {
   activityid_ = 0u;
 }
-::google::protobuf::uint32 CGetCumulRechargePrizeRequest::activityid() const {
-  // @@protoc_insertion_point(field_get:CGetCumulRechargePrizeRequest.ActivityID)
+::google::protobuf::uint32 CGetPhaseActPrizeRequest::activityid() const {
+  // @@protoc_insertion_point(field_get:CGetPhaseActPrizeRequest.ActivityID)
   return activityid_;
 }
-void CGetCumulRechargePrizeRequest::set_activityid(::google::protobuf::uint32 value) {
+void CGetPhaseActPrizeRequest::set_activityid(::google::protobuf::uint32 value) {
   
   activityid_ = value;
-  // @@protoc_insertion_point(field_set:CGetCumulRechargePrizeRequest.ActivityID)
+  // @@protoc_insertion_point(field_set:CGetPhaseActPrizeRequest.ActivityID)
 }
 
 // optional uint32 Index = 2;
-void CGetCumulRechargePrizeRequest::clear_index() {
+void CGetPhaseActPrizeRequest::clear_index() {
   index_ = 0u;
 }
-::google::protobuf::uint32 CGetCumulRechargePrizeRequest::index() const {
-  // @@protoc_insertion_point(field_get:CGetCumulRechargePrizeRequest.Index)
+::google::protobuf::uint32 CGetPhaseActPrizeRequest::index() const {
+  // @@protoc_insertion_point(field_get:CGetPhaseActPrizeRequest.Index)
   return index_;
 }
-void CGetCumulRechargePrizeRequest::set_index(::google::protobuf::uint32 value) {
+void CGetPhaseActPrizeRequest::set_index(::google::protobuf::uint32 value) {
   
   index_ = value;
-  // @@protoc_insertion_point(field_set:CGetCumulRechargePrizeRequest.Index)
+  // @@protoc_insertion_point(field_set:CGetPhaseActPrizeRequest.Index)
 }
 
-inline const CGetCumulRechargePrizeRequest* CGetCumulRechargePrizeRequest::internal_default_instance() {
-  return &CGetCumulRechargePrizeRequest_default_instance_.get();
+inline const CGetPhaseActPrizeRequest* CGetPhaseActPrizeRequest::internal_default_instance() {
+  return &CGetPhaseActPrizeRequest_default_instance_.get();
 }
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int CGetCumulRechargePrizeResponse::kResultFieldNumber;
+const int CGetPhaseActPrizeResponse::kResultFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-CGetCumulRechargePrizeResponse::CGetCumulRechargePrizeResponse()
+CGetPhaseActPrizeResponse::CGetPhaseActPrizeResponse()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   if (this != internal_default_instance()) protobuf_InitDefaults_serveractmodule_2ehxx();
   SharedCtor();
-  // @@protoc_insertion_point(constructor:CGetCumulRechargePrizeResponse)
+  // @@protoc_insertion_point(constructor:CGetPhaseActPrizeResponse)
 }
 
-void CGetCumulRechargePrizeResponse::InitAsDefaultInstance() {
+void CGetPhaseActPrizeResponse::InitAsDefaultInstance() {
 }
 
-CGetCumulRechargePrizeResponse::CGetCumulRechargePrizeResponse(const CGetCumulRechargePrizeResponse& from)
+CGetPhaseActPrizeResponse::CGetPhaseActPrizeResponse(const CGetPhaseActPrizeResponse& from)
   : ::google::protobuf::Message(),
     _internal_metadata_(NULL) {
   SharedCtor();
   UnsafeMergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:CGetCumulRechargePrizeResponse)
+  // @@protoc_insertion_point(copy_constructor:CGetPhaseActPrizeResponse)
 }
 
-void CGetCumulRechargePrizeResponse::SharedCtor() {
+void CGetPhaseActPrizeResponse::SharedCtor() {
   result_ = 0u;
   _cached_size_ = 0;
 }
 
-CGetCumulRechargePrizeResponse::~CGetCumulRechargePrizeResponse() {
-  // @@protoc_insertion_point(destructor:CGetCumulRechargePrizeResponse)
+CGetPhaseActPrizeResponse::~CGetPhaseActPrizeResponse() {
+  // @@protoc_insertion_point(destructor:CGetPhaseActPrizeResponse)
   SharedDtor();
 }
 
-void CGetCumulRechargePrizeResponse::SharedDtor() {
+void CGetPhaseActPrizeResponse::SharedDtor() {
 }
 
-void CGetCumulRechargePrizeResponse::SetCachedSize(int size) const {
+void CGetPhaseActPrizeResponse::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* CGetCumulRechargePrizeResponse::descriptor() {
+const ::google::protobuf::Descriptor* CGetPhaseActPrizeResponse::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return CGetCumulRechargePrizeResponse_descriptor_;
+  return CGetPhaseActPrizeResponse_descriptor_;
 }
 
-const CGetCumulRechargePrizeResponse& CGetCumulRechargePrizeResponse::default_instance() {
+const CGetPhaseActPrizeResponse& CGetPhaseActPrizeResponse::default_instance() {
   protobuf_InitDefaults_serveractmodule_2ehxx();
   return *internal_default_instance();
 }
 
-::google::protobuf::internal::ExplicitlyConstructed<CGetCumulRechargePrizeResponse> CGetCumulRechargePrizeResponse_default_instance_;
+::google::protobuf::internal::ExplicitlyConstructed<CGetPhaseActPrizeResponse> CGetPhaseActPrizeResponse_default_instance_;
 
-CGetCumulRechargePrizeResponse* CGetCumulRechargePrizeResponse::New(::google::protobuf::Arena* arena) const {
-  CGetCumulRechargePrizeResponse* n = new CGetCumulRechargePrizeResponse;
+CGetPhaseActPrizeResponse* CGetPhaseActPrizeResponse::New(::google::protobuf::Arena* arena) const {
+  CGetPhaseActPrizeResponse* n = new CGetPhaseActPrizeResponse;
   if (arena != NULL) {
     arena->Own(n);
   }
   return n;
 }
 
-void CGetCumulRechargePrizeResponse::Clear() {
-// @@protoc_insertion_point(message_clear_start:CGetCumulRechargePrizeResponse)
+void CGetPhaseActPrizeResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:CGetPhaseActPrizeResponse)
   result_ = 0u;
 }
 
-bool CGetCumulRechargePrizeResponse::MergePartialFromCodedStream(
+bool CGetPhaseActPrizeResponse::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:CGetCumulRechargePrizeResponse)
+  // @@protoc_insertion_point(parse_start:CGetPhaseActPrizeResponse)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -1007,40 +1007,40 @@ bool CGetCumulRechargePrizeResponse::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:CGetCumulRechargePrizeResponse)
+  // @@protoc_insertion_point(parse_success:CGetPhaseActPrizeResponse)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:CGetCumulRechargePrizeResponse)
+  // @@protoc_insertion_point(parse_failure:CGetPhaseActPrizeResponse)
   return false;
 #undef DO_
 }
 
-void CGetCumulRechargePrizeResponse::SerializeWithCachedSizes(
+void CGetPhaseActPrizeResponse::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:CGetCumulRechargePrizeResponse)
+  // @@protoc_insertion_point(serialize_start:CGetPhaseActPrizeResponse)
   // optional uint32 Result = 1;
   if (this->result() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->result(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:CGetCumulRechargePrizeResponse)
+  // @@protoc_insertion_point(serialize_end:CGetPhaseActPrizeResponse)
 }
 
-::google::protobuf::uint8* CGetCumulRechargePrizeResponse::InternalSerializeWithCachedSizesToArray(
+::google::protobuf::uint8* CGetPhaseActPrizeResponse::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:CGetCumulRechargePrizeResponse)
+  // @@protoc_insertion_point(serialize_to_array_start:CGetPhaseActPrizeResponse)
   // optional uint32 Result = 1;
   if (this->result() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->result(), target);
   }
 
-  // @@protoc_insertion_point(serialize_to_array_end:CGetCumulRechargePrizeResponse)
+  // @@protoc_insertion_point(serialize_to_array_end:CGetPhaseActPrizeResponse)
   return target;
 }
 
-size_t CGetCumulRechargePrizeResponse::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:CGetCumulRechargePrizeResponse)
+size_t CGetPhaseActPrizeResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CGetPhaseActPrizeResponse)
   size_t total_size = 0;
 
   // optional uint32 Result = 1;
@@ -1057,23 +1057,23 @@ size_t CGetCumulRechargePrizeResponse::ByteSizeLong() const {
   return total_size;
 }
 
-void CGetCumulRechargePrizeResponse::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:CGetCumulRechargePrizeResponse)
+void CGetPhaseActPrizeResponse::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CGetPhaseActPrizeResponse)
   if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const CGetCumulRechargePrizeResponse* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const CGetCumulRechargePrizeResponse>(
+  const CGetPhaseActPrizeResponse* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const CGetPhaseActPrizeResponse>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CGetCumulRechargePrizeResponse)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CGetPhaseActPrizeResponse)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:CGetCumulRechargePrizeResponse)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CGetPhaseActPrizeResponse)
     UnsafeMergeFrom(*source);
   }
 }
 
-void CGetCumulRechargePrizeResponse::MergeFrom(const CGetCumulRechargePrizeResponse& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:CGetCumulRechargePrizeResponse)
+void CGetPhaseActPrizeResponse::MergeFrom(const CGetPhaseActPrizeResponse& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CGetPhaseActPrizeResponse)
   if (GOOGLE_PREDICT_TRUE(&from != this)) {
     UnsafeMergeFrom(from);
   } else {
@@ -1081,69 +1081,69 @@ void CGetCumulRechargePrizeResponse::MergeFrom(const CGetCumulRechargePrizeRespo
   }
 }
 
-void CGetCumulRechargePrizeResponse::UnsafeMergeFrom(const CGetCumulRechargePrizeResponse& from) {
+void CGetPhaseActPrizeResponse::UnsafeMergeFrom(const CGetPhaseActPrizeResponse& from) {
   GOOGLE_DCHECK(&from != this);
   if (from.result() != 0) {
     set_result(from.result());
   }
 }
 
-void CGetCumulRechargePrizeResponse::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:CGetCumulRechargePrizeResponse)
+void CGetPhaseActPrizeResponse::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CGetPhaseActPrizeResponse)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void CGetCumulRechargePrizeResponse::CopyFrom(const CGetCumulRechargePrizeResponse& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:CGetCumulRechargePrizeResponse)
+void CGetPhaseActPrizeResponse::CopyFrom(const CGetPhaseActPrizeResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CGetPhaseActPrizeResponse)
   if (&from == this) return;
   Clear();
   UnsafeMergeFrom(from);
 }
 
-bool CGetCumulRechargePrizeResponse::IsInitialized() const {
+bool CGetPhaseActPrizeResponse::IsInitialized() const {
 
   return true;
 }
 
-void CGetCumulRechargePrizeResponse::Swap(CGetCumulRechargePrizeResponse* other) {
+void CGetPhaseActPrizeResponse::Swap(CGetPhaseActPrizeResponse* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void CGetCumulRechargePrizeResponse::InternalSwap(CGetCumulRechargePrizeResponse* other) {
+void CGetPhaseActPrizeResponse::InternalSwap(CGetPhaseActPrizeResponse* other) {
   std::swap(result_, other->result_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   std::swap(_cached_size_, other->_cached_size_);
 }
 
-::google::protobuf::Metadata CGetCumulRechargePrizeResponse::GetMetadata() const {
+::google::protobuf::Metadata CGetPhaseActPrizeResponse::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = CGetCumulRechargePrizeResponse_descriptor_;
-  metadata.reflection = CGetCumulRechargePrizeResponse_reflection_;
+  metadata.descriptor = CGetPhaseActPrizeResponse_descriptor_;
+  metadata.reflection = CGetPhaseActPrizeResponse_reflection_;
   return metadata;
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
-// CGetCumulRechargePrizeResponse
+// CGetPhaseActPrizeResponse
 
 // optional uint32 Result = 1;
-void CGetCumulRechargePrizeResponse::clear_result() {
+void CGetPhaseActPrizeResponse::clear_result() {
   result_ = 0u;
 }
-::google::protobuf::uint32 CGetCumulRechargePrizeResponse::result() const {
-  // @@protoc_insertion_point(field_get:CGetCumulRechargePrizeResponse.Result)
+::google::protobuf::uint32 CGetPhaseActPrizeResponse::result() const {
+  // @@protoc_insertion_point(field_get:CGetPhaseActPrizeResponse.Result)
   return result_;
 }
-void CGetCumulRechargePrizeResponse::set_result(::google::protobuf::uint32 value) {
+void CGetPhaseActPrizeResponse::set_result(::google::protobuf::uint32 value) {
   
   result_ = value;
-  // @@protoc_insertion_point(field_set:CGetCumulRechargePrizeResponse.Result)
+  // @@protoc_insertion_point(field_set:CGetPhaseActPrizeResponse.Result)
 }
 
-inline const CGetCumulRechargePrizeResponse* CGetCumulRechargePrizeResponse::internal_default_instance() {
-  return &CGetCumulRechargePrizeResponse_default_instance_.get();
+inline const CGetPhaseActPrizeResponse* CGetPhaseActPrizeResponse::internal_default_instance() {
+  return &CGetPhaseActPrizeResponse_default_instance_.get();
 }
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 

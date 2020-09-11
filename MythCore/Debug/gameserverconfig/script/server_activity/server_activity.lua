@@ -1,5 +1,9 @@
+local pb = require "pb"
+assert(pb.loadfile "gameserverconfig/script/server_activity/serveractmodule.pb") 
+
 require("gameserverconfig/script/server_activity/server_activity_type")
 require("gameserverconfig/script/server_activity/cumulative_recharge")
+
 -- 根据不同的类型，不同的初始化函数
 -- 结束函数注册表，按类型
 ServerActivity_GlobalEndFunc = {
@@ -21,9 +25,15 @@ ServerActivity_GlobalGetConfigFunc = {
 	[EmSvrActType.CumRecharge] = CumulativeRecharge_getConfigName
 }
 
+-- 获得奖励函数注册表，按类型
+ServerActivity_GivePlayerPrizeFunc = {
+	[EmSvrActType.CumRecharge] = CumulativeRecharge_givePlayerPrize
+}
+
+
 -- 消息出现函数注册表，按ID
 GlobalSvrActMsgFunc = {
-	[0x1C02] = CumulativeRecharge_onMsgGetCumulRechargePrizeRequest
+	[EmSvrActMsg.ID_C2S_REQUEST_GET_PHASE_ACT_PRIZE] = ServerActivity_GetPhaseActPrizeRequest
 }
 
 -- 按类型调用活动的结束函数
@@ -36,25 +46,25 @@ function ServerActivity_EndFunc(nActivityType, nActivityID)
 end
 
 -- 按类型调用活动的刷新函数
-function ServerActivity_RefreshFunc(nActivityType, nActivityID, rPlayer, nParam1, nParam2)
+function ServerActivity_RefreshFunc(nActivityType, nActivityID, pPlayer, nParam1, nParam2)
 	if nil == ServerActivity_GlobalRefreshFunc[nActivityType] then
 		return
 	end
 
-	ServerActivity_GlobalRefreshFunc[nActivityType](nActivityID, rPlayer, nParam1, nParam2)
+	ServerActivity_GlobalRefreshFunc[nActivityType](nActivityID, pPlayer, nParam1, nParam2)
 end
 
 -- 按类型调用活动清除数据函数
-function ServerActivity_ClearPlayerData(nActivityType, nActivityID, rPlayer)
+function ServerActivity_ClearPlayerData(nActivityType, nActivityID, pPlayer)
 	if nil == ServerActivity_GlobalClearPlayerDataFunc[nActivityType] then
 		return
 	end
 
-	ServerActivity_GlobalClearPlayerDataFunc[nActivityType](nActivityID, rPlayer)
+	ServerActivity_GlobalClearPlayerDataFunc[nActivityType](nActivityID, pPlayer)
 end
 
 
--- 按类型调用得到活动配置文件的函数
+-- 按类型调用得到活动配置文件名字的函数
 function ServerActivity_GetConfig(nActivityType)
 	if nil == ServerActivity_GlobalGetConfigFunc[nActivityType] then
 		return ""
@@ -70,4 +80,32 @@ function ServerActivity_onClientMessage(pPlayer, nMessageID, pMsgData)
 	else
 		print("Error Msg ID")
 	end
+end
+
+
+function ServerActivity_GetPhaseActPrizeRequest(pPlayer, pMsgData)
+	local msg = assert(pb.decode("CGetPhaseActPrizeRequest", pMsgData))
+	local nActivityID = msg.ActivityID
+	local nIndex = msg.Index
+
+	local pServerActModule = getServerActModule()
+	-- 不在奖励期间
+	local nActivityType = pServerActModule:getActType(nActivityID)
+
+	if nil == ServerActivity_GivePlayerPrizeFunc[nActivityType] then
+		return
+	end
+
+	ServerActivity_GivePlayerPrizeFunc[nActivityType](pPlayer, nActivityID, nIndex)
+end
+
+function ServerActivity_GetPhaseActPrizeResponse(pPlayer, nResult)
+	local Response = {
+		Result = nResult;
+	}
+
+	print("ServerActivity_GetPhaseActPrizeResponse")
+	local bytes = assert(pb.encode("CGetPhaseActPrizeResponse", Response));
+	local pSceneJob = getSceneJob();
+	pSceneJob:send2Player(pPlayer, EmSvrActMsg.ID_S2C_RESPONSE_GET_PHASE_ACT_PRIZE, bytes, string.len(bytes))
 end

@@ -1,170 +1,77 @@
 #include "instance.h"
-/// ------------------- CSingleInstance -----------------------
-/// 初始化
-void CSingleInstance::init()
+extern "C"
 {
-
-}
-
-/// 创建
-void CSingleInstance::create()
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
+};
+#include "lua_tinker.h"
+#include "scenejob.h"
+#include "timemanager.h"
+void CInstanceConfig::loadConfig()
 {
+	lua_State* L = CSceneJob::Inst()->getLuaState();
+	lua_tinker::table table(L, "InstanceConfig");
 
-}
+	mID = table.get<int>("ID");
+	mType = table.get<int>("Type");
+	mTime = table.get<int>("Time");
 
-/// 结束
-void CSingleInstance::end()
-{
-
-}
-
-/// 销毁
-void CSingleInstance::destroy()
-{
-
-}
-
-/// 发奖
-void CSingleInstance::givePrize()
-{
-
-}
-
-
-/// 玩家进入
-void CSingleInstance::playerEnter(CEntityPlayer& rPlayer)
-{
-
-}
-
-
-/// ------------------- CMultipleInstance -----------------------
-/// 初始化
-void CMultipleInstance::init()
-{
-
-}
-
-/// 创建
-void CMultipleInstance::create()
-{
-
-}
-
-/// 结束
-void CMultipleInstance::end()
-{
-
-}
-
-/// 销毁
-void CMultipleInstance::destroy()
-{
-
-}
-
-/// 发奖
-void CMultipleInstance::givePrize()
-{
-
-}
-
-/// 玩家进入
-void CMultipleInstance::playerEnter(CEntityPlayer& rPlayer)
-{
-
-}
-
-
-/// ------------------- CInstance -----------------------
-/// 创建
-void CInstance::create()
-{
-	switch (mType)
+	// lua数组索引从1开始
+	lua_tinker::table tMapTable = table.get<lua_tinker::table>("MapID");
+	for (uint i = 1; i <= lua_rawlen(L, -1) && i <= MAX_INSTANCE_MAP_NUM; ++ i)
 	{
-		case emInstance_Common:
-		{
-			mSingle.init();
-			mSingle.create();
-			break;
-		}
-		case emInstance_Team:
-		{
-			mMultiple.init();
-			mMultiple.create();
-			break;
-		}
+		mMapId[i - 1] = tMapTable.get<int>(i);
 	}
+}
+
+/// 创建
+void CInstance::create(CInstanceConfig* pInstanceConfig)
+{
+	if (NULL == pInstanceConfig)
+	{
+		return;
+	}
+
+	mType = (EmInstanceType)pInstanceConfig->mType;
+	mCreateTime = CTimeManager::Inst()->getCurrTime();
+	mExpiredTime = mCreateTime + pInstanceConfig->mTime;
+
+	lua_State* L = CSceneJob::Inst()->getLuaState();
+	lua_tinker::call<int>(L, "Instance_CreateFunc", mType, mInstanceID);
 }
 
 /// 结束
 void CInstance::end()
 {
-	switch (mType)
-	{
-		case emInstance_Common:
-		{
-			mSingle.end();
-			break;
-		}
-		case emInstance_Team:
-		{
-			mMultiple.end();
-			break;
-		}
-	}
+	lua_State* L = CSceneJob::Inst()->getLuaState();
+	lua_tinker::call<int>(L, "Instance_EndFunc", mType, mInstanceID);
 }
 
 /// 销毁
 void CInstance::destroy()
 {
-	switch (mType)
-	{
-		case emInstance_Common:
-		{
-			mSingle.destroy();
-			break;
-		}
-		case emInstance_Team:
-		{
-			mMultiple.destroy();
-			break;
-		}
-	}
+	lua_State* L = CSceneJob::Inst()->getLuaState();
+	lua_tinker::call<int>(L, "Instance_DestroyFunc", mType, mInstanceID);
 }
 
 /// 发奖
-void CInstance::givePrize()
+void CInstance::givePrize(CEntityPlayer& rPlayer)
 {
-	switch (mType)
-	{
-		case emInstance_Common:
-		{
-			mSingle.givePrize();
-			break;
-		}
-		case emInstance_Team:
-		{
-			mMultiple.givePrize();
-			break;
-		}
-	}
+	lua_State* L = CSceneJob::Inst()->getLuaState();
+	lua_tinker::call<int>(L, "ServerActivity_GivePrizeFunc", mType, mInstanceID, &rPlayer);
 }
 
 /// 玩家进入
 void CInstance::playerEnter(CEntityPlayer& rPlayer)
 {
-	switch (mType)
-	{
-		case emInstance_Common:
-		{
-			mSingle.playerEnter(rPlayer);
-			break;
-		}
-		case emInstance_Team:
-		{
-			mMultiple.playerEnter(rPlayer);
-			break;
-		}
-	}
+	lua_State* L = CSceneJob::Inst()->getLuaState();
+	lua_tinker::call<int>(L, "ServerActivity_PlayerEnterFunc", mType, mInstanceID, &rPlayer);
+}
+
+/// 事件发生
+void CInstance::onEvent(EmInstanceEvent eEventType, int nParam1, int nParam2)
+{
+	lua_State* L = CSceneJob::Inst()->getLuaState();
+	lua_tinker::call<int>(L, "ServerActivity_OnEventFunc", mType, mInstanceID, eEventType, nParam1, nParam2);
 }

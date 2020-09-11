@@ -38,6 +38,7 @@ public:
 	void		sendAcceptTaskRequest(int nTaskID);
 	void		sendSubmitTaskRequest(int nTaskID);
 	void		sendGetCumulRechargePrizeRequest(int nActID, int nIndex);
+	void		sendEnterInstanceRequest(int nInstanceID);
 
 private:
 	void		onMessageLoginResponse(Message* pMessage);

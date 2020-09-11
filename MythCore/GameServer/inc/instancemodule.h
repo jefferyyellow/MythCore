@@ -6,12 +6,13 @@
 #include "instancetype.h"
 using namespace Myth;
 class CInstance;
+class CInstanceConfig;
 class CInstanceModule : public CLogicModule, public CSingleton < CInstanceModule >
 {
 	friend class CSingleton<CInstanceModule>;
 private:
-	CInstanceModule();
-	~CInstanceModule();
+	CInstanceModule(){}
+	~CInstanceModule(){}
 
 public:
 	/// 启动服务器
@@ -36,9 +37,26 @@ public:
 	virtual	void onLoadConfig();
 
 public:
+	// 加载所有的副本配置
+	void loadAllInstConfig(const char* pFindPath, const char* pPath);
 	void onClientMessage(CEntityPlayer& rPlayer, unsigned int nMessageID, Message* pMessage);
 
 public:
-	CInstance* createInstance(EmInstanceType eType, int nInstanceID);
+	// 检查玩家是否能进副本
+	int checkPlayerEnterInstance(CEntityPlayer& rPlayer, int nInstanceType, int nInstanceID);
+	// 玩家进入副本的请求
+	void onEnterInstanceRequest(CEntityPlayer& rPlayer, Message* pMessage);
+	// 玩家进入副本的回应
+	void sendEnterInstanceResponse(CEntityPlayer& rPlayer, int nResult, int nInstanceID);
+	// 玩家离开副本的请求
+	void onLeaveInstanceRequest(CEntityPlayer& rPlayer, Message* pMessage);
+	// 玩家离开副本的回应
+	void sendLeaveInstanceResponse(CEntityPlayer& rPlayer, int nResult);
+
+public:
+	CInstance* createInstance(int nInstanceID);
+
+public:
+	CInstanceConfig* mAllInstConfig[MAX_INSTANCE_ID];
 };
 #endif

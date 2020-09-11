@@ -18,6 +18,7 @@ extern "C"
 #include "platjob.h"
 #include "internalmsg.h"
 #include "fileutility.h"
+#include "objpoolimp.h"
 CServerActModule::CServerActModule()
 {
 	init();
@@ -331,6 +332,22 @@ bool CServerActModule::checkActOpen(int nActivityID)
 	return true;
 }
 
+/// 得到活动的类型
+int CServerActModule::getActType(int nActivityID)
+{
+	if (nActivityID <= 0 || nActivityID >= MAX_SERVER_ACT_NUM)
+	{
+		return 0;
+	}
+
+	if (NULL == mAvailActivity[nActivityID])
+	{
+		return 0;
+	}
+
+	return mAvailActivity[nActivityID]->getType();
+}
+
 /// 是否在可以领奖的期间,如果领奖时间大于0，表示是否在活动结束到领奖期间
 /// 如果领奖时间小于等于0，表示是否在活动开始到结束期间都能领奖
 bool CServerActModule::checkActPrizeTime(int nActivityID)
@@ -369,16 +386,10 @@ bool CServerActModule::checkActPrizeTime(int nActivityID)
 /// 每日刷新所以的玩家
 void CServerActModule::dailyRefreshAllPlayer()
 {
-	CEntityPlayer* pPlayer = NULL;
-	CSceneJob::PLAYER_LIST& rPlayerList = CSceneJob::Inst()->getPlayerList();
-	CSceneJob::PLAYER_LIST::iterator it = rPlayerList.begin();
-	for (; it != rPlayerList.end(); ++it)
+	CShareObjPoolImp::PlayerEntityPool& rPlayerEntityPool = CObjPool::Inst()->getShareObjPoolImp()->mPlayerEntityPool;
+	CEntityPlayer* pPlayer = rPlayerEntityPool.begin();
+	for (; pPlayer != NULL; pPlayer = rPlayerEntityPool.next(pPlayer))
 	{
-		pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
-		if (NULL == pPlayer)
-		{
-			continue;
-		}
 		if (emPlayerStatus_Gameing != pPlayer->getPlayerStauts())
 		{
 			continue;

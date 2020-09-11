@@ -74,25 +74,19 @@ void CPropertyModule::onTimer(unsigned int nTickOffset)
 
 	CEntityPlayer* tArrayPlayer[CAPACITY_PLAYER];
 	int nPlayerNum = 0;
-	CSceneJob::PLAYER_LIST rPlayerList = CSceneJob::Inst()->getPlayerList();
-	CSceneJob::PLAYER_LIST::iterator tPlayerIt = rPlayerList.begin();
-	for (; tPlayerIt != rPlayerList.end(); ++tPlayerIt)
+
+
+	CShareObjPoolImp::PlayerEntityPool& rPlayerEntityPool = CObjPool::Inst()->getShareObjPoolImp()->mPlayerEntityPool;
+	CEntityPlayer* pPlayer = rPlayerEntityPool.begin();
+	for (; pPlayer != NULL; pPlayer = rPlayerEntityPool.next(pPlayer))
 	{
-		CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(tPlayerIt->second));
-		if (NULL == pPlayer)
-		{
-			LOG_ERROR("player charid  %d don't exist", tPlayerIt->first);
-			continue;
-		}
-		// 游戏里面
-		if (pPlayer->getPlayerStauts() != emPlayerStatus_Gameing)
+		if (emPlayerStatus_Gameing != pPlayer->getPlayerStauts())
 		{
 			continue;
 		}
-		
 		pPlayer->getTimeUnit().getTimerList().update(tTickCount);
 		tArrayPlayer[nPlayerNum] = pPlayer;
-		++ nPlayerNum;
+		++nPlayerNum;
 	}
 
 	if (mSavePlayerTimer.elapse(nTickOffset))
@@ -213,27 +207,23 @@ void CPropertyModule::onLeaveGameRequest(CEntityPlayer& rPlayer, Message* pMessa
 void CPropertyModule::kickAllPlayer()
 {
 	int nCount = 0;
-	CSceneJob::PLAYER_LIST& rPlayerList = CSceneJob::Inst()->getPlayerList();
-	for (CSceneJob::PLAYER_LIST::iterator it = rPlayerList.begin(); it != rPlayerList.end(); ++ it)
+	CShareObjPoolImp::PlayerEntityPool& rPlayerEntityPool = CObjPool::Inst()->getShareObjPoolImp()->mPlayerEntityPool;
+	CEntityPlayer* pPlayer = rPlayerEntityPool.begin();
+	for (; pPlayer != NULL; pPlayer = rPlayerEntityPool.next(pPlayer))
 	{
-		CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
-		if (NULL == pPlayer)
-		{
-			continue;
-		}
-
 		if (pPlayer->getPlayerStauts() == emPlayerStatus_Exiting)
 		{
 			continue;
 		}
 
 		playerLeaveGame(*pPlayer, EmLeaveReason_ServerShutDown);
-		++ nCount;
+		++nCount;
 		// 每次30个
 		if (nCount >= 30)
 		{
 			break;
 		}
+
 	}
 }
 

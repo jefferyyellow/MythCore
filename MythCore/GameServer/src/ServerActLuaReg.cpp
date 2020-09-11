@@ -19,5 +19,6 @@ void CServerActLuaReg::reglua()
 	lua_tinker::class_add<CServerActModule>(L, "CServerActModule");
 	lua_tinker::class_def<CServerActModule>(L, "checkActOpen", &CServerActModule::checkActOpen);
 	lua_tinker::class_def<CServerActModule>(L, "checkActPrizeTime", &CServerActModule::checkActPrizeTime);
+	lua_tinker::class_def<CServerActModule>(L, "getActType", &CServerActModule::getActType);
 
 }

@@ -77,6 +77,7 @@ BEGIN_MESSAGE_MAP(CGameClientDlgDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_COMPLETE_TASK, &CGameClientDlgDlg::OnBnClickedCompleteTask)
 	ON_BN_CLICKED(IDC_CLEAR_LOG, &CGameClientDlgDlg::OnBnClickedClearLog)
 	ON_BN_CLICKED(IDC_GET_CUMUL_PRIZE, &CGameClientDlgDlg::OnBnClickedGetCumulPrize)
+	ON_BN_CLICKED(IDC_ENTER_INSTANCE, &CGameClientDlgDlg::OnBnClickedEnterInstance)
 END_MESSAGE_MAP()
 
 
@@ -324,4 +325,15 @@ void CGameClientDlgDlg::OnBnClickedGetCumulPrize()
 	int nIndex = atoi(stBuffer.GetBuffer());
 
 	mpClient->sendGetCumulRechargePrizeRequest(nActivityID, nIndex);
+}
+
+
+void CGameClientDlgDlg::OnBnClickedEnterInstance()
+{
+	// TODO:  在此添加控件通知处理程序代码
+	CString stBuffer;
+	((CEdit*)GetDlgItem(IDC_INSTANCE_ID))->GetWindowText(stBuffer);
+	int nInstanceID = atoi(stBuffer.GetBuffer());
+
+	mpClient->sendEnterInstanceRequest(nInstanceID);
 }

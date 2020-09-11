@@ -75,6 +75,7 @@
     <ClCompile Include="..\message\common.hxx.pb.cc" />
     <ClCompile Include="..\message\dailyactmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\dbmodule.hxx.pb.cc" />
+    <ClCompile Include="..\message\instancemodule.hxx.pb.cc" />
     <ClCompile Include="..\message\itemmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\loginmessage.hxx.pb.cc" />
     <ClCompile Include="..\message\mapmodule.hxx.pb.cc" />
@@ -176,6 +177,8 @@
     <ClInclude Include="..\message\dailyactmodule.hxx.pb.h" />
     <ClInclude Include="..\message\dbmodule.hxx" />
     <ClInclude Include="..\message\dbmodule.hxx.pb.h" />
+    <ClInclude Include="..\message\instancemodule.hxx" />
+    <ClInclude Include="..\message\instancemodule.hxx.pb.h" />
     <ClInclude Include="..\message\itemmodule.hxx" />
     <ClInclude Include="..\message\itemmodule.hxx.pb.h" />
     <ClInclude Include="..\message\loginmessage.hxx" />

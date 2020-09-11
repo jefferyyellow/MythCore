@@ -3,20 +3,31 @@
 #include "instancetype.h"
 #include "servercommon.h"
 #include "obj.h"
+#include "bit_set.h"
+using namespace Myth;
 class CEntityPlayer;
-/// 副本配置类
+/// 副本配置类(只读取C++中需要项)
 class CInstanceConfig
 {
+public:
+	CInstanceConfig()
+	{
+		mType = 0;
+		mID = 0;
+		mTime = 0;
+		memset(mMapId, 0, sizeof(mMapId));
+	}
+	~CInstanceConfig(){}
+public:
+	void loadConfig();
 
 public:
 	/// 副本类型
-	int		mType;
+	short	mType;
 	/// 副本ID
-	int		mID;
+	short	mID;
 	/// 时间
-	int		mTime;
-	/// 玩家等级要求
-	int		mPlayerLevel;
+	uint	mTime;
 	/// 副本地图ID
 	int		mMapId[MAX_INSTANCE_MAP_NUM];
 };
@@ -25,42 +36,22 @@ public:
 struct CSingleInstance
 {
 public:
-	/// 初始化
-	void	init();
-	/// 创建
-	void	create();
-	/// 结束
-	void	end();
-	/// 销毁
-	void	destroy();
-	/// 发奖
-	void	givePrize();
-	/// 玩家进入
-	void	playerEnter(CEntityPlayer& rPlayer);
 };
 
 /// 多人副本（包括团队本）(用于union)
 struct CMultipleInstance
 {
 public:
-	/// 初始化
-	void	init();
-	/// 创建
-	void	create();
-	/// 结束
-	void	end();
-	/// 销毁
-	void	destroy();
-	/// 发奖
-	void	givePrize();
-	/// 玩家进入
-	void	playerEnter(CEntityPlayer& rPlayer);
+
 };
 
 
 /// 副本类
 class CInstance : public CObj
 {
+public:
+	typedef CBitSet<emInstEventMax> INST_EVENT_BIT_SET;
+
 public:
 	CInstance()
 	{
@@ -70,7 +61,6 @@ public:
 
 	void			init()
 	{
-		mConfig = NULL;
 		memset(mMapObjId, 0, sizeof(mMapObjId));
 		mCreateTime = 0;
 		mExpiredTime = 0;
@@ -79,21 +69,20 @@ public:
 	}
 public:
 	/// 创建
-	void	create();
+	void	create(CInstanceConfig* pInstanceConfig);
 	/// 结束
 	void	end();
 	/// 销毁
 	void	destroy();
 	/// 发奖
-	void	givePrize();
+	void	givePrize(CEntityPlayer& rPlayer);
 	/// 玩家进入
 	void	playerEnter(CEntityPlayer& rPlayer);
+	/// 事件发生
+	void	onEvent(EmInstanceEvent eEventType, int nParam1, int nParam2);
 
 public:
 	/// autocode don't edit!!!
-	CInstanceConfig* getConfig(){ return mConfig; }
-	void setConfig(CInstanceConfig* value){ mConfig = value; }
-
 	int getMapObjId(int nIndex)
 	{
 		if (nIndex < 0 || nIndex >= MAX_INSTANCE_MAP_NUM)
@@ -131,8 +120,6 @@ public:
 	CMultipleInstance& getMultiple(){return mMultiple;}
 
 private:
-	/// 副本配置
-	CInstanceConfig*	mConfig;
 	/// 地图实体Id
 	int					mMapObjId[MAX_INSTANCE_MAP_NUM];
 	/// 副本创建时间
@@ -145,7 +132,8 @@ private:
 	EmInstanceType		mType;
 	///  副本ID
 	uint				mInstanceID;
-
+	/// 副本关心事件
+	INST_EVENT_BIT_SET	mCareEvent;
 	// 不同的副本类型，不同的数据
 	union
 	{

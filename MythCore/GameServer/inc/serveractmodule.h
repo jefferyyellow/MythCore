@@ -71,6 +71,8 @@ public:
 	
 	/// 是否在活动期间
 	bool				checkActOpen(int nActivityID);
+	/// 得到活动的类型
+	int					getActType(int nActivityID);
 	/// 是否在可以领奖的期间(包括有效期间和发奖期间)
 	bool				checkActPrizeTime(int nActivityID);
 	/// 每日刷新所以的玩家

@@ -42,7 +42,7 @@ bool CJobManager::init()
 	}
 
 	mpRankJob = new CRankJob;
-	if (NULL != mpRankJob)
+	if (NULL == mpRankJob)
 	{
 		return false;
 	}

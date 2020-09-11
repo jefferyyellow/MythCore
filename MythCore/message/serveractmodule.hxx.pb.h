@@ -36,8 +36,8 @@ void protobuf_InitDefaults_serveractmodule_2ehxx();
 void protobuf_AssignDesc_serveractmodule_2ehxx();
 void protobuf_ShutdownFile_serveractmodule_2ehxx();
 
-class CGetCumulRechargePrizeRequest;
-class CGetCumulRechargePrizeResponse;
+class CGetPhaseActPrizeRequest;
+class CGetPhaseActPrizeResponse;
 class CGetServerActRequest;
 class CGetServerActResponse;
 
@@ -45,14 +45,14 @@ enum SERVER_ACT_MODULE_MSG_ID {
   ID_SERVER_ACT_MODULE_ERROR = 0,
   ID_C2S_REQUEST_GET_SERVER_ACT = 7168,
   ID_S2C_RESPONSE_GET_SERVER_ACT = 7169,
-  ID_C2S_REQUEST_GET_CUMUL_RECHARGE_PRIZE = 7170,
-  ID_S2C_RESPONSE_GET_CUMUL_RECHARGE_PRIZE = 7171,
+  ID_C2S_REQUEST_GET_PHASE_ACT_PRIZE = 7170,
+  ID_S2C_RESPONSE_GET_PHASE_ACT_PRIZE = 7171,
   SERVER_ACT_MODULE_MSG_ID_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   SERVER_ACT_MODULE_MSG_ID_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
 bool SERVER_ACT_MODULE_MSG_ID_IsValid(int value);
 const SERVER_ACT_MODULE_MSG_ID SERVER_ACT_MODULE_MSG_ID_MIN = ID_SERVER_ACT_MODULE_ERROR;
-const SERVER_ACT_MODULE_MSG_ID SERVER_ACT_MODULE_MSG_ID_MAX = ID_S2C_RESPONSE_GET_CUMUL_RECHARGE_PRIZE;
+const SERVER_ACT_MODULE_MSG_ID SERVER_ACT_MODULE_MSG_ID_MAX = ID_S2C_RESPONSE_GET_PHASE_ACT_PRIZE;
 const int SERVER_ACT_MODULE_MSG_ID_ARRAYSIZE = SERVER_ACT_MODULE_MSG_ID_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* SERVER_ACT_MODULE_MSG_ID_descriptor();
@@ -225,34 +225,34 @@ extern ::google::protobuf::internal::ExplicitlyConstructed<CGetServerActResponse
 
 // -------------------------------------------------------------------
 
-class CGetCumulRechargePrizeRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CGetCumulRechargePrizeRequest) */ {
+class CGetPhaseActPrizeRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CGetPhaseActPrizeRequest) */ {
  public:
-  CGetCumulRechargePrizeRequest();
-  virtual ~CGetCumulRechargePrizeRequest();
+  CGetPhaseActPrizeRequest();
+  virtual ~CGetPhaseActPrizeRequest();
 
-  CGetCumulRechargePrizeRequest(const CGetCumulRechargePrizeRequest& from);
+  CGetPhaseActPrizeRequest(const CGetPhaseActPrizeRequest& from);
 
-  inline CGetCumulRechargePrizeRequest& operator=(const CGetCumulRechargePrizeRequest& from) {
+  inline CGetPhaseActPrizeRequest& operator=(const CGetPhaseActPrizeRequest& from) {
     CopyFrom(from);
     return *this;
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const CGetCumulRechargePrizeRequest& default_instance();
+  static const CGetPhaseActPrizeRequest& default_instance();
 
-  static const CGetCumulRechargePrizeRequest* internal_default_instance();
+  static const CGetPhaseActPrizeRequest* internal_default_instance();
 
-  void Swap(CGetCumulRechargePrizeRequest* other);
+  void Swap(CGetPhaseActPrizeRequest* other);
 
   // implements Message ----------------------------------------------
 
-  inline CGetCumulRechargePrizeRequest* New() const { return New(NULL); }
+  inline CGetPhaseActPrizeRequest* New() const { return New(NULL); }
 
-  CGetCumulRechargePrizeRequest* New(::google::protobuf::Arena* arena) const;
+  CGetPhaseActPrizeRequest* New(::google::protobuf::Arena* arena) const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const CGetCumulRechargePrizeRequest& from);
-  void MergeFrom(const CGetCumulRechargePrizeRequest& from);
+  void CopyFrom(const CGetPhaseActPrizeRequest& from);
+  void MergeFrom(const CGetPhaseActPrizeRequest& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -271,8 +271,8 @@ class CGetCumulRechargePrizeRequest : public ::google::protobuf::Message /* @@pr
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(CGetCumulRechargePrizeRequest* other);
-  void UnsafeMergeFrom(const CGetCumulRechargePrizeRequest& from);
+  void InternalSwap(CGetPhaseActPrizeRequest* other);
+  void UnsafeMergeFrom(const CGetPhaseActPrizeRequest& from);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _internal_metadata_.arena();
@@ -300,7 +300,7 @@ class CGetCumulRechargePrizeRequest : public ::google::protobuf::Message /* @@pr
   ::google::protobuf::uint32 index() const;
   void set_index(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:CGetCumulRechargePrizeRequest)
+  // @@protoc_insertion_point(class_scope:CGetPhaseActPrizeRequest)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -314,38 +314,38 @@ class CGetCumulRechargePrizeRequest : public ::google::protobuf::Message /* @@pr
 
   void InitAsDefaultInstance();
 };
-extern ::google::protobuf::internal::ExplicitlyConstructed<CGetCumulRechargePrizeRequest> CGetCumulRechargePrizeRequest_default_instance_;
+extern ::google::protobuf::internal::ExplicitlyConstructed<CGetPhaseActPrizeRequest> CGetPhaseActPrizeRequest_default_instance_;
 
 // -------------------------------------------------------------------
 
-class CGetCumulRechargePrizeResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CGetCumulRechargePrizeResponse) */ {
+class CGetPhaseActPrizeResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:CGetPhaseActPrizeResponse) */ {
  public:
-  CGetCumulRechargePrizeResponse();
-  virtual ~CGetCumulRechargePrizeResponse();
+  CGetPhaseActPrizeResponse();
+  virtual ~CGetPhaseActPrizeResponse();
 
-  CGetCumulRechargePrizeResponse(const CGetCumulRechargePrizeResponse& from);
+  CGetPhaseActPrizeResponse(const CGetPhaseActPrizeResponse& from);
 
-  inline CGetCumulRechargePrizeResponse& operator=(const CGetCumulRechargePrizeResponse& from) {
+  inline CGetPhaseActPrizeResponse& operator=(const CGetPhaseActPrizeResponse& from) {
     CopyFrom(from);
     return *this;
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const CGetCumulRechargePrizeResponse& default_instance();
+  static const CGetPhaseActPrizeResponse& default_instance();
 
-  static const CGetCumulRechargePrizeResponse* internal_default_instance();
+  static const CGetPhaseActPrizeResponse* internal_default_instance();
 
-  void Swap(CGetCumulRechargePrizeResponse* other);
+  void Swap(CGetPhaseActPrizeResponse* other);
 
   // implements Message ----------------------------------------------
 
-  inline CGetCumulRechargePrizeResponse* New() const { return New(NULL); }
+  inline CGetPhaseActPrizeResponse* New() const { return New(NULL); }
 
-  CGetCumulRechargePrizeResponse* New(::google::protobuf::Arena* arena) const;
+  CGetPhaseActPrizeResponse* New(::google::protobuf::Arena* arena) const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const CGetCumulRechargePrizeResponse& from);
-  void MergeFrom(const CGetCumulRechargePrizeResponse& from);
+  void CopyFrom(const CGetPhaseActPrizeResponse& from);
+  void MergeFrom(const CGetPhaseActPrizeResponse& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -364,8 +364,8 @@ class CGetCumulRechargePrizeResponse : public ::google::protobuf::Message /* @@p
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(CGetCumulRechargePrizeResponse* other);
-  void UnsafeMergeFrom(const CGetCumulRechargePrizeResponse& from);
+  void InternalSwap(CGetPhaseActPrizeResponse* other);
+  void UnsafeMergeFrom(const CGetPhaseActPrizeResponse& from);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _internal_metadata_.arena();
@@ -387,7 +387,7 @@ class CGetCumulRechargePrizeResponse : public ::google::protobuf::Message /* @@p
   ::google::protobuf::uint32 result() const;
   void set_result(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:CGetCumulRechargePrizeResponse)
+  // @@protoc_insertion_point(class_scope:CGetPhaseActPrizeResponse)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
@@ -400,7 +400,7 @@ class CGetCumulRechargePrizeResponse : public ::google::protobuf::Message /* @@p
 
   void InitAsDefaultInstance();
 };
-extern ::google::protobuf::internal::ExplicitlyConstructed<CGetCumulRechargePrizeResponse> CGetCumulRechargePrizeResponse_default_instance_;
+extern ::google::protobuf::internal::ExplicitlyConstructed<CGetPhaseActPrizeResponse> CGetPhaseActPrizeResponse_default_instance_;
 
 // ===================================================================
 
@@ -422,59 +422,59 @@ inline const CGetServerActResponse* CGetServerActResponse::internal_default_inst
 }
 // -------------------------------------------------------------------
 
-// CGetCumulRechargePrizeRequest
+// CGetPhaseActPrizeRequest
 
 // optional uint32 ActivityID = 1;
-inline void CGetCumulRechargePrizeRequest::clear_activityid() {
+inline void CGetPhaseActPrizeRequest::clear_activityid() {
   activityid_ = 0u;
 }
-inline ::google::protobuf::uint32 CGetCumulRechargePrizeRequest::activityid() const {
-  // @@protoc_insertion_point(field_get:CGetCumulRechargePrizeRequest.ActivityID)
+inline ::google::protobuf::uint32 CGetPhaseActPrizeRequest::activityid() const {
+  // @@protoc_insertion_point(field_get:CGetPhaseActPrizeRequest.ActivityID)
   return activityid_;
 }
-inline void CGetCumulRechargePrizeRequest::set_activityid(::google::protobuf::uint32 value) {
+inline void CGetPhaseActPrizeRequest::set_activityid(::google::protobuf::uint32 value) {
   
   activityid_ = value;
-  // @@protoc_insertion_point(field_set:CGetCumulRechargePrizeRequest.ActivityID)
+  // @@protoc_insertion_point(field_set:CGetPhaseActPrizeRequest.ActivityID)
 }
 
 // optional uint32 Index = 2;
-inline void CGetCumulRechargePrizeRequest::clear_index() {
+inline void CGetPhaseActPrizeRequest::clear_index() {
   index_ = 0u;
 }
-inline ::google::protobuf::uint32 CGetCumulRechargePrizeRequest::index() const {
-  // @@protoc_insertion_point(field_get:CGetCumulRechargePrizeRequest.Index)
+inline ::google::protobuf::uint32 CGetPhaseActPrizeRequest::index() const {
+  // @@protoc_insertion_point(field_get:CGetPhaseActPrizeRequest.Index)
   return index_;
 }
-inline void CGetCumulRechargePrizeRequest::set_index(::google::protobuf::uint32 value) {
+inline void CGetPhaseActPrizeRequest::set_index(::google::protobuf::uint32 value) {
   
   index_ = value;
-  // @@protoc_insertion_point(field_set:CGetCumulRechargePrizeRequest.Index)
+  // @@protoc_insertion_point(field_set:CGetPhaseActPrizeRequest.Index)
 }
 
-inline const CGetCumulRechargePrizeRequest* CGetCumulRechargePrizeRequest::internal_default_instance() {
-  return &CGetCumulRechargePrizeRequest_default_instance_.get();
+inline const CGetPhaseActPrizeRequest* CGetPhaseActPrizeRequest::internal_default_instance() {
+  return &CGetPhaseActPrizeRequest_default_instance_.get();
 }
 // -------------------------------------------------------------------
 
-// CGetCumulRechargePrizeResponse
+// CGetPhaseActPrizeResponse
 
 // optional uint32 Result = 1;
-inline void CGetCumulRechargePrizeResponse::clear_result() {
+inline void CGetPhaseActPrizeResponse::clear_result() {
   result_ = 0u;
 }
-inline ::google::protobuf::uint32 CGetCumulRechargePrizeResponse::result() const {
-  // @@protoc_insertion_point(field_get:CGetCumulRechargePrizeResponse.Result)
+inline ::google::protobuf::uint32 CGetPhaseActPrizeResponse::result() const {
+  // @@protoc_insertion_point(field_get:CGetPhaseActPrizeResponse.Result)
   return result_;
 }
-inline void CGetCumulRechargePrizeResponse::set_result(::google::protobuf::uint32 value) {
+inline void CGetPhaseActPrizeResponse::set_result(::google::protobuf::uint32 value) {
   
   result_ = value;
-  // @@protoc_insertion_point(field_set:CGetCumulRechargePrizeResponse.Result)
+  // @@protoc_insertion_point(field_set:CGetPhaseActPrizeResponse.Result)
 }
 
-inline const CGetCumulRechargePrizeResponse* CGetCumulRechargePrizeResponse::internal_default_instance() {
-  return &CGetCumulRechargePrizeResponse_default_instance_.get();
+inline const CGetPhaseActPrizeResponse* CGetPhaseActPrizeResponse::internal_default_instance() {
+  return &CGetPhaseActPrizeResponse_default_instance_.get();
 }
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
 // -------------------------------------------------------------------

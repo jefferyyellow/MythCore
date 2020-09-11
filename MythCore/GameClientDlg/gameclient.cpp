@@ -11,6 +11,7 @@
 #include "serveractmodule.hxx.pb.h"
 #include "chatmodule.hxx.pb.h"
 #include "i18n.h"
+#include "instancemodule.hxx.pb.h"
 CGameClient::CGameClient()
 	:mSelectModel(&mTcpSocket, 1)
 {
@@ -301,9 +302,17 @@ void CGameClient::sendSubmitTaskRequest(int nTaskID)
 
 void CGameClient::sendGetCumulRechargePrizeRequest(int nActID, int nIndex)
 {
-	CGetCumulRechargePrizeRequest tRequest;
+	CGetPhaseActPrizeRequest tRequest;
 	tRequest.set_activityid(nActID);
 	tRequest.set_index(nIndex);
 
-	sendMessage(ID_C2S_REQUEST_GET_CUMUL_RECHARGE_PRIZE, &tRequest);
+	sendMessage(ID_C2S_REQUEST_GET_PHASE_ACT_PRIZE, &tRequest);
+}
+
+void CGameClient::sendEnterInstanceRequest(int nInstanceID)
+{
+	CEnterInstanceRequest tRequest;
+	tRequest.set_instanceid(nInstanceID);
+
+	sendMessage(ID_C2S_REQUEST_ENTER_INSTANCE, &tRequest);
 }

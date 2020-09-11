@@ -39,6 +39,8 @@ extern "C"
 };
 #include "lua_tinker.h"
 #include "mailmodule.h"
+#include "instancemodule.h"
+#include "objpoolimp.h"
 CSceneJob::CSceneJob()
 :mMinuteTimer(SECONDS_PER_MIN)
 {
@@ -332,21 +334,31 @@ void CSceneJob::checkNewDayCome()
 
 void CSceneJob::onNewDayCome()
 {
-	CEntityPlayer* pPlayer = NULL;
-	PLAYER_LIST::iterator it = mPlayerList.begin();
-	for (; it != mPlayerList.end(); ++it)
+	CShareObjPoolImp::PlayerEntityPool& rPlayerEntityPool =  CObjPool::Inst()->getShareObjPoolImp()->mPlayerEntityPool;
+	CEntityPlayer* pPlayer = rPlayerEntityPool.begin();
+	for (; pPlayer != NULL; pPlayer = rPlayerEntityPool.next(pPlayer))
 	{
-		pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
-		if (NULL == pPlayer)
-		{
-			continue;
-		}
 		if (emPlayerStatus_Gameing != pPlayer->getPlayerStauts())
 		{
 			continue;
 		}
 		pPlayer->dailyRefresh(false);
 	}
+
+	//PLAYER_LIST::iterator it = mPlayerList.begin();
+	//for (; it != mPlayerList.end(); ++it)
+	//{
+	//	pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
+	//	if (NULL == pPlayer)
+	//	{
+	//		continue;
+	//	}
+	//	if (emPlayerStatus_Gameing != pPlayer->getPlayerStauts())
+	//	{
+	//		continue;
+	//	}
+	//	pPlayer->dailyRefresh(false);
+	//}
 }
 
 void CSceneJob::onTask(CInternalMsg* pMsg)
@@ -421,11 +433,13 @@ bool CSceneJob::initBase(int nDBBuffSize)
 	mLogicModuleList.push_back(CTaskModule::createInst());
 	mLogicModuleList.push_back(CPlatModule::createInst());
 	mLogicModuleList.push_back(CMailModule::createInst());
+	mLogicModuleList.push_back(CInstanceModule::createInst());
 	return true;
 }
 
 void CSceneJob::clearBase()
 {
+	CInstanceModule::destroyInst();
 	CMailModule::destroyInst();
 	CPlatModule::destroyInst();
 	CTaskModule::destroyInst();
@@ -780,21 +794,35 @@ void CSceneJob::send2PlayerLua(CEntityPlayer& rPlayer, unsigned short nMessageID
 /// 发生给所有的玩家消息
 void CSceneJob::send2AllPlayer(unsigned short nMessageID, Message* pMessage)
 {
-	CEntityPlayer* pPlayer = NULL;
-	PLAYER_LIST::iterator it = mPlayerList.begin();
-	for (; it != mPlayerList.end(); ++ it)
+
+
+	CShareObjPoolImp::PlayerEntityPool& rPlayerEntityPool = CObjPool::Inst()->getShareObjPoolImp()->mPlayerEntityPool;
+	CEntityPlayer* pPlayer = rPlayerEntityPool.begin();
+	for (; pPlayer != NULL; pPlayer = rPlayerEntityPool.next(pPlayer))
 	{
-		pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
-		if (NULL == pPlayer)
-		{
-			continue;
-		}
 		if (emPlayerStatus_Gameing != pPlayer->getPlayerStauts())
 		{
 			continue;
 		}
 		send2Player(pPlayer->getExchangeHead(), nMessageID, pMessage);
 	}
+
+
+	//CEntityPlayer* pPlayer = NULL;
+	//PLAYER_LIST::iterator it = mPlayerList.begin();
+	//for (; it != mPlayerList.end(); ++ it)
+	//{
+	//	pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
+	//	if (NULL == pPlayer)
+	//	{
+	//		continue;
+	//	}
+	//	if (emPlayerStatus_Gameing != pPlayer->getPlayerStauts())
+	//	{
+	//		continue;
+	//	}
+	//	send2Player(pPlayer->getExchangeHead(), nMessageID, pMessage);
+	//}
 }
 
 /// 断开玩家的连接
@@ -857,6 +885,16 @@ void CSceneJob::dispatchClientMessage(CEntityPlayer& rPlayer, unsigned short nMe
 		case MESSAGE_MODULE_DAILY_ACT:
 		{
 			CDailyActModule::Inst()->onClientMessage(rPlayer, nMessageID, pMessage);
+			break;
+		}
+		case MESSAGE_MODULE_RANK:
+		{
+			CRankModule::Inst()->onClientMessage(rPlayer, nMessageID, pMessage);
+			break;
+		}
+		case MESSAGE_MODULE_INSTANCE:
+		{
+			CInstanceModule::Inst()->onClientMessage(rPlayer, nMessageID, pMessage);
 			break;
 		}
 		default:

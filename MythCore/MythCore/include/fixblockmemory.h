@@ -11,9 +11,25 @@ namespace Myth
 	///		int mIndex;
 	///		T	mData;
 	/// };
+	
+	// 将分配出去的数据链接成一个双向链表
+	template<typename T>
+	class CFixBlockData
+	{
+	public:
+		// 数据部分
+		T		mData;
+		// 前一个数据的索引
+		int		mPreIndex;
+		// 后一个数据的索引
+		int		mNextIndex;
+	};
+
 	template<typename T, int MaxCount, int BaseCount, int IncreCount>
 	class CFixBlockMemory
 	{
+		typedef CFixBlockData<T> BLOCK_DATA;
+
 	public:
 		CFixBlockMemory()
 		{
@@ -21,6 +37,7 @@ namespace Myth
 			mAllocCount = 0;
 			mFreeCount= 0;
 			allocIncrement(BaseCount);
+			mHeadIndex = -1;
 		}
 		~CFixBlockMemory()
 		{
@@ -28,7 +45,7 @@ namespace Myth
 			{
 				if (NULL != mBlockMemory[i])
 				{
-					delete mBlockMemory[i];
+					::free(mBlockMemory[i]);
 				}
 			}
 		}
@@ -54,7 +71,16 @@ namespace Myth
 			
 			nMemIndex = nIndex;
 			-- mFreeCount;
-			return mBlockMemory[nIndex];
+			
+			// 表示还有其他的节点已经被分配
+			if (mHeadIndex >= 0)
+			{
+				mBlockMemory[mHeadIndex]->mPreIndex = nIndex;
+				mBlockMemory[nIndex]->mNextIndex = mHeadIndex;
+			}
+			mHeadIndex = nIndex;
+			new (&(mBlockMemory[nIndex]->mData)) T();
+			return &(mBlockMemory[nIndex]->mData);
 		}
 
 		T*			get(int nMemIndex)
@@ -63,7 +89,7 @@ namespace Myth
 			{
 				return NULL;
 			}
-			return mBlockMemory[nMemIndex];
+			return &(mBlockMemory[nMemIndex]->mData);
 		}
 
 		void		free(int nMemIndex)
@@ -74,6 +100,46 @@ namespace Myth
 			}
 			mFreeIndex[mFreeCount] = nMemIndex;
 			++ mFreeCount;
+			
+			int nPreIndex = mBlockMemory[nMemIndex]->mPreIndex;
+			int nNextIndex = mBlockMemory[nMemIndex]->mNextIndex;
+			if (nPreIndex >= 0)
+			{
+				mBlockMemory[nPreIndex]->mNextIndex = nNextIndex;
+			}
+			if (nNextIndex >= 0)
+			{
+				mBlockMemory[nNextIndex]->mPreIndex = nPreIndex;
+			}
+			if (mHeadIndex == nMemIndex)
+			{
+				mHeadIndex = mBlockMemory[mHeadIndex]->mNextIndex;
+			}
+			mBlockMemory[nMemIndex]->mNextIndex = -1;
+			mBlockMemory[nMemIndex]->mPreIndex = -1;
+		}
+		
+		T*			begin()
+		{
+			if (mHeadIndex < 0)
+			{
+				return NULL;
+			}
+			return &(mBlockMemory[mHeadIndex]->mData);
+		}
+
+		T*			next(T* pValue)
+		{
+			if (NULL == pValue)
+			{
+				return NULL;
+			}
+			BLOCK_DATA* pData = (BLOCK_DATA*)pValue;
+			if (pData->mNextIndex < 0)
+			{
+				return NULL;
+			}
+			return &(mBlockMemory[pData->mNextIndex]->mData);
 		}
 
 		void		allocIncrement(int nSize)
@@ -92,7 +158,9 @@ namespace Myth
 			int nDescrease = nCount - 1;
 			for (int i = mAllocCount; i < nCount; ++ i)
 			{
-				mBlockMemory[i] = new T();
+				mBlockMemory[i] = (BLOCK_DATA*)malloc(sizeof(BLOCK_DATA));
+				mBlockMemory[i]->mNextIndex = -1;
+				mBlockMemory[i]->mPreIndex = -1;
 				mFreeIndex[mFreeCount] = nDescrease;
 				-- nDescrease;
 				++ mFreeCount;
@@ -103,10 +171,11 @@ namespace Myth
 		int			getAllocCount(){return mAllocCount;}
 		int			getObjNum(){return mAllocCount - mFreeCount;}
 	private:
-		T*			mBlockMemory[MaxCount];
-		int			mAllocCount;
-		int			mFreeIndex[MaxCount];
-		int			mFreeCount;
+		BLOCK_DATA*			mBlockMemory[MaxCount];
+		int					mAllocCount;
+		int					mFreeIndex[MaxCount];
+		int					mFreeCount;
+		int					mHeadIndex;
 	};
 
 	template<typename T, int Capacity>

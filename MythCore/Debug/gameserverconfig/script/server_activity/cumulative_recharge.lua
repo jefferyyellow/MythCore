@@ -26,11 +26,7 @@ function CumulativeRecharge_refreshProcess(ActivityID, pPlayer, nParam1, nParam2
 	pServerActUnit:setActData(EmActDataType.EmCumRechargeValue, value)
 end
 
-function CumulativeRecharge_onMsgGetCumulRechargePrizeRequest(pPlayer, pMsgData)
-	local msg = assert(pb.decode("CGetCumulRechargePrizeRequest", pMsgData))
-	local nActivityID = msg.ActivityID
-	local nIndex = msg.Index
-	
+function CumulativeRecharge_givePlayerPrize(pPlayer, nActivityID, nIndex)
 	local pServerActModule = getServerActModule()
 	-- 不在奖励期间
 	if not pServerActModule:checkActPrizeTime(nActivityID) then
@@ -86,13 +82,3 @@ function CumulativeRecharge_onMsgGetCumulRechargePrizeRequest(pPlayer, pMsgData)
 	sendGetCumulRechargePrizeResponse(pPlayer, ERR_SERVER_ACT.SUCCESS)
 end
 
-function sendGetCumulRechargePrizeResponse(pPlayer, nResult)
-	local Response = {
-		Result = nResult;
-	}
-
-	print("sendGetCumulRechargePrizeResponse")
-	local bytes = assert(pb.encode("CGetCumulRechargePrizeResponse", Response));
-	local pSceneJob = getSceneJob();
-	pSceneJob:send2Player(pPlayer, EmSvrActMsg.ID_S2C_RESPONSE_GET_CUMUL_RECHARGE_PRIZE, bytes, string.len(bytes))
-end

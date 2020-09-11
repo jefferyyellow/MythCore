@@ -6,6 +6,7 @@
 #include "dbmodule.h"
 #include "errcode.h"
 #include "timemanager.h"
+#include "objpoolimp.h"
 /// 启动服务器
 void CMailModule::onLaunchServer()
 {
@@ -401,16 +402,10 @@ void CMailModule::giveAllGlobalMail(CEntityPlayer& rPlayer)
 /// 给所以的玩家发全局邮件
 void CMailModule::giveAllPlayerGlobalMail(CMail& rMail)
 {
-	CEntityPlayer* pPlayer = NULL;
-	CSceneJob::PLAYER_LIST& rPlayerList = CSceneJob::Inst()->getPlayerList();
-	CSceneJob::PLAYER_LIST::iterator it = rPlayerList.begin();
-	for (; it != rPlayerList.end(); ++it)
+	CShareObjPoolImp::PlayerEntityPool& rPlayerEntityPool = CObjPool::Inst()->getShareObjPoolImp()->mPlayerEntityPool;
+	CEntityPlayer* pPlayer = rPlayerEntityPool.begin();
+	for (; pPlayer != NULL; pPlayer = rPlayerEntityPool.next(pPlayer))
 	{
-		pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
-		if (NULL == pPlayer)
-		{
-			continue;
-		}
 		if (emPlayerStatus_Gameing != pPlayer->getPlayerStauts())
 		{
 			continue;

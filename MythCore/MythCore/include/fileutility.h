@@ -74,11 +74,14 @@ namespace Myth
 		void findFirstFile(const char* pFilePath, char* pFileName, int nNameSize);
 		void nextFile(char* pFileName, int nNameSize);
 
+		const char* findFirstFileLua(const char* pFilePath);
+		const char* nextFileLua();
 	private:
 #ifdef MYTH_OS_UNIX
 		DIR*	mDir;
 #else
 		HANDLE	mFindHandle;
+		WIN32_FIND_DATA mFindData;
 #endif
 	};
 }

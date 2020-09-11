@@ -76,6 +76,12 @@ public:
 
 	/// 得到已经用了的Obj数目
 	int getObjNum(){return mFixMemory.getObjNum();}
+
+	/// 得到列表头节点
+	T*	begin(){return mFixMemory.begin();}
+
+	/// 得到下一个节点
+	T*  next(T* pNode){return mFixMemory.next(pNode);}
 private:
 	// ***********************************************************************
 	// 算法注释
@@ -139,7 +145,7 @@ public:
 
 	int	getMemorySize()
 	{
-		return sizeof(T) * MaxCount;
+		return mShareMemory.getMemorySize();
 	}
 	
 	T*		allocObj()
@@ -207,6 +213,12 @@ public:
 	int getMinID(){return IDStart;}
 	// 得到最大的ID值
 	int getMaxID(){return IDEnd;}
+
+	/// 得到列表头节点
+	T*	begin(){ return mShareMemory.begin(); }
+
+	/// 得到下一个节点
+	T*  next(T* pNode){ return mShareMemory.next(pNode); }
 private:
 	// 解释如CObjManager同名函数
 	int	generalID(int nMemIndex)

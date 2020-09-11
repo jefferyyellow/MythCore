@@ -28,6 +28,8 @@ public:
 	void	logObjNum();
 
 	CObjPoolImp* getPoolImp() const { return mPoolImp; }
+	CShareObjPoolImp* getShareObjPoolImp() const {return mSharePoolImp;}
+
 private:
 	CObjPoolImp*		mPoolImp;
 	CShareObjPoolImp*	mSharePoolImp;

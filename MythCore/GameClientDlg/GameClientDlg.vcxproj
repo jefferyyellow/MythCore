@@ -115,6 +115,8 @@
     <ClInclude Include="..\message\dailyactmodule.hxx.pb.h" />
     <ClInclude Include="..\message\dbmodule.hxx" />
     <ClInclude Include="..\message\dbmodule.hxx.pb.h" />
+    <ClInclude Include="..\message\instancemodule.hxx" />
+    <ClInclude Include="..\message\instancemodule.hxx.pb.h" />
     <ClInclude Include="..\message\itemmodule.hxx" />
     <ClInclude Include="..\message\itemmodule.hxx.pb.h" />
     <ClInclude Include="..\message\loginmessage.hxx" />
@@ -156,6 +158,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\message\dbmodule.hxx.pb.cc">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\message\instancemodule.hxx.pb.cc">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\message\itemmodule.hxx.pb.cc">
