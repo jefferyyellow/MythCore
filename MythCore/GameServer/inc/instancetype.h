@@ -12,7 +12,6 @@ enum EmInstanceStatus
 	emInstanceStatus_Init	= 1,			// 初始化
 	emInstanceStatus_Play	= 2,			// 开始玩
 	emInstanceStatus_End	= 3,			// 结束
-	emInstanceStatus_Destory= 4,			// 销毁
 };
 
 enum EmInstanceType
@@ -32,4 +31,7 @@ enum EmInstanceEvent
 	emInstEvent_PlayerHP		= 3,			// 玩家血量变化
 	emInstEventMax
 };
+
+#define INSTANCE_DESTORY_TIME	30				// 副本销毁等待时间
+#define INSTANCE_CHECK_TIMER	1000			// 副本检查计时器
 #endif

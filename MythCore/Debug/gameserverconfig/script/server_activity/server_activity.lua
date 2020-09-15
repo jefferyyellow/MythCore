@@ -1,5 +1,5 @@
 local pb = require "pb"
-assert(pb.loadfile "gameserverconfig/script/server_activity/serveractmodule.pb") 
+assert(pb.loadfile "gameserverconfig/script/server_activity/serveractmodule.pb")
 
 require("gameserverconfig/script/server_activity/server_activity_type")
 require("gameserverconfig/script/server_activity/cumulative_recharge")
@@ -30,11 +30,6 @@ ServerActivity_GivePlayerPrizeFunc = {
 	[EmSvrActType.CumRecharge] = CumulativeRecharge_givePlayerPrize
 }
 
-
--- 消息出现函数注册表，按ID
-GlobalSvrActMsgFunc = {
-	[EmSvrActMsg.ID_C2S_REQUEST_GET_PHASE_ACT_PRIZE] = ServerActivity_GetPhaseActPrizeRequest
-}
 
 -- 按类型调用活动的结束函数
 function ServerActivity_EndFunc(nActivityType, nActivityID)
@@ -78,10 +73,9 @@ function ServerActivity_onClientMessage(pPlayer, nMessageID, pMsgData)
 	if GlobalSvrActMsgFunc[nMessageID] then
 		GlobalSvrActMsgFunc[nMessageID](pPlayer, pMsgData)
 	else
-		print("Error Msg ID")
+		print("Error Msg ID" .. nMessageID)
 	end
 end
-
 
 function ServerActivity_GetPhaseActPrizeRequest(pPlayer, pMsgData)
 	local msg = assert(pb.decode("CGetPhaseActPrizeRequest", pMsgData))
@@ -109,3 +103,8 @@ function ServerActivity_GetPhaseActPrizeResponse(pPlayer, nResult)
 	local pSceneJob = getSceneJob();
 	pSceneJob:send2Player(pPlayer, EmSvrActMsg.ID_S2C_RESPONSE_GET_PHASE_ACT_PRIZE, bytes, string.len(bytes))
 end
+
+-- 消息出现函数注册表，按ID
+GlobalSvrActMsgFunc = {
+	[EmSvrActMsg.ID_C2S_REQUEST_GET_PHASE_ACT_PRIZE] = ServerActivity_GetPhaseActPrizeRequest
+}

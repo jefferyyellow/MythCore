@@ -30,10 +30,12 @@ public:
 public:
 	void	onIMUpdateRankRequest(CInternalMsg* pIMMsg);
 	void	onIMGetRankInfoRequest(CInternalMsg* pIMMsg);
-
+	
 public:
 	// 更新玩家的排行榜
 	void updateRoleRank(EmRankType eType, uint nRoleID, int nValue, time_t nTime);
+	// 更新玩家的排行榜
+	void updateRoleRank(EmRankType eType, CRankValue& rRankValue);
 	// 获得玩家的排名
 	int getRoleRank(EmRankType eType, int nRoleID);
 

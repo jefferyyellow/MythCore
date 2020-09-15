@@ -9,5 +9,6 @@ enum EmRankType
 
 #define MAX_RANK_NUM			1000
 #define MAX_RANK_SHOW_NUM		100		// 排行榜最大显示人数
+#define MAX_RANK_SHOW_CACHE_NUM	200		// 排行榜最大显示缓存人数(为了防止掉出MAX_RANK_SHOW_NUM没人补充)
 
 #endif

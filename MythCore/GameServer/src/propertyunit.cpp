@@ -51,5 +51,5 @@ void CPropertyUnit::onLevelUp(int nOldLevel)
 	tLevelUpNotify.set_level(mLevel);
 	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_NOTIYF_LEVEL_UP, &tLevelUpNotify);
 
-	CRankModule::Inst()->updateRoleRank(emRankType_Level, mPlayer.getRoleID(), mLevel);
+	CRankModule::Inst()->updateRoleRank(emRankType_Level, mPlayer, mLevel);
 }

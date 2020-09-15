@@ -20,6 +20,7 @@ public:
 	{
         mExp = 0;
         mLevel = 0;
+		mHeadID = 0;
 	}
 
 public:
@@ -34,6 +35,9 @@ public:
 
     byte getLevel(){ return mLevel;}
     void setLevel(byte value){ mLevel = value;}
+
+	uint getHeadID(){return mHeadID;}
+	void setHeadID(uint nHeadID){mHeadID = nHeadID;}
 	/// end autocode
 
 private:
@@ -41,5 +45,7 @@ private:
 	sint64			mExp;
 	/// µÈ¼¶
 	byte			mLevel;
+	/// Í·Ïñ
+	uint			mHeadID;
 };
 #endif

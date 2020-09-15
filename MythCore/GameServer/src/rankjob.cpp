@@ -56,11 +56,27 @@ void CRankJob::onIMUpdateRankRequest(CInternalMsg* pIMMsg)
 	}
 	CIMUpdateRankRequest* pUpdateRankRequest = (CIMUpdateRankRequest*)pIMMsg;
 	EmRankType eType = (EmRankType)(pUpdateRankRequest->mRankType);
-	uint nRoleID = pUpdateRankRequest->mRoleID;
-	int nValue = pUpdateRankRequest->mValue;
-	time_t tTime = pUpdateRankRequest->mTime;
 
-	updateRoleRank(eType, nRoleID, nValue, tTime);
+	if (eType <= emRankType_None || eType >= emRankTypeMax)
+	{
+		return;
+	}
+
+	CRankValue tRankValue;
+	tRankValue.mRankValue = pUpdateRankRequest->mValue;
+	tRankValue.mRankTime = pUpdateRankRequest->mTime;
+	tRankValue.mRankKey = pUpdateRankRequest->mRoleID;
+	int nIndex = mRankList[eType].refreshRankValue(tRankValue);
+	if (nIndex < MAX_RANK_SHOW_CACHE_NUM)
+	{
+		CIMUpdateRankResponse* pResponse = (CIMUpdateRankResponse*)CInternalMsgPool::Inst()->allocMsg(IM_RESPONSE_UPDATE_RANK);
+		if (NULL != pResponse)
+		{
+			pResponse->mRoleID = pUpdateRankRequest->mRoleID;
+			pResponse->mRoleObjID = pUpdateRankRequest->mRoleObjID;
+			CJobManager::Inst()->pushTask(emJobTaskType_Scene, pResponse);
+		}
+	}
 }
 
 void CRankJob::onIMGetRankInfoRequest(CInternalMsg* pIMMsg)
@@ -134,6 +150,15 @@ void CRankJob::updateRoleRank(EmRankType eType, uint nRoleID, int nValue, time_t
 	mRankList[eType].refreshRankValue(tRankValue);
 }
 
+// 更新玩家的排行榜
+void CRankJob::updateRoleRank(EmRankType eType, CRankValue& rRankValue)
+{
+	if (eType <= emRankType_None || eType >= emRankTypeMax)
+	{
+		return;
+	}
+	mRankList[eType].refreshRankValue(rRankValue);
+}
 
 // 获得玩家的排名
 int CRankJob::getRoleRank(EmRankType eType, int nRoleID)

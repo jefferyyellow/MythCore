@@ -166,8 +166,32 @@ void CRankModule::onIMGetRankInfoResponse(CInternalMsg* pIMMsg)
 	CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_RESPONSE_GET_RANK_INFO, &tResponse);
 }
 
+void CRankModule::onIMUpdateRankResponse(CInternalMsg* pIMMsg)
+{
+	if (NULL == pIMMsg)
+	{
+		return;
+	}
+	CIMUpdateRankResponse* pResponse = (CIMUpdateRankResponse*)pIMMsg;
+
+	CEntityPlayer* pPlayer = (CEntityPlayer*)CObjPool::Inst()->getObj(pResponse->mRoleObjID);
+	// 已经下线了
+	if (NULL == pPlayer)
+	{
+		return;
+	}
+	// 已经被重用了
+	if (pPlayer->getRoleID() != pResponse->mRoleID)
+	{
+		return;
+	}
+
+	addRoleInfo(*pPlayer);
+}
+
+
 // 更新玩家的排行榜
-void CRankModule::updateRoleRank(EmRankType eType, uint nRoleID, int nValue)
+void CRankModule::updateRoleRank(EmRankType eType, CEntityPlayer& rPlayer, int nValue)
 {
 	CIMUpdateRankRequest* pUpdateRankRequest = (CIMUpdateRankRequest*)CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_UPDATE_RANK);
 	if (NULL == pUpdateRankRequest)
@@ -176,10 +200,49 @@ void CRankModule::updateRoleRank(EmRankType eType, uint nRoleID, int nValue)
 	}
 
 	pUpdateRankRequest->mRankType = eType;
-	pUpdateRankRequest->mRoleID = nRoleID;
+	pUpdateRankRequest->mRoleID = rPlayer.getRoleID();
+	pUpdateRankRequest->mRoleObjID = rPlayer.getObjID();
 	pUpdateRankRequest->mValue = nValue;
 	pUpdateRankRequest->mTime = CTimeManager::Inst()->getCurrTime();
 
 	CJobManager::Inst()->pushTask(emJobTaskType_Rank, pUpdateRankRequest);
 }
 
+
+// 更新玩家排行榜信息
+void CRankModule::updateRoleInfo(CEntityPlayer& rPlayer)
+{
+	HASH_RANK_INFO::iterator it = mHashRankInfo.find(rPlayer.getRoleID());
+	// 更新
+	if (it == mHashRankInfo.end())
+	{
+		return;
+	}
+	CPlayerRankInfo& rRankInfo = it->second;
+	updateRoleInfo(rPlayer, rRankInfo);
+}
+
+/// 更新玩家排行榜信息
+void CRankModule::updateRoleInfo(CEntityPlayer& rPlayer, CPlayerRankInfo& rRankInfo)
+{
+	rRankInfo.setName(rPlayer.getName());
+	rRankInfo.setHeadID(rPlayer.getPropertyUnit().getHeadID());
+}
+
+/// 增加玩家排行榜信息
+void CRankModule::addRoleInfo(CEntityPlayer& rPlayer)
+{
+	HASH_RANK_INFO::iterator it = mHashRankInfo.find(rPlayer.getRoleID());
+	// 更新
+	if (it != mHashRankInfo.end())
+	{
+		CPlayerRankInfo& rRankInfo = it->second;
+		updateRoleInfo(rPlayer, rRankInfo);
+	}
+	else
+	{
+		CPlayerRankInfo tRankInfo;
+		updateRoleInfo(rPlayer, tRankInfo);
+		mHashRankInfo.insert(HASH_RANK_INFO::value_type(rPlayer.getRoleID(), tRankInfo));
+	}
+}

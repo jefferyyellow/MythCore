@@ -22,7 +22,7 @@ extern "C"
 CServerActModule::CServerActModule()
 {
 	init();
-	mServerOpenTime = unixTimeStamp("2020-09-01 00:00:00");
+	mServerOpenTime = unixTimeStamp("2020-09-15 00:00:00");
 }
 
 void CServerActModule::init()
@@ -261,6 +261,10 @@ void CServerActModule::loadServerActivityConfig(const char* pConfigFile)
 		mConfigFileList.insert(pFileName);
 		sendPlatWebRequest(pFileName, pFileName, EmHttpType(emHttpTypeGet | emHttpTypeFile), true);
 	}
+	if (0 == mAvailActivityNum)
+	{
+		mConfigFileLoadComplete = true;
+	}
 }
 
 /// 清算结束的活动
@@ -317,14 +321,14 @@ bool CServerActModule::checkActOpen(int nActivityID)
 	{
 		return false;
 	}
-	if (NULL == mAvailActivity[nActivityID])
+	if (NULL == mServerActivity[nActivityID])
 	{
 		return false;
 	}
 
 	time_t tNowTime = CTimeManager::Inst()->getCurrTime();
-	if (tNowTime < mAvailActivity[nActivityID]->getStartTime()
-		|| tNowTime >= mAvailActivity[nActivityID]->getEndTime())
+	if (tNowTime < mServerActivity[nActivityID]->getStartTime()
+		|| tNowTime >= mServerActivity[nActivityID]->getEndTime())
 	{
 		return false;
 	}
@@ -340,12 +344,12 @@ int CServerActModule::getActType(int nActivityID)
 		return 0;
 	}
 
-	if (NULL == mAvailActivity[nActivityID])
+	if (NULL == mServerActivity[nActivityID])
 	{
 		return 0;
 	}
 
-	return mAvailActivity[nActivityID]->getType();
+	return mServerActivity[nActivityID]->getType();
 }
 
 /// 是否在可以领奖的期间,如果领奖时间大于0，表示是否在活动结束到领奖期间
@@ -357,15 +361,15 @@ bool CServerActModule::checkActPrizeTime(int nActivityID)
 		return false;
 	}
 
-	if (NULL == mAvailActivity[nActivityID])
+	if (NULL == mServerActivity[nActivityID])
 	{
 		return false;
 	}
 	time_t tNowTime = CTimeManager::Inst()->getCurrTime();
-	if (mAvailActivity[nActivityID]->getPrizeTime() > 0)
+	if (mServerActivity[nActivityID]->getPrizeTime() > 0)
 	{
-		if (tNowTime < mAvailActivity[nActivityID]->getEndTime()
-			|| tNowTime >= mAvailActivity[nActivityID]->getPrizeTime())
+		if (tNowTime < mServerActivity[nActivityID]->getEndTime()
+			|| tNowTime >= mServerActivity[nActivityID]->getPrizeTime())
 		{
 			return false;
 		}
@@ -374,8 +378,8 @@ bool CServerActModule::checkActPrizeTime(int nActivityID)
 	}
 	else
 	{
-		if (tNowTime < mAvailActivity[nActivityID]->getStartTime()
-			|| tNowTime >= mAvailActivity[nActivityID]->getEndTime())
+		if (tNowTime < mServerActivity[nActivityID]->getStartTime()
+			|| tNowTime >= mServerActivity[nActivityID]->getEndTime())
 		{
 			return false;
 		}

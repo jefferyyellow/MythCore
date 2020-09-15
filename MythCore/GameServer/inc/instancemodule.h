@@ -4,15 +4,17 @@
 #include "logicmodule.h"
 #include "messagefactory.h"
 #include "instancetype.h"
+#include "timeutility.h"
 using namespace Myth;
 class CInstance;
 class CInstanceConfig;
+class CEntityOgre;
 class CInstanceModule : public CLogicModule, public CSingleton < CInstanceModule >
 {
 	friend class CSingleton<CInstanceModule>;
 private:
-	CInstanceModule(){}
-	~CInstanceModule(){}
+	CInstanceModule();
+	~CInstanceModule();
 
 public:
 	/// 启动服务器
@@ -54,9 +56,23 @@ public:
 	void sendLeaveInstanceResponse(CEntityPlayer& rPlayer, int nResult);
 
 public:
-	CInstance* createInstance(int nInstanceID);
+	/// 创建副本
+	CInstance*	createInstance(int nInstanceID);
+	/// 销毁副本
+	void		destoryInstance(CInstance* pInstance);
+	/// 检查所有的副本时间
+	void		checkAllInstanceTime();
+	/// ----- 副本事件相关 -----
+	/// 怪物死亡
+	void		onOgreDead(CEntityOgre *pOgre);
+	/// 玩家死亡
+	void		onPlayerDead(CEntityPlayer& rPlayer);
+	/// 玩家离开
+	void		onPlayerLeave(CEntityPlayer& rPlayer);
+	/// ----- 副本事件相关 -----
 
 public:
-	CInstanceConfig* mAllInstConfig[MAX_INSTANCE_ID];
+	CInstanceConfig*	mAllInstConfig[MAX_INSTANCE_ID];
+	time_t				mLastCheckTime;
 };
 #endif

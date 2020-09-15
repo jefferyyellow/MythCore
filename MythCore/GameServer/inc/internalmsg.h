@@ -78,6 +78,7 @@ class CIMUpdateRankRequest : public CInternalMsg
 public:
 	byte		mRankType;							// 排行榜类型
 	uint		mRoleID;							// 玩家角色ID
+	int			mRoleObjID;							// 玩家实体ID
 	int			mValue;								// 排行榜值
 	time_t		mTime;								// 时间
 };
@@ -86,8 +87,8 @@ public:
 class CIMUpdateRankResponse : public CInternalMsg
 {
 public:
-	byte		mRankType;							// 排行榜类型
 	uint		mRoleID;							// 玩家角色ID
+	int			mRoleObjID;							// 玩家实体ID
 };
 
 // 得到排行榜的请求

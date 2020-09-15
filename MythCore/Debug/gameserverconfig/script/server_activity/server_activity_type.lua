@@ -9,7 +9,7 @@ EmActDataType =
 	EmCumConsumePrize		= 4,	-- 累计消费领奖记录
 }
 
-EmActBitType = 
+EmActBitType =
 {
 	EmActBitNone			= 0,	-- 无
 	EmLevelRankPrize		= 1,	-- 等级排行榜领奖
@@ -17,7 +17,7 @@ EmActBitType =
 }
 
 -- 开服活动类型
-EmSvrActType = 
+EmSvrActType =
 {
 	None					= 0,	-- 无类型
 	CumRecharge				= 1,	-- 累计充值
@@ -31,5 +31,5 @@ EmSvrActMsg =
 	ID_C2S_REQUEST_GET_SERVER_ACT			= 0x1C00,	-- 得到开服活动的请求
 	ID_S2C_RESPONSE_GET_SERVER_ACT			= 0x1C01,	-- 得到开服活动的回应
 	ID_C2S_REQUEST_GET_PHASE_ACT_PRIZE		= 0x1C02,	-- 领取累计充值奖励的请求
-	ID_C2S_REQUEST_GET_PHASE_ACT_PRIZE		= 0x1C03,	-- 领取累计充值奖励的回应
+	ID_S2C_RESPONSE_GET_PHASE_ACT_PRIZE		= 0x1C03,	-- 领取累计充值奖励的回应
 }

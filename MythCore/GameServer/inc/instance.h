@@ -114,10 +114,18 @@ public:
 
 	uint getInstanceID() const { return mInstanceID; }
 	void setInstanceID(uint nValue) { mInstanceID = nValue; }
+
+	time_t getDestoryTime() const { return mDestoryTime; }
+	void setDestoryTime(time_t nValue) { mDestoryTime = nValue; }
 	/// end autocode
 
 	CSingleInstance& getSingle(){return mSingle;}
 	CMultipleInstance& getMultiple(){return mMultiple;}
+
+	/// 关心事件
+	bool checkCareEvent(EmInstanceEvent eEvent){mCareEvent.getBit(eEvent);}
+	void addCareEvent(EmInstanceEvent eEvent){mCareEvent.setBit(eEvent);}
+	void clearCareEvent(EmInstanceEvent eEvent){mCareEvent.clearBit(eEvent);}
 
 private:
 	/// 地图实体Id
@@ -126,6 +134,8 @@ private:
 	time_t				mCreateTime;
 	/// 副本到期时间
 	time_t				mExpiredTime;
+	/// 销毁时间
+	time_t				mDestoryTime;
 	/// 状态 default:emInstanceStatus_None
 	EmInstanceStatus	mStatus;
 	///  副本类型

@@ -13,10 +13,23 @@ extern "C"
 #include "lua_tinker.h"
 #include "scenejob.h"
 #include "fileutility.h"
+#include "objpoolimp.h"
+#include "timemanager.h"
+
+CInstanceModule::CInstanceModule()
+{
+	mLastCheckTime = 0;
+}
+
+CInstanceModule::~CInstanceModule()
+{
+
+}
+
 /// 启动服务器
 void CInstanceModule::onLaunchServer()
 {
-
+	
 }
 
 /// 启动完成检查
@@ -63,7 +76,11 @@ void CInstanceModule::onDestroyPlayer(CEntityPlayer* pPlayer)
 
 void CInstanceModule::onTimer(unsigned int nTickOffset)
 {
-
+	// 不是同一秒
+	if (CTimeManager::Inst()->getCurrTime() != mLastCheckTime)
+	{
+		checkAllInstanceTime();
+	}
 }
 
 /// 加载配置文件
@@ -172,6 +189,7 @@ void CInstanceModule::onEnterInstanceRequest(CEntityPlayer& rPlayer, Message* pM
 	}
 	pInstance->create(pInstanceConfig);
 
+	pInstance->setStatus(emInstanceStatus_Play);
 	pInstance->playerEnter(rPlayer);
 
 	sendEnterInstanceResponse(rPlayer, SUCCESS, nInstanceID);
@@ -213,4 +231,59 @@ CInstance* CInstanceModule::createInstance(int nInstanceID)
 
 	pInstance->setInstanceID(nInstanceID);
 	return pInstance;
+}
+
+/// 销毁副本
+void CInstanceModule::destoryInstance(CInstance* pInstance)
+{
+	if (NULL == pInstance)
+	{
+		return;
+	}
+
+	pInstance->destroy();
+	CObjPool::Inst()->free(pInstance->getObjID());
+}
+
+// 检查所有的副本时间
+void CInstanceModule::checkAllInstanceTime()
+{
+	time_t tNowTime = CTimeManager::Inst()->getCurrTime();
+	CObjPoolImp::InstancePool& rInstancePool = CObjPool::Inst()->getPoolImp()->mInstancePool;
+	for (CInstance* pInstance = rInstancePool.begin(); NULL != pInstance; pInstance = rInstancePool.next(pInstance))
+	{
+		// 销毁状态中
+		if (pInstance->getDestoryTime() > 0)
+		{
+			// 到了销毁状态了，直接销毁
+			if (tNowTime >= pInstance->getDestoryTime())
+			{
+				destoryInstance(pInstance);
+			}
+		}
+		else
+		{
+			// 是否副本时间到
+			if (pInstance->getExpiredTime() > tNowTime)
+			{
+				continue;
+			}
+			pInstance->end();
+		}
+	}
+}
+
+/// 怪物死亡
+void CInstanceModule::onOgreDead(CEntityOgre *pOgre)
+{
+	if (NULL == pOgre)
+	{
+		return;
+	}
+}
+
+/// 玩家死亡
+void CInstanceModule::onPlayerDead(CEntityPlayer& rPlayer)
+{
+
 }

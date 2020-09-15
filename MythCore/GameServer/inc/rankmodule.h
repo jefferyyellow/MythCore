@@ -5,13 +5,51 @@
 #include "messagefactory.h"
 #include "ranktype.h"
 #include "commontype.h"
+#include "template.h"
+#include "logintype.h"
+#include <map>
+
 using namespace Myth;
 
 class CEntityPlayer;
 class CInternalMsg;
+
+class CPlayerRankInfo
+{
+public:
+	CPlayerRankInfo()
+	{}
+	~CPlayerRankInfo()
+	{}
+
+public:
+	/// 名字
+	char*		getName(){return mName;}
+	void		setName(const char* pName)
+	{
+		if (NULL == pName)
+		{
+			return;
+		}
+		strncpy(mName, pName, sizeof(MAX_PLAYER_NAME_LEN) - 1);
+	}
+
+	/// 头像ID
+	uint		getHeadID(){return mHeadID;}
+	void		setHeadID(uint nHeadID){mHeadID = nHeadID;}
+
+private:
+	/// 玩家名称
+	char		mName[MAX_PLAYER_NAME_LEN];
+	/// 头像ID
+	uint		mHeadID;
+};
+
 class CRankModule : public CLogicModule, public CSingleton<CRankModule>
 {
 	friend class CSingleton<CRankModule>;
+	typedef std::map<uint, CPlayerRankInfo>	HASH_RANK_INFO;
+
 private:
 	CRankModule();
 	~CRankModule();
@@ -44,9 +82,18 @@ public:
 
 public:
 	void onIMGetRankInfoResponse(CInternalMsg* pIMMsg);
+	void onIMUpdateRankResponse(CInternalMsg* pIMMsg);
 
 public:
-	// 更新玩家的排行榜
-	void updateRoleRank(EmRankType eType, uint nRoleID, int nValue);
+	/// 更新玩家的排行榜
+	void updateRoleRank(EmRankType eType, CEntityPlayer& rPlayer, int nValue);
+	/// 更新玩家排行榜信息
+	void updateRoleInfo(CEntityPlayer& rPlayer);
+	/// 更新玩家排行榜信息
+	void updateRoleInfo(CEntityPlayer& rPlayer, CPlayerRankInfo& rRankInfo);
+	/// 增加玩家排行榜信息
+	void addRoleInfo(CEntityPlayer& rPlayer);
+private:
+	HASH_RANK_INFO	mHashRankInfo;
 };
 #endif

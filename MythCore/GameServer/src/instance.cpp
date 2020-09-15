@@ -33,6 +33,11 @@ void CInstance::create(CInstanceConfig* pInstanceConfig)
 		return;
 	}
 
+	if (mStatus == emInstanceStatus_Init)
+	{
+		return;
+	}
+
 	mType = (EmInstanceType)pInstanceConfig->mType;
 	mCreateTime = CTimeManager::Inst()->getCurrTime();
 	mExpiredTime = mCreateTime + pInstanceConfig->mTime;
@@ -44,6 +49,13 @@ void CInstance::create(CInstanceConfig* pInstanceConfig)
 /// 结束
 void CInstance::end()
 {
+	if (mStatus == emInstanceStatus_End)
+	{
+		return;
+	}
+	// 设置销毁时间
+	mDestoryTime = mExpiredTime + INSTANCE_DESTORY_TIME;
+
 	lua_State* L = CSceneJob::Inst()->getLuaState();
 	lua_tinker::call<int>(L, "Instance_EndFunc", mType, mInstanceID);
 }
@@ -72,6 +84,12 @@ void CInstance::playerEnter(CEntityPlayer& rPlayer)
 /// 事件发生
 void CInstance::onEvent(EmInstanceEvent eEventType, int nParam1, int nParam2)
 {
+	// 副本不关心该事件
+	if (!mCareEvent.getBit(eEventType))
+	{
+		return;
+	}
+
 	lua_State* L = CSceneJob::Inst()->getLuaState();
 	lua_tinker::call<int>(L, "ServerActivity_OnEventFunc", mType, mInstanceID, eEventType, nParam1, nParam2);
 }
