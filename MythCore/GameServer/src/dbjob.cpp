@@ -25,7 +25,8 @@ void CDBJob::init()
     mSqlLength = 0;
 }
 
-int CDBJob::initDB(const char* pHost, const char* pUserName, const char* pPasswd, const char* pDataBase, int nPort, const char* pUnixSocket)
+int CDBJob::initDB(const char* pHost, const char* pUserName, const char* pPasswd, 
+				   const char* pDataBase, int nPort, const char* pUnixSocket)
 {
 	int nResult = mDataBase.connectMysqlServer(pHost, pUserName, pPasswd, pDataBase, nPort, pUnixSocket);
 	return nResult;
@@ -152,7 +153,9 @@ void CDBJob::checkDBStream()
 				nRowNum, nColNum);
 			if (nResult != SUCCESS)
 			{
-				LOG_ERROR("mysql query error, errno: %d, %s, %s", mysql_errno(mDataBase.GetMysql()), mysql_error(mDataBase.GetMysql()),
+				LOG_ERROR("mysql query error, errno: %d, %s, %s", 
+					mysql_errno(mDataBase.GetMysql()), 
+					mysql_error(mDataBase.GetMysql()),
 					(char*)mDBRequest.mSqlBuffer);
 			}
 		}

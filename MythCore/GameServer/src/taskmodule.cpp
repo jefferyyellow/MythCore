@@ -51,13 +51,13 @@ void CTaskModule::onNewWeekCome()
 }
 
 /// 建立实体
-void CTaskModule::onCreatePlayer(CEntityPlayer* pPlayer)
+void CTaskModule::onCreatePlayer(CEntityPlayer& rPlayer)
 {
 
 }
 
 /// 销毁实体
-void CTaskModule::onDestroyPlayer(CEntityPlayer* pPlayer)
+void CTaskModule::onDestroyPlayer(CEntityPlayer& rPlayer)
 {
 
 }

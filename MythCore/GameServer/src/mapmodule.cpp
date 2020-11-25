@@ -53,42 +53,42 @@ void CMapModule::onNewWeekCome()
 }
 
 /// 建立实体
-void CMapModule::onCreatePlayer(CEntityPlayer* pPlayer)
+void CMapModule::onCreatePlayer(CEntityPlayer& rPlayer)
 {
-	CMap* pMap = CMapManager::Inst()->getMap(pPlayer->getLineID(), pPlayer->getMapID(), pPlayer->getMapIndex());
+	CMap* pMap = CMapManager::Inst()->getMap(rPlayer.getLineID(), rPlayer.getMapID(), rPlayer.getMapIndex());
 	// 如果地图不存在，检查是不是自动销毁的地图，如果是，重新创建一张
 	if (NULL == pMap)
 	{
-		CMapConfig* pMapConfig = CMapConfigManager::Inst()->getMapConfig(pPlayer->getMapID());
+		CMapConfig* pMapConfig = CMapConfigManager::Inst()->getMapConfig(rPlayer.getMapID());
 		if (NULL == pMapConfig)
 		{
-			LOG_ERROR("find map config error, line id: %d, map id: %d, map index: %d", pPlayer->getLineID(), pPlayer->getMapID(), pPlayer->getMapIndex());
+			LOG_ERROR("find map config error, line id: %d, map id: %d, map index: %d", rPlayer.getLineID(), rPlayer.getMapID(), rPlayer.getMapIndex());
 			return;
 		}
 		if (pMapConfig->getAutoDestory())
 		{
-			pMap = createMapFromConfig(pPlayer->getLineID(), pPlayer->getMapID(), pPlayer->getMapIndex());
+			pMap = createMapFromConfig(rPlayer.getLineID(), rPlayer.getMapID(), rPlayer.getMapIndex());
 		}
 	}
 	
 	if (NULL == pMap)
 	{
-		LOG_ERROR("the map of the player's location is null , line id: %d, map id: %d, map index: %d", pPlayer->getLineID(), pPlayer->getMapID(), pPlayer->getMapIndex());
+		LOG_ERROR("the map of the player's location is null , line id: %d, map id: %d, map index: %d", rPlayer.getLineID(), rPlayer.getMapID(), rPlayer.getMapIndex());
 		return;
 	}
 
-	pMap->createPlayer(pPlayer);
+	pMap->createPlayer(rPlayer);
 }
 
 /// 销毁实体
-void CMapModule::onDestroyPlayer(CEntityPlayer* pPlayer)
+void CMapModule::onDestroyPlayer(CEntityPlayer& rPlayer)
 {
-	CMap* pMap = CMapManager::Inst()->getMap(pPlayer->getLineID(), pPlayer->getMapID(), pPlayer->getMapIndex());
+	CMap* pMap = CMapManager::Inst()->getMap(rPlayer.getLineID(), rPlayer.getMapID(), rPlayer.getMapIndex());
 	if (NULL == pMap)
 	{
 		return;
 	}
-	pMap->destroyPlayer(pPlayer);
+	pMap->destroyPlayer(rPlayer);
 }
 
 void CMapModule::onTimer(unsigned int nTickOffset)

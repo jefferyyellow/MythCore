@@ -57,13 +57,13 @@ void CDailyActModule::onNewWeekCome()
 }
 
 /// 建立实体
-void CDailyActModule::onCreatePlayer(CEntityPlayer* pPlayer)
+void CDailyActModule::onCreatePlayer(CEntityPlayer& rPlayer)
 {
 
 }
 
 /// 销毁实体
-void CDailyActModule::onDestroyPlayer(CEntityPlayer* pPlayer)
+void CDailyActModule::onDestroyPlayer(CEntityPlayer& rPlayer)
 {
 
 }

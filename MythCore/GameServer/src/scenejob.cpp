@@ -272,21 +272,21 @@ void CSceneJob::newWeekCome()
 	}
 }
 
-void CSceneJob::createPlayer(CEntityPlayer* pPlayer)
+void CSceneJob::createPlayer(CEntityPlayer& rPlayer)
 {
 	LOGIC_MODULE_LIST::iterator it = mLogicModuleList.begin();
 	for (; it != mLogicModuleList.end(); ++it)
 	{
-		(*it)->onCreatePlayer(pPlayer);
+		(*it)->onCreatePlayer(rPlayer);
 	}
 }
 
-void CSceneJob::destroyPlayer(CEntityPlayer* pPlayer)
+void CSceneJob::destroyPlayer(CEntityPlayer& rPlayer)
 {
 	LOGIC_MODULE_LIST::iterator it = mLogicModuleList.begin();
 	for (; it != mLogicModuleList.end(); ++it)
 	{
-		(*it)->onDestroyPlayer(pPlayer);
+		(*it)->onDestroyPlayer(rPlayer);
 	}
 }
 

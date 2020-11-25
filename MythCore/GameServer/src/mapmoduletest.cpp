@@ -94,7 +94,7 @@ TEST(MapModule, createEntity)
 	CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->allocObj(emObjType_Entity_Player));
 	pPlayer->setPos(0, 0);
 
-	pMap->createPlayer(pPlayer);
+	pMap->createPlayer(*pPlayer);
 	CMapCell* pMapCell = pMap->getMapCell(0, 0);
 	EXPECT_EQ(1, pMapCell->getEntityNum());
 	EXPECT_TRUE(pMapCell->checkEntity(pPlayer->getObjID()));
@@ -145,7 +145,7 @@ TEST(MapModule, createEntity)
 	EXPECT_TRUE(pMapCell->checkEntity(pOgre->getObjID()));
 
 
-	pMap->destroyPlayer(pPlayer);
+	pMap->destroyPlayer(*pPlayer);
 	pMapCell = pMap->getMapCell(11, 11);
 	EXPECT_EQ(1, pMapCell->getEntityNum());
 	EXPECT_FALSE(pMapCell->checkEntity(pPlayer->getObjID()));

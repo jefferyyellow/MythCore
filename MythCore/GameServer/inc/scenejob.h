@@ -83,8 +83,8 @@ public:
 	void		exitServer();
 	void		newDayCome();
 	void		newWeekCome();
-	void		createPlayer(CEntityPlayer* pPlayer);
-	void		destroyPlayer(CEntityPlayer* pPlayer);
+	void		createPlayer(CEntityPlayer& rPlayer);
+	void		destroyPlayer(CEntityPlayer& rPlayer);
 	void		timer(unsigned int nTickOffset);
 	void		loadConfig();
 	void		reloadConfig();

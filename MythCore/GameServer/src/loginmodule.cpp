@@ -66,13 +66,13 @@ void CLoginModule::onNewWeekCome()
 }
 
 /// 建立实体
-void CLoginModule::onCreatePlayer(CEntityPlayer* pPlayer)
+void CLoginModule::onCreatePlayer(CEntityPlayer& rPlayer)
 {
 
 }
 
 /// 销毁实体
-void CLoginModule::onDestroyPlayer(CEntityPlayer* pPlayer)
+void CLoginModule::onDestroyPlayer(CEntityPlayer& rPlayer)
 {
 
 }

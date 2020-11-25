@@ -351,17 +351,12 @@ void CMap::onRemoveEntityFromMap(CEntity* pEntity)
 }
 
 /// 创建玩家
-void CMap::createPlayer(CEntityPlayer* pPlayer)
+void CMap::createPlayer(CEntityPlayer& rPlayer)
 {
-	if (NULL == pPlayer)
-	{
-		return;
-	}
-
-	addEntityToMapCell(pPlayer);
-	onCreateEntityToMap(pPlayer);
+	addEntityToMapCell(&rPlayer);
+	onCreateEntityToMap(&rPlayer);
 	// 加入玩家列表中
-	mPlayerList.push_back(pPlayer->getObjID());
+	mPlayerList.push_back(rPlayer.getObjID());
 	return;
 }
 
@@ -391,14 +386,14 @@ CEntity* CMap::createEntity(CEntityCreator* pCreator)
 }
 
 /// 销毁玩家
-void CMap::destroyPlayer(CEntityPlayer* pPlayer)
+void CMap::destroyPlayer(CEntityPlayer& rPlayer)
 {
-	removeEntityFromMap(pPlayer);
+	removeEntityFromMap(&rPlayer);
 
 	PLAYER_LIST::iterator it = mPlayerList.begin();
 	for (; it != mPlayerList.end(); ++it)
 	{
-		if (*it == pPlayer->getObjID())
+		if (*it == rPlayer.getObjID())
 		{
 			mPlayerList.erase(it);
 			break;

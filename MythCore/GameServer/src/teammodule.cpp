@@ -37,13 +37,13 @@ void CTeamModule::onNewWeekCome()
 }
 
 /// 建立实体
-void CTeamModule::onCreatePlayer(CEntityPlayer* pPlayer)
+void CTeamModule::onCreatePlayer(CEntityPlayer& rPlayer)
 {
 
 }
 
 /// 销毁实体
-void CTeamModule::onDestroyPlayer(CEntityPlayer* pPlayer)
+void CTeamModule::onDestroyPlayer(CEntityPlayer& rPlayer)
 {
 
 }

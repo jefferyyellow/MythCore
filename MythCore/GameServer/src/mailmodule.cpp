@@ -46,13 +46,13 @@ void CMailModule::onNewWeekCome()
 }
 
 /// 建立实体
-void CMailModule::onCreatePlayer(CEntityPlayer* pPlayer)
+void CMailModule::onCreatePlayer(CEntityPlayer& rPlayer)
 {
 
 }
 
 /// 销毁实体
-void CMailModule::onDestroyPlayer(CEntityPlayer* pPlayer)
+void CMailModule::onDestroyPlayer(CEntityPlayer& rPlayer)
 {
 
 }

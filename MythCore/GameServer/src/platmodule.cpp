@@ -56,13 +56,13 @@ void CPlatModule::onNewWeekCome()
 }
 
 /// 建立实体
-void CPlatModule::onCreatePlayer(CEntityPlayer* pPlayer)
+void CPlatModule::onCreatePlayer(CEntityPlayer& rPlayer)
 {
-	loadRechargeCache(pPlayer);
+	loadRechargeCache(rPlayer);
 }
 
 /// 销毁实体
-void CPlatModule::onDestroyPlayer(CEntityPlayer* pPlayer)
+void CPlatModule::onDestroyPlayer(CEntityPlayer& rPlayer)
 {
 
 }
@@ -110,20 +110,23 @@ void CPlatModule::onInsertRechargeCache(CDBResponse& rResponse)
 	}
 
 	CEntityPlayer* pEntityPlayer = CSceneJob::Inst()->getPlayerByRoleID(rResponse.mParam1);
-	loadRechargeCache(pEntityPlayer);
+	if (NULL != pEntityPlayer)
+	{
+		loadRechargeCache(*pEntityPlayer);
+	}
 }
 
 
 /// 加载充值缓存
-void CPlatModule::loadRechargeCache(CEntityPlayer* pPlayer)
+void CPlatModule::loadRechargeCache(CEntityPlayer& rPlayer)
 {
 	// 玩家离线或者不是游戏状态
-	if (NULL == pPlayer || emPlayerStatus_Gameing != pPlayer->getPlayerStauts())
+	if (emPlayerStatus_Gameing != rPlayer.getPlayerStauts())
 	{
 		return;
 	}
 
-	uint nRoleID = pPlayer->getRoleID();
+	uint nRoleID = rPlayer.getRoleID();
 	CDBModule::Inst()->pushDBTask(nRoleID, emSessionType_LoadRechargeCache, nRoleID, 0, "call LoadRechargeCache(%u)", nRoleID);
 }
 

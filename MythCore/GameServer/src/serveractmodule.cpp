@@ -97,19 +97,14 @@ void CServerActModule::onNewWeekCome()
 }
 
 /// 建立实体
-void CServerActModule::onCreatePlayer(CEntityPlayer* pPlayer)
+void CServerActModule::onCreatePlayer(CEntityPlayer& rPlayer)
 {
 	
 }
 
 /// 销毁实体
-void CServerActModule::onDestroyPlayer(CEntityPlayer* pPlayer)
+void CServerActModule::onDestroyPlayer(CEntityPlayer& rPlayer)
 {
-	if (NULL == pPlayer)
-	{
-		return;
-	}
-
 
 }
 

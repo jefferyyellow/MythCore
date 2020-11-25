@@ -118,12 +118,12 @@ public:
 	void		onRemoveEntityFromMap(CEntity* pEntity);
 
 	/// 创建玩家
-	void		createPlayer(CEntityPlayer* pPlayer);
+	void		createPlayer(CEntityPlayer& rPlayer);
 	/// 创建实体
 	CEntity*	createEntity(CEntityCreator* pCreator);
 
 	/// 销毁玩家
-	void		destroyPlayer(CEntityPlayer* pPlayer);
+	void		destroyPlayer(CEntityPlayer& rPlayer);
 	/// 销毁实体
 	void		destroyEntity(CEntity* pEntity);
 	/// 销毁地图上所有的实体（不包含玩家）

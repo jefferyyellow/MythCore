@@ -15,7 +15,8 @@ public:
 	CDBJob();
 	~CDBJob();
 	void	init();
-	int		initDB(const char* pHost, const char* pUserName, const char* pPasswd, const char* pDataBase, int nPort, const char* pUnixSocket);
+	int		initDB(const char* pHost, const char* pUserName, const char* pPasswd, 
+				   const char* pDataBase, int nPort, const char* pUnixSocket);
 	void	clear();
 
 public:

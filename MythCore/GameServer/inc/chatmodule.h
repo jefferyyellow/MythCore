@@ -48,9 +48,9 @@ public:
 	/// 新一周到来
 	virtual void onNewWeekCome();
 	/// 建立实体
-	virtual void onCreatePlayer(CEntityPlayer* pPlayer);
+	virtual void onCreatePlayer(CEntityPlayer& rPlayer);
 	/// 销毁实体
-	virtual void onDestroyPlayer(CEntityPlayer* pPlayer);
+	virtual void onDestroyPlayer(CEntityPlayer& rPlayer);
 	/// 时间函数
 	virtual	void onTimer(unsigned int nTickOffset);
 	/// 加载配置文件

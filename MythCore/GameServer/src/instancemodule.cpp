@@ -63,13 +63,13 @@ void CInstanceModule::onNewWeekCome()
 }
 
 /// 建立实体
-void CInstanceModule::onCreatePlayer(CEntityPlayer* pPlayer)
+void CInstanceModule::onCreatePlayer(CEntityPlayer& rPlayer)
 {
 
 }
 
 /// 销毁实体
-void CInstanceModule::onDestroyPlayer(CEntityPlayer* pPlayer)
+void CInstanceModule::onDestroyPlayer(CEntityPlayer& rPlayer)
 {
 
 }

@@ -48,13 +48,13 @@ void CItemModule::onNewWeekCome()
 }
 
 /// 建立实体
-void CItemModule::onCreatePlayer(CEntityPlayer* pPlayer)
+void CItemModule::onCreatePlayer(CEntityPlayer& rPlayer)
 {
 
 }
 
 /// 销毁实体
-void CItemModule::onDestroyPlayer(CEntityPlayer* pPlayer)
+void CItemModule::onDestroyPlayer(CEntityPlayer& rPlayer)
 {
 
 }

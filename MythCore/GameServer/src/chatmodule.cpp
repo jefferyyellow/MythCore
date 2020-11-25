@@ -55,13 +55,13 @@ void CChatModule::onNewWeekCome()
 }
 
 /// 建立实体
-void CChatModule::onCreatePlayer(CEntityPlayer* pPlayer)
+void CChatModule::onCreatePlayer(CEntityPlayer& rPlayer)
 {
 
 }
 
 /// 销毁实体
-void CChatModule::onDestroyPlayer(CEntityPlayer* pPlayer)
+void CChatModule::onDestroyPlayer(CEntityPlayer& rPlayer)
 {
 
 }

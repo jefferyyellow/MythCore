@@ -43,13 +43,13 @@ void CDBModule::onNewWeekCome()
 }
 
 /// 建立实体
-void CDBModule::onCreatePlayer(CEntityPlayer* pPlayer)
+void CDBModule::onCreatePlayer(CEntityPlayer& rPlayer)
 {
 
 }
 
 /// 销毁实体
-void CDBModule::onDestroyPlayer(CEntityPlayer* pPlayer)
+void CDBModule::onDestroyPlayer(CEntityPlayer& rPlayer)
 {
 
 }

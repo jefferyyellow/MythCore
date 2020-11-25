@@ -97,6 +97,7 @@
     <ClCompile Include="src\entityplayer.cpp" />
     <ClCompile Include="src\entitytimer.cpp" />
     <ClCompile Include="src\equip.cpp" />
+    <ClCompile Include="src\friendmodule.cpp" />
     <ClCompile Include="src\GameLogicConfig.cpp" />
     <ClCompile Include="src\gameserver.cpp" />
     <ClCompile Include="src\gameserverconfig.cpp" />
@@ -104,6 +105,7 @@
     <ClCompile Include="src\gmcommandmanager.cpp" />
     <ClCompile Include="src\gmlog.cpp" />
     <ClCompile Include="src\gtest.cpp" />
+    <ClCompile Include="src\guildmodule.cpp" />
     <ClCompile Include="src\instance.cpp" />
     <ClCompile Include="src\instancemodule.cpp" />
     <ClCompile Include="src\interactiveunit.cpp" />
@@ -216,12 +218,14 @@
     <ClInclude Include="inc\entitytype.h" />
     <ClInclude Include="inc\equip.h" />
     <ClInclude Include="inc\errcode.h" />
+    <ClInclude Include="inc\friendmodule.h" />
     <ClInclude Include="inc\GameLogicConfig.h" />
     <ClInclude Include="inc\gameserver.h" />
     <ClInclude Include="inc\gameserverconfig.h" />
     <ClInclude Include="inc\globalluareg.h" />
     <ClInclude Include="inc\gmcommandmanager.h" />
     <ClInclude Include="inc\gmlog.h" />
+    <ClInclude Include="inc\guildmodule.h" />
     <ClInclude Include="inc\instance.h" />
     <ClInclude Include="inc\instancemodule.h" />
     <ClInclude Include="inc\instancetype.h" />

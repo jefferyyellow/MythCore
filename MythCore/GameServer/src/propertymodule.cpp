@@ -55,13 +55,13 @@ void CPropertyModule::onNewWeekCome()
 }
 
 /// 建立实体
-void CPropertyModule::onCreatePlayer(CEntityPlayer* pPlayer)
+void CPropertyModule::onCreatePlayer(CEntityPlayer& rPlayer)
 {
 	
 }
 
 /// 销毁实体
-void CPropertyModule::onDestroyPlayer(CEntityPlayer* pPlayer)
+void CPropertyModule::onDestroyPlayer(CEntityPlayer& rPlayer)
 {
 
 }
@@ -359,7 +359,7 @@ void CPropertyModule::onLoadComplete(CEntityPlayer* pPlayer)
 		pPlayer->dailyRefresh(true);
 	}
 
-	CSceneJob::Inst()->createPlayer(pPlayer);
+	CSceneJob::Inst()->createPlayer(*pPlayer);
 
 
 	pPlayer->refreshBaseProperty();

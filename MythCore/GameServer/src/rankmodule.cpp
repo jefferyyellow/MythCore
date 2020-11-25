@@ -71,13 +71,13 @@ void CRankModule::onNewWeekCome()
 }
 
 /// 建立实体
-void CRankModule::onCreatePlayer(CEntityPlayer* pPlayer)
+void CRankModule::onCreatePlayer(CEntityPlayer& rPlayer)
 {
 
 }
 
 /// 销毁实体
-void CRankModule::onDestroyPlayer(CEntityPlayer* pPlayer)
+void CRankModule::onDestroyPlayer(CEntityPlayer& rPlayer)
 {
 
 }

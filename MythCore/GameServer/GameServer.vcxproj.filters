@@ -70,6 +70,12 @@
     <Filter Include="logicmodule\mail">
       <UniqueIdentifier>{a57b9a72-7de6-4067-aa95-e21d9fdca2db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="logicmodule\friend">
+      <UniqueIdentifier>{a844c178-7a7a-4be9-a665-1dd4e0af9b29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logicmodule\guild">
+      <UniqueIdentifier>{119837ba-2066-46ae-bc31-ab09e4822a03}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\message\loginmessage.hxx.pb.cc">
@@ -359,6 +365,12 @@
     </ClCompile>
     <ClCompile Include="..\message\instancemodule.hxx.pb.cc">
       <Filter>message</Filter>
+    </ClCompile>
+    <ClCompile Include="src\friendmodule.cpp">
+      <Filter>logicmodule\friend</Filter>
+    </ClCompile>
+    <ClCompile Include="src\guildmodule.cpp">
+      <Filter>logicmodule\guild</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -751,6 +763,12 @@
     </ClInclude>
     <ClInclude Include="..\message\instancemodule.hxx.pb.h">
       <Filter>message</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\friendmodule.h">
+      <Filter>logicmodule\friend</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\guildmodule.h">
+      <Filter>logicmodule\guild</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -29,9 +29,9 @@ public:
 	/// 新一周到来
 	virtual void onNewWeekCome();
 	/// 建立实体
-	virtual void onCreatePlayer(CEntityPlayer* pPlayer);
+	virtual void onCreatePlayer(CEntityPlayer& rPlayer);
 	/// 销毁实体
-	virtual void onDestroyPlayer(CEntityPlayer* pPlayer);
+	virtual void onDestroyPlayer(CEntityPlayer& rPlayer);
 	/// 时间函数
 	virtual	void onTimer(unsigned int nTickOffset);
 	/// 加载配置文件
@@ -45,7 +45,7 @@ public:
 	/// 插入充值缓存中DB回调
 	void onInsertRechargeCache(CDBResponse& rResponse);
 	/// 加载充值缓存
-	void loadRechargeCache(CEntityPlayer* pPlayer);
+	void loadRechargeCache(CEntityPlayer& rPlayer);
 	/// 加载充值缓存的DB回调
 	void onLoadRechargeCache(CDBResponse& rResponse);
 	/// 充值成功的DB回调
