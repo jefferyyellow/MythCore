@@ -28,7 +28,6 @@ void CGameServer::init()
     mLastTime = 0;
 	mpJobManager = NULL;
 	mGameTimeOffset = 0;
-	mServerState = emServerStateInit;
 }
 
 /// ≥ı ºªØ
