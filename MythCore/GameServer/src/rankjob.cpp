@@ -1,6 +1,5 @@
 #include "rankjob.h"
 #include "internalmsgpool.h"
-#include "scenejob.h"
 #include "jobmanager.h"
 void CRankJob::doing(int uParam)
 {
@@ -28,7 +27,6 @@ void CRankJob::doing(int uParam)
 			}
 		}
 
-		CInternalMsgPool::Inst()->freeMsg(pIMMsg);
 		++nCount;
 		if (nCount > 100)
 		{
@@ -36,16 +34,16 @@ void CRankJob::doing(int uParam)
 		}
 	}
 
-	// 如果scene job已经退出完成了，表示需要保存的数据基本都完成了
-	if (CSceneJob::Inst()->getExited())
-	{
-		CInternalMsg* pIMMsg = mTaskManager.popTask();
-		// 如果没有任务了
-		if (NULL == pIMMsg)
-		{
-			setExited(true);
-		}
-	}
+	//// 如果scene job已经退出完成了，表示需要保存的数据基本都完成了
+	//if (CSceneJob::Inst()->getExited())
+	//{
+	//	CInternalMsg* pIMMsg = mTaskManager.popTask();
+	//	// 如果没有任务了
+	//	if (NULL == pIMMsg)
+	//	{
+	//		setExited(true);
+	//	}
+	//}
 }
 
 void CRankJob::onIMUpdateRankRequest(CInternalMsg* pIMMsg)
@@ -69,12 +67,12 @@ void CRankJob::onIMUpdateRankRequest(CInternalMsg* pIMMsg)
 	int nIndex = mRankList[eType].refreshRankValue(tRankValue);
 	if (nIndex < MAX_RANK_SHOW_CACHE_NUM)
 	{
-		CIMUpdateRankResponse* pResponse = (CIMUpdateRankResponse*)CInternalMsgPool::Inst()->allocMsg(IM_RESPONSE_UPDATE_RANK);
+		CIMUpdateRankResponse* pResponse = new CIMUpdateRankResponse;
 		if (NULL != pResponse)
 		{
 			pResponse->mRoleID = pUpdateRankRequest->mRoleID;
 			pResponse->mRoleObjID = pUpdateRankRequest->mRoleObjID;
-			CJobManager::Inst()->pushTask(emJobTaskType_Scene, pResponse);
+			CJobManager::Inst()->pushTaskByType(emJobTaskType_Scene, pResponse);
 		}
 	}
 }
@@ -85,53 +83,53 @@ void CRankJob::onIMGetRankInfoRequest(CInternalMsg* pIMMsg)
 	{
 		return;
 	}
-	CIMGetRankInfoRequest* pGetRankInfoRequest = (CIMGetRankInfoRequest*)pIMMsg;
-	
-	EmRankType eRankType = (EmRankType)(pGetRankInfoRequest->mRankType);
-	int nStartPlace = pGetRankInfoRequest->mStartPlace;
-	int nEndPlace = pGetRankInfoRequest->mEndPlace;
-	uint nSelfRoleID = pGetRankInfoRequest->mSelfRoleID;
-	int nSelfObjID = pGetRankInfoRequest->mSelfObjID;
-	
-	CIMGetRankInfoResponse* pResponse = (CIMGetRankInfoResponse*)CInternalMsgPool::Inst()->allocMsg(IM_RESPONSE_GET_RANK_INFO);
-	if (NULL == pResponse)
-	{
-		return;
-	}
-	pResponse->mRankType = (byte)eRankType;
-	int nCount = 0;
-	for (int i = nStartPlace; i <= nEndPlace; ++ i)
-	{
-		CRankList::CRankValueType* pRankValueType = mRankList[eRankType].getRankValueByIndex(i);
-		if (NULL == pRankValueType)
-		{
-			continue;
-		}
+	//CIMGetRankInfoRequest* pGetRankInfoRequest = (CIMGetRankInfoRequest*)pIMMsg;
+	//
+	//EmRankType eRankType = (EmRankType)(pGetRankInfoRequest->mRankType);
+	//int nStartPlace = pGetRankInfoRequest->mStartPlace;
+	//int nEndPlace = pGetRankInfoRequest->mEndPlace;
+	//uint nSelfRoleID = pGetRankInfoRequest->mSelfRoleID;
+	//int nSelfObjID = pGetRankInfoRequest->mSelfObjID;
+	//
+	//CIMGetRankInfoResponse* pResponse = (CIMGetRankInfoResponse*)CInternalMsgPool::Inst()->allocMsg(IM_RESPONSE_GET_RANK_INFO);
+	//if (NULL == pResponse)
+	//{
+	//	return;
+	//}
+	//pResponse->mRankType = (byte)eRankType;
+	//int nCount = 0;
+	//for (int i = nStartPlace; i <= nEndPlace; ++ i)
+	//{
+	//	CRankList::CRankValueType* pRankValueType = mRankList[eRankType].getRankValueByIndex(i);
+	//	if (NULL == pRankValueType)
+	//	{
+	//		continue;
+	//	}
 
-		pResponse->mRankRoleID[nCount] = pRankValueType->mRankKey;
-		pResponse->mRankValue[nCount]  = pRankValueType->mRankValue;
-		++ nCount;
-		if (nCount >= MAX_RANK_SHOW_NUM)
-		{
-			break;
-		}
-	}
-	pResponse->mSelfRoleID = pGetRankInfoRequest->mSelfRoleID;
-	pResponse->mSelfObjID = pGetRankInfoRequest->mSelfObjID;
+	//	pResponse->mRankRoleID[nCount] = pRankValueType->mRankKey;
+	//	pResponse->mRankValue[nCount]  = pRankValueType->mRankValue;
+	//	++ nCount;
+	//	if (nCount >= MAX_RANK_SHOW_NUM)
+	//	{
+	//		break;
+	//	}
+	//}
+	//pResponse->mSelfRoleID = pGetRankInfoRequest->mSelfRoleID;
+	//pResponse->mSelfObjID = pGetRankInfoRequest->mSelfObjID;
 
-	CRankList::CRankValueType* pRankValueType = mRankList[eRankType].getRankValueByKey(nSelfRoleID);
-	if (NULL != pRankValueType)
-	{
-		pResponse->mSelfRankPlace = pRankValueType->mRankIndex;
-		pResponse->mSelfRankValue = pRankValueType->mRankValue;
-	}
-	else
-	{
-		pResponse->mSelfRankPlace = -1;
-		pResponse->mSelfRankValue = 0;
-	}
+	//CRankList::CRankValueType* pRankValueType = mRankList[eRankType].getRankValueByKey(nSelfRoleID);
+	//if (NULL != pRankValueType)
+	//{
+	//	pResponse->mSelfRankPlace = pRankValueType->mRankIndex;
+	//	pResponse->mSelfRankValue = pRankValueType->mRankValue;
+	//}
+	//else
+	//{
+	//	pResponse->mSelfRankPlace = -1;
+	//	pResponse->mSelfRankValue = 0;
+	//}
 
-	CJobManager::Inst()->pushTask(emJobTaskType_Scene, pResponse);
+	//CJobManager::Inst()->pushTask(emJobTaskType_Scene, pResponse);
 }
 
 // 更新玩家的排行榜，暂时这么做吧，如果需要缓存再说

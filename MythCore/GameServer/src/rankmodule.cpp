@@ -1,7 +1,6 @@
 #include "rankmodule.h"
 #include "entityplayer.h"
 #include "rankmodule.hxx.pb.h"
-#include "scenejob.h"
 #include "timemanager.h"
 #include "internalmsgpool.h"
 #include "jobmanager.h"
@@ -111,21 +110,21 @@ void CRankModule::onClientMessage(CEntityPlayer& rPlayer, unsigned int nMessageI
 void CRankModule::onGetRankInfoRequest(CEntityPlayer& rPlayer, Message* pMessage)
 {
 	MYTH_ASSERT(NULL != pMessage, return);
-	CGetRankInfoRequest* pGetRankInfoRequest = static_cast<CGetRankInfoRequest*>(pMessage);
-	MYTH_ASSERT(NULL != pGetRankInfoRequest, return);
+	//CGetRankInfoRequest* pGetRankInfoRequest = static_cast<CGetRankInfoRequest*>(pMessage);
+	//MYTH_ASSERT(NULL != pGetRankInfoRequest, return);
 
-	CIMGetRankInfoRequest* pRequest = (CIMGetRankInfoRequest*)CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_GET_RANK_INFO);
-	if (NULL == pRequest)
-	{
-		return;
-	}
+	//CIMGetRankInfoRequest* pRequest = (CIMGetRankInfoRequest*)CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_GET_RANK_INFO);
+	//if (NULL == pRequest)
+	//{
+	//	return;
+	//}
 
-	pRequest->mRankType = pGetRankInfoRequest->ranktype();
-	pRequest->mStartPlace = 0;
-	pRequest->mEndPlace = MAX_RANK_SHOW_NUM - 1;
-	pRequest->mSelfRoleID = rPlayer.getRoleID();
-	pRequest->mSelfObjID = rPlayer.getObjID();
-	CJobManager::Inst()->pushTask(emJobTaskType_Rank, pRequest);
+	//pRequest->mRankType = pGetRankInfoRequest->ranktype();
+	//pRequest->mStartPlace = 0;
+	//pRequest->mEndPlace = MAX_RANK_SHOW_NUM - 1;
+	//pRequest->mSelfRoleID = rPlayer.getRoleID();
+	//pRequest->mSelfObjID = rPlayer.getObjID();
+	//CJobManager::Inst()->pushTask(emJobTaskType_Rank, pRequest);
 }
 
 void CRankModule::onIMGetRankInfoResponse(CInternalMsg* pIMMsg)
@@ -163,7 +162,7 @@ void CRankModule::onIMGetRankInfoResponse(CInternalMsg* pIMMsg)
 	tResponse.set_selfplace(pIMResponse->mSelfRankPlace);
 	tResponse.set_selfrankvalue(pIMResponse->mSelfRankValue);
 
-	CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_RESPONSE_GET_RANK_INFO, &tResponse);
+	//CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_RESPONSE_GET_RANK_INFO, &tResponse);
 }
 
 void CRankModule::onIMUpdateRankResponse(CInternalMsg* pIMMsg)
@@ -193,19 +192,19 @@ void CRankModule::onIMUpdateRankResponse(CInternalMsg* pIMMsg)
 // 更新玩家的排行榜
 void CRankModule::updateRoleRank(EmRankType eType, CEntityPlayer& rPlayer, int nValue)
 {
-	CIMUpdateRankRequest* pUpdateRankRequest = (CIMUpdateRankRequest*)CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_UPDATE_RANK);
-	if (NULL == pUpdateRankRequest)
-	{
-		return;
-	}
+	//CIMUpdateRankRequest* pUpdateRankRequest = (CIMUpdateRankRequest*)CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_UPDATE_RANK);
+	//if (NULL == pUpdateRankRequest)
+	//{
+	//	return;
+	//}
 
-	pUpdateRankRequest->mRankType = eType;
-	pUpdateRankRequest->mRoleID = rPlayer.getRoleID();
-	pUpdateRankRequest->mRoleObjID = rPlayer.getObjID();
-	pUpdateRankRequest->mValue = nValue;
-	pUpdateRankRequest->mTime = CTimeManager::Inst()->getCurrTime();
+	//pUpdateRankRequest->mRankType = eType;
+	//pUpdateRankRequest->mRoleID = rPlayer.getRoleID();
+	//pUpdateRankRequest->mRoleObjID = rPlayer.getObjID();
+	//pUpdateRankRequest->mValue = nValue;
+	//pUpdateRankRequest->mTime = CTimeManager::Inst()->getCurrTime();
 
-	CJobManager::Inst()->pushTask(emJobTaskType_Rank, pUpdateRankRequest);
+	//CJobManager::Inst()->pushTask(emJobTaskType_Rank, pUpdateRankRequest);
 }
 
 

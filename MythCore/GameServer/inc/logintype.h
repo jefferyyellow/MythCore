@@ -7,14 +7,6 @@ enum EmTcpError
 	emTcpError_OffLineClose		= 1,	// 下线关闭
 };
 
-struct CExchangeHead
-{
-	time_t	mSocketTime;				// socket建立时间
-	short	mSocketIndex;				// socket索引
-	short	mSocketError;				// socket错误
-};
-
-
 #define MAX_PLAYER_NAME_LEN		32		// 玩家名字最大长度
 #define PLAYER_NAME_RESERVE		6		// 玩家名字合服预留
 

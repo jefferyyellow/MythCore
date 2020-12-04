@@ -96,6 +96,8 @@ public:
 		return NULL;
 	}
 
+	void		onTimer(unsigned int nTickOffset);
+
 	/// 实体移动
 	void		onEntityMove(CEntity* pEntity, CMythPoint& rDesPos);
 	/// 得到可以区域

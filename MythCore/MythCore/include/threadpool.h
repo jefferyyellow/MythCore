@@ -1,140 +1,62 @@
 #ifndef __THREADPOOL_H__
 #define __THREADPOOL_H__
-
-
 #include "commontype.h"
-#include "blockmemory.h"
 #include "thread.h"
 #include "simplelock.h"
 #include "array.h"
-#include "winthread.h"
-#include "linuxthread.h"
 #include <list>
+#define MAX_JOB_ID_NUM	128
+#define MAX_THREAD_CAPACITY 32
 namespace Myth
 {
+	class CThread;
 	class CThreadPool
 	{
 	public:
-		
-		typedef CArray<IJob*, 32> JobArray;
+		typedef CArray<IJob*, MAX_JOB_ID_NUM> JobArray;
 
 	public:
-		CThreadPool()
-		{
-			mThreadNum = 0;
-			mJobIndex = 0;
-			for (int i = 0; i < 32; ++ i)
-			{
-				mThreadList[i] = NULL;
-			}
-		}
-		~CThreadPool()
-		{
-			for (int i = 0; i < 32; ++ i)
-			{
-				if (NULL != mThreadList[i])
-				{
-					delete mThreadList[i];
-					mThreadList[i] = NULL;
-				}
-			}
-		}
+		CThreadPool();
+		~CThreadPool();
 
-		void				init(int nThreadSize)
-		{
-			mJobIndex = 0;
-			mThreadNum = nThreadSize;
-			for (int i = 0; i < nThreadSize; ++i)
-			{
-#ifdef MYTH_OS_WINDOWS
-				mThreadList[i] = new CWinThread;
-#else
-				mThreadList[i] = new CPThread;
-#endif			
-
-				if (NULL != mThreadList[i])
-				{
-					mThreadList[i]->setThreadPool(this);
-					mThreadList[i]->setSerialNum(i);
-					mThreadList[i]->start();
-					printf("%x\n", mThreadList[i]);
-				}
-			}
-			//printf("*************\n");
-			//ThreadList::iterator it = mIdleList.begin();
-
-			//int i = 0;
-			//IThread* pIdleThread = NULL;
-			//for (; it != mIdleList.end(); ++ it)
-			//{
-			//	printf("%x\n", *it);
-			//	printf("%d\n", i);
-			//	++ i;
-			//	//pIdleThread = *it;
-			//}
-		}
 	public:
-		void				pushBackJob(IJob* pJob)
-		{
-			mSimpleLock.lock();
-			mJobArray.push_back(pJob);
-			mSimpleLock.unlock();
-		}
-
-		IJob*				popJob()
-		{
-			mSimpleLock.lock();
-			
-			if (mJobIndex >= mJobArray.size())
-			{
-				mSimpleLock.unlock();
-				return NULL;
-			}
-			IJob* pRunJob = NULL;
-			for (; mJobIndex < mJobArray.size(); ++ mJobIndex)
-			{
-				if (!(mJobArray[mJobIndex]->getBusy()))
-				{
-					pRunJob = mJobArray[mJobIndex];
-					mJobArray[mJobIndex]->setBusy(true);
-					++mJobIndex;
-					break;
-				}
-			}			
-		
-			mSimpleLock.unlock();
-
-			return pRunJob;
-		}
-
-		void				setJobFree(IJob* pJob)
-		{
-			mSimpleLock.lock();
-			pJob->setBusy(false);
-			mSimpleLock.unlock();
-		}
-
-		void				resetJob()
-		{
-			mSimpleLock.lock();
-			mJobIndex = 0;
-			mSimpleLock.unlock();
-		}
-
-		void				run();
-		void				terminateAllThread();
-		void				waitAllThread();
+		/// 初始化线程
+		bool initThread(int nThreadSize);
+		/// 运行
+		void run();
+		/// 增加job
+		bool pushBackJob(IJob* pJob);
+		/// 删除job
+		void removeJob(IJob* pJob);
+		/// 弹出job
+		IJob* popJob();
+		/// 设置对应的job为空闲状态
+		void setJobFree(IJob* pJob);
+		/// 重置job的索引
+		void resetJobIndex();
+		/// 关闭所有线程
+		void terminateAllThread();
+		/// 等待所有线程退出
+		void waitAllThread();
+		/// 根据job id得到对应的job
+		IJob* getJobByID(byte nJobID);
 
 	private:
+		/// 运行的JobIndex,用来模拟弹出
 		byte				mJobIndex;
+		/// 线程池的线程数量
 		byte				mThreadNum;
-#ifdef MYTH_OS_WINDOWS
-		CWinThread*			mThreadList[32];
-#else
-		CPThread*			mThreadList[32];
-#endif
-		JobArray			mJobArray;
+		/// 线程列表
+		CThread*			mThreadList[MAX_THREAD_CAPACITY];
+		/// 
 		CSimpleLock			mSimpleLock;
+		// Job ID 生成器
+		byte				mJobIDCount;
+		// 通过Job ID取出job
+		IJob*				mJobList[MAX_JOB_ID_NUM];
+		// Job列表
+		JobArray			mJobArray;
+
 	};
 }
 #endif

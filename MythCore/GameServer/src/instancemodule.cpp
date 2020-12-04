@@ -11,7 +11,6 @@ extern "C"
 #include "lauxlib.h"
 };
 #include "lua_tinker.h"
-#include "scenejob.h"
 #include "fileutility.h"
 #include "objpoolimp.h"
 #include "timemanager.h"
@@ -86,8 +85,8 @@ void CInstanceModule::onTimer(unsigned int nTickOffset)
 /// 加载配置文件
 void CInstanceModule::onLoadConfig()
 {
-	lua_State* L = CSceneJob::Inst()->getLuaState();
-	lua_tinker::dofile(L, "gameserverconfig/script/instance/instance.lua");
+	//lua_State* L = CSceneJob::Inst()->getLuaState();
+	//lua_tinker::dofile(L, "gameserverconfig/script/instance/instance.lua");
 
 	loadAllInstConfig("gameserverconfig/instance/*.lua", "gameserverconfig/instance/");
 }
@@ -95,38 +94,38 @@ void CInstanceModule::onLoadConfig()
 // 加载所有的副本配置
 void CInstanceModule::loadAllInstConfig(const char* pFindPath, const char* pPath)
 {
-	if (NULL == pFindPath || NULL == pPath)
-	{
-		return;
-	}
+	//if (NULL == pFindPath || NULL == pPath)
+	//{
+	//	return;
+	//}
 
-	lua_State* L = CSceneJob::Inst()->getLuaState();
+	//lua_State* L = CSceneJob::Inst()->getLuaState();
 
 
-	CDir tDir;
-	char tPathFile[STR_LENGTH_256] = { 0 };
-	char tFileName[STR_LENGTH_256] = { 0 };
-	tDir.findFirstFile(pFindPath, tFileName, sizeof(tFileName));
-	while (tFileName[0] != '\0')
-	{
-		snprintf(tPathFile, sizeof(tPathFile) - 1, "%s%s", pPath, tFileName);
-		lua_tinker::dofile(L, tPathFile);
-		CInstanceConfig* pNewInstConfig = new CInstanceConfig;
-		if (NULL == pNewInstConfig)
-		{
-			continue;
-		}
-		pNewInstConfig->loadConfig();
-		if (pNewInstConfig->mID <= 0 || pNewInstConfig->mID >= MAX_INSTANCE_ID)
-		{
-			delete pNewInstConfig;
-			continue;
-		}
+	//CDir tDir;
+	//char tPathFile[STR_LENGTH_256] = { 0 };
+	//char tFileName[STR_LENGTH_256] = { 0 };
+	//tDir.findFirstFile(pFindPath, tFileName, sizeof(tFileName));
+	//while (tFileName[0] != '\0')
+	//{
+	//	snprintf(tPathFile, sizeof(tPathFile) - 1, "%s%s", pPath, tFileName);
+	//	lua_tinker::dofile(L, tPathFile);
+	//	CInstanceConfig* pNewInstConfig = new CInstanceConfig;
+	//	if (NULL == pNewInstConfig)
+	//	{
+	//		continue;
+	//	}
+	//	pNewInstConfig->loadConfig();
+	//	if (pNewInstConfig->mID <= 0 || pNewInstConfig->mID >= MAX_INSTANCE_ID)
+	//	{
+	//		delete pNewInstConfig;
+	//		continue;
+	//	}
 
-		lua_tinker::call<int>(L, "initInstLuaConfig", pNewInstConfig->mID);
-		mAllInstConfig[pNewInstConfig->mID] = pNewInstConfig;
-		tDir.nextFile(tFileName, sizeof(tFileName));
-	}
+	//	lua_tinker::call<int>(L, "initInstLuaConfig", pNewInstConfig->mID);
+	//	mAllInstConfig[pNewInstConfig->mID] = pNewInstConfig;
+	//	tDir.nextFile(tFileName, sizeof(tFileName));
+	//}
 
 }
 
@@ -153,8 +152,8 @@ int CInstanceModule::checkPlayerEnterInstance(CEntityPlayer& rPlayer, int nInsta
 	// 通用检查
 	int nResult = SUCCESS;
 
-	lua_State* L = CSceneJob::Inst()->getLuaState();
-	nResult = lua_tinker::call<int>(L, "Instance_CheckPlayerEnterFunc", nInstanceType, nInstanceID, &rPlayer);
+	//lua_State* L = CSceneJob::Inst()->getLuaState();
+	//nResult = lua_tinker::call<int>(L, "Instance_CheckPlayerEnterFunc", nInstanceType, nInstanceID, &rPlayer);
 	return nResult;
 }
 
@@ -202,7 +201,7 @@ void CInstanceModule::sendEnterInstanceResponse(CEntityPlayer& rPlayer, int nRes
 	tResponse.set_result(nResult);
 	tResponse.set_instanceid(nInstanceID);
 
-	CSceneJob::Inst()->send2Player(rPlayer, ID_S2C_RESPONSE_ENTER_INSTANCE, &tResponse);
+	//CSceneJob::Inst()->send2Player(rPlayer, ID_S2C_RESPONSE_ENTER_INSTANCE, &tResponse);
 }
 
 // 玩家离开副本的请求
@@ -218,7 +217,7 @@ void CInstanceModule::sendLeaveInstanceResponse(CEntityPlayer& rPlayer, int nRes
 	CLeaveInstanceResponse tResponse;
 	tResponse.set_result(nResult);
 
-	CSceneJob::Inst()->send2Player(rPlayer, ID_S2C_RESPONSE_LEAVE_INSTANCE, &tResponse);
+	//CSceneJob::Inst()->send2Player(rPlayer, ID_S2C_RESPONSE_LEAVE_INSTANCE, &tResponse);
 }
 
 CInstance* CInstanceModule::createInstance(int nInstanceID)

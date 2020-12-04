@@ -17,4 +17,8 @@ WriteStatisticsTime：写入统计信息的时间间隔
     <CheckLiveTime value="5"/>
     <WriteStatisticsTime value="60"/>
   </RunParam>
+  <GameServer>
+    <IP value="127.0.0.1"/>
+    <Port value="6687"/>
+  </GameServer>
 </Data>

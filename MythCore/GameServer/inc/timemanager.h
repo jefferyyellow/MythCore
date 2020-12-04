@@ -18,8 +18,8 @@ private:
 	}
 
 public:
-	/// 将时间转化为日期为当天的时间戳,1530表示服务器时间当天的15：30
-	time_t			time2TimeStamp(int nTime);
+	///// 将时间转化为日期为当天的时间戳,1530表示服务器时间当天的15：30
+	//time_t			time2TimeStamp(int nTime);
 	/// 将日期转化为时间戳,20200804转化成2020年8月4日凌晨0点0分0秒的时间戳
 	time_t			date2TimeStamp(int nTime);
 	/// 是否是同一天

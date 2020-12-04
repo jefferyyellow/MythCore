@@ -1,6 +1,5 @@
 #include "entitytimer.h"
 #include "objpool.h"
-#include "scenejob.h"
 CTimerList::TimeOutFunc* CTimerList::mpTimeOutFunc = NULL;
 int	CTimerList::setTimer(int nOwerObjID, int nModule, int nMilliSec, const int* pParam, int nParamNum, int nCallTimes)
 {
@@ -11,7 +10,7 @@ int	CTimerList::setTimer(int nOwerObjID, int nModule, int nMilliSec, const int* 
 	}
 
 	pTimer->mOwerObjID = nOwerObjID;
-	pTimer->mTickCount = nMilliSec + CSceneJob::Inst()->getLastTimerTick();
+	//pTimer->mTickCount = nMilliSec + CSceneJob::Inst()->getLastTimerTick();
 	pTimer->mInitialMilliSec = nMilliSec;
 	if (NULL != pParam)
 	{

@@ -1,6 +1,5 @@
 #include "itemunit.h"
 #include "itemmodule.hxx.pb.h"
-#include "scenejob.h"
 #include "errcode.h"
 #include "itemobject.h"
 #include "template.h"
@@ -43,7 +42,7 @@ int CItemUnit::obtainCurrency(EmCurrencyType eCurrencyType, int nCurrencyNum)
 	tMsg.set_currencytype(eCurrencyType);
 	tMsg.set_currencynum(mCurrency[eCurrencyType]);
 
-	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_NOTIYF_CURRENCY_UPDATE, &tMsg);
+	//CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_NOTIYF_CURRENCY_UPDATE, &tMsg);
 	return SUCCESS;
 }
 
@@ -73,7 +72,7 @@ int CItemUnit::consumeCurrency(EmCurrencyType eCurrencyType, int nCurrencyNum)
 	CCurrencyUpdateNotify tMsg;
 	tMsg.set_currencytype(eCurrencyType);
 	tMsg.set_currencynum(mCurrency[eCurrencyType]);
-	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_NOTIYF_CURRENCY_UPDATE, &tMsg);
+	//CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_NOTIYF_CURRENCY_UPDATE, &tMsg);
 	return SUCCESS;
 }
 
@@ -208,7 +207,7 @@ int CItemUnit::removeItem(int nIndex, int nItemNum)
 		tRemoveItemNotify.set_number(pItemObject->GetItemNum());
 	}
 
-	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_NOTIYF_REMOVE_ITEM, &tRemoveItemNotify);
+	//CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_NOTIYF_REMOVE_ITEM, &tRemoveItemNotify);
 
 	return SUCCESS;
 }
@@ -249,7 +248,7 @@ void CItemUnit::removeItemOnly(int nItemID, int nItemNum)
 			tRemoveItemNotify.set_index(nOutItemIndex[i]);
 			tRemoveItemNotify.set_number(pItemObject->GetItemNum());
 		}
-		CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_NOTIYF_REMOVE_ITEM, &tRemoveItemNotify);
+		//CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_NOTIYF_REMOVE_ITEM, &tRemoveItemNotify);
 	}
 }
 
@@ -271,7 +270,7 @@ void CItemUnit::sendInsertItemNotify(int nItemID, int* pIndex, int* pNumber, int
 		tInsertItemNotify.add_number(pNumber[i]);
 	}
 
-	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_NOTIYF_INSERT_ITEM, &tInsertItemNotify);
+	//CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_NOTIYF_INSERT_ITEM, &tInsertItemNotify);
 }
 
 ///  插入道具通知(有特殊属性的道具)
@@ -290,7 +289,7 @@ void CItemUnit::sendInsertItemObjNotify(int nIndex)
 		pbItemObject->set_index(nIndex);
 		pItemObject->createToPB(pbItemObject);
 	}
-	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_NOTIYF_INSERT_ITEM_OBJ, &tInsertItemObjNotify);
+	//CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_NOTIYF_INSERT_ITEM_OBJ, &tInsertItemObjNotify);
 }
 
 /// 使用道具
@@ -348,7 +347,7 @@ void CItemUnit::sendUseItemResponse(int nResult)
 	CUseItemResponse tUseItemResponse;
 	tUseItemResponse.set_result(nResult);
 
-	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_USE_ITEM, &tUseItemResponse);
+	//CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_USE_ITEM, &tUseItemResponse);
 }
 
 /// 卖出道具
@@ -392,7 +391,7 @@ void CItemUnit::sendSellItemResponse(int nResult)
 	CSellItemResponse tSellItemResponse;
 	tSellItemResponse.set_result(nResult);
 
-	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_SELL_ITEM, &tSellItemResponse);
+	//CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_SELL_ITEM, &tSellItemResponse);
 }
 
 /// 获得商店道具信息
@@ -430,7 +429,7 @@ void CItemUnit::sendGetShopInfoResponse(int nResult, CShopLevelData* pLevelData)
 		}
 	}
 
-	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_GET_SHOP_INFO, &tResponse);
+	//CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_GET_SHOP_INFO, &tResponse);
 }
 
 /// 购买道具
@@ -481,7 +480,7 @@ void CItemUnit::sendPurchaseItemResponse(int nResult)
 {
 	CPurchaseItemResponse tPurchaseItemResponse;
 	tPurchaseItemResponse.set_result(nResult);
-	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_PURCHASE_ITEM, &tPurchaseItemResponse);
+	//CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_PURCHASE_ITEM, &tPurchaseItemResponse);
 
 }
 
@@ -510,7 +509,7 @@ void CItemUnit::sendEquipItemResponse(int nResult, int nItemIndex)
 	tEquipItemResponse.set_result(nResult);
 	tEquipItemResponse.set_itemindex(nItemIndex);
 
-	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_EQUIP_ITEM, &tEquipItemResponse);
+	//CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_EQUIP_ITEM, &tEquipItemResponse);
 }
 
 /// 卸载道具
@@ -539,7 +538,7 @@ void CItemUnit::sendUnEquipItemResponse(int nResult, int nEquipPart, int nItemIn
 	tUnEquipItemResponse.set_equippart(nEquipPart);
 	tUnEquipItemResponse.set_itemindex(nItemIndex);
 
-	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_UNEQUIP_ITEM, &tUnEquipItemResponse);
+	//CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_UNEQUIP_ITEM, &tUnEquipItemResponse);
 }
 
 /// 广播装备改变通知
@@ -550,7 +549,7 @@ void CItemUnit::broadcastChangeNotify(int nEntityID, int nEquipPart, int nEquipI
 	tEquipChangeNotify.set_equippart(nEquipPart);
 	tEquipChangeNotify.set_equipitemid(nEquipItemID);
 
-	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_NOTIYF_EQUIP_CHANGE, &tEquipChangeNotify);
+	//CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_NOTIYF_EQUIP_CHANGE, &tEquipChangeNotify);
 }
 
 // 拾取道具的请求
@@ -601,5 +600,5 @@ void CItemUnit::sendPickItemResponse(int nResult)
 {
 	CPickItemResponse tPickItemResponse;
 	tPickItemResponse.set_result(nResult);
-	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_PICK_ITEM, &tPickItemResponse);
+	//CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_PICK_ITEM, &tPickItemResponse);
 }

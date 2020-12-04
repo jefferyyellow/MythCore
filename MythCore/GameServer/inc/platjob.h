@@ -11,7 +11,7 @@ void	sendPlatWebRequest(const char* pURL, const char* pData, EmHttpType eHttpTyp
 
 class CURLHandle;
 class CAsyncRedis;
-class CPlatJob : public CJob < 100, 100 >, public CSingleton<CPlatJob>
+class CPlatJob : public CJob, public CSingleton<CPlatJob>
 {
 public:
 	friend class CSingleton < CPlatJob > ;
@@ -20,7 +20,7 @@ public:
 	CPlatJob()
 	{
 		init();
-		setJobID(emJobID_Plat);
+		setJobType(emJobID_Plat);
 	}
 	~CPlatJob()
 	{

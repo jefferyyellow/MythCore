@@ -50,7 +50,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;MYTH_OS_WINDOWS;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;MYTH_OS_WINDOWS;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>./include;../dep/mysql/include</AdditionalIncludeDirectories>
       <AdditionalOptions>/D"_SCL_SECURE_NO_WARNINGS" %(AdditionalOptions)</AdditionalOptions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -102,10 +102,9 @@
     <ClCompile Include="src\simplelock.cpp" />
     <ClCompile Include="src\socketstream.cpp" />
     <ClCompile Include="src\tcpsocket.cpp" />
-    <ClCompile Include="src\linuxthread.cpp" />
     <ClCompile Include="src\threadpool.cpp" />
     <ClCompile Include="src\timeutility.cpp" />
-    <ClCompile Include="src\winthread.cpp" />
+    <ClCompile Include="src\workthread.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\array.h" />
@@ -130,7 +129,6 @@
     <ClInclude Include="include\mysqlfield.h" />
     <ClInclude Include="include\mysqlqueryresult.h" />
     <ClInclude Include="include\performance.h" />
-    <ClInclude Include="include\linuxthread.h" />
     <ClInclude Include="include\selectclient.h" />
     <ClInclude Include="include\selectmodel.h" />
     <ClInclude Include="include\selectserver.h" />
@@ -142,7 +140,7 @@
     <ClInclude Include="include\threadevent.h" />
     <ClInclude Include="include\threadpool.h" />
     <ClInclude Include="include\timeutility.h" />
-    <ClInclude Include="include\winthread.h" />
+    <ClInclude Include="include\workthread.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\bit_set.inl" />

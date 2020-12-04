@@ -73,5 +73,25 @@ bool CGameServerConfig::loadGameServerConfigFromXml(const char* pFilePath)
 		}
 	}
 
+	XMLElement* pNetInfoElem = pRoot->FirstChildElement("NetInfo");
+	if (NULL != pNetInfoElem)
+	{
+		XMLElement* pPortElement = pNetInfoElem->FirstChildElement("Port");
+		if (NULL != pPortElement)
+		{
+			mListenPort = pPortElement->IntAttribute("value");
+		}
+	}
+
+	XMLElement* pServerInfoElem = pRoot->FirstChildElement("ServerInfo");
+	if (NULL != pServerInfoElem)
+	{
+		XMLElement* pServerIDElem = pServerInfoElem->FirstChildElement("ServerID");
+		if (NULL != pServerIDElem)
+		{
+			mServerID = pServerIDElem->IntAttribute("value");
+		}
+	}
+
 	return true;
 }

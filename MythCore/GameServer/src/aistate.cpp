@@ -3,7 +3,6 @@
 #include "objpool.h"
 #include "entity.h"
 #include "mapmodule.h"
-#include "scenejob.h"
 #include "template.h"
 using namespace Myth;
 /// 进入状态调用
@@ -21,7 +20,7 @@ void CAIStandState::exitState()
 /// 更新状态调用
 void CAIStandState::update(CAIStrategy* pStrategy)
 {
-	uint64 tNowTickCount = CSceneJob::Inst()->getLastTimerTick();
+	uint64 tNowTickCount = 0;//CSceneJob::Inst()->getLastTimerTick();
 	if (tNowTickCount < mEndTime)
 	{
 		return;
@@ -52,7 +51,7 @@ void CAIMoveState::exitState()
 void CAIMoveState::update(CAIStrategy* pStrategy)
 {
 	// 这一步还没走完，直接返回
-	uint64 tNowTickCount = CSceneJob::Inst()->getLastTimerTick();
+	uint64 tNowTickCount = 0;//CSceneJob::Inst()->getLastTimerTick();
 	if (tNowTickCount < mMoveEndTime)
 	{
 		return;
@@ -153,7 +152,7 @@ void CAIAttackState::exitState()
 /// 更新状态调用
 void CAIAttackState::update(CAIStrategy* pStrategy)
 {
-	uint64 tNowTickCount = CSceneJob::Inst()->getLastTimerTick();
+	uint64 tNowTickCount = 0;//CSceneJob::Inst()->getLastTimerTick();
 	CEntity* pOwner = pStrategy->getOwner();
 	
 	// 技能释放中
@@ -223,7 +222,7 @@ void CAIAttackState::update(CAIStrategy* pStrategy)
 
 int CAIAttackState::canAttack(CMythPoint& rPos, CMythPoint& rTargetPos)
 {
-	uint64 tNowTick = CSceneJob::Inst()->getLastTimerTick();
+	uint64 tNowTick = 0;//CSceneJob::Inst()->getLastTimerTick();
 	for (size_t i = 0; i < mSkillList.size(); ++ i)
 	{
 		if (tNowTick < mSkillList[i].mCoolTime)
@@ -246,7 +245,7 @@ int CAIAttackState::canAttack(CMythPoint& rPos, CMythPoint& rTargetPos)
 
 void CAIAttackState::setSkillCD(int nSkillID)
 {
-	uint64 tNowTick = CSceneJob::Inst()->getLastTimerTick();
+	uint64 tNowTick = 0;//CSceneJob::Inst()->getLastTimerTick();
 	for (size_t i = 0; i < mSkillList.size(); ++i)
 	{
 		if (mSkillList[i].mID != nSkillID)

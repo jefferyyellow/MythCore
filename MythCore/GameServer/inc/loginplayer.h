@@ -5,6 +5,7 @@
 #include "messagefactory.h"
 #include "dbmessage.h"
 class CDBResponse;
+class CPlayerMsgQueue;
 enum EmLoginState
 {
 	emLoginState_None				= 0,	// 无状态
@@ -55,7 +56,8 @@ public:
 	void		setLoginState(int nState){mStateMachine.switchState(nState);}
 	// 创建玩家实体并加载
 	int			createPlayerAndLoad();
-
+	// 时间函数
+	void		onTimer();
 public:
 	/// autocode don't edit!!!
     unsigned int getAccountID(){ return mAccountID;}
@@ -96,6 +98,12 @@ public:
 
     EmLoginDelState getDelState(){ return mDelState;}
     void setDelState(EmLoginDelState value){ mDelState = value;}
+
+	CPlayerMsgQueue* GetMsgQueue() const { return mMsgQueue; }
+	void SetMsgQueue(CPlayerMsgQueue* nValue) { mMsgQueue = nValue; }
+
+	byte getJobID() const { return mJobID; }
+	void setJobID(byte nValue) { mJobID = nValue; }
 	/// end autocode
 
 private:
@@ -118,5 +126,9 @@ private:
 	EmSessionType					mDBSessionType;
 	// 是否是删除状态(已经出错或者登录完成),default:emLoginDelState_None
 	EmLoginDelState					mDelState;
+	// 消息队列
+	CPlayerMsgQueue*				mMsgQueue;
+	// Job ID
+	byte							mJobID;
 };
 #endif

@@ -4,7 +4,6 @@
 #include "locallogjob.h"
 #include "i18n.h"
 #include "entityplayer.h"
-#include "scenejob.h"
 #include "itemmodule.hxx.pb.h"
 #include "gameserver.h"
 #include "chatmodule.hxx.pb.h"
@@ -122,7 +121,7 @@ void CGMCommandManager::broadcastCommandResult(CEntityPlayer& rPlayer, char* pRe
 	tChatNotify.set_playername(rPlayer.getName());
 	tChatNotify.set_channel(emChatChannel_World);
 	tChatNotify.set_content(pResult);
-	CSceneJob::Inst()->send2AllPlayer(ID_S2C_NOTIFY_CHAT, &tChatNotify);
+	//CSceneJob::Inst()->send2AllPlayer(ID_S2C_NOTIFY_CHAT, &tChatNotify);
 }
 
 /// 通知玩家命令影响和结果
@@ -134,7 +133,7 @@ void CGMCommandManager::sendCommandResult(CEntityPlayer& rPlayer, const char* pR
 	tChatNotify.set_channel(emChatChannel_World);
 	tChatNotify.set_content(pResult);
 
-	CSceneJob::Inst()->send2Player(rPlayer, ID_S2C_NOTIFY_CHAT, &tChatNotify);
+	//CSceneJob::Inst()->send2Player(rPlayer, ID_S2C_NOTIFY_CHAT, &tChatNotify);
 }
 
 /// 执行GM命令
@@ -289,7 +288,7 @@ COMMAND_HANDLER_IMPL(clearbag)
 		CRemoveItemNotify tRemoveItemNotify;
 		tRemoveItemNotify.set_index(i);
 		tRemoveItemNotify.set_number(pItemObject->GetItemNum());
-		CSceneJob::Inst()->send2Player(rPlayer, ID_S2C_NOTIYF_REMOVE_ITEM, &tRemoveItemNotify);
+		//CSceneJob::Inst()->send2Player(rPlayer, ID_S2C_NOTIYF_REMOVE_ITEM, &tRemoveItemNotify);
 	}
 
 	rBag.clear();
@@ -322,88 +321,88 @@ COMMAND_HANDLER_IMPL(setlevel)
 // settime 20230808 14:43:58 改成2023年8月8号14点43分58秒
 COMMAND_HANDLER_IMPL(settime)
 {
-	tm& rTmNow = CSceneJob::Inst()->getTmNow();
-	tm  tTmSetTime = rTmNow;
-
-	StrTokens tTimeTokens;
-	if (tTokens.size() >= 2)
-	{
-		int nDate = atoi(tTokens[0].c_str());
-		int nTmpYear = nDate / 10000;
-		int nTmpMonth = nDate % 10000 / 100;
-		int nTmpDay = nDate % 100;
-		if (nTmpYear != 0)
-		{
-			tTmSetTime.tm_year = nTmpYear - 1900;
-		}
-
-		if (nTmpMonth != 0)
-		{
-			tTmSetTime.tm_mon = nTmpMonth - 1;
-		}
-
-		tTmSetTime.tm_mday = nTmpDay;
-
-		tTimeTokens = strSplit(tTokens[1].c_str(), ":");
-	}
-	else if (tTokens.size() >= 1)
-	{
-		tTimeTokens = strSplit(tTokens[0].c_str(), ":");
-		// 如果不是以冒号分隔的字符串
-		if (tTimeTokens.size() <= 1)
-		{
-			int nDate = atoi(tTokens[0].c_str());
-			int nTmpYear = nDate / 10000;
-			int nTmpMonth = nDate % 10000 / 100;
-			int nTmpDay = nDate % 100;
-			if (nTmpYear != 0)
-			{
-				tTmSetTime.tm_year = nTmpYear - 1900;
-			}
-
-			if (nTmpMonth != 0)
-			{
-				tTmSetTime.tm_mon = nTmpMonth - 1;
-			}
-
-			tTmSetTime.tm_mday = nTmpDay;
-			// 清掉时间
-			tTimeTokens.clear();
-		}
-	}
-	else
-	{
-		time_t tRealTime = time(NULL);
-#ifdef MYTH_OS_WINDOWS
-		localtime_s(&tTmSetTime, &tRealTime);
-#else
-		localtime_r(&tRealTime, &tTmSetTime);
-#endif // MYTH_OS_WINDOWS
-	}
-
-	if (tTimeTokens.size() >= 1)
-	{
-		tTmSetTime.tm_hour = atoi(tTimeTokens[0].c_str());
-	}
-	if (tTimeTokens.size() >= 2)
-	{
-		tTmSetTime.tm_min = atoi(tTimeTokens[1].c_str());
-	}
-	if (tTimeTokens.size() >= 3)
-	{
-		tTmSetTime.tm_sec = atoi(tTimeTokens[2].c_str());
-	}
-
-	time_t tGameTime = mktime(&tTmSetTime);
-	CGameServer::Inst()->SetGameTimeOffset(tGameTime - time(NULL));
-
-	char acBuffer[STR_LENGTH_128] = {0};
-#ifdef MYTH_OS_WINDOWS
-	asctime_s(acBuffer, sizeof(acBuffer) - 1, &tTmSetTime);
-#else
-	asctime_r(&tTmSetTime, acBuffer);
-#endif
-	broadcastCommandResult(rPlayer, acBuffer);
+//	tm& rTmNow = CSceneJob::Inst()->getTmNow();
+//	tm  tTmSetTime = rTmNow;
+//
+//	StrTokens tTimeTokens;
+//	if (tTokens.size() >= 2)
+//	{
+//		int nDate = atoi(tTokens[0].c_str());
+//		int nTmpYear = nDate / 10000;
+//		int nTmpMonth = nDate % 10000 / 100;
+//		int nTmpDay = nDate % 100;
+//		if (nTmpYear != 0)
+//		{
+//			tTmSetTime.tm_year = nTmpYear - 1900;
+//		}
+//
+//		if (nTmpMonth != 0)
+//		{
+//			tTmSetTime.tm_mon = nTmpMonth - 1;
+//		}
+//
+//		tTmSetTime.tm_mday = nTmpDay;
+//
+//		tTimeTokens = strSplit(tTokens[1].c_str(), ":");
+//	}
+//	else if (tTokens.size() >= 1)
+//	{
+//		tTimeTokens = strSplit(tTokens[0].c_str(), ":");
+//		// 如果不是以冒号分隔的字符串
+//		if (tTimeTokens.size() <= 1)
+//		{
+//			int nDate = atoi(tTokens[0].c_str());
+//			int nTmpYear = nDate / 10000;
+//			int nTmpMonth = nDate % 10000 / 100;
+//			int nTmpDay = nDate % 100;
+//			if (nTmpYear != 0)
+//			{
+//				tTmSetTime.tm_year = nTmpYear - 1900;
+//			}
+//
+//			if (nTmpMonth != 0)
+//			{
+//				tTmSetTime.tm_mon = nTmpMonth - 1;
+//			}
+//
+//			tTmSetTime.tm_mday = nTmpDay;
+//			// 清掉时间
+//			tTimeTokens.clear();
+//		}
+//	}
+//	else
+//	{
+//		time_t tRealTime = time(NULL);
+//#ifdef MYTH_OS_WINDOWS
+//		localtime_s(&tTmSetTime, &tRealTime);
+//#else
+//		localtime_r(&tRealTime, &tTmSetTime);
+//#endif // MYTH_OS_WINDOWS
+//	}
+//
+//	if (tTimeTokens.size() >= 1)
+//	{
+//		tTmSetTime.tm_hour = atoi(tTimeTokens[0].c_str());
+//	}
+//	if (tTimeTokens.size() >= 2)
+//	{
+//		tTmSetTime.tm_min = atoi(tTimeTokens[1].c_str());
+//	}
+//	if (tTimeTokens.size() >= 3)
+//	{
+//		tTmSetTime.tm_sec = atoi(tTimeTokens[2].c_str());
+//	}
+//
+//	time_t tGameTime = mktime(&tTmSetTime);
+//	CGameServer::Inst()->SetGameTimeOffset(tGameTime - time(NULL));
+//
+//	char acBuffer[STR_LENGTH_128] = {0};
+//#ifdef MYTH_OS_WINDOWS
+//	asctime_s(acBuffer, sizeof(acBuffer) - 1, &tTmSetTime);
+//#else
+//	asctime_r(&tTmSetTime, acBuffer);
+//#endif
+//	broadcastCommandResult(rPlayer, acBuffer);
 }
 
 COMMAND_HANDLER_IMPL(recharge)
@@ -419,12 +418,12 @@ COMMAND_HANDLER_IMPL(recharge)
 	}
 	else
 	{
-		tm& rTmNow = CSceneJob::Inst()->getTmNow();
-#ifdef MYTH_OS_WINDOWS
-		asctime_s(acOrderID, sizeof(acOrderID) - 1, &rTmNow);
-#else
-		asctime_r(&rTmNow, acOrderID);
-#endif
+//		tm& rTmNow = CSceneJob::Inst()->getTmNow();
+//#ifdef MYTH_OS_WINDOWS
+//		asctime_s(acOrderID, sizeof(acOrderID) - 1, &rTmNow);
+//#else
+//		asctime_r(&rTmNow, acOrderID);
+//#endif
 	}
 
 	CRechargeGoods* pGoods = CPlatModule::Inst()->getRechargeConfig().getGoods(nIDCRC, tTokens[0].c_str());
@@ -477,5 +476,5 @@ COMMAND_HANDLER_IMPL(globalmail)
 
 COMMAND_HANDLER_IMPL(reloadconfig)
 {
-	CSceneJob::Inst()->reloadConfig();
+	//CSceneJob::Inst()->reloadConfig();
 }

@@ -10,22 +10,27 @@ namespace Myth
 		IJob()
 		{
 			mBusy = false;
+			mJobType = 0;
 			mJobID = 0;
 		}
 		virtual ~IJob()
 		{
-
 		}
 
 	public:
 		virtual void doing(int uParam) = 0;
 
-		byte	getJobID(){return mJobID;}
-		void	setJobID(byte nJobID){mJobID = nJobID;}
+		byte getJobType() const { return mJobType; }
+		void setJobType(byte nValue) { mJobType = nValue; }
 
-		bool	getBusy(){return mBusy;}
-		void	setBusy(bool bBusy){mBusy = bBusy;}
+		bool getBusy(){return mBusy;}
+		void setBusy(bool bBusy){mBusy = bBusy;}
+
+		byte getJobID() const { return mJobID; }
+		void setJobID(byte nValue) { mJobID = nValue; }
+
 	private:
+		byte mJobType;
 		byte mJobID;
 		bool mBusy;
 	};
@@ -33,13 +38,11 @@ namespace Myth
 
 	enum EmThreadState
 	{
-		emThreadState_None		= 0,	// 无状态
-		emThreadState_Initing	= 1,	// 初始中
-		emThreadState_inited	= 2,	// 初始化完成
-		emThreadState_Runing	= 3,	// 运行中
-		emThreadState_Suspend	= 4,	// 暂停中
-		emThreadState_Exiting	= 5,	// 退出中
-		emThreadState_Exited	= 6,	// 退出完成
+		emThreadState_None		= 0,	// 非法状态
+		emThreadState_Ready		= 1,	// 准备完成
+		emThreadState_Runing	= 2,	// 运行中
+		emThreadState_Exiting	= 3,	// 退出中
+		emThreadState_Exited	= 4,	// 退出完成
 		emThreadStateMax
 	};
 	class CThreadPool;
@@ -48,6 +51,8 @@ namespace Myth
 	public:
 		IThread()
 		{
+			mThreadState  = emThreadState_Ready;
+			mSerialNum = 0;
 		}
 		virtual ~IThread()
 		{
@@ -66,14 +71,18 @@ namespace Myth
 		/// resume thread
 		virtual void resume() = 0;
 
-		virtual EmThreadState getThreadState() = 0;
-		virtual void setThreadState(EmThreadState eThreadState) = 0;
+	public:
+		EmThreadState getThreadState(){ return mThreadState; }
+		void setThreadState(EmThreadState eThreadState){ mThreadState = eThreadState; }
 
-		virtual CThreadPool* getThreadPool() = 0;
-		virtual void setThreadPool(CThreadPool* pThreadPool) = 0;
+		int getSerialNum(){ return mSerialNum; }
+		void setSerialNum(int nSerialNum){ mSerialNum = nSerialNum; }
 
-		virtual int getSerialNum() = 0;
-		virtual void setSerialNum(int nSerialNum) = 0;
+	private:
+		//  线程状态
+		EmThreadState		mThreadState;
+		// 线程序列号
+		int					mSerialNum;
 	};
 }
 #endif

@@ -2,7 +2,6 @@
 #include "mapmodule.hxx.pb.h"
 #include "entity.h"
 #include "objpool.h"
-#include "scenejob.h"
 #include "mapmamager.h"
 #include "locallogjob.h"
 #include "entityplayer.h"
@@ -232,7 +231,7 @@ void CMapModule::broadCastVisiblePlayer(CEntity* pEntity, unsigned short nMessag
 			continue;
 		}
 
-		CSceneJob::Inst()->send2Player(static_cast<CEntityPlayer*>(pVisibleEntity), nMessageID, pMessage);
+		//CSceneJob::Inst()->send2Player(static_cast<CEntityPlayer*>(pVisibleEntity), nMessageID, pMessage);
 		 ++ it;
 	}
 }
@@ -262,7 +261,7 @@ void CMapModule::broadCastMapPlayer(CEntity* pEntity, unsigned short nMessageID,
 			continue;
 		}
 
-		CSceneJob::Inst()->send2Player(static_cast<CEntityPlayer*>(pEntity), nMessageID, pMessage);
+		//CSceneJob::Inst()->send2Player(static_cast<CEntityPlayer*>(pEntity), nMessageID, pMessage);
 	}
 }
 
@@ -302,7 +301,7 @@ void CMapModule::sendPlayerMoveResponse(CEntityPlayer* pPlayer, int nResult)
 	CPlayerMoveResponse tPlayerMoveResponse;
 	tPlayerMoveResponse.set_result(nResult);
 
-	CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_RESPONSE_PLAYER_MOVE, &tPlayerMoveResponse);
+	//CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_RESPONSE_PLAYER_MOVE, &tPlayerMoveResponse);
 }
 
 /// 处理玩家传送的消息
@@ -331,5 +330,5 @@ void CMapModule::sendPlayerTeleportResponse(CEntityPlayer* pPlayer, int nResult)
 
 	CPlayerTeleportResponse tPlayerTeleportResponse;
 	tPlayerTeleportResponse.set_result(nResult);
-	CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_RESPONSE_PLAYER_TELEPORT, &tPlayerTeleportResponse);
+	//CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_RESPONSE_PLAYER_TELEPORT, &tPlayerTeleportResponse);
 }

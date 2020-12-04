@@ -5,7 +5,6 @@
 #include "entityplayer.h"
 #include "mapregionsearch.h"
 #include "mapmodule.hxx.pb.h"
-#include "scenejob.h"
 #include "mapconfigmanager.h"
 #include "template.h"
 #include "entitycreator.h"
@@ -91,6 +90,19 @@ void CMap::getVisibleRect(CEntity* pEntity, CMythRect& rRect)
 	rRect.mBottomRight.mX = (std::min)(pEntity->getPos().mX + VISIBLE_RADIUS_X, getLength() - 1);
 	rRect.mBottomRight.mY = (std::min)(pEntity->getPos().mY + VISIBLE_RADIUS_Y, getWidth() - 1);
 	return;
+}
+
+void CMap::onTimer(unsigned int nTickOffset)
+{
+	for (unsigned int i = 0; i < mPlayerList.size(); ++ i)
+	{
+		CEntityPlayer* pEntityPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(mPlayerList[i]));
+		if (NULL == pEntityPlayer)
+		{
+			continue;
+		}
+		pEntityPlayer->onTimer(nTickOffset);
+	}
 }
 
 /// 实体移动
@@ -442,7 +454,7 @@ void CMap::createPlayer2PlayerList(CEntityPlayer* pPlayer, std::vector<CEntityPl
 	for (unsigned int i = 0; i < rPlayerList.size(); ++ i)
 	{
 		pPlayer->addVisiblePlayer(rPlayerList[i]);
-		CSceneJob::Inst()->send2Player(rPlayerList[i], ID_S2C_NOTIYF_CREATE_PLAYER_LIST, &tCreatePlayerListNotify);
+		//CSceneJob::Inst()->send2Player(rPlayerList[i], ID_S2C_NOTIYF_CREATE_PLAYER_LIST, &tCreatePlayerListNotify);
 	}
 }
 
@@ -456,7 +468,7 @@ void CMap::createPlayerList2Player(std::vector<CEntityPlayer*>& rPlayerList, CEn
 		PBPlayerSceneInfo* pPlayerInfo = tCreatePlayerListNotify.add_playerinfo();
 		rPlayerList[i]->serializeSceneInfoToPB(pPlayerInfo);
 	}
-	CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIYF_CREATE_PLAYER_LIST, &tCreatePlayerListNotify);
+	//CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIYF_CREATE_PLAYER_LIST, &tCreatePlayerListNotify);
 }
 
 /// 通知该玩家创建NPC列表
@@ -470,7 +482,7 @@ void CMap::createNPCList2Player(std::vector<CEntityNPC*>& rNPCList, CEntityPlaye
 		rNPCList[i]->serializeSceneInfoToPB(pNpcSceneInfo);
 	}
 
-	CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIYF_CREATE_NPC_LIST, &tCreateNPCListNotify);
+	//CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIYF_CREATE_NPC_LIST, &tCreateNPCListNotify);
 }
 
 /// 通知该玩家创建NPC
@@ -485,7 +497,7 @@ void CMap::createNPC2PlayerList(CEntityNPC* pNPC, std::vector<CEntityPlayer*>& r
 	for (unsigned int i = 0; i < rPlayerList.size(); ++ i)
 	{
 		pNPC->addVisiblePlayer(rPlayerList[i]);
-		CSceneJob::Inst()->send2Player(rPlayerList[i], ID_S2C_NOTIYF_CREATE_NPC_LIST, &tCreateNPCListNotify);
+		//CSceneJob::Inst()->send2Player(rPlayerList[i], ID_S2C_NOTIYF_CREATE_NPC_LIST, &tCreateNPCListNotify);
 	}
 }
 
@@ -501,7 +513,7 @@ void CMap::destroyPlayer2PlayerList(CEntityPlayer* pPlayer, std::vector<CEntityP
 	for (unsigned int i = 0; i < rPlayerList.size(); ++i)
 	{
 		pPlayer->removeVisiblePlayer(rPlayerList[i]);
-		CSceneJob::Inst()->send2Player(rPlayerList[i], ID_S2C_NOTIYF_DESTROY_ENTITY, &tDestroyEntityNotify);
+		//CSceneJob::Inst()->send2Player(rPlayerList[i], ID_S2C_NOTIYF_DESTROY_ENTITY, &tDestroyEntityNotify);
 	}
 }
 
@@ -515,7 +527,7 @@ void CMap::destroyPlayerList2Player(std::vector<CEntityPlayer*>& rPlayerList, CE
 		tDestroyEntityNotify.add_entityid(rPlayerList[i]->getObjID());
 	}
 
-	CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIYF_DESTROY_ENTITY, &tDestroyEntityNotify);
+	//CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIYF_DESTROY_ENTITY, &tDestroyEntityNotify);
 }
 
 /// 通知该玩家销毁NPC列表
@@ -527,7 +539,7 @@ void CMap::destroyNPCList2Player(std::vector<CEntityNPC*>& rNPCList, CEntityPlay
 		rNPCList[i]->removeVisiblePlayer(pPlayer);
 		tDestroyEntityNotify.add_entityid(rNPCList[i]->getObjID());
 	}
-	CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIYF_DESTROY_ENTITY, &tDestroyEntityNotify);
+	//CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIYF_DESTROY_ENTITY, &tDestroyEntityNotify);
 }
 
 /// 通知其他玩家销毁该NPC
@@ -542,7 +554,7 @@ void CMap::destroyNPC2PlayerList(CEntityNPC* pNPC, std::vector<CEntityPlayer*>& 
 	for (unsigned int i = 0; i < rPlayerList.size(); ++i)
 	{
 		pNPC->removeVisiblePlayer(rPlayerList[i]);
-		CSceneJob::Inst()->send2Player(rPlayerList[i], ID_S2C_NOTIYF_DESTROY_ENTITY, &tDestroyEntityNotify);
+		//CSceneJob::Inst()->send2Player(rPlayerList[i], ID_S2C_NOTIYF_DESTROY_ENTITY, &tDestroyEntityNotify);
 	}
 }
 

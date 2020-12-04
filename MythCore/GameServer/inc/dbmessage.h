@@ -1,17 +1,6 @@
 #ifndef __DBMESSAGE_H__
 #define __DBMESSAGE_H__
 #include "servercommon.h"
-class	CDBRequestHeader
-{
-public:
-	int			mPlayerID;				// 玩家ID
-	int			mParam1;				// 参数1
-	int			mParam2;				// 参数2
-	short		mSessionType;			// 会话类型
-	short		mSqlLenth;				// 缓冲区长度
-
-};
-
 class CDBRequest : public CDBRequestHeader
 {
 public:
@@ -20,18 +9,7 @@ public:
 	byte		mSqlBuffer[130000];		// 数据缓冲区
 };
 
-class CDBResponseHeader
-{
-public:
-	int			mPlayerID;				// 玩家ID
-	int			mSqlResult;				// SQL执行结果
-	int			mParam1;				// 参数1
-	int			mParam2;				// 参数2
-	short		mSessionType;			// 会话ID
-	short		mRowNum;				// 行数
-	short		mColNum;				// 列数
-	short		mSqlLenth;				// 缓冲区长度
-};
+
 
 class CDBResponse : public CDBResponseHeader
 {
@@ -140,23 +118,23 @@ enum EmSessionType
 	emSessionType_LoadPlayerInfo		= 3,			// 加载玩家信息
 	emSessionType_LoadPlayerBaseProperty= 4,			// 加载玩家属性
 	emSessionType_SavePlayerInfo		= 5,			// 保存玩家属性
-	emSessionType_SavePlayerBaseProperty= 6,			// 保存玩家基础属性
+	emSessionType_SavePlayerBaseProperty= 6,			// 保存玩家基础属性***
 	emSessionType_LoadAllocateRoleId	= 7,			// 加载分配角色ID
 	emSessionType_UpdateAllocateRoleId	= 8,			// 更新分配角色ID
 	emSessionType_InsertRechargeCache	= 9,			// 插入充值缓存
 	emSessionType_LoadRechargeCache		= 10,			// 加载充值缓存
 	emSessionType_RechargeSuccess		= 11,			// 充值成功
-	emSessionType_SavePlayerMail		= 12,			// 保存玩家邮件
+	emSessionType_SavePlayerMail		= 12,			// 保存玩家邮件***
 	emSessionType_LoadPlayerMail		= 13,			// 加载玩家邮件
 	emSessionType_LoadMaxMailID			= 14,			// 加载最大的邮件ID
 	emSessionType_DeleteExpireMail		= 15,			// 删除过期邮件
-	emSessionType_SaveGlobalMail		= 16,			// 保存全局邮件
+	emSessionType_SaveGlobalMail		= 16,			// 保存全局邮件***
 	emSessionType_LoadGlobalMail		= 17,			// 加载全局邮件
 	emSessionType_DeleteGlobalMail		= 18,			// 删除全局邮件
 	emSessionType_LoadMaxGlobalMailID	= 19,			// 加载最大的全局邮件ID
 	emSessionType_DeleteMail			= 20,			// 删除邮件
 	emSessionType_UpdateMailStatus		= 21,			// 更新邮件状态
-	emSessionType_SaveGameEvent			= 22,			// 保存离线事件
+	emSessionType_SaveGameEvent			= 22,			// 保存离线事件***
 	emSessionType_DeleteGameEvent		= 23,			// 删除离线事件
 	emSessionType_LoadGameEvent			= 24,			// 加载离线事件
 };

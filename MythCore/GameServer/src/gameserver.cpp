@@ -70,6 +70,12 @@ bool CGameServer::initAll()
 		return false;
 	}
 
+	bResult = initNet();
+	if (!bResult)
+	{
+		return false;
+	}
+
 	bResult = mpJobManager->initThread();
 	if (!bResult)
 	{
@@ -128,7 +134,7 @@ bool CGameServer::initLogicModule()
 {
 	CPerfManager::createInst();
 	CMessageFactory::createInst();
-	CInternalMsgPool::createInst();
+	//CInternalMsgPool::createInst();
 	CGameServerConfig::createInst();
 	CGameLogicConfig::createInst();
 	CObjPool::createInst();
@@ -157,6 +163,14 @@ bool CGameServer::initStaticData()
 }
 
 
+/// 初始化服务器网络
+bool CGameServer::initNet()
+{
+	int nListenPort = CGameServerConfig::Inst()->getListenPort();
+	bool bResult = mGameServerNet.initSocket(1, SOCKET_CACHE_SIZE, &nListenPort, 1, 1024);
+	return bResult;
+}
+
 /// 运行
 void CGameServer::run()
 {
@@ -169,6 +183,7 @@ void CGameServer::run()
 		CTimeManager::Inst()->setCurrTime(time(NULL) + mGameTimeOffset);
 
 		//printf("*dddd*");
+		mGameServerNet.receiveMessage();
 		mpJobManager->run();
 #ifdef MYTH_OS_WINDOWS
 		Sleep(20);
@@ -259,7 +274,7 @@ void CGameServer::clearLogicModule()
 	CObjPool::destroyInst();
 	CGameLogicConfig::destroyInst();
 	CGameServerConfig::destroyInst();
-	CInternalMsgPool::destroyInst();
+	//CInternalMsgPool::destroyInst();
 	CMessageFactory::destroyInst();
 	CPerfManager::destroyInst();
 }
@@ -313,3 +328,109 @@ void CGameServer::logPerf()
 	rPerfLock.unlock();
 }
 
+
+///// 断开玩家的连接
+//void CSceneJob::disconnectPlayer(CExchangeHead& rExchangeHead)
+//{
+//	char* pTemp = mBuffer;
+//	rExchangeHead.mSocketError = emTcpError_OffLineClose;
+//	memcpy(pTemp, &rExchangeHead, sizeof(rExchangeHead));
+//	mServer2TcpMemory->PushPacket((byte*)mBuffer, sizeof(rExchangeHead));
+//}
+//
+//void CSceneJob::disconnectPlayer(CEntityPlayer& rPlayer)
+//{
+//	// 端口连接的时候，将玩家的socket信息清除
+//	removePlayerSocketIndex(rPlayer.getExchangeHead().mSocketIndex);
+//	disconnectPlayer(rPlayer.getExchangeHead());
+//}
+//
+///// 登录了一个玩家（只是登录校验完成，数据还没有加载完成）
+//bool CSceneJob::onPlayerLogin(CEntityPlayer* pNewPlayer)
+//{
+//	std::pair<PLAYER_SOCKET_LIST::iterator, bool> tSocketIndexRet = mPlayerSocketList.insert(
+//		PLAYER_SOCKET_LIST::value_type(pNewPlayer->getExchangeHead().mSocketIndex, pNewPlayer->getObjID()));
+//	if (!tSocketIndexRet.second)
+//	{
+//		return false;
+//	}
+//
+//	std::pair<PLAYER_LIST::iterator, bool> tPlayerListRet = mPlayerList.insert(
+//		PLAYER_LIST::value_type(pNewPlayer->getRoleID(), pNewPlayer->getObjID()));
+//	if (!tPlayerListRet.second)
+//	{
+//		mPlayerSocketList.erase(tSocketIndexRet.first);
+//		return false;
+//	}
+//
+//	return true;
+//}
+//
+///// 离开了一个玩家
+//void CSceneJob::destroyPlayerObject(CEntityPlayer& rPlayer)
+//{
+//	mPlayerList.erase(rPlayer.getRoleID());
+//	disconnectPlayer(rPlayer);
+//}
+//
+///// 一个Socket断开
+//void CSceneJob::onSocketDisconnect(int nSocketIndex)
+//{
+//	printf("Socket disconnect\n");
+//	CLoginModule::Inst()->onSocketDisconnect(nSocketIndex);
+//	PLAYER_SOCKET_LIST::iterator it = mPlayerSocketList.find(nSocketIndex);
+//	if (it != mPlayerSocketList.end())
+//	{
+//		// 注意只有玩家已经在游戏当中了才存盘，如果玩家是退出状态或者加载折腾，不需要存盘
+//		CEntityPlayer* pPlayer = static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
+//		if (NULL != pPlayer)
+//		{
+//			pPlayer->getExchangeHead().mSocketIndex = -1;
+//			// 将玩家置为下线状态
+//			CPropertyModule::Inst()->playerLeaveGame(*pPlayer, EmLeaveReason_Disconnection);
+//		}
+//		mPlayerSocketList.erase(it);
+//	}
+//}
+
+//
+///// 通过角色ID得到玩家
+//CEntityPlayer* CSceneJob::getPlayerByRoleID(unsigned int nRoleID)
+//{
+//	PLAYER_LIST::iterator it = mPlayerList.find(nRoleID);
+//	if (it != mPlayerList.end())
+//	{
+//		return static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
+//	}
+//	return NULL;
+//}
+//
+///// 通过SocketIndex得到玩家
+//CEntityPlayer* CSceneJob::getPlayerBySocketIndex(short nSocketIndex)
+//{
+//	PLAYER_SOCKET_LIST::iterator it = mPlayerSocketList.find(nSocketIndex);
+//	if (it != mPlayerSocketList.end())
+//	{
+//		return static_cast<CEntityPlayer*>(CObjPool::Inst()->getObj(it->second));
+//	}
+//
+//	return NULL;
+//}
+//
+///// 添加socket index
+//bool CSceneJob::addPlayerSocketIndex(short nSocketIndex, int nObjID)
+//{
+//	std::pair<PLAYER_SOCKET_LIST::iterator, bool> tSocketIndexRet = mPlayerSocketList.insert(
+//		PLAYER_SOCKET_LIST::value_type(nSocketIndex, nObjID));
+//	if (tSocketIndexRet.second)
+//	{
+//		return true;
+//	}
+//	return false;
+//}
+//
+///// 删除socket index
+//void CSceneJob::removePlayerSocketIndex(short nSocketIndex)
+//{
+//	mPlayerSocketList.erase(nSocketIndex);
+//}

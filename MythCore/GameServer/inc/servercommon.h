@@ -1,4 +1,5 @@
-// 不能用rand()%x的方式得到0-(x-1)的随机数，因为RAND_MAX不能整除x,所以会导致不能完全随机
+#ifndef __SERVERCOMMON_H__
+#define __SERVERCOMMON_H__
 #include "commontype.h"
 #include <vector>
 #include <map>
@@ -8,7 +9,7 @@ using namespace std;
 using namespace tinyxml2;
 
 #define INVALID_OBJ_ID				0		// 非法的OBJ ID
-
+// 不能用rand()%x的方式得到0-(x-1)的随机数，因为RAND_MAX不能整除x,所以会导致不能完全随机
 #define RAND(x) (int)( ( x )*(rand( )/(float)( RAND_MAX + 1.0 ) ))
 
 #define MYTH_PERCENT_FLOAT		10000.0f					// 万分比（浮点数）
@@ -33,3 +34,39 @@ using namespace tinyxml2;
 #define RETURN_DATA_LENGTH			1024					// Web请求返回数据长度
 
 
+#define MAX_GATE_BUFF_SIZE			10*1024*1024			// 10M
+#define SOCKET_CACHE_SIZE			1024*1024				// socket的缓存
+#define PLAYER_SOCKET_BUFF_SIZE		8096					// 玩家socket缓存
+#define MAX_PACKAGE_SIZE			4096					// 最大包大小
+struct CExchangeHead
+{
+	short	mDataLength;				// 数据长度
+	time_t	mSocketTime;				// socket建立时间
+	short	mSocketIndex;				// socket索引
+	short	mSocketError;				// socket错误
+};
+
+class	CDBRequestHeader
+{
+public:
+	int		mPlayerID;					// 玩家ID
+	int		mParam1;					// 参数1
+	int		mParam2;					// 参数2
+	short	mSessionType;				// 会话类型
+	short	mSqlLenth;					// 缓冲区长度
+	byte	mJobID;						// 请求的JobID
+};
+
+class CDBResponseHeader
+{
+public:
+	int			mPlayerID;				// 玩家ID
+	int			mSqlResult;				// SQL执行结果
+	int			mParam1;				// 参数1
+	int			mParam2;				// 参数2
+	short		mSessionType;			// 会话ID
+	short		mRowNum;				// 行数
+	short		mColNum;				// 列数
+	short		mSqlLenth;				// 缓冲区长度
+};
+#endif

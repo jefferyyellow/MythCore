@@ -70,6 +70,10 @@ public:
 
     short getDBPort(){ return mDBPort;}
     void setDBPort(short value){ mDBPort = value;}
+
+	short getListenPort() const { return mListenPort; }
+	void setListenPort(short nValue) { mListenPort = nValue; }
+
 	/// end autocode
 
 private:
@@ -81,7 +85,11 @@ private:
 	char			mDBPasswd[STR_LENGTH_16];
 	/// 连接的数据库名
 	char			mDefaultDataBase[STR_LENGTH_16];
-	/// 端口
+	/// 服务器的侦听端口，给网关服务器连接用
 	short			mDBPort;
+	/// 服务器侦听端口
+	short			mListenPort;
+	// 服务器ID
+	int				mServerID;
 };
 #endif

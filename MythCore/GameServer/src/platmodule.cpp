@@ -1,5 +1,4 @@
 #include "platmodule.h"
-#include "scenejob.h"
 #include "entityplayer.h"
 #include "crc32.h"
 #include "dbmodule.h"
@@ -89,9 +88,9 @@ void CPlatModule::processRecharge(const char* pOrderID, const char* pGoodsID, ui
 	}
 
 	uint nOrderCRC = crc32((unsigned char*)pOrderID, strlen(pOrderID));
-	// 插入充值缓存表中
-	CDBModule::Inst()->pushDBTask(nRoleID, emSessionType_InsertRechargeCache, nRoleID, 0, "call InsertRechargeCache(%u, '%s', '%s',%u, %u, %u, %u, %f, %d)",
-		nOrderCRC, pOrderID, pGoodsID, nRoleID, nAccountID, nChannelID, nServerID, dRechargeMoney, CTimeManager::Inst()->getCurrTime());
+	//// 插入充值缓存表中
+	//CDBModule::Inst()->pushDBTask(nRoleID, emSessionType_InsertRechargeCache, nRoleID, 0, "call InsertRechargeCache(%u, '%s', '%s',%u, %u, %u, %u, %f, %d)",
+	//	nOrderCRC, pOrderID, pGoodsID, nRoleID, nAccountID, nChannelID, nServerID, dRechargeMoney, CTimeManager::Inst()->getCurrTime());
 
 }
 
@@ -109,11 +108,11 @@ void CPlatModule::onInsertRechargeCache(CDBResponse& rResponse)
 		return;
 	}
 
-	CEntityPlayer* pEntityPlayer = CSceneJob::Inst()->getPlayerByRoleID(rResponse.mParam1);
-	if (NULL != pEntityPlayer)
-	{
-		loadRechargeCache(*pEntityPlayer);
-	}
+	//CEntityPlayer* pEntityPlayer = CSceneJob::Inst()->getPlayerByRoleID(rResponse.mParam1);
+	//if (NULL != pEntityPlayer)
+	//{
+	//	loadRechargeCache(*pEntityPlayer);
+	//}
 }
 
 
@@ -127,7 +126,8 @@ void CPlatModule::loadRechargeCache(CEntityPlayer& rPlayer)
 	}
 
 	uint nRoleID = rPlayer.getRoleID();
-	CDBModule::Inst()->pushDBTask(nRoleID, emSessionType_LoadRechargeCache, nRoleID, 0, "call LoadRechargeCache(%u)", nRoleID);
+	CDBModule::Inst()->pushDBTask(rPlayer.getJobID(), nRoleID, emSessionType_LoadRechargeCache, 
+		nRoleID, 0, "call LoadRechargeCache(%u)", nRoleID);
 }
 
 /// 加载充值缓存的DB回调
@@ -139,7 +139,7 @@ void CPlatModule::onLoadRechargeCache(CDBResponse& rResponse)
 	}
 
 	uint nRoleID = rResponse.mParam1;
-	CEntityPlayer* pEntityPlayer = CSceneJob::Inst()->getPlayerByRoleID(nRoleID);
+	CEntityPlayer* pEntityPlayer = NULL;//CSceneJob::Inst()->getPlayerByRoleID(nRoleID);
 	// 玩家离线或者不是游戏状态
 	if (NULL == pEntityPlayer || emPlayerStatus_Gameing != pEntityPlayer->getPlayerStauts())
 	{
@@ -174,7 +174,8 @@ void CPlatModule::onLoadRechargeCache(CDBResponse& rResponse)
 		nResult = pEntityPlayer->getVIPUnit().processRecharge(pGoods, nRechargeMoney);
 		if (SUCCESS == nResult)
 		{
-			CDBModule::Inst()->pushDBTask(pEntityPlayer->getRoleID(), emSessionType_RechargeSuccess, nRoleID, 0, "call RechargeSuccess(%u)", nID);
+			CDBModule::Inst()->pushDBTask(pEntityPlayer->getJobID(), pEntityPlayer->getRoleID(), 
+				emSessionType_RechargeSuccess, nRoleID, 0, "call RechargeSuccess(%u)", nID);
 		}
 	}
 }

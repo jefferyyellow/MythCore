@@ -216,9 +216,6 @@
     <ClCompile Include="..\GameServer\src\redis.cpp">
       <Filter>gameserver</Filter>
     </ClCompile>
-    <ClCompile Include="..\GameServer\src\scenejob.cpp">
-      <Filter>gameserver</Filter>
-    </ClCompile>
     <ClCompile Include="..\GameServer\src\serveractivity.cpp">
       <Filter>gameserver</Filter>
     </ClCompile>

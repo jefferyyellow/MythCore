@@ -2,11 +2,10 @@
 #include "gameserver.h"
 #include "internalmsgpool.h"
 #include "jobmanager.h"
-#include "scenejob.h"
 #include "timemanager.h"
 void LogLocalLog(EmLogType eLogType, const char* pFile, int nLine, const char* pFunction, const char* pFormat, ...)
 {
-	CIMLocalLogRequest* pLocalLogRequest = static_cast<CIMLocalLogRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_LOCAL_LOG));
+	CIMLocalLogRequest* pLocalLogRequest = new CIMLocalLogRequest;
 	if (NULL == pLocalLogRequest)
 	{
 		return;
@@ -18,12 +17,12 @@ void LogLocalLog(EmLogType eLogType, const char* pFile, int nLine, const char* p
 	vsnprintf(pLocalLogRequest->mLogContent + nSize, sizeof(pLocalLogRequest->mLogContent)-nSize - 1, pFormat, valist);
 	va_end(valist);
 	pLocalLogRequest->mLogType = eLogType;
-	CJobManager::Inst()->pushTask(emJobTaskType_LocalLog, pLocalLogRequest);
+	CJobManager::Inst()->pushTaskByType(emJobTaskType_LocalLog, pLocalLogRequest);
 }
 
 void LogNoLocation(EmLogType eLogType, const char* pFormat, ...)
 {
-	CIMLocalLogRequest* pLocalLogRequest = static_cast<CIMLocalLogRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_LOCAL_LOG));
+	CIMLocalLogRequest* pLocalLogRequest = new CIMLocalLogRequest;
 	if (NULL == pLocalLogRequest)
 	{
 		return;
@@ -36,12 +35,12 @@ void LogNoLocation(EmLogType eLogType, const char* pFormat, ...)
 
 
 	pLocalLogRequest->mLogType = eLogType;
-	CJobManager::Inst()->pushTask(emJobTaskType_LocalLog, pLocalLogRequest);
+	CJobManager::Inst()->pushTaskByType(emJobTaskType_LocalLog, pLocalLogRequest);
 }
 
 void LogLocalDebugLog(const char* pLogName, const char* pFile, int nLine, const char* pFunction, const char* pFormat, ...)
 {
-	CIMLocalLogRequest* pLocalLogRequest = static_cast<CIMLocalLogRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_LOCAL_LOG));
+	CIMLocalLogRequest* pLocalLogRequest = new CIMLocalLogRequest;
 	if (NULL == pLocalLogRequest)
 	{
 		return;
@@ -55,7 +54,7 @@ void LogLocalDebugLog(const char* pLogName, const char* pFile, int nLine, const 
 	int nSize = snprintf(pLocalLogRequest->mLogContent, sizeof(pLocalLogRequest->mLogContent)-1, "[%s:%d (%s)] ", LOG_FILE(pFile), nLine, pFunction);
 	vsnprintf(pLocalLogRequest->mLogContent + nSize, sizeof(pLocalLogRequest->mLogContent)-nSize - 1, pFormat, valist);
 	va_end(valist);
-	CJobManager::Inst()->pushTask(emJobTaskType_LocalLog, pLocalLogRequest);
+	CJobManager::Inst()->pushTaskByType(emJobTaskType_LocalLog, pLocalLogRequest);
 }
 
 void CLocalLogJob::init()
@@ -74,7 +73,7 @@ void CLocalLogJob::doing(int uParam)
 	if (tTmpTime - mLogTime > TIME_JOB_RUN_LOG)
 	{
 		mLogTime = tTmpTime;
-		LOG_INFO("Job doing, Thread Num: %d, Job ID: %d", uParam, getJobID());
+		LOG_INFO("Job doing, Thread Num: %d, Job ID: %d", uParam, getJobType());
 	}
 
 	int nCount = 0;
@@ -93,7 +92,6 @@ void CLocalLogJob::doing(int uParam)
 			OnIMLocalLogRequest(static_cast<CIMLocalLogRequest*>(pIMMsg));
 		}
 
-		CInternalMsgPool::Inst()->freeMsg(pIMMsg);
 		++ nCount;
 		if (nCount > 1000)
 		{
@@ -108,14 +106,14 @@ void CLocalLogJob::doing(int uParam)
 		mLastTime = tTimeNow;
 	}
 
-	// 如果scene job已经退出完成了,表示服务器开始进入退出的流程了
-	if (CSceneJob::Inst()->getExited())
-	{
-		if (CJobManager::Inst()->checkOtherJobExit())
-		{
-			setExited(true);
-		}
-	}
+	//// 如果scene job已经退出完成了,表示服务器开始进入退出的流程了
+	//if (CSceneJob::Inst()->getExited())
+	//{
+	//	if (CJobManager::Inst()->checkOtherJobExit())
+	//	{
+	//		setExited(true);
+	//	}
+	//}
 }
 
 void CLocalLogJob::OnIMLocalLogRequest(CIMLocalLogRequest* pLogRequest)

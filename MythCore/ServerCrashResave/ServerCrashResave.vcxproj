@@ -53,7 +53,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;MYTH_OS_WINDOWS;_CRT_SECURE_NO_WARNINGS;__SERVER_CRASH_RESAVE__;__DEBUG__;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../MythCore/include;../dep/protobuffer;../message;../dep/mysql/include;./inc;../dep/tinyxml;../dep;../dep/libcurl/include;../dep/hiredis/windows/include;../dep/jsoncpp/;../dep/libevent/windows/include;../dep/gtest/include;../GameServer/inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../MythCore/include;../dep/protobuffer;../message;../dep/mysql/include;./inc;../dep/tinyxml;../dep;../dep/libcurl/include;../dep/hiredis/windows/include;../dep/jsoncpp/;../dep/libevent/windows/include;../dep/gtest/include;../GameServer/inc;../dep/lua53</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -132,7 +132,6 @@
     <ClCompile Include="..\GameServer\src\rankmodule.cpp" />
     <ClCompile Include="..\GameServer\src\rankmoduletest.cpp" />
     <ClCompile Include="..\GameServer\src\redis.cpp" />
-    <ClCompile Include="..\GameServer\src\scenejob.cpp" />
     <ClCompile Include="..\GameServer\src\serveractivity.cpp" />
     <ClCompile Include="..\GameServer\src\serveractivityunit.cpp" />
     <ClCompile Include="..\GameServer\src\serveractmodule.cpp" />

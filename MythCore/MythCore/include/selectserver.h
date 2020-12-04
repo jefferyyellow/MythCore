@@ -24,7 +24,7 @@ namespace Myth
 			clear();
 		}
 
-		bool	initSocket(int nMaxSocketNum, int nCacheSize, int* pListenPort, int nPortNum, int nBackLogNum);
+		bool	initSocket(int nListenSocketNum, int nCacheSize, int* pListenPort, int nPortNum, int nBackLogNum);
 		void	clear();
 		void	receiveMessage();
 		int		sendMessage(CTcpSocket* pSocket, const byte* pBuff, int nBuffSize);

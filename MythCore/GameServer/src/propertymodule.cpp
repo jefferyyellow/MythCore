@@ -2,7 +2,6 @@
 #include "propertyunit.h"
 #include "entityplayer.h"
 #include "propertymodule.hxx.pb.h"
-#include "scenejob.h"
 #include "locallogjob.h"
 #include "dbmessage.h"
 #include "gameserver.h"
@@ -70,7 +69,7 @@ void CPropertyModule::onDestroyPlayer(CEntityPlayer& rPlayer)
 void CPropertyModule::onTimer(unsigned int nTickOffset)
 {
 	time_t tTimeNow = CTimeManager::Inst()->getCurrTime();
-	uint64 tTickCount = CSceneJob::Inst()->getLastTimerTick();
+	uint64 tTickCount = 0;//CSceneJob::Inst()->getLastTimerTick();
 
 	CEntityPlayer* tArrayPlayer[CAPACITY_PLAYER];
 	int nPlayerNum = 0;
@@ -359,7 +358,7 @@ void CPropertyModule::onLoadComplete(CEntityPlayer* pPlayer)
 		pPlayer->dailyRefresh(true);
 	}
 
-	CSceneJob::Inst()->createPlayer(*pPlayer);
+	//CSceneJob::Inst()->createPlayer(*pPlayer);
 
 
 	pPlayer->refreshBaseProperty();
@@ -390,7 +389,7 @@ void CPropertyModule::sendPlayerBaseInfoNotify(CEntityPlayer* pPlayer)
 	tNotify.set_viplevel(pPlayer->getVIPUnit().getVipLevel());
 	tNotify.set_vipexp(pPlayer->getVIPUnit().getVipExp());
 
-	CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIFY_PLAYER_BASE_INFO, &tNotify);
+	//CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIFY_PLAYER_BASE_INFO, &tNotify);
 }
 
 /// 发送玩家道具信息通知
@@ -399,7 +398,7 @@ void CPropertyModule::sendPlayerItemInfoNotify(CEntityPlayer* pPlayer)
 	CPlayerItemInfoNotify tNotify;
 	pPlayer->getItemUnit().getBag().createToPB(tNotify.mutable_bag());
 
-	CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIFY_PLAYER_ITEM_INFO, &tNotify);
+	//CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIFY_PLAYER_ITEM_INFO, &tNotify);
 }
 
 /// 发送玩家任务信息通知
@@ -408,7 +407,7 @@ void CPropertyModule::sendPlayerTaskInfoNotify(CEntityPlayer* pPlayer)
 	CPlayerTaskInfoNotify tNotify;
 	pPlayer->getTaskUnit().createToPB(tNotify.mutable_tasklist());
 
-	CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIFY_PLAYER_TASK_INFO, &tNotify);
+	//CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_NOTIFY_PLAYER_TASK_INFO, &tNotify);
 }
 
 /// 玩家技能信息通知
@@ -428,7 +427,7 @@ void CPropertyModule::savePlayer(CEntityPlayer& rPlayer)
 void CPropertyModule::savePlayerInfo(CEntityPlayer& rPlayer)
 {
 	time_t tCurrTime = CTimeManager::Inst()->getCurrTime();
-	CDBModule::Inst()->pushDBTask(rPlayer.getRoleID(), emSessionType_SavePlayerInfo, rPlayer.getObjID(), 0,
+	CDBModule::Inst()->pushDBTask(rPlayer.getJobID(), rPlayer.getRoleID(), emSessionType_SavePlayerInfo, rPlayer.getObjID(), 0,
 		"call UpdatePlayerInfo(%d, %d,%lld,%d,%d,%d,%d,%d)", rPlayer.getRoleID(),
 		rPlayer.getPropertyUnit().getLevel(), rPlayer.getPropertyUnit().getExp(),
 		rPlayer.getVIPUnit().getVipLevel(), rPlayer.getVIPUnit().getVipExp(),
@@ -442,7 +441,7 @@ void CPropertyModule::savePlayerBaseProperty(CEntityPlayer& rPlayer)
 	rPlayer.getItemUnit().getEquip().createToPB(tSavePlayer.mutable_equip());
 	rPlayer.getTaskUnit().createToPB(tSavePlayer.mutable_task());
 	
-	CDBModule::Inst()->pushDBTask(rPlayer.getRoleID(), emSessionType_SavePlayerBaseProperty, rPlayer.getObjID(), 0, &tSavePlayer);
+	CDBModule::Inst()->pushDBTask(rPlayer.getJobID(), rPlayer.getRoleID(), emSessionType_SavePlayerBaseProperty, rPlayer.getObjID(), 0, &tSavePlayer);
 }
 /// 玩家存盘完成
 void CPropertyModule::onSavePlayerComplete(CEntityPlayer& rPlayer)
@@ -493,7 +492,7 @@ void CPropertyModule::playerLeaveGame(CEntityPlayer& rPlayer, EmLeaveReason eRea
 /// 玩家离开游戏
 void CPropertyModule::destroyPlayer(CEntityPlayer& rPlayer)
 {
-	CSceneJob::Inst()->destroyPlayerObject(rPlayer);
+	//CSceneJob::Inst()->destroyPlayerObject(rPlayer);
 	CObjPool::Inst()->free(rPlayer.getObjID());
 }
 

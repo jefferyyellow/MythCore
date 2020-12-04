@@ -12,7 +12,6 @@ enum EmJobID
 	emJobID_Rank	= 5,		// 排行榜job
 };
 
-template<int BaseCount, int Increment>
 class CJob : public IJob
 {
 public:
@@ -46,7 +45,7 @@ public:
 
 protected:
 	time_t								mLogTime;
-	CTaskManager<BaseCount, Increment>	mTaskManager;
+	CTaskManager						mTaskManager;
 	/// 退出完成
 	bool								mExited;
 };

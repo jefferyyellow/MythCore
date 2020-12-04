@@ -63,16 +63,10 @@
     <ClCompile Include="src\epollmodel.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\winthread.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\threadpool.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\simplelock.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="src\linuxthread.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="include\thread.h">
@@ -103,6 +97,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="src\timeutility.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\workthread.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -143,16 +140,10 @@
     <ClInclude Include="include\array.h">
       <Filter>头文件\basecontainer</Filter>
     </ClInclude>
-    <ClInclude Include="include\linuxthread.h">
-      <Filter>头文件\thread</Filter>
-    </ClInclude>
     <ClInclude Include="include\tcpsocket.h">
       <Filter>头文件\network</Filter>
     </ClInclude>
     <ClInclude Include="include\threadpool.h">
-      <Filter>头文件\thread</Filter>
-    </ClInclude>
-    <ClInclude Include="include\winthread.h">
       <Filter>头文件\thread</Filter>
     </ClInclude>
     <ClInclude Include="include\logdisplayer.h">
@@ -211,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="include\indexarray.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\workthread.h">
+      <Filter>头文件\thread</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

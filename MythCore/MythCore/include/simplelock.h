@@ -6,6 +6,7 @@
 #endif
 namespace Myth
 {
+	/// 简单锁，windows是关键代码段实现，linux用互斥体
 	class CSimpleLock
 	{
 	public:
@@ -55,6 +56,30 @@ namespace Myth
 		pthread_mutex_t			mMutex;
 		pthread_mutexattr_t		mMutexAttr;
 #endif
+	};
+
+	/// 自己解锁的辅助结构
+	class CAutoLock
+	{
+	public:
+		CAutoLock(CSimpleLock* tSimpleLock):
+			pLock(tSimpleLock)
+		{
+			if (NULL != pLock)
+			{
+				pLock->lock();
+			}
+		}
+		~CAutoLock()
+		{
+			if (NULL != pLock)
+			{
+				pLock->unlock();
+			}
+		}
+
+	private:
+		CSimpleLock* pLock;
 	};
 }
 #endif

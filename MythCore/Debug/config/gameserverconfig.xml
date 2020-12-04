@@ -7,6 +7,10 @@
     <DefaultDataBase value="Myth"/>
     <Port value="3306"/>
   </DBInfo>
+  <NetInfo>
+    <!--服务器的侦听端口，给网关服务器连接用-->
+    <Port value="6687"/>
+  </NetInfo>
   <ServerInfo>
     <ServerID value="1"/>
   </ServerInfo>

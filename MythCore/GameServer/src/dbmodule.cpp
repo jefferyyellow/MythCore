@@ -6,6 +6,7 @@
 #include "jobmanager.h"
 #include "platmodule.h"
 #include "mailmodule.h"
+#include "internalmsg.h"
 /// 启动服务器
 void CDBModule::onLaunchServer()
 {
@@ -66,39 +67,50 @@ void CDBModule::onLoadConfig()
 }
 
 /// 压入DB任务
-void CDBModule::pushDBTask(int nPlayerID, int nSessionType, int nParam1, int nParam2, const char* pSql, ...)
+void CDBModule::pushDBTask(int nJobID, int nPlayerID, int nSessionType, int nParam1, int nParam2, const char* pSql, ...)
 {
+	CIMDBSqlRequest* pSqlRequest = new CIMDBSqlRequest;
+	if (NULL == pSqlRequest)
+	{
+		return;
+	}
+	pSqlRequest->setMsgID(IM_REQUEST_DB_SQL);
+
 	va_list tArgs;
 	va_start(tArgs, pSql);
 	// +1表示吧终止符也拷贝过去
-	int nLength = ::vsnprintf((char*)mDBRequest.mSqlBuffer, sizeof(mDBRequest.mSqlBuffer) - 1, pSql, tArgs) + 1;
+	int nLength = ::vsnprintf((char*)pSqlRequest->mSql, sizeof(pSqlRequest->mSql) - 1, pSql, tArgs) + 1;
 	va_end(tArgs);
-	printf("\n%s\n", mDBRequest.mSqlBuffer);
-	mDBRequest.mPlayerID = nPlayerID;
-	mDBRequest.mParam1 = nParam1;
-	mDBRequest.mParam2 = nParam2;
-	mDBRequest.mSessionType = nSessionType;
-	mDBRequest.mSqlLenth = nLength;
+	printf("\n%s\n", pSqlRequest->mSql);
+	CDBRequestHeader& rHeader = pSqlRequest->mHeader;
+	rHeader.mJobID = nJobID;
+	rHeader.mPlayerID = nPlayerID;
+	rHeader.mParam1 = nParam1;
+	rHeader.mParam2 = nParam2;
+	rHeader.mSessionType = nSessionType;
+	rHeader.mSqlLenth = nLength;
 
-	int nTotalLength = nLength + sizeof(CDBRequestHeader);
-	CJobManager::Inst()->pushDBTask(nPlayerID, (byte*)(&mDBRequest), nTotalLength);
+	CJobManager::Inst()->pushDBTask(nPlayerID, pSqlRequest);
 }
 
-void CDBModule::pushDBTask(int nPlayerID, int nSessionType, int nParam1, int nParam2, Message* pMessage)
+void CDBModule::pushDBTask(int nJobID, int nPlayerID, int nSessionType, int nParam1, int nParam2, Message* pMessage)
 {
-	if (!pMessage->SerializeToArray(mDBRequest.mSqlBuffer, sizeof(mDBRequest.mSqlBuffer) - 1))
+	CIMDBMsgRequest* pMsgRequest = new CIMDBMsgRequest;
+	if (NULL == pMsgRequest)
 	{
-		LOG_ERROR("PushDBTask Error, SerializeToArray Failure, Session Type: %d", nSessionType);
 		return;
 	}
-	mDBRequest.mPlayerID = nPlayerID;
-	mDBRequest.mParam1 = nParam1;
-	mDBRequest.mParam2 = nParam2;
-	mDBRequest.mSessionType = nSessionType;
-	mDBRequest.mSqlLenth = pMessage->ByteSize();
+	pMsgRequest->setMsgID(IM_REQUEST_DB_MSG);
+	CDBRequestHeader& rHeader = pMsgRequest->mHeader;
+	rHeader.mJobID = nJobID;
+	rHeader.mPlayerID = nPlayerID;
+	rHeader.mParam1 = nParam1;
+	rHeader.mParam2 = nParam2;
+	rHeader.mSessionType = nSessionType;
+	rHeader.mSqlLenth = pMessage->ByteSize();
+	pMsgRequest->mSqlMsg = pMessage;
 
-	int nTotalLength = pMessage->ByteSize() + sizeof(CDBRequestHeader);
-	CJobManager::Inst()->pushDBTask(nPlayerID, (byte*)(&mDBRequest), nTotalLength);
+	CJobManager::Inst()->pushDBTask(nPlayerID, pMsgRequest);
 }
 
 void CDBModule::onDBSession()

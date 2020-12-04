@@ -115,17 +115,7 @@ namespace Myth
 		{
 			return;
 		}
-		unsigned int newSuspendCount = ::SuspendThread(mThreadHand) + 1;
-		if (newSuspendCount == 0xffffffff)
-		{
-
-		}
-		if (newSuspendCount != 1)
-		{
-
-		}
-
-		setThreadState(emThreadState_Suspend);
+		::SuspendThread(mThreadHand);
 	}
 
 	/// resume thread
@@ -135,17 +125,7 @@ namespace Myth
 		{
 			return;
 		}
-		unsigned int newSuspendCount = ::ResumeThread(mThreadHand) - 1;
-		if (newSuspendCount == 0xffffffff)
-		{
-
-		}
-		if (newSuspendCount != 0)
-		{
-
-		}
-
-		setThreadState(emThreadState_Runing);
+		::ResumeThread(mThreadHand) - 1;
 	}
 }
 #endif

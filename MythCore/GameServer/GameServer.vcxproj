@@ -44,7 +44,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>MYTH_OS_WINDOWS;_CRT_SECURE_NO_WARNINGS;__DEBUG__;NOMINMAX;__USE_PERF_FUNC__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MYTH_OS_WINDOWS;_CRT_SECURE_NO_WARNINGS;__DEBUG__;NOMINMAX;__USE_PERF_FUNC__;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>../MythCore/include;../dep/protobuffer;../message;../dep/mysql/include;./inc;../dep/tinyxml;../dep;../dep/libcurl/include;../dep/hiredis/windows/include;../dep/jsoncpp/;../dep/libevent/windows/include;../dep/gtest/include;../dep/lua53;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -87,6 +87,7 @@
     <ClCompile Include="..\message\taskmodule.hxx.pb.cc" />
     <ClCompile Include="..\message\template.hxx.pb.cc" />
     <ClCompile Include="src\chatmodule.cpp" />
+    <ClCompile Include="src\clientsocketjob.cpp" />
     <ClCompile Include="src\curlhandle.cpp" />
     <ClCompile Include="src\dailyactivity.cpp" />
     <ClCompile Include="src\dailyactmodule.cpp" />
@@ -101,6 +102,8 @@
     <ClCompile Include="src\GameLogicConfig.cpp" />
     <ClCompile Include="src\gameserver.cpp" />
     <ClCompile Include="src\gameserverconfig.cpp" />
+    <ClCompile Include="src\gameservernet.cpp" />
+    <ClCompile Include="src\geometrytype.cpp" />
     <ClCompile Include="src\globalluareg.cpp" />
     <ClCompile Include="src\gmcommandmanager.cpp" />
     <ClCompile Include="src\gmlog.cpp" />
@@ -120,6 +123,7 @@
     <ClCompile Include="src\job.cpp" />
     <ClCompile Include="src\jobmanager.cpp" />
     <ClCompile Include="src\locallogjob.cpp" />
+    <ClCompile Include="src\loginjob.cpp" />
     <ClCompile Include="src\loginmodule.cpp" />
     <ClCompile Include="src\loginplayer.cpp" />
     <ClCompile Include="src\lua_tinker.cpp" />
@@ -133,9 +137,9 @@
     <ClCompile Include="src\mapregionsearch.cpp" />
     <ClCompile Include="src\messagefactory.cpp" />
     <ClCompile Include="src\aistate.cpp" />
+    <ClCompile Include="src\messagequeue.cpp" />
     <ClCompile Include="src\objmanager.cpp" />
     <ClCompile Include="src\objpool.cpp" />
-    <ClCompile Include="src\geometrytype.cpp" />
     <ClCompile Include="src\perfmanager.cpp" />
     <ClCompile Include="src\platjob.cpp" />
     <ClCompile Include="src\platlog.cpp" />
@@ -148,7 +152,7 @@
     <ClCompile Include="src\rankmodule.cpp" />
     <ClCompile Include="src\rankmoduletest.cpp" />
     <ClCompile Include="src\redis.cpp" />
-    <ClCompile Include="src\scenejob.cpp" />
+    <ClCompile Include="src\mapjob.cpp" />
     <ClCompile Include="src\serveractivity.cpp" />
     <ClCompile Include="src\serveractivityunit.cpp" />
     <ClCompile Include="src\serveractmodule.cpp" />
@@ -203,6 +207,7 @@
     <ClInclude Include="..\message\template.hxx.pb.h" />
     <ClInclude Include="inc\aistrategy.h" />
     <ClInclude Include="inc\chatmodule.h" />
+    <ClInclude Include="inc\clientsocketjob.h" />
     <ClInclude Include="inc\curlhandle.h" />
     <ClInclude Include="inc\dailyactivity.h" />
     <ClInclude Include="inc\dailyactivitytype.h" />
@@ -222,6 +227,7 @@
     <ClInclude Include="inc\GameLogicConfig.h" />
     <ClInclude Include="inc\gameserver.h" />
     <ClInclude Include="inc\gameserverconfig.h" />
+    <ClInclude Include="inc\gameservernet.h" />
     <ClInclude Include="inc\globalluareg.h" />
     <ClInclude Include="inc\gmcommandmanager.h" />
     <ClInclude Include="inc\gmlog.h" />
@@ -243,6 +249,7 @@
     <ClInclude Include="inc\jobmanager.h" />
     <ClInclude Include="inc\locallogjob.h" />
     <ClInclude Include="inc\logicmodule.h" />
+    <ClInclude Include="inc\loginjob.h" />
     <ClInclude Include="inc\loginmodule.h" />
     <ClInclude Include="inc\loginplayer.h" />
     <ClInclude Include="inc\logintype.h" />
@@ -256,6 +263,7 @@
     <ClInclude Include="inc\maptype.h" />
     <ClInclude Include="inc\messagefactory.h" />
     <ClInclude Include="inc\aistate.h" />
+    <ClInclude Include="inc\messagequeue.h" />
     <ClInclude Include="inc\obj.h" />
     <ClInclude Include="inc\objpoolimp.h" />
     <ClInclude Include="inc\objmanager.h" />
@@ -274,7 +282,7 @@
     <ClInclude Include="inc\rankmodule.h" />
     <ClInclude Include="inc\ranktype.h" />
     <ClInclude Include="inc\redis.h" />
-    <ClInclude Include="inc\scenejob.h" />
+    <ClInclude Include="inc\mapjob.h" />
     <ClInclude Include="inc\serveractivity.h" />
     <ClInclude Include="inc\serveractivitytype.h" />
     <ClInclude Include="inc\serveractivityunit.h" />

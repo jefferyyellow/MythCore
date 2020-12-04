@@ -90,9 +90,6 @@
     <ClCompile Include="src\gameserver.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="src\gameserverconfig.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="src\internalmsg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -116,9 +113,6 @@
     </ClCompile>
     <ClCompile Include="src\entityplayer.cpp">
       <Filter>player</Filter>
-    </ClCompile>
-    <ClCompile Include="src\scenejob.cpp">
-      <Filter>job</Filter>
     </ClCompile>
     <ClCompile Include="src\dbjob.cpp">
       <Filter>job</Filter>
@@ -149,9 +143,6 @@
     </ClCompile>
     <ClCompile Include="src\mapmamager.cpp">
       <Filter>logicmodule\map</Filter>
-    </ClCompile>
-    <ClCompile Include="src\geometrytype.cpp">
-      <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\message\mapmodule.hxx.pb.cc">
       <Filter>message</Filter>
@@ -372,6 +363,27 @@
     <ClCompile Include="src\guildmodule.cpp">
       <Filter>logicmodule\guild</Filter>
     </ClCompile>
+    <ClCompile Include="src\mapjob.cpp">
+      <Filter>job</Filter>
+    </ClCompile>
+    <ClCompile Include="src\clientsocketjob.cpp">
+      <Filter>job</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameservernet.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\geometrytype.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameserverconfig.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\loginjob.cpp">
+      <Filter>job</Filter>
+    </ClCompile>
+    <ClCompile Include="src\messagequeue.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\message\loginmessage.hxx">
@@ -438,9 +450,6 @@
       <Filter>job</Filter>
     </ClInclude>
     <ClInclude Include="inc\dbjob.h">
-      <Filter>job</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\scenejob.h">
       <Filter>job</Filter>
     </ClInclude>
     <ClInclude Include="..\dep\tinyxml\tinyxml2.h">
@@ -769,6 +778,21 @@
     </ClInclude>
     <ClInclude Include="inc\guildmodule.h">
       <Filter>logicmodule\guild</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\mapjob.h">
+      <Filter>job</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\clientsocketjob.h">
+      <Filter>job</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\gameservernet.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\loginjob.h">
+      <Filter>job</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\messagequeue.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

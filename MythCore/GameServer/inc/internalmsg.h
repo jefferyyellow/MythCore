@@ -4,6 +4,7 @@
 #include "logmanager.h"
 #include "logintype.h"
 #include "ranktype.h"
+#include "messagefactory.h"
 // IM表示内部消息（internal message的简写)
 enum EmInternalMsgID
 {
@@ -15,6 +16,9 @@ enum EmInternalMsgID
 	IM_RESPONSE_UPDATE_RANK				= 6,			// 更新排行榜回应
 	IM_REQUEST_GET_RANK_INFO			= 7,			// 得到排行信息请求
 	IM_RESPONSE_GET_RANK_INFO			= 8,			// 得到排行信息的回应
+	IM_REQUEST_PLAYER_LOGIN				= 9,			// 玩家登陆
+	IM_REQUEST_DB_SQL					= 10,			// DB sql语句直接请求
+	IM_REQUEST_DB_MSG					= 11,			// DB 消息方式的请求
 };
 
 #define RETURN_DATA_LENGTH 1024
@@ -116,4 +120,37 @@ public:
 	int		mSelfRankValue;						// 排行值
 };
 
+class CIMPlayerLoginRequest : public CInternalMsg
+{
+public:
+	time_t	mSocketTime;						// socket时间
+	short	mSocketIndex;						// socket索引
+	void*	mMsgQueue;							// 消息队列指针
+	int		mJobID;								// 那个Job发过来的
+};
+
+class CIMDBMsgBase : public CInternalMsg
+{
+public:
+	CDBRequestHeader	mHeader;					// 请求头
+};
+
+class CIMDBSqlRequest : public CIMDBMsgBase
+{
+public:
+	byte				mSql[1024];					// sql语句
+};
+
+class CIMDBMsgRequest : public CIMDBMsgBase
+{
+public:
+	Message*			mSqlMsg;					// 存储结构
+};
+
+class CIMDBMsgResponse : public CInternalMsg
+{
+public:
+	CDBResponseHeader	mHeader;					// 回应头
+	byte*				mMsgBuffer;					// 消息Buffer
+};
 #endif

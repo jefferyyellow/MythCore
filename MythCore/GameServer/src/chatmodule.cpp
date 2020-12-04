@@ -2,7 +2,6 @@
 #include "chatmodule.hxx.pb.h"
 #include "locallogjob.h"
 #include "entityplayer.h"
-#include "scenejob.h"
 #include "timemanager.h"
 CChatModule::CChatModule()
 {
@@ -133,7 +132,7 @@ void CChatModule::onChatRequest(CEntityPlayer& rPlayer, Message* pMessage)
 				return;
 			}
 
-			CSceneJob::Inst()->send2AllPlayer(ID_S2C_NOTIFY_CHAT, &tChatNotify);
+			//CSceneJob::Inst()->send2AllPlayer(ID_S2C_NOTIFY_CHAT, &tChatNotify);
 			break;
 		}
 		case emChatChannel_Team:
@@ -155,7 +154,7 @@ void CChatModule::sendWorldNews(CEntityPlayer& rPlayer, EmWorldNewsType eNewsTyp
 	createPBNewsRole(rPlayer, tNotify.mutable_role());
 	tNotify.mutable_newsparam()->CopyFrom(rNewParam);
 	
-	CSceneJob::Inst()->send2AllPlayer(ID_S2C_NOTIFY_WORLD_NEWS, &tNotify);
+	//CSceneJob::Inst()->send2AllPlayer(ID_S2C_NOTIFY_WORLD_NEWS, &tNotify);
 }
 
 /// 发送世界新闻
@@ -164,7 +163,7 @@ void CChatModule::sendWorldNews(EmWorldNewsType eNewsType, PBNewsParam& rNewPara
 	CWorldNewsNotify tNotify;
 	tNotify.set_type(eNewsType);
 	tNotify.mutable_newsparam()->CopyFrom(rNewParam);
-	CSceneJob::Inst()->send2AllPlayer(ID_S2C_NOTIFY_WORLD_NEWS, &tNotify);
+	//CSceneJob::Inst()->send2AllPlayer(ID_S2C_NOTIFY_WORLD_NEWS, &tNotify);
 }
 
 /// 创建世界传闻的玩家信息

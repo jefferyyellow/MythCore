@@ -7,7 +7,6 @@
 #include "objpool.h"
 #include "loginplayer.h"
 #include "dbmodule.h"
-#include "scenejob.h"
 #include "propertymodule.h"
 #include "timemanager.h"
 #include "errcode.h"
@@ -104,11 +103,11 @@ void CLoginModule::onTimer(unsigned int nTickOffset)
 				// 如果已经在加载状态了，那肯定有对应的CEntityPlayer，不能存盘，直接删除对应的实体和socket
 				if (emLoginState_RoleLoading == pLoginPlayer->getLoginState())
 				{
-					CEntityPlayer* pPlayer = CSceneJob::Inst()->getPlayerBySocketIndex(pLoginPlayer->getExchangeHead().mSocketIndex);
-					if (NULL != pPlayer)
-					{
-						CPropertyModule::Inst()->playerLeaveGame(*pPlayer, EmLeaveReason_LoadTimeOut);
-					}
+					//CEntityPlayer* pPlayer = CSceneJob::Inst()->getPlayerBySocketIndex(pLoginPlayer->getExchangeHead().mSocketIndex);
+					//if (NULL != pPlayer)
+					//{
+					//	CPropertyModule::Inst()->playerLeaveGame(*pPlayer, EmLeaveReason_LoadTimeOut);
+					//}
 				}
 				printf("delete login player, State: %d, DelState: %d, OverTime: %d", pLoginPlayer->getLoginState(), pLoginPlayer->getDelState(), bOverTime);
 				removeVerifyPlayer(pLoginPlayer->getChannelID(), pLoginPlayer->getServerID(), pLoginPlayer->getAccountID());
@@ -121,7 +120,7 @@ void CLoginModule::onTimer(unsigned int nTickOffset)
 				// 如果登录完成了就不能断开连接
 				if (emLoginDelState_Complete != pLoginPlayer->getDelState())
 				{
-					CSceneJob::Inst()->disconnectPlayer(pLoginPlayer->getExchangeHead());
+					//CSceneJob::Inst()->disconnectPlayer(pLoginPlayer->getExchangeHead());
 				}
 				continue;
 			}
@@ -188,10 +187,10 @@ void CLoginModule::onClientMessage(CExchangeHead& rExchangeHead, unsigned int nM
 	const ::google::protobuf::Descriptor* pDescriptor = pMessage->GetDescriptor();
 
 	LOG_DEBUG("default", "---- Receive from client(Obj Id:%d|Account Id:%d|Channel:%d|Server:%d|Role:%d|Name:%s) \
-Msg[ %s ][id: 0x%04x/%d] ---",
-		pLoginPlayer->getObjID(), pLoginPlayer->getAccountID(), pLoginPlayer->getChannelID(),
-		pLoginPlayer->getServerID(), pLoginPlayer->getRoleID(), pLoginPlayer->getAccountName(), 
-		pDescriptor->name().c_str(),nMessageID, nMessageID);
+	Msg[ %s ][id: 0x%04x/%d] ---",
+	pLoginPlayer->getObjID(), pLoginPlayer->getAccountID(), pLoginPlayer->getChannelID(),
+	pLoginPlayer->getServerID(), pLoginPlayer->getRoleID(), pLoginPlayer->getAccountName(), 
+	pDescriptor->name().c_str(),nMessageID, nMessageID);
 	LOG_DEBUG("default", "[%s]", pMessage->ShortDebugString().c_str());
 }
 
@@ -243,8 +242,6 @@ void CLoginModule::processWaitEnterGame(CLoginPlayer* pLoginPlayer, Message* pMe
 	{
 		return;
 	}
-
-
 }
 
 ///  一个Socket断开
@@ -267,7 +264,7 @@ void CLoginModule::onSocketDisconnect(int nSocketIndex)
 /// 加载数据库里分配角色ID的字段
 void CLoginModule::loadAllocateRoleId()
 {
-	CDBModule::Inst()->pushDBTask(0, emSessionType_LoadAllocateRoleId, 0, 0,"select * from AllocateRoleId order by server_id asc limit %d", BAT_LOAD_ROLE_ID_NUM);
+	//CDBModule::Inst()->pushDBTask(0, emSessionType_LoadAllocateRoleId, 0, 0,"select * from AllocateRoleId order by server_id asc limit %d", BAT_LOAD_ROLE_ID_NUM);
 }
 
 /// 加载数据库里分配角色ID的处理
@@ -286,7 +283,7 @@ void CLoginModule::onLoadAllocateRoleId(CDBResponse& rResponse)
 	// 还没加载完成
 	if (nRow >= BAT_LOAD_ROLE_ID_NUM)
 	{
-		CDBModule::Inst()->pushDBTask(0, emSessionType_LoadAllocateRoleId, 0, 0, "select * from AllocateRoleId where server_id > %d order by server_id asc limit %d", nMaxServerId, BAT_LOAD_ROLE_ID_NUM);
+		//CDBModule::Inst()->pushDBTask(0, emSessionType_LoadAllocateRoleId, 0, 0, "select * from AllocateRoleId where server_id > %d order by server_id asc limit %d", nMaxServerId, BAT_LOAD_ROLE_ID_NUM);
 	}
 	// 已经加载完了
 	else
@@ -302,8 +299,8 @@ void CLoginModule::onLoadAllocateRoleId(CDBResponse& rResponse)
 			else
 			{
 				setAllocateRoleId(CGameServer::Inst()->getServerID(), nBeginRoleID);
-				CDBModule::Inst()->pushDBTask(0, emSessionType_UpdateAllocateRoleId, 0, 0, 
-				"insert into AllocateRoleId (server_id,max_role_id) values(%d, %d)", CGameServer::Inst()->getServerID(), nBeginRoleID);
+				//CDBModule::Inst()->pushDBTask(0, emSessionType_UpdateAllocateRoleId, 0, 0, 
+				//"insert into AllocateRoleId (server_id,max_role_id) values(%d, %d)", CGameServer::Inst()->getServerID(), nBeginRoleID);
 			}
 		}
 	}
@@ -324,8 +321,8 @@ unsigned int CLoginModule::allocateRoleID(int nServerId)
 	}
 
 	setAllocateRoleId(nServerId, nMaxRoleId + 1);
-	CDBModule::Inst()->pushDBTask(0, emSessionType_UpdateAllocateRoleId, 0, 0,
-		"update AllocateRoleId set max_role_id=%d where server_id=%d", nMaxRoleId + 1, nServerId);
+	//CDBModule::Inst()->pushDBTask(0, emSessionType_UpdateAllocateRoleId, 0, 0,
+	//	"update AllocateRoleId set max_role_id=%d where server_id=%d", nMaxRoleId + 1, nServerId);
 	return nMaxRoleId;
 }
 

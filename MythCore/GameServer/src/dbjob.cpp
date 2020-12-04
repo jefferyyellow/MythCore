@@ -6,12 +6,12 @@
 #include "entityplayer.h"
 #include "dbmodule.hxx.pb.h"
 #include "errcode.h"
-#include "scenejob.h"
 #include "timemanager.h"
+#include "jobmanager.h"
 CDBJob::CDBJob()
 {
 	init();
-	setJobID((int)emJobID_DB);
+	setJobType((int)emJobID_DB);
 }
 
 CDBJob::~CDBJob()
@@ -21,7 +21,6 @@ CDBJob::~CDBJob()
 
 void CDBJob::init()
 {
-    mJobBuffer = NULL;
     mSqlLength = 0;
 }
 
@@ -34,11 +33,6 @@ int CDBJob::initDB(const char* pHost, const char* pUserName, const char* pPasswd
 
 void CDBJob::clear()
 {
-	if (NULL != mJobBuffer)
-	{
-		delete []mJobBuffer;
-		mJobBuffer = NULL;
-	}
 }
 
 void CDBJob::doing(int uParam)
@@ -47,128 +41,118 @@ void CDBJob::doing(int uParam)
 	if (tTmpTime - mLogTime > TIME_JOB_RUN_LOG)
 	{
 		mLogTime = tTmpTime;
-		LOG_INFO("Job doing, Thread Num: %d, Job ID: %d", uParam, getJobID());
+		LOG_INFO("Job doing, Thread Num: %d, Job ID: %d", uParam, getJobType());
 	}
-	checkDBStream();
+	checkDBTask();
 
-	// 如果scene job已经退出完成了，表示需要保存的数据基本都完成了
-	if (CSceneJob::Inst()->getExited())
-	{
-		// 检查请求队列里是否还有数据，如果没有数据了，表示可以退出了
-		if ((!getExited()) && checkJobDataEmpty())
-		{
-			setExited(true);
-		}
-	}
-}
-
-int CDBJob::setBuffer(int nBufferSize)
-{
-	mJobBuffer = new byte[nBufferSize];
-	if (NULL == mJobBuffer)
-	{
-		return -1;
-	}
-	mJobStream.Initialize(mJobBuffer, nBufferSize);
-	return 0;
-}
-
-/// 压入工作数据
-void CDBJob::pushBackJobData(const byte* pData, int nDataLength)
-{
-	if (NULL == pData || 0 == nDataLength)
-	{
-		return;
-	}
-
-	mJobStreamLock.lock();
-	mJobStream.PushPacket(pData, nDataLength);
-	mJobStreamLock.unlock();
-}
-
-/// 取出工作数据
-void CDBJob::popUpJobData(byte* pData, int &rLength)
-{
-	if (NULL == pData)
-	{
-		return;
-	}
-
-	mJobStreamLock.lock();
-	mJobStream.GetHeadPacket(pData, rLength);
-	mJobStreamLock.unlock();
-}
-
-/// 得到工作数据量大小
-int CDBJob::checkJobDataEmpty()
-{
-	mJobStreamLock.lock();
-	bool bEmpty = mJobStream.IsEmpty();
-	mJobStreamLock.unlock();
-	return bEmpty;
+	//// 如果scene job已经退出完成了，表示需要保存的数据基本都完成了
+	//if (CSceneJob::Inst()->getExited())
+	//{
+	//	// 检查请求队列里是否还有数据，如果没有数据了，表示可以退出了
+	//	if ((!getExited()) && mTaskManager.empty()))
+	//	{
+	//		setExited(true);
+	//	}
+	//}
 }
 
 /// 处理DB流里的数据
-void CDBJob::checkDBStream()
+void CDBJob::checkDBTask()
 {
 	for (int i = 0; i < 2000; ++ i)
 	{
-		int nLength = 0;
-		popUpJobData((byte*)&mDBRequest, nLength);
-		if (nLength <= 0)
+		CInternalMsg* pIMMsg = mTaskManager.popTask();
+		// 如果
+		if (NULL == pIMMsg)
 		{
-			return;
+			break;
 		}
-		nLength -= (int)(sizeof(CDBRequestHeader));
+		if (pIMMsg->getMsgID() != IM_REQUEST_DB_SQL && pIMMsg->getMsgID() !=  IM_REQUEST_DB_MSG)
+		{
+			continue;
+		}
+		CIMDBMsgResponse* pResponse = new CIMDBMsgResponse;
+		if (NULL == pResponse)
+		{
+			break;
+		}
 
-		int nResultLength = sizeof(mDBResponse.mSqlBuffer) - 1;
+		CIMDBMsgBase* pMDBMsgBase = (CIMDBMsgBase*)pIMMsg;
+		CDBRequestHeader& rHeader = pMDBMsgBase->mHeader;
+		
+		pResponse->mHeader.mParam1 = rHeader.mParam1;
+		pResponse->mHeader.mParam2 = rHeader.mParam2;
+		pResponse->mHeader.mPlayerID = rHeader.mPlayerID;
+		pResponse->mHeader.mSessionType = rHeader.mSessionType;
+		int nTargetJobID = rHeader.mJobID;
 
 		int nRowNum = 0;
 		int nColNum = 0;
 		int nResult = SUCCESS;
-		switch (mDBRequest.mSessionType)
+		int nResultLength = sizeof(mDBResponse.mSqlBuffer);
+		if (pIMMsg->getMsgID() == IM_REQUEST_DB_SQL)
 		{
-			case emSessionType_SavePlayerBaseProperty:
-			{
-				nResult = onSavePlayerBaseProperty(nLength);
-				break;
-			}
-			case emSessionType_SavePlayerMail:
-			{
-				nResult = onSaveMail(nLength);
-				break;
-			}
-			case emSessionType_SaveGlobalMail:
-			{
-				nResult = onSaveGlobalMail(nLength);
-			}
-			default:
-			{
-				break;
-			}
-		}
-		if (SUCCESS == nResult)
-		{
-			nResult = mDataBase.query((char*)mDBRequest.mSqlBuffer, (byte*)mDBResponse.mSqlBuffer, nResultLength,
+			CIMDBSqlRequest* pRequest = (CIMDBSqlRequest*)pIMMsg;
+			nResult = mDataBase.query((char*)pRequest->mSql, (byte*)mDBResponse.mSqlBuffer, nResultLength,
 				nRowNum, nColNum);
 			if (nResult != SUCCESS)
 			{
-				LOG_ERROR("mysql query error, errno: %d, %s, %s", 
-					mysql_errno(mDataBase.GetMysql()), 
+				LOG_ERROR("mysql query error, errno: %d, %s, %s",
+					mysql_errno(mDataBase.GetMysql()),
 					mysql_error(mDataBase.GetMysql()),
-					(char*)mDBRequest.mSqlBuffer);
+					(char*)pRequest->mSql);
 			}
 		}
+		else
+		{
+			CIMDBMsgRequest* pRequest = (CIMDBMsgRequest*)pIMMsg;
+			switch (rHeader.mSessionType)
+			{
+				case emSessionType_SavePlayerBaseProperty:
+				{
+					nResult = onSavePlayerBaseProperty(pRequest->mSqlMsg);
+					break;
+				}
+				case emSessionType_SavePlayerMail:
+				{
+					nResult = onSaveMail(pRequest->mSqlMsg);
+					break;
+				}
+				case emSessionType_SaveGlobalMail:
+				{
+					nResult = onSaveGlobalMail(pRequest->mSqlMsg);
+				}
+				default:
+				{
+					break;
+				}
+			}
+			if (SUCCESS == nResult)
+			{
+				nResult = mDataBase.query((char*)mDBRequest.mSqlBuffer, (byte*)mDBResponse.mSqlBuffer, nResultLength,
+					nRowNum, nColNum);
+				if (nResult != SUCCESS)
+				{
+					LOG_ERROR("mysql query error, errno: %d, %s, %s",
+						mysql_errno(mDataBase.GetMysql()),
+						mysql_error(mDataBase.GetMysql()),
+						(char*)mDBRequest.mSqlBuffer);
+				}
+			}
+			delete pRequest->mSqlMsg;
+		}
+		if (SUCCESS == nResult)
+		{
+			pResponse->mHeader.mRowNum = nRowNum;
+			pResponse->mHeader.mColNum = nColNum;
+			pResponse->mMsgBuffer = new byte[nResultLength];
+			pResponse->mHeader.mSqlLenth = nResultLength;
+			memcpy(pResponse->mMsgBuffer, mDBResponse.mSqlBuffer, nResultLength);
+		}
+		pResponse->mHeader.mSqlResult = nResult;
 
-		mDBResponse.mPlayerID = mDBRequest.mPlayerID;
-		mDBResponse.mSqlResult = nResult;
-		mDBResponse.mParam1 = mDBRequest.mParam1;
-		mDBResponse.mParam2 = mDBRequest.mParam2;
-		mDBResponse.mSessionType = mDBRequest.mSessionType;
-		mDBResponse.mRowNum = (short)nRowNum;
-		mDBResponse.mColNum = (short)nColNum;
-		mDBResponse.mSqlLenth = (short)nResultLength;
-		CSceneJob::Inst()->pushBackDBData((byte*)&mDBResponse, (int)(sizeof(CDBResponseHeader)+nResultLength));
+		CJobManager::Inst()->pushTaskByID(nTargetJobID, pResponse);
+		delete pIMMsg;
 	}
 }
 
@@ -426,14 +410,10 @@ int CDBJob::parsePBForPrecedure(const Message& rMessage)
 }
 
 /// 处理保存玩家基本属性
-int CDBJob::onSavePlayerBaseProperty(int nLength)
+int CDBJob::onSavePlayerBaseProperty(const Message* pMessage)
 {
-	PBSavePlayer tSavePlayer;
-	if (!tSavePlayer.ParseFromArray(mDBRequest.mSqlBuffer, nLength))
-	{
-		LOG_ERROR("Player Base Property Parse From Array Error, PlayerID: %d", mDBRequest.mPlayerID);
-		return -1;
-	}
+	PBSavePlayer* pbSavePlayer = (PBSavePlayer*)pMessage;
+
 	//mSqlLength = 0;
 	//int tLen = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer) - mSqlLength,
 	//	"update PlayerBaseProperty set ");
@@ -451,7 +431,7 @@ int CDBJob::onSavePlayerBaseProperty(int nLength)
 	int tLen = snprintf((char*)&(mDBRequest.mSqlBuffer[mSqlLength]), sizeof(mDBRequest.mSqlBuffer),
 		"call UpdatePlayerBaseProperty(%d,", mDBRequest.mPlayerID);
 	mSqlLength += tLen;
-	int nResult = parsePBForPrecedure(tSavePlayer);
+	int nResult = parsePBForPrecedure(*pbSavePlayer);
 	if (SUCCESS != nResult)
 	{
 		return nResult;
@@ -463,12 +443,11 @@ int CDBJob::onSavePlayerBaseProperty(int nLength)
 }
 
 /// 处理保存玩家邮件
-int CDBJob::onSaveMail(int nLength)
+int CDBJob::onSaveMail(const Message* pMessage)
 {
-	PBMail pbMail;
-	if (!pbMail.ParseFromArray(mDBRequest.mSqlBuffer, nLength))
+	PBMail* pbMail = (PBMail*)pMessage;
+	if (NULL == pbMail)
 	{
-		LOG_ERROR("Player Mail Parse From Array Error, PlayerID: %d", mDBRequest.mPlayerID);
 		return -1;
 	}
 
@@ -477,7 +456,7 @@ int CDBJob::onSaveMail(int nLength)
 			"call SaveMail(");
 
 	mSqlLength += tLen;
-	int nResult = parsePBForPrecedure(pbMail);
+	int nResult = parsePBForPrecedure(*pbMail);
 	if (SUCCESS != nResult)
 	{
 		return nResult;
@@ -489,12 +468,11 @@ int CDBJob::onSaveMail(int nLength)
 }
 
 /// 处理保存全局邮件
-int CDBJob::onSaveGlobalMail(int nLength)
+int CDBJob::onSaveGlobalMail(const Message* pMessage)
 {
-	PBGlobalMail pbGlobalMail;
-	if (!pbGlobalMail.ParseFromArray(mDBRequest.mSqlBuffer, nLength))
+	PBGlobalMail* pbGlobalMail = (PBGlobalMail*)pMessage;
+	if (NULL == pbGlobalMail)
 	{
-		LOG_ERROR("Player Mail Parse From Array Error, PlayerID: %d", mDBRequest.mPlayerID);
 		return -1;
 	}
 
@@ -503,7 +481,7 @@ int CDBJob::onSaveGlobalMail(int nLength)
 		"call SaveGlobalMail(");
 
 	mSqlLength += tLen;
-	int nResult = parsePBForPrecedure(pbGlobalMail);
+	int nResult = parsePBForPrecedure(*pbGlobalMail);
 	if (SUCCESS != nResult)
 	{
 		return nResult;

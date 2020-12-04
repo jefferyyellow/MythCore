@@ -4,7 +4,6 @@
 #include "serverutility.h"
 #include "serveractivityunit.h"
 #include "entityplayer.h"
-#include "scenejob.h"
 #include "serveractmodule.hxx.pb.h"
 #include "timemanager.h"
 extern "C"
@@ -116,7 +115,7 @@ void CServerActModule::onTimer(unsigned int nTickOffset)
 /// 加载配置文件
 void CServerActModule::onLoadConfig()
 {
-	lua_State* L = CSceneJob::Inst()->getLuaState();
+	lua_State* L = NULL;//CSceneJob::Inst()->getLuaState();
 	lua_tinker::dofile(L, "gameserverconfig/script/server_activity/server_activity.lua");
 
 	sendPlatWebRequest("server_activity.xml", "server_activity.xml", EmHttpType(emHttpTypeGet | emHttpTypeFile), true);
@@ -298,7 +297,7 @@ CServerActivity* CServerActModule::getServerActivity(int nActivityID)
 /// 刷新活动进度
 void CServerActModule::refreshProcess(EmSvrActType eType, CEntityPlayer& rPlayer, int nParam1, int nParam2)
 {
-	lua_State* L = CSceneJob::Inst()->getLuaState();
+	lua_State* L = NULL;//CSceneJob::Inst()->getLuaState();
 	for (int i = 0; i < mAvailActivityNum; ++ i)
 	{
 		if (mAvailActivity[i]->getType() != eType)
@@ -422,7 +421,7 @@ void CServerActModule::onLoadPlatFile(CIMPlatWebResponse* pResponse)
 		return;
 	}
 
-	lua_State* L = CSceneJob::Inst()->getLuaState();
+	lua_State* L = NULL;//CSceneJob::Inst()->getLuaState();
 	if (strncmp("lua", acExtension, sizeof(acExtension) - 1) == 0)
 	{
 		if (luaL_loadfile(L, pResponse->mReturnData) != LUA_OK)

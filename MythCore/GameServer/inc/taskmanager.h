@@ -7,7 +7,6 @@
 using namespace Myth;
 class CInternalMsg;
 /// 数据库管理程序,管理各个数据库Job
-template<int BaseCount, int Increment>
 class CTaskManager
 {
 public:
@@ -35,8 +34,15 @@ public:
 		return pMsg;
 	}
 
+	bool empty()
+	{
+		mLock.lock();
+		bool bResult = mTaskList.empty();
+		mLock.unlock();
+		return bResult;
+	}
+
 private:
-	//CList<CInternalMsg*, BaseCount, Increment>	mTaskList;
 	std::list<CInternalMsg*>		mTaskList;
 	CSimpleLock						mLock;
 };

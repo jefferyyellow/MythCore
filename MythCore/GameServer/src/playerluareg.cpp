@@ -1,6 +1,5 @@
 #include "playerluareg.h"
 #include "entityplayer.h"
-#include "scenejob.h"
 extern "C"
 {
 #include "lua.h"
@@ -10,7 +9,7 @@ extern "C"
 #include "lua_tinker.h"
 void CPlayerLuaReg::reglua()
 {
-	lua_State* L = CSceneJob::Inst()->getLuaState();
+	lua_State* L = NULL;//CSceneJob::Inst()->getLuaState();
 	// CEntityPlayer本身接口注册
 	lua_tinker::class_add<CEntityPlayer>(L, "CEntityPlayer");
 	lua_tinker::class_def<CEntityPlayer>(L, "getRoleID", &CEntityPlayer::getRoleID);

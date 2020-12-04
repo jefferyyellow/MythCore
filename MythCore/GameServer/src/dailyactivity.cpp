@@ -7,7 +7,6 @@ extern "C"
 #include "lauxlib.h"
 };
 #include "lua_tinker.h"
-#include "scenejob.h"
 void CDailyActivity::init()
 {
     mType = 0;
@@ -22,20 +21,20 @@ void CDailyActivity::init()
 /// 活动开启
 void CDailyActivity::start()
 {
-	lua_State* L = CSceneJob::Inst()->getLuaState();
-	lua_tinker::call<int>(L, "DailyActivity_ActivityStart", mType, mID);
+	//lua_State* L = CSceneJob::Inst()->getLuaState();
+	//lua_tinker::call<int>(L, "DailyActivity_ActivityStart", mType, mID);
 }
 
 /// 活动结束的清理
 void CDailyActivity::end()
 {
-	lua_State* L = CSceneJob::Inst()->getLuaState();
-	lua_tinker::call<int>(L, "DailyActivity_ActivityEnd", mType, mID);
+	//lua_State* L = CSceneJob::Inst()->getLuaState();
+	//lua_tinker::call<int>(L, "DailyActivity_ActivityEnd", mType, mID);
 }
 
 /// 通知
 void CDailyActivity::notice()
 {
-	lua_State* L = CSceneJob::Inst()->getLuaState();
-	lua_tinker::call<int>(L, "DailyActivity_ActivityNotice", mType, mID);
+	//lua_State* L = CSceneJob::Inst()->getLuaState();
+	//lua_tinker::call<int>(L, "DailyActivity_ActivityNotice", mType, mID);
 }

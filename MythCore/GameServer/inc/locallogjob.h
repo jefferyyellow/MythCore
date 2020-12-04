@@ -54,13 +54,13 @@ extern void		LogLocalDebugLog(const char* pLogName, const char* pFile, int nLine
 extern void		LogNoLocation(EmLogType eLogType, const char* pFormat, ...);
 
 class CIMLocalLogRequest;
-class CLocalLogJob : public CJob<100, 100>
+class CLocalLogJob : public CJob
 {
 public:
 	CLocalLogJob()
 	{
 		init();
-		setJobID(emJobID_Log);
+		setJobType(emJobID_Log);
 	}
 	~CLocalLogJob(){}
 	void init();

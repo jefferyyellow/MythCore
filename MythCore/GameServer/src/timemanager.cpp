@@ -1,15 +1,14 @@
 #include "timemanager.h"
-#include "scenejob.h"
-/// 将时间转化为日期为当天的时间戳,1530表示服务器时间当天的15：30
-time_t CTimeManager::time2TimeStamp(int nTime)
-{
-	tm tTmNow = CSceneJob::Inst()->getTmNow();
-	tTmNow.tm_hour = nTime / 100;
-	tTmNow.tm_min = nTime % 100;
-	tTmNow.tm_sec = 0;
-
-	return mktime(&tTmNow);
-}
+///// 将时间转化为日期为当天的时间戳,1530表示服务器时间当天的15：30
+//time_t CTimeManager::time2TimeStamp(int nTime)
+//{
+//	tm tTmNow = 0;//CSceneJob::Inst()->getTmNow();
+//	tTmNow.tm_hour = nTime / 100;
+//	tTmNow.tm_min = nTime % 100;
+//	tTmNow.tm_sec = 0;
+//
+//	return mktime(&tTmNow);
+//}
 
 /// 将日期转化为时间戳,20200804转化成2020年8月4日凌晨0点0分0秒的时间戳
 time_t CTimeManager::date2TimeStamp(int nDate)

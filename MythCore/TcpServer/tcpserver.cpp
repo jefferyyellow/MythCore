@@ -10,6 +10,7 @@
 using namespace tinyxml2;
 
 CTcpServer::CTcpServer()
+	:mClientModel(&mClientSocket, 1)
 {
 
 }
@@ -35,13 +36,22 @@ bool CTcpServer::init()
 
 	loadTcpServerConfig("config/tcpserverconfig.xml");
 
-	bResult = initShareMemory();
 	if (!bResult)
 	{
 		return false;
 	}
 
 	bResult = initSocket();
+	if (!bResult)
+	{
+		return false;
+	}
+
+	bResult = initGameSvrSocket();
+	if (!bResult)
+	{
+		return false;
+	}
 	return bResult;
 }
 
@@ -102,53 +112,6 @@ bool CTcpServer::initLog()
 	CLogManager::Inst()->setTmNow(mCurrTime);
 	return true;
 }
-
-/// 初始化管道
-bool CTcpServer::initShareMemory()
-{
-	// 一个CShareMemory管理类
-	int nShareMemorySize = sizeof(CShareMemory);
-	// 两个CSocketStream管理类
-	nShareMemorySize += 2 * sizeof(CSocketStream);
-	// 两个真实的内存区域
-	nShareMemorySize += 2 * PIPE_SIZE;
-
-	bool bCreate = true;
-	byte* pSharePoint = CShareMemory::createShareMemory(37345234, nShareMemorySize, bCreate);
-	if (NULL == pSharePoint)
-	{
-		return false;
-	}
-	// 初始化
-	mShareMemory = (CShareMemory*)pSharePoint;
-	if (bCreate)
-	{
-		mShareMemory->setShmPoint(pSharePoint);
-		mShareMemory->setShmKey(37345234);
-		mShareMemory->setShmSize(nShareMemorySize);
-	}
-
-
-	pSharePoint += sizeof(CShareMemory);
-
-	// 初始化Tcp2Server共享内存
-	mTcp2ServerMemory = (CSocketStream*)pSharePoint;
-	if (bCreate)
-	{
-		mTcp2ServerMemory->Initialize(pSharePoint + sizeof(CSocketStream), PIPE_SIZE);
-	}
-
-	pSharePoint += sizeof(CSocketStream) + PIPE_SIZE;
-	// 初始化Server2Tcp共享内存
-	mServer2TcpMemory = (CSocketStream*)pSharePoint;
-	if (bCreate)
-	{
-		mServer2TcpMemory->Initialize(pSharePoint + sizeof(CSocketStream), PIPE_SIZE);
-	}
-	
-	return true;
-}
-
 
 #ifdef MYTH_OS_WINDOWS
 /// 初始化Socket
@@ -252,6 +215,28 @@ bool CTcpServer::initSocket()
 }
 #endif
 
+/// 初始化作为一个客户端的socket
+bool CTcpServer::initGameSvrSocket()
+{
+	CSelectModel::initSocketSystem();
+	mClientSocket.createSocket();
+	mClientSocket.setSendBuffSizeOption(SOCKET_CACHE_SIZE);
+	mClientSocket.setRecvBuffSizeOption(SOCKET_CACHE_SIZE);
+
+	int nResult = mClientSocket.connectServer(mTcpConfig.mGameSvrIP, mTcpConfig.mGameSvrPort);
+	if (0 != nResult)
+	{
+		return false;
+	}
+
+	mpClientRecData = new byte[MAX_GATE_BUFF_SIZE];
+	mClientSocket.setRecvBuff(mpClientRecData);
+	mClientSocket.setRecvBuffSize(0);
+	mClientSocket.setMaxRecvBuffSize(MAX_GATE_BUFF_SIZE);
+	mClientModel.addNewSocket(&mClientSocket, 0);
+	return true;
+}
+
 /// 运行
 void CTcpServer::run()
 {
@@ -274,8 +259,8 @@ void CTcpServer::run()
 
 		nanosleep(&tv, NULL);
 #endif
-		receiveMessage();
-		sendMessage();
+		receiveClientMessage();
+		receiveGameServerMsg();
 		checkTimeOut();
 	}
 	
@@ -342,7 +327,7 @@ void CTcpServer::checkKeepLiveTimeOut(time_t tTimeNow)
 
 #ifdef MYTH_OS_WINDOWS
 /// 接收消息
-void CTcpServer::receiveMessage()
+void CTcpServer::receiveClientMessage()
 {
 	int nMaxSocketIndex = mSelectModel->getMaxSocketIndex();
 	CTcpSocket* pAllSocket = mSelectModel->getAllSocket();
@@ -424,7 +409,7 @@ void CTcpServer::receiveMessage()
 	}
 }
 #else
-void CTcpServer::receiveMessage()
+void CTcpServer::receiveClientMessage()
 {
 	int nNumFd = mEpollModel->wait();
 	if (nNumFd < 0)
@@ -565,6 +550,7 @@ void CTcpServer::onReceiveMessage(CTcpSocket* pSocket, int nIndex)
 			break;
 		}
 
+		mExchangeHead.mDataLength = nMessageLen + sizeof(mExchangeHead);
 		mExchangeHead.mSocketIndex = nIndex;
 		mExchangeHead.mSocketError = emTcpError_None;
 		mExchangeHead.mSocketTime = mSocketInfo[nIndex].mCreateTime;
@@ -572,7 +558,9 @@ void CTcpServer::onReceiveMessage(CTcpSocket* pSocket, int nIndex)
 
 		memcpy(mBuffer, &mExchangeHead, sizeof(mExchangeHead));
 		memcpy(mBuffer + sizeof(mExchangeHead), pBuffer, nMessageLen);
-		mTcp2ServerMemory->PushPacket((byte*)mBuffer, nMessageLen + sizeof(mExchangeHead));
+		//mTcp2ServerMemory->PushPacket((byte*)mBuffer, nMessageLen + sizeof(mExchangeHead));
+		// 发往游戏服务器
+		mClientSocket.sendData(mBuffer, nMessageLen + sizeof(mExchangeHead));
 
 		pBuffer += nMessageLen;
 		nBuffSize -= nMessageLen;
@@ -586,32 +574,83 @@ void CTcpServer::onReceiveMessage(CTcpSocket* pSocket, int nIndex)
 	int nSendSize = pSocket->getRecvBuffSize() - nBuffSize;
 	if (nSendSize > 0)
 	{
-		pSocket->setRecvBuffSize(nBuffSize);
 		pSocket->resetRecvBuffPoint(nSendSize);
+		pSocket->setRecvBuffSize(nBuffSize);
 	}
 }
 
-// 发送客户端消息
-void CTcpServer::sendMessage()
+/// 接收游戏服务器消息
+void CTcpServer::receiveGameServerMsg()
 {
-	int nMessageLen = MAX_SOCKET_BUFF_SIZE;
-	int nResult = 0;
-	for (int i = 0; i < MAX_SEND_PACKAGE_ONCE; ++ i)
+	mClientModel.selectAllFd();
+	int nMaxSocketIndex = mClientModel.getMaxSocketIndex();
+	CTcpSocket* pAllSocket = mClientModel.getAllSocket();
+	fd_set& rReadSet = mClientModel.getReadSet();
+	for (int i = 0; i <= nMaxSocketIndex; ++i)
 	{
-		nResult = mServer2TcpMemory->GetHeadPacket((byte*)mBuffer, nMessageLen);
-		if (nResult < 0)
+		int nFd = pAllSocket[i].getSocketFd();
+		if (INVALID_SOCKET == nFd)
+		{
+			continue;
+		}
+		if (FD_ISSET(nFd, &rReadSet))
+		{
+			int nResult = pAllSocket[i].recvData(pAllSocket[i].getRecvBuffPoint(), pAllSocket[i].getRecvBuffCapacity());
+			if (nResult <= 0)
+			{
+				CTcpSocket* pSocket = mSelectModel->getSocket(i);
+				if (NULL != pSocket)
+				{
+					//sendSocketErrToGameServer(i, emTcpError_SendData);
+					//// 客户端已经退出
+					//clearSocketInfo(i, pSocket);
+				}
+				break;
+			}
+			else
+			{
+				pAllSocket[i].setRecvBuffSize(pAllSocket[i].getRecvBuffSize() + nResult);
+				onReceiveGameServerMsg(&(pAllSocket[i]));
+			}
+		}
+	}
+}
+
+/// 接收游戏服务器处理
+void CTcpServer::onReceiveGameServerMsg(CTcpSocket* pSocket)
+{
+	if (NULL == pSocket)
+	{
+		return;
+	}
+
+	int nBuffSize = pSocket->getRecvBuffSize();
+	byte* pBuffer = pSocket->getRecvBuff();
+
+	while (true)
+	{
+		if (nBuffSize < 4 + sizeof(CExchangeHead))
 		{
 			break;
 		}
 
-		if (nMessageLen <= 0)
+		short nMessageLen = *(short*)pBuffer;
+		// 4是前端和服务器的消息头：2个字节的长度+2个字节的ID
+		if (nMessageLen < 4 + sizeof(CExchangeHead) || nMessageLen > MAX_SOCKET_BUFF_SIZE)
+		{
+			// 出错
+			break;
+		}
+
+		// 消息包还没有接受完全
+		if (nBuffSize < nMessageLen)
 		{
 			break;
 		}
-		byte* pTemp = mBuffer;
+
 		CExchangeHead* pExchangeHead = (CExchangeHead*)mBuffer;
 
-		pTemp += sizeof(CExchangeHead);
+		pBuffer += sizeof(CExchangeHead);
 		nMessageLen -= sizeof(CExchangeHead);
 
 		int nTcpIndex = pExchangeHead->mSocketIndex;
@@ -644,18 +683,13 @@ void CTcpServer::sendMessage()
 			clearSocketInfo(nTcpIndex, pSocket);
 			continue;
 		}
-
-		if (nMessageLen <= 0)
-		{
-			continue;
-		}
-		short nLength = *(short*)pTemp;
+		short nLength = *(short*)pBuffer;
 		if (nLength != nMessageLen)
 		{
 			continue;
 		}
 
-		int nResult = pSocket->sendData(pTemp, nMessageLen);
+		int nResult = pSocket->sendData(pBuffer, nMessageLen);
 		// int nResult = mSelectModel->processWrite(nTcpIndex, pTemp, nMessageLen);
 		if (nResult != nMessageLen)
 		{
@@ -664,7 +698,7 @@ void CTcpServer::sendMessage()
 			continue;
 		}
 		// 增加发送消息数目
-		++ mServerStatistics.mSendMessageNum;
+		++mServerStatistics.mSendMessageNum;
 		// 增加发送消息的字节数
 		mServerStatistics.mSendBytes += nMessageLen;
 #else
@@ -674,6 +708,12 @@ void CTcpServer::sendMessage()
 		{
 			continue;
 		}
+
+		if (INVALID_SOCKET == pSocket->getSocketFd())
+		{
+			continue;
+		}
+
 		// 游戏服务器已经关闭socket，所以不需要通知游戏服务器了
 		if (pExchangeHead->mSocketError == emTcpError_OffLineClose)
 		{
@@ -681,13 +721,13 @@ void CTcpServer::sendMessage()
 			continue;
 		}
 
-		short nLength = *(short*)pTemp;
+		short nLength = *(short*)pBuffer;
 		if (nLength != nMessageLen)
 		{
 			continue;
 		}
 
-		int nResult = pSocket->sendData(pTemp, nMessageLen);
+		int nResult = pSocket->sendData(pBuffer, nMessageLen);
 		// int nResult = mEpollModel->processWrite(nTcpIndex, pTemp, nMessageLen);
 		if (nResult != nMessageLen)
 		{
@@ -702,6 +742,15 @@ void CTcpServer::sendMessage()
 		mServerStatistics.mSendBytes += nMessageLen;
 #endif
 
+		pBuffer += nMessageLen;
+		nBuffSize -= nMessageLen;
+	}
+
+	int nSendSize = pSocket->getRecvBuffSize() - nBuffSize;
+	if (nSendSize > 0)
+	{
+		pSocket->resetRecvBuffPoint(nSendSize);
+		pSocket->setRecvBuffSize(nBuffSize);
 	}
 }
 
@@ -713,12 +762,15 @@ void CTcpServer::sendSocketErrToGameServer(int nTcpIndex, short nSocketError)
 		return;
 	}
 
+	mExchangeHead.mDataLength = sizeof(CExchangeHead);
 	mExchangeHead.mSocketIndex = nTcpIndex;
 	mExchangeHead.mSocketError = nSocketError;
 	mExchangeHead.mSocketTime = mSocketInfo[nTcpIndex].mCreateTime;
 
 	memcpy(mBuffer, &mExchangeHead, sizeof(mExchangeHead));
-	mTcp2ServerMemory->PushPacket((byte*)mBuffer, sizeof(mExchangeHead));
+	//mTcp2ServerMemory->PushPacket((byte*)mBuffer, sizeof(mExchangeHead));
+	// 发往游戏服务器
+	mClientSocket.sendData(mBuffer, sizeof(mExchangeHead));
 }
 
 // 清除socket info
@@ -800,31 +852,47 @@ void CTcpServer::loadTcpServerConfig(const char* pConfigPath)
 			mTcpConfig.mWriteStatisticsTime = pWriteStatisticsTimeElement->IntAttribute("value");
 		}
 	}
+
+	XMLElement* pGameSvrEelm = pRoot->FirstChildElement("GameServer");
+	if (NULL != pGameSvrEelm)
+	{
+		XMLElement* pGameSvrIPElem = pGameSvrEelm->FirstChildElement("IP");
+		if (NULL != pGameSvrIPElem)
+		{
+			strncpy(mTcpConfig.mGameSvrIP, pGameSvrIPElem->Attribute("value"), sizeof(mTcpConfig.mGameSvrIP));
+		}
+
+		XMLElement* pGameSvrPortElem = pGameSvrEelm->FirstChildElement("Port");
+		if (NULL != pGameSvrPortElem)
+		{
+			mTcpConfig.mGameSvrPort = pGameSvrPortElem->IntAttribute("value");
+		}
+	}
 }
 
 /// 写统计信息
 void CTcpServer::writeTcpStatisticsData()
 { 
 
-	int nServer2TcpLeftSpace = mServer2TcpMemory->GetLeftSpace();
-	int nTcp2ServerLeftSpace = mTcp2ServerMemory->GetLeftSpace();
+	//int nServer2TcpLeftSpace = mServer2TcpMemory->GetLeftSpace();
+	//int nTcp2ServerLeftSpace = mTcp2ServerMemory->GetLeftSpace();
 
-	char tBuff[256] = {0};
-	snprintf(tBuff, sizeof(tBuff) - 1, "S2TLeft: %d --- T2S: %d, Connects: %d, TotalConnects: %d, ReceiveBytes: %d, ReceiveMessageNum: %d, SendBytes: %d, SendMessageNum:%d",
-		nServer2TcpLeftSpace, nTcp2ServerLeftSpace, mServerStatistics.mConnects, mServerStatistics.mTotalConnects, mServerStatistics.mReceiveBytes, 
-		mServerStatistics.mReceiveMessageNum, mServerStatistics.mSendBytes, mServerStatistics.mSendMessageNum);
-
-
-	char tLogBuff[256] = { 0 };
-	CLogManager::Inst()->FormatLogMessage(tLogBuff, sizeof(tLogBuff) - 1, "INFO", tBuff);
-	mStatisticsLog->DisplayLog(tLogBuff);
+	//char tBuff[256] = {0};
+	//snprintf(tBuff, sizeof(tBuff) - 1, "S2TLeft: %d --- T2S: %d, Connects: %d, TotalConnects: %d, ReceiveBytes: %d, ReceiveMessageNum: %d, SendBytes: %d, SendMessageNum:%d",
+	//	nServer2TcpLeftSpace, nTcp2ServerLeftSpace, mServerStatistics.mConnects, mServerStatistics.mTotalConnects, mServerStatistics.mReceiveBytes, 
+	//	mServerStatistics.mReceiveMessageNum, mServerStatistics.mSendBytes, mServerStatistics.mSendMessageNum);
 
 
-	mServerStatistics.mConnects = 0;
-	mServerStatistics.mReceiveBytes = 0;
-	mServerStatistics.mReceiveMessageNum = 0;
-	mServerStatistics.mSendBytes = 0;
-	mServerStatistics.mSendMessageNum = 0;
+	//char tLogBuff[256] = { 0 };
+	//CLogManager::Inst()->FormatLogMessage(tLogBuff, sizeof(tLogBuff) - 1, "INFO", tBuff);
+	//mStatisticsLog->DisplayLog(tLogBuff);
+
+
+	//mServerStatistics.mConnects = 0;
+	//mServerStatistics.mReceiveBytes = 0;
+	//mServerStatistics.mReceiveMessageNum = 0;
+	//mServerStatistics.mSendBytes = 0;
+	//mServerStatistics.mSendMessageNum = 0;
 }
 
 /// 清除日志
@@ -874,7 +942,7 @@ void CTcpServer::clear()
 	clearLog(&CLogManager::Inst()->GetWarnLog());
 	clearLog(mStatisticsLog);
 	delete mStatisticsLog;
-
+	delete mpClientRecData;
 	CLogManager::destroyInst();
 }
 

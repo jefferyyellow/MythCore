@@ -2,7 +2,6 @@
 #include "mail.h"
 #include "entityplayer.h"
 #include "dbmodule.hxx.pb.h"
-#include "scenejob.h"
 #include "dbmodule.h"
 #include "errcode.h"
 #include "timemanager.h"
@@ -71,8 +70,8 @@ void CMailModule::onLoadConfig()
 
 void CMailModule::loadMaxMailID()
 {
-	CDBModule::Inst()->pushDBTask(0, emSessionType_LoadMaxMailID, 0, 0,
-		"select AUTO_INCREMENT from information_schema.tables where table_schema=database() and table_name='Mail'");
+	//CDBModule::Inst()->pushDBTask(0, emSessionType_LoadMaxMailID, 0, 0,
+	//	"select AUTO_INCREMENT from information_schema.tables where table_schema=database() and table_name='Mail'");
 }
 
 /// 加载最大的邮件ID回调
@@ -95,8 +94,8 @@ void CMailModule::onLoadMaxMailID(CDBResponse& rResponse)
 /// 加载最大的全局邮件ID
 void CMailModule::loadMaxGlobalMailID()
 {
-	CDBModule::Inst()->pushDBTask(0, emSessionType_LoadMaxGlobalMailID, 0, 0,
-		"select AUTO_INCREMENT from information_schema.tables where table_schema=database() and table_name='GlobalMail'");
+	//CDBModule::Inst()->pushDBTask(0, emSessionType_LoadMaxGlobalMailID, 0, 0,
+	//	"select AUTO_INCREMENT from information_schema.tables where table_schema=database() and table_name='GlobalMail'");
 
 }
 /// 加载最大的全局邮件ID回调
@@ -121,8 +120,8 @@ void CMailModule::deleteExpireMail()
 {
 	// 得到现在 - 邮件存在最长时间 = 过期时间，比过期时间早的都删除掉
 	time_t nExpireTime = CTimeManager::Inst()->getCurrTime() - MAX_MAIL_DURATION_TIME;
-	CDBModule::Inst()->pushDBTask(0, emSessionType_DeleteExpireMail, 0, 0,
-		"delete from Mail where create_time <= %d", nExpireTime);
+	//CDBModule::Inst()->pushDBTask(0, emSessionType_DeleteExpireMail, 0, 0,
+	//	"delete from Mail where create_time <= %d", nExpireTime);
 }
 
 
@@ -170,12 +169,12 @@ void CMailModule::sendPlayerMail(uint nRoleID, CMail& rMail)
 	// 创建邮件ID
 	rMail.setMailID(mPlayerMailID++);
 
-	// 如果在线，加入玩家的邮件列表中
-	CEntityPlayer* pPlayer = CSceneJob::Inst()->getPlayerByRoleID(nRoleID);
-	if (NULL != pPlayer)
-	{
-		pPlayer->getInteractiveUnit().addMail(rMail);
-	}
+	//// 如果在线，加入玩家的邮件列表中
+	//CEntityPlayer* pPlayer = CSceneJob::Inst()->getPlayerByRoleID(nRoleID);
+	//if (NULL != pPlayer)
+	//{
+	//	pPlayer->getInteractiveUnit().addMail(rMail);
+	//}
 	saveMail2DB(nRoleID, rMail);
 }
 
@@ -206,7 +205,7 @@ void CMailModule::saveMail2DB(uint nRoleID, CMail& rMail)
 	PBMailItemList* pbMailItemList = pbMail.mutable_mail_item();
 	saveMailItemList(rMail, pbMailItemList);
 
-	CDBModule::Inst()->pushDBTask(nRoleID, emSessionType_SavePlayerMail, nRoleID, 0, &pbMail);
+	//CDBModule::Inst()->pushDBTask(nRoleID, emSessionType_SavePlayerMail, nRoleID, 0, &pbMail);
 }
 
 /// 保存全局邮件到数据库
@@ -223,23 +222,23 @@ void CMailModule::saveGlobalMail2DB(CMail& rMail)
 	PBMailItemList* pbMailItemList = pbMail.mutable_mail_item();
 	saveMailItemList(rMail, pbMailItemList);
 
-	CDBModule::Inst()->pushDBTask(0, emSessionType_SaveGlobalMail, 0, 0, &pbMail);
+	//CDBModule::Inst()->pushDBTask(0, emSessionType_SaveGlobalMail, 0, 0, &pbMail);
 }
 
 
 /// 加载邮件
 void CMailModule::loadPlayerMail(int nRoleID)
 {
-	CDBModule::Inst()->pushDBTask(nRoleID, emSessionType_LoadPlayerMail, nRoleID, 0,
-		"select mail_id, mail_status, mail_type, item_log, create_time, mail_title, mail_body, mail_item from Mail where role_id=%d",
-		nRoleID);
+	//CDBModule::Inst()->pushDBTask(nRoleID, emSessionType_LoadPlayerMail, nRoleID, 0,
+	//	"select mail_id, mail_status, mail_type, item_log, create_time, mail_title, mail_body, mail_item from Mail where role_id=%d",
+	//	nRoleID);
 }
 
 /// 加载邮件数据库回调
 void CMailModule::onLoadPlayerMail(CDBResponse& rResponse)
 {
 	int nPlayerID = rResponse.mPlayerID;
-	CEntityPlayer* pPlayer = CSceneJob::Inst()->getPlayerByRoleID(nPlayerID);
+	CEntityPlayer* pPlayer = NULL;// CSceneJob::Inst()->getPlayerByRoleID(nPlayerID);
 	if (NULL == pPlayer)
 	{
 		return;
@@ -276,8 +275,8 @@ void CMailModule::onLoadPlayerMail(CDBResponse& rResponse)
 /// 加载全局邮件
 void CMailModule::loadGlobalMail()
 {
-	CDBModule::Inst()->pushDBTask(0, emSessionType_LoadGlobalMail, 0, 0,
-		"select mail_id, mail_type, create_time, mail_title, mail_body, mail_item from GlobalMail order by mail_id asc");
+	//CDBModule::Inst()->pushDBTask(0, emSessionType_LoadGlobalMail, 0, 0,
+	//	"select mail_id, mail_type, create_time, mail_title, mail_body, mail_item from GlobalMail order by mail_id asc");
 }
 
 /// 加载全局邮件回调
@@ -366,8 +365,8 @@ void CMailModule::saveMailItemList(CMail& rMail, PBMailItemList* pbMailItemList)
 /// 删除全局邮件
 void CMailModule::deleteGlobalMail2DB(uint nMailID)
 {
-	CDBModule::Inst()->pushDBTask(0, emSessionType_DeleteGlobalMail, 0, 0,
-		"delete from GlobalMail where mail_id=%d", nMailID);
+	//CDBModule::Inst()->pushDBTask(0, emSessionType_DeleteGlobalMail, 0, 0,
+	//	"delete from GlobalMail where mail_id=%d", nMailID);
 }
 
 /// 给玩家发全局邮件
@@ -421,14 +420,14 @@ void CMailModule::gameEvent(uint nRoleID, EmGameEventType eType, PBGameEvent& rG
 	rGameEvent.set_event_type(eType);
 	rGameEvent.set_create_time((google::protobuf::uint32)CTimeManager::Inst()->getCurrTime());
 
-	CDBModule::Inst()->pushDBTask(nRoleID, emSessionType_SaveGameEvent, nRoleID, 0, &rGameEvent);
+	//CDBModule::Inst()->pushDBTask(nRoleID, emSessionType_SaveGameEvent, nRoleID, 0, &rGameEvent);
 }
 
 void CMailModule::loadGameEvent(uint nRoleID, uint nMaxEventID)
 {
 	// 如果事件过多一次性加载不完的话，一次性加载500，平均每条event_id有130多个字节左右
 	char* pSql = "select event_id, event_type, event_param from GameEvent where role_id=%d and event_id > %d ordery by event_id asc limit %d";
-	CDBModule::Inst()->pushDBTask(nRoleID, emSessionType_LoadGameEvent, nRoleID, 0, pSql, nRoleID, nMaxEventID, MAX_GAME_EVENT_LOAD);
+	//CDBModule::Inst()->pushDBTask(nRoleID, emSessionType_LoadGameEvent, nRoleID, 0, pSql, nRoleID, nMaxEventID, MAX_GAME_EVENT_LOAD);
 }
 
 void CMailModule::onLoadGameEvent(CDBResponse& rResponse)
@@ -484,6 +483,6 @@ void CMailModule::processGameEvent(uint nEventID, uint nRoleID, EmGameEventType 
 void CMailModule::deleteGameEvent(uint nEventID, uint nRoleID)
 {
 	char* pSql = "delete from GameEvent where event_id=%d";
-	CDBModule::Inst()->pushDBTask(nRoleID, emSessionType_DeleteGameEvent, 0, 0, pSql, nEventID);
+	//CDBModule::Inst()->pushDBTask(nRoleID, emSessionType_DeleteGameEvent, 0, 0, pSql, nEventID);
 
 }

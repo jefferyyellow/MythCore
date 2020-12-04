@@ -2,10 +2,11 @@
 #include "locallogjob.h"
 #include "dbjob.h"
 #include "platjob.h"
-#include "scenejob.h"
+#include "mapjob.h"
 #include "gameserverconfig.h"
 #include "internalmsg.h"
 #include "rankjob.h"
+#include "loginjob.h"
 
 CJobManager::CJobManager()
 {
@@ -13,10 +14,14 @@ CJobManager::CJobManager()
 	{
 		mpDBJob[i] = NULL;
 	}
+	for (int i = 0; i < MAX_MAP_JOB; ++ i)
+	{
+		mpMapJob[i] = NULL;
+	}
 	mpLocalLogJob = NULL;
-	mpSceneJob = NULL;
 	mpPlatJob = NULL;
 	mpRankJob = NULL;
+	mpLoginJob = NULL;
 }
 
 // 
@@ -34,15 +39,14 @@ bool CJobManager::init()
 		return false;
 	}
 
-	// 初始化SceneJob
-	mpSceneJob = CSceneJob::createInst();
-	if (NULL == mpSceneJob)
+	mpRankJob = new CRankJob;
+	if (NULL == mpRankJob)
 	{
 		return false;
 	}
 
-	mpRankJob = new CRankJob;
-	if (NULL == mpRankJob)
+	mpLoginJob = new CLoginJob;
+	if (NULL == mpLoginJob)
 	{
 		return false;
 	}
@@ -56,13 +60,22 @@ bool CJobManager::init()
 		}
 	}
 
+	for (int i = 0; i < MAX_MAP_JOB; ++ i)
+	{
+		mpMapJob[i] = new CMapJob;
+		if (NULL == mpMapJob[i])
+		{
+			return false;
+		}
+	}
+
 	return true;
 }
 
 /// 初始线程
 bool CJobManager::initThread()
 {
-	mThreadPool.init(10);
+	mThreadPool.initThread(10);
 
 	//Sleep(3000);
 	// 初始化LocalLogJob
@@ -79,7 +92,6 @@ bool CJobManager::initThread()
 		{
 			return false;
 		}
-		mpDBJob[i]->setBuffer(MAX_DB_JOB_BUFFER_SIZE);
 	}
 
 	if (NULL != mpPlatJob)
@@ -93,35 +105,28 @@ bool CJobManager::initThread()
 	}
 
 
-	if (NULL != mpSceneJob)
-	{
-		bool bResult = mpSceneJob->initBase(MAX_SCENE_DB_BUFFER_SIZE);
-		if (!bResult)
-		{
-			return false;
-		}
-		mpSceneJob->doInit();
-
-	}
-
 
 	printf("initThread\n");
-	mThreadPool.pushBackJob(mpLocalLogJob);
+	pushBackJob(mpLocalLogJob);
 	for (int i = 0; i < MAX_DB_JOB; ++i)
 	{
-		mThreadPool.pushBackJob(mpDBJob[i]);
+		pushBackJob(mpDBJob[i]);
 	}
-	if (NULL != mpSceneJob)
+	for (int i = 0; i < MAX_MAP_JOB; ++ i)
 	{
-		mThreadPool.pushBackJob(mpSceneJob);
+		pushBackJob(mpMapJob[i]);
 	}
 	if (NULL != mpPlatJob)
 	{
-		mThreadPool.pushBackJob(mpPlatJob);
+		pushBackJob(mpPlatJob);
 	}
 	if (NULL != mpRankJob)
 	{
-		mThreadPool.pushBackJob(mpRankJob);
+		pushBackJob(mpRankJob);
+	}
+	if (NULL != mpLoginJob)
+	{
+		pushBackJob(mpLoginJob);
 	}
 	return true;
 }
@@ -153,10 +158,6 @@ void CJobManager::clearThread()
 	mThreadPool.terminateAllThread();
 	mThreadPool.run();
 	mThreadPool.waitAllThread();
-	if (NULL != mpSceneJob)
-	{
-		mpSceneJob->clearBase();
-	}
 
 	if (NULL != mpRankJob)
 	{
@@ -168,6 +169,11 @@ void CJobManager::clearThread()
 		mpPlatJob->clear();
 	}
 
+	if (NULL != mpLoginJob)
+	{
+		mpLoginJob->clear();
+	}
+
 	for (int i = 0; i < MAX_DB_JOB; ++i)
 	{
 		if (NULL == mpDBJob[i])
@@ -175,6 +181,14 @@ void CJobManager::clearThread()
 			continue;
 		}
 		mpDBJob[i]->clear();
+	}
+	for (int i = 0; i < MAX_MAP_JOB; ++ i)
+	{
+		if (NULL == mpMapJob[i])
+		{
+			continue;
+		}
+		mpMapJob[i]->clear();
 	}
 }
 
@@ -187,13 +201,6 @@ void CJobManager::run()
 /// 检查除了log job是否都已经退出
 bool CJobManager::checkOtherJobExit()
 {
-	if (NULL != mpSceneJob)
-	{
-		if (!mpSceneJob->getExited())
-		{
-			return false;
-		}
-	}
 
 	if (NULL != mpRankJob)
 	{
@@ -224,6 +231,17 @@ bool CJobManager::checkOtherJobExit()
 		}
 	}
 
+	for (int i = 0; i < MAX_MAP_JOB; ++i)
+	{
+		if (NULL == mpMapJob[i])
+		{
+			continue;
+		}
+		if (!mpMapJob[i]->getExited())
+		{
+			return false;
+		}
+	}
 	return true;
 }
 
@@ -242,18 +260,13 @@ bool CJobManager::checkAllJobExit()
 	return checkOtherJobExit();
 }
 
-void CJobManager::pushTask(EmJobTaskType eTaskType, CInternalMsg* pMsg)
+void CJobManager::pushTaskByType(EmJobType eJobType, CInternalMsg* pMsg)
 {
-	switch (eTaskType)
+	switch (eJobType)
 	{
 		case emJobTaskType_LocalLog:
 		{
 			mpLocalLogJob->pushTask(pMsg);
-			break;
-		}
-		case emJobTaskType_Scene:
-		{
-			mpSceneJob->pushTask(pMsg);
 			break;
 		}
 		case emJobTaskType_Plat:
@@ -266,6 +279,11 @@ void CJobManager::pushTask(EmJobTaskType eTaskType, CInternalMsg* pMsg)
 			mpRankJob->pushTask(pMsg);
 			break;
 		}
+		case emJobTaskType_Login:
+		{
+			mpLoginJob->pushTask(pMsg);
+			break;
+		}
 		default:
 		{
 			break;
@@ -273,8 +291,24 @@ void CJobManager::pushTask(EmJobTaskType eTaskType, CInternalMsg* pMsg)
 	}
 }
 
-void CJobManager::pushDBTask(int nUid, byte* pData, int nDataLength)
+void CJobManager::pushTaskByID(byte nJobID, CInternalMsg* pMsg)
+{
+	CJob* pJob = (CJob*)mThreadPool.getJobByID(nJobID);
+	if (NULL == pJob)
+	{
+		return;
+	}
+
+	pJob->pushTask(pMsg);
+}
+
+void CJobManager::pushDBTask(int nUid, CInternalMsg* pMsg)
 {
 	int nIndex = nUid % MAX_DB_JOB;
-	mpDBJob[nIndex]->pushBackJobData(pData, nDataLength);
+	mpDBJob[nIndex]->pushTask(pMsg);
+}
+
+void CJobManager::pushBackJob(IJob* pJob)
+{
+	mThreadPool.pushBackJob(pJob);
 }

@@ -7,7 +7,7 @@
 #include "log.h"
 #include "internalmsgpool.h"
 #include "jobmanager.h"
-#include "scenejob.h"
+//#include "scenejob.h"
 #include "propertymodule.h"
 #include "dbmodule.h"
 #include "entityplayer.h"
@@ -23,67 +23,67 @@ CServerResave::CServerResave()
 /// 初始化
 bool CServerResave::initAll()
 {
-	// 优先初始化这两个变量
-	bool bResult = initLogicModule();
-	if (!bResult)
-	{
-		return false;
-	}
-	mpJobManager = CJobManager::Inst();
-	mpJobManager->initMin();
+	//// 优先初始化这两个变量
+	//bool bResult = initLogicModule();
+	//if (!bResult)
+	//{
+	//	return false;
+	//}
+	//mpJobManager = CJobManager::Inst();
+	//mpJobManager->initMin();
 
-	bResult = CGameServerConfig::Inst()->loadGameServerConfigFromXml("config/gameserverconfig.xml");
-	if (!bResult)
-	{
-		return bResult;
-	}
+	//bResult = CGameServerConfig::Inst()->loadGameServerConfigFromXml("config/gameserverconfig.xml");
+	//if (!bResult)
+	//{
+	//	return bResult;
+	//}
 
-	bResult = CGameLogicConfig::Inst()->loadGameLogicConfig("gameserverconfig/gamelogicconfig/gamelogicconfig.xml");
-	if (!bResult)
-	{
-		return bResult;
-	}
+	//bResult = CGameLogicConfig::Inst()->loadGameLogicConfig("gameserverconfig/gamelogicconfig/gamelogicconfig.xml");
+	//if (!bResult)
+	//{
+	//	return bResult;
+	//}
 
-	CTimeManager::Inst()->setCurrTime(time(NULL));
-	srand((unsigned int)CTimeManager::Inst()->getCurrTime());
-	mLastTime = CTimeManager::Inst()->getCurrTime();
+	//CTimeManager::Inst()->setCurrTime(time(NULL));
+	//srand((unsigned int)CTimeManager::Inst()->getCurrTime());
+	//mLastTime = CTimeManager::Inst()->getCurrTime();
 
-	bResult = initLog();
-	if (!bResult)
-	{
-		return false;
-	}
+	//bResult = initLog();
+	//if (!bResult)
+	//{
+	//	return false;
+	//}
 
-	bResult = initStaticData();
-	if (!bResult)
-	{
-		return false;
-	}
-	bResult = mpJobManager->initThread();
-	if (!bResult)
-	{
-		return false;
-	}
+	//bResult = initStaticData();
+	//if (!bResult)
+	//{
+	//	return false;
+	//}
+	//bResult = mpJobManager->initThread();
+	//if (!bResult)
+	//{
+	//	return false;
+	//}
 
-	bool bCreate = true;
-	int nShareMemoryKey = 37345235;
+	//bool bCreate = true;
+	//int nShareMemoryKey = 37345235;
 
-	int nShareMemorySize = CObjPool::Inst()->getShareMemorySize();
-	byte* pSharePoint = CShareMemory::createShareMemory(nShareMemoryKey, nShareMemorySize, bCreate);
-	if (NULL == pSharePoint)
-	{
-		return false;
-	}
+	//int nShareMemorySize = CObjPool::Inst()->getShareMemorySize();
+	//byte* pSharePoint = CShareMemory::createShareMemory(nShareMemoryKey, nShareMemorySize, bCreate);
+	//if (NULL == pSharePoint)
+	//{
+	//	return false;
+	//}
 
-	// 没有遗留的玩家
-	if (bCreate)
-	{
-		CShareMemory::destroyShareMemory(nShareMemoryKey, pSharePoint);
-		return false;
-	}
+	//// 没有遗留的玩家
+	//if (bCreate)
+	//{
+	//	CShareMemory::destroyShareMemory(nShareMemoryKey, pSharePoint);
+	//	return false;
+	//}
 
-	CObjPool::Inst()->setShareMemory(pSharePoint);
-	ResetPlayerSaveStatus();
+	//CObjPool::Inst()->setShareMemory(pSharePoint);
+	//ResetPlayerSaveStatus();
 	return true;
 }
 
@@ -120,15 +120,15 @@ bool CServerResave::initLog()
 /// 初始逻辑模块
 bool CServerResave::initLogicModule()
 {
-	CTimeManager::createInst();
-	CInternalMsgPool::createInst();
-	CGameServerConfig::createInst();
-	CObjPool::createInst();
-	CJobManager::createInst();
-	// 注意，不把CSceneJob放在job队列里面去管理
-	CSceneJob::createInst();
-	CPropertyModule::createInst();
-	CDBModule::createInst();
+	//CTimeManager::createInst();
+	//CInternalMsgPool::createInst();
+	//CGameServerConfig::createInst();
+	//CObjPool::createInst();
+	//CJobManager::createInst();
+	//// 注意，不把CSceneJob放在job队列里面去管理
+	//CSceneJob::createInst();
+	//CPropertyModule::createInst();
+	//CDBModule::createInst();
 
 	return true;
 }
@@ -149,37 +149,37 @@ bool CServerResave::initStaticData()
 /// 运行
 void CServerResave::run()
 {
-	static int i = 0;
-	while (true)
-	{
-		CTimeManager::Inst()->setCurrTime(time(NULL));
-		time_t tTimeNow = CTimeManager::Inst()->getCurrTime();
-		if (tTimeNow != mLastTime)
-		{
-			// 就是秒
-			if (mFiveSecTimer.elapse((int)(tTimeNow - mLastTime)))
-			{
-				SavePlayerBat();
-			}
-			mLastTime = tTimeNow;
-		}
-
-		//printf("*dddd*");
-		mpJobManager->run();
-#ifdef MYTH_OS_WINDOWS
-		Sleep(20);
-#else
-		struct timespec tv;
-		tv.tv_sec = 0;
-		tv.tv_nsec = 20000000;
-		nanosleep(&tv, NULL);
-#endif
-		// 如果是退出状态，并且所以的job都已经退出完成
-		if (mExit && mpJobManager->checkAllJobExit())
-		{
-			break;
-		}
-	}
+//	static int i = 0;
+//	while (true)
+//	{
+//		//CTimeManager::Inst()->setCurrTime(time(NULL));
+//		time_t tTimeNow = CTimeManager::Inst()->getCurrTime();
+//		if (tTimeNow != mLastTime)
+//		{
+//			// 就是秒
+//			if (mFiveSecTimer.elapse((int)(tTimeNow - mLastTime)))
+//			{
+//				SavePlayerBat();
+//			}
+//			mLastTime = tTimeNow;
+//		}
+//
+//		//printf("*dddd*");
+//		mpJobManager->run();
+//#ifdef MYTH_OS_WINDOWS
+//		Sleep(20);
+//#else
+//		struct timespec tv;
+//		tv.tv_sec = 0;
+//		tv.tv_nsec = 20000000;
+//		nanosleep(&tv, NULL);
+//#endif
+//		// 如果是退出状态，并且所以的job都已经退出完成
+//		if (mExit && mpJobManager->checkAllJobExit())
+//		{
+//			break;
+//		}
+//	}
 }
 
 void CServerResave::ResetPlayerSaveStatus()
@@ -204,63 +204,63 @@ void CServerResave::ResetPlayerSaveStatus()
 
 void CServerResave::SavePlayerBat()
 {
-	// 退出
-	if (getExit())
-	{
-		return;
-	}
+	//// 退出
+	//if (getExit())
+	//{
+	//	return;
+	//}
 
-	int nMinID = CObjPool::Inst()->getPlayerMinID();
-	int nMaxID = nMinID + CAPACITY_PLAYER;
+	//int nMinID = CObjPool::Inst()->getPlayerMinID();
+	//int nMaxID = nMinID + CAPACITY_PLAYER;
 
-	int nCount = 0; 
-	int nSavingCount = 0;
+	//int nCount = 0; 
+	//int nSavingCount = 0;
 
-	time_t tTimeNow = CTimeManager::Inst()->getCurrTime();
-	for (int i = nMinID; i < nMaxID; ++i)
-	{
-		CEntityPlayer* pPlayer = (CEntityPlayer*)CObjPool::Inst()->getObj(i);
-		if (NULL == pPlayer)
-		{
-			continue;
-		}
+	//time_t tTimeNow = CTimeManager::Inst()->getCurrTime();
+	//for (int i = nMinID; i < nMaxID; ++i)
+	//{
+	//	CEntityPlayer* pPlayer = (CEntityPlayer*)CObjPool::Inst()->getObj(i);
+	//	if (NULL == pPlayer)
+	//	{
+	//		continue;
+	//	}
 
-		if (INVALID_OBJ_ID == pPlayer->getObjID())
-		{
-			continue;
-		}
-		// 已经在保存中了
-		if (emSaveStatus_None != pPlayer->getSaveStatus())
-		{
-			// 没有保存完成
-			if (emSaveStatusAll != pPlayer->getSaveStatus())
-			{
-				++ nSavingCount;
-			}
-			continue;
-		}
+	//	if (INVALID_OBJ_ID == pPlayer->getObjID())
+	//	{
+	//		continue;
+	//	}
+	//	// 已经在保存中了
+	//	if (emSaveStatus_None != pPlayer->getSaveStatus())
+	//	{
+	//		// 没有保存完成
+	//		if (emSaveStatusAll != pPlayer->getSaveStatus())
+	//		{
+	//			++ nSavingCount;
+	//		}
+	//		continue;
+	//	}
 
-		if (tTimeNow - pPlayer->getTimeUnit().getLastSaveTime() < 30)
-		{
-			continue;
-		}
+	//	if (tTimeNow - pPlayer->getTimeUnit().getLastSaveTime() < 30)
+	//	{
+	//		continue;
+	//	}
 
-		pPlayer->getTimeUnit().setLastSaveTime(CTimeManager::Inst()->getCurrTime());
-		CPropertyModule::Inst()->savePlayer(pPlayer);
-		nCount++ ;
-		if (nCount >= 50)
-		{
-			break;
-		}
-	}
+	//	pPlayer->getTimeUnit().setLastSaveTime(CTimeManager::Inst()->getCurrTime());
+	//	CPropertyModule::Inst()->savePlayer(pPlayer);
+	//	nCount++ ;
+	//	if (nCount >= 50)
+	//	{
+	//		break;
+	//	}
+	//}
 
-	// 已经保存完成
-	if (nCount <= 0 && nSavingCount <= 0)
-	{
-		printf("保存完成");
-		setExit(true);
-		CSceneJob::Inst()->setExited(true);
-	}
+	//// 已经保存完成
+	//if (nCount <= 0 && nSavingCount <= 0)
+	//{
+	//	printf("保存完成");
+	//	setExit(true);
+	//	//CSceneJob::Inst()->setExited(true);
+	//}
 }
 
 

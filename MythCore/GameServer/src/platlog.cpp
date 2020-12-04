@@ -9,14 +9,14 @@ using namespace Myth;
 void LogPlatLog(const char* pLogName, Json::Value& tLogValue)
 {
 	tLogValue["log_name"] = pLogName;
-	CIMPlatLogRequest* pRequest = static_cast<CIMPlatLogRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_PLAT_LOG));
+	CIMPlatLogRequest* pRequest = new CIMPlatLogRequest;
 	if (NULL == pRequest)
 	{
 		return;
 	}
 	Json::StreamWriterBuilder wbuilder;
 	strncpy(pRequest->mContent, Json::writeString(wbuilder, tLogValue).c_str(), sizeof(pRequest->mContent) - 1);
-	CJobManager::Inst()->pushTask(emJobTaskType_Plat, pRequest);
+	CJobManager::Inst()->pushTaskByType(emJobTaskType_Plat, pRequest);
 }
 
 void LogServerStartComplete()

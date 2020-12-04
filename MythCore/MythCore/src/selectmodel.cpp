@@ -57,7 +57,8 @@ namespace Myth
 		int nResult = select((int)(mMaxFd + 1), &mReadSet, NULL, NULL, &mSelectTime);
 		if (nResult < 0)
 		{
-			//int nError = WSAGetLastError();
+			int nError = WSAGetLastError();
+			int i = 0;
 		}
 	}
 

@@ -1,8 +1,13 @@
 #include "entityplayer.h"
 #include "mapmodule.hxx.pb.h"
 #include "propertymodule.hxx.pb.h"
-#include "scenejob.h"
 #include "timemanager.h"
+/// 心跳
+void CEntityPlayer::onTimer(unsigned int nTickOffset)
+{
+
+}
+
 /// 刷新基本属性
 void CEntityPlayer::refreshBaseProperty()
 {
@@ -52,7 +57,7 @@ void CEntityPlayer::onGetPlayerPropertyRequest(Message* pMessage)
 		tResponse.add_propertyvalue(mBaseProperty[i].getValue());
 	}
 
-	CSceneJob::Inst()->send2Player(this, ID_S2C_RESPONSE_GET_PLAYER_PROPERTY, &tResponse);
+	//CSceneJob::Inst()->send2Player(this, ID_S2C_RESPONSE_GET_PLAYER_PROPERTY, &tResponse);
 }
 
 /// 每日刷新
@@ -99,4 +104,69 @@ int CEntityPlayer::setTimer(int nOwerObjID, int nModule, int nMilliSec, const in
 		return INVALID_OBJ_ID;
 	}
 	return rTimeList.setTimer(nOwerObjID, nModule, nMilliSec, pParam, nParamNum, nCallTimes);
+}
+
+void CEntityPlayer::send2PlayerImp(unsigned short nMessageID, Message* pMessage)
+{
+	//if (rExchangeHead.mSocketIndex < 0)
+	//{
+	//	return;
+	//}
+	//char* pTemp = mBuffer;
+	//memcpy(pTemp, &rExchangeHead, sizeof(rExchangeHead));
+	//pTemp += sizeof(rExchangeHead);
+
+	//unsigned short nMessageLen = pMessage->ByteSize() + sizeof(unsigned short) * 2;
+	//memcpy(pTemp, &nMessageLen, sizeof(nMessageLen));
+
+	//pTemp += sizeof(nMessageLen);
+
+	//memcpy(pTemp, &nMessageID, sizeof(nMessageID));
+	//pTemp += sizeof(nMessageID);
+
+	//pMessage->SerializeToArray(pTemp, sizeof(mBuffer) - sizeof(rExchangeHead) - sizeof(unsigned short) * 2);
+	////printf("PushPacket nMessageID: %d\n", nMessageID);
+	//mServer2TcpMemory->PushPacket((byte*)mBuffer, pMessage->ByteSize() + sizeof(rExchangeHead) + sizeof(unsigned short) * 2);
+
+}
+void CEntityPlayer::send2Player(unsigned short nMessageID, Message* pMessage)
+{
+	const ::google::protobuf::Descriptor* pDescriptor = pMessage->GetDescriptor();
+	LOG_DEBUG("default", "---- Send to client(Obj Id:%d|Role:%d|Name:%s) Msg[ %s ][id: 0x%04x/%d] ---",
+		getObjID(), getRoleID(), getName(),
+		pDescriptor->name().c_str(), nMessageID, nMessageID);
+	LOG_DEBUG("default", "[%s]", pMessage->ShortDebugString().c_str());
+
+	send2PlayerImp(nMessageID, pMessage);
+}
+/// 发现前端消息(lua)
+void CEntityPlayer::send2PlayerLua(unsigned short nMessageID, const char* pMsgBuff, int nBuffLen)
+{
+	//if (NULL == pMsgBuff)
+	//{
+	//	return;
+	//}
+
+	//CExchangeHead& rExchangeHead = rPlayer.getExchangeHead();
+	//if (rExchangeHead.mSocketIndex < 0)
+	//{
+	//	return;
+	//}
+	//char* pTemp = mBuffer;
+	//memcpy(pTemp, &rExchangeHead, sizeof(rExchangeHead));
+	//pTemp += sizeof(rExchangeHead);
+
+	//unsigned short nMessageLen = nBuffLen + sizeof(unsigned short) * 2;
+	//memcpy(pTemp, &nMessageLen, sizeof(nMessageLen));
+
+	//pTemp += sizeof(nMessageLen);
+
+	//memcpy(pTemp, &nMessageID, sizeof(nMessageID));
+	//pTemp += sizeof(nMessageID);
+
+	//int nLeftLen = sizeof(mBuffer) - sizeof(rExchangeHead) - sizeof(unsigned short) * 2;
+	//memcpy(pTemp, pMsgBuff, nBuffLen > nLeftLen ? nLeftLen : nBuffLen);
+	////pMessage->SerializeToArray(pTemp, sizeof(mBuffer) - sizeof(rExchangeHead) - sizeof(unsigned short) * 2);
+	////printf("PushPacket nMessageID: %d\n", nMessageID);
+	//mServer2TcpMemory->PushPacket((byte*)mBuffer, nBuffLen + sizeof(rExchangeHead) + sizeof(unsigned short) * 2);
 }

@@ -2,7 +2,6 @@
 #include "taskmodule.hxx.pb.h"
 #include "common.hxx.pb.h"
 #include "locallogjob.h"
-#include "scenejob.h"
 #include "errcode.h"
 #include "entityplayer.h"
 #include "taskmodule.h"
@@ -80,7 +79,7 @@ void CTaskUnit::sendAcceptTaskResponse(int nResult, int nTaskID)
 	tAcceptTaskResponse.set_result(nResult);
 	tAcceptTaskResponse.set_taskid(nTaskID);
 
-	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_ACCEPT_TASK, &tAcceptTaskResponse);
+	//CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_ACCEPT_TASK, &tAcceptTaskResponse);
 }
 
 void CTaskUnit::onSubmitTaskRequest(Message* pMessage)
@@ -123,7 +122,7 @@ void CTaskUnit::sendSubmitTaskResponse(int nResult, int nTaskID)
 	tResponse.set_result(nResult);
 	tResponse.set_taskid(nTaskID);
 
-	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_SUBMIT_TASK, &tResponse);
+	//CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_SUBMIT_TASK, &tResponse);
 }
 
 
@@ -146,7 +145,7 @@ void CTaskUnit::sendAbortTaskResponse(int nResult, int nTaskID)
 	CAbortTaskResponse tResponse;
 	tResponse.set_result(nResult);
 	tResponse.set_taskid(nTaskID);
-	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_ABORT_TASK, &tResponse);
+	//CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_RESPONSE_ABORT_TASK, &tResponse);
 }
 
 /// 发送更新任务进度通知
@@ -155,7 +154,7 @@ void CTaskUnit::sendUpdateTaskProcessNotify(int nTaskID, int nCondIndex, int nPa
 	CUpdateTaskProcessNotify tNotify;
 	tNotify.set_taskid(nTaskID);
 	tNotify.set_param(nParam);
-	CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_NOTIFY_UPDATE_TASK_PROCESS, &tNotify);
+	//CSceneJob::Inst()->send2Player(mPlayer, ID_S2C_NOTIFY_UPDATE_TASK_PROCESS, &tNotify);
 }
 
 // 玩家身上是否有这个任务

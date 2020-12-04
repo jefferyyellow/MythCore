@@ -71,6 +71,8 @@ public:
 
 	}
 public:
+	/// 心跳
+	void			onTimer(unsigned int nTickOffset);
 	/// 刷新基本属性
 	void			refreshBaseProperty();
 	/// 刷新战斗属性
@@ -215,6 +217,16 @@ public:
 	bool getAccountStatus(EmAccountStatus eStatus){return mAccountStatus.getBit(eStatus);}
 	void clearAccountStatus(EmAccountStatus eStatus){mAccountStatus.clearBit(eStatus);}
 
+
+	void		send2PlayerImp(unsigned short nMessageID, Message* pMessage);
+	void		send2Player(unsigned short nMessageID, Message* pMessage);
+	/// 发现前端消息(lua)
+	void		send2PlayerLua(unsigned short nMessageID, const char* pMsgBuff, int nBuffLen);
+
+	/// 
+	byte getJobID() const { return mJobID; }
+	void setJobID(byte nValue) { mJobID = nValue; }
+
 private:
 	/// socket连接信息
 	CExchangeHead	mExchangeHead;
@@ -255,5 +267,7 @@ private:
 	byte			mLoadStatus;
 	/// 账号状态
 	ACCOUNT_STATUS	mAccountStatus;
+	/// 所在的Job ID
+	byte			mJobID;
 };
 #endif 

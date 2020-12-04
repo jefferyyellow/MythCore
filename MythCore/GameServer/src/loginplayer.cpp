@@ -6,11 +6,12 @@
 #include "dbmodule.h"
 #include "errcode.h"
 #include "locallogjob.h"
-#include "scenejob.h"
 #include "dirtyword.h"
 #include "i18n.h"
 #include "crc32.h"
 #include "propertymodule.h"
+#include "clientsocketjob.h"
+#include "message.hxx.pb.h"
 void CLoginPlayer::init()
 {
     mAccountID = 0;
@@ -71,7 +72,7 @@ int CLoginPlayer::processStateNone()
 	unsigned char* pAccountName = (unsigned char*)mAccountName;
 	unsigned int nAccountID = crc32(pAccountName, strlen(mAccountName));
 
-	CDBModule::Inst()->pushDBTask(0, emSessionType_AccountVerify,getObjID(), 0, "call CheckUserName('%s', %u, %d, %d)", 
+	CDBModule::Inst()->pushDBTask(getJobID(), 0, emSessionType_AccountVerify,getObjID(), 0, "call CheckUserName('%s', %u, %d, %d)", 
 		pLoginRequest->name().c_str(), nAccountID, pLoginRequest->channelid(), pLoginRequest->serverid());
 	return emLoginState_AccountVerify;
 }
@@ -132,7 +133,7 @@ int CLoginPlayer::processAccountVerify()
 	tLoginResponse.set_serverid(mServerID);
 	tLoginResponse.set_roleid(mRoleID);
 	
-	CSceneJob::Inst()->send2Player(this, ID_S2C_RESPONSE_LOGIN, &tLoginResponse);
+	//CSceneJob::Inst()->send2Player(this, ID_S2C_RESPONSE_LOGIN, &tLoginResponse);
 	if (mRoleID == 0)
 	{
 		return emLoginState_WaitCreateRole;
@@ -216,7 +217,7 @@ int CLoginPlayer::processWaitCreateRole()
 	}
 
 	LOG_INFO("Create role Accountid: %d, ChannelId: %d, ServerId: %d", mAccountID, mChannelID, mServerID);
-	CDBModule::Inst()->pushDBTask(0, emSessionType_CreateRole, getObjID(), 0, "call CreateRole(%u, '%s', %d, %d, '%s', %u, %d, %d)",
+	CDBModule::Inst()->pushDBTask(getJobID(), 0, emSessionType_CreateRole, getObjID(), 0, "call CreateRole(%u, '%s', %d, %d, '%s', %u, %d, %d)",
 	nRoleID, pCreateRoleRequest->rolename().c_str(), eSex, nMetier, getAccountName(), mAccountID, mChannelID, mServerID);
 
 	return emLoginState_CreateRoleing;
@@ -256,7 +257,7 @@ int CLoginPlayer::processCreateRoleing()
 	CCreateRoleResponse tCreateRoleResponse;
 	tCreateRoleResponse.set_result(0);
 	tCreateRoleResponse.set_roleid(mRoleID);
-	CSceneJob::Inst()->send2Player(this, ID_S2C_RESPONSE_CREATE_ROLE, &tCreateRoleResponse);
+	//CSceneJob::Inst()->send2Player(this, ID_S2C_RESPONSE_CREATE_ROLE, &tCreateRoleResponse);
 
 	return emLoginState_LoginComplete;
 }
@@ -291,43 +292,43 @@ int CLoginPlayer::processLoginComplete()
 		return -1;
 	}
 
-	CEntityPlayer* pPlayer = CSceneJob::Inst()->getPlayerByRoleID(pEnterSceneRequest->roleid());
-	if (NULL != pPlayer)
-	{
-		printf("Kick out by other: %d\n", pEnterSceneRequest->roleid());
-		// 如果加入不了到列表，就踢不下线
-		if (!CSceneJob::Inst()->addPlayerSocketIndex(getExchangeHead().mSocketIndex, pPlayer->getObjID()))
-		{
-			CSceneJob::Inst()->disconnectPlayer(getExchangeHead());
-			return -1;
-		}
-		// 玩家都在游戏中活着退出过程中，表示玩家数据是完整的，可以直接用
-		if (pPlayer->getPlayerStauts() == emPlayerStatus_Gameing || pPlayer->getPlayerStauts() == emPlayerStatus_Exiting)
-		{
-			pPlayer->setPlayerStauts(emPlayerStatus_Gameing);
+	//CEntityPlayer* pPlayer = CSceneJob::Inst()->getPlayerByRoleID(pEnterSceneRequest->roleid());
+	//if (NULL != pPlayer)
+	//{
+	//	printf("Kick out by other: %d\n", pEnterSceneRequest->roleid());
+	//	// 如果加入不了到列表，就踢不下线
+	//	if (!CSceneJob::Inst()->addPlayerSocketIndex(getExchangeHead().mSocketIndex, pPlayer->getObjID()))
+	//	{
+	//		CSceneJob::Inst()->disconnectPlayer(getExchangeHead());
+	//		return -1;
+	//	}
+	//	// 玩家都在游戏中活着退出过程中，表示玩家数据是完整的，可以直接用
+	//	if (pPlayer->getPlayerStauts() == emPlayerStatus_Gameing || pPlayer->getPlayerStauts() == emPlayerStatus_Exiting)
+	//	{
+	//		pPlayer->setPlayerStauts(emPlayerStatus_Gameing);
 
-			// 将原来的玩家下线
-			CSceneJob::Inst()->disconnectPlayer(*pPlayer);
+	//		// 将原来的玩家下线
+	//		CSceneJob::Inst()->disconnectPlayer(*pPlayer);
 
-			// 换成新的玩家socket信息
-			pPlayer->getExchangeHead() = getExchangeHead();
-			CEnterSceneResponse tEnterSceneResponse;
-			tEnterSceneResponse.set_result(0);
-			CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
-			setDelState(emLoginDelState_Complete);
-			return emLoginState_None;
-		}
-		else
-		{
-			// 将玩家销毁
-			CPropertyModule::Inst()->destroyPlayer(*pPlayer);
-			return createPlayerAndLoad();
-		}
-	}
-	else
-	{
-		return createPlayerAndLoad();
-	}
+	//		// 换成新的玩家socket信息
+	//		pPlayer->getExchangeHead() = getExchangeHead();
+	//		CEnterSceneResponse tEnterSceneResponse;
+	//		tEnterSceneResponse.set_result(0);
+	//		CSceneJob::Inst()->send2Player(pPlayer, ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
+	//		setDelState(emLoginDelState_Complete);
+	//		return emLoginState_None;
+	//	}
+	//	else
+	//	{
+	//		// 将玩家销毁
+	//		CPropertyModule::Inst()->destroyPlayer(*pPlayer);
+	//		return createPlayerAndLoad();
+	//	}
+	//}
+	//else
+	//{
+	//	return createPlayerAndLoad();
+	//}
 }
 
 // 创建玩家实体并加载
@@ -344,21 +345,21 @@ int CLoginPlayer::createPlayerAndLoad()
 	pNewPlayer->setRoleID(getRoleID());
 	pNewPlayer->getExchangeHead() = getExchangeHead();
 
-	bool bResult = CSceneJob::Inst()->onPlayerLogin(pNewPlayer);
-	if (!bResult)
-	{
-		CObjPool::Inst()->free(pNewPlayer->getObjID());
-		return -1;
-	}
+	//bool bResult = CSceneJob::Inst()->onPlayerLogin(pNewPlayer);
+	//if (!bResult)
+	//{
+	//	CObjPool::Inst()->free(pNewPlayer->getObjID());
+	//	return -1;
+	//}
 	printf("******processWaitEnterGame: %d\n", pNewPlayer->getObjID());
 
 	pNewPlayer->setLoadStatus(0);
-	CDBModule::Inst()->pushDBTask(getRoleID(), emSessionType_LoadPlayerInfo, pNewPlayer->getObjID(), 0, "call LoadPlayerInfo(%u)", getRoleID());
-	CDBModule::Inst()->pushDBTask(getRoleID(), emSessionType_LoadPlayerBaseProperty, pNewPlayer->getObjID(), 0, "call LoadPlayerBaseProperty(%u)", getRoleID());
+	CDBModule::Inst()->pushDBTask(getJobID(), getRoleID(), emSessionType_LoadPlayerInfo, pNewPlayer->getObjID(), 0, "call LoadPlayerInfo(%u)", getRoleID());
+	CDBModule::Inst()->pushDBTask(getJobID(), getRoleID(), emSessionType_LoadPlayerBaseProperty, pNewPlayer->getObjID(), 0, "call LoadPlayerBaseProperty(%u)", getRoleID());
 
 	CEnterSceneResponse tEnterSceneResponse;
 	tEnterSceneResponse.set_result(0);
-	CSceneJob::Inst()->send2Player(pNewPlayer, ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
+	//CSceneJob::Inst()->send2Player(pNewPlayer, ID_S2C_RESPONSE_ENTER_SCENE, &tEnterSceneResponse);
 	return emLoginState_RoleLoading;
 }
 
@@ -382,4 +383,68 @@ int CLoginPlayer::onSwitchFailure()
 {
 	setDelState(emLoginDelState_Error);
 	return 0;
+}
+
+// 时间函数
+void CLoginPlayer::onTimer()
+{
+	if (NULL == mMsgQueue)
+	{
+		return;
+	}
+	CByteStream& rByteStream = mMsgQueue->mReceiveStream;
+	char mBuffer[MAX_PACKAGE_SIZE + sizeof(CExchangeHead)];
+	int nMessageLen = MAX_PACKAGE_SIZE;
+
+	int nResult = rByteStream.GetHeadPacket((byte*)mBuffer, nMessageLen);
+	if (nResult < 0)
+	{
+		return;
+	}
+
+	if (nMessageLen <= 0)
+	{
+		return;
+	}
+
+	char* pTemp = mBuffer;
+	short nLength = *(short*)pTemp;
+	if (nLength != nMessageLen)
+	{
+		return;
+	}
+
+	pTemp += sizeof(short);
+	nMessageLen -= sizeof(short);
+
+	short nMessageID = *(short*)pTemp;
+	pTemp += sizeof(short);
+	nMessageLen -= sizeof(short);
+
+	Message* pMessage = CMessageFactory::Inst()->createClientMessage(nMessageID);
+	if (NULL != pMessage)
+	{
+		printf("Recive MessageID: %d\n", nMessageID);
+		pMessage->ParseFromArray(pTemp, nMessageLen);
+		int nModule = nMessageID & MESSAGE_MODULE_MASK;
+		if (nModule == MESSAGE_MODULE_LOGIN)
+		{
+			setClientMessage(pMessage);
+			setClientMessageID(nMessageID);
+			checkState();
+			setClientMessage(NULL);
+			setClientMessageID(0);
+
+		}
+		const ::google::protobuf::Descriptor* pDescriptor = pMessage->GetDescriptor();
+
+		LOG_DEBUG("default", "---- Receive from client(Obj Id:%d|Account Id:%d|Channel:%d|Server:%d|Role:%d|Name:%s) \
+							 Msg[ %s ][id: 0x%04x/%d] ---",
+							 getObjID(), getAccountID(), getChannelID(),
+							 getServerID(), getRoleID(), getAccountName(),
+							 pDescriptor->name().c_str(), nMessageID, nMessageID);
+		LOG_DEBUG("default", "[%s]", pMessage->ShortDebugString().c_str());
+
+		pMessage->~Message();
+	}
 }

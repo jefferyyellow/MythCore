@@ -1,5 +1,4 @@
 #include "ServerActLuaReg.h"
-#include "scenejob.h"
 extern "C"
 {
 #include "lua.h"
@@ -11,7 +10,7 @@ extern "C"
 
 void CServerActLuaReg::reglua()
 {
-	lua_State* L = CSceneJob::Inst()->getLuaState();
+	lua_State* L = NULL;//CSceneJob::Inst()->getLuaState();
 
 	// 全局函数得到CServerActModule的实例
 	lua_tinker::def(L, "getServerActModule", &CServerActModule::Inst);

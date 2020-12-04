@@ -7,7 +7,7 @@
 #include "rank.h"
 using namespace Myth;
 typedef CRank<MAX_RANK_NUM> CRankList;
-class CRankJob : public CJob<100, 100>, public CSingleton<CRankJob>
+class CRankJob : public CJob, public CSingleton<CRankJob>
 {
 	friend class CSingleton<CRankJob>;
 public:

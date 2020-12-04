@@ -4,11 +4,10 @@
 #include "locallogjob.h"
 #include "gameserver.h"
 #include "jobmanager.h"
-#include "scenejob.h"
 #include "timemanager.h"
 void sendPlatWebRequest(const char* pURL, const char* pData, EmHttpType eHttpType, bool bNeedBack)
 {
-	CIMPlatWebRequest* pPlatWebRequest = static_cast<CIMPlatWebRequest*>(CInternalMsgPool::Inst()->allocMsg(IM_REQUEST_PLAT_WEB));
+	CIMPlatWebRequest* pPlatWebRequest = new CIMPlatWebRequest;
 	if (NULL == pPlatWebRequest)
 	{
 		return;
@@ -33,7 +32,7 @@ void sendPlatWebRequest(const char* pURL, const char* pData, EmHttpType eHttpTyp
 	pPlatWebRequest->mHttpType = eHttpType;
 	pPlatWebRequest->mNeedCallBack = bNeedBack;
 
-	CJobManager::Inst()->pushTask(emJobTaskType_Plat, pPlatWebRequest);
+	CJobManager::Inst()->pushTaskByType(emJobTaskType_Plat, pPlatWebRequest);
 }
 
 bool CPlatJob::initAll(const char* pRedisIP, int nRedisPort, int nSocketNum, int nListenPort)
@@ -140,7 +139,6 @@ void CPlatJob::doing(int uParam)
 				break;
 		}
 
-		CInternalMsgPool::Inst()->freeMsg(pIMMsg);
 		++nCount;
 		if (nCount > 1000)
 		{
@@ -148,16 +146,16 @@ void CPlatJob::doing(int uParam)
 		}
 	}
 
-	// 如果scene job已经退出完成了，表示需要保存的数据基本都完成了
-	if (CSceneJob::Inst()->getExited())
-	{
-		CInternalMsg* pIMMsg = mTaskManager.popTask();
-		// 如果没有任务了
-		if (NULL == pIMMsg)
-		{
-			setExited(true);
-		}
-	}
+	//// 如果scene job已经退出完成了，表示需要保存的数据基本都完成了
+	//if (CSceneJob::Inst()->getExited())
+	//{
+	//	CInternalMsg* pIMMsg = mTaskManager.popTask();
+	//	// 如果没有任务了
+	//	if (NULL == pIMMsg)
+	//	{
+	//		setExited(true);
+	//	}
+	//}
 }
 
 bool CPlatJob::initSocket(int nSocketNum, int nListenPort)
@@ -370,16 +368,16 @@ void CPlatJob::CommandCallBack(redisAsyncContext*, void *reply, void *privdata)
 /// Web处理的回调函数
 void CPlatJob::onURLCompleteCallBack(CURLSession* pURLSession)
 {
-	if (NULL == pURLSession)
-	{
-		return;
-	}
-	CIMPlatWebResponse* pPlatWebResponse = static_cast<CIMPlatWebResponse*>(CInternalMsgPool::Inst()->allocMsg(IM_RESPONSE_PLAT_WEB));
-	if (NULL == pPlatWebResponse)
-	{
-		return;
-	}
-	pPlatWebResponse->mHttpType = pURLSession->getHttpType();
-	strncpy(pPlatWebResponse->mReturnData, pURLSession->getReturnData(), WEB_POST_DATA_LEN - 1);
-	CJobManager::Inst()->pushTask(emJobTaskType_Scene, pPlatWebResponse);
+	//if (NULL == pURLSession)
+	//{
+	//	return;
+	//}
+	//CIMPlatWebResponse* pPlatWebResponse = static_cast<CIMPlatWebResponse*>(CInternalMsgPool::Inst()->allocMsg(IM_RESPONSE_PLAT_WEB));
+	//if (NULL == pPlatWebResponse)
+	//{
+	//	return;
+	//}
+	//pPlatWebResponse->mHttpType = pURLSession->getHttpType();
+	//strncpy(pPlatWebResponse->mReturnData, pURLSession->getReturnData(), WEB_POST_DATA_LEN - 1);
+	//CJobManager::Inst()->pushTask(emJobTaskType_Scene, pPlatWebResponse);
 }

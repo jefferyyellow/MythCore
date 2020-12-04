@@ -150,13 +150,6 @@ namespace Myth
 		}
 
 		pthread_mutex_lock(&mMutex);
-		// 如果已经是运行中了，直接退出
-		if (getThreadState() == emThreadState_Runing)
-		{
-			pthread_mutex_unlock(&mMutex);
-			return;
-		}
-		setThreadState(emThreadState_Runing);
 		pthread_cond_signal(&mCond);
 		pthread_mutex_unlock(&mMutex);
 	}

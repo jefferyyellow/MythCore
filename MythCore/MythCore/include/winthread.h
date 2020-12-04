@@ -27,26 +27,13 @@ namespace Myth
 		/// resume thread
 		virtual void resume();
 		
-		virtual EmThreadState getThreadState(){ return mThreadState; }
-		virtual void setThreadState(EmThreadState eThreadState){ mThreadState = eThreadState; }
-
-		virtual CThreadPool* getThreadPool(){ return mpThreadPool; }
-		virtual void setThreadPool(CThreadPool* pThreadPool){ mpThreadPool = pThreadPool; }
-
-		virtual int getSerialNum(){ return mSerialNum; }
-		virtual void setSerialNum(int nSerialNum){ mSerialNum = nSerialNum; }
 
 	public:
 		IJob*			mpJob;			// 可执行对象
-		CThreadPool*	mpThreadPool;	// 线程池
 
 	private:
 		int				mThreadID;
 		HANDLE			mThreadHand;
-		// thread state 
-		EmThreadState	mThreadState;
-		// thread serial num
-		int				mSerialNum;
 	};
 }
 #endif

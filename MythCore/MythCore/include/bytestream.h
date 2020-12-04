@@ -11,7 +11,6 @@ namespace Myth
 	{
 	public:
 		CByteStream(void);
-		CByteStream(int nTotalSize);
 		~CByteStream(void);
 
 	public:
