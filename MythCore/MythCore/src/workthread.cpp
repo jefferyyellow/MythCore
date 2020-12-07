@@ -15,32 +15,8 @@ namespace Myth
 			return 0;
 		}
 
-		pThead->setThreadState(emThreadState_Runing);
-		while (true)
-		{
-			if (NULL == pThead->mpJob)
-			{
-				pThead->suspend();
-				if (NULL != pThead->mpThreadPool)
-				{
-					IJob* pJob = pThead->mpThreadPool->popJob();
-					if (NULL != pJob)
-					{
-						pThead->mpJob = pJob;
-					}
-				}
-				continue;
-			}
-			pThead->mpJob->doing(pThead->getSerialNum());
 
-			if (NULL != pThead->mpThreadPool)
-			{
-				pThead->mpThreadPool->setJobFree(pThead->mpJob);
-				IJob* pJob = pThead->mpThreadPool->popJob();
-				pThead->mpJob = pJob;
-			}
-		}
-
+		pThead->run();
 		return 0;
 	}
 
@@ -48,7 +24,6 @@ namespace Myth
 	{
 		mpThreadPool = NULL;
 		mpJob = NULL;
-		mThreadID = 0;
 #ifdef MYTH_OS_WINDOWS
 		mThreadHand = INVALID_HANDLE_VALUE;
 #else
@@ -91,6 +66,7 @@ namespace Myth
 	/// 终止线程
 	void CThread::terminate()
 	{
+		setThreadState(emThreadState_Exiting);
 #ifdef MYTH_OS_WINDOWS
 		if (mThreadHand == INVALID_HANDLE_VALUE)
 		{
@@ -128,6 +104,7 @@ namespace Myth
 		}
 		pthread_join(mThreadID, 0);
 #endif
+		setThreadState(emThreadState_Exited);
 	}
 
 	/// 暂停线程
@@ -164,5 +141,35 @@ namespace Myth
 		pthread_cond_signal(&mCond);
 		pthread_mutex_unlock(&mMutex);
 #endif
+	}
+
+	/// 运行
+	void CThread::run()
+	{
+		setThreadState(emThreadState_Runing);
+		while (true)
+		{
+			if (NULL == mpJob)
+			{
+				suspend();
+				if (NULL != mpThreadPool)
+				{
+					IJob* pJob = mpThreadPool->popJob();
+					if (NULL != pJob)
+					{
+						mpJob = pJob;
+					}
+				}
+				continue;
+			}
+			mpJob->doing(getSerialNum());
+
+			if (NULL != mpThreadPool)
+			{
+				mpThreadPool->setJobFree(mpJob);
+				IJob* pJob = mpThreadPool->popJob();
+				mpJob = pJob;
+			}
+		}
 	}
 }

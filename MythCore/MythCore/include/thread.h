@@ -45,6 +45,12 @@ namespace Myth
 		emThreadState_Exited	= 4,	// 退出完成
 		emThreadStateMax
 	};
+
+#ifdef MYTH_OS_WINDOWS
+	typedef DWORD		THREAD_ID;
+#else 
+	typedef pthread_t	THREAD_ID;
+#endif
 	class CThreadPool;
 	class IThread
 	{
@@ -53,10 +59,10 @@ namespace Myth
 		{
 			mThreadState  = emThreadState_Ready;
 			mSerialNum = 0;
+			mThreadID = 0;
 		}
 		virtual ~IThread()
 		{
-
 		}
 
 	public:
@@ -78,11 +84,15 @@ namespace Myth
 		int getSerialNum(){ return mSerialNum; }
 		void setSerialNum(int nSerialNum){ mSerialNum = nSerialNum; }
 
-	private:
+		THREAD_ID getThreadID() const { return mThreadID; }
+		void setThreadID(THREAD_ID nValue) { mThreadID = nValue; }
+	protected:
 		//  线程状态
 		EmThreadState		mThreadState;
 		// 线程序列号
 		int					mSerialNum;
+		// 线程ID
+		THREAD_ID			mThreadID;
 	};
 }
 #endif

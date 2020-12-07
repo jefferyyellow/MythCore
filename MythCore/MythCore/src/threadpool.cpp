@@ -49,6 +49,94 @@ namespace Myth
 		return true;
 	}
 
+	/// 运行
+	void CThreadPool::run()
+	{
+		CAutoLock tLock(&mSimpleLock);
+		if (mJobIndex >= mJobArray.size())
+		{
+			mJobIndex = 0;
+		}
+
+		for (int i = 0; i < mThreadNum; ++i)
+		{
+			mThreadList[i]->resume();
+		}
+	}
+
+	/// 关闭所有线程
+	void CThreadPool::terminateAllThread()
+	{
+		for (int i = 0; i < mThreadNum; ++i)
+		{
+			mThreadList[i]->terminate();
+		}
+	}
+
+	/// 等待所有线程退出
+	void CThreadPool::waitAllThread()
+	{
+		for (int i = 0; i < mThreadNum; ++i)
+		{
+			mThreadList[i]->wait();
+		}
+	}
+
+	//添加一个线程到线程池
+	bool CThreadPool::pushBackThread(CThread* pThread)
+	{
+		CAutoLock tLock(&mSimpleLock);
+		if (mThreadNum >= MAX_THREAD_CAPACITY)
+		{
+			return false;
+		}
+		for (int i = 0; i < MAX_THREAD_CAPACITY; ++ i)
+		{
+			if ( NULL == mThreadList[i])
+			{
+				mThreadList[i] = pThread;
+				++ mThreadNum;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	//删除一个线程
+	bool CThreadPool::removeThread(THREAD_ID id)
+	{
+		CAutoLock tLock(&mSimpleLock);
+		for (int i = 0; i < MAX_THREAD_CAPACITY; ++ i)
+		{
+			if (NULL != mThreadList[i] && mThreadList[i]->getThreadID())
+			{
+				mThreadList[i] = NULL;
+				-- mThreadNum;
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	//根据线程ID取得线程指针
+	CThread* CThreadPool::getThread(THREAD_ID id)
+	{
+		CAutoLock tLock(&mSimpleLock);
+
+		for (int i = 0; i < MAX_THREAD_CAPACITY; ++i)
+		{
+			if (NULL != mThreadList[i] && mThreadList[i]->getThreadID() == id)
+			{
+				mThreadList[i] = NULL;
+				--mThreadNum;
+				return mThreadList[i];
+			}
+		}
+
+		return NULL;
+	}
+
 	/// 增加job
 	bool CThreadPool::pushBackJob(IJob* pJob)
 	{
@@ -146,39 +234,6 @@ namespace Myth
 	{
 		CAutoLock tLock(&mSimpleLock);
 		mJobIndex = 0;
-	}
-	
-	/// 运行
-	void CThreadPool::run()
-	{
-		CAutoLock tLock(&mSimpleLock);
-		if (mJobIndex >= mJobArray.size())
-		{
-			mJobIndex = 0;
-		}
-		
-		for (int i = 0; i < mThreadNum; ++ i)
-		{
-			mThreadList[i]->resume();
-		}
-	}
-
-	/// 关闭所有线程
-	void CThreadPool::terminateAllThread()
-	{
-		for (int i = 0; i < mThreadNum; ++i)
-		{
-			mThreadList[i]->terminate();
-		}
-	}
-
-	/// 等待所有线程退出
-	void CThreadPool::waitAllThread()
-	{
-		for (int i = 0; i < mThreadNum; ++i)
-		{
-			mThreadList[i]->wait();
-		}
 	}
 
 	/// 根据job id得到对应的job

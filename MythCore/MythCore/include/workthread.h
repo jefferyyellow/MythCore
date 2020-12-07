@@ -6,10 +6,8 @@ namespace Myth
 {
 #ifdef MYTH_OS_WINDOWS
 	DWORD __stdcall ThreadFunction(void* arg);
-	typedef DWORD		THREAD_ID;
 #else 
 	void* ThreadFunction(void* arg);
-	typedef pthread_t	THREAD_ID;
 #endif
 
 	class CThread : public IThread
@@ -29,23 +27,21 @@ namespace Myth
 		virtual void suspend();
 		/// 唤醒线程
 		virtual void resume();
-
+		/// 运行
+		virtual void run();
 
 	public:
 		CThreadPool* getThreadPool(){ return mpThreadPool; }
 		void setThreadPool(CThreadPool* pThreadPool){ mpThreadPool = pThreadPool; }
-		
+
 		IJob* getMpJob() const { return mpJob; }
 		void setMpJob(IJob* nValue) { mpJob = nValue; }
 
-	public:
+	private:
 		// 归属的线程池
 		CThreadPool*		mpThreadPool;
 		// 正在执行的job
 		IJob*				mpJob;
-	private:
-		// 线程ID
-		THREAD_ID			mThreadID;
 #ifdef MYTH_OS_WINDOWS
 		// windows线程句柄
 		HANDLE				mThreadHand;

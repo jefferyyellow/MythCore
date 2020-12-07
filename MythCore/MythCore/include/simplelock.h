@@ -63,23 +63,17 @@ namespace Myth
 	{
 	public:
 		CAutoLock(CSimpleLock* tSimpleLock):
-			pLock(tSimpleLock)
+			mLock(tSimpleLock)
 		{
-			if (NULL != pLock)
-			{
-				pLock->lock();
-			}
+			mLock.lock();
 		}
 		~CAutoLock()
 		{
-			if (NULL != pLock)
-			{
-				pLock->unlock();
-			}
+			mLock.unlock();
 		}
 
 	private:
-		CSimpleLock* pLock;
+		CSimpleLock& mLock;
 	};
 }
 #endif
