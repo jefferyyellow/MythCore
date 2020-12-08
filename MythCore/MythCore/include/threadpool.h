@@ -51,8 +51,8 @@ namespace Myth
 	private:
 		/// 运行的JobIndex,用来模拟弹出
 		byte				mJobIndex;
-		/// 线程池的线程数量
-		byte				mThreadNum;
+		/// 线程池最大位置索引（列表中有些slot可能为空)
+		char				mThreadMaxIndex;
 		/// 线程列表
 		CThread*			mThreadList[MAX_THREAD_CAPACITY];
 		/// 

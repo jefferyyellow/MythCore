@@ -5,7 +5,7 @@ namespace Myth
 	CThreadPool::CThreadPool()
 	{
 		mJobIndex = 0;
-		mThreadNum = 0;
+		mThreadMaxIndex = -1;
 		for (int i = 0; i < MAX_THREAD_CAPACITY; ++ i)
 		{
 			mThreadList[i] = NULL;
@@ -26,12 +26,16 @@ namespace Myth
 	/// 初始化线程
 	bool CThreadPool::initThread(int nThreadSize)
 	{
+		if (nThreadSize <= 0)
+		{
+			return false;
+		}
 		if (nThreadSize > MAX_THREAD_CAPACITY)
 		{
 			return false;
 		}
 		mJobIndex = 0;
-		mThreadNum = nThreadSize;
+		mThreadMaxIndex = nThreadSize - 1;
 		for (int i = 0; i < nThreadSize; ++i)
 		{
 			mThreadList[i] = new CThread;
@@ -52,14 +56,18 @@ namespace Myth
 	/// 运行
 	void CThreadPool::run()
 	{
-		CAutoLock tLock(&mSimpleLock);
+		CAutoLock tLock(mSimpleLock);
 		if (mJobIndex >= mJobArray.size())
 		{
 			mJobIndex = 0;
 		}
 
-		for (int i = 0; i < mThreadNum; ++i)
+		for (int i = 0; i <= mThreadMaxIndex; ++i)
 		{
+			if (NULL == mThreadList[i])
+			{
+				continue;
+			}
 			mThreadList[i]->resume();
 		}
 	}
@@ -67,8 +75,12 @@ namespace Myth
 	/// 关闭所有线程
 	void CThreadPool::terminateAllThread()
 	{
-		for (int i = 0; i < mThreadNum; ++i)
+		for (int i = 0; i < MAX_THREAD_CAPACITY; ++i)
 		{
+			if (NULL == mThreadList[i])
+			{
+				continue;
+			}
 			mThreadList[i]->terminate();
 		}
 	}
@@ -76,26 +88,30 @@ namespace Myth
 	/// 等待所有线程退出
 	void CThreadPool::waitAllThread()
 	{
-		for (int i = 0; i < mThreadNum; ++i)
+		for (int i = 0; i < MAX_THREAD_CAPACITY; ++i)
 		{
+			if (NULL == mThreadList[i])
+			{
+				continue;
+			}
 			mThreadList[i]->wait();
+			mThreadList[i] = NULL;
 		}
 	}
 
 	//添加一个线程到线程池
 	bool CThreadPool::pushBackThread(CThread* pThread)
 	{
-		CAutoLock tLock(&mSimpleLock);
-		if (mThreadNum >= MAX_THREAD_CAPACITY)
-		{
-			return false;
-		}
+		CAutoLock tLock(mSimpleLock);
 		for (int i = 0; i < MAX_THREAD_CAPACITY; ++ i)
 		{
 			if ( NULL == mThreadList[i])
 			{
 				mThreadList[i] = pThread;
-				++ mThreadNum;
+				if (i > mThreadMaxIndex)
+				{
+					mThreadMaxIndex = i;
+				}
 				return true;
 			}
 		}
@@ -105,14 +121,31 @@ namespace Myth
 	//删除一个线程
 	bool CThreadPool::removeThread(THREAD_ID id)
 	{
-		CAutoLock tLock(&mSimpleLock);
+		CAutoLock tLock(mSimpleLock);
+		int nPos = 0;
 		for (int i = 0; i < MAX_THREAD_CAPACITY; ++ i)
 		{
 			if (NULL != mThreadList[i] && mThreadList[i]->getThreadID())
 			{
 				mThreadList[i] = NULL;
-				-- mThreadNum;
+				nPos = i;
 				return true;
+			}
+		}
+
+		// 缩减最大pos
+		if (nPos == mThreadMaxIndex)
+		{
+			for (int i = mThreadMaxIndex; i >= 0; ++ i)
+			{
+				if (NULL == mThreadList[i])
+				{
+					-- mThreadMaxIndex;
+				}
+				else
+				{
+					break;
+				}
 			}
 		}
 
@@ -122,14 +155,12 @@ namespace Myth
 	//根据线程ID取得线程指针
 	CThread* CThreadPool::getThread(THREAD_ID id)
 	{
-		CAutoLock tLock(&mSimpleLock);
+		CAutoLock tLock(mSimpleLock);
 
 		for (int i = 0; i < MAX_THREAD_CAPACITY; ++i)
 		{
 			if (NULL != mThreadList[i] && mThreadList[i]->getThreadID() == id)
 			{
-				mThreadList[i] = NULL;
-				--mThreadNum;
 				return mThreadList[i];
 			}
 		}
@@ -144,7 +175,7 @@ namespace Myth
 		{
 			return false;
 		}
-		CAutoLock tLock(&mSimpleLock);
+		CAutoLock tLock(mSimpleLock);
 		// Job列表以及满了
 		if (mJobArray.size() >= mJobArray.capacity())
 		{
@@ -172,7 +203,7 @@ namespace Myth
 			return;
 		}
 
-		CAutoLock tLock(&mSimpleLock);
+		CAutoLock tLock(mSimpleLock);
 		for (JobArray::iterator it = mJobArray.begin(); it != mJobArray.end(); ++it)
 		{
 			if (pJob == *it)
@@ -201,7 +232,7 @@ namespace Myth
 	/// 弹出job
 	IJob* CThreadPool::popJob()
 	{
-		CAutoLock tLock(&mSimpleLock);
+		CAutoLock tLock(mSimpleLock);
 
 		if (mJobIndex >= mJobArray.size())
 		{
@@ -225,14 +256,14 @@ namespace Myth
 	/// 设置对应的job为空闲状态
 	void CThreadPool::setJobFree(IJob* pJob)
 	{
-		CAutoLock tLock(&mSimpleLock);
+		CAutoLock tLock(mSimpleLock);
 		pJob->setBusy(false);
 	}
 
 	/// 重置job的索引
 	void CThreadPool::resetJobIndex()
 	{
-		CAutoLock tLock(&mSimpleLock);
+		CAutoLock tLock(mSimpleLock);
 		mJobIndex = 0;
 	}
 

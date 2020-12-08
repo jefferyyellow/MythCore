@@ -62,8 +62,8 @@ namespace Myth
 	class CAutoLock
 	{
 	public:
-		CAutoLock(CSimpleLock* tSimpleLock):
-			mLock(tSimpleLock)
+		CAutoLock(CSimpleLock& rSimpleLock):
+			mLock(rSimpleLock)
 		{
 			mLock.lock();
 		}
