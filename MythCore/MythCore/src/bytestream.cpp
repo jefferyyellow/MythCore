@@ -7,19 +7,19 @@ namespace Myth
 		mSize = 0;
 		mBegin = 0;
 		mEnd = 0;
-		mBuffer = NULL;
+		mBuffer = nullptr;
 	}
 
 	CByteStream::~CByteStream(void)
 	{
-		mBuffer = NULL;
+		mBuffer = nullptr;
 	}
 
 
 	// 初始化
 	int CByteStream::Initialize(byte* pBuffer, int nTotalSize)
 	{
-		if (NULL == pBuffer)
+		if (nullptr == pBuffer)
 		{
 			return -1;
 		}
@@ -33,7 +33,7 @@ namespace Myth
 	// 重置
 	int	CByteStream::Resume(byte* pBuffer, int nTotalSize)
 	{
-		if (NULL == pBuffer)
+		if (nullptr == pBuffer)
 		{
 			return -1;
 		}
@@ -46,7 +46,7 @@ namespace Myth
 	int	CByteStream::PushPacket(const byte* pCode, int nLength)
 	{
 		// 参数校验
-		if (NULL == pCode || nLength <= 0)
+		if (nullptr == pCode || nLength <= 0)
 		{
 			return -1;
 		}
@@ -119,7 +119,7 @@ namespace Myth
 	int	CByteStream::GetHeadPacket(byte* pCode, int &rLength)
 	{
 		// 参数校验
-		if (NULL == pCode)
+		if (nullptr == pCode)
 		{
 			rLength = 0;
 			return -1;
@@ -207,7 +207,7 @@ namespace Myth
 	int CByteStream::PeekHeadPacket(byte* pCode, int& rLength)
 	{
 		// 参数校验
-		if (NULL == pCode)
+		if (nullptr == pCode)
 		{
 			return -1;
 		}
@@ -341,7 +341,7 @@ namespace Myth
 	int	CByteStream::GetOnePacket(int nOffset, int nLength, byte* pOutCode, int& rOutLength)
 	{
 		// 参数校验
-		if (NULL == pOutCode || nLength <= 0)
+		if (nullptr == pOutCode || nLength <= 0)
 		{
 			return -1;
 		}

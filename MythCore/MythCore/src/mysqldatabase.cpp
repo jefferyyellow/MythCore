@@ -10,17 +10,17 @@ namespace Myth
 		if (0 == mDBCount++)
 		{
 			// 初始化数据库
-			 mysql_library_init(-1, NULL, NULL);
+			 mysql_library_init(-1, nullptr, nullptr);
 		}
 	}
 
 	CMysqlDataBase::~CMysqlDataBase()
 	{
-		if (NULL != mMysql)
+		if (nullptr != mMysql)
 		{
 			mysql_close(mMysql);
 		}
-		//if (NULL != mMysqlInit)
+		//if (nullptr != mMysqlInit)
 		//{
 		//	mysql_close(mMysqlInit);
 		//}
@@ -30,14 +30,14 @@ namespace Myth
 			// 卸载
 			mysql_library_end();
 		}
-		mMysql = NULL;
-		mMysqlInit = NULL;
+		mMysql = nullptr;
+		mMysqlInit = nullptr;
 	}
 	
 	void CMysqlDataBase::init()
 	{
-		mMysql = NULL;
-		mMysqlInit = NULL;
+		mMysql = nullptr;
+		mMysqlInit = nullptr;
 		mHost[0] = '\0';
 		mUserName[0] = '\0';
 		mPasswd[0] = '\0';
@@ -48,13 +48,13 @@ namespace Myth
 
 	int CMysqlDataBase::connectMysqlServer(const char* pHost, const char* pUserName, const char* pPasswd, const char* pDataBase, int nPort, const char* pUnixSocket)
 	{
-		if (NULL == pHost || NULL == pUserName || NULL == pPasswd || NULL == pDataBase)
+		if (nullptr == pHost || nullptr == pUserName || nullptr == pPasswd || nullptr == pDataBase)
 		{
 			return -1;
 		}
 
-		mMysqlInit = mysql_init(NULL);
-		if (NULL == mMysqlInit)
+		mMysqlInit = mysql_init(nullptr);
+		if (nullptr == mMysqlInit)
 		{
 			return -1;
 		}
@@ -74,7 +74,7 @@ namespace Myth
 		mMysql = mysql_real_connect(mMysqlInit, pHost, pUserName,
 			pPasswd, pDataBase, (unsigned int)nPort, pUnixSocket, CLIENT_MULTI_RESULTS);
 
-		if (NULL == mMysql)
+		if (nullptr == mMysql)
 		{
 			return -1;
 		}
@@ -84,7 +84,7 @@ namespace Myth
 		strncpy(mUserName, pUserName, sizeof(mUserName) - 1);
 		strncpy(mPasswd, pPasswd, sizeof(mPasswd) - 1);
 		strncpy(mDataBase, pDataBase, sizeof(mDataBase) - 1);
-		if (NULL != pUnixSocket)
+		if (nullptr != pUnixSocket)
 		{
 			strncpy(mUnixSocket, pUnixSocket, sizeof(mUnixSocket) - 1);
 		}
@@ -104,7 +104,7 @@ namespace Myth
 		int nRowCount = (int)mysql_affected_rows(mMysql);
 		int nFieldCount = (int)mysql_field_count(mMysql);
 
-		if (NULL == pResult)
+		if (nullptr == pResult)
 		{
 			return 0;
 		}
@@ -132,7 +132,7 @@ namespace Myth
 
 		rRowNum = nRowCount;
 		rColNum = nFieldCount;
-		if (NULL == pResult)
+		if (nullptr == pResult)
 		{
 			return 0;
 		}
@@ -145,7 +145,7 @@ namespace Myth
 		{
 			MYSQL_ROW tRow = mysql_fetch_row(pResult);
 			unsigned long *pColumn = mysql_fetch_lengths(pResult);
-			if (NULL == tRow || NULL == pColumn)
+			if (nullptr == tRow || nullptr == pColumn)
 			{
 				break;
 			}
@@ -162,7 +162,7 @@ namespace Myth
 				}
 				*pValueLength = pColumn[nCount];
 				pValueLength += 1;
-				if (NULL != tRow[nCount])
+				if (nullptr != tRow[nCount])
 				{
 					memcpy(pValue, tRow[nCount], pColumn[nCount] + 1);
 					pValue += pColumn[nCount] + 1;
@@ -185,7 +185,7 @@ namespace Myth
 
 	int CMysqlDataBase::query(const char *pSql)
 	{
-		if (NULL == mMysql || NULL == pSql)
+		if (nullptr == mMysql || nullptr == pSql)
 		{
 			return -1;
 		}
@@ -213,12 +213,12 @@ namespace Myth
 	}
 	void CMysqlDataBase::clearResult()
 	{
-		if (mMysql == NULL) return;
+		if (mMysql == nullptr) return;
 		// 处理mysql 2014错误，去掉缓存
-		MYSQL_RES* tRes = NULL;
+		MYSQL_RES* tRes = nullptr;
 		while (mysql_next_result(mMysql) == 0)
 		{
-			if(NULL != (tRes = mysql_store_result(mMysql)))
+			if(nullptr != (tRes = mysql_store_result(mMysql)))
 			{
 				mysql_free_result(tRes);
 			}

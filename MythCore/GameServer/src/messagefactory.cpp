@@ -8,7 +8,7 @@
 #include "chatmodule.hxx.pb.h"
 #include "dailyactmodule.hxx.pb.h"
 #include "serveractmodule.hxx.pb.h"
-#include "instancemodule.hxx.pb.h"
+//#include "instancemodule.hxx.pb.h"
 #define CASE_NEW_MSG(msg, msgid)						\
 		case msgid:										\
 		{												\
@@ -96,11 +96,11 @@ Message* CMessageFactory::createClientMessage(unsigned short nMessageID)
 		// daily module
 		CASE_NEW_MSG(CActivityStatusNotify, ID_S2C_NOTIFY_ACTIVITY_START)
 
-		// instance module
-		CASE_NEW_MSG(CEnterInstanceRequest, ID_C2S_REQUEST_ENTER_INSTANCE)
-		CASE_NEW_MSG(CEnterInstanceResponse, ID_S2C_RESPONSE_ENTER_INSTANCE)
-		CASE_NEW_MSG(CLeaveInstanceRequest, ID_C2S_REQUEST_LEAVE_INSTANCE)
-		CASE_NEW_MSG(CLeaveInstanceResponse, ID_S2C_RESPONSE_LEAVE_INSTANCE)
+		//// instance module
+		//CASE_NEW_MSG(CEnterInstanceRequest, ID_C2S_REQUEST_ENTER_INSTANCE)
+		//CASE_NEW_MSG(CEnterInstanceResponse, ID_S2C_RESPONSE_ENTER_INSTANCE)
+		//CASE_NEW_MSG(CLeaveInstanceRequest, ID_C2S_REQUEST_LEAVE_INSTANCE)
+		//CASE_NEW_MSG(CLeaveInstanceResponse, ID_S2C_RESPONSE_LEAVE_INSTANCE)
 
 
 		// ≤‚ ‘”√

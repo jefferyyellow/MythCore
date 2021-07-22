@@ -17,7 +17,7 @@ namespace Myth
 	// 初始化
 	int CSocketStream::Initialize(const byte* pBuffer, int nTotalSize)
 	{
-		if (NULL == pBuffer)
+		if (nullptr == pBuffer)
 		{
 			return -1;
 		}
@@ -30,7 +30,7 @@ namespace Myth
 	// 重置
 	int	CSocketStream::Resume(const byte* pBuffer, int nTotalSize)
 	{
-		if (NULL == pBuffer)
+		if (nullptr == pBuffer)
 		{
 			return -1;
 		}
@@ -42,7 +42,7 @@ namespace Myth
 	int	CSocketStream::PushPacket(const byte* pCode, int nLength)
 	{
 		// 参数校验
-		if (NULL == pCode || nLength <= 0)
+		if (nullptr == pCode || nLength <= 0)
 		{
 			return -1;
 		}
@@ -115,7 +115,7 @@ namespace Myth
 	int	CSocketStream::GetHeadPacket(byte* pCode, int &rLength)
 	{
 		// 参数校验
-		if (NULL == pCode)
+		if (nullptr == pCode)
 		{
 			rLength = 0;
 			return -1;
@@ -210,7 +210,7 @@ namespace Myth
 	int CSocketStream::PeekHeadPacket(byte* pCode, int& rLength)
 	{
 		// 参数校验
-		if (NULL == pCode)
+		if (nullptr == pCode)
 		{
 			return -1;
 		}
@@ -344,7 +344,7 @@ namespace Myth
 	int	CSocketStream::GetOnePacket(int nOffset, int nLength, byte* pOutCode, int& rOutLength)
 	{
 		// 参数校验
-		if (NULL == pOutCode || nLength <= 0)
+		if (nullptr == pOutCode || nLength <= 0)
 		{
 			return -1;
 		}

@@ -47,7 +47,7 @@ namespace Myth
 		/// create the singleton instance
 		static T*   createInst()
 		{
-			if (mInst == NULL)
+			if (mInst == nullptr)
 			{
 				return new T;
 			}
@@ -56,10 +56,10 @@ namespace Myth
 		/// destroy the singleton instance
 		static void destroyInst()
 		{
-			if (NULL != mInst)
+			if (nullptr != mInst)
 			{
 				delete mInst;
-				mInst = NULL;
+				mInst = nullptr;
 			}
 		}
 	private:
@@ -67,12 +67,12 @@ namespace Myth
 	};
 
 	template< typename T >
-	T* CSingleton<T>::mInst = NULL;
+	T* CSingleton<T>::mInst = nullptr;
 
 	//#define NEW_INST(SingletonClass) \
 	//	static SingletonClass* NewInst() \
 	//	{ \
-	//		if (NULL == SingletonClass::Inst()) \
+	//		if (nullptr == SingletonClass::Inst()) \
 	//		{ \
 	//			return new SingletonClass; \
 	//		} \
@@ -82,7 +82,7 @@ namespace Myth
 	//#define DESTROY_INST(SingletonClass) \
 	//	static void DestroyInst() \
 	//	{ \
-	//		if (NULL != SingletonClass::Inst()) \
+	//		if (nullptr != SingletonClass::Inst()) \
 	//		{ \
 	//			delete SingletonClass::Inst(); \
 	//		} \

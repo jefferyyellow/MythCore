@@ -15,10 +15,10 @@ namespace Myth
 		bCreate = true;
 		char szKeyBuffer[MAX_PATH] = { 0 };
 		snprintf(szKeyBuffer, sizeof(szKeyBuffer) - 1, "%d", nKey);
-		HANDLE hHandle = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, (unsigned int)nSize, szKeyBuffer);
+		HANDLE hHandle = CreateFileMapping(INVALID_HANDLE_VALUE, nullptr, PAGE_READWRITE, 0, (unsigned int)nSize, szKeyBuffer);
 		if (INVALID_HANDLE_VALUE == hHandle)
 		{
-			return NULL;
+			return nullptr;
 		}
 
 		// 不知道如何得到共享内存的大小，所以没法对大小做校验，先暂时这样吧，
@@ -34,14 +34,14 @@ namespace Myth
 
 	int CShareMemory::destroyShareMemory(int nKey, const byte* pShmPoint)
 	{
-		if (NULL != pShmPoint)
+		if (nullptr != pShmPoint)
 		{
 			UnmapViewOfFile(pShmPoint);
 		}
 
 		char szKeyBuffer[MAX_PATH] = { 0 };
 		snprintf(szKeyBuffer, sizeof(szKeyBuffer) - 1, "%d", nKey);
-		HANDLE hHandle = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, 0, szKeyBuffer);
+		HANDLE hHandle = CreateFileMapping(INVALID_HANDLE_VALUE, nullptr, PAGE_READWRITE, 0, 0, szKeyBuffer);
 		if (INVALID_HANDLE_VALUE == hHandle)
 		{
 			return 0;
@@ -57,7 +57,7 @@ namespace Myth
 		size_t nShmSize = (size_t)nSize;
 		if (nKey < 0)
 		{
-			return NULL;
+			return nullptr;
 		}
 		// 直接创建
 		int nShmID = shmget(tKey, nShmSize, IPC_CREAT | IPC_EXCL | 0666);
@@ -65,7 +65,7 @@ namespace Myth
 		{
 			if (EEXIST != errno)
 			{
-				return NULL;
+				return nullptr;
 			}
 			bCreate = false;
 			// 对应的键值已经存在
@@ -77,28 +77,28 @@ namespace Myth
 				nShmID = shmget(tKey, 0, 0666);
 				if (nShmID < 0)
 				{
-					return NULL;
+					return nullptr;
 				}
 				else
 				{
 					bCreate = true;
 					// 将共享内存删除
-					if (shmctl(tKey, IPC_RMID, NULL))
+					if (shmctl(tKey, IPC_RMID, nullptr))
 					{
-						return NULL;
+						return nullptr;
 					}
 					// 创建共享内存
 					nShmID = shmget(tKey, nShmSize, IPC_CREAT | IPC_EXCL | 0666);
 					if (nShmID < 0)
 					{
-						return NULL;
+						return nullptr;
 					}
 				}
 			}
 		}
 
 
-		return (byte*)shmat(nShmID, NULL, 0);
+		return (byte*)shmat(nShmID, nullptr, 0);
 	}
 
 	int CShareMemory::destroyShareMemory(int nKey, const byte* pShmPoint)
@@ -116,7 +116,7 @@ namespace Myth
 		}
 		else
 		{
-			if (shmctl(nShmID, IPC_RMID, NULL))
+			if (shmctl(nShmID, IPC_RMID, nullptr))
 			{
 				return -1;
 			}

@@ -16,7 +16,7 @@ namespace Myth
 
 	CRollFileDisplayer::CRollFileDisplayer(char* pFileName, int uMaxFileSize, int uMaxBackNum)
 	{
-		if (NULL != pFileName)
+		if (nullptr != pFileName)
 		{
 			mFd = open(pFileName, O_CREAT | O_APPEND | O_WRONLY, 00644);
 			strncpy(mFileName, pFileName, sizeof(mFileName) - 1);
@@ -42,7 +42,7 @@ namespace Myth
 	/// display log message
 	void CRollFileDisplayer::DisplayLog(char* pLogMessage)
 	{
-		if (0 > mFd || NULL == pLogMessage)
+		if (0 > mFd || nullptr == pLogMessage)
 		{
 			return;
 		}
@@ -85,7 +85,7 @@ namespace Myth
 	void CDebuggerOutputDisplayer::DisplayLog(char* pLogMessage)
 	{
 #ifdef MYTH_OS_WINDOWS
-		//int nLenth = MultiByteToWideChar(CP_ACP,0, pLogMessage, -1, NULL, 0);
+		//int nLenth = MultiByteToWideChar(CP_ACP,0, pLogMessage, -1, nullptr, 0);
 		//wchar_t* pWideChar = new wchar_t[nLenth + 1];
 		//MultiByteToWideChar(CP_ACP, 0, pLogMessage, -1, (LPWSTR)pWideChar, nLenth);
 		OutputDebugString(pLogMessage);

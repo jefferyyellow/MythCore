@@ -19,10 +19,10 @@ namespace Myth
 		{
 			strncpy(mName, pName, sizeof(mName) - 1);
 			mName[sizeof(mName) - 1] = '\0';
-			mParentNode = NULL;
-			mFirstSonNode = NULL;
-			mLastSonNode = NULL;
-			mNextSiblingNode = NULL;
+			mParentNode = nullptr;
+			mFirstSonNode = nullptr;
+			mLastSonNode = nullptr;
+			mNextSiblingNode = nullptr;
 			mCallNum = 0;
 			mMaxTime = 0;
 			mMinTime = 0xFFFFFFFF;

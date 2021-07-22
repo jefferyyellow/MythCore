@@ -11,7 +11,7 @@ namespace Myth
 	{
 		if (nFd < 0 || nFd >= mSocketCapacity)
 		{
-			return NULL;
+			return nullptr;
 		}
 		return &(mpAllSocket[nFd]);
 	}
@@ -19,11 +19,11 @@ namespace Myth
 	int	CEpollModel::initEpollSocket()
 	{
 		mCtrlEvent.events = EPOLLIN | EPOLLERR | EPOLLHUP;
-		mCtrlEvent.data.ptr = NULL;
+		mCtrlEvent.data.ptr = nullptr;
 		mCtrlEvent.data.fd  = -1;
 
 		mpWaitEvents = (struct epoll_event *) malloc(mSocketCapacity * sizeof(struct epoll_event));
-		if(NULL == mpWaitEvents)
+		if(nullptr == mpWaitEvents)
 		{
 			// 出错
 		}
@@ -42,13 +42,13 @@ namespace Myth
 		SOCKET nNewFd = socket(AF_INET, SOCK_STREAM, 0);
 		if(INVALID_SOCKET == nNewFd)
 		{
-			return NULL;
+			return nullptr;
 		}
 		if (nNewFd >= mSocketCapacity)
 		{
 			shutdown(nNewFd, SHUT_RDWR);
 			close(nNewFd);
-			return NULL;
+			return nullptr;
 		}
 
 		CTcpSocket& rNewSocket = mpAllSocket[nNewFd];
@@ -61,24 +61,24 @@ namespace Myth
 		{
 			// 出错
 			rNewSocket.setSocketFd(-1);
-			return NULL;
+			return nullptr;
 		}
 		if(rNewSocket.setReuseAddr(true) < 0)
 		{
 			// 出错
 			rNewSocket.setSocketFd(-1);
-			return NULL;
+			return nullptr;
 		}
 		if(rNewSocket.setLinger(0) < 0)
 		{
 			// 出错
 			rNewSocket.setSocketFd(-1);
-			return NULL;
+			return nullptr;
 		}
 		if(rNewSocket.bindPort() < 0)
 		{
 			rNewSocket.setSocketFd(-1);
-			return NULL;
+			return nullptr;
 		}
 
 
@@ -96,7 +96,7 @@ namespace Myth
 		{
 			rNewSocket.closeSocket();
 			rNewSocket.setSocketFd(INVALID_SOCKET);
-			return NULL;
+			return nullptr;
 		}
 
 		return &rNewSocket;
@@ -144,13 +144,13 @@ namespace Myth
 		SOCKET  nNewFd = accept(rListSocket.getSocketFd(), (struct sockaddr*)&serverAddr, &nLen);
 		if (nNewFd < 0)
 		{
-			return NULL;
+			return nullptr;
 		}
 		if (mSocketCapacity <= nNewFd)
 		{
 			shutdown(nNewFd, SHUT_RDWR);
 			close(nNewFd);
-			return NULL;
+			return nullptr;
 		}
 
 		CTcpSocket& rNewSocket = mpAllSocket[nNewFd];
@@ -161,7 +161,7 @@ namespace Myth
 		if ((rNewSocket.setNonBlock(true)) < 0)
 		{
 			rNewSocket.closeSocket();
-			return NULL;
+			return nullptr;
 		}
 
 		addSocket(rNewSocket.getSocketFd());
@@ -170,7 +170,7 @@ namespace Myth
 
 	//int CEpollModel::processWrite(int nSocketFd, char* pBuffer, int nBuffSize)
 	//{
-	//	if (NULL == pBuffer)
+	//	if (nullptr == pBuffer)
 	//	{
 	//		return 0;
 	//	}

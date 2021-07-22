@@ -8,12 +8,12 @@ namespace Myth
 		mThreadMaxIndex = -1;
 		for (int i = 0; i < MAX_THREAD_CAPACITY; ++ i)
 		{
-			mThreadList[i] = NULL;
+			mThreadList[i] = nullptr;
 		}
 		mJobIDCount = 0;
 		for (int i = 0; i < MAX_JOB_ID_NUM; ++ i)
 		{
-			mJobList[i] = NULL;
+			mJobList[i] = nullptr;
 		}
 	}
 
@@ -39,7 +39,7 @@ namespace Myth
 		for (int i = 0; i < nThreadSize; ++i)
 		{
 			mThreadList[i] = new CThread;
-			if (NULL == mThreadList[i])
+			if (nullptr == mThreadList[i])
 			{
 				terminateAllThread();
 				waitAllThread();
@@ -64,7 +64,7 @@ namespace Myth
 
 		for (int i = 0; i <= mThreadMaxIndex; ++i)
 		{
-			if (NULL == mThreadList[i])
+			if (nullptr == mThreadList[i])
 			{
 				continue;
 			}
@@ -77,7 +77,7 @@ namespace Myth
 	{
 		for (int i = 0; i < MAX_THREAD_CAPACITY; ++i)
 		{
-			if (NULL == mThreadList[i])
+			if (nullptr == mThreadList[i])
 			{
 				continue;
 			}
@@ -90,12 +90,12 @@ namespace Myth
 	{
 		for (int i = 0; i < MAX_THREAD_CAPACITY; ++i)
 		{
-			if (NULL == mThreadList[i])
+			if (nullptr == mThreadList[i])
 			{
 				continue;
 			}
 			mThreadList[i]->wait();
-			mThreadList[i] = NULL;
+			mThreadList[i] = nullptr;
 		}
 	}
 
@@ -105,7 +105,7 @@ namespace Myth
 		CAutoLock tLock(mSimpleLock);
 		for (int i = 0; i < MAX_THREAD_CAPACITY; ++ i)
 		{
-			if ( NULL == mThreadList[i])
+			if ( nullptr == mThreadList[i])
 			{
 				mThreadList[i] = pThread;
 				if (i > mThreadMaxIndex)
@@ -125,9 +125,9 @@ namespace Myth
 		int nPos = 0;
 		for (int i = 0; i < MAX_THREAD_CAPACITY; ++ i)
 		{
-			if (NULL != mThreadList[i] && mThreadList[i]->getThreadID())
+			if (nullptr != mThreadList[i] && mThreadList[i]->getThreadID())
 			{
-				mThreadList[i] = NULL;
+				mThreadList[i] = nullptr;
 				nPos = i;
 				return true;
 			}
@@ -138,7 +138,7 @@ namespace Myth
 		{
 			for (int i = mThreadMaxIndex; i >= 0; ++ i)
 			{
-				if (NULL == mThreadList[i])
+				if (nullptr == mThreadList[i])
 				{
 					-- mThreadMaxIndex;
 				}
@@ -159,19 +159,19 @@ namespace Myth
 
 		for (int i = 0; i < MAX_THREAD_CAPACITY; ++i)
 		{
-			if (NULL != mThreadList[i] && mThreadList[i]->getThreadID() == id)
+			if (nullptr != mThreadList[i] && mThreadList[i]->getThreadID() == id)
 			{
 				return mThreadList[i];
 			}
 		}
 
-		return NULL;
+		return nullptr;
 	}
 
 	/// Ôö¼Ójob
 	bool CThreadPool::pushBackJob(IJob* pJob)
 	{
-		if (NULL == pJob)
+		if (nullptr == pJob)
 		{
 			return false;
 		}
@@ -184,7 +184,7 @@ namespace Myth
 		mJobArray.push_back(pJob);
 		for (int i = 0; i < MAX_JOB_ID_NUM; ++i)
 		{
-			if (NULL == mJobList[i])
+			if (nullptr == mJobList[i])
 			{
 				pJob->setJobID(i);
 				mJobList[i] = pJob;
@@ -198,7 +198,7 @@ namespace Myth
 	/// É¾³ýjob
 	void CThreadPool::removeJob(IJob* pJob)
 	{
-		if (NULL == pJob)
+		if (nullptr == pJob)
 		{
 			return;
 		}
@@ -214,7 +214,7 @@ namespace Myth
 		}
 		if (pJob->getJobID() >= 0 && pJob->getJobID() < MAX_JOB_ID_NUM)
 		{
-			mJobList[pJob->getJobID()] = NULL;
+			mJobList[pJob->getJobID()] = nullptr;
 		}
 		else
 		{
@@ -222,7 +222,7 @@ namespace Myth
 			{
 				if (pJob == mJobList[i])
 				{
-					mJobList[i] = NULL;
+					mJobList[i] = nullptr;
 					break;
 				}
 			}
@@ -236,9 +236,9 @@ namespace Myth
 
 		if (mJobIndex >= mJobArray.size())
 		{
-			return NULL;
+			return nullptr;
 		}
-		IJob* pRunJob = NULL;
+		IJob* pRunJob = nullptr;
 		for (; mJobIndex < mJobArray.size(); ++mJobIndex)
 		{
 			if (!(mJobArray[mJobIndex]->getBusy()))
@@ -272,7 +272,7 @@ namespace Myth
 	{
 		if (nJobID < 0 || nJobID >= MAX_JOB_ID_NUM)
 		{
-			return NULL;
+			return nullptr;
 		}
 		return mJobList[nJobID];
 	}

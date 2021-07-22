@@ -35,7 +35,7 @@ namespace Myth
 			FD_ZERO(&mReadBackSet);
 			mSelectTime.tv_sec = 0;
 			mSelectTime.tv_usec = 0;
-			mpAllSocket = NULL;
+			mpAllSocket = nullptr;
 			mSocketCapacity = 0;
 			mMaxSocketIndex = -1;
 		}
@@ -55,7 +55,7 @@ namespace Myth
 		{
 			if (nIndex < 0 || nIndex >= mSocketCapacity)
 			{
-				return NULL;
+				return nullptr;
 			}
 			return &(mpAllSocket[nIndex]);
 		}

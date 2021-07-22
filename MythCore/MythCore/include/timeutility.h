@@ -61,7 +61,7 @@ namespace Myth
 	public:
 		CAutoClockTime(const char* pName)
 		{
-			if (NULL != pName)
+			if (nullptr != pName)
 			{
 				strncpy(mName, pName, sizeof(mName) - 1);
 				mName[sizeof(mName) - 1] = '\0';

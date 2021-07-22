@@ -55,7 +55,7 @@ int calcFileCrc32(const char *pFilePath, unsigned int *FileCrc)
     unsigned int crc = 0xffffffff;   
   
     FILE* pFile = fopen(pFilePath, "rb");  
-    if (NULL == pFile) {  
+    if (nullptr == pFile) {  
         return -1;  
     }  
           

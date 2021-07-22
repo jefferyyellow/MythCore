@@ -43,7 +43,7 @@ namespace Myth
 		{
 			for (int i = 0; i < MaxCount; ++ i)
 			{
-				if (NULL != mBlockMemory[i])
+				if (nullptr != mBlockMemory[i])
 				{
 					::free(mBlockMemory[i]);
 				}
@@ -58,7 +58,7 @@ namespace Myth
 				allocIncrement(IncreCount);
 				if (0 >= mFreeCount)
 				{
-					return NULL;
+					return nullptr;
 				}
 			}
 			
@@ -66,7 +66,7 @@ namespace Myth
 			if (nIndex < 0 || nIndex >= mAllocCount)
 			{
 				nMemIndex = -1;
-				return NULL;
+				return nullptr;
 			}
 			
 			nMemIndex = nIndex;
@@ -87,7 +87,7 @@ namespace Myth
 		{
 			if (nMemIndex < 0 || nMemIndex >= mAllocCount)
 			{
-				return NULL;
+				return nullptr;
 			}
 			return &(mBlockMemory[nMemIndex]->mData);
 		}
@@ -123,21 +123,21 @@ namespace Myth
 		{
 			if (mHeadIndex < 0)
 			{
-				return NULL;
+				return nullptr;
 			}
 			return &(mBlockMemory[mHeadIndex]->mData);
 		}
 
 		T*			next(T* pValue)
 		{
-			if (NULL == pValue)
+			if (nullptr == pValue)
 			{
-				return NULL;
+				return nullptr;
 			}
 			BLOCK_DATA* pData = (BLOCK_DATA*)pValue;
 			if (pData->mNextIndex < 0)
 			{
-				return NULL;
+				return nullptr;
 			}
 			return &(mBlockMemory[pData->mNextIndex]->mData);
 		}
@@ -206,14 +206,14 @@ namespace Myth
 		{
 			if (0 >= mFreeCount)
 			{
-				return NULL;
+				return nullptr;
 			}
 
 			int nIndex = mFreeIndex[mFreeCount - 1];
 			if (nIndex < 0 || nIndex >= Capacity)
 			{
 				nMemIndex = -1;
-				return NULL;
+				return nullptr;
 			}
 
 			nMemIndex = nIndex;
@@ -225,7 +225,7 @@ namespace Myth
 		{
 			if (nMemIndex < 0 || nMemIndex >= Capacity)
 			{
-				return NULL;
+				return nullptr;
 			}
 			return &mBlockMemory[nMemIndex];
 		}

@@ -13,7 +13,7 @@ namespace Myth
 	const char* CFileUtility::GetLastSeparator(const char* pFilePath)
 	{
 		const char* pFind = strrchr(pFilePath, '/');
-		if (NULL == pFind)
+		if (nullptr == pFind)
 		{
 			pFind = strrchr(pFilePath, '\\');
 		}
@@ -24,13 +24,13 @@ namespace Myth
 	/// get the file name from file path
 	char* CFileUtility::GetFileName(const char* pFilePath, char* pFileName, int nSize)
 	{
-		if (NULL == pFilePath || NULL == pFileName)
+		if (nullptr == pFilePath || nullptr == pFileName)
 		{
-			return NULL;
+			return nullptr;
 		}
 
 		const char* pFind = GetLastSeparator(pFilePath);
-		if (NULL == pFind)
+		if (nullptr == pFind)
 		{
 			strncpy(pFileName, pFilePath, size_t(nSize - 1));
 		}
@@ -44,13 +44,13 @@ namespace Myth
 	/// get the path name from file path
 	char* CFileUtility::GetPathName(const char* pFilePath, char* pPathName, int nSize)
 	{
-		if (NULL == pFilePath || NULL == pPathName)
+		if (nullptr == pFilePath || nullptr == pPathName)
 		{
-			return NULL;
+			return nullptr;
 		}
 
 		const char* pFind = GetLastSeparator(pFilePath);
-		if (NULL == pFind)
+		if (nullptr == pFind)
 		{
 			strncpy(pPathName, pFilePath, size_t(nSize - 1));
 		}
@@ -72,7 +72,7 @@ namespace Myth
 	char* CFileUtility::GetExtension(const char* pFilePath, char* pExtension, int nSize)
 	{
 		const char* pFind = strrchr(pFilePath, '.');
-		if (NULL == pFind)
+		if (nullptr == pFind)
 		{
 			strncpy(pExtension, "", size_t(nSize - 1));
 		}
@@ -90,7 +90,7 @@ namespace Myth
 		GetFileName(pFilePath, tBuffer, STR_LENGTH_64);
 
 		char* pFind = strrchr(tBuffer, '.');
-		if (NULL == pFind)
+		if (nullptr == pFind)
 		{
 			strncpy(pNewFileName, pFilePath, size_t(nSize - 1));
 		}
@@ -109,13 +109,13 @@ namespace Myth
 
 	char* CFileUtility::GetFilePathWithoutExtension(const char* pFilePath, char* pNewFilePath, int nSize)
 	{
-		if (NULL == pFilePath || NULL == pNewFilePath)
+		if (nullptr == pFilePath || nullptr == pNewFilePath)
 		{
-			return NULL;
+			return nullptr;
 		}
 
 		const char* pFind = strrchr(pFilePath, '.');
-		if (NULL == pFind)
+		if (nullptr == pFind)
 		{
 			strncpy(pNewFilePath, pFilePath, size_t(nSize - 1));
 		}
@@ -203,12 +203,12 @@ namespace Myth
 
 	unsigned int CFileUtility::GetFileModifyTime(const char* pFilePath)
 	{
-		//	if(NULL == pFilePath)
+		//	if(nullptr == pFilePath)
 		//	{
 		//		return 0;
 		//	}
 		//#ifdef MYTH_OS_WINDOWS
-		//	HANDLE handle = CreateFile(pFilePath, 0, 0, NULL, OPEN_EXISTING, 0, 0);
+		//	HANDLE handle = CreateFile(pFilePath, 0, 0, nullptr, OPEN_EXISTING, 0, 0);
 		//	FILETIME tCreationTime;
 		//	FILETIME tAccessTime; 
 		//	FILETIME tModTime;
@@ -225,7 +225,7 @@ namespace Myth
 	}
 	bool CFileUtility::SetFileModifyTime(const char* pFilePath, unsigned int uModifyTime)
 	{
-		if (NULL == pFilePath)
+		if (nullptr == pFilePath)
 		{
 			return false;
 		}
@@ -234,7 +234,7 @@ namespace Myth
 
 	unsigned int CFileUtility::GetFileCreateDate(const char* pFilePath)
 	{
-		if (NULL == pFilePath)
+		if (nullptr == pFilePath)
 		{
 			return 0;
 		}
@@ -256,12 +256,12 @@ namespace Myth
 
 	bool CFileUtility::CreateEmptyFile(const char* pFilePath)
 	{
-		if (NULL == pFilePath)
+		if (nullptr == pFilePath)
 		{
 			return false;
 		}
 		FILE* pFile = fopen(pFilePath, "wb");
-		if (NULL != pFile)
+		if (nullptr != pFile)
 		{
 			fclose(pFile);
 			return true;
@@ -281,7 +281,7 @@ namespace Myth
 
 	bool CFileUtility::CreateDir(const char* pDirName)
 	{
-		if (NULL == pDirName)
+		if (nullptr == pDirName)
 		{
 			return false;
 		}
@@ -294,7 +294,7 @@ namespace Myth
 
 	bool CFileUtility::DeleteDir(const char* pDirName)
 	{
-		if (NULL == pDirName)
+		if (nullptr == pDirName)
 		{
 			return false;
 		}
@@ -309,7 +309,7 @@ namespace Myth
 
 	bool CFileUtility::CreateDirTree(const char* pDirName)
 	{
-		if (NULL == pDirName)
+		if (nullptr == pDirName)
 		{
 			return false;
 		}
@@ -362,7 +362,7 @@ namespace Myth
 
 	bool CFileUtility::DeleteDirTree(const char* pDirName)
 	{
-		if (NULL == pDirName)
+		if (nullptr == pDirName)
 		{
 			return false;
 		}
@@ -411,12 +411,12 @@ namespace Myth
 		struct 	stat tStatBuf;
 		char tBuffer[STR_LENGTH_256] = { 0 };
 
-		if ((pDir = opendir(pDirName)) == NULL)
+		if ((pDir = opendir(pDirName)) == nullptr)
 		{
 			return false;
 		}
 
-		while ((pDirent = readdir(pDir)) != NULL)
+		while ((pDirent = readdir(pDir)) != nullptr)
 		{
 			if (strcmp(".", pDirent->d_name) == 0
 				|| strcmp("..", pDirent->d_name) == 0)
@@ -447,7 +447,7 @@ namespace Myth
 	void CDir::findFirstFile(const char* pFilePath, char* pFileName, int nNameSize)
 	{
 #ifdef MYTH_OS_UNIX
-		if ((mDir = opendir (pFilePath)) == NULL) 
+		if ((mDir = opendir (pFilePath)) == nullptr) 
 		{
 			pFileName[0] = '\0';
 			return;
@@ -475,9 +475,9 @@ namespace Myth
 #ifdef MYTH_OS_UNIX
 		struct 	stat tStatBuf;
 		char tBuffer[STR_LENGTH_256] = { 0 };
-		struct dirent *dp = NULL;
+		struct dirent *dp = nullptr;
 
-		while((dp = readdir (mDir)) != NULL)
+		while((dp = readdir (mDir)) != nullptr)
 		{
 			int nReulst = lstat(tBuffer, &tStatBuf);
 			// 不处理子文件夹
@@ -510,16 +510,16 @@ namespace Myth
 	const char* CDir::findFirstFileLua(const char* pFilePath)
 	{
 #ifdef MYTH_OS_UNIX
-		if ((mDir = opendir(pFilePath)) == NULL)
+		if ((mDir = opendir(pFilePath)) == nullptr)
 		{
-			return NULL;
+			return nullptr;
 		}
 		return nextFileLua();
 #else
 		mFindHandle = FindFirstFile(pFilePath, &mFindData);
 		if (INVALID_HANDLE_VALUE == mFindHandle)
 		{
-			return NULL;
+			return nullptr;
 		}
 		// 只处理非文件夹文件
 		if (!(mFindData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
@@ -535,9 +535,9 @@ namespace Myth
 #ifdef MYTH_OS_UNIX
 		struct 	stat tStatBuf;
 		char tBuffer[STR_LENGTH_256] = { 0 };
-		struct dirent *dp = NULL;
+		struct dirent *dp = nullptr;
 
-		while ((dp = readdir(mDir)) != NULL)
+		while ((dp = readdir(mDir)) != nullptr)
 		{
 			int nReulst = lstat(tBuffer, &tStatBuf);
 			// 不处理子文件夹
@@ -547,7 +547,7 @@ namespace Myth
 			}
 			return dp->d_name;
 		}
-		return NULL;
+		return nullptr;
 #else
 		while (FindNextFile(mFindHandle, &mFindData) != 0)
 		{
@@ -559,7 +559,7 @@ namespace Myth
 			return mFindData.cFileName;
 		}
 
-		return NULL;
+		return nullptr;
 #endif
 	}
 }

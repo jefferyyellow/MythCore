@@ -7,7 +7,7 @@ namespace Myth
 	{
 	public:
 		CMysqlField()
-		:mpValue(NULL), mValueLen(0)
+		:mpValue(nullptr), mValueLen(0)
 		{
 		}
 		CMysqlField(CMysqlField& rFiled)

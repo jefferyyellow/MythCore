@@ -35,7 +35,7 @@ namespace Myth
 		{
 			if (nIndex >= MAX_ROW_FIELD_NUM)
 			{
-				return NULL;
+				return nullptr;
 			}
 			return &mField[nIndex];
 		}

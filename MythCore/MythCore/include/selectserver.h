@@ -14,8 +14,8 @@ namespace Myth
 		CSelectServer(SrvReceiveMsgHandle tReceiveMsgHanle,SrvNewConnHandle tNewConnHandle, SrvRemoveConnHandle tRemoveConnHandle)
 			:mReceiveMsgHandle(tRemoveConnHandle), mNewConnHandle(tNewConnHandle), mRemoveConnHandle(tRemoveConnHandle)
 		{
-			mTcpSocket = NULL;
-			mSelectModel = NULL;
+			mTcpSocket = nullptr;
+			mSelectModel = nullptr;
 			mCacheSize = 0;
 			mMaxSocketNum = 0;
 		}

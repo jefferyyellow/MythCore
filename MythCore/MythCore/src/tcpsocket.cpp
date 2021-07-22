@@ -20,7 +20,7 @@ namespace Myth
 
 	int	CTcpSocket::connectServer(const char* pIP, unsigned short uPort)
 	{
-		if (NULL == pIP)
+		if (nullptr == pIP)
 		{
 			return -1;
 		}
@@ -84,7 +84,7 @@ namespace Myth
 		socklen_t nLen = sizeof(serverAddr);
 #endif
 		SOCKET  nFd = accept(mSocketFd, (struct sockaddr*)&serverAddr, &nLen);
-		if (NULL != pNewSocket)
+		if (nullptr != pNewSocket)
 		{
 			pNewSocket->setSocketFd(nFd);
 			pNewSocket->setPort(ntohs(serverAddr.sin_port));

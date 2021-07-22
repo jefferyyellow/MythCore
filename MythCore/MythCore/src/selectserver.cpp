@@ -8,13 +8,13 @@ namespace Myth
 		mCacheSize = nCacheSize;
 		mMaxSocketNum = nMaxSocketNum;
 		mTcpSocket = new CTcpSocket[nMaxSocketNum];
-		if (NULL == mTcpSocket)
+		if (nullptr == mTcpSocket)
 		{
 			return false;
 		}
 
 		mSelectModel = new CSelectModel(mTcpSocket, nMaxSocketNum);
-		if (NULL == mSelectModel)
+		if (nullptr == mSelectModel)
 		{
 			return false;
 		}
@@ -22,8 +22,8 @@ namespace Myth
 		for (int i = 0; i < nPortNum; ++i)
 		{
 			int nSocketIndex = -1;
-			CTcpSocket* pListenSocket = mSelectModel->createListenSocket(NULL, pListenPort[i], nBackLogNum, nSocketIndex);
-			if (NULL == pListenSocket)
+			CTcpSocket* pListenSocket = mSelectModel->createListenSocket(nullptr, pListenPort[i], nBackLogNum, nSocketIndex);
+			if (nullptr == pListenSocket)
 			{
 				return false;
 			}
@@ -41,7 +41,7 @@ namespace Myth
 		for (int i = 0; i < mMaxSocketNum; ++i)
 		{
 			byte* pBuff = mTcpSocket[i].getRecvBuff();
-			if (NULL != pBuff)
+			if (nullptr != pBuff)
 			{
 				delete[]pBuff;
 			}
@@ -73,15 +73,15 @@ namespace Myth
 				int nSocketIndex = -1;
 				CTcpSocket* pNewSocket = mSelectModel->getFreeSocket(nSocketIndex);
 				pAllSocket[i].acceptConnection(pNewSocket);
-				if (NULL == pNewSocket)
+				if (nullptr == pNewSocket)
 				{
 					// 出错
 					continue;
 				}
-				if (NULL == pNewSocket->getRecvBuff())
+				if (nullptr == pNewSocket->getRecvBuff())
 				{
 					byte* pNewSocketBuff = new byte[mCacheSize];
-					if (NULL == pNewSocketBuff)
+					if (nullptr == pNewSocketBuff)
 					{
 						clearSocket(pNewSocket);
 						continue;
@@ -95,7 +95,7 @@ namespace Myth
 				pNewSocket->setMaxRecvBuffSize(mCacheSize);
 				pNewSocket->setRecvBuffSize(0);
 				mSelectModel->addNewSocket(pNewSocket, nSocketIndex);
-				if (NULL != mNewConnHandle)
+				if (nullptr != mNewConnHandle)
 				{
 					mNewConnHandle(pNewSocket);
 				}
@@ -106,11 +106,11 @@ namespace Myth
 				if (nResult <= 0)
 				{
 					CTcpSocket* pSocket = mSelectModel->getSocket(i);
-					if (NULL != pSocket)
+					if (nullptr != pSocket)
 					{
 						// 客户端已经退出
 						clearSocket(pSocket);
-						if (NULL != mRemoveConnHandle)
+						if (nullptr != mRemoveConnHandle)
 						{
 							mRemoveConnHandle(pSocket);
 						}
@@ -128,7 +128,7 @@ namespace Myth
 
 	int CSelectServer::sendMessage(CTcpSocket* pSocket, const byte* pBuff, int nBuffSize)
 	{
-		if (NULL == pBuff || nBuffSize <= 0)
+		if (nullptr == pBuff || nBuffSize <= 0)
 		{
 			return -1;
 		}
@@ -140,7 +140,7 @@ namespace Myth
 		if (nResult != nBuffSize)
 		{
 			clearSocket(pSocket);
-			if (NULL != mRemoveConnHandle)
+			if (nullptr != mRemoveConnHandle)
 			{
 				mRemoveConnHandle(pSocket);
 			}

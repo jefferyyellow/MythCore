@@ -19,15 +19,15 @@ namespace Myth
 		int nSocketIndex = -1;
 
 		CTcpSocket* pNewSocket = getFreeSocket(nSocketIndex);
-		if (NULL == pNewSocket)
+		if (nullptr == pNewSocket)
 		{
 			// ³ö´í
-			return NULL;
+			return nullptr;
 		}
 
 		if(INVALID_SOCKET == pNewSocket->createSocket())
 		{
-			return NULL;
+			return nullptr;
 		}
 
 		pNewSocket->setReuseAddr(true);
@@ -36,12 +36,12 @@ namespace Myth
 		if (pNewSocket->bindPort() < 0)
 		{
 			//int nError = WSAGetLastError();
-			return NULL;
+			return nullptr;
 		}
 		if (pNewSocket->listenSocket(nListNum) < 0)
 		{
 			//int nError = WSAGetLastError();
-			return NULL;
+			return nullptr;
 		}
 
 		pNewSocket->SetListen(1);
@@ -54,7 +54,7 @@ namespace Myth
 	void CSelectModel::selectAllFd()
 	{
 		mReadSet = mReadBackSet;
-		int nResult = select((int)(mMaxFd + 1), &mReadSet, NULL, NULL, &mSelectTime);
+		int nResult = select((int)(mMaxFd + 1), &mReadSet, nullptr, nullptr, &mSelectTime);
 		if (nResult < 0)
 		{
 			int nError = WSAGetLastError();
@@ -64,7 +64,7 @@ namespace Myth
 
 	//int CSelectModel::processWrite(int nSocketIndex, char* pBuffer, int nBuffSize)
 	//{
-	//	if (NULL == pBuffer)
+	//	if (nullptr == pBuffer)
 	//	{
 	//		return 0;
 	//	}
@@ -105,7 +105,7 @@ namespace Myth
 	//				{
 	//					mMaxSocketIndex = nSocketIndex;
 	//				}
-	//				if (NULL == pNewSocket)
+	//				if (nullptr == pNewSocket)
 	//				{
 	//					// ³ö´í
 	//				}
@@ -113,7 +113,7 @@ namespace Myth
 	//			}
 	//			else
 	//			{
-	//				if (NULL != mpAllSocket[i].getRecvBuff())
+	//				if (nullptr != mpAllSocket[i].getRecvBuff())
 	//				{
 	//					int nResult = mpAllSocket[i].recvData(mpAllSocket[i].getRecvBuffPoint(), mpAllSocket[i].getRecvBuffCapacity());
 	//					if (nResult <= 0)
@@ -137,12 +137,12 @@ namespace Myth
 		int nIndex = findFreeSocketIndex();
 		if (nIndex < 0)
 		{
-			return NULL;
+			return nullptr;
 		}
 
 		if (nIndex >= mSocketCapacity)
 		{
-			return NULL;
+			return nullptr;
 		}
 		rSocketIndex = nIndex;
 		return &mpAllSocket[nIndex];
@@ -150,7 +150,7 @@ namespace Myth
 
 	void CSelectModel::addNewSocket(CTcpSocket* pNewSocket, int nSocketIndex)
 	{
-		if (NULL == pNewSocket)
+		if (nullptr == pNewSocket)
 		{
 			return;
 		}

@@ -362,14 +362,14 @@ namespace Myth
 		void push_back(const value_type& value)
 		{
 			CListNode<T>* pNode = mAlloc.allocate();
-			if (NULL == pNode)
+			if (nullptr == pNode)
 			{
 				return;
 			}
 
 #ifdef MYTH_OS_WINDOWS
 			// vs2010 or above
-			comconstruct<T, std::has_trivial_constructor<T>::value>::construct(&(pNode->mData), value);
+			comconstruct<T, false>::construct(&(pNode->mData), value);
 #else
 			// gcc has no std::has_trivial_constructor<T>::value
 			comconstruct<T, false>::construct(&(pNode->mData), value);
@@ -386,14 +386,14 @@ namespace Myth
 		void push_front(const value_type& value)
 		{
 			CListNode<T>* pNode = mAlloc.allocate();
-			if (NULL == pNode)
+			if (nullptr == pNode)
 			{
 				return;
 			}
 
 #ifdef MYTH_OS_WINDOWS
 			// vs2010 or above
-			comconstruct<T, std::has_trivial_constructor<T>::value>::construct(&(pNode->mData), value);
+			comconstruct<T, false>::construct(&(pNode->mData), value);
 #else
 			// gcc has no std::has_trivial_constructor<T>::value
 			comconstruct<T, false>::construct(&(pNode->mData), value);
@@ -410,9 +410,9 @@ namespace Myth
 		iterator insert(iterator position, const value_type& rValue)
 		{
 			CListNode<T>* pNode = mAlloc.allocate();
-			if (NULL == pNode)
+			if (nullptr == pNode)
 			{
-				return iterator(NULL);
+				return iterator(nullptr);
 			}
 
 #ifdef MYTH_OS_WINDOWS
@@ -518,7 +518,7 @@ namespace Myth
 		void reverse()
 		{
 			CListNodeBase* pCurrNode = mBaseNode.mpNext;
-			CListNodeBase* pTempNext = NULL;
+			CListNodeBase* pTempNext = nullptr;
 			while(pCurrNode != &mBaseNode)
 			{
 				pTempNext = pCurrNode->mpNext;

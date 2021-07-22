@@ -36,7 +36,7 @@ namespace Myth
 	{
 		if (uIndex >= MAX_NUM_LOG_DISPLAYER)
 		{
-			return NULL;
+			return nullptr;
 		}
 		return mDisplayer[uIndex];
 	}

@@ -9,12 +9,12 @@ namespace Myth
 		// increment the call times
 		++mCallNum;
 		// if the node is not in the tree
-		if (NULL == mParentNode)
+		if (nullptr == mParentNode)
 		{
 			mParentNode = const_cast<CPerforNode*>(CPerformance::Inst()->GetCurrNode());
 			CPerforNode* pLastBrother = mParentNode->mLastSonNode;
 			// the parenet node has no children
-			if (NULL == pLastBrother)
+			if (nullptr == pLastBrother)
 			{
 				mParentNode->mFirstSonNode = this;
 				mParentNode->mLastSonNode = this;
@@ -63,7 +63,7 @@ namespace Myth
 		CPerforNode* pChild = mFirstSonNode;
 		// Traverse all child and print the result
 		++nLevel;
-		for (; NULL != pChild; pChild = pChild->mNextSiblingNode)
+		for (; nullptr != pChild; pChild = pChild->mNextSiblingNode)
 		{
 			pChild->Print(nLevel);
 		}

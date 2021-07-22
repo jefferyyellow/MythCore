@@ -33,7 +33,7 @@ namespace Myth
 			for (size_type i = 0; i < nSize; ++ i)
 			{
 				T* pNewMemory = mMemoryPool.allocate(nMemIndex);
-				if (NULL == pNewMemory)
+				if (nullptr == pNewMemory)
 				{ 
 					mDataIndex[i] = -1;
 					continue;
@@ -54,7 +54,7 @@ namespace Myth
 			for (size_type i = 0; i < nSize; ++i)
 			{
 				T* pNewMemory = mMemoryPool.allocate(nMemIndex);
-				if (NULL == pNewMemory)
+				if (nullptr == pNewMemory)
 				{
 					mDataIndex[i] = -1;
 					continue;
@@ -81,7 +81,7 @@ namespace Myth
 			for (size_type i = 0; i < nSize; ++i)
 			{
 				T* pNewMemory = mMemoryPool.allocate(nMemIndex);
-				if (NULL == pNewMemory)
+				if (nullptr == pNewMemory)
 				{
 					mDataIndex[i] = -1;
 					continue;
@@ -98,7 +98,7 @@ namespace Myth
 			for (size_type i = 0; i < mSize; ++i)
 			{
 				T* pNewMemory = mMemoryPool.allocate(nMemIndex);
-				if (NULL == pNewMemory)
+				if (nullptr == pNewMemory)
 				{
 					mDataIndex[i] = -1;
 					continue;
@@ -131,7 +131,7 @@ namespace Myth
 			for (size_type i = 0; i < mSize; ++i)
 			{
 				T* pNewMemory = mMemoryPool.allocate(nMemIndex);
-				if (NULL == pNewMemory)
+				if (nullptr == pNewMemory)
 				{
 					mDataIndex[i] = -1;
 					continue;
@@ -190,7 +190,7 @@ namespace Myth
 			for (size_type i = 0; i < mSize; ++i)
 			{
 				T* pNewMemory = mMemoryPool.allocate(nMemIndex);
-				if (NULL == pNewMemory)
+				if (nullptr == pNewMemory)
 				{
 					mDataIndex[i] = -1;
 					continue;
@@ -213,7 +213,7 @@ namespace Myth
 			for (size_type i = 0; i < mSize; ++i)
 			{
 				T* pNewMemory = mMemoryPool.allocate(nMemIndex);
-				if (NULL == pNewMemory)
+				if (nullptr == pNewMemory)
 				{
 					mDataIndex[i] = -1;
 					continue;
@@ -230,7 +230,7 @@ namespace Myth
 			}
 			int nMemIndex = 0;
 			T* pNewMemory = mMemoryPool.allocate(nMemIndex);
-			if (NULL == pNewMemory)
+			if (nullptr == pNewMemory)
 			{
 				return;
 			}
@@ -260,7 +260,7 @@ namespace Myth
 			for (size_type i = 0; i < n; ++i)
 			{
 				T* pNewMemory = mMemoryPool.allocate(nMemIndex);
-				if (NULL == pNewMemory)
+				if (nullptr == pNewMemory)
 				{
 					mDataIndex[pos] = -1;
 					continue;

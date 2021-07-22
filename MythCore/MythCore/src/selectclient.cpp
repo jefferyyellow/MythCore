@@ -3,7 +3,7 @@ namespace Myth
 {
 	bool CSelectClient::initSocket(const char* pServerIP, int nServerPort, int nRecvBufSize)
 	{
-		if (NULL == pServerIP)
+		if (nullptr == pServerIP)
 		{
 			return false;
 		}
@@ -17,7 +17,7 @@ namespace Myth
 		}
 
 		mRecvDataBuffer = new byte[nRecvBufSize];
-		if (NULL == mRecvDataBuffer)
+		if (nullptr == mRecvDataBuffer)
 		{
 			return false;
 		}
@@ -26,7 +26,7 @@ namespace Myth
 		mTcpSocket.setRecvBuffSize(0);
 		mTcpSocket.setMaxRecvBuffSize(nRecvBufSize);
 		mSelectModel.addNewSocket(&mTcpSocket, 0);
-		if (NULL != mConnectHandle)
+		if (nullptr != mConnectHandle)
 		{
 			mConnectHandle();
 		}
@@ -35,7 +35,7 @@ namespace Myth
 
 	void CSelectClient::clear()
 	{
-		if (NULL != mRecvDataBuffer)
+		if (nullptr != mRecvDataBuffer)
 		{
 			delete[]mRecvDataBuffer;
 		}
@@ -88,7 +88,7 @@ namespace Myth
 	/// Çå³ýsocket
 	void CSelectClient::clearSocket()
 	{
-		if (NULL != mDisconnectHandle)
+		if (nullptr != mDisconnectHandle)
 		{
 			mDisconnectHandle();
 		}

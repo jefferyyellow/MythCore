@@ -31,12 +31,12 @@ namespace Myth
 		void init()
 		{
 			mEpollFd = -1;
-			mpWaitEvents = NULL;
+			mpWaitEvents = nullptr;
 			memset(&mCtrlEvent, 0, sizeof(epoll_event));
-			mpAllSocket = NULL;
+			mpAllSocket = nullptr;
 			mSocketCapacity = 0;
 			mWaitTimeOut = 0;
-			if (NULL != mpWaitEvents)
+			if (nullptr != mpWaitEvents)
 			{
 				free(mpWaitEvents);
 			}
@@ -46,10 +46,10 @@ namespace Myth
 		void finial()
 		{
 			close(mEpollFd);
-			if(NULL != mpWaitEvents)
+			if(nullptr != mpWaitEvents)
 			{
 				free(mpWaitEvents);
-				mpWaitEvents = NULL;
+				mpWaitEvents = nullptr;
 			}
 		}
 

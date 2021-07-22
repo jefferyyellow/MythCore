@@ -10,7 +10,7 @@ namespace Myth
 #endif
 	{
 		CThread* pThead = (CThread*)arg;
-		if (NULL == pThead)
+		if (nullptr == pThead)
 		{
 			return 0;
 		}
@@ -22,12 +22,12 @@ namespace Myth
 
 	CThread::CThread()
 	{
-		mpThreadPool = NULL;
-		mpJob = NULL;
+		mpThreadPool = nullptr;
+		mpJob = nullptr;
 #ifdef MYTH_OS_WINDOWS
 		mThreadHand = INVALID_HANDLE_VALUE;
 #else
-		pthread_cond_init(&mCond, NULL);
+		pthread_cond_init(&mCond, nullptr);
 		pthread_mutexattr_init(&mMutexAttr);
 		pthread_mutexattr_settype(&mMutexAttr, PTHREAD_MUTEX_RECURSIVE_NP);
 		pthread_mutex_init(&mMutex, &mMutexAttr);
@@ -57,9 +57,9 @@ namespace Myth
 			return;
 		}
 #ifdef MYTH_OS_WINDOWS
-		mThreadHand = ::CreateThread(NULL, 0, ThreadFunction, (void*)this, 0, (LPDWORD)&mThreadID);
+		mThreadHand = ::CreateThread(nullptr, 0, ThreadFunction, (void*)this, 0, (LPDWORD)&mThreadID);
 #else
-		pthread_create(&mThreadID, NULL, ThreadFunction, (void *)this);
+		pthread_create(&mThreadID, nullptr, ThreadFunction, (void *)this);
 #endif
 	}
 
@@ -149,13 +149,13 @@ namespace Myth
 		setThreadState(emThreadState_Runing);
 		while (true)
 		{
-			if (NULL == mpJob)
+			if (nullptr == mpJob)
 			{
 				suspend();
-				if (NULL != mpThreadPool)
+				if (nullptr != mpThreadPool)
 				{
 					IJob* pJob = mpThreadPool->popJob();
-					if (NULL != pJob)
+					if (nullptr != pJob)
 					{
 						mpJob = pJob;
 					}
@@ -164,7 +164,7 @@ namespace Myth
 			}
 			mpJob->doing(getSerialNum());
 
-			if (NULL != mpThreadPool)
+			if (nullptr != mpThreadPool)
 			{
 				mpThreadPool->setJobFree(mpJob);
 				IJob* pJob = mpThreadPool->popJob();

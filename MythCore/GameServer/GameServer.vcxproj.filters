@@ -354,9 +354,6 @@
     <ClCompile Include="src\rankjob.cpp">
       <Filter>job</Filter>
     </ClCompile>
-    <ClCompile Include="..\message\instancemodule.hxx.pb.cc">
-      <Filter>message</Filter>
-    </ClCompile>
     <ClCompile Include="src\friendmodule.cpp">
       <Filter>logicmodule\friend</Filter>
     </ClCompile>
@@ -766,12 +763,6 @@
     </ClInclude>
     <ClInclude Include="inc\rankjob.h">
       <Filter>job</Filter>
-    </ClInclude>
-    <ClInclude Include="..\message\instancemodule.hxx">
-      <Filter>message</Filter>
-    </ClInclude>
-    <ClInclude Include="..\message\instancemodule.hxx.pb.h">
-      <Filter>message</Filter>
     </ClInclude>
     <ClInclude Include="inc\friendmodule.h">
       <Filter>logicmodule\friend</Filter>

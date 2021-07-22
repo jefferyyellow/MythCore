@@ -85,13 +85,13 @@ namespace Myth
 		{
 			return it->second;
 		}
-		return NULL;
+		return nullptr;
 	}
 
 	/// add a new specified name debug log
 	void CLogManager::AddDebugLog(CLog* pLog, const char* pName)
 	{
-		if (NULL == pLog || NULL == pName)
+		if (nullptr == pLog || nullptr == pName)
 		{
 			return;
 		}
@@ -109,7 +109,7 @@ namespace Myth
 		char tBuffer[MAX_LOG_BUFFER_NUM] = { 0 };
 		FormatLogMessage(tBuffer, sizeof(tBuffer) - 1, "DEBUG", pFormat, valist);
 		CLog* pErrorLog = GetDebugLog(pLogName);
-		if (NULL != pErrorLog)
+		if (nullptr != pErrorLog)
 		{
 			pErrorLog->DisplayLog(tBuffer);
 		}
@@ -122,7 +122,7 @@ namespace Myth
 		char tBuffer[MAX_LOG_BUFFER_NUM] = { 0 };
 		FormatLogMessage(tBuffer, sizeof(tBuffer) - 1, "DEBUG", pLogContent);
 		CLog* pErrorLog = GetDebugLog(pLogName);
-		if (NULL != pErrorLog)
+		if (nullptr != pErrorLog)
 		{
 			pErrorLog->DisplayLog(tBuffer);
 		}

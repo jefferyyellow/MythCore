@@ -12,7 +12,7 @@ namespace Myth
 		CSelectClient(ClientReceiveMsgHandle ReceiveMsgHandle, ClientConnectHandle tConnect, ClientDisconnectHandle tDisconnect)
 			:mReceiveMsgHandle(ReceiveMsgHandle), mConnectHandle(tConnect), mDisconnectHandle(tDisconnect)
 		{
-			mRecvDataBuffer = NULL;
+			mRecvDataBuffer = nullptr;
 		}
 		~CSelectClient()
 		{

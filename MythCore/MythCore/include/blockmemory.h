@@ -62,7 +62,7 @@ namespace Myth
 		/// init member variables, allocate BaseCount memory node
 		void init()
 		{
-			mpBlockHead = NULL;
+			mpBlockHead = nullptr;
 			mAllocCount = 0;
 			mpIdleList = allocBlock(BaseCount);
 		}
@@ -71,14 +71,14 @@ namespace Myth
 		void final()
 		{
 			CBlockListNode* pNode = mpBlockHead;
-			while (NULL != pNode)
+			while (nullptr != pNode)
 			{
 				delete []pNode->mBlockPoint;
 				pNode = pNode->mNextNode;
 			}
 
 		
-			while (NULL != mpBlockHead)
+			while (nullptr != mpBlockHead)
 			{
 				pNode = mpBlockHead;
 				mpBlockHead = mpBlockHead->mNextNode;
@@ -91,13 +91,13 @@ namespace Myth
 		/// allocate an element
 		T*			allocate()
 		{
-			if (NULL == mpIdleList)
+			if (nullptr == mpIdleList)
 			{
 				mpIdleList = allocBlock(Increment);
 			}
 
 			// check all idle memory node used up
-			if (NULL != mpIdleList)
+			if (nullptr != mpIdleList)
 			{
 				T* pAllocNode = reinterpret_cast<T*>(mpIdleList->mBuffNode.mBuff);
 	#ifdef __DEBUG__
@@ -129,7 +129,7 @@ namespace Myth
 			}
 			else
 			{
-				return NULL;
+				return nullptr;
 			}
 
 		}
@@ -137,7 +137,7 @@ namespace Myth
 		/// free an element
 		void		free(T* pFree)
 		{
-			if (NULL == pFree)
+			if (nullptr == pFree)
 			{
 				return;
 			}
@@ -190,12 +190,12 @@ namespace Myth
 		{
 			if (nSize <= 0)
 			{
-				return NULL;
+				return nullptr;
 			}
 			CMemoryNode* pNode = new CMemoryNode[nSize];
-			if (NULL == pNode)
+			if (nullptr == pNode)
 			{
-				return NULL;
+				return nullptr;
 			}
 			// make all memory node as a chain
 			CMemoryNode* pTempNode = pNode;
@@ -205,7 +205,7 @@ namespace Myth
 				++ pTempNode;
 			}
 			// the last node has no next node
-			pTempNode->mBuffNode.mpNode = NULL;
+			pTempNode->mBuffNode.mpNode = nullptr;
 	#ifdef __DEBUG__
 			pTempNode = pNode;
 			for (int i = 0; i < nSize; ++ i)
@@ -223,12 +223,12 @@ namespace Myth
 		/// add a block in block list
 		void addBlockListNode(CMemoryNode* pNode)
 		{
-			if (NULL == pNode)
+			if (nullptr == pNode)
 			{
 				return;
 			}
 			CBlockListNode* pBlockListNode = new CBlockListNode;
-			if (NULL == pBlockListNode)
+			if (nullptr == pBlockListNode)
 			{
 				return;
 			}
@@ -315,9 +315,9 @@ namespace Myth
 		/// allocate an element
 		T*			allocate()
 		{
-			if (NULL == mpIdleList)
+			if (nullptr == mpIdleList)
 			{
-				return NULL;
+				return nullptr;
 			}
 
 			// check all idle memory node used up
@@ -346,7 +346,7 @@ namespace Myth
 		/// free an element
 		void		free(T* pFree)
 		{
-			if (NULL == pFree)
+			if (nullptr == pFree)
 			{
 				return;
 			}
@@ -387,7 +387,7 @@ namespace Myth
 		}
 		bool isfull()
 		{
-			if (NULL == mpIdleList)
+			if (nullptr == mpIdleList)
 			{
 				return true;
 			}

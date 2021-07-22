@@ -19,16 +19,16 @@ namespace Myth
 	{
 	CTcpBuff()
 	{
-	mpBuff = NULL;
+	mpBuff = nullptr;
 	mBuffSize = 0;
 	}
 
 	~CTcpBuff()
 	{
-	if (NULL != mpBuff)
+	if (nullptr != mpBuff)
 	{
 	delete mpBuff;
-	mpBuff = NULL;
+	mpBuff = nullptr;
 	}
 	mBuffSize = 0;
 	}
@@ -37,7 +37,7 @@ namespace Myth
 	int			CreateBuffer(int nBuffSize)
 	{
 	mpBuff = new char[nBuffSize];
-	if (NULL == mpBuff)
+	if (nullptr == mpBuff)
 	{
 	return 0;
 	}
@@ -65,13 +65,13 @@ namespace Myth
 			mSocketStatus = emSocketStatusClose;
 			mbListen = 0;
 
-			mpRecvBuff = NULL;
+			mpRecvBuff = nullptr;
 			mRecvBuffSize = 0;
 			mMaxRecvBuffSize = 0;
 		}
 		CTcpSocket(char* pIP, short uPort)
 		{
-			if (NULL != pIP)
+			if (nullptr != pIP)
 			{
 				setIP(pIP);
 			}
@@ -123,7 +123,7 @@ namespace Myth
 		const char*	getIP(){ return mIP; }
 		void	setIP(const char* strIP)
 		{
-			if (NULL == strIP)
+			if (nullptr == strIP)
 			{
 				return;
 			}
@@ -188,10 +188,10 @@ namespace Myth
 	//public:
 	//	CBuffTcpSocket()
 	//	{
-	//		mpSendBuff = NULL;
+	//		mpSendBuff = nullptr;
 	//		mSendBuffSize = 0;
 	//		mMaxSendBuffSize = 0;
-	//		mpRecvBuff = NULL;
+	//		mpRecvBuff = nullptr;
 	//		mRecvBuffSize = 0;
 	//		mMaxRecvBuffSize = 0;
 	//	}
@@ -206,7 +206,7 @@ namespace Myth
 	//		if (nRecvBuffSize > 0)
 	//		{
 	//			mpRecvBuff = new char[nRecvBuffSize];
-	//			if (NULL == mpRecvBuff)
+	//			if (nullptr == mpRecvBuff)
 	//			{
 	//				clear();
 	//				return -1;
@@ -218,7 +218,7 @@ namespace Myth
 	//		if (nSendBuffSize > 0)
 	//		{
 	//			mpSendBuff = new char[nSendBuffSize];
-	//			if (NULL == mpSendBuff)
+	//			if (nullptr == mpSendBuff)
 	//			{
 	//				clear();
 	//				return -1;
@@ -232,16 +232,16 @@ namespace Myth
 
 	//	void		clear()
 	//	{
-	//		if (NULL != mpRecvBuff)
+	//		if (nullptr != mpRecvBuff)
 	//		{
 	//			delete[]mpRecvBuff;
-	//			mpRecvBuff = NULL;
+	//			mpRecvBuff = nullptr;
 	//		}
 
-	//		if (NULL != mpSendBuff)
+	//		if (nullptr != mpSendBuff)
 	//		{
 	//			delete[]mpSendBuff;
-	//			mpSendBuff = NULL;
+	//			mpSendBuff = nullptr;
 	//		}
 
 	//		mSendBuffSize = 0;

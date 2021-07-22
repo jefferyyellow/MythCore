@@ -49,7 +49,7 @@ namespace Myth
 		CDir()
 		{
 #ifdef MYTH_OS_UNIX
-			mDir = NULL;
+			mDir = nullptr;
 #else
 			mFindHandle = INVALID_HANDLE_VALUE;
 #endif
@@ -57,10 +57,10 @@ namespace Myth
 		~CDir()
 		{
 #ifdef MYTH_OS_UNIX
-			if (NULL != mDir)
+			if (nullptr != mDir)
 			{
 				closedir(mDir);
-				mDir = NULL;
+				mDir = nullptr;
 			}
 #else
 			if (INVALID_HANDLE_VALUE != mFindHandle)

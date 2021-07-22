@@ -5,7 +5,7 @@ namespace Myth
 	CMysqlQueryResult::CMysqlQueryResult(CMysqlDataBase* pMysqlDataBase, bool bProcedure)
 		:mMysqlDataBase(pMysqlDataBase), mProcedure(bProcedure)
 	{
-		mResult = NULL;
+		mResult = nullptr;
 		mFieldCount = 0;
 		mRowCount = 0;
 		mFieldDataType[0] = emMysqlDataType_Unknow;
@@ -18,23 +18,23 @@ namespace Myth
 
 	void CMysqlQueryResult::clear()
 	{
-		if (NULL != mResult)
+		if (nullptr != mResult)
 		{
 			mysql_free_result(mResult);
-			mResult = NULL;
+			mResult = nullptr;
 		}
 		mFieldCount = 0;
 		mRowCount = 0;
-		if (mProcedure && NULL != mMysqlDataBase)
+		if (mProcedure && nullptr != mMysqlDataBase)
 		{
 			mMysqlDataBase->clearResult();
 		}
-		mMysqlDataBase = NULL;
+		mMysqlDataBase = nullptr;
 	}
 
 	int CMysqlQueryResult::init(MYSQL_RES *pResult, int nRowCount, int nFieldCount)
 	{
-		if (NULL == pResult)
+		if (nullptr == pResult)
 		{
 			return -1;
 		}
@@ -43,10 +43,10 @@ namespace Myth
 			return -1;
 		}
 		// 如果以前就是遗留，先free
-		if (NULL != mResult)
+		if (nullptr != mResult)
 		{
 			mysql_free_result(mResult);
-			mResult = NULL;
+			mResult = nullptr;
 		}
 
 		mResult = pResult;
@@ -63,14 +63,14 @@ namespace Myth
 
 	int CMysqlQueryResult::nextRow()
 	{
-		if (NULL == mResult)
+		if (nullptr == mResult)
 		{
 			return -1;
 		}
 
 		MYSQL_ROW tRow = mysql_fetch_row(mResult);
 		unsigned long *pColumn = mysql_fetch_lengths(mResult);
-		if (NULL == tRow || NULL == pColumn)
+		if (nullptr == tRow || nullptr == pColumn)
 		{
 			return -1;
 		}

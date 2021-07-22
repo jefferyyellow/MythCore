@@ -6,7 +6,7 @@ public:
 	CThreadEvent(bool bManualReset)
 	{
 #ifdef MYTH_OS_WINDOWS
-		mEvent = CreateEvent(NULL, bManualReset, FALSE, NULL);
+		mEvent = CreateEvent(nullptr, bManualReset, FALSE, nullptr);
 #else
 		pthread_mutexattr_init(&mMutexAttr);
 		pthread_mutexattr_settype(&mMutexAttr,PTHREAD_MUTEX_RECURSIVE_NP); 
@@ -17,10 +17,10 @@ public:
 	~CThreadEvent()
 	{
 #ifdef MYTH_OS_WINDOWS
-		if (NULL != mEvent)
+		if (nullptr != mEvent)
 		{
 			CloseHandle(mEvent);
-			mEvent = NULL;
+			mEvent = nullptr;
 		}
 #else
 		pthread_cond_destroy(&mCond);
